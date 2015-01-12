@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 01 Jun 2013 06:02:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 01 Jun 2013 06:02:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: flink: Spruce up your map markers with font-icons
+Content-Transfer-Encoding: 8bit
+Content-Base: http://flink.com.au/ramblings/spruce-your-map-markers-font-icons
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>flink: Spruce up your map markers with font-icons</title>
+    <base href="http://flink.com.au/ramblings/spruce-your-map-markers-font-icons">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://flink.com.au/sites/default/files/styles/large/public/field/image/svn%20is%20supersharp1_1.jpg"><img typeof="foaf:Image" src="http://flink.com.au/sites/default/files/styles/large/public/field/image/svn%20is%20supersharp1_1.jpg" width="480" height="446" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>We've been having a lot of fun with maps recently. From the challenges of dealing with 100,000 markers (see this <a href="http://www.youtube.com/watch?v=BPXDrln0QB0&amp;feature=youtu.be">DrupalCon Portland mapping session</a>) down to smaller maps that attractively reveal the nature of their data locations through animated clustering and beautiful marker images in colours that reflect location type, such as the kind of shop (hairdresser, camera store etc) or the price range of rental accommodation.</p>
+<p>For the map maker who is not a pro at Photoshop or similar tool, the bane of a marker image is that its attributes (shape, colour, resolution, #kBytes) are all wrapped up in this one atomic unit: the .png file. When assembling markers for various types of locations you can't easily combine "this" marker image in "that" colour with "this" cute symbol in the middle, in "that" size…  And then have all that repeated automatically on the fly by your map, as more locations are added to your site.</p>
+<p>But with scalable alternatives spreading rapidly, most notably <a href="https://en.wikipedia.org/wiki/Web_Open_Font_Format">WOFF</a>, and repositories like <a href="http://fortawesome.github.io/Font-Awesome/cheatsheet">Font Awesome</a>  and <a href="http://fsymbols.com">fsymbols</a> featuring more and more cute icons, we are now striding closer to an easier solution.<br />
+Drawing form these repositories <a href="http://drupal.org/project/ip_geoloc">IP Geolocation Views &amp; Maps</a> let's you superimpose any scalable icon on top of any of your traditional marker images, giving you a smorgasbord of combinations. </p>
+<p>To contrast the font "awesomeness" of the icons versus trad .png we've included a couple of screenshots. The first, a highly zoomed-in map with markers, reveals how both map tiles and marker images have become pixelated during enlargement, while the font icons have not. In the second the font-size of those two special font icons was increased dramatically (and their colours changed to black). Notice the sharpness of these characters, 'cause that's what these are, characters, at any magnification or zoom level? Luvly.<br /><img src="http://flink.com.au/sites/default/files/svn%20is%20supersharp2.jpg" /><br />
+And how much do you have to pay the ferryman, to get those snazzy icons from your server to the other side?<br />
+How much? The price in bandwidth is: one. One UTF character.  Not a 10k image or even a 1k image. One single UTF character per icon. That's, well… nothing.</p>
+<p>Having said that, unlike the <em>fsymbols</em> set, the <em>Font Awesome</em> icons do come with a CSS file for easy icon customisation as well as a WOFF file (or if not supported a TTF or SVG fallback), automatically loaded by your browser. This does constitute a one-off hit of 55kB or so. But that sets you up for as many font icons as you wish, at no further cost in bandwidth.</p>
+<p>Thus you can pick &amp; mix marker images and font icons to your heart's content and assemble CSS-stylable, scalable, super-sharp markers to create beautiful maps for your clients. All through an easy UI. No Photoshop in sight.</p>
+<p>So for your next map, give <a href="http://drupal.org/project/ip_geoloc">IP Geolocation Views &amp; Maps</a> a go and let us know what you think. Available in 7.x-1.x-dev and the upcoming 7.x-1.21 versions.</p>
+<p><strong>More font icon sets?</strong><br />
+o <a href="http://icomoon.io">IcoMoon</a><br />
+o <a href="http://symbolset.com/icons">Symbolset icons</a><br />
+o <a href="http://thenextweb.com/dd/2012/10/12/7-gorgeous-icon-fonts-to-speed-up-your-site-and-your-design-process">7 Gorgeous icon fonts to speed up your site ...</a></p>
+</div></div></div><div class="field field-name-field-file-under field-type-taxonomy-term-reference field-label-above">
+      <h3 class="field-label">File under:&nbsp;</h3>
+    <span class="field-items">
+                  <a href="/file-under/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Planet Drupal</a>            </span>
+</div>
+  </body>
+</html>
+

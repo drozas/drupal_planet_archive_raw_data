@@ -1,0 +1,109 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Mar 2014 19:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Mar 2014 19:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Marzee Labs: Coding as a team: content fixtures
+Content-Transfer-Encoding: 8bit
+Content-Base: http://marzeelabs.org/blog/2014/03/17/coding-as-a-team-content-fixtures
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Marzee Labs: Coding as a team: content fixtures</title>
+    <base href="http://marzeelabs.org/blog/2014/03/17/coding-as-a-team-content-fixtures">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class='lead'>Any frontend guy will tell you that content is very important to be able to do their thing. You cannot properly structure content display and style it without having material to play with. And there is nothing more tedious than creating fake content on-the-fly to do the job. It will end up being destroyed, and you'd have to do it again because a new field was created. How about fixturising your content and keep on iterating it?</p>
+<p>When time comes to start frontend implementation, you will take over some structure built by the backend guy. And if you usually work on large sites, then you certainly have to deal with a bigger team. Beyond the production of CSS and JS, you will need to have some dummy content to understand how it looks on the display. But, wouldn’t it be nice if everyone in the team would be looking at the same site content? Imagine how easier would it be to reference a specific URL or part of a page when debugging. It would also allow the initial site review by the client or PM to happen much sooner, before the actual content is ready. How easier would it now be to test your app, either manually or through an automated setup! Are you nodding yet? Then let me show you how we do it in Marzee Labs as part of our Drupal development workflow.</p>
+
+<h3 id="the_migrate_module">The Migrate module</h3>
+
+<p>You are probably aware of the existence of the <a href="http://www.drupal.org/project/migrate/">migrate</a> module that is now part of Drupal 8 core. From the project page we can read “The migrate module provides a flexible framework for migrating content into Drupal from other sources”.</p>
+
+<p>Essentially, the migrate module is a swiss army knife that allows you to insert content into Drupal. By default it can import nodes, users, files, terms, and comments; other modules can easily extend it further. Check the <a href="https://drupal.org/node/415260">official module documentation</a> for further insight.</p>
+
+<h3 id="a_practical_tutorial_sample_content_ready_on_install">A practical tutorial: Sample content ready on install</h3>
+
+<p>We’ll use a sample migrate module of our own: the <a href="https://github.com/marzeelabs/mz/tree/master/modules/features/mz_migrate_example">MZ Migrate Example module</a> (this module is part of our <a href="https://github.com/marzeelabs/mz">MZ installation profile</a>).</p>
+
+<p>This sample module feature defines two content types: <code>Trappist</code> (an exclusive <a href="http://en.wikipedia.org/wiki/Trappist_beer">Belgian Beer</a>) and <code>Brewery</code>. Feel free to download and check the anatomy of this module. Don’t worry if it seems complex, we will dissect it and unveil all its secrets. You can install it directly on a drupal test site but we will also talk about a <strong><em>more advanced way™</em></strong> later on, so keep reading!</p>
+
+<p>The feature module is responsible for migrating it’s own sample content. It’s a nice way of organizing your code, keeping both the <em>content definition</em> and the <em>sample content</em> together in a single feature.</p>
+
+<p>We will be focusing on migrating sample content, so open up <code>trappists.csv</code> under the <code>import</code> folder of the same module. It contains the following lines:</p>
+
+<pre><code>id,title,brewery,image,type
+1,&quot;Westvleteren XII&quot;,1,westvleteren.jpg,Other
+2,&quot;Chimay&quot;,2,chimay.jpg,Dubbel|Tripel</code></pre>
+
+<p>Breaking it down you have:</p>
+
+<ul>
+<li>An ID of the content</li>
+
+<li>The title</li>
+
+<li>The ID of the related brewery, this is not the final node ID, but an internal ID we use to reference content via these CSV files</li>
+
+<li>The image file name, under <code>import/files</code></li>
+
+<li>The taxonomy term, with support for multivalue, in this case separated by the | character.</li>
+</ul>
+
+<p>This is a simple CSV file. In complex content types with several fields and multiple references it can get more confusing so you can use a spreadsheet tool for editing.</p>
+
+<p>So, now that we have some sample content, we need to define how to import that content. In the file <code>mz_migrate_example.migrate.inc</code> you’ll see we have declared a migration class for each content type: <code>MZBrewery</code> and <code>MZTrappist</code>.</p>
+
+<p><code>trappist.inc</code> defines the actual migration code. You’ll see that we prepare the migration of several field types: text (either title or body), references to other migrate content (e.g. the <code>Brewery</code> the trappist beer is associated to via an entityreference field), some images, taxonomy terms and the author (with default <code>uid = 1</code>):</p>
+
+<p>For example, here is a simple field mapping:</p>
+
+<pre><code>// Title
+$this-&gt;addFieldMapping(&#39;title&#39;, &#39;title&#39;);</code></pre>
+
+<p>and a more complex one:</p>
+
+<pre><code>// Image
+$this-&gt;addFieldMapping(&#39;field_trappist_image&#39;, &#39;image&#39;);
+$this-&gt;addFieldMapping(&#39;field_trappist_image:file_replace&#39;)
+  -&gt;defaultValue(FILE_EXISTS_REPLACE);
+$this-&gt;addFieldMapping(&#39;field_trappist_image:source_dir&#39;)
+  -&gt;defaultValue(drupal_get_path(&#39;module&#39;, &#39;mz_migrate_example&#39;) . &#39;/import/files&#39;);</code></pre>
+
+<p>That’s it, you are now all set to import that content.</p>
+
+<h3 id="import_that_content">Import that content!</h3>
+
+<p>You can import the sample content through the migrate UI in the backend, at <code>/admin/content/migrate</code> or using <code>drush</code>.</p>
+
+<p>If you are using the stand-alone example module you can use the following drush commands to test it:</p>
+
+<pre><code>drush en mz_migrate_example
+drush cc all
+drush mi MZBrewery,MZTrappist</code></pre>
+
+<p>You can find <a href="https://drupal.org/node/1561820">more information on drush migrate commands</a> and a discussion on why you should use drush instead of the backend UI to use migrate <a href="https://drupal.org/node/1806824">here</a>.</p>
+
+<p>But that’s just beginning</p>
+
+<h3 id="doing_it_all_automatic_now_aka_the_more_advanced_way">Doing it all automatic now… aka the More Advanced Way™</h3>
+
+<p>As I mentioned above, there is a more advanced way™, and that is using <a href="http://www.phing.info/">Phing</a>. What is Phing you ask? For the more distracted of you, we wrote a <a href="http://marzeelabs.org/blog/2014/03/03/coding-as-a-team-automation-using-phing/">blog post</a> on how to automate development using phing.</p>
+
+<p>The integration is pretty simple: whenever the database is rebuilt there is some sample content ready to be used. The best part of this is when a fellow team mate goes in to review your feature, jumps into the branch you are working on and only has to do a <code>phing build</code>. Your team mate will then have the sample content ready to test your feature, because while building the feature you’ve been updating that magical CSV file for the migrate procedure, right? Of course you have!</p>
+
+<p>On a more personal note, as a frontend guy, but also as a site builder, sometimes I had to add fields to features and I was a bit lost in the beginning looking at the <code>migrate.inc</code> files of the features. That’s when I remembered that Drupal has great documentation. In this particular instance I needed to add sample content to a multivalue link field, I checked <code>link.migrate.inc</code> and saw in the comments how to import links automatically. Easy, isn’t it?</p>
+
+<h3 id="how_could_i_live_without_this">How could I live without this?</h3>
+
+<p>Your frontend folks will love it and they will also start doing it themselves. Besides having the same code base, better yet is to always have the same sample content to play with as you build the website. And all of it done automatically, with <a href="http://marzeelabs.org/blog/2014/03/03/coding-as-a-team-automation-using-phing/">phing to the rescue</a>! Speed up the process, and manage short deadlines better by using content fixtures from day 1. Working as a team is great, and with this workflow it just got easier!</p>
+
+<p>Have you got similar experiences, or totally different approaches on how you manage your test content? Drop us a line in the comments below, let’s start a conversation.</p>
+
+<p><em>Featured image credit: Quantum_Kitten / Flickr</em></p>
+  </body>
+</html>
+

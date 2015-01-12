@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 22 Nov 2013 00:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 22 Nov 2013 00:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Darren Mothersele: Sending Base64 Encoded Data via HTTP in C++ using openFrameworks and Poco Net Libraries
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.darrenmothersele.com/blog/2013/11/22/sending-base64-encoded-data-poco-net-openframeworks/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Darren Mothersele: Sending Base64 Encoded Data via HTTP in C++ using openFrameworks and Poco Net Libraries</title>
+    <base href="http://www.darrenmothersele.com/blog/2013/11/22/sending-base64-encoded-data-poco-net-openframeworks/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I needed a simple way to submit data to a server using C++, this example shows
+how you can make use of the Poco libraries provided in openFrameworks to
+simplify this task.</p>
+
+<p></p>
+
+<p>The process is quite straightforward, if you've got your head around how the
+Poco libraries work. This took a bit of googling, but eventually I came up
+with a working example.</p>
+
+<p>My first attempt was to add the image (binary) data as a part, thus using
+a multipart form encoding, but I could not get this to work. Until I've worked
+out how to get multipart form encoding working with Poco::Net::HTMLForm I
+guess I'll stick with this.</p>
+
+<p>This code passes the binary data buffer (with the image data in it) to
+a base64 encoder (also provided in the Poco libraries) and then adds it as
+a standard form item to the form.</p>
+
+<p>Code is available in this <a href="https://gist.github.com/darrenmothersele/7597016">Gist</a>.</p>
+
+<script src="https://gist.github.com/darrenmothersele/7597016.js"></script>
+  </body>
+</html>
+

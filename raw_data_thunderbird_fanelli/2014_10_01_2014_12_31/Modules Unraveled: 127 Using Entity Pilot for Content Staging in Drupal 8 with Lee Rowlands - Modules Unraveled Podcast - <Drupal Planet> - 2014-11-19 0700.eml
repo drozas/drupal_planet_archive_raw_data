@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 19 Nov 2014 06:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 19 Nov 2014 06:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Modules Unraveled: 127 Using Entity Pilot for Content Staging in Drupal 8 with Lee Rowlands - Modules Unraveled Podcast
+Content-Transfer-Encoding: 8bit
+Content-Base: http://modulesunraveled.com/podcast/127-using-entity-pilot-content-staging-drupal-8-lee-rowlands-modules-unraveled-podcast
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Modules Unraveled: 127 Using Entity Pilot for Content Staging in Drupal 8 with Lee Rowlands - Modules Unraveled Podcast</title>
+    <base href="http://modulesunraveled.com/podcast/127-using-entity-pilot-content-staging-drupal-8-lee-rowlands-modules-unraveled-podcast">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--name-field-image field--type-image field--label-hidden"><div class="field__items"><div class="field__item even"><img typeof="foaf:Image" src="http://modulesunraveled.com/sites/default/files/styles/podcast_default/public/podcast/image/leerowlands.png?itok=-0U_1-M1" width="251" height="251" alt="Photo of Lee Rowlands" /></div></div></div><span class="submitted-by">Published: Wed, 11/19/14</span><div class="field field--name-field-podcast-file field--type-file field--label-hidden"><div class="field__items"><div class="field__item even"><div class="mediaelement-audio"><audio  src="http://traffic.libsyn.com/modulesunraveled/127_Using_Entity_Pilot_for_Content_Staging_in_Drupal_8_with_Lee_Rowlands_-_Modules_Unraveled_Podcast.mp3" class="mediaelement-formatter-identifier-1416387653-0" controls="controls" ></audio><div class="mediaelement-download-link"><a href="http://traffic.libsyn.com/modulesunraveled/127_Using_Entity_Pilot_for_Content_Staging_in_Drupal_8_with_Lee_Rowlands_-_Modules_Unraveled_Podcast.mp3">Download this episode</a></div></div></div></div></div><div class="field field--name-body field--type-text-with-summary field--label-hidden"><div class="field__items"><div class="field__item even" property="content:encoded"><h2>Entity Pilot</h2>
+<ul><li>What is Entity Pilot?
+<ul><li>I’ve been working on Entity Pilot since February, and have slowly been working through my backlog of features - but now its ready for Beta testers so that’s why I here on the show.</li>
+</ul></li>
+<li>How does Entity Pilot work?
+<ul><li>The basic premise is you create your content like normal and then create a new departure. You can add the content to your departure in logical groups, or you can create one departure for each piece of content - its a pretty flexible workflow. So if you were working on a new product launch you might create all of that content on your staging site. You’d be able to see what the site will look like with the new content, preview the front-page and landing pages etc.</li>
+</ul></li>
+<li>You’re using airport terminology, like “baggage”, “departure” and “arrival”. Can you break those down, and explain what each one entails?
+<ul><li>Passengers</li>
+<li>Baggage</li>
+<li>Departure - When you create the departure the baggage handler service takes care of adding the dependencies - so if you create a node, any terms or images it requires, or the author account are automatically added as baggage.</li>
+<li>Arrival - On another site, you setup your Entity Pilot account and then create a new Arrival. This presents you with the list of your flights that exist in Entity Pilot for your account. After selecting the flight for the arrival, you move to the approval stage.</li>
+<li>Customs - The approval stage presents you with a list of content on the incoming flight. Each item can be previewed and if it matches existing content on the site the administrator is able to view a diff of the changplanet-drupal the desired items to import are selected and imported either immediately, or via background processing.</li>
+</ul></li>
+<li>How does this work in a team?</li>
+<li>Talk about security</li>
+<li>Pricing</li>
+</ul><h2>Use Cases</h2>
+<ul><li>For marketing: Prepare content for a product launch on the staging site. Land the content on the live site on launch day.</li>
+<li>For editors: Share content between your sites. Write content once and adapt to any site in your network.</li>
+<li>For developers: Deploy content when you deploy code. Use real content not lorem ipsum. Solid APIs to integrate into your custom deployment workflow or code.</li>
+</ul></div></div></div><div class="field field--name-field-items-mentioned field--type-link-field field--label-above"><div class="field__label">Episode Links:&nbsp;</div><div class="field__items"><div class="field__item even"><a href="http://drupal.org/u/larowlan" rel="nofollow" target="_blank">Lee on drupal.org</a></div><div class="field__item odd"><a href="http://twitter.com/larowlan" rel="nofollow" target="_blank">Lee on Twitter</a></div><div class="field__item even"><a href="http://twitter.com/EntityPilot" rel="nofollow" target="_blank">Entity Pilot on Twitter</a></div><div class="field__item odd"><a href="https://drupal.org/irc" rel="nofollow" target="_blank">larowlan on IRC</a></div><div class="field__item even"><a href="http://entitypilot.com/" rel="nofollow" target="_blank">Entity Pilot</a></div></div></div><div class="field field--name-field-tags field--type-taxonomy-term-reference field--label-above"><div class="field__label">Tags:&nbsp;</div><div class="field__items"><div class="field__item even"><a href="/tags/content-staging" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Content Staging</a></div><div class="field__item odd"><a href="/tags/drupal-8" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal 8</a></div><div class="field__item even"><a href="/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet-drupal</a></div></div></div>
+  </body>
+</html>
+

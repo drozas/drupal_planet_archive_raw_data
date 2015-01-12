@@ -1,0 +1,160 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: An Event Apart SF 2013 Recap
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/event-apart-sf-2013-recap%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: An Event Apart SF 2013 Recap</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/event-apart-sf-2013-recap%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I just got back from <a href="http://aneventapart.com/event/san-francisco-2013">An Event Apart San Francisco</a> and my brain is about to burst. I’ll do my best to summarize my most significant learnings and share lots of great new (to me) tools and resources.</p><br />
+<br />
+<h3>Recurring ideas</h3><br />
+<br />
+<p>We need to look outside of ourselves when designing websites. If you’re reading this, you’re probably one of us; you know and understand the web and you’re probably using an up-to-date device to surf it. But there is an entire planet of people that aren’t us and they’re increasingly using the web from their phones and devices that we thought were long gone.</p><br />
+<br />
+<h3>Major questions</h3><br />
+<br />
+<p>How can we serve up a mobile experience that isn’t inferior to the desktop version (Karen McGrane)? How can we build websites that will still be around in ten years (Jeremy Keith)? How can we work more efficiently using tools like SASS (Chris Coyier)? How can we better promote the health of the web (Ethan Marcotte)?</p><br />
+<br />
+<h3>Mobile is here to stay</h3><br />
+<br />
+<p>If you have any doubt about the prevalence of users on smartphones and tablets, Luke Wroblewski made this chart for you:</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/device-global-sales.png"></p><br />
+<br />
+<p>This should scare you (it certainly scares me). Since about 2011 smartphone and tablet sales have <em>dramatically</em> outpaced the sale of PCs, which have already hit their peak. We can no longer dismiss users on mobile devices; the future will be mobile.</p><br />
+<br />
+<p>And then there's this one:</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/us-media-consumption.png"></p><br />
+<br />
+<p>Notice that between 2009 and 2013 <em>only</em> mobile media consumption has increased. TV, online, radio and print have all decreased. Mobile content is increasingly integrating itself into our content consumption habits.</p><br />
+<br />
+<p>Here are some more mobile statistics in case you need ammunition to convince your boss that mobile is a thing:</p><br />
+<br />
+<ul><br />
+	<li>E-commerce from mobile devices was responsible for <a href="http://www.lukew.com/ff/entry.asp?1837 ">over 25% of all purchases made on Thanksgiving in 2013</a></li><br />
+	<li>78% of monthly Facebook users in the US are on mobile</li><br />
+	<li>3 hours of video are uploaded EVERY SECOND via YouTube on mobile devices</li><br />
+	<li>Ebay made $13 billion in mobile commerce in 2012</li><br />
+</ul><br />
+<br />
+<h3>Design for standards, not devices</h3><br />
+<br />
+<p>So, you’re designing for mobile. Cool. Which of the zillions of devices do you decide to base your static design comps on?</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/android-fragmentation.png"></p><br />
+<br />
+<p><a href="http://opensignal.com/reports/fragmentation.php">This chart</a> shows the physical screen sizes of nearly 3,997 different Android devices. That device count was from August of 2012; the <a href="http://opensignal.com/reports/fragmentation-2013/ ">Android Fragmentation Report</a> from July 2013 found 11,868 distinct devices (yikes!).</p><br />
+<br />
+<p>Alright, <a href="https://twitter.com/reggiewirjadi/status/410834854352130049/photo/1 ">here’s one more</a>, showing the amount of variation within the Samsung Galaxy series of devices alone:</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/samsung-galaxies.jpg"></p><br />
+<br />
+<h3>Designers and developers; mass hysteria!</h3><br />
+<br />
+<p>This is the world we live in now and this requires a new web design process. It stings a bit, but to effectively design for all of these devices we can’t just make static comps anymore. We need to learn how to develop prototypes of our designs, or at least collaborate more deeply with developers. Tools like <a href="http://macaw.co/ ">Macaw</a> (coming soon!) aim to bridge the gap between development and design and look to be a great first step.</p><br />
+<br />
+<h3>Look Ma, one hand!</h3><br />
+<br />
+<p>With a traditional desktop computer, it’s the job of the mouse and keyboard designers to create ergonomics. When we design for touch devices, however, we are the ones responsible for creating ergonomics in our mobile designs. We need to consider how users hold their devices and which areas of the screen are more easily tappable. In an observational study, about <a href="http://www.uxmatters.com/mt/archives/2013/02/how-do-users-really-hold-mobile-devices.php ">half of mobile phone users used their phones one-handed</a>.</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/mobile-posture.png"></p><br />
+<br />
+<p>One-handed usage is a great way to test your website. If you can effectively navigate using one hand you’re accounting for the most common mobile usage. Luke Wroblewski urges us to “keep the keyboard away” as much as possible. FourSquare does this by using location data on the phone to suggest nearby business to check in to, instead of requiring the user to type in the name (although that’s still an option). Google Flights lists popular destinations or even provides a map view where you can tap your destination as an alternative to typing it out. These changes improve the ergonomics of our interfaces.</p><br />
+<br />
+<h3>Open Device Labs</h3><br />
+<br />
+<p>So how do you test your websites when there are literally thousands of devices you might need to account for? Jeremy Keith talked about <a href="http://opendevicelab.com">Open Device Labs</a>, physical spaces that host a library of donated devices that are freely available for testing. How many of you have an old phone sitting in a drawer collecting dust? Consider donating it to an ODL! There’s one <a href="http://odlsf.org/ ">right here in San Francisco</a> with 85 devices available! You can find an ODL near you at www.opendevicelab.com.</p><br />
+<br />
+<h3>The Mobile Only User</h3><br />
+<br />
+<p>Karen McGrane spoke about the very real digital divide currently in the United States. 91% of Americans now own mobile phones, and 34% of them use their phone as their primary internet device. Among minorities the percentage is even higher, effectively creating a new “Mobile Only User”.</p><br />
+<br />
+<p>In Africa, more people have mobile phones than electricity, and they’re predominantly using old feature phones on sub-3G networks, as Ethan Marcotte shared. Viewing a website on those devices relies on simplistic, SMS-style text and super lightweight page loads in order to work. As much as we hate waiting for a big page to load, for these people it’s essential; <a href="http://blog.chriszacharias.com/page-weight-matters ">page weight matters</a> and optimizing for mobile is critical.</p><br />
+<br />
+<p>Think about how many times you’ve tried to visit a website on your phone only to find that you have to clumsily navigate a scaled-down version of the desktop site. Think about the times you’ve visited a “mobile-optimized” website only to discover that important content has been removed! We can’t assume that mobile = killing time while waiting in line at the supermarket. In fact, <a href="http://www.lukew.com/ff/entry.asp?1624 ">68% of consumer smartphone use happens at home</a>.</p><br />
+<br />
+<p>For these Mobile Only Users, they can’t just bail on the mobile experience and fire up the site on their laptop when it doesn’t work right. They end up with a “broken, watered-down web”, which effectively makes them second-class citizens, according to Karen McGrane. Many of the opportunities and resources that we take for granted as connected web citizens are dramatically inferior when used on a mobile device.</p><br />
+<br />
+<h3>Progressive enhancement</h3><br />
+<br />
+<p>As Mitch Hedburg said, “An escalator can never break; it can only become stairs.” This is the idea behind progressive enhancement on the web. We should think about first building a functional skeleton of the site that will work on old feature phones and on slow connections in the middle of the desert. As the user’s device/internet connection allows, we can then <em>progressively enhance</em> their experience by adding images or other fanciness.</p><br />
+<br />
+<p>Ethan Marcotte talked about BBC News and their initiative to build a mobile-first version of their website. If you point your phone to m.bbc.com/news you can see their working prototype. By default the first article in their list will include an image but the rest don’t.</p><br />
+<br />
+<p>They run JavaScript on page load to determine whether your computer can handle the “enhanced” experience, which includes higher-resolution images and additional interface elements. However, he cautioned that you should never rely on JavaScript in the event that it’s not available or doesn’t load correctly.</p><br />
+<br />
+<h3>Mike Monteiro quotes</h3><br />
+<br />
+<p>I’d like to dedicate an entirely separate blog post to react to his talk, which was the most emotional and urgent. The general premise was that as designers we have a responsibility to produce work that improves the world and we often lose sight of that. For now, let me share some of these quotes with you (albeit without context):</p><br />
+<br />
+<ul><br />
+	<li>“Design happens regardless of whether there’s a designer around or not.”</li><br />
+	<li>“Responsibility isn’t a burden you have to carry; it’s your potential to move humankind forward.”</li><br />
+	<li>“Don’t work for anyone that you’re afraid to say ‘no’ to.”</li><br />
+	<li>“Be willing to get fired.”</li><br />
+	<li>“The work we choose to take on defines us.”</li><br />
+	<li>“If you don’t care about what you’re designing, stop designing.”</li><br />
+	<li>“Not only can designers change the world; designers need to.”</li><br />
+</ul><br />
+<br />
+<h3>Becoming a Design Unicorn</h3><br />
+<br />
+<p>Jared Spool said that there are currently 150,000 job listings for UX designers in the United States right now. However, there aren’t nearly that many UX designers. He wants to cultivate more “Design Unicorns”, which are the rare ones who can do all of these things:</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/design-unicorn.png"></p><br />
+<br />
+<p>This is quite a list, but it’s attainable. Here are Jared’s tips for becoming a design unicorn:</p><br />
+<br />
+<ol><br />
+	<li>Train yourself</li><br />
+	<li>Pick something you’ve never done and learn everything you can about it.</li><br />
+	<li>Practice your new skills</li><br />
+	<li>Deconstruct as many designs as you can</li><br />
+	<li>Ask yourself: “how could I make that better?” or “how would I do that?”</li><br />
+	<li>Seek out feedback (and listen to it)</li><br />
+	<li>Teach others</li><br />
+</ol><br />
+<br />
+<p>In an effort to cultivate more Design Unicorns, Spool has started the <a href="http://unicorninstitute.com/ ">Unicorn Institute</a> (which has the best URL ever) to improve UX education and become a resource for students and teachers in this field. I encourage you all to sign up and get involved with the project in whatever capacity you can.</p><br />
+<br />
+<h3>Ideas to think about</h3><br />
+<br />
+<p>There were way more nuggets of wisdom than I can possibly fit into this post, so allow me to give you some bite-sized highlights:</p><br />
+<br />
+<ul><br />
+	<li><strong>JEFFREY ZELDMAN:</strong> Use <a href="http://viljamis.com/blog/2012/remote-preview/ ">Remote Preview</a> to test a URL on a number of mobile devices simultaneously.</li><br />
+	<li><strong>KAREN MCGRANE:</strong> “It’s not a strategy if you can’t maintain it.”</li><br />
+	<li><strong>KAREN MCGRANE:</strong> Don’t truncate your headlines on mobile devices! There’s a <a href="http://guardiantruncationteam.tumblr.com/ ">comical Tumblr</a> that pokes fun at bad truncation on The Guardian.</li><br />
+	<li><strong>LUKE WROBLEWSKI:</strong> Did you know you can <a href="http://timkadlec.com/2013/04/media-queries-within-svg/ ">include media queries inside an SVG file</a>?! This makes it possible to have one SVG file for a logo or icon that adapts to different sizes automatically.</li><br />
+	<li><strong>TIM BROWN:</strong> <a href="https://github.com/Wilto/Molten-Leading ">Molten Leading</a> allows for fluid line height on the web (typography alert!).</li><br />
+	<li><strong>TIM BROWN:</strong> <a href="http://typerendering.com/ ">Type Rendering Mix</a> is a tool that swaps out fonts based on the user’s platform. For example, Mac users would be served the “Light” style and Windows users get the “Regular” style, creating better visual consistency across different text rasterizers.</li><br />
+	<li><strong>ETHAN MARCOTTE:</strong> <a href="http://mmaji.wordpress.com/ ">M-Maji</a> is a project to help people find clean water in Africa on their mobile phones.</li><br />
+	<li><strong>JEREMY KEITH:</strong> If you’re designing a password input field, consider making the password visible by default and include a checkbox to toggle the “secure” asterisked view to improve usability and reduce input error.</li><br />
+	<li><a href="https://vine.co/v/hQP7AxY05AW "><strong>JEREMY KEITH</strong> knows how to play the mandolin (quite well).</a></li><br />
+	<li><strong>JEREMY KEITH:</strong> designing a good URL structure is a great exercise when building a website; your URLs should be readable/guessable/hackable.</li><br />
+	<li><strong>JEREMY KEITH:</strong> Don’t rely on 3rd-party APIs because you never know when they’ll evaporate.</li><br />
+	<li><strong>JEREMY KEITH:</strong> “The best way to be future-friendly is to be backwards compatible.”</li><br />
+	<li><strong>CHRIS COYIER:</strong> <a href="https://github.com/ai/autoprefixer ">Autoprefixer</a> lets you configure the browsers you want to support and it will automatically output the correct CSS for each (for things like Webkit elements).</li><br />
+	<li><strong>CHRIS COYIER:</strong> <a href="http://incident57.com/codekit/ ">CodeKit</a> and <a href="http://livereload.com/ ">LiveReload</a> will compile your .scss files easily.</li><br />
+	<li><strong>LEA VEROU:</strong> Her slides are <a href="http://www.lea.verou.me/more-css-secrets ">freely available online right here</a> (and she showed off some truly amazing CSS tricks)</li><br />
+	<li><strong>MIKE MONTEIRO:</strong> You should really read <em><a href="http://www.amazon.com/Design-For-The-Real-World/dp/0897331532 ">Design for the Real World</a></em> by Victor Papanek.</li><br />
+</ul><br />
+<br />
+<p>Phew! This is really only a slice of the whole conference (which I would wholeheartedly recommend), but hopefully it gets some gears turning in your heads. I’ll reiterate one of my favorite quotes from the conference from Mike Monteiro (just before he dropped the mic and walked off-stage):</p><br />
+<br />
+<h3>“Not only can designers change the world; designers need to.”</h3><br />
+  </body>
+</html>
+

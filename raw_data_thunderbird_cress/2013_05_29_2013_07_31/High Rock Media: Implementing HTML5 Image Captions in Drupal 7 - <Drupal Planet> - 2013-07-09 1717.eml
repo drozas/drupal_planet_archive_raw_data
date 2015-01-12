@@ -1,0 +1,85 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 09 Jul 2013 16:17:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 09 Jul 2013 16:17:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Implementing HTML5 Image Captions in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/implementing-html5-image-captions-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Implementing HTML5 Image Captions in Drupal 7</title>
+    <base href="http://highrockmedia.com/blog/implementing-html5-image-captions-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/img_6949-edit-2-127-1529324591.jpg" width="879" height="292" alt="Two Methods to Implement HTML5 Captions in Drupal 7 Using Image Fields" title="Two Methods to Implement HTML5 Captions in Drupal 7 Using Image Fields" class="image-adaptive inline-adaptive" /></p>
+
+<p>I've been pretty busy these days with a few different projects and a number of them required a user friendly way (editors not needing to know how to code) of implementing captions for images within content areas.</p>
+
+<p>There's a few Drupal caption modules I tried but was just not totally happy with the markup and they did not fit all use cases. The best one I found and used for a while is jCaption, a jQuery based caption script. Ultimately, this failed as I found a distressing conflict with the Disqus module. If jCaption was enabled, it prevented the Disqus comment box from loading most of the time. I still need to get to the bottom of that and possibly file an issue but for lack of time, I decided to try some other methods.</p>
+
+<p>Enter the HTML5 <code>&lt;figure&gt;</code> and <code>&lt;figcaption&gt;</code> elements. The nice thing about this combo is you don't really need to add any additional layout CSS to get the caption to be inline with the image, that was not the case with some other tools that I tried.</p>
+
+<h2>Drupal Implementation</h2>
+
+<p>The next task was to develop and create methods for a trivial Drupal implementation. I have two basic uses cases here.</p>
+
+<ol>
+<li>A standard Drupal 7 imagefield within a content page</li>
+<li>Imagefields being inserted as inline images using the Drupal Insert module</li>
+</ol>
+
+<h2>Standard Imagefield Method</h2>
+
+<p>For the standard imagefield, we can create a custom field template in our theme and add our HTML5 caption markup to it, job done.</p>
+
+<div class="geshifilter">&lt;figure class=&quot;field-item <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$delta</span> <span style="color: #339933;">%</span> <span style="color: #cc66cc;">2</span> ? <span style="color: #0000ff;">'odd'</span> <span style="color: #339933;">:</span> <span style="color: #0000ff;">'even'</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>&quot;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$item_attributes</span><span style="color: #009900;">&#91;</span><span style="color: #000088;">$delta</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>&gt;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> render<span style="color: #009900;">&#40;</span><span style="color: #000088;">$item</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span><br />
+&nbsp; &nbsp; &lt;!-- render the title tag as caption --&gt;<br />
+&nbsp; &nbsp; <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$item</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'#item'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'title'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">?&gt;</span><br />
+&nbsp; &nbsp; &lt;figcaption&gt;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$item</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'#item'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'title'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>&lt;/figcaption&gt;<br />
+&nbsp; <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">endif</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span><br />
+&lt;/figure&gt;</div>
+
+<p>Note that we leveraged the API call to <code>$items</code> from the core <em>field.tpl.php</em> file and then used this within our own field template within our theme for a nice override. We're taking the <em>title tag</em> of the image which has been input in the imagefield UI and then render it as a caption. You can also do this with the <em>alt tag</em> as well.</p>
+
+<p>For more info how to do this, see my previous blog post, "<em>Designing a Responsive Lightbox Photo Grid Gallery for Drupal 7</em>", link below in the Resources section.</p>
+
+<h2>Insert Imagefield Method</h2>
+
+<p>For this method to work, you'll need to get ramped up with the Drupal Insert Module. Once installed, configure which image styles you want to insert and then the key is to assign a class (in the Insert UI) to images you are inserting. I used something like "image-adaptive". Then, any image that get's inserted will have that class. You may need to adjust your input filters for this, milage may vary. In addition, be sure you check the<code>alt</code> and / or <code>title</code> tag when creating or editing that specific Image Field.</p>
+
+<p>Once you have inserted an image, we can add a little jQuery to wrap the image in a <code>&lt;figure&gt;</code> element and then grab the title or alt tag and append it as a <code>&lt;figcaption&gt;</code>. So in your theme's custom scripts file or a custom module, do something like this:</p>
+
+<div class="geshifilter"><span style="color: #009900;">&#40;</span><span style="color: #000000; font-weight: bold;">function</span> <span style="color: #009900;">&#40;</span>$<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+<span style="color: #666666; font-style: italic;">// Do this the Drupal 7 way!</span><br />
+Drupal<span style="color: #339933;">.</span>behaviors<span style="color: #339933;">.</span>miscBootstrap <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; attach<span style="color: #339933;">:</span><span style="color: #000000; font-weight: bold;">function</span> <span style="color: #009900;">&#40;</span>context<span style="color: #339933;">,</span> settings<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+<span style="color: #666666; font-style: italic;">// End drupal calls.</span><br />
+<br />
+<span style="color: #666666; font-style: italic;">// Wrap a &lt;figure&gt; element around the inline image.</span><br />
+$<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'#main-container-inner img.image-adaptive'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">.</span>wrap<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;&lt;figure&gt;&lt;/figure&gt;&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<br />
+<span style="color: #666666; font-style: italic;">// Now grab the title from the image and append it as a &lt;figcaption&gt;.</span><br />
+$<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;#main-container-inner img.image-adaptive&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">.</span><span style="color: #990000;">each</span><span style="color: #009900;">&#40;</span><span style="color: #000000; font-weight: bold;">function</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">,</span> ele<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; <span style="color: #000000; font-weight: bold;">var</span> title <span style="color: #339933;">=</span> this<span style="color: #339933;">.</span>title<span style="color: #339933;">;</span><br />
+&nbsp; $<span style="color: #009900;">&#40;</span>this<span style="color: #009900;">&#41;</span><span style="color: #339933;">.</span>closest<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;figure&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">.</span>append<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;&lt;figcaption&gt;&quot;</span> <span style="color: #339933;">+</span> this<span style="color: #339933;">.</span>title <span style="color: #339933;">+</span> <span style="color: #0000ff;">&quot;&lt;/figcaption&gt;&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<br />
+<span style="color: #009900;">&#125;</span><span style="color: #009900;">&#125;</span><span style="color: #009900;">&#125;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#40;</span>jQuery<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div>
+
+<p>The comments are pretty self-explanatory, note, I'm targeting my specific content area <code>#main-container-inner</code> as I don't want captions added unnecessarily elsewhere. The end result from both methods above are that you get a nicely themed image with caption:</p>
+
+<div class="geshifilter"><span style="color: #339933;">&lt;</span>figure<span style="color: #339933;">&gt;</span><br />
+&nbsp; <span style="color: #339933;">&lt;</span>img src<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;/myimage.jpg&quot;</span> title<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;My Image Foobar&quot;</span><span style="color: #339933;">&gt;</span><br />
+&nbsp; <span style="color: #339933;">&lt;</span>figcaption<span style="color: #339933;">&gt;</span>My Image Foobar<span style="color: #339933;">&lt;/</span>figcaption<span style="color: #339933;">&gt;</span><br />
+<span style="color: #339933;">&lt;/</span>figure<span style="color: #339933;">&gt;</span></div>
+
+<p>You can tweak the CSS for <code>&lt;figcaption&gt;</code> as needed in terms of font color, italics, size etc… I've been pretty happy with these methods, the next thing I'd like to do would be to add a link to the caption, sometimes that's necessary to give attribution for images used from Flickr but I think that will be a little trickier.</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">Drupal</li><li class="field-item even">HTML5</li><li class="field-item odd">Tutorial</li><li class="field-item even">PHP</li><li class="field-item odd">JQuery</li><li class="field-item even last">Drupal Planet</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="http://html5doctor.com/the-figure-figcaption-elements/" target="_blank" rel="nofollow">The figure &amp; figcaption elements</a></li><li class="field-item even"><a href="https://drupal.org/project/insert" target="_blank" rel="nofollow">Drupal Insert Module</a></li><li class="field-item odd"><a href="http://highrockmedia.com/blog/designing-responsive-lightbox-photo-grid-gallery-drupal-7" target="_blank" rel="nofollow">Designing a Responsive Lightbox Photo Grid Gallery for Drupal 7</a></li><li class="field-item even last"><a href="https://api.drupal.org/api/drupal/modules%21field%21theme%21field.tpl.php/7" target="_blank" rel="nofollow">field.tpl.php (Drupal 7 API)</a></li></ul>
+  </body>
+</html>
+

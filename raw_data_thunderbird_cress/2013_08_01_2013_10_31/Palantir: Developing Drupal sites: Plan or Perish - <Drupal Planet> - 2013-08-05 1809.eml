@@ -1,0 +1,54 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 05 Aug 2013 17:09:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 05 Aug 2013 17:09:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Palantir: Developing Drupal sites: Plan or Perish
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.palantir.net/blog/developing-drupal-sites-plan-or-perish
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Palantir: Developing Drupal sites: Plan or Perish</title>
+    <base href="http://www.palantir.net/blog/developing-drupal-sites-plan-or-perish">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="featured-blog-image">  
+      <img typeof="foaf:Image" src="http://www.palantir.net/sites/default/files/styles/bloglandingpage-thumbnail/public/blog/images/WileECoyote-Roadrunner-BluePrint-davesgeekyideas-Poster.png?itok=BTe1OyHP" width="262" height="175" alt="" />  </span>
+            <p>One of the key challenges Drupal developers face when building a complex Drupal site is that there are many moving parts. It's not unusual for a mid- to large-sized site to have as many as a dozen content types, 50+ fields (some of them shared), 20 different Views displays, a couple of flags, some nodequeues ...  there's a lot that goes into a Drupal build. Keeping track of all of them can be a challenge when building out a site. What was that View called? Did we remember to name fields consistently? Singular or plural? Wait, did we use Flag or Nodequeue here? Okay, who forgot to include help text!</p>
+<p>While it's tempting to say "Drupal is configurable, and we're Agile, we'll figure it out as we go!", that's rarely a workable answer for any but the most trivial sites. There have been attempts in the past to automate an entire build off of some scripted format, but none have really caught on. At Palantir, though, we've realized that it's the planning step that is most important: Planning out how the entire site's content model and build will look is itself a valuable exercise, as it reduces errors and improves overall consistency and quality. To that end, we've developed a tool that we now use for all sites to aid in discovery, strategy, and planning: the Build Spec.</p>
+<h2>Another document? Great Druplicon, why?</h2>
+<p>Some folks may be flipping out at this point. Big specification documents are an artifact of waterfall processes, that hated dinosaur of software development that exists only in legends of time gone by and in the expectations of less-hip clients everywhere. "Design documents get out of date as soon as they're written!" you cry. "The code is the spec; that's the Agile way!"</p>
+<p>Perhaps, but the Build Spec is not documentation. It's a tool for discovery and content strategy. As Dwight Eisenhower once said, "Plans are worthless, but planning is everything." While Drupal is extremely configurable, that doesn't mean step one of a new site is to start pushing buttons; it's to figure out "so what do we actually want to do?"</p>
+<p>That process is commonly called Content Strategy these days, and is an important step in the process. But how do you translate the outcome of that process into actionable Drupal tasks? That's what the Build Spec is for.</p>
+<p>The Build Spec is a Drupal-specific birds-eye-view of how the site will be built. It contains every content type that will be created, all fields, and all field, formatter, and widget settings (that is, the data model). It contains all Views that are going to be needed, and all of their displays. It contains every image style, every flag or nodequeue that is expected, every taxonomy vocabulary ... anything that you'd get from just pushing buttons.</p>
+<p>Why go to all that work? How many times have you gotten most of the way through a Drupal site and realized that your image style names don't make any sense; or that you have four fields that are identical but duplicated, and all named with different standards; or that one third of your fields have help text, but the grammar is inconsistent; or that you want to build a View but the fields you need to filter on don't exist; Or that you're using a custom "weight" field in one place but nodequeue in another, not for any particular reason other than the site evolved that way as different people built them.</p>
+<p>We've seen all of that, which is exactly where having that big-picture plan before you start button-pushing is helpful. It's much easier to rename fields in a spreadsheet than after you've built three views based on them, and much easier to spot potential places to merge fields when they're all lined up in a spreadsheet. And, especially, it's easier to remember to write, in a consistent voice, all of the necessary help text for fields, views, and so on when there's a blank cell staring you right in the face. It's far easier to tweak, adjust, and evolve a content model via spreadsheet than it is in Drupal itself with all of its forms, and everything is still changeable (unlike in Drupal where many values can't be changed after they're set without deleting something entirely).</p>
+<h2>OK, you sold me. How does it work?</h2>
+<p>Glad you asked! There's no One True Way(tm) to capture this sort of information, but at Palantir we've developed a fairly <a href="https://docs.google.com/spreadsheet/ccc?key=0AuIiRK97zQSYdG1EUXNxdDhtVlZBang1N3o1b19IRWc#gid=0">robust template</a> for our use as a Google Spreadsheet.  (Follow along at home for the next part.)</p>
+<p>During the discovery and definition phases of a project, the technical lead, product owner, and usually another engineer take the information unearthed during discovery and translate it into a content model. That's largely the first two tabs, which contain all content types with fields used and all fields on the site, respectively. We split it across two tabs for a number of reasons, but most notably because fields exist independently of the content type that uses them. There's a lot of configuration that goes into a field, and fields can be shared across content types. Of note, though, each column corresponds almost 1:1 with a a field in the UI when actually configuring Drupal.</p>
+<p>Any other fieldable entities (taxonomy terms, fieldable panels panes, etc.) have their own tabs and work essentially the same as content types. There are also pages for Flag, Nodequeue, Menus, and User roles that are all fairly self-explanatory and as above map very closely to the actual fields to fill out in Drupal's UI forms.</p>
+<p>Of particular note, though, are View Modes, Image Styles, and Views. The first two are really under-utilized features of Drupal's site building arsenal. Both View Modes and Image Styles are ways to take an underlying object (node, user, image, etc.) and define a special representation of it. A single object can be presented in a variety of different ways, not just in the default "full" and "teaser". That's why <a href="https://drupal.org/project/entity_view_mode">Entity View Mode</a> is a standard part of Palantir's Drupal toolkit. Between that and core's image styles, we're able to single-source content and display far better than with just Views alone. That's because we can, in most cases, use the view mode/image style for theming and display purposes and let Views handle just the querying logic, then display nodes (or any entity) in some well-defined view mode.</p>
+<p>Depending on the site, creating a Build Spec could take anywhere from 2-3 hours to 2-3 days. Often, and by design, filling out the Build Spec will surface architectural questions, and therefore business logic questions, that are best answered early when they're cheap to change. (It's just a spreadsheet, after all.) That is actually the biggest benefit of this approach; internal consistency and "crossing all the Ts" is a secondary, but still very useful, benefit.</p>
+<p>Once the Build Spec has been completed, it should take a competent Drupal site builder only one to three days (again, depending on the site size) of clicking, copying, and pasting to build out the "80% solution" that Drupal is reputedly so good at. Then the rest of the project can be spent building necessary custom code, theming, testing, and so on.</p>
+<p>We do generally try to keep the Build Spec up to date if the site changes, but we've found that if our discovery process was sufficiently complete changes tend to be rare and minimal. (That makes it more likely that we will actually keep it up to date.)</p>
+<p>Since it's "just" a spreadsheet, the Build Spec is also flexible. On sites that won't use Nodequeue, or Fieldable Panels Panes, just delete those tabs. Using Organic Groups? Add a column to the Node types tab for OG settings. </p>
+<h2>How else does this approach help?</h2>
+<p>Aside from the more robust discovery and more thought-through architecture, we've found a number of other ancillary benefits to using this model:</p>
+<ul><li>It allows for easier identification of possible custom modules that may be needed.  (Field types, formatters, Views plugins, etc.)</li>
+<li>Hidden custom code needs can be identified early and factored into the budget or into design changes, as appropriate.</li>
+<li>It allows the entire team to review the content model at-a-glance to see how all of the moving parts fit together, as well as identify potential pitfalls before they're reached.</li>
+<li>Developers joining a project late can get a much clearer picture of the site they're inheriting, how it's built, and more importantly why.</li>
+<li>Because it includes the help text, field settings, and other little details in-your-face, it's harder to forget about those important UX details.</li>
+<li>The entire build can be completed at once, greatly reducing "oh, we haven't built that part yet" problems during development and avoiding too many context switches from "build headspace" to "code headspace" by the development team.</li>
+<li>The entire site build can be completed at once, showing the client early progress.</li>
+<li>By having specific call-outs for information like image style settings, it helps to ensure that such information is figured out early and in a consistent manner.</li>
+</ul><h2>Nifty. Can I use it?</h2>
+<p>But of course! Give it a whirl on your next Drupal site and see if having a big-picture view of a site makes your life easier. It's certainly made life easier for us. And if you have suggestions for improvements, let us know!</p>
+<p><em>Wile E. Coyote blueprint poster by <a href="http://davesgeekyideas.com/2011/11/08/wile-e-coyote-blueprint-posters-now-available/">Dave Delisle</a>.</em></p>
+  </body>
+</html>
+

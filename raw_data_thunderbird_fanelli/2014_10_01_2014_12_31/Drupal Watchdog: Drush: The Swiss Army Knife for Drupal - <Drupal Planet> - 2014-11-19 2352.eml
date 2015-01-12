@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 19 Nov 2014 22:52:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 19 Nov 2014 22:52:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Drush: The Swiss Army Knife for Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-3/issue-2/drush-swiss-army-knife-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Drush: The Swiss Army Knife for Drupal</title>
+    <base href="http://drupalwatchdog.com/volume-3/issue-2/drush-swiss-army-knife-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Article        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p>Hello again, young MacGyver! </p>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/3.2-swissarmy.jpg" width="33%" alt="Swiss Army Knive" align="right" class="img-responsive img-thumbnail margin-left" />In the previous issue you learned how to install Drush, Drupal, and contributed modules.  If you missed it, make sure you go back and read <a href="http://drupalwatchdog.com/volume-3/issue-1/drush-swiss-army-knife-drupal">Part One from the previous issue</a>.</p>
+<h3>Updates</h3>
+<p>Now that you've successfully installed Drupal and extended it with some awesome contributed modules, it's time to apply a few updates. With Drush, it is easier by far than any method you might currently be using. </p>
+<p>Let's get started: Make sure you are working from the root directory of your website. That would be the directory where you find index.php, and I'm going to assume that location for the remainder of this article. </p>
+<p>Issue the following command:</p>
+<pre>
+drush pm-update
+</pre><p>
+That command will check for new versions of core, themes, and all the contributed modules that are enabled on your site. A list of all available updates will be shown on the screen. Review the list and then press “y” at the prompt if you wish to proceed with the updates.  </p>
+<p>If you proceed with the updates, Drush will make a backup copy of all the out-of-date packages, download the new ones, and then run database updates, if any are required. It's all very quick and you don't even have to open an FTP client. </p>
+<p>Alas, sometimes things go awry; often, very awry. That's why Drush stores a backup copy of the updated packages for you. Should an update fail, it will restore the previous versions and notify you there was a problem. Or, if you need to restore manually, you can find the backups in your user's home directory under “drush-backups”.</p>
+<p>Now let's say you only want to update Drupal, but none of the contributed projects. Easy enough: this time only check for Drupal core. Let’s use the shorter version of the command, which I prefer: </p>
+<pre>
+drush up drupal
+</pre><p>
+The command “up” is short for “pm-update”. As in the first example, Drush will backup the installed version, replace it with the latest, and then run database updates, if any are required. In this case, we specified “drupal”, so Drush will only check for updates for Drupal core. </p>        </div>
+  </body>
+</html>
+

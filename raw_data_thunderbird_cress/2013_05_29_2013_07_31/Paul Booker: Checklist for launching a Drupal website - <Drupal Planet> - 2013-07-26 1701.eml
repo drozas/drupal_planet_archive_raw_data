@@ -1,0 +1,67 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 26 Jul 2013 16:01:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 26 Jul 2013 16:01:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Checklist for launching a Drupal website
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-development-services/article/checklist-launching-drupal-website
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Checklist for launching  a Drupal website</title>
+    <base href="http://www.paulbooker.co.uk/drupal-development-services/article/checklist-launching-drupal-website">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>When building a Drupal website, you need to ensure you have thoroughly tested the site before you turn it over to your client. If a client discovers a significant issue, it degrades their trust and can cost sales if the problem is enough to block a website visitor's ability to interact with the site.</p>
+<p>At Digett, we thoroughly test every site we build. Over the years, we have built a checklist of items to test on a site before going live. </p>
+<p>I have filtered this list for items we test specifically for Drupal. We have another list of items that are tested even for a one-page static HTML site. </p>
+<p>Planned</p>
+<p>These first items are just to ensure we've planned for a few items that have caught me off guard before on a Drupal site.</p>
+<p>Test what happens when you add a level of navigation lower than planned — what if the client wants a page under a page you planned as the deepest you could go? Not that you have to allow for it in the drop down header navigation, but at least there is a plan.<br />
+Ensure css takes into account html tags outside initial site content. No tables when launching the site, it doesn't reflect well if a client has to report a problem later when they try to add a simple table of data and the style is completely off because we forgot to plan for it.<br />
+301 redirects are in place to redirect old site paths to new Drupal site paths. We do these in the <a href="https://drupal.org/project/redirect">Redirect</a> module.<br />
+WYSIWYG on main content pages provides a way for clients to align images left or right and css provides appropriate padding for each.<br />
+WYSIWYG image and file uploads work as expected and the client has appropriate permissions to upload.</p>
+<p>Before launch </p>
+<p>Privacy policy link is in place if there are comments on the site (required since we use <a href="https://drupal.org/project/mollom">Mollom</a>).<br />
+404 (not found) and 403 (forbidden) display appropriate information and are customized appropriately.<br />
+Drupal Content Type settings: we turn off preview, we ensure revisions are turned on for all content types and we ensure the correct menu is available.<br />
+Ensure <a href="https://drupal.org/project/pathauto">Pathauto</a> patterns are set appropriately for each content type.<br />
+<a href="https://drupal.org/project/xmlsitemap">Xmlsitemap</a> is configured and updating properly when content changes.<br />
+Meta descriptions/titles are in place and available for home page and views as well as normal content pages. For Drupal, it is important to always check pages created by Views. This is often missed on Drupal sites I've seen.<br />
+Robots.txt file correctly blocks nodes that should not be indexed (rotators, sidebar block promos, etc). We prefer to do this in the <a href="https://drupal.org/project/robotstxt">RobotsTxt</a> module.<br />
+Client has enough permissions but not too much (based on your ongoing support with client).<br />
+User passwords are set to strong passwords before launch.<br />
+If not a community site, ensure only admins can create accounts.<br />
+Ensure test content has been removed.<br />
+Ensure Google Analytics is in place and working (use real time function to ensure anonymous users are tracking); block your IP and client (if desired).<br />
+Disable development and unused modules.<br />
+Enable appropriate css and js aggregation (do this before testing site). Javascript aggregation can be especially problematic in some cases so ensure you test any pages with custom functionality.<br />
+Turn on Drupal cache (if not using Varnish).<br />
+Check error log and resolve issues.<br />
+We like to set error reporting to NOT show on screen for production sites — just write to log.<br />
+Ensure site search works as expected and that it is themed properly.<br />
+Check that all Webforms and/or Rules-based notifications are in-place and set to go to the client's email address.<br />
+Ensure that all theme images are correctly compressed</p>
+<p>Right after launch</p>
+<p>Clear all Drupal caches.<br />
+Run broken link checker to ensure production site has no broken links. We use the <a href="https://drupal.org/project/linkchecker">Link Checker</a> module to assist with this process.<br />
+Ensure any staging or dev url paths are set to production (we use <a href="https://drupal.org/project/pathologic">Pathologic</a> to help catch these)</p>
+<p>There are lots more items on our production testing checklist. The items above are just the main things we check for Drupal sites; SEO, browser testing and lots more are involved in launching any website.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/drupal-development-services/tags/launch" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">launch</a></div><div class="field-item odd" rel="dc:subject"><a href="/drupal-development-services/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-development-services/article/checklist-launching-drupal-website"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Checklist for launching  a Drupal website">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-development-services/article/checklist-launching-drupal-website"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys: $label2                                                                        
+Date: Wed, 09 Oct 2013 01:24:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 09 Oct 2013 01:24:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: xjm: When it's ready™
+Content-Transfer-Encoding: 8bit
+Content-Base: http://xjm.drupalgardens.com/blog/when-its-ready
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>xjm: When it's ready™</title>
+    <base href="http://xjm.drupalgardens.com/blog/when-its-ready">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><em>This is the third in a <a href="http://xjm.drupalgardens.com/tags/technical-debt" title="Technical debt in Drupal 8">series of posts</a> on Drupal 8's progress toward release.</em></p>
+<p>At the DrupalCon Prague <a href="https://prague2013.drupal.org/session/drupal-8-leadership-qa">Drupal 8 leadership Q&amp;A</a>, one audience member posed the following question:</p>
+<blockquote><p>Imagine please each of you is given $10,000 and you have to use that money to bet on the date when Drupal 8 is actually released... what would your bet be?</p>
+</blockquote>
+<p>You can hear my answer at 51:39 in the recording. Editing a bit for clarity,</p>
+<blockquote><p>I'm going to have to say "When it's ready"... and here's why. I'm not going to promise something that people are going to make business decisions around, and then be wrong about it. We think it's going to be coming out in 2014. Whether it's early 2014 or mid-2014 depends on how much help we get and things that we don't know yet. The thing about open source is that our resources are uncertain. And if you want to get it out sooner, help make our resources more certain by funding someone to work on problems that exist in core, by getting your developers in there and testing it and using it so that we uncover more bugs sooner.</p>
+</blockquote>
+<p><iframe allowfullscreen="" frameborder="0" height="30" mozallowfullscreen="true" src="http://archive.org/embed/MeetDries1" webkitallowfullscreen="true" width="500"></iframe></p>
+<h3>What does "When it's ready" mean?</h3>
+<p>"When it's ready" is the traditional Drupal answer to the question "When will Drupal N+1 be released?" In practice, we roll the first <a href="https://drupal.org/core/release-cycle#rc">release candidate</a> when all critical issues are fixed. (These issues include both critical bugs and other critical tasks like ensuring acceptable performance, developer experience, and so on.) We <a href="https://groups.drupal.org/node/342698">plan on rolling drupal-8.0-alpha4 next week</a>... but how off is drupal-8.0-rc1, given our current progress rate on critical issues? How has the <a href="http://buytaert.net/drupal-8-apis-are-freezing-but-not-frozen">API completion phase</a> played out for the past three months?</p>
+<h3>The good news: Technical debt accrual has leveled off</h3>
+<p>Let's take a look at the technical debt for <em>critical issues only</em> since DrupalCon Portland back in May. The technical debt is the difference between the total issues critical issues uncovered and those fixed.</p>
+<p><div class="media-thumbnail-frame"><img alt="" class="media-image" height="605" width="884" typeof="foaf:Image" src="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201310/d8_critical_debt_oct.png" /></div></p>
+<p><em>Critical technical debt in Drupal 8 (the difference between the number of criticals posted and fixed over time). Change notifications are not included.</em></p>
+<p>Leading up to API freeze, our technical debt continues to climb. There's a spike as we <a href="http://xjm.drupalgardens.com/blog/triaging-drupal-8">triage the core queue</a> for the July 1 API freeze start date, and then the technical debt continues to climb as we surface all the <a href="https://groups.drupal.org/node/313408">outstanding API changes</a> and shift our focus to <a href="http://buytaert.net/drupal-8-apis-are-freezing-but-not-frozen">completing core APIs</a>. Around mid-August, we catch up a bit and start fixing more or less as many new issues as we find.</p>
+<p>This is good news. Between July 1 and October 1, we discovered 112 new critical issues, but also <strong>fixed 104 criticals</strong> during that same timeframe. Compare this to the period between April 1 and July 1, when 107 new critical issues were discovered, but only 66 were fixed. This is the API completion phase in action -- following the July 1 API freeze deadline, Drupal core contributors have shifted their focus from adding new things to Drupal 8 to completing what we have.</p>
+<h3>However: There's a lot of work outstanding</h3>
+<p>In order to get Drupal 8 from alpha to release candidate, we need to fix the outstanding <a href="https://drupal.org/project/issues/search/drupal?version[0]=8.x&amp;status[0]=1&amp;status[1]=4&amp;status[2]=8&amp;status[3]=13&amp;status[4]=14&amp;status[5]=15&amp;priorities[0]=1&amp;categories[0]=bug">33 critical bugs</a> and <a href="https://drupal.org/project/issues/search/drupal?version[0]=8.x&amp;status[0]=1&amp;status[1]=4&amp;status[2]=8&amp;status[3]=13&amp;status[4]=14&amp;status[5]=15&amp;priorities[0]=1&amp;categories[0]=task">81 critical tasks</a>, as well as all the <em>new</em> critical issues that we'll uncover as more and more members of the Drupal community begin to test Drupal 8.  On average, we're finding <em><strong>three</strong> new critical issues <strong>every two days</strong></em>. This is why <a href="http://drupalreleasedate.com/">drupalreleasedate.com</a> can't predict any D8 release, and why the issue counts on our Drupal.org dashboards don't seem to change significantly. Fortunately, we're at a turning point where, with everyone's best effort, our critical technical debt will start to go down. Drupal core contributors are still hard at work getting Drupal 8 into shape, and we need all the help we can get.</p>
+<h3>For the nerds: The raw data</h3>
+<h4>Quarterly totals for critical and non-critical issues</h4>
+<p><iframe frameborder="0" height="250" src="https://docs.google.com/spreadsheet/pub?key=0Aq4WCH9VjLJadGE5N3JvanN4SExFQ18wMXRnOGhCRlE&amp;single=true&amp;gid=0&amp;output=html&amp;widget=true" width="890"></iframe></p>
+<h4>Raw query results</h4>
+<p><em>Core metrics queries are documented in the <a href="https://drupal.org/node/2020471" title="Threshold issue fix rate">Drupal.org handbook</a>.</em></p>
+<ul><li><a href="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201310/critical_posted_rate.txt.out_.csv">Critical issue posted dates</a></li>
+<li><a href="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201310/critical_fix_rate.txt.out_.csv">Critical issue fix dates (non-backports)</a></li>
+<li><a href="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201310/critical_backport_rate.txt.out_.csv">Critical issue fix dates (backports)</a></li>
+</ul> </div></div></div>
+  </body>
+</html>
+

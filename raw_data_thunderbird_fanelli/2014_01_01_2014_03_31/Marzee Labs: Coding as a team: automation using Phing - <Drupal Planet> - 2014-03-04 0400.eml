@@ -1,0 +1,131 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 04 Mar 2014 03:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 04 Mar 2014 03:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Marzee Labs: Coding as a team: automation using Phing
+Content-Transfer-Encoding: 8bit
+Content-Base: http://marzeelabs.org/blog/2014/03/03/coding-as-a-team-automation-using-phing
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Marzee Labs: Coding as a team: automation using Phing</title>
+    <base href="http://marzeelabs.org/blog/2014/03/03/coding-as-a-team-automation-using-phing">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Drupal development as a team is tough: finding a balance between code and configuration saved in the database is one of the hardest challenges to overcome. When working in a team, it is even more important to control the development cycle, having different people work on different features at the same time, and automate as much as possible of the repetitive tasks you’re really to do.</p>
+
+<p>In this series, we’ll look at the recipes we use at Marzee Labs to make Drupal development as a team a success. The very first ingredient, and the base of everything else: automating your build processes.</p>
+
+<h3 id="introducing_phing">Introducing Phing</h3>
+
+<p>We’ll start with <a href="http://www.phing.info/">Phing</a>: an automation tool that replaces all your shell scripts and establishes a to-the-point development flow for your team.</p>
+
+<p>Phing is a PHP build tool based on Apache Ant that does a great job of organizing tasks in targets, written using an XML-based syntax. For Drupal development, we find that using Phing gives us this extra layer on top of Drush to make building and testing Drupal sites so much easier.</p>
+
+<p>Want to start developing a new feature and need a clean Drupal installation? <code>phing build</code> is your answer. Need to change back to the master branch and work on a hotfix? Start with <code>phing build</code> and you’ll be sure to not mix configuration from the different branches.</p>
+
+<h3 id="what_do_i_need_to_get_started">What do I need to get started?</h3>
+
+<p>Here are are the ingredients you need to get started with Phing and automate your Drupal development:</p>
+
+<ul>
+<li>Store your configuration in code. Risking to state the obvious here: for Drupal 7 that means using the <a href="http://drupal.org/project/features">Features</a> module.</li>
+
+<li>Develop your Drupal site as an installation profile. This allows you to re-install your site at any given time from your profile. After you’ve launched the site and you have a production version, you also need to provide an upgrade path.</li>
+
+<li>Use Drush makefiles to document modules, themes and libraries that constitute your project.</li>
+
+<li><a href="http://www.phing.info/trac/wiki/Users/Installation">Install Phing</a> using PEAR</li>
+</ul>
+
+<h3 id="a_practical_tutorial_building_a_site_from_scratch_using_phing">A practical tutorial: building a site from scratch using Phing</h3>
+
+<p>Enough theory? Let’s have a look at a practical example: we’ll clone <a href="https://github.com/marzeelabs/mz_box">MZ Box</a> - our Phing boilerplate - and use this build a fully functional Drupal 7 site base on our <a href="https://github.com/marzeelabs/mz">MZ profile</a>, which contains all our favourite modules, libraries and some settings to kick off your project.</p>
+
+<pre><code>$ git clone https://github.com/marzeelabs/mz_box.git
+$ cp build.properties.example build.properties</code></pre>
+
+<p>This clones the boilerplate repository and creates a new build.properties file which will hold all configuration specific for your project. You should create a new SQL database and update the database connection string in <code>build.properties</code>.</p>
+
+<p>Next, we’re going to <code>make</code> the project: Phing will take care of cloning the MZ profile, and calling <code>drush make</code> to download all the modules and themes.</p>
+
+<pre><code>$ phing make</code></pre>
+
+<p>If all goes well, you’ll read <code>BUILD FINISHED</code>.</p>
+
+<p>You now have a full copy of Drupal core, the MZ installation profile, and contrib modules, libraries and themes in place. Now would be a good time to add all these files to the git repository and push them upstream to your new repository. Our first step is done!</p>
+
+<p>Next, we’ll want to install the site. If you look at <code>build.default.properties</code> you’ll see that <code>drupal.profile = mz</code> so the <code>mz</code> installation profile is the default profile that will be installed. We’ll need to run</p>
+
+<pre><code>$ phing build</code></pre>
+
+<p>and - after a couple of minutes - you’ll read again <code>BUILD FINISHED</code> (note: you can see the entire build log on <a href="https://travis-ci.org/marzeelabs/mz_box">Travis</a> ).</p>
+
+<p>And voilà: you have a fully installed Drupal site. We’ve also added some goodies in the build target such as configuring a test editor account and adding a quick-switch for the <a href="http://drupal.org/project/masquerade">Masquerade</a> block so you can easily switch user accounts for testing.</p>
+
+<p>You can run <code>phing build</code> as much as you want to re-install the Drupal site, and keep a peaceful mind when developing new features.</p>
+
+<h3 id="reviewing_phing_targets">Reviewing Phing targets</h3>
+
+<p>If you analyze the phing <code>build</code> target in the <code>build.xml</code> file, you see that every build runs these targets:</p>
+
+<ul>
+<li>site-install</li>
+
+<li>enable-dev-mode</li>
+
+<li>run-migrate</li>
+
+<li>config-masquerade</li>
+
+<li>check-features</li>
+</ul>
+
+<p>For example, the <code>enable-dev-mode</code> target activates development and UI modules and disables the Views cache:</p>
+
+<pre><code>&lt;target name=&quot;enable-dev-mode&quot;
+        description=&quot;Configures this installation for use in development&quot;
+        depends=&quot;setup-phing-drush&quot;&gt;
+  &lt;!-- Enable development and UI modules --&gt;
+  &lt;drush command=&quot;en&quot; assume=&quot;yes&quot;&gt;
+    &lt;param&gt;devel,views_ui,context_ui,field_ui&lt;/param&gt;
+  &lt;/drush&gt;
+  &lt;!-- Disable views data caching --&gt;
+  &lt;drush command=&quot;vset&quot; assume=&quot;yes&quot;&gt;
+    &lt;param&gt;views_skip_cache&lt;/param&gt;
+    &lt;param&gt;1&lt;/param&gt;
+  &lt;/drush&gt;
+&lt;/target&gt;</code></pre>
+
+<p>You can easily create new targets and have them depend on one another to automate common tasks. You can also run these targets independently. For example,</p>
+
+<pre><code>$ phing enable-dev-mode</code></pre>
+
+<p>will prepare your current sandbox for development, and</p>
+
+<pre><code>$ phing -l</code></pre>
+
+<p>will list all the available targets with a short one-liner to explain what the target does, which is great to communicate tasks to the other members of the team.</p>
+
+<h3 id="using_phing_in_a_team">Using Phing in a team</h3>
+
+<p>When adopting the <a href="http://nvie.com/posts/a-successful-git-branching-model/">git flow</a> model, Phing is the missing link to re-build the site for a feature branch and developing features in isolation.</p>
+
+<p>After switching to your feature branch, the only thing to do is run <code>phing build</code>, work on your code and configuration (stored in code), push changes back upstream, and ask anyone in the team to review these changes by running <code>phing build</code> on the feature branch.</p>
+
+<p>Phing will establish a common language within the team and make it easy to share development recipes and best practices as documentable targets.</p>
+
+<h3 id="what_else_can_i_do_with_phing">What else can I do with Phing?</h3>
+
+<p>We’ve only scratched the surface of what you can do with Phing to automate your Drupal development. We use Phing to automatically migrate mock content using the <a href="http://drupal.org/project/migrate">Migrate</a> module, run an automated test stack, and provide continuous builds everytime new code is pushed to the repository (check out our <a href="https://travis-ci.org/marzeelabs/mz_box">Travis logs</a>).</p>
+
+<p>The take home message is that building a Drupal site should be as easy as running <code>phing build</code>, and with that - we’ve complied with the second step of Joel Spolsky’s <a href="http://www.joelonsoftware.com/articles/fog0000000043.html">Joel Test to Better Code</a>: “Can you make a build in one step?”</p>
+
+<p><em>Featured image credit: Daniel Wehner / Flickr</em></p>
+  </body>
+</html>
+

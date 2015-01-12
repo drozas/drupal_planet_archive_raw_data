@@ -1,0 +1,95 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 18 Feb 2014 14:51:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 18 Feb 2014 14:51:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LimoenGroen company blog: Continuous Integration & Drupal at LimoenGroen
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.limoengroen.nl/en/blog/continuous-integration-drupal-at-limoengroen
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LimoenGroen company blog: Continuous Integration & Drupal at LimoenGroen</title>
+    <base href="http://www.limoengroen.nl/en/blog/continuous-integration-drupal-at-limoengroen">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    What is Continuous Integration?
+Continuous integration (CI) is the practice of frequently integrating one's new or changed code with the existing code repository.
+Source: Wikipedia
+In practice this means that ideally the Drupal website that is being developed is build / updated and tested automatically after every commit by a developer increasing the overall quality of the development process.
+Why do we need it?
+Everyone can probably remember the process of developing a website in Drupal by configuring some functionality on a development environment and having to perform (part of) the exact same steps again on one or more target environments. Developing this way has the risk of human errors and the amount of time needed to get functionality to the production environment can be high. This possibly results in frustrated customers and developers when bugs arise on the production environment that were not there in earlier stages of the development process.
+When you have CI in place you eliminate the manual steps (as far as possible) and you will get instant feedback on the quality after every commit. Also, by automating deployments, a deployment that is successful on the test environment will almost certainly also be successful on the production environment and take far less time to perform. Lastly developers can continue working on something else while the CI tool takes care of the deployments saving them a lot of time.
+So implementing CI in your development process has the following advantages:
+Eliminating human errors.
+	Direct feedback on every commit.
+	Saving time.
+	Less downtime of the production environment during deployments.
+	Deployments are always performed in the same way so they become more predictable.
+What tools do you need?
+The minimal set of tools you need to implement CI in the Drupal development process are:
+Features, Context, and update hooks to store ALL configuration in code.
+	A version management system like Git.
+	A CI tool like Jenkins.
+	Drush on every target environment.
+Example of the Jenkins dashboard
+Implementation of CI in our development process
+At LimoenGroen we have been using CI in our Drupal development process for over 2,5 years now. A rough sketch of our process is the following:
+
+Building test environments
+After every push of commits to Git a trigger is sent to Jenkins that starts the appropriate job to immediately build the corresponding test environment.
+The Jenkins job that builds a test environment consists of the following build steps:
+Pull latest commits from develop branch in Git
+	Update the code on the test environment (drush rsync)
+	Apply updates (drush updatedb / drush features-revert-all)
+	Disable UI and devel modules
+When a build fails at any of the build steps an e-mail is sent out to all of the developers that were involved in the commits that triggered the build so they can investigate and fix any errors.   
+Building acceptance environments
+Essentially the job to build an acceptance environment is exactly the same as the job to build the test environment. The only difference is that the job is not triggered by Git, but by a manual start. We only want the acceptance environment to be build when we have a completed set of functionalities for a next release.
+Building production environments
+The production environment is built from the master branch in Git. Also a tag is required to start the production build job which means that a release has been accepted by the product owner after testing on the acceptance environment and the release has been tagged in Git.
+The Jenkins job that builds a production environment consists of the following build steps:
+Pull latest commits from master branch in Git
+	Make a backup of the current production website (drush archive-dump)
+	Schedule downtime in the monitoring tool
+	Put the website in maintenance mode (drush variable-set)
+	Update the code on the production environment (drush rsync)
+	Apply updates (drush updatedb / drush features-revert-all)
+	Get the website out of maintenance mode (drush variable-set)
+Jenkins setup and scripts
+We run a Jenkins instance on a Tomcat application server. Our target environments run on several other servers, so Jenkins needs to be able to remotely execute drush commands. We have created several generic shell scripts that take arguments to actually call the required drush commands. Next to that we use drush alias files (read more about alias files in this blog post) to execute the drush commands on the appropriate target. Of course the Jenkins system user has to have the ability to send ssh commands to the target environment without being prompted for passwords (by using public/private key authentication).
+For example the shell script that applies the updates on a Drupal website calls 'drush fra' like this:
+...
+	if /usr/local/bin/drush @$ALIAS fra -y
+	  then
+	    echo "Features reverted successfully."
+	  else
+	    echo "Reverting features failed!"
+	    exit 1
+	fi
+	...
+The corresponding build step (Execute shell) in Jenkins calls the shell script like this:/usr/share/jenkins/scripts/apply-updates.sh -a example.prod
+The '-a' argument indicates which alias to use and differs per Jenkins job. You can use 'Getopts' in your shell scripts to use arguments like this.
+Jenkins will respond to the return value from the shell script to see if the step was successful or a failure. That is what the 'exit 1' (or 'exit 0' at the end of the shell script) is for.
+This way you can execute any drush command from Jenkins using variables to make the build step project specific. Jenkins also provides useful environment variables for each build that you can use as an argument. For instance the shell script that updates the code on the target environment needs to know where the Git repository of the Jenkins job is located. Jenkins provides the '${WORKSPACE}' variable for that so the script is called by the Jenkins build step (Execute shell) like this:/usr/share/jenkins/scripts/update-code.sh -a example.prod -w ${WORKSPACE}
+By splitting up the scripts into separate generic small steps in the build process we can create jobs in Jenkins that suit the specific needs for each target environment without having to create scripts for each project. For instance: making a backup on each build on the test environment might not be required.
+A tag is required to start a production job.
+Triggering Jenkins from Git
+You can configure Jenkins (or use the Github plugin for Jenkins) to be triggered remotely. Github and Bitbucket hosted Git services provide the ability to configure (web)hooks (Github: 'Webhooks', Bitbucket: 'Hooks') for each of your repositories that will sent a request after recieving commits. If you run your own Git server it will probably have a similar feature.
+
+Example: Hooks in Bitbucket
+Updating issue information
+We use Redmine for issue management. Using the same hooks that we use to trigger Jenkins we also trigger Redmine to pull the latest commits from Git and use the commit messages to link commits to issues and possibly update the status of an issue. A developer can for instance indicate an issue is resolved by inluding 'Fixes #1234' in his commit message. Redmine will set the status of issue #1234 to 'Resolved'
+Possible future improvements
+Automatic code / Syntax checking:
+	Wouldn't it be nice if all committed code was checked against the applicable coding standards before it was even deployed to a target environment?
+Automated tests (Behat, Selenium):
+	Automated tests are definitely a challenge with Drupal projects and time consuming at first because of the time needed for writing the test scripts, but in the long run for larger projects possibly very worthwhile.
+(Partly) replace shell scripts by Phing:
+	Phing is 'Ant for PHP' and allows you to configure all the build parameters in XML utilizing the available build scripts that Phing already provides and extending them with your own.
+  </body>
+</html>
+

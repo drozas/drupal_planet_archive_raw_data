@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 25 Sep 2014 17:45:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 25 Sep 2014 17:45:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Drupal 7 Form Building
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-3/issue-2/drupal-7-form-building
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Drupal 7 Form Building</title>
+    <base href="http://drupalwatchdog.com/volume-3/issue-2/drupal-7-form-building">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Article        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p>Static websites, comprising web pages that do not respond to any user input, may be adequate for listing information, but little else. Dynamic pages are what make the Web more than just interlinked digital billboards. The primary mechanism that enables this is the humble web form – whether a modest single button or a multi-page form with various controls that allow the user to input text, make choices, upload files, etc.</p>
+<p>Anyone developing a new Drupal-based website will usually need to create forms for gathering data from users. There are at least two possible approaches to solving this problem: One approach mostly relies on Drupal core, and the other uses a contributed module dedicated to forms.</p>
+<h3>The Node Knows</h3>
+<p>If you understand how to create content types and attach fields to them, then that could be a straightforward way to make a form – not for creating nodes to be used later for other purposes, but solely for gathering user input. To add different types of form fields to a content type, you will need to install and enable the corresponding modules, all of which are available from Drupal.org's modules section.</p>
+<p>Some of these modules are part of Drupal's core: <em>File</em> (for uploading files), <em>List</em> (for selection lists), <em>Number</em> (for integers, decimals, and floats), <em>Options</em> (for selection controls, checkboxes, and radio buttons), <em>Taxonomy</em> (for tagging content with terms), and <em>Text</em> (for single- and multi-line entry fields).</p>
+<blockquote><p>
+Other field-related modules have been contributed by the Drupal community, including:</p></blockquote>        </div>
+  </body>
+</html>
+

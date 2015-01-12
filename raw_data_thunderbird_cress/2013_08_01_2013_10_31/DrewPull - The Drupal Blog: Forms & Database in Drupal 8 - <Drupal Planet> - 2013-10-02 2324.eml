@@ -1,0 +1,126 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 02 Oct 2013 22:24:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 02 Oct 2013 22:24:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: DrewPull - The Drupal Blog: Forms & Database in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drewpull.drupalgardens.com/blog/forms-database-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>DrewPull - The Drupal Blog: Forms & Database in Drupal 8</title>
+    <base href="http://drewpull.drupalgardens.com/blog/forms-database-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>In the previous post we learnt how to create a menu link to access our forms so now we will learn how to create those forms. For our Bingo module, we will need two forms, one to add participants to the contest and other to delete participants from the contest.</p>
+<p>Let's start with the form to add participants. We need to implement \Drupal\Core\Form\FormInterface and override it's methods. You can take a look at all available methods in core/lib/Drupal/Core/Form/FormInterface.php file. The following code implements our AddForm class:</p>
+<p>lib/Drupal/bingo/AddForm.php</p>
+<pre>&lt;?php                                                                                                                                       
+
+namespace Drupal\bingo;
+
+use Drupal\Core\Form\FormInterface;
+
+class AddForm implements FormInterface {</pre><p>Now whe can implement our own methods starting with getFormID to identify our form with an unique ID:</p>
+<pre>  function getFormID() {
+    return 'bingo_add_form';
+  }</pre><p>And create our form fields in the same way we did it in Drupal 7:</p>
+<pre>  /*
+   * {@inheritdoc}
+   */
+  function buildForm(array $form, array &amp;$form_state) {
+    $form['name'] = array(
+      '#type' =&gt; 'textfield',
+      '#title' =&gt; t('Participant'),
+    );
+
+    $form['actions'] = array('#type' =&gt; 'actions');
+
+    $form['actions']['submit'] = array(
+      '#type' =&gt; 'submit',
+      '#value' =&gt; t('Add'),
+    );
+
+    return $form;
+  }</pre><p>To create the form to delete participants we extend Drupal\Core\Form\ConfirmFormBase class implementing our own methods. You can take a look at core/lib/Drupal/Core/Form/ConfigFormBase.php file to see all available methods. We start with our class extension:</p>
+<p>lib/Drupal/bingo/DeleteForm.php</p>
+<pre>&lt;?php                                                                                                                                       
+
+namespace Drupal\bingo;
+
+use Drupal\Core\Form\ConfirmFormBase;
+
+class DeleteForm extends ConfirmFormBase {</pre><p>And then implement our method to customize confirm text in form button, for example:</p>
+<pre>  /*
+   * {@inheritdoc}
+   */
+  function getConfirmText() {
+    return t('Delete');
+  }</pre><p>The second part of this post is related to Database access. We need to connect our form requests to the database in order to get and send out data. For that purpose we need a specific controller for our database architecture. We will create it in BingoStorage.php file, and it's contents can be something like:</p>
+<p>lib/Drupal/bingo/BingoStorage.php</p>
+<pre>&lt;?php                                                                                                                                       
+
+namespace Drupal\bingo;
+
+class BingoStorage {
+
+  // Returns all participant names stored in database.
+  static function getAll() {
+    return db_query('SELECT name FROM {bingo}')-&gt;fetchCol();
+  }
+
+  /*
+   * Stores participant name in database.
+   *
+   * @param $name
+   *   participant name.
+   */
+  static function add($name) {
+    db_insert('bingo')-&gt;fields(array('name' =&gt; $name))-&gt;execute();
+  }
+
+  /**
+   * Deletes participant name in database.
+   *
+   * @param $name
+   *   participant name.
+   */
+  static function delete($name) {
+    db_delete('bingo')-&gt;condition('name', $name)-&gt;execute();
+  }
+}</pre><p>As you can see we have implemented two methods, one to create participants in the database and other to delete them. Yes, I know it needs some error handling to avoid warnings but, who cares? Maybe in a future post :P</p>
+<p>Now we can add participants to our database using the add form:</p>
+<p>lib/Drupal/bingo/AddForm.php</p>
+<pre>  /*
+   * {@inheritdoc}
+   */
+  function submitForm(array &amp;$form, array &amp;$form_state) {
+    $name = $form_state['values']['name'];
+
+    BingoStorage::add($name);
+
+    drupal_set_message(t('Added %name as new participant.', array('%name' =&gt; $name)));
+
+    $form_state['redirect'] = 'bingo';
+  }</pre><p>As you can see we call BingoStorage::add($name); that is automatically loaded following the PSR-0 autoloader specification.</p>
+<p>In the same way we can delete participants using the delete form:</p>
+<p>lib/Drupal/bingo/DeleteForm.php</p>
+<pre>  /*                                                                                                                                        
+   * {@inheritdoc}
+   */
+  function submitForm(array &amp;$form, array &amp;$form_state) {
+    BingoStorage::delete($this-&gt;name);
+
+    drupal_set_message(t('Participant %name deleted.', array('%name' =&gt; $this-&gt;name)));
+
+    $form_state['redirect'] = 'bingo';
+  }</pre><p>Just take a look at <a href="https://drupal.org/sandbox/rteijeiro/2087957" target="_blank">Bingo module repository</a> to see full code examples and how this module works like a charm ;)</p>
+<p>In the next post I will try to explain the new template system introduced in Drupal 8. Yes, it's Twig!!</p>
+ </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal-8" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal 8</a></div><div class="field-item odd"><a href="/tags/forms" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Forms</a></div><div class="field-item even"><a href="/tags/database" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Database</a></div><div class="field-item odd"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

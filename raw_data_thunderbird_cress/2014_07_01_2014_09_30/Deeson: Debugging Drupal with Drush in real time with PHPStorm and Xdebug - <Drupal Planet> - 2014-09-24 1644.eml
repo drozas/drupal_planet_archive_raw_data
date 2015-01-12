@@ -1,0 +1,108 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 24 Sep 2014 15:44:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 24 Sep 2014 15:44:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson: Debugging Drupal with Drush in real time with PHPStorm and Xdebug
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.deeson.co.uk/labs/debugging-drupal-drush-real-time-phpstorm-and-xdebug
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson: Debugging Drupal with Drush in real time with PHPStorm and Xdebug</title>
+    <base href="https://www.deeson.co.uk/labs/debugging-drupal-drush-real-time-phpstorm-and-xdebug">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I am going to explain how to setup your development tools so that you can debug Drush commands in real time, as they run. I've tested these instructions on Mac OSX.</p>
+<p>In a previous blog post I outlined how to configure PHPStorm and Xdebug so you can step through the code of a webpage as it is executed. This allowed you to set breakpoints and inspect the value of variables at specific points in the code. The same can be done for Drush commands. You will need to have configured your PHPStorm as described in the first blog post.</p>
+Add Drush code to PHPStorm
+<p>Drush can be added to PHPStorm as an external library. This will allow you to view the Drush code within PHPStorm so you can add break points to it later. </p>
+        
+    
+  
+
+
+
+  
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/secondary_images/images/labs-external-libraries.png?itok=2Q73gNU3" width="220" height="130" alt="PHP Storm External Libraries Panel" title="PHP Storm External Libraries Panel" />        
+        
+          <p>1. In the project pane, double click external libraries, which appears at the bottom of the directories.</p>
+        
+      
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/secondary_images/images/labs-xdebug-external-libraries-2.png?itok=GelZdpHH" width="220" height="134" alt="PHP Storm PHP configuration screen" title="PHP Storm PHP configuration screen" />        
+        
+          <p>2. Click the plus button in the bottom left of the PHP popup window. Now use the file brower to find where Drush is installed on your system. Select the folder and click OK and OK again. Drush should now be listed as an external library.</p>
+        
+      
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/secondary_images/images/labs-telephone.png?itok=7bHHLfi_" width="220" height="123" alt="PHP Storm listen for connections button" title="PHP Storm listen for connections button" />        
+        
+          <p>3. Click the telephone button in PHPStorm so it starts listening for executed code.</p>
+        
+      
+      
+
+
+  
+    
+        
+          Configuring Drush to tell PHPStorm it is running
+<p>In the command line where you normally run your Drush commands, first type the following command and press enter:</p>
+<p><pre>
+export PHP_OPTIONS="-dxdebug.remote_autostart=On -didekey=PHPSTORM -dremote_host=localhost -dprofiler_enable=1"</pre></p>
+<p>Now, when you run a Drush command it will be picked up by PHPStorm.</p>
+        
+    
+  
+
+
+
+  
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/labs-breakpoint.png?itok=d4jnQl5X" width="220" height="121" alt="PHPStorm with a breakpoint" title="PHPStorm with a breakpoint at index.php" />        
+        
+          <p>If you have put in a breakpoint, then execution of the command will pause at that point. For example, open index.php in your project and place a breakpoint next to a PHP function as shown in the image. If you click between the line number and the code, a red spot will appear.</p>
+        
+      
+      
+
+
+  
+    
+        
+          <p>Now, at the same command prompt where you entered the export command above, run a Drush command, for example:</p>
+        
+    
+  
+
+
+
+  
+    
+      <pre class="syntax">
+                  
+drush cc all        </pre>
+      </pre>
+    
+  
+
+
+
+  
+    
+        
+          <p>PHPStorm should open at the breakpoint. Now you can step through the code in the same way as before.</p>
+<p>Executing the export command before running Drush commands will be a little time consuming. I recommend you add this to your .bashrc file or .bash_profile file in your home directory so it's available as soon as you open your terminal.</p>
+<p>To stop PHPStorm opening every time you run a Drush command, simply press the telephone button again and hang up.</p>
+  </body>
+</html>
+

@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 15 Apr 2014 22:50:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 15 Apr 2014 22:50:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Redirect user after login (or filling out other forms)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/redirect-user-after-login-or-filling-out-other-forms-0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Redirect user after login (or filling out other forms)</title>
+    <base href="http://www.aglobalway.com/content/redirect-user-after-login-or-filling-out-other-forms-0">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <div>Redirecting a user to a specific path after a form submission is a feature required by most CMS websites. In Drupal, as with most things, there’s multiple ways to do it. Here’s a couple we use, depending on the site’s requirements:</div>
+
+<div> </div>
+
+<p style="margin:0px;text-align:justify;font-family:'Trebuchet MS';"><span style="letter-spacing:0px;">This is a method can be used for all the forms. Two steps here:</span></p>
+
+<ol><li style="margin:0px;text-align:justify;font-family:'Trebuchet MS';"><div><strong>Change block thank you page url</strong></div><div>This method only works for a form in a block. In admin-&gt;structure-&gt;block, find the block containing the form and there is a configuration named “Thank You Page”. Put in the redirect url here or leave blank for no redirect. The benefit of this way is both developers and the website administrator can change it without touching code while the limitation is the form must be put in a form.</div><div> </div></li><li style="margin:0px;text-align:justify;font-family:'Trebuchet MS';"><strong><span style="letter-spacing:0px;">Add a submit handler to form_alter</span></strong><ol style="list-style-type:lower-alpha;"><li style="margin:0px;text-align:justify;font-family:'Trebuchet MS';"><span style="letter-spacing:0px;">Add a submit handler to the form_alter with the condition that the form id is the one we want to customize.</span></li><li style="margin:0px;text-align:justify;font-family:'Trebuchet MS';"><span style="letter-spacing:0px;">Assign the redirect path to $form_state['redirect'] in the handler function.</span></li></ol></li></ol>
+
+<p> </p> </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,430 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Jul 2014 18:55:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Jul 2014 18:55:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Greater Los Angeles Drupal (GLAD): Drupal Migrate using xml 0 to 35
+Content-Transfer-Encoding: 8bit
+Content-Base: https://drupal.la/articles/drupal-migrate-using-xml-0-to-35
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Greater Los Angeles Drupal (GLAD): Drupal Migrate using xml 0 to 35</title>
+    <base href="https://drupal.la/articles/drupal-migrate-using-xml-0-to-35">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Using Drupal Migrate is a great way to move you content into Drupal.  Unfortunately the documentation for xml import can be obscure.  This comes about when those that developed the module try to communicate how they did what they did to someone that did not do the work.  Things that seem obvious to them are not to someone else.</p>
+<p>I have spent some time recently importing content using xml.  In no way am I an expert that is speeding down the fast lane, something more in the cruising around town at a comfortable 35 mph.</p>
+<p>To use Drupal Migrate you need to define your own class.  A class is php code that is used in Object Oriented Programming that defines your data and defines how you can manipulate your data.  Most of the actual migration work is done with the classes provide by the migrate module, you simply have to define the details of your migration.</p>
+<p>Constructor - The constructor modifies the migration modules classes to define your specific data.  I was able to follow the SourceList method, this provides one xml (file or feed) that contains the ID number for all the content you want to import, and a second (file or feed) that contains the content.  The wine example migrate has this but understanding what it really wants is more difficult to understand.</p>
+<p>Below is my class file explained:<br />
+=====================<br />
+&lt;?php</p>
+<p>/**<br />
+ * @file<br />
+ * Vision Article migration.<br />
+ */</p>
+<p>/**<br />
+ * Vision Article migration class.<br />
+ */<br />
+class VisionArticleMigration extends XMLMigration {<br />
+  public function __construct() {<br />
+    parent::__construct();<br />
+    $this-&gt;description = t('XML feed of Ektron Articles.');</p>
+<h3>---------------<br />
+So far pretty easy.  You need to name your class, extend from the proper migration. and give it an extension. 
+</h3><p>-----------------<br /></p><p>    // There isn't a consistent way to automatically identify appropriate<br />
+    // "fields" from an XML feed, so we pass an explicit list of source fields.<br />
+    $fields = array(<br />
+      'id' =&gt; t('ID'),<br />
+      'lang_type' =&gt; t('Language'),<br />
+      'type' =&gt; t('Type'),<br />
+      'image' =&gt; t('Image'),<br />
+      'authors' =&gt; t('Authors'),<br />
+      'article_category' =&gt; t('Article Category'),<br />
+      'article_series_title' =&gt; t('Article Series Title'),<br />
+      'article_part_no' =&gt; t('Article Series Part Number'),<br />
+      'article_title' =&gt; t('Article Title'),<br />
+      'article_date' =&gt; t('Article Date'),<br />
+      'article_display_date' =&gt; t('Article Display Date'),<br />
+      'article_dropheader' =&gt; t('Article Dropheader'),<br />
+      'article_body' =&gt; t('Article Body'),<br />
+      'article_author_name' =&gt; t('Article Author Name'),<br />
+      'article_author_url' =&gt; t('Article Author Email Address'),<br />
+      'article_authors' =&gt; t('Article Additional Authors'),<br />
+      'article_postscript' =&gt; t('Article Postscript'),<br />
+      'article_link_text' =&gt; t('Article Link text'),<br />
+      'article_link' =&gt; t('Article Link'),<br />
+      'article_image' =&gt; t('Article Image'),<br />
+      'article_image_folder' =&gt; t('Article Image Folder'),<br />
+      'article_image_alt' =&gt; t('Article Image Alt'),<br />
+      'article_image_title' =&gt; t('Article Image Title'),<br />
+      'article_image_caption' =&gt; t('Article Image Caption'),<br />
+      'article_image_credit' =&gt; t('Article Image Credit'),<br />
+      'article_sidebar_element' =&gt; t('Article Side Bar Content'),<br />
+      'article_sidebar_element_margin' =&gt; t('Article Margin between Sidebar Content'),<br />
+      'article_archived_html_content' =&gt; t('Article HTML Content from old system'),<br />
+      'article_video_id' =&gt; t('Article ID of Associated Video Article'),<br />
+      'metadata_title' =&gt; t('Metadata Title'),<br />
+      'metadata_description' =&gt; t('Metadata Description'),<br />
+      'metadata_keywords' =&gt; t('Metadata Keywords'),<br />
+      'metadata_google_sitemap_priority' =&gt; t('Metadata Google Sitemap Priority'),<br />
+      'metadata_google_sitemap_change_frequency' =&gt; t('Metadata Google Sitemap Change Freequency'),<br />
+      'metadata_collection_number' =&gt; t('Metadata Collection Number'),<br />
+      'title' =&gt; t('Title'),<br />
+      'teaser' =&gt; t('Teaser'),<br />
+      'alias' =&gt; t('Alias from old system'),<br />
+      'taxonomy' =&gt; t('Taxonomy'),<br />
+      'created_date' =&gt; t('Date Created')<br />
+    );</p>
+<h3>
+-------------------<br />
+So what doe this mean?<br />
+You will need a field name below.  It has nothing to do with your xml file, you will need a field for each thing you want to import.  Such as article_image_alt is the alt text for the image.  Later you will define the xpath to load this variable.  This will start to come together below, just remember each unique piece of information needs a variable.
+</h3><p>---------------------<br /></p><p>    // The source ID here is the one retrieved from the XML listing URL, and<br />
+    // used to identify the specific item's URL.<br />
+    $this-&gt;map = new MigrateSQLMap($this-&gt;machineName,<br />
+      array(<br />
+        'ID' =&gt; array(<br />
+          'type' =&gt; 'int',<br />
+          'unsigned' =&gt; TRUE,<br />
+          'not null' =&gt; TRUE,<br />
+          'description' =&gt; 'Source ID',<br />
+        )<br />
+      ),<br />
+      MigrateDestinationNode::getKeySchema()<br />
+    );</p>
+<h3>
+---------------------<br />
+This has to do with setting up the migration table in the database.  This has to do with the input database, the Source ID is the field in the input file that has the pointer to the data record. My source file looks like:
+</h3><p>567<br />
+1054</p>
+<p>So we need a table with a field for the id which an integer.</p>
+<p>-----------------------<br /></p><p>    // Source list URL.<br />
+    $list_url = '<a href="http://www.vision.org/visionmedia/generateexportlist.aspx">http://www.vision.org/visionmedia/generateexportlist.aspx</a>';<br />
+    // Each ID retrieved from the list URL will be plugged into :id in the<br />
+    // item URL to fetch the specific objects.<br />
+    // @todo: Add langtype for importing translated content.<br />
+    $item_url = '<a href="http://www.vision.org/visionmedia/generatecontentxml.aspx?id=:id">http://www.vision.org/visionmedia/generatecontentxml.aspx?id=:id</a>';</p>
+<p>    // We use the MigrateSourceList class for any source where we obtain the<br />
+    // list of IDs to process separately from the data for each item. The<br />
+    // listing and item are represented by separate classes, so for example we<br />
+    // could replace the XML listing with a file directory listing, or the XML<br />
+    // item with a JSON item.<br />
+    $this-&gt;source = new MigrateSourceList(new MigrateListXML($list_url),<br />
+      new MigrateItemXML($item_url), $fields);</p>
+<p>    $this-&gt;destination = new MigrateDestinationNode('vision_article');</p>
+<h3>
+-----------------
+</h3><p>Now we are setting up the magic.  We setup a list url that contains the ID's of all the content to import, then another one that uses this ID to fetch the details for this ID.  Then you tell Migrate to use the MigrateListXML to find the items to import with MigrateItemXML.  Then finally in the MigrateDestinationNode to tell Migrate which content type to use.  This means we need a separate migration class for each content type to import.  I have been creating each class in it's own inc file and adding this to the files section in the info file.</p>
+<p>-----------------<br /></p><p>    // TIP: Note that for XML sources, in addition to the source field passed to<br />
+    // addFieldMapping (the name under which it will be saved in the data row<br />
+    // passed through the migration process) we specify the Xpath used to retrieve<br />
+    // the value from the XML.<br />
+    $this-&gt;addFieldMapping('created', 'created_date')<br />
+      -&gt;xpath('/content/CreateDate');</p>
+<h3>
+------------------<br />
+Now we map the source field with the destination field.  Created is the field name in the content type (vision_article), created_date is from our fields section above.  Remember I said we needed a definiation for each part of the content we want to import.  The xpath then points to the data in the xml feed.  So this says take the content of the /contnet/CreateDate in the xml file and load this into the source variable created_date, then store this in the created field in a new vision_article content item.  I say this in this way because if you do like me and cut and paste and forget to change the source varable, the source varable will contain the bottom data from xpath.
+</h3><p>------------------<br /></p><p>    $this-&gt;addFieldMapping('field_category', 'article_category')<br />
+     -&gt;defaultValue(1)<br />
+      -&gt;xpath('/content/html/root/article/Category');</p>
+<h3>
+-------------------
+</h3><p>You can set a default value in case the xml does not contain any data</p>
+<p>----------<br /></p><p>    $this-&gt;addFieldMapping('field_series_title', 'article_series_title')<br />
+      -&gt;xpath('/content/html/root/article/ArticleSeriesTitle');<br />
+    $this-&gt;addFieldMapping('field_part_number', 'article_part_no')<br />
+      -&gt;xpath('/content/html/root/article/ArticlePartNo');<br />
+    $this-&gt;addFieldMapping('field_h1_title', 'article_title')<br />
+      -&gt;arguments(array('format' =&gt; 'filtered_html'))<br />
+      -&gt;xpath('/content/html/root/article/Title');<br />
+    $this-&gt;addFieldMapping('field_display_date', 'article_display_date')<br />
+      -&gt;xpath('/content/html/root/article/DisplayDate');<br />
+    $this-&gt;addFieldMapping('field_drophead', 'article_dropheader')<br />
+      -&gt;arguments(array('format' =&gt; 'filtered_html'))<br />
+      -&gt;xpath('/content/Taxonomy');</p>
+<h3>
+-------------
+</h3><p>Another field argument, the default content type is plain text, so if your content contains HTML you need to set the correct format here.</p>
+<p>---------------<br /></p><p>    $this-&gt;addFieldMapping('body', 'article_body')<br />
+      -&gt;arguments(array('format' =&gt; 'filtered_html'))<br />
+      -&gt;xpath('/content/html/root/article/Body');<br />
+    $this-&gt;addFieldMapping('body:summary', 'teaser')<br />
+      -&gt;arguments(array('format' =&gt; 'filtered_html'))<br />
+      -&gt;xpath('/content/Teaser');</p>
+<h3>
+-----------
+</h3><p>Note you can set the teaser as a part of the body.  One of the drush migrate commands make is easy to discover the additional parts of your content field, drush mfd (Migrate Field Destinations).  This will display all the destination fields and their options.</p>
+<p>------------<br /></p><p>    $this-&gt;addFieldMapping('field_author', 'article_author_email')<br />
+      -&gt;xpath('/content/html/root/article/AuthorURL');<br />
+    $this-&gt;addFieldMapping('field_author:title', 'article_author_name')<br />
+      -&gt;xpath('/content/html/root/article/AuthorName');<br />
+    $this-&gt;addFieldMapping('field_ext_reference_title', 'article_postscript')<br />
+      -&gt;arguments(array('format' =&gt; 'filtered_html'))<br />
+      -&gt;xpath('/content/html/root/article/Postscript');</p>
+<p>---------<br />
+see explanation below<br />
+--------<br />
+    $this-&gt;addFieldMapping('field_article_image:file_replace')<br />
+      -&gt;defaultValue(MigrateFile::FILE_EXISTS_REUSE); //FILE_EXISTS_REUSE is in the MigrateFile class<br />
+    $this-&gt;addFieldMapping('field_article_images', 'article_image')<br />
+      -&gt;xpath('/content/html/root/article/Image/File/img/file_name');<br />
+    $this-&gt;addFieldMapping('field_article_images:source_dir', 'article_image_folder')<br />
+      -&gt;xpath('/content/html/root/article/Image/File/img/file_path');<br />
+    $this-&gt;addFieldMapping('field_article_images:alt', 'article_image_alt')<br />
+      -&gt;xpath('/content/html/root/article/Image/File/img/@alt');<br />
+    $this-&gt;addFieldMapping('field_article_images:title', 'article_image_title')<br />
+      -&gt;xpath('/content/html/root/article/Image/File/img/@alt');</p>
+<h3>
+--------------
+</h3><p>This section gets tricky.  You are importing an Image or other file.  The default migration for a file is MigrateFileUrl.  You can migrate all your files ahead of time or as I am doing do it inline.   The main components for this is the main field, which is the file name, and the source_dir for the path to this image.  Drual 7 has a database table for the files is uses with the url to the file.  MigrateFile then uploads this file to the public folder and creates an entry into the files_,amaged table to indicate the url.  What I did was copy all the images to a public location on S3 storage so I did not want Migrate to create a new file but use the existing file.  Thus the file_replace setting to the constant MigrateFile::FILE_EXISTS_REUSE.  This tells migrate to use the existing file and make an entry in the file_managed table for this file.</p>
+<p>Later in the PrepareRow method I will show how we separate this and add it to the xml.</p>
+<p>------------<br /></p><p>    $this-&gt;addFieldMapping('field_archive', 'article_archived_html_content')<br />
+      -&gt;xpath('/content/archive_html');<br />
+    $this-&gt;addFieldMapping('field_ektron_id', 'id')<br />
+      -&gt;xpath('/content/ID');<br />
+    $this-&gt;addFieldMapping('field_ektron_alias', 'alias')<br />
+      -&gt;xpath('/content/html/Alias');<br />
+    $this-&gt;addFieldMapping('field_sidebar', 'article_sidebar_element')<br />
+      -&gt;arguments(array('format' =&gt; 'filtered_html'))<br />
+      -&gt;xpath('/content/html/root/article/SidebarElement/SidebarElementInformation');<br />
+    $this-&gt;addFieldMapping('field_slider_image:file_replace')<br />
+      -&gt;defaultValue(MigrateFile::FILE_EXISTS_REUSE); //FILE_EXISTS_REUSE is in the MigrateFile class<br />
+    $this-&gt;addFieldMapping('field_slider_image', 'image')<br />
+      -&gt;xpath('/content/Image/file_name');<br />
+    $this-&gt;addFieldMapping('field_slider_image:source_dir', 'image_folder')<br />
+      -&gt;xpath('/content/Image/file_path');<br />
+    $this-&gt;addFieldMapping('field_slider_image:alt', 'image_alt')<br />
+      -&gt;xpath('/content/Title');<br />
+    $this-&gt;addFieldMapping('field_slider_image:title', 'image_title')<br />
+      -&gt;xpath('/content/Title');<br />
+    $this-&gt;addFieldMapping('title', 'title')<br />
+      -&gt;xpath('/content/Title');<br />
+    $this-&gt;addFieldMapping('title_field', 'title')<br />
+      -&gt;xpath('/content/Title');</p>
+<p>   // Declare unmapped source fields.<br />
+    $unmapped_sources = array(<br />
+      'article_author_url',<br />
+      'article_authors',<br />
+      'article_sidebar_element_margin',<br />
+      'article_video_id',<br />
+      'metadata_title',<br />
+      'metadata_description',<br />
+      'metadata_keywords',<br />
+      'metadata_google_sitemap_priority',<br />
+      'metadata_google_sitemap_change_frequency',<br />
+      'metadata_collection_number',</p>
+<p>    );</p>
+<h3>
+-------------
+</h3><p>If you are not using a source field, best practices state that you declare it in the unmapped sources</p>
+<p>------------<br /></p><p>    $this-&gt;addUnmigratedSources($unmapped_sources);</p>
+<p>    // Declare unmapped destination fields.<br />
+    $unmapped_destinations = array(<br />
+      'revision_uid',<br />
+      'changed',<br />
+      'status',<br />
+      'promote',<br />
+      'sticky',<br />
+      'revision',<br />
+      'log',<br />
+      'language',<br />
+      'tnid',<br />
+      'is_new',<br />
+      'body:language',<br />
+    );</p>
+<h3>
+----------------------
+</h3><p>If you are not using a destination field best practices state that you declare in the unmaped destinations array.  Note if you later use this field you need to remove it from the unused array.</p>
+<p>---------------------<br /></p><p>    $this-&gt;addUnmigratedDestinations($unmapped_destinations);</p>
+<p>    if (module_exists('path')) {<br />
+      $this-&gt;addFieldMapping('path')<br />
+           -&gt;issueGroup(t('DNM'));<br />
+      if (module_exists('pathauto')) {<br />
+        $this-&gt;addFieldMapping('pathauto')<br />
+             -&gt;issueGroup(t('DNM'));<br />
+      }<br />
+    }<br />
+    if (module_exists('statistics')) {<br />
+      $this-&gt;addUnmigratedDestinations(array('totalcount', 'daycount', 'timestamp'));<br />
+    }<br />
+  }</p>
+<p>------------</p>
+<p>The rest of the constructor is from the example.  Did not cause me a problem so did not worry about it.</p>
+<p>------------<br />
+  /**<br />
+   * {@inheritdoc}<br />
+   */</p>
+<h3>
+---------------
+</h3><p>Now we can add our own magic.  We can effect the data from the content item before it is saved in to the content item.  </p>
+<p>-----------------<br /></p><p>  public function prepareRow($row) {<br />
+    if (parent::prepareRow($row) === FALSE) {<br />
+      return FALSE;<br />
+    }<br />
+    $ctype = (string)$row-&gt;xml-&gt;Type;<br />
+    //set variable for return code<br />
+    $ret = FALSE;<br />
+    //dpm($row);</p>
+<h3>
+------------
+</h3><p>You will see these scattered through the prepareRow function.  These are the devel command to print to the screen for debuging.  They should be commented out but you can see the process I went through to debug my particular prepareRow.  Also note this is a great use of the Migrate UI, these print statment only help you in the web interface, if you use Drush you will not see these diagnostic prints.</p>
+<p>---------------<br /></p><p>    if ($ctype == '12'){</p>
+<h3>
+---------------
+</h3><p>This is specific to my migrate.  The following code is only applicable to a content type of 12.  The other content types have a different data structure.  If prepareRow returns False the row will be skipped.</p>
+<p>------------------<br /></p><p>    // Map the article_postscript source field to the new destination fields.<br />
+    //if((string)$row-&gt;xml-&gt;root-&gt;article-&gt;Title == ''){<br />
+    //  $row-&gt;xml-&gt;root-&gt;article-&gt;Title = $row-&gt;xml-&gt;root-&gt;Title;<br />
+    //}<br />
+    $postscript = $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Postscript-&gt;asXML();<br />
+    $postscript = str_replace('','',$postscript);<br />
+    $postscript = str_replace('','',$postscript);<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Postscript = $postscript;</p>
+<h3>
+-------------------
+</h3><p>Again this is something unique to my migrate.  The content structure is contained in xml so the HTML is recognized by SimpleXML as xml.  So the asXML() function returns a string containing the xml of the node.  Now I can save this string to the node and it becomes a string node and is back to straight html.  So I need to do this for all the nodes that contain html.  Most of the time you will be able to pass the html string as a node and will not have to do this transform.</p>
+<p>-------------------<br /></p><p>    //converts html nodes to string so they will load.<br />
+    $body = $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Body-&gt;asXML();<br />
+    $body = str_replace('','',$body);<br />
+    $body = str_replace('','',$body);<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Body = $body;<br />
+    $title = $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Title-&gt;asXML();<br />
+    $title = str_replace('','',$title);<br />
+    $title = str_replace('','',$title);<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Title = $title;<br />
+    $drophead = $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Dropheader-&gt;asXML();<br />
+    $drophead = str_replace('','',$drophead);<br />
+    $drophead = str_replace('','',$drophead);<br />
+    //If Dropheader is empty<br />
+    $drophead = str_replace('','',$drophead);<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Dropheader = $drophead;<br />
+    //Array to allow conversion of Category text to IS<br />
+    $cat_tax = array(<br />
+      'Science and Environment' =&gt; 1,<br />
+      'History' =&gt; 2,<br />
+      'Social Issues' =&gt; 3,<br />
+      'Family and Relationships' =&gt; 4,<br />
+      'Life and Health' =&gt; 5,<br />
+      'Religion and Spirituality' =&gt; 6,<br />
+      'Biography' =&gt; 7,<br />
+      'Ethics and Morality'=&gt; 8,<br />
+      'Society and Culture' =&gt; 9,<br />
+      'Current Events and Politics' =&gt; 10,<br />
+      'Philosophy and Ideas' =&gt; 11,<br />
+      'Personal Development' =&gt; 12,<br />
+      'Reviews' =&gt; 13,<br />
+      'From the Publisher' =&gt; 14,<br />
+      'Interviews' =&gt; 17,<br />
+  );<br />
+    //Convert additional taxonomies to tags<br />
+    //$tax_id_in = (string)$row-&gt;xml-&gt;Taxonomy;<br />
+    //$tax_id_array = explode(',',$tax_id_in);<br />
+    //$tax_in_array = array();<br />
+    //foreach($tax_id_array as $tax){<br />
+    //  If(is_null($cat_tax[tax]))<br />
+    //    $tax_in_array[] = $cat_tax[$tax];<br />
+    //}<br />
+    //$new_tax = implode(',',$tax_in_array);<br />
+    //dpm($new_tax);<br />
+    //dpm($row);<br />
+    //$row-&gt;xml-&gt;Taxomomy = $new_tax;<br />
+    // Change category text to ID<br />
+    $category = (string)$row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Category;<br />
+    //Specify unknown category if we do not recognize the category<br />
+    //This allows the migrate and allow us to fix later.<br />
+    $tax_cat = $cat_tax[trim($category)];<br />
+    //dpm($category);<br />
+    if(is_null($tax_cat)) {$tax_cat = 18;}<br />
+    //dpm($tax_cat);<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Category = $tax_cat;</p>
+<h3>
+-------------
+</h3><p>The category field in the source is a text field.  The categories are a entity reference to a taxonomy field, which requires an id rather than text.  I manually setup the categories ahead of time so I created an array that has the text as the key and the is as the content.  Then you can use this to quickly look up the id for the text in he category field.  Then we can replace the text in Category with the id.  This works, another way to do this is migrate the categories first then use this migration to translate this for you.  This is a feature built into migrate.  The explanation of this will come later.</p>
+<p>----------------<br /></p><p>   //modify the image file node.<br />
+    //dpm((string)$row-&gt;xml-&gt;ID);<br />
+    if((string)$row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Image-&gt;File-&gt;asXML() != ''){<br />
+      //dpm((string)$row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Image-&gt;File-&gt;asXML());<br />
+    $src = (string)$row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Image-&gt;File-&gt;img-&gt;attributes()-&gt;src;<br />
+    $src_new = str_replace('/visionmedia/uploadedImages/','<a href="http://assets.vision.org/uploadedimages/">http://assets.vision.org/uploadedimages/</a>',$src);<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Image-&gt;File-&gt;img-&gt;attributes()-&gt;src = $src_new;<br />
+    $file_name = basename($src_new);<br />
+    $file_path = rtrim(str_replace($file_name,'', $src_new), '/');;<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Image-&gt;File-&gt;img-&gt;addChild('file_name',$file_name);<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;Image-&gt;File-&gt;img-&gt;addChild('file_path',$file_path);<br />
+    }</p>
+<h3>
+--------------
+</h3><p>There is alot of stuff here.  Remember for the MigrateFile you need to present the file name and source directory.  The Image/File node contains an img tag.  So we need to get the scr attribute and extract the file name and source directory.  So why the if?  Migrate will import a null node as null, but this is php code running on the row.  If you try to get the src attribute on a null node it will throw an error.  So the if statement checks to see if the File node is empty (only contains /File) and skips this tranformation, Migrate will simply import a null or empty field.</p>
+<p>The src is the relative path to the website, so the first thing we do is change this to full url to the s3 content storage.  The path is basically the same except in the uploadedimages the i in the database is uppercase.  This was a Windows server so it did not make a difference but the s3 url is case sensitive.  We then use base name to extract the file name and use this to remove the file from the path for the file path and create a new child in the xml row to store these.  I did not point this out but this is the xpath use in the field mapping above.</p>
+<p>--------------<br /></p><p>    $email = (string)$row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;AuthorURL;<br />
+    if (!empty($email)){<br />
+      $email = 'mailto:'.$email;<br />
+      $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;AuthorURL = $email;<br />
+    }</p>
+<h3>
+-------------
+</h3><p>The author url is the email to the author of the article.  We turn this into a mailto link so that it will generate a link to send the author an email.</p>
+<p>---------------<br /></p><p>    $archive_html = (string)$row-&gt;xml-&gt;html-&gt;asXML();<br />
+    $row-&gt;xml-&gt;addChild('archive_html',$archive_html);<br />
+    $sidebar_element = (string)$row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;SidebarElement-&gt;SidebarElementInformation-&gt;asXML();<br />
+    $row-&gt;xml-&gt;html-&gt;root-&gt;article-&gt;SidebarElement-&gt;SidebarElementInformation = $sidebar_element;<br />
+    $slider_src = (string)$row-&gt;xml-&gt;Image;<br />
+    $slider_src_new = str_replace('/visionmedia/uploadedImages/','<a href="http://assets.vision.org/uploadedimages/">http://assets.vision.org/uploadedimages/</a>',$slider_src);<br />
+    $row-&gt;xml-&gt;Image = $slider_src_new;<br />
+    $slider_file_name = basename($slider_src_new);<br />
+    $slider_file_path = rtrim(str_replace($slider_file_name,'', $slider_src_new), '/');;<br />
+    $row-&gt;xml-&gt;Image-&gt;addChild('file_name',$slider_file_name);<br />
+    $row-&gt;xml-&gt;Image-&gt;addChild('file_path',$slider_file_path);<br />
+//dpm($row);</p>
+<p>---------------</p>
+<p>The rest is repitition of the above techniques.  Note that we return TRUE if we want to process the row and false if we do not want to process the row.</p>
+<p>-----------------<br /></p><p>$ret=TRUE;<br />
+//dpm($src);<br />
+}<br />
+//Need to add processing for other Article Content types especially 0 (HTML content)<br />
+//dpm($row);<br />
+    return $ret;<br />
+  }</p>
+<p>}</p>
+<h3>
+----------
+</h3><p>This is the class I use for one of the imports.  I told you that I would show the use of another migrate in the field mappings.  Below is a snippet of code from the issues migration.  The issue contains entity reference to vision_articles that were imported from above.</p>
+<p>-------------<br /></p><p>    $this-&gt;addFieldMapping('field_articles', 'article_id')<br />
+        -&gt;sourceMigration('VisionArticle')<br />
+        -&gt;xpath('/item/articles/article/ID'); </p>
+<h3>
+--------------
+</h3><p>So this says use the VisionArticle (I will show you were to find this next), it knows to look up the source ID and relate it to the DestinationID and store this in the field_articles field.</p>
+<p>---------------</p>
+<p>Migrate has been around for a while.  Initially they said that the class would automaticall be registed and you could manually register them if needed.  Then they changed to say that they will not manually register and you should register your classes.  So you should have as part of your migration module the following that will register your classes.  Note the name of the array element is the name used above.</p>
+<p>----------------<br /></p><p>function vision_migrate_migrate_api() {<br />
+  $api = array(<br />
+    'api' =&gt; 2,<br />
+    // Give the group a human readable title.<br />
+    'groups' =&gt; array(<br />
+      'vision' =&gt; array(<br />
+        'title' =&gt; t('Vision'),<br />
+      ),<br />
+    ),<br />
+    'migrations' =&gt; array(<br />
+      'VisionArticle' =&gt; array('class_name' =&gt; 'VisionArticleMigration'),<br />
+      'VisionIssue' =&gt; array('class_name' =&gt; 'VisionIssueMigration'),<br />
+      'VisionVideoArticle' =&gt; array('class_name' =&gt; 'VisionVideoArticleMigration'),<br />
+      'VisionFrontpage' =&gt; array('class_name' =&gt; 'VisionFrontpageMigration'),<br />
+    ),<br />
+  );</p>
+<p>  return $api;<br />
+} </p>
+<h3>
+----------------
+</h3><p>I hope this makes things a little easier to understand.  You will need some basic module building skills, knowing the file names and things like that, but this should help you through the more obscure parts of creating your migration class.</p>
+
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div></div>
+  </body>
+</html>
+

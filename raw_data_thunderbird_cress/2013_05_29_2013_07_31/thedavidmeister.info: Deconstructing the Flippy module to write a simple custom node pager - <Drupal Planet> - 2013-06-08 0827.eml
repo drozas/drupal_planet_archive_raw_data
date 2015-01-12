@@ -1,0 +1,308 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 08 Jun 2013 07:27:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 08 Jun 2013 07:27:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: thedavidmeister.info: Deconstructing the Flippy module to write a simple custom node pager
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thedavidmeister.info/post/deconstructing-flippy-module-write-simple-custom-node-pager
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>thedavidmeister.info: Deconstructing the Flippy module to write a simple custom node pager</title>
+    <base href="http://thedavidmeister.info/post/deconstructing-flippy-module-write-simple-custom-node-pager">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-title field-type-text field-label-hidden"><div class="field-items"><div class="field-item even">Deconstructing the Flippy module to write a simple custom node pager</div></div></div><div class="field field-name-post-date field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">Saturday, 8th Jun 2013</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Mike Crittenden recently wrote <a href="http://mikecr.it/ramblings/drupal-and-invented-here">an article</a> on an "Invented Here" aversion in the Drupal community. One of the main points made there is that often a module will do what you want, but also introduce new things that you actually don't want that may outweigh or negate the good in the long term. It could be as innocent as a form alter adding a description to an existing form, or some CSS intended to make a module seem more appealing "out of the box", but if it doesn't match what your designer handed you (my experience with designers is that the chance of a design matching the styles of a contrib module the designer hasn't explicitly referenced is somewhere under one in a million) it means more work, and there's a huge range of how much more work it means depending on the current requirements and how the module is written.</p>
+
+<p>A huge number of modules on d.o are very small (in terms of lines of code) and only aim solve a single, very specific use-case. I often find that, after reading over the code there's only 1-5 functions that "do the work" and the bulk of the code is just implementing Drupal hooks to provide a nice UI, default settings, page callbacks, permissions, etc...</p>
+
+<p>Given that:</p>
+
+<ul>
+<li>installing a new module, any module, has some probability of introducing something new that I will have to painstakingly remove again with my own overrides</li>
+<li>this probability seems to be roughly inversely proportional to the number of users the module has listed on d.o and how actively maintained it is</li>
+<li>smaller modules that have less frequent commits are often (not always, obviously) written by less experienced developers and while they may do the job they're more likely to introduce unwanted side effects too</li>
+<li>modules that promise to enhance the front-end/theme of your site are more likely to introduce a public facing side effect than something like the Google Analytics integration module, for example</li>
+<li>Drupal is open source and I can read/write PHP</li>
+<li>Many decent modules are internally structured to first define their own private API before leveraging it to provide the functionality required</li>
+</ul>
+
+<p>...when I see a new module that promises to add a new block or node links or javascript widget I approach it with a degree of caution and find myself wondering "Could I just copy/paste this module's API and then do/render exactly what I actually want directly?".</p>
+
+<h2>The Flippy module</h2>
+
+<p>Check out the <a href="https://drupal.org/project/flippy">Flippy</a> module. It's a really simple way to get first/previous/next/last style pagination on your nodes based on node creation dates and the content type of the current node.</p>
+
+<p>The module code is pretty easy to read over (the main module file is under 500 lines of code), so I thought it would be a nice example on how to deconstruct a Drupal module into "Internal API + Drupal API implementations".</p>
+
+<p>Let's say that for our requirements we want exactly what Flippy provides but we also want:</p>
+
+<ol>
+<li>Our pagination functionality to just provide an associative array of nids rather than a fully rendered pager.</li>
+<li>Our pagination to be based on updated date rather than created date.</li>
+<li>Persistent caching of our calculated pager info on a per-node basis so we can avoid hitting the db wherever possible.</li>
+</ol>
+
+<p>We're unlikely to find an existing contrib module that satisfies these requirements exactly without searching pretty hard, so let's see if we can just adapt Flippy to our needs.</p>
+
+<p>Here's the list of all the functions in flippy.module with a summary of what they do:</p>
+
+<p><strong>Drupal Hooks:</strong></p>
+
+<ul>
+<li>flippy_theme: Implements <a href="https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_theme/7">hook_theme()</a> to make the flippy.tpl.php file work.</li>
+<li>flippy_form_node_type_form_alter: Implements <a href="https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_form_FORM_ID_alter/7">hook_form_FORM_ID_alter()</a> to add extra per-content-type settings for Flippy.</li>
+<li>flippy_field_extra_fields: Implements <a href="https://api.drupal.org/api/drupal/modules!field!field.api.php/function/hook_field_extra_fields/7">hook_field_extra_fields()</a> to expose Flippy as a "pseudo-field" (which means you can use it on the "manage display" page).</li>
+<li>flippy_node_view: Implements <a href="https://api.drupal.org/api/drupal/modules%21node%21node.api.php/function/hook_node_view/7">hook_node_view()</a> to actually render Flippy's "pseuedo-field" as a node is being viewed.</li>
+<li>template_preprocess_flippy: Implements <a href="https://api.drupal.org/api/drupal/modules!system!theme.api.php/function/hook_preprocess_HOOK/7">hook_preprocess_HOOK()</a> to prepare variables for use in flippy.tpl.php template files.</li>
+<li>flippy_block_info: Implements <a href="https://api.drupal.org/api/drupal/modules%21block%21block.api.php/function/hook_block_info/7">hook_block_info()</a> to define a block for Flippy pagers.</li>
+<li>flippy_block_view: Implements <a href="https://api.drupal.org/api/drupal/modules%21block%21block.api.php/function/hook_block_view/7">hook_block_view()</a> to be called by Drupal when a Flippy pager block is to be rendered.</li>
+</ul>
+
+<p><strong>Flippy internal API</strong></p>
+
+<ul>
+<li>flippy_build_list: Generates a statically cached array of Flippy links, given a fully loaded node object.</li>
+<li>flippy_pager_block: Render the Flippy pager block. Called by <code>flippy_block_view()</code>.</li>
+<li>_flippy_use_pager: Determine if a pager should be rendered on the current node based on settings for that content type.</li>
+<li>_flippy_add_head_elements: Handles adding <a href="http://googlewebmastercentral.blogspot.com.au/2011/09/pagination-with-relnext-and-relprev.html">pagination header links</a>.</li>
+</ul>
+
+<p>As you can see, the majority of the functions here are Drupal hooks: preparing variables for templates, exposing the pager to the Field API, implementing theme templates, defining and rendering blocks, etc.</p>
+
+<p>Because we don't need a UI or any particular rendering implementation to satisfy our requirements we only need to appropriate one function here, <code>flippy_build_list()</code> which looks like this:</p>
+
+<pre class="prettyprint">
+/**
+ *  Function that builds the list of nodes
+ */
+function flippy_build_list($node) {
+  $master_list = &drupal_static(__FUNCTION__);
+  if (!isset($master_list)) {
+    $master_list = array();
+  }
+  if (!isset($master_list[$node->nid])) {
+    // Create a starting-point query object
+    $query = db_select('node')
+      ->fields('node', array('nid', 'title'))
+      ->condition('nid', $node->nid, '!=')
+      ->condition('status', 1)
+      ->condition('type', $node->type, '=')
+      ->range(0, 1);
+
+    $first = clone $query;
+    $list['first'] = $first
+      ->condition(db_or()
+        ->condition('created', $node->created, '<')
+        ->condition(db_and()
+          ->condition('created', $node->created, '=')
+          ->condition('nid', $node->nid, '<')))
+      ->orderBy('created', 'ASC')
+      ->execute()->fetchAssoc();
+
+    $list['current'] = array(
+      'nid' => $node->nid,
+      'title' => $node->title,
+    );
+
+    $prev = clone $query;
+    $list['prev'] = $prev
+      ->condition(db_or()
+        ->condition('created', $node->created, '<')
+        ->condition(db_and()
+          ->condition('created', $node->created, '=')
+          ->condition('nid', $node->nid, '<')))
+      ->orderBy('created', 'DESC')
+      ->execute()->fetchAssoc();
+
+    $next = clone $query;
+    $list['next'] = $next
+      ->condition(db_or()
+        ->condition('created', $node->created, '>')
+        ->condition(db_and()
+          ->condition('created', $node->created, '=')
+          ->condition('nid', $node->nid, '>')))
+      ->orderBy('created', 'ASC')
+      ->execute()->fetchAssoc();
+
+    $last = clone $query;
+    $list['last'] = $last
+      ->condition(db_or()
+        ->condition('created', $node->created, '>')
+        ->condition(db_and()
+          ->condition('created', $node->created, '=')
+          ->condition('nid', $node->nid, '>')))
+      ->orderBy('created', 'DESC')
+      ->execute()->fetchAssoc();
+
+    $random = clone $query;
+    $list['random'] = $random
+      ->orderRandom()
+      ->execute()->fetchAssoc();
+
+    $master_list[$node->nid] = $list;
+  }
+  return $master_list[$node->nid];
+}
+</pre>
+
+<h2>"Just the good bits" - Meeting our requirements</h2>
+
+<blockquote>
+  <p>provide an array of structured data rather than a fully rendered pager.</p>
+</blockquote>
+
+<p>Because Flippy provides its own API before using it, in the form of <code>flippy_build_list()</code> our first requirement is really easy to satisfy - this function already returns a nice, simple array of data based on the queries it runs. All we need to do is renamespace the function to <code>MODULENAME_get_pager_info()</code> or similar and put it in one of our custom modules and we've done step 1.</p>
+
+<blockquote>
+  <p>pagination to be based on updated date rather than created date.</p>
+</blockquote>
+
+<p>For this we have to update the queries within <code>flippy_build_list()</code> to sort by updated date rather than created date.</p>
+
+<p>If you haven't used the OOP database queries available in D7 then have a look at <a href="http://worldempire.ch/story/howto-convert-module-dbtng">Berdir's conversion guide</a> to get you up to scratch on the differences between DBTNG queries and the "old style" <code>db_query("SELECT * FROM ....", $var1, $var2, ...)</code> Drupal db functions.</p>
+
+<p>Firstly, Flippy creates a "base" query in <code>$query</code> with some conditions shared by all the pagination links:</p>
+
+<ul>
+<li>Get the nid and titles for the nodes returned by our query.</li>
+<li>Make sure not to return the node we're currently looking at.</li>
+<li>Only return published nodes.</li>
+<li>Only return nodes of the same content type as the node we're currently looking at.</li>
+<li>Only ever return one node for each query.</li>
+</ul>
+
+<p>Flippy then clones this base query 6 times then extends (and actually executes) each new query object with the conditions specific to building that link:</p>
+
+<ul>
+<li>First: Get the first node created before this node, sorted by created date ascending.</li>
+<li>Previous: Get the first node created before this node, sorted by created date descending.</li>
+<li>Current: This node.</li>
+<li>Next: Get the first node created after this node, sorted by created date ascending.</li>
+<li>Last: Get the first node created after this node, sorted by created date descending.</li>
+<li>Random: Get a random node.</li>
+</ul>
+
+<p>For first/previous/next/last we also check the order of nids in the case that the created times are identical.</p>
+
+<p>All we need to do to achieve sorting by updated date is to edit the conditions and the sorts in the overrides in a consistent way.</p>
+
+<p>We should end up with something like this (modifying "created" to "changed"):</p>
+
+<pre class="prettyprint">
+  function MODULENAME_get_pager_info($node) {
+    $master_list = &drupal_static(__FUNCTION__);
+    if (!isset($master_list)) {
+      $master_list = array();
+    }
+    if (!isset($master_list[$node->nid])) {
+      // Create a starting-point query object
+      $query = db_select('node')
+        ->fields('node', array('nid', 'title'))
+        ->condition('nid', $node->nid, '!=')
+        ->condition('status', 1)
+        ->condition('type', $node->type, '=')
+        ->range(0, 1);
+
+      $first = clone $query;
+      $list['first'] = $first
+        ->condition(db_or()
+          ->condition('changed', $node->changed, '<')
+          ->condition(db_and()
+            ->condition('changed', $node->changed, '=')
+            ->condition('nid', $node->nid, '<')))
+        ->orderBy('changed', 'ASC')
+        ->execute()->fetchAssoc();
+
+      $list['current'] = array(
+        'nid' => $node->nid,
+        'title' => $node->title,
+      );
+
+      $prev = clone $query;
+      $list['prev'] = $prev
+        ->condition(db_or()
+          ->condition('changed', $node->changed, '<')
+          ->condition(db_and()
+            ->condition('changed', $node->changed, '=')
+            ->condition('nid', $node->nid, '<')))
+        ->orderBy('changed', 'DESC')
+        ->execute()->fetchAssoc();
+
+      $next = clone $query;
+      $list['next'] = $next
+        ->condition(db_or()
+          ->condition('changed', $node->changed, '>')
+          ->condition(db_and()
+            ->condition('changed', $node->changed, '=')
+            ->condition('nid', $node->nid, '>')))
+        ->orderBy('changed', 'ASC')
+        ->execute()->fetchAssoc();
+
+      $last = clone $query;
+      $list['last'] = $last
+        ->condition(db_or()
+          ->condition('changed', $node->changed, '>')
+          ->condition(db_and()
+            ->condition('changed', $node->changed, '=')
+            ->condition('nid', $node->nid, '>')))
+        ->orderBy('changed', 'DESC')
+        ->execute()->fetchAssoc();
+
+      $random = clone $query;
+      $list['random'] = $random
+        ->orderRandom()
+        ->execute()->fetchAssoc();
+
+      $master_list[$node->nid] = $list;
+    }
+    return $master_list[$node->nid];
+  }
+</pre>
+
+<p>We can now call this function wherever we have a loaded node object to get a list of simple pagination links and we didn't need to install a whole new module to achieve this.</p>
+
+<blockquote>
+  <p>Persistent caching of our calculated pager info on a per-node basis.</p>
+</blockquote>
+
+<p>Flippy doesn't provide this at all so we have to implement it ourselves whether we want to use Flippy or our custom adaption.</p>
+
+<p>I'm actually not going to show the code required for this here, as Lullabot already have the <a href="http://www.lullabot.com/blog/articles/beginners-guide-caching-data-drupal-7">best introductory guide</a> I've ever read on the topic so I don't feel the need to duplicate their efforts.</p>
+
+<p>The point here is less about showing exact code examples and more that if you're on a deadline with a specific brief it would be easier (maybe not "better", but definitely easier) to just write the extra caching hooks around this one custom function in your own module than try to get a feature patch committed to a contrib module (Flippy is in "Maintenance fixes only" mode).</p>
+
+<h2>The end result</h2>
+
+<p>So let's have a quick look at what we gain and lose by taking the "DIY" approach using an existing module as an <em>example</em> rather than a framework/turnkey solution.</p>
+
+<h3>Pros</h3>
+
+<ul>
+<li>We have one less module to keep track of. This is most important for iterative projects where more modules means more maintenance overhead in the long term and projects where every little bit of performance counts and we want as few modules in our site as possible.</li>
+<li>We may learn a lot and improve our own module writing skills in the process.</li>
+<li>We're much less likely to find ourselves implementing overrides and ripping stuff out that doesn't match a design/brief and spend more time building things we actually want.</li>
+<li>We have more control over the behaviour of the final product.</li>
+<li>Give yourself a chance to avoid the most common harmful shortcuts made by contrib module developers like overuse of <code>variable_get()</code> and <code>variable_set()</code> (has a proven negative performance impact) or half-finished install/update hooks.</li>
+<li>This approach can get you to the end result much faster in many cases (module is simple and would need a relatively large amount of overrides to make it behave).</li>
+<li>In the case where the module doesn't provide a theme implementation or something that's easily alterable, we have more control over the markup when we finally render it.</li>
+</ul>
+
+<h2>Cons</h2>
+
+<ul>
+<li>Don't have access to security updates from the module maintainer without applying them yourself (that said, if you're writing <em>any</em> custom code anywhere you either have security holes in your code already or you have an idea of how to avoid them).</li>
+<li>This approach can be much slower than just using the module and implementing your own hooks to tweak it if the module doesn't have a decent API structure that can be teased out into separate components like Flippy can, or if the module is larger than a thousand lines or so.</li>
+<li>If the module has some big issues that you are capable of filing a patch to help fix then the community would obviously benefit from such a contribution as much as you would.</li>
+<li>Obviously we lose any functionality the module would have provided that we aren't porting/adapting to our custom codebase. In this Flippy example we lose the automatic addition of pagination links to our page <code>&lt;head&gt;</code> when we finally render the links, that could have helped our site's SEO.</li>
+</ul>
+
+<p>In summary, I'm definitely not saying to always "do this" or "do that". I just wanted to show an example of going through a process that highlights an option that I have found new developers often don't realise they have, or they do realise it's something they could do but they overstate the amount of difficulty/effort involved in adapting some existing body of work vs. using it directly. The important thing for us developers is that we're always mindful of what's really in our toolkit and when/how to apply each of our tools to the task at hand.</p>
+</div></div></div><div class="field field-name-field-syndicate field-type-taxonomy-term-reference field-label-above"><div class="field-label">Syndicate:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/syndicate/planet-drupal">planet drupal</a></div></div></div>
+  </body>
+</html>
+

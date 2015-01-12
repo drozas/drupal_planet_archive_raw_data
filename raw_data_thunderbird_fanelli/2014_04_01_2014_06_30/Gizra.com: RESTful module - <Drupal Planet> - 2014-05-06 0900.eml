@@ -1,0 +1,53 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 06 May 2014 07:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 06 May 2014 07:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gizra.com: RESTful module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.gizra.com/content/restful-server
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gizra.com: RESTful module</title>
+    <base href="http://www.gizra.com/content/restful-server">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://github.com/Gizra/restful#restful-best-practices-for-drupal">RESTful module</a> is a new approach to providing a REST server in Drupal. Its concepts and philosophy appears in the module&#39;s README so I won&#39;t repeat it, but I&#39;d like to go over some of the key points.</p>
+<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="c1">// Handler v1.0</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="nx">restful_get_restful_handler</span><span class="p">(</span><span class="s1">&#39;articles&#39;</span><span class="p">);</span>
+<span class="c1">// GET method.</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$handler</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// Output:</span>
+<span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;example title&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;self&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/node/1&#39;</span><span class="p">,</span>
+<span class="p">);</span>
+
+<span class="c1">// Handler v1.1 extends v1.0, and removes the &quot;self&quot; property from the</span>
+<span class="c1">// exposed properties.</span>
+<span class="nv">$handler</span> <span class="o">=</span> <span class="nx">restful_get_restful_handler</span><span class="p">(</span><span class="s1">&#39;articles&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$handler</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// Output:</span>
+<span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;example title&#39;</span><span class="p">,</span>
+<span class="p">);</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
+<p>In the past year almost every site we have is either completely decoupled from the server side where AngularJs serves the webapp, or AngularJS plays a smaller part, and we just embed web components inside a Drupal page to provide a slick UI.</p>
+
+<p>Up until now our go to module was RestWs by the wonderful Klausi, which wraps around Entity API module&#39;s metadata wrapper. Basically, it hands over to the metadata wrapper the responsibility for the access and for the actual value it spits out.<br>
+It works fine, however the JSON it exposes has too much information.</p>
+
+          <p><a href="http://www.gizra.com/content/restful-server/">Continue reading…</a></p>
+  </body>
+</html>
+

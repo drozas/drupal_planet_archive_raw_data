@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 22 Dec 2014 11:05:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 22 Dec 2014 11:05:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Yuriy Gerasimov: Panels control panes render sequence
+Content-Transfer-Encoding: 8bit
+Content-Base: http://ygerasimov.com/control-panes-render-sequence
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Yuriy Gerasimov: Panels control panes render sequence</title>
+    <base href="http://ygerasimov.com/control-panes-render-sequence">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Panels standard renderer has very flexible undocumented feature of controlling the sequence of panels being rendered.</p>
+<p>By default you have possibility to use 'render first' and 'render last' in your content type definition so you already can control what pane should be rendered for example last. Undocumented part is more interesting that is hook_panels_panes_prepared_alter() that runs after all panes were set up. So you can alter the array of panes in which way you can control sequence of panes being rendered. This feature is super handy when you have dependent panes.</p>
+<p>Example can be if you have several panes with list of news articles. Lets say one block displays 3 items and another block displays other 5. But the problem is that editors can place blocks independently and you do not know whether you have two blocks on the page or only one. But you know that block that have 3 items should be rendered first and then block of 5 so first block has more recent news articles. Using properties 'render first' and 'render last' you can do the trick. When you render 3 items block you can save some static variable so when you render 5 items block you can check that variable and if previous block set it to TRUE you need to shift your list to 3 items so you won't duplicate news articles in both lists.</p>
+<p>Meanwhile if you have multiple combinations of similar blocks you can use hook_panels_panes_prepared_alter() and control which block renders first and then you will still have very nice lists of articles.</p>
+<p>I would like to thank <a href="https://www.drupal.org/u/andrii.tiupa">Andrii Tiupa</a> for pointing me to this brilliant feature.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/taxonomy/term/6" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/taxonomy/term/19" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">panels</a></div><div class="field-item even" rel="dc:subject"><a href="/taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

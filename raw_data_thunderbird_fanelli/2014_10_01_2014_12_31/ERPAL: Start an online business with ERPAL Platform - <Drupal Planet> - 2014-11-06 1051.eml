@@ -1,0 +1,34 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Nov 2014 09:51:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Nov 2014 09:51:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ERPAL: Start an online business with ERPAL Platform
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.erpal.info/de/blog/start-an-online-business-with-erpal-platform
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ERPAL: Start an online business with ERPAL Platform</title>
+    <base href="http://www.erpal.info/de/blog/start-an-online-business-with-erpal-platform">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Drupal has everything you need to start a full-featured online business. Drupal is open, free and flexible – and it provides all the components required to integrate content, commerce and community features. With just a few of the 15,000+ modules, it’s possible to build almost any web application you need. With the ERPAL Platform Drupal distribution, Drupal developers and site builders get a pre-configured Drupal installation as a starting point for <a href="http://www.erpal.info/de/blog/erpal-platform-build-powerful-business-applications">flexible and open business applications</a>. As one of our first use cases, I want to show how you can use ERPAL Platform to build your <strong>complete online business within a single Drupal installation</strong>. In this blogpost I’ll cover the overall functionality of this e-commerce use case and in one of the next blogposts I’ll show you in detail how to build your online shop, complete with all the administration features you need to manage your online business.</p>
+<h2>Business processes first</h2>
+<p>No matter whether you sell services, projects, or products; no matter whether you sell them online or offline: all business will go through the same basic steps. Starting with the first customer contact to begin the sales process, you’ll mostly be tracking leads that will be transformed into opportunities and become prospects. In the prospect status you’ll create a quote for your customer in which you offer the products and services that the customer requested. After the quote is accepted, it becomes an order (which may be different from the quote). The order confirmation is sent as a receipt to your customer. Now it depends on the payment modalities negotiated before the order as to how and when you can create one or more invoices to get paid. You may get some upfront payment with the submission of the order, after some or all products have been delivered, or once you’ve reached a certain milestone in a project or manufacturing process. So no matter what you deliver to your customer, you get paid either in advance or upon delivery, or a combination of both.</p>
+<p><img alt="ERPAL Platform business process" src="http://www.erpal.info/sites/default/files/online_business_erpal_platform_1.png" title="ERPAL Platform business process" width="478" height="70" /></p>
+<p>This sales process is always fundamentally the same and it’s the core functionality that ERPAL Platform provides. With Drupal Commerce entities for quotes, orders and invoices, this business process is flexible and can be extended with fields, rules and views. With these features the administrative backend for the general business process is already in place, and you can extend it as you need. Read one of the first ERPAL Platform blog posts for more details about this <a href="http://www.erpal.info/de/blog/erpal-platform-build-powerful-business-applications">business process and how it’s implemented</a> in ERPAL Platform</p>
+<h2>Integrate a Drupal Commerce storefront</h2>
+<p>Since Drupal Commerce is already integrated into ERPAL Platform, it’s easy to extend the feature set with an <strong>e-commerce storefront</strong>. At the "frontend" you sell your products to your customers. They can buy any products directly in the web from an online store that’s built on top of your business process platform. If you already know Drupal Commerce, it’s easy to extend ERPAL Platform to expose a storefront to website visitors. In this use case, the ERPAL Platform features will serve a complete administrative backend – visible only to shop administrators – for all your business processes.</p>
+<p><img alt="administration of and store integration" src="http://www.erpal.info/sites/default/files/online_business_erpal_platform_2.png" title="administration of and store integration" width="470" height="94" /></p>
+<p>Imagine we have three commerce order bundles – order, quote and invoice – to separate these entities. If a user adds a product to her cart, this is an order entity. For an order entity that’s not yet checked out, as a customer you can request a quote, which can be used to compare products and prices with other stores or to show to another party (as PDF). If the customer comes back, she can continue with the order and complete the checkout process. After the checkout is complete, the invoice is created as a separate entity and both the user and the shop administrator can access all these receipts in the same Drupal installation: no synchronization between systems needed. If a payment is made, it’s added to the invoice and changes the balance. That’s it! There you have all you need to process your business in a nutshell. If you build an e-commerce site for a start-up you may want to begin lean and without heavy integration projects. With ERPAL Platform you have all the features in one distribution to start an online business and to <a href="http://www.erpal.info/de/blog/how-drupal-applications-help-in-agile-business-development">continue to grow it in an agile way</a>.</p>
+<p>In one of our next blogposts, we’ll present a step-by-step guide for building an online business based on ERPAL Platform.</p>
+<p><img alt="All ERPAL Platform processes integrated" src="http://www.erpal.info/sites/default/files/online_business_erpal_platform_3.png" title="All ERPAL Platform processes integrated" width="640" height="218" /></p>
+<p>In our <a href="https://commerceguys.com/webinars/webinar-open-integration-mit-drupal-commerce">upcomming webinar with the Commerce Guys</a>, we will talk about open integration of Drupal Commerce and give a real use case of an ERPAL Platform project that integrates all online-business process in one platform. </p>
+</div></div></div>
+  </body>
+</html>
+

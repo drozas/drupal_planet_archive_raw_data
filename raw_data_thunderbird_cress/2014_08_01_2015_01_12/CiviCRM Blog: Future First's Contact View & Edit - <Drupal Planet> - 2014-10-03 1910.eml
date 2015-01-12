@@ -1,0 +1,124 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 03 Oct 2014 18:10:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 03 Oct 2014 18:10:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: Future First's Contact View & Edit
+Content-Transfer-Encoding: 8bit
+Content-Base: https://civicrm.org/blogs/johnff/future-firsts-contact-view-edit
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: Future First's Contact View & Edit</title>
+    <base href="https://civicrm.org/blogs/johnff/future-firsts-contact-view-edit">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><div>
+	Sadly all good things must come to an end.</div>
+<div>
+	 </div>
+<div>
+	Here at the CiviCRM 2014 Edale Sprint we've been working closely with members of the core team. As well as fixing bugs, working on integrating Google Summer of Code projects, and readying extensions for release, it's been an excellent opportunity for the Future First Software Developers to learn directly from the CiviCRM experts themselves.</div>
+<div>
+	 </div>
+<div>
+	In a presentation I showed something that the Future First Software Development Team made recently - a brand new contact screen. It went down a treat, so here's a blog article revealing how we did it!</div>
+<div>
+	 </div>
+<div>
+	<strong>Background:</strong></div>
+<div>
+	 </div>
+<div>
+	Future First is a charity that helps state-funded schools and colleges mobilise their former students for the benefit of their current students. Former students can do this by attending in-school events to inspire current students, by offering mentoring or work experience opportunities, by assisting in fundraising, or even by appearing on a poster displayed in the school!</div>
+<div>
+	 </div>
+<div>
+	A key part of Future First's offering is a Teacher Dashboard that teachers can log into to engage with their former students. This mostly involves an extensive search system and a communal inbox. It is built from a combination of Drupal custom modules and CiviCRM custom extensions.</div>
+<div>
+	 </div>
+<div>
+	<strong>The legacy:</strong></div>
+<div>
+	 </div>
+<div>
+	Future First's Teacher Dashboard is a legacy system. Initially a screen was created to allow teachers to view contacts, based off a profile (with a separate screen to edit). Then notes were attached, so that teachers could add, edit, and remove notes about the alumni. When our Mailbox was operational we added each mail send to and from that alumnus to the profile screen too. Afterwards we added the ability to record mobilisations, so they made their way onto the screen as well!</div>
+<div>
+	 </div>
+<div>
+	The result was not pretty: an overburdened, messy screen that didn't allow teachers to view or edit all of the information that was being stored by CiviCRM. It was very slow, as all the mobilisations and emails had to be loaded just to add or remove a note. And everything had to be loaded once to view the contact, then again to edit it, and then a third time to see the saved edit.</div>
+<div>
+	 </div>
+<div>
+	It was time to start over. </div>
+<div>
+	 </div>
+<div>
+	<strong>The requirements:</strong></div>
+<div>
+	 </div>
+<div>
+	Our main requirements were: </div>
+<div>
+	- fast</div>
+<div>
+	- have only one screen for both editing</div>
+<div>
+	- neater</div>
+<div>
+	- view and edit everything</div>
+<div>
+	- maintainable. Our system is growing rapidly, and the screen should be ready to support that.</div>
+<div>
+	 </div>
+<div>
+	<strong>The plan:</strong></div>
+<div>
+	 </div>
+<div>
+	With three members of staff to work on the project, it needed to be modular. The data was broken into logical categories, and an api and template file was created for each of these. This structure translated directly into the different tabs.</div>
+<div>
+	 </div>
+<div>
+	Only the data on the first tab is loaded. When other tabs are clicked AJAX calls the API function for that tab. This retrieves the relevant data, which some jQuery then puts into the appropriate place.</div>
+<div>
+	 </div>
+<div>
+	Inline editing was used for each field. This feature, provided by the CiviCRM core, allows our users to view and update data without needing to move between different screens. Sadly, this didn't let us update custom data, so we patched it and offered our patch to the core!</div>
+<div>
+	 </div>
+<div>
+	<strong>The results:</strong></div>
+<div>
+	 </div>
+<div>
+	 </div>
+</div>
+  </div>
+<div class="field field-name-upload field-type-file field-label-hidden">
+        <div class="field-item even"><table class="sticky-enabled">
+ <thead><tr><th>Attachment</th><th>Size</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="https://civicrm.org/sites/civicrm.org/files/contact_screen_1.png" type="image/png; length=88576">contact_screen_1.png</a></span></td><td>86.5 KB</td> </tr>
+ <tr class="even"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="https://civicrm.org/sites/civicrm.org/files/contact_screen_2.png" type="image/png; length=70812">contact_screen_2.png</a></span></td><td>69.15 KB</td> </tr>
+ <tr class="odd"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="https://civicrm.org/sites/civicrm.org/files/contact_screen_3.png" type="image/png; length=99346">contact_screen_3.png</a></span></td><td>97.02 KB</td> </tr>
+ <tr class="even"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="https://civicrm.org/sites/civicrm.org/files/contact_screen_4.png" type="image/png; length=67521">contact_screen_4.png</a></span></td><td>65.94 KB</td> </tr>
+</tbody>
+</table>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/extensions" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Extensions</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

@@ -1,0 +1,140 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 29 Aug 2013 09:53:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 29 Aug 2013 09:53:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: Drupal climbs the AWS Elastic Beanstalk
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/drupal-climbs-aws-elastic-beanstalk
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: Drupal climbs the AWS Elastic Beanstalk</title>
+    <base href="http://comm-press.de/en/blog/drupal-climbs-aws-elastic-beanstalk">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Drupal hosting on AWS Elastic Beanstalk</h2>
+By Swen Mock
+<p>This article is intended to be a very basic step-by-step tutorial on how to set up <a href="http://drupal.org">Drupal</a> within <a href="http://aws.amazon.com/en/elasticbeanstalk/">AWS Elastic Beanstalk</a>, an Amazon Web <a href="http://en.wikipedia.org/wiki/Platform_as_a_service">Platform as a service (PaaS)</a> solution. The article does not go into detail about long-term experiences of hosting or working with AWS Elastic Beanstalk and Drupal, maybe a future article will cover this interesting subject.
+You will need an <a href="http://aws.amazon.com/">Amazon AWS Account</a> to proceed with this tutorial, the account registration process should be self-explanatory enough, just follow the instructions.</p>
+
+<p>I am a fan of bullet points and don't like running text in a tutorial, so, let's jump straight in:</p>
+
+<h3>STEP 1: Prepare your local workstation</h3>
+
+<ul>
+<li>This step may differ depending on what local OS you have running, in my case it is OS X (10.6.8) so I will describe all necessary steps for this system. Don’t worry: you will find help easily in the <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_PHP_eb.sdlc.html">official Amazon documentation</a> </li>
+<li>Back to the road: Get and unzip the <a href="http://aws.amazon.com/code/6752709412171743">Elastic Beanstalk Command Line Tools</a>, short ‘eb’ (you will need them anyway for the deployment process later on)</li>
+<li>Copy the unzipped files (folder) to a location of your choosing</li>
+<li>Add the eb location to your consoles path variable, e.g. by adding<br />
+<code>export PATH=$PATH:&lt;path to eb&gt;</code> to your <em>.bash_profile</em></li>
+<li>At this point: Be sure you have the correct <a href="http://www.python.org/download/">Python</a> version installed already (2.7+ is required), I had to update mine (Note: Don't try Python 3.3+ on an Mac OS 10.6, it won't work, take Python 2.7 and everything is fine)</li>
+<li>You can check your Python version by typing:<br />
+<code>python --version</code></li>
+</ul>
+
+<h3>STEP 1.1: Prepare Drupal to be deployed</h3>
+
+<ul>
+<li>You will need GIT installed on your machine, if you don't have it yet, get it <a href="http://git-scm.com/download/">here</a>!</li>
+<li>Get a current copy of Drupal from <a href="https://drupal.org/download">Drupal.org</a> and unzip the files into a folder like <em>‘htdocs’</em></li>
+<li>Go to your new drupal folder, in my case this is ‘htdocs’, and initiate a git repository with the command:<br />
+<code>git init</code></li>
+<li>Next add all the drupal files to that repository by typing:<br />
+<code>git add . -A</code></li>
+<li>Now make a initial commit:<br />
+<code>git commit -m “Initial Commit”</code></li>
+<li>You should now have a master branch which is currently checked out</li>
+</ul>
+
+<h3>STEP 1.2: Initialize Elastic Beanstalk CLI &amp; configure Beanstalk environment</h3>
+
+<ul>
+<li>I summarized these steps, for details take a look at the <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_PHP_eb.sdlc.html">official Documentation</a></li>
+<li>Within your local drupal folder - in my case ‘htdocs’ - use the command:<br />
+<code>eb init</code></li>
+<li>You will be prompted to enter your <strong>AWS Access Key ID</strong> (NOTE: <em>‘Key ID’</em> and <em>‘Key’</em> are two different things). If you need to know how to get that, check <a href="http://docs.aws.amazon.com/general/latest/gr/getting-aws-sec-creds.html">'Getting AWS security credentials'</a> </li>
+<li>Next you will be asked to enter your <strong>AWS Secret Access Key</strong> .</li>
+<li>Then you will be asked to select your <em>AWS Elastic Beanstalk service region</em>, in my case this is <em>‘EU West (Ireland)’</em></li>
+<li>After selecting the region you can name your application, default will be the name of your folder; in my case the folder default name was ‘htdocs’ so I entered <em>‘drupal’</em> as a new, more fitting, application name</li>
+<li>Next you will be asked for the environment name of your application, default is ‘[name of application]-env’; I accepted <em>‘drupal-env’</em> for my test case</li>
+<li>As the next step you have to choose a fitting solution stack, that means which OS the target (hosting) machine has to run; I selected <em>‘64bit Amazon Linux running PHP 5.4’</em></li>
+<li>After that you have to select which environment type should be used, load-balanced or single-instance; because this is a test case for me, I selected <em>‘single-instance’</em></li>
+<li>Next accept to create a <strong>RDS DB Instance</strong>; of course we need a database to run our Drupal application</li>
+<li>When you are asked whether an existing snapshot should be used or not, decline</li>
+<li>Now you have to enter a <em>DB master password</em> and retype it to confirm</li>
+<li>Next you can decide to make a DB snapshot</li>
+<li>You are asked which environment profile should be used; I used <em>default</em></li>
+<li>After this last step, the eb config file <em>‘aws_credential_file’</em> will be written</li>
+</ul>
+
+<h3>STEP 2: Deploying Drupal as a sample application</h3>
+
+<ul>
+<li>In your local application folder - in my case ‘htdocs’ - where you initialized eb, type:<br />
+<code>eb start</code></li>
+<li>The upload and boot-up process of your application and the configured beanstalk environment starts, this may take several minutes - around 12 minutes in my case - perhaps you should go and get a fresh cup of coffee</li>
+<li>After the process has finished, your Elastic Beanstalk environment, in my case named <em>‘drupal-env’</em>, should be up and healthy without problems</li>
+<li>Go to the <strong>Elastic Beanstalk web interface</strong>, select the register with your new environment, you will be automatically linked to the dashboard of this environment, click there the link to your environment (red marked on image):
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130823/aws_eb_dashboard_env-link.png" rel="lightbox[field_picture][&lt;p&gt;&lt;a href=&quot;http://comm-press.de/sites/default/files/articles/images/20130823/aws_eb_dashboard_env-link.png&quot;&gt;Download Original&lt;/a&gt;&lt;/p&gt;]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130823/aws_eb_dashboard_env-link.png?itok=V_j5ecjB" width="800" height="482" alt="" /></a></div></div></div></div></li>
+<li>You will get to the drupal standard installation screen, hosted by AWS and embedded into a AWS Elastic Beanstalk environment</li>
+</ul>
+
+<h3>STEP 3: Installing Drupal</h3>
+
+<ul>
+<li>Go through the installation steps until you are asked for database configuration
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130823/drupal_install_db-settings.png" rel="lightbox[field_picture][&lt;p&gt;&lt;a href=&quot;http://comm-press.de/sites/default/files/articles/images/20130823/drupal_install_db-settings.png&quot;&gt;Download Original&lt;/a&gt;&lt;/p&gt;]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130823/drupal_install_db-settings.png?itok=yJGW-FGP" width="800" height="485" alt="" /></a></div></div></div></div></li>
+<li>Use <strong>‘ebdb’</strong> as database name and <strong>‘ebroot’</strong> as database username; these names were set by the eb command line interface when initialising the eb environment locally</li>
+</ul>
+
+<h4>Excursion</h4>
+
+<ul>
+<li>If you ever want to or have to know e.g. what name your RDS database has, go to your <a href="https://console.aws.amazon.com/rds">RDS Webinterface</a> and select <strong>'Instances'</strong> from the menu on the left. There you get a table with available database instances:
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130823/aws-rds-database-instances.png" rel="lightbox[field_picture][&lt;p&gt;&lt;a href=&quot;http://comm-press.de/sites/default/files/articles/images/20130823/aws-rds-database-instances.png&quot;&gt;Download Original&lt;/a&gt;&lt;/p&gt;]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130823/aws-rds-database-instances.png?itok=1I2vgk89" width="800" height="486" alt="" /></a></div></div></div></div></li>
+<li>There you can click on the 
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130823/icon.png" rel="lightbox[field_picture][&lt;p&gt;&lt;a href=&quot;http://comm-press.de/sites/default/files/articles/images/20130823/icon.png&quot;&gt;Download Original&lt;/a&gt;&lt;/p&gt;]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130823/icon.png?itok=YRkgyZhD" width="25" height="25" alt="" /></a></div></div></div></div> 
+icon to see the detailed configuration screen of that database instance:
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130823/aws_rds_database-instance-details.png" rel="lightbox[field_picture][&lt;p&gt;&lt;a href=&quot;http://comm-press.de/sites/default/files/articles/images/20130823/aws_rds_database-instance-details.png&quot;&gt;Download Original&lt;/a&gt;&lt;/p&gt;]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130823/aws_rds_database-instance-details.png?itok=0q8c0HVm" width="800" height="492" alt="" /></a></div></div></div></div></li>
+</ul>
+
+<h3>Back to your Drupal install process:</h3>
+
+<ul>
+<li>Unfold the <em>‘Advanced Options’</em> container to enter Host and Port of your new RDS Database instance</li>
+<li>You get this information at the <strong>Elastic Beanstalk web interface</strong> of your environment under the <em>‘Configuration’</em> menu item, search for <em>‘Data Layer’</em> and the box named simply <em>‘RDS’</em>:
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130826/aws_eb_rds-configuration.png" rel="lightbox[field_picture][&lt;p&gt;&lt;a href=&quot;http://comm-press.de/sites/default/files/articles/images/20130826/aws_eb_rds-configuration.png&quot;&gt;Download Original&lt;/a&gt;&lt;/p&gt;]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130826/aws_eb_rds-configuration.png?itok=TFDwoD9l" width="800" height="456" alt="" /></a></div></div></div></div></li>
+<li>Copy host (endpoint) url but beware to only copy the URL string, EXCLUSIVE the port ‘:3306’ suffix and paste that into your drupal installation screen</li>
+<li>Enter the port number, generally this will be <em>3306</em></li>
+<li>Press the ‘Save and Continue’ button</li>
+<li>Follow the next steps, configure your ‘user 1’ account and . . .</li>
+<li>Tada! You got Drupal within an AWS Elastic Beanstalk environment!</li>
+</ul>
+
+<p>To finish this up, I wan't to show you how easily local changes could be deployed:</p>
+
+<h3>STEP 4: Deploy local changes</h3>
+
+<ul>
+<li>Make your changes to your local files</li>
+<li>Add them as usual to Git, by typing<br />
+<code>git add . -A</code></li>
+<li>Commit the added stuff<br />
+<code>git commit -m “Update Test”</code></li>
+<li>And then, push it right to your Beanstalk environment by typing:<br />
+<code>git aws.push</code></li>
+<li>That’s all, if everything is all right, you will see something similar to:
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130823/aws_eb_deployed.png" rel="lightbox[field_picture][&lt;p&gt;&lt;a href=&quot;http://comm-press.de/sites/default/files/articles/images/20130823/aws_eb_deployed.png&quot;&gt;Download Original&lt;/a&gt;&lt;/p&gt;]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130823/aws_eb_deployed.png?itok=b6E1dj_E" width="800" height="129" alt="" /></a></div></div></div></div></li>
+<li>Your Beanstalk Environment will be updated and restarted automatically, this may take a few seconds</li>
+<li>That’s all! Update complete.</li>
+</ul>
+
+<p>As I said, this is a very basic howto get drupal into AWS Elastic Beanstalk but I hope this will be helpful to some of you.
+Next time I will try to get <a href="http://aws.amazon.com/en/opsworks/">AWS OpsWorks</a> working with Drupal.</p>
+  </body>
+</html>
+

@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 06:01:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 06:01:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Rerolling patches for PSR-4
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/424758
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Rerolling patches for PSR-4</title>
+    <base href="https://groups.drupal.org/node/424758">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>All Drupal 8 core module code was recently <a href="https://drupal.org/node/2247991">converted to the PSR-4 standard</a>. This issue moved hundreds of files and so many patches will need rerolls. You can update patches safely with the following workflow (provided by @donquixote):</p>
+<ol>
+<li><strong>Ensure you have the latest 8.x HEAD in your Drupal 8 repository: <code>git pull origin 8.x</code></strong></li>
+<li><code>git checkout -b tmp 00339b3d</code> to create a new a new (temporary) branch from the Drupal 8 commit hash before the patch for <a href="https://drupal.org/node/2247991">Issue #2247991</a> i=was committed.</li>
+<li><strong><code>git apply --index</code> the patch and commit to the new branch.</strong></li>
+<li><strong><code>git rebase 8.x</code></strong> -- This should actually preserve all the local changes to existing files, because git understands if a file has been moved.</li>
+<li>Run <strong><code>php core/scripts/switch-psr4.sh</code> and commit the changes.</strong> This is for files that were added in the patch or local branch. Remember, this script will add and remove files without udpating the git index, so you will need to add and remove files with <code>git add</code>.</li>
+<li><strong><code>git diff 8.x</code> to produce a new version of the patch.</strong></li>
+<li>Upload the new patch to the issue and set the issue "Needs review".</li>
+</ol>
+<p>As always, be sure to review your updated patch carefully for any errors.</p>
+  </body>
+</html>
+

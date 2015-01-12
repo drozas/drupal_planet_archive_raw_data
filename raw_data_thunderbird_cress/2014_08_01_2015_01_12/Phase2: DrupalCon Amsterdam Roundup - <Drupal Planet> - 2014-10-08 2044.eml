@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 08 Oct 2014 19:44:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 08 Oct 2014 19:44:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: DrupalCon Amsterdam Roundup
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/drupalcon-amsterdam-roundup/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: DrupalCon Amsterdam Roundup</title>
+    <base href="http://www.phase2technology.com/blog/drupalcon-amsterdam-roundup/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As I write this, I&#8217;m on a plane back to the US after a whirlwind 10 days in Amsterdam for DrupalCon Amsterdam 2014. As always it is so gratifying to meet and work with the international Drupal community. I love getting to take a look at what everyone is working on and collaborate with people that you might otherwise only know as IRC nicks. Here are my highlights of DrupalCon Amsterdam:</p>
+<h2 id="sprints-and-drupalorg-logging">Sprints and Drupal.org Logging</h2>
+<p>I volunteer my time to help the drupal.org infrastructure team with their logging infrastructure. I was very happy to be able to sprint for 3 days, mainly on drupal.org infrastructure. On Sunday, Friday, and Saturday, I worked with the Drupal.org Puppet configuration to get a new CentOS 6-based log aggregation host ready to go running the latest versions of the ELK (ElasticSearch, Logstash, and Kibana) stack. The new Logstash configuration that we&#8217;ll be rolling out is much simpler. Stay tuned to the blog for information on some of the improvements we made in the process. We hope to deploy the new logging host within the week.</p>
+<h2 id="devops-meetup">DevOps Meetup</h2>
+<p>Tuesday evening, I attended the DevOps Amsterdam meetup.  The meetup was sponsored by ElasticSearch, who bought a delicious dinner for all attendees as well as some drinks. During dinner, I sat with some folks from Germany and had a chance to speak with a number of ops-attuned folks about Docker and the possible use cases for it.</p>
+<p>The meetup had some great content. There was a talk on how <a href="http://www.jacobvosmaer.nl/files/omnibus-gitlab-20140930.pdf">GitLab uses omnibus to package GitLab with far less hassle</a>, a talk from fellow d.o infra team volunteer Ricardo Amaro on building the next-gen Drupal testbot on Docker, and a great talk from the DrupalCon Amsterdam DevOps chair Bastian Widmer <a href="http://bastianwidmer.ch/slides/2014-09-30_Culture_BastianWidmer_DevOpsMeetupAmsterdam.pdf">on developing culture and sharing knowledge in an agency</a>.</p>
+<h2 id="lsd">LSD Leadership Meeting</h2>
+<p>Earlier this year, Phase2 contributed some of its innovation hours to the LSD project and worked with Acquia to present a webinar on Behat and release a pre-built virtual machine designed to make it easy to start doing automated testing using Behat. During the LSD leadership meeting I joined Melissa Anderson of Tag1 Consulting and Hugh Fidgens of Pfizer in a breakout session discussing Behat. Quite a few organizations present were very interested in how they could use Behat to enable a behavior-driven development workflow with their developers, or to develop a good set of automated tests that could be run either as smoke tests or as end-to-end integration tests.</p>
+<h2>Behat Everywhere</h2>
+<p>In addition to the LSD leadership meeting, automated testing and BDD were topics on everyone&#8217;s minds throughout DrupalCon.</p>
+<p>I attended 2 BoF about automated testing or Behat, the Testing Drupal 8 BoF, and Hugh Fidgen&#8217;s Organizational Behat BoF. These talked about how we could better leverage automated testing tools in Drupal core and in client work we build today, respectively. Many people have had some success in getting automated tests or a BDD workflow started, but there was a lot of talk about writing good sustainable tests and how to integrate these tools into your workflow.</p>
+<p>Speaking of writing sustainable tests, my favorite session of the conference was definitely <a href="https://amsterdam2014.drupal.org/session/doing-behaviour-driven-development-behat">the session by Konstantin Kudryashov (the creator of Behat and Mink) on how to do BDD with Behat</a>. The session was remarkable and left an impact on many folks who went there. It really emphasized the point that BDD must be about identifying and delivering business value in our projects, and that doing that is the way to write good tests. It is definitely worth an hour of your time to watch.</p>
+<p>As testing best practices are refined in the Drupal community as well as in Phase2, I&#8217;m very excited that the talented Jonathan Hedstrom <a href="http://www.phase2technology.com/blog/phase2-and-opensourcery-whats-new-in-portland/">has joined the Phase2 team</a>.  Jonathan is a maintainer of <a href="https://www.drupal.org/project/drupalextension">the Behat DrupalExtension</a>, and is sure to help us further refine our testing practices as Phase2. Jonathan has been doing work recently on upgrading the DrupalExtension to support Behat 3 and has plans to generalize the drivers that the Behat DrupalExtensions provides so that it could be used with Mink for writing tests in straight PHP without needing to use Behat.</p>
+<p><span style="font-size: 1.5em; line-height: 1.5em;">My &#8220;Open Source Logging and Monitoring Tools&#8221; Session</span></p>
+<p>On Wednesday I presented my session &#8220;<a href="https://amsterdam2014.drupal.org/session/using-open-source-logging-and-monitoring-tools">Using Open Source Logging and Monitoring Tools.</a>&#8221; I covered a lot of information in my session including using Logstash, ElasticSearch, and Kibana.  Thanks to the tireless work of the DrupalCon A/C crew, the <a href="https://www.youtube.com/watch?v=ERsBKxCTNgE">video recording of my session is online</a>, and <a href="http://www.slideshare.net/Phase2Technology/open-source-logging-and-metrics-tools">the slides are available on SlideShare if you would like to follow along</a>.  The session had an excellent turnout, and there were some great questions and discussions following my session. I was quite pleased at the large turnout, and so was <a title="@KrisBuytaert" href="https://twitter.com/KrisBuytaert">@KrisBuytaert</a>, who been bringing information about DevOps-related topics to DrupalCons for years.</p>
+<blockquote class="twitter-tweet" lang="en"><p>I need to rephrase my state of <a href="https://twitter.com/hashtag/devops?src=hash">#devops</a> and <a href="https://twitter.com/hashtag/drupal?src=hash">#drupal</a> conclusion, 2 years ago in Munich there were 10 people in this talk ..(1/2)</p>
+<p>— Kris Buytaert (@KrisBuytaert) <a href="https://twitter.com/KrisBuytaert/status/517289878355468288">October 1, 2014</a></p></blockquote>
+<p><script charset="utf-8" type="text/javascript" src="//platform.twitter.com/widgets.js" async=""></script></p>
+<blockquote class="twitter-tweet" lang="en"><p>
+Back then by <a href="https://twitter.com/samkottler">@samkottler</a> , this year <a href="https://twitter.com/stevenmerrill">@stevenmerrill</a> &#8216;s talk is packed , we are winning this ! <a href="https://twitter.com/hashtag/logstash?src=hash">#logstash</a>, <a href="https://twitter.com/hashtag/drupalcon?src=hash">#drupalcon</a> <a href="https://twitter.com/hashtag/elasticsearch?src=hash">#elasticsearch</a></p>
+<p>— Kris Buytaert (@KrisBuytaert) <a href="https://twitter.com/KrisBuytaert/status/517290078893531136">October 1, 2014</a>
+</p></blockquote>
+<p><script charset="utf-8" type="text/javascript" src="//platform.twitter.com/widgets.js" async=""></script></p>
+<p>We were also fortunate to have Leslie Hawthorne of ElasticSearch in the audience. She gave out ElasticSearch ELKs to sprinters at the Friday event.</p>
+<blockquote class="twitter-tweet" lang="en"><p>Packed house for <a href="https://twitter.com/stevenmerrill">@stevenmerrill</a> in <a href="https://twitter.com/hashtag/DrupalCon?src=hash">#DrupalCon</a> <a href="https://twitter.com/hashtag/DevOps?src=hash">#DevOps</a> track. About to learn how the d.o infra team uses <a href="https://twitter.com/hashtag/elkstack?src=hash">#elkstack</a> <a href="http://t.co/MThDhkA48E">pic.twitter.com/MThDhkA48E</a></p>
+<p>— Leslie Hawthorn (@lhawthorn) <a href="https://twitter.com/lhawthorn/status/517286601073119232">October 1, 2014</a></p></blockquote>
+<p><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<h2 id="takeaways">Takeaways</h2>
+<p>Based on the sheer number of people interested and sessions to devoted to both topics, it is clear that there is a growing interest in both logging and metrics and automated testing or BDD in the Drupal Community. This is also the 11th DrupalCon I&#8217;ve been to, and this year&#8217;s keynotes were the best I could remember. I really enjoyed Dries&#8217;s ideation around sustainable methods for getting contributions to Drupal core and contrib, and getting to see Cory Doctorow speak live about the perils of DRM and restrictions software freedoms was also excellent.</p>
+<p>This is an exciting time for Drupal. Drupal 8 beta 1 is live. The community is active and engaged around making Drupal better, both by contributing to Drupal 8 and by doing a better job testing projects built on it. The DA and an army of volunteers have made huge strides on improving the infrastructure around core testing as well as around all the online communities under drupal.org.</p>
+  </body>
+</html>
+

@@ -1,0 +1,85 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 18 Jun 2014 17:15:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 18 Jun 2014 17:15:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Get Pantheon Blog: The Great Drupal Multisite Debate
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.getpantheon.com/blog/great-drupal-multisite-debate
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Get Pantheon Blog: The Great Drupal Multisite Debate</title>
+    <base href="https://www.getpantheon.com/blog/great-drupal-multisite-debate">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Well, that was a little tense. </p>
+
+<p>Thursday afternoon at DrupalCon Austin, we gathered the most over-attended BoF session I've seen in quite a while for "the Great Multisite Debate", in part sparked by blog posts I've written about how I don't believe this architecture is the future for Drupal. Clearly, I anchored on one end of the spectrum.</p><!--break-->
+
+<iframe width="590" height="330" src="//www.youtube.com/embed/9dJxEUM2YOY" frameborder="0" allowfullscreen></iframe>
+
+<p>On the opposite end from me were <a href="https://twitter.com/jakubsuchy">Jakub</a> and <a href="https://twitter.com/EclipseGc">Kris</a>, team members from Acquia, and <a href="http://ergonlogic.com/">Christopher Gervais, a leading member of the Aegir project</a>. Occupying the mushy middle ground was <a href="https://twitter.com/btopro">Bryan Ollendyke</a> — leader of the ELMS project — and <a href="https://www.zivtech.com/about/staff/frank-carey">Frank Cary, now VP of Product at Zivtech</a>, but formerly of Sony Music, where he worked with one of the earliest large multisite builds. <a href="http://thinkdrop.net/">Jon Pugh</a> did his best to moderate.</p>
+
+<h4>My Position In A Nutshell</h4>
+
+<p>I've laid it out <a href="https://www.getpantheon.com/pantheon-one/drupal-multisite">in detail before</a>, but to put it bluntly I don't think multisite is the future architecture for Drupal or any other open source website framework. We need something better. There's too much complexity pushed onto developers, and even with a perfect set of deployment tools the risk is still too high.</p>
+
+<p>Multisite paints you into the same architectural corners as shared hosting. People say all the time that "that's not really a multisite thing", and it's true: you can be dragged down noisy neighbors, application complexity, and security problems for a whole host of reasons. However, multisite more or less <em>forces</em> you into these compromises, the same way choosing low-end shared hosting does.</p>
+
+<p>To wit - you have a lot of different end-users (distinct sites) co-located onto a shared set of resources with no partitioning. There's no way around this if you want to run lots of sites on one codebase. If anyone does anything interesting (good or bad) there will be trouble.</p>
+
+<p>That may be the only viable answer if you are on a very tight budget, or it could be an acceptable risk if your sites aren't very important. But it's not the future infrastructure for an Open Source Web. We don't 10x our number of installs by accepting those kinds of tradeoffs. </p>
+
+<h4>A Few Caveats</h4>
+
+<p>I expected fireworks, but the energy in the room was still was more emotional than I prepared for. After pondering that quite a bit, I think that might be because for many it feels like their work is being belittled when I critique multisite as an architecture. That seems obvious in hindsight, but I don't think I really appreciated it fully.</p>
+
+<p>So: <strong>I am not trying to call anyone's work poor or sub-par</strong>. I've contributed code to Aegir. I've set up multisites successfully. I'm not saying you're wrong if you do or have done the same. </p>
+
+<p>I am not saying multisite <em>can't work</em>; I'm just saying I've seen it fail. Often. Painfully. Mostly because it has a lot of flaws and risks. But if you're winning with it, more power to you. Please don't be shy about sharing your secrets for success with the wider world.</p>
+
+<p>Likewise, I'm particularly sensitive to the notion that my blog posts could be used by an aggressive sales rep at Adobe or SiteCore or some other proprietary racket to try and warn people off Drupal as a solution, which was Jakub's main concern. That would suck, and I'll have to to start salting all my posts with caveats explaining that Adobe and SiteCore represent a <em>far greater risk</em> for an organization looking for a website platform compared to Multisite.</p>
+
+<h4>That Said...</h4>
+
+<p>There's a reason that Frank ends up saying things like, "well, if you're going to do something dangerous I want to give you prophylactic advice." There's a reason why many old hands in the Drupal community cast a skeptical eye towards multisite — or <a href="https://www.youtube.com/watch?v=6ezdpbj9bug#t=2845">as Robert Douglass said in an earlier session, it "should die and burn in hell"</a>. There's a reason why Sony Music, which is Frank's main experience with big Multisite, actually moved away from it on their next refit.</p>
+
+<p>I think it's often difficult in Drupal to day that anything is better than anything else, and I think this holds us back. Without the ability to be critical, we won't advance. If we don't advance, we'll ultimately end up being a footnote or less in history.</p>
+
+<p>Just like Drupal core decided to move away from our familiar procedural hook system to Object Oriented programming and Symfony2 with the 8.0 release, I think we need to start looking beyond the status-quo for solving the problem of running a large numbers of sites. We have to do better if we want to see wider adoption.</p>
+
+<p>I felt like as a “debate” we ducked this big question. A lot of the discussion felt like a brainstorming session on how to mitigate the pain that comes with multisite, rather than an honest discussion about the architecture itself, and whether or not we deserve something better. </p>
+
+<h4>Economics</h4>
+
+<p>We also glossed over budget and business in this debate a bit. I think it's important to acknowledge that economics play a huge role:</p>
+
+<ul>
+<li>Some vendors are actively selling solutions that are based on multisite.</li>
+<li>Other vendors (e.g. us) are actively developing <a href="https://www.getpantheon.com/content/i-cant-believe-its-not-multisite">other solutions based on newer architectures to provide customers with an alternative</a>.</li>
+<li>For many users, multisite is currently the only option for how they can square their infrastructure budget with the volume of sites they have to support.</li>
+</ul>
+
+<p>The last point is the one that matters. The first two just add heat to the debate. Vendors are bound to clash over solutions architecture, but we can all agree that any big-picture answer to the problem of operating sites at volume will need to be able to deliver price-points that can at least compete with piling a bunch of sites on a server somewhere. </p>
+
+<p>That’s a challenge. I think it’s something we should take on as a community to think about and work on. I don't think Drupal should double-down on multisite just because it's what we know historically.</p>
+
+<p>This debate will continue, and I’m game. There's a lot more to discuss. My thanks to everyone who represented on the panel, and attended!</p></div></div></div><div class="field field-name-field-blog-related-posts field-type-entityreference field-label-above"><div class="field-label">Related posts:&nbsp;</div><div class="field-items"><div class="field-item even">Drupal Multisite: Much ado About Drupal Multisite</div><div class="field-item odd">Why Drupal Multisite Is Not Enterprise Grade</div><div class="field-item even">Nobody Ever Goes Back to Multisite</div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="https://www.getpantheon.com/blog/great-drupal-multisite-debate"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="The Great Drupal Multisite Debate">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=https%3A//www.getpantheon.com/blog/great-drupal-multisite-debate&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="https://www.getpantheon.com/blog/great-drupal-multisite-debate"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="https://www.getpantheon.com/blog/great-drupal-multisite-debate" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

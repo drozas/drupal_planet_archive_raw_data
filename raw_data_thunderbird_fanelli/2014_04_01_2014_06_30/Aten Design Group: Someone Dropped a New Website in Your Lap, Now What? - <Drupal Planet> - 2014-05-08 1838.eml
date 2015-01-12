@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 May 2014 16:38:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 May 2014 16:38:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Someone Dropped a New Website in Your Lap, Now What?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/someone-dropped-new-website-your-lap-now-what
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Someone Dropped a New Website in Your Lap, Now What?</title>
+    <base href="http://atendesigngroup.com/blog/someone-dropped-new-website-your-lap-now-what">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>At Aten, I tend to work on already live websites. Sometimes this means small bug fixes. Sometimes it encompasses information architecture, design work, a weeklong development sprint or working on the front end. In most cases my work is on a site I didn't build originally and often on a site Aten didn't build.</p>
+
+<p>I started putting some notes together on some of the gotchas I run across when working on new-to-me sites. This will become a series of blog posts, but one always has to start at the beginning: getting the site working on your local environment.</p>
+
+<p>We're assuming you already have some sort of a <a href="http://en.wikipedia.org/wiki/LAMP_(software_bundle)">LAMP</a>/<a href="https://www.mamp.info/en">MAMP</a>/<a href="http://www.wampserver.com/">WAMP</a> stack working.</p>
+
+<h2>Version Control</h2>
+
+<p>Next, you'll need access to the code to get it into your preferred version control system. Make sure you don't commit any settings.php files, the files directory, and possibly .htaccess if it contains server-specific settings. If using Git, remember that just because you've added these files/directories to .gitignore, <a href="http://aralbalkan.com/2389/">doing <span class="geshifilter"><code class="text geshifilter-text">git add .</code></span> will add them anyway</a>. If the code is already in a repository this step should be as easy as <span class="geshifilter"><code class="text geshifilter-text">git clone [PATH]</code></span>. If not, you might need to use something like <span class="geshifilter"><code class="text geshifilter-text">tar czvf ~/everything.tar.gz public_html</code></span> to make a copy of the whole file structure. I've also seen cases where JavaScript libraries are maintained as separate Git repositories within the main one. If those are in .gitignore a regular <span class="geshifilter"><code class="text geshifilter-text">git clone</code></span> of the main repo will skip these. I prefer to keep everything together by removing the entries in .gitignore. Run <span class="geshifilter"><code class="text geshifilter-text">git clone</code></span> on each library, delete each library's .git folder, and finally use <span class="geshifilter"><code class="text geshifilter-text">git add</code></span> to add them to the main repository.</p>
+
+<h2>Database</h2>
+
+<p>After you have the code, you'll need to make a database export and import it. <span class="geshifilter"><code class="text geshifilter-text">Drush sql-sync</code></span> can do this, assuming [but that presumes] you have ssh keys and aliases configured and an already running site that drush can bootstrap. From the MySQL command line, <span class="geshifilter"><code class="text geshifilter-text">create database [DATABASE_NAME]; use [DATABASE_NAME]; source ./[FILENAME.sql]</code></span> always works. Don't forget to create a database user with something like: <span class="geshifilter"><code class="text geshifilter-text">GRANT ALL ON database.* TO user@localhost IDENTIFIED BY 'someLongAndCompletelyRandomPassword'; FLUSH PRIVILEGES;</code></span>.</p>
+
+<h2>Files</h2>
+
+<p>Along with the database, you'll need to deal with the files directory.  If you had to tar the whole thing you've already got many megabytes of files on your hard drive. If you want to avoid that, <a href="http://drupal.org/project/stage_file_proxy">Stage File Proxy</a> can help by downloading images from a production website as needed on a page by page basis. While this will help, there are some images it has problems dealing with. Another possibility is <a href="http://www.lullabot.com/blog/article/using-remote-image-files-when-you-develop-locally">using Apache rewrites to load image resources from the production site</a>.</p>
+
+<h2>Domain</h2>
+
+<p>My final steps are to <a href="https://drupal.org/node/238805">add an entry to /etc/hosts for the new local domain</a>, and an entry or new vhosts .conf file to direct that domain to the correct web root directory. Finally, flush DNS cache and restart apache. These steps will differ slightly, depending on your specific LAMP implementation.</p>
+
+<p>Once we have the site up and running, it's time to make some improvements. Next time I'll discuss how to track down some specific situations when you know very little about how a site was built.</p>
+  </body>
+</html>
+

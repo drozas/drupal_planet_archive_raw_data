@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 31 Aug 2013 20:16:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 31 Aug 2013 20:16:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: OO in D8: Interfaces vs. Abstract Classes (Part 1)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/oo-d8-interfaces-vs-abstract-classes-part-1
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: OO in D8: Interfaces vs. Abstract Classes (Part 1)</title>
+    <base href="http://comm-press.de/en/blog/oo-d8-interfaces-vs-abstract-classes-part-1">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Object-Oriented Design in Drupal 8 Mini-Series</h2>
+By Tobias Stöckler
+<p>It's been a while since I visited the Symfony Summit in Cologne in the beginning of July. I had two days of training there, one of which was on the topic of <em>Object-Oriented Design</em>. All other participants used Symfony on a daily basis, but none of them had worked with Drupal before, at least not in-depth. So, as a Drupal 8 core developer, I had a unique perspective on the presented topics. There were three things in particular that stood out to me in the training, and I'd like to share them with you as part of this mini-series.</p>
+<style>
+<!--/*--><![CDATA[/* ><!--*/
+p code { display:inline }
+/*--><!]]>*/
+</style><p>The single biggest effort of Drupal 8 is that to move all procedural code into object-oriented classes that have their dependencies injected. Using PHP's type-hinting, the class of the passed-in object can be enforced. It is a standard for Drupal 8, however, to type-hint an interface instead of a class. That way only the functions that an object must have (and their parameters) are locked down; the actual implementation can be done in numerous different ways by different classes. Often times an abstract base class is provided as well in Drupal 8. An abstract base class can make it easier to implement an interface by implementing certain methods, that are generic enough for most use-cases.</p>
+<p>Let's take Drupal's Comment module, for example. In Drupal 8 each <code>$comment</code> object is an instance of the <a href="https://api.drupal.org/api/drupal/core!modules!comment!lib!Drupal!comment!Entity!Comment.php/class/Comment/8"><code>Comment</code></a> class. It handles the default logic associated with comments, most prominently it handles the threading logic that Drupal provides. But all functions that work with comments, for instance <a href="https://api.drupal.org/api/drupal/core!modules!comment!lib!Drupal!comment!Controller!CommentController.php/function/CommentController%3A%3AcommentPermalink/8">the route controller that redirects to the comment permalink</a>, do not type-hint the <code>Comment</code> class, but <a href="https://api.drupal.org/api/drupal/core!modules!comment!lib!Drupal!comment!CommentInterface.php/interface/CommentInterface/8"><code>CommentInterface</code></a> that is also provided by Comment module. That way, in case you want to implement your own improved threading logic, you can provide an alternative to the <code>Comment</code> class and everything will work fine, as long as you implement <code>CommentInterface</code>. In this particular case there is no abstract base class; the implementation lives directly in the <code>Comment</code> class.</p>
+<p>Going into the training, I had thought that this concept of swappability by providing interfaces is fundamental to object-oriented design and that it would be endorsed by the trainers. To my confusion, however, I was told that in the Symfony world it is common to not create an interface at all and simply type-hint an abstract base class. That way, only sub-classes of the base class can be passed-in to the given object. You can still override the methods of the base class, but you are locked into its general architecture; if you want to solve the same problem in a completely different way, you can't.
+ I was puzzled hearing this, as clearly either Drupal or Symfony must be wrong on this very fundamental issue, I thought. Given my perhaps understandable Drupal bias I had the impression the Symfony community was being sloppy in not following the interface-driven pattern. Thinking about this is in the past weeks, however, I have come to understand that Drupal and Symfony serve fundamentally different use-cases and, thus, different patterns apply.</p>
+<p>Going back to the example above, we must consider that the comment functionality provided by Drupal's Comment module will be used by literally hundreds of thousands - if not millions - of websites. So while the current implementation in Drupal core has been thought up by numerous skilled and savy developers, it is unreasonable to assume it will fit the use-cases of every Drupal site out there. Where we can provide flexibility in Drupal core (without making significant trade-offs), we do. Symfony applications, on the other hand, are (at least in comparison to Drupal) built from the ground up. If a certain website has a need for comment functionality the given developer will write a <code>Comment</code> class that suits the needs of that specific site. And being conscious of possible future refactoring and design principles in general the developer will separate generic or re-usable parts into an abstract <code>CommentBase</code> class, which he will use for type-hinting. Keeping an eye out for possible abstractions is a good practice even in the scope of a single website, but in this case it would be unreasonable to account for radically different, theoretical use-cases, such as a completely different threading logic. Summarily, what is useful versatility in the Drupal case, is needless abstraction in the Symfony case.</p>
+  </body>
+</html>
+

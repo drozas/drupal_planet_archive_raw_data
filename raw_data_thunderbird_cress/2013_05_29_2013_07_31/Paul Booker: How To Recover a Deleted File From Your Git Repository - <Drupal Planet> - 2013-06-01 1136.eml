@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 01 Jun 2013 10:36:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 01 Jun 2013 10:36:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: How To Recover a Deleted File From Your Git Repository
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/command-lines/how-recover-deleted-file-your-git-repository
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: How To Recover a Deleted File From Your Git Repository</title>
+    <base href="http://www.paulbooker.co.uk/command-lines/how-recover-deleted-file-your-git-repository">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>First if you're not sure of the name of the deleted file check through your Git log ..</p>
+<pre class="brush: bash">
+git log --diff-filter=D --summary
+</pre><p>
+Find the last commit that affected the given file</p>
+<pre class="brush: bash">
+git rev-list -n 1 HEAD -- ./path/to/file/
+</pre><p>
+.. I'll refer to that as REVISON_NUMBER</p>
+<p>Now we can checkout the previous revision</p>
+<pre class="brush: bash">
+git checkout REVISON_NUMBER^ -- ./path/to/file/
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/taxonomy/term/7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">git</a></div><div class="field-item odd"><a href="/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix vertical easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/command-lines/how-recover-deleted-file-your-git-repository"
+data-count="vertical"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="How To Recover a Deleted File From Your Git Repository">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="tall" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/command-lines/how-recover-deleted-file-your-git-repository"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

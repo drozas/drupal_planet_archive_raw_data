@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 31 Aug 2014 21:00:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 31 Aug 2014 21:00:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Joachim's blog: Graphing relationships between entity types
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.noreiko.com/blog/graphing-relationships-between-entity-types
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Joachim's blog: Graphing relationships between entity types</title>
+    <base href="http://www.noreiko.com/blog/graphing-relationships-between-entity-types">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Another thing that was developed as a result of my big Commerce project (see <a href="http://www.noreiko.com/blog/ripple-effect">my previous blog post for the run-down of the various modules this contributed back to Drupal</a>) was a bit of code for generating a graph that represents the relationships between entity types.</p>
+<p>For a site with a lot of entityreference fields it's a good idea to draw diagrams before you get started, to figure out how everything ties together. But it's also nice to have a diagram that's based on what you've built, so you can compare it, and refer back to it (not to mention that it's a lot easier to read than my handwriting).</p>
+<p>The code for this never got released; I tried various graph engines that work with <a href="https://www.drupal.org/project/graphapi">Graph API</a>, but none of them produced quite what I was hoping for. It just sat in my local copy of Field Tools for the last couple of years (I didn't even make a git branch for it, that shows how rough it was!). Then yesterday I came across the <a href="http://sigmajs.org/">Sigma.js graph library</a>, and that inspired me to dig out the code and finish it off.</p>
+<p>To give the complete picture, I've added support for the relationships that are formed between entity types by their schema fields: things like the uid property on a node. These are easily picked out of hook_schema()'s foreign keys array.</p>
+<p>In the end, I found Sigma.js wasn't the right fit: it looks very pretty, but it expects you to dictate the position of the nodes in the canvass, which for a generated graph doesn't really work. There is a plugin for it that allows the graph to be force-directed, but that was starting to be too fiddly. Instead though, I found <a href="http://getspringy.com/">Springy</a>, that while maybe not quite as versatile, automatically lays out the graph nodes out of the box. It didn't take too long to write <a href="https://www.drupal.org/sandbox/joachim/2330333">a library module for using Springy with Graph API</a>.</p>
+<p>Here's the result:</p>
+<p><img src="http://www.noreiko.com/sites/default/files/article/image/field-tools-graph-springy_0.png" width="785" height="487" alt="Graph showing relationships between entity types on a development Drupa site" /></p>
+<p>Because this uses Graph API, it'll work with any graph engine, not just Springy. So I'll be interested to see what people who are more familiar with graphing can make it do. To get something that looks like the above for your site, it's simple: install the 7.x-1.x-dev release of <a href="http://drupal.org/project/field_tools">Field Tools</a>, install <a href="https://www.drupal.org/project/graphapi">Graph API</a>, install <a href="https://www.drupal.org/sandbox/joachim/2330333">the Springy module</a>, and follow the instructions in the README of that last module for installing the Springy Javascript library.</p>
+<p>The next stage of development for this tool is figuring out a nice way of showing entity bundles. After all, entityreference fields are on specific bundles, and may point to only certain bundles. However, they sometimes point to all bundles of an entity type. And meanwhile, schema properties are always on all bundles and point to all bundles. How do we represent that without the graph turning into a total mess? I'm pondering adding a form that lets you pick which entity types should be shown as separate bundles, but it's starting to get complicated. If you have any thoughts on this, or other ways to improve this feature, please share them with me in the Field Tools issue queue!</p>
+</div></div></div>
+  </body>
+</html>
+

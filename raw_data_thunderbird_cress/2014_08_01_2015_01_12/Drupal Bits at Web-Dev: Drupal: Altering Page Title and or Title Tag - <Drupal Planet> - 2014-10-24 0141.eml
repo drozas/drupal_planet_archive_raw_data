@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 24 Oct 2014 00:41:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 24 Oct 2014 00:41:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Bits at Web-Dev: Drupal: Altering Page Title and or Title Tag
+Content-Transfer-Encoding: 8bit
+Content-Base: http://web-dev.wirt.us/info/drupal-7-code-snippets/drupal-altering-page-title-and-or-title-tag
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Bits at Web-Dev: Drupal: Altering Page Title and or Title Tag</title>
+    <base href="http://web-dev.wirt.us/info/drupal-7-code-snippets/drupal-altering-page-title-and-or-title-tag">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Sometimes you need to alter the title that appears on the page and or the title tag in Drupal 7. If you need to make them both the same, a call to <a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/drupal_set_title/7" target="_blank">drupal_set_ttile()</a> from within a <a href="https://api.drupal.org/api/drupal/includes%21theme.inc/function/template_preprocess_page/7" target="_blank">hook_preprocess_page()</a> will do it.</p></div></div></div><ul class="links inline"><li class="node-readmore first"><a href="/info/drupal-7-code-snippets/drupal-altering-page-title-and-or-title-tag" rel="tag" title="Drupal: Altering Page Title and or Title Tag">Read more<span class="element-invisible"> about Drupal: Altering Page Title and or Title Tag</span></a></li>
+<li class="comment_forbidden last"></li>
+</ul>
+  </body>
+</html>
+

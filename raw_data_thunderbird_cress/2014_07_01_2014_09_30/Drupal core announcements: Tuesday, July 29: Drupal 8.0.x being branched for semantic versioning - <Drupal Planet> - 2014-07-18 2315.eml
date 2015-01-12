@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 18 Jul 2014 22:15:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 18 Jul 2014 22:15:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Tuesday, July 29: Drupal 8.0.x being branched for semantic versioning
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/434068
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Tuesday, July 29: Drupal 8.0.x being branched for semantic versioning</title>
+    <base href="https://groups.drupal.org/node/434068">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-type-datestamp field-field-start7">
+    <div class="field-items">
+            <div class="field-item odd">
+                      <div class="field-label-inline-first">
+              Start:&nbsp;</div>
+                    <span class="date-display-single">2014-07-29 <span class="date-display-start">12:00</span><span class="date-display-separator"> - </span><span class="date-display-end">14:00</span> America/New_York</span>        </div>
+        </div>
+</div>
+<div class="field field-type-text field-field-event-type">
+    <div class="field-items">
+            <div class="field-item odd">
+                    Online meeting (eg. IRC meeting)        </div>
+        </div>
+</div>
+<p>On this date, the new 8.0.x branch for Drupal 8 will be created so we can start using <a href="https://www.drupal.org/node/2135189">the new Drupal release cycle</a> in advance of beta 1.</p>
+<p>Steps involved are:</p>
+<ul>
+<li>drumm will create the 8.0.x branch</li>
+<li>Existing issues will be moved automatically from 8.x-dev to 8.0.x-dev (this may take a couple of hours)</li>
+<li>Testbot will be patched to look at the new 8.0.x branch instead of the old 8.x branch.</li>
+</ul>
+<p>After we're sure there is no fallout from this, the README.txt on the old 8.x will be amended to inform about the change, and then the 8.x branch will be removed entirely after a few days.</p>
+<p>Core developers should do the following once the process is complete to ensure they're patching against the latest version of the code:</p>
+<p><div class="codeblock"><code>git fetch<br />git checkout 8.0.x</code></div></p>
+<p>Woohoo!</p>
+  </body>
+</html>
+

@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 18 Sep 2014 17:05:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 18 Sep 2014 17:05:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: The Automagic Speed-Up Cache
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/automagic-speed-cache
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: The Automagic Speed-Up Cache</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/automagic-speed-cache">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Feature        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <h3>Motivation</h3>
+<p>The granularity of cache expiration in Drupal has been a long-standing problem.</p>
+<p>One can have the most effective cache in the world, but if it clears entirely on any content change, it is not really workable. A “page” in Drupal can have blocks, listing, entities, regions, and many other objects. When one contained item changes, the container of that item needs to be fully rebuilt; often, that is the whole page, a problem requiring a much-needed solution.</p>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/4.1-AutomagicPageRegions.png" alt="A page is divided into regions, blocks, listings, and content items. Only the red item needs to be re-built as only a single node has been changed; the rest can be retrieved from cache." class="img-responsive img-thumbnail" /></p>
+<p>Why can't we just rebuild the parts that have actually changed?</p>
+<p>Consider what would be the best case scenario here. Assume that every item listed above can be cached separately. Now if one single entity changes, the following would be our "perfect" page request:</p>
+<ol><li>Drupal bootstraps.
+</li><li>Drupal builds the page.
+</li><li>Drupal notices that only the “content” region has changed and retrieves the remaining regions from cache.
+</li><li>Drupal re-builds the content region.
+</li><li>Drupal notices only one listing in the content region has changed and retrieves the remaining blocks from cache.
+</li><li>Drupal builds the “missing” block.
+</li><li>The block contains a listing of entities.
+</li><li>Drupal re-builds the listing, and entity_view() is called on these entities.
+</li><li>Drupal retrieves all entities except the changed one from cache.
+</li></ol><p>We would have a bootstrap, then we would see just one region call, one block call, one listing call, and one entity building call. Is this really possible?</p>
+<p>Yes and no.</p>
+<p>There are certain implementation limitations – especially around page assets – and a unified caching strategy needs to take them into account.</p>
+<h3>State of the Art</h3>
+<p>Render Caching is the saving of HTML content in a storage cache, while retaining assets like CSS and JS files and other “out-of-band” data. It can be used for reconstructing the page content, without changing the state the page would have without render caching active. The render cached HTML markup needs to be removed from the cache, or updated in the cache when the objects used for generation of the markup change.</p>        </div>
+  </body>
+</html>
+

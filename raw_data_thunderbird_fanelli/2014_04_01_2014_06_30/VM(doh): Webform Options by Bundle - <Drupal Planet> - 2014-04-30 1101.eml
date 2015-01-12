@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 30 Apr 2014 09:01:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 30 Apr 2014 09:01:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: VM(doh): Webform Options by Bundle
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vmdoh.com//blog/webform-options-bundle
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>VM(doh): Webform Options by Bundle</title>
+    <base href="http://www.vmdoh.com//blog/webform-options-bundle">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>At one time or another, most Drupal developers have worked on a site with one or more Webforms that used a select list that pertained to some other entity on the site (such as a store location, law firm practice area, etc). And especially on sites with multiple forms, site administrators sometimes forget to update one of the lists.</p><p>The Webform Options by Bundle module fixes that for you. Webform has an feature on select lists for you to populate the options from a pre-built list such as countries or days of the week. This module uses a hook in Webform to let you populate the options with the labels of your entities. (Just to be clear, nodes are also entities. "Content Types" are bundles for the Node entity type. "Title" is the "label" for a Node entity.)</p><p>We've tagged a release as 7.x-1.0-rc1. You can <a href="https://github.com/VeggieMeat/webform_options_by_bundle/releases">download an archive from Github</a>. (Yes, it's also <a href="https://drupal.org/sandbox/brianaltenhofel/2253131">available on Drupal.org</a> - but sandboxes don't allow releases).</p><p>After downloading and installing the module, you first need to tell it what bundles to expose to Webform. This is <strong>very</strong> important. You do <strong>not</strong> want to use a bundle that has thousands of nodes. That would <strong>not</strong> be a good idea. So don't be that guy that tries to add 1,000,000 Article nodes to a select list.</p><p>Once you've done that, you can setup a Webform with a select list. All you have to do is tell it which bundle you want to use. For example, if you had your store locations as "Location" nodes, you'd select "Node: Location".</p><p>By the way, because the module populates the list using EntityFieldQuery and checking user access to each entity, your users will only see the entities that they have permission to view when they go to fill out the form.</p>
+  </body>
+</html>
+

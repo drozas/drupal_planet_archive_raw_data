@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Jul 2014 08:54:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Jul 2014 08:54:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dave Hall Consulting: Interacting with the Acquia Cloud API with Python
+Content-Transfer-Encoding: 8bit
+Content-Base: http://davehall.com.au/blog/dave/2014/07/21/interacting-acquia-cloud-api-python
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dave Hall Consulting: Interacting with the Acquia Cloud API with Python</title>
+    <base href="http://davehall.com.au/blog/dave/2014/07/21/interacting-acquia-cloud-api-python">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>The <a href="http://cloudapi.acquia.com/" rel="nofollow">Acquia Cloud API</a> makes it easy to manage sites on the platform.  The API allows you to perform many administrative tasks including creating, destroying and copying databases, deploying code, managing domains and copying files.</p>
+<p>Acquia offers 2 official clients. The primary client is a drush plugin which can only be downloaded from Acquia Insight.  The other is a <a href="https://github.com/acquia/cloudapi-php-client" rel="nofollow">PHP library</a> which states in the README that it is "[n]ot ready for production usage".</p>
+<p>On a recent project using <a href="http://wftools.org" rel="nofollow">WF Tools</a> we needed some pretty advanced deployment scripts for sites hosted on Acquia Cloud.  We had tried using a mix of bash and PHP, but that created a maintenance nightmare, so we switched to Python.</p>
+<p>I was unable to find a high quality Python library, so I wrote a <a href="https://github.com/skwashd/python-acquia-cloud" rel="nofollow">python client for the Acquia Cloud API</a>.  The library implements all of the features that we needed, so there is a few things missing.</p>
+<p>Chaining complex commands together is easy because the library implements a <a href="https://en.wikipedia.org/wiki/Fluent_interface" rel="nofollow">fluent interface</a>.  An extreme example of what is possible is below:</p>
+<pre>
+<code>
+import acapi
+
+# Instantiate the client
+c = acapi.Client('user@example.com', 'acquia-token')
+
+# Copy the prod db to dev, make a backup of the dev db and download it to /tmp
+c.site('mysite').environment('prod').db('mysite').copy('dev').backups().create().download('/tmp/backup.sql.gz')
+</code>
+</pre><p>
+Some of the code is library is "borrowed" from the <a href="https://github.com/twilio/twilio-python" rel="nofollow">Python client for Twilio</a>.  The library is licensed under the terms of the MIT license.</p>
+<p>I am continuing to develop the library.  Consider this a working alpha.  Improving error handling, creating a comprehensive test suite and implementing the missing API calls are all on the roadmap.  Pull requests are welcome.</p>
+<p>The code is <a href="https://www.python.org/dev/peps/pep-0008" rel="nofollow">PEP 8 (coding standards</a> and <a href="https://www.python.org/dev/peps/pep-0257" rel="nofollow">PEP 257 (documentation standards)</a> compliant and uses the <a href="https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt" rel="nofollow">numpydoc for code documentation</a>. </p>
+<p>Check out <a href="https://github.com/skwashd/python-acquia-cloud" rel="nofollow">the Python client for Acquia's Cloud API on github</a>.</p>
+  </body>
+</html>
+

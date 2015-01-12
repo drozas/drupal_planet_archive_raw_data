@@ -1,0 +1,114 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 May 2014 19:47:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 May 2014 19:47:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Julian Granger-Bevan: How to diagnose a bloated Drupal database
+Content-Transfer-Encoding: 8bit
+Content-Base: http://julian.granger-bevan.me/blog/how-to-diagnose-a-bloated-drupal-database
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Julian Granger-Bevan: How to diagnose a bloated Drupal database</title>
+    <base href="http://julian.granger-bevan.me/blog/how-to-diagnose-a-bloated-drupal-database">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-field-image2 field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://julian.granger-bevan.me/sites/julian.granger-bevan.me/files/styles/medium/public/bloat.jpg?itok=LuI7f3Hq" width="150" height="150" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Drupal websites use a database to store content and configuration relating to the running of the website.</p>
+<p>For most installations (i.e., not large scale deployments), the database will be relatively compact. As an example, the websites that I maintain have databases between 5MB and 20MB. The specific size is affected by the amount of content on the websites and which modules are enabled.</p>
+<p>Therefore, I was surprised to receive a notification from my host warning me that I was using over 2GB in database storage! Naturally I thought something must be wrong.</p>
+<p>In this post, I'll share how I solved the issue for myself with some tips in case you suffer a similar issue yourself.</p>
+<p>(Quick hint, use <a href="http://drush.ws/#sql-cli">drush sqlc</a> to run SQL commands against your website's database).</p>
+<p> </p>
+<p><u>Database level</u></p>
+<p>Find the affected database. Unless you are using a multi-site setup, each of your websites will be based in a different database.</p>
+<pre>SELECT
+    table_schema "DB Name",
+    ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) "DB Size in MB" 
+FROM information_schema.tables
+GROUP BY table_schema;
+
++--------------------+---------------+
+| DB Name            | DB Size in MB |
++--------------------+---------------+
+| information_schema |           0.2 |
+| drupal_database    |        1110.2 |
++--------------------+---------------+
+2 rows in set (0.01 sec)</pre><p><span style="line-height: 1.538em;">As you can see, my database user can only see two databases - information_schema containing SQL internals, and the main database (re)named drupal_database.</span></p>
+<p> </p>
+<p><u>Table level</u></p>
+<p>The next step is to find out what is causing that database to become so large. Drill-down to the tables within the database.</p>
+<p>I found this "order by size" query helped a lot. It will only show the 5 largest tables, but this is where any problem will be. If there are no unusually large tables, it could just be that your website has grown large organically.</p>
+<pre>SELECT
+    table_name,
+    table_rows,
+    data_length,
+    index_length,
+    ROUND(((data_length + index_length) / 1024 / 1024),2) 'Table Size in MB'
+FROM information_schema.tables
+WHERE table_type = 'BASE TABLE'
+ORDER BY data_length DESC
+LIMIT 5;
+
++---------------------+------------+-------------+--------------+------------------+
+| table_name          | table_rows | data_length | index_length | Table Size in MB |
++---------------------+------------+-------------+--------------+------------------+
+| queue               |     137362 |  1137704424 |      4017152 |          1088.83 |
+| field_revision_body |       1731 |     5259276 |       154624 |             5.16 |
+| field_data_body     |       1731 |     5259276 |       145408 |             5.15 |
+| feeds_log           |      27455 |     2712868 |      1131520 |             3.67 |
+| menu_router         |        401 |      406128 |        76800 |             0.46 |
++---------------------+------------+-------------+--------------+------------------+
+5 rows in set (0.01 sec)</pre><p><span style="line-height: 1.538em;">In my example, the queue table occupies 98% of my the space used by this database. This is where the problem lies.</span></p>
+<p>For context, <a href="https://api.drupal.org/api/drupal/modules!system!system.queue.inc/group/queue/7">Drupal uses the queue table to store tasks that need to be carried out on cron runs</a>, and if cron is running successfully should contain no records or only a few that have arisen since the last cron run.</p>
+<p> </p>
+<p><u>Task level</u></p>
+<p>To find out what was going on, I looked at the types of tasks contained in this table:</p>
+<pre>SELECT
+    name,
+    COUNT(1)
+FROM queue
+GROUP BY name;
+
++---------------------+----------+
+| name                | COUNT(1) |
++---------------------+----------+
+| feeds_source_import |   137498 |
++---------------------+----------+
+1 row in set (0.07 sec)</pre><p><span style="line-height: 1.538em;">There was only one task remaining, relating to the regular import of nodes from RSS feeds using the </span><a href="https://drupal.org/project/feeds" style="line-height: 1.538em;">feeds</a><span style="line-height: 1.538em;"> module. Checking the settings for this importer, I realised that the import was scheduled to run every 15 minutes, yet cron only runs on this website once an hour. This means that each time cron ran, it could not get through all of the tasks required, and the backlog just started growing.</span></p>
+<p>The long term solution was easy. Increase the frequency of the cron runs, and decrease the frequency of the node imports to ensure that cron is always on top of the tasks it needs to complete.</p>
+<p>There is also the issue of the remaining bloated table. Whilst this will naturally diminish back to its normal size as cron catches up, if you're worried about how long this will take you could truncate the table once to ensure that the problem is solved. There's a risk with that though, if tasks in the table turn out to actually be required.</p>
+<p> </p>
+<p><u>Benchmarks:</u></p>
+<p>For context, here are the results of the same queries against a (healthier) website.</p>
+<p>As you can see there are no tables that massively exceed the others in size, and the overall database size is under 10MB.</p>
+<pre>+--------------------+---------------+
+| DB Name            | DB Size in MB |
++--------------------+---------------+
+| information_schema |           0.2 |
+| drupal_database    |           6.1 |
++--------------------+---------------+
+2 rows in set (0.12 sec)
+
++---------------------+------------+-------------+--------------+------------+
+| TABLE_NAME          | table_rows | data_length | index_length | Size in MB |
++---------------------+------------+-------------+--------------+------------+
+| field_revision_body |        423 |     1556716 |        47104 |       1.53 |
+| menu_router         |        450 |      425076 |        80896 |       0.48 |
+| system              |        390 |      313544 |        73728 |       0.37 |
+| field_data_body     |         37 |      135968 |        18432 |       0.15 |
+| registry            |        965 |       94016 |        53248 |       0.14 |
++---------------------+------------+-------------+--------------+------------+
+5 rows in set (0.02 sec)
+
++----------+
+| count(1) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)</pre> </div></div></div><!-- google_ad_section_end --><div class="field field-name-field-category field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/websites" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Websites</a></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/database" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">database</a></div><div class="field-item odd"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item even"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

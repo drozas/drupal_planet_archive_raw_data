@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 24 Nov 2014 14:28:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 24 Nov 2014 14:28:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: NFS, rsync, and shared folder performance in Vagrant VMs
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/nfs-rsync-and-shared-folder
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: NFS, rsync, and shared folder performance in Vagrant VMs</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/nfs-rsync-and-shared-folder">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It's been a well-known fact that using native VirtualBox or VMWare shared folders is a terrible idea if you're developing a Drupal site (or some other site that uses thousands of files in hundreds of folders). The most common recommendation is to switch to NFS for shared folders.</p>
+<p>NFS shared folders are a decent solution, and using NFS does indeed speed up performance quite a bit (usually on the order of 20-50x for a file-heavy framework like Drupal!). However, it has it's downsides: it requires extra effort to get running on Windows, requires NFS support inside the VM (not all Vagrant base boxes provide support by default), and is not actually all that fast—in comparison to native filesystem performance.</p></div></div></div>
+  </body>
+</html>
+

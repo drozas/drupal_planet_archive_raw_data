@@ -1,0 +1,69 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 16 Jun 2014 16:00:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 16 Jun 2014 16:00:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: SitePoint PHP Drupal: Building a Drupal 8 Module: Blocks and Forms
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.sitepoint.com/building-drupal-8-module-blocks-forms/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>SitePoint PHP Drupal: Building a Drupal 8 Module: Blocks and Forms</title>
+    <base href="http://www.sitepoint.com/building-drupal-8-module-blocks-forms/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><p>In the <a href="http://www.sitepoint.com/build-drupal-8-module-routing-controllers-menu-links/">first installment</a> of this article <a href="http://www.sitepoint.com/series/how-to-build-a-drupal-8-module/">series on Drupal 8 module development</a> we started with the basics. We’ve seen what files were needed to let Drupal know about our module, how the routing process works and how to create menu links programatically as configuration. </p>
+
+<p>In this tutorial we are going to go a bit further with our sandbox module found in <a href="https://bitbucket.org/upchuk/drupal-8-demo">this repository</a> and look at two new important pieces of functionality: blocks and forms. To this end, we will create a custom block that returns some configurable text. After that, we will create a simple form used to print out user submitted values to the screen.</p>
+
+<h2 id="drupal-8-blocks">Drupal 8 blocks</h2>
+
+<p>A cool new change to the block API in D8 has been a switch to making blocks more prominent, by making them plugins (a brand new concept). What this means is that they are reusable pieces of functionality (under the hood) as you can now create a block in the UI and reuse it across the site - you are no longer limited to using a block only one time. </p>
+
+<p>Let’s go ahead and create a simple block type that prints to the screen <em>Hello World!</em> by default. All we need to work with is one class file located in the <code>src/Plugin/Block</code> folder of our module’s root directory. Let’s call our new block type <code>DemoBlock</code>, and naturally it needs to reside in a file called <code>DemoBlock.php</code>. Inside this file, we can start with the following:</p>
+
+<pre class="prettyprint prettyprinted"><code><span class="pun">&#60;?</span><span class="pln">php
+
+</span><span class="kwd">namespace</span><span class="pln"> </span><span class="typ">Drupal</span><span class="pln">\demo\Plugin\B</span><span class="kwd">lock</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">use</span><span class="pln"> </span><span class="typ">Drupal</span><span class="pln">\b</span><span class="kwd">lock</span><span class="pln">\BlockBase</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">use</span><span class="pln"> </span><span class="typ">Drupal</span><span class="pln">\Core\Session\AccountInterface</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">/**
+ * Provides a 'Demo' block.
+ *
+ * @Block(
+ *   id = "demo_block",
+ *   admin_label = @Translation("Demo block"),
+ * )
+ */</span><span class="pln">
+
+</span><span class="kwd">class</span><span class="pln"> </span><span class="typ">DemoBlock</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">BlockBase</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+  </span><span class="com">/**
+   * {@inheritdoc}
+   */</span><span class="pln">
+  </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> build</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">    
+    </span><span class="kwd">return</span><span class="pln"> array</span><span class="pun">(</span><span class="pln">
+      </span><span class="str">'#markup'</span><span class="pln"> </span><span class="pun">=&#62;</span><span class="pln"> $this</span><span class="pun">-&#62;</span><span class="pln">t</span><span class="pun">(</span><span class="str">'Hello World!'</span><span class="pun">),</span><span class="pln">
+    </span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+
+  </span><span class="com">/**
+   * {@inheritdoc}
+   */</span><span class="pln">
+  </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> access</span><span class="pun">(</span><span class="typ">AccountInterface</span><span class="pln"> $account</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> $account</span><span class="pun">-&#62;</span><span class="pln">hasPermission</span><span class="pun">(</span><span class="str">'access content'</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">  
+
+</span><span class="pun">}</span></code></pre>
+
+<p>Like with all other class files we start by namespacing our class. Then we <em>use</em> the <code>BlockBase</code> class so that we can extend it, as well as the <code>AccountInterface</code> class so that we can get access to the currently logged in user. Then follows something you definitely have not seen in Drupal 7: annotations.</p>
+</p><p><em>Continue reading %<a rel="nofollow" href="http://www.sitepoint.com/building-drupal-8-module-blocks-forms/">Building a Drupal 8 Module: Blocks and Forms</a>%</em></p>
+  </body>
+</html>
+

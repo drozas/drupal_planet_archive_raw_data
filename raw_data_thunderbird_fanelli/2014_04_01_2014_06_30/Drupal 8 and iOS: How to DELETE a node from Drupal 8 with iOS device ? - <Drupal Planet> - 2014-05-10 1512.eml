@@ -1,0 +1,161 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 10 May 2014 13:12:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 10 May 2014 13:12:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal 8 and iOS: How to DELETE a node from Drupal 8 with iOS device ?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tntfoss-vivekvpandya.rhcloud.com/node/14
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal 8 and iOS: How to DELETE a node from Drupal 8 with iOS device ?</title>
+    <base href="http://tntfoss-vivekvpandya.rhcloud.com/node/14">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/14/title/en/rss">How to DELETE a node from Drupal 8 with iOS device ?</span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/14/body/en/rss">
+    <div class="field-items">
+          <div class="field-item" property="schema:text"><p><span>In this tutorial I will teach you how to use NSURLSession dataTask to delete a node from Drupal 8 via REST services.</span></p>
+
+<p><span>It is required that you have enough permission to delete any content via REST. To check that navigate to /admin/people/permission on your Drupal 8 site. Here I am assuming that you have REST enabled on your site.  You should give DELETE permission to Admin and Authenticated user only as shown in flowing figure.</span></p>
+
+<p><span>One other thing I want to mention here is you have to add basic_auth as supported_auth for DELETE method for entity:node in your rest.settings.yml file. But as in alpha 11 settings files are not getting generated I would suggest you to use REST UI ( </span><a href="https://drupal.org/project/restui" target="_blank">https://drupal.org/project/restui</a> <span>) contributed module for this purpose.</span></p>
+<figure class="caption caption-img"><img alt="" data-editor-file-uuid="bd300d1d-5464-4a94-a702-2b9f6753471c" height="424" src="/sites/default/files/inline-images/DELTE_Conf.png" width="220" /><figcaption>rest.settings.yml for DELETE</figcaption></figure><p><span> Now add new simple page on your Drupal site and remember its node ID. Ok this is for Drupal side. Now let’s move on to our iOS application.</span></p>
+<figure class="caption caption-img"><img alt="" data-editor-file-uuid="f51a6aff-08c8-4d0e-b30a-1015a198146d" height="590" src="/sites/default/files/inline-images/storyboard.png" width="320" /><figcaption>Storyboard for this app</figcaption></figure><p><span> Our app just have one button and on label as shown in figure. Here you will type node ID in text field and click on “Delete Node” button.</span></p>
+
+<p> </p>
+
+<p><span>As we have hook up “deleteNode” method with “Delete Node” button on clicking “Delete Node” button following method will get executed.</span></p>
+
+<p><span>This method creates new NSMutableURLRequest and sets it http method to “DELETE”. Now it will create NSURLSessionConfiguration object and sets appropriate headers like “Authorization”. Here we are using http basic auth. Finally we create NSURLSession and NSURLSessionDataTask and resume the task.</span></p>
+
+<p> </p>
+
+<p><span>After successful deletion you will get notified by app.</span></p>
+
+<p><span>Here is code for method that will be called when “Delete Node” button is pressed.</span></p>
+
+<p> </p>
+
+<p><code><span>- (IBAction)deleteNode:(id)sender {</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    [self.nodeDetailsTextField resignFirstResponder]; // just tom make keyboard go away</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    NSString *nodeID = [self.nodeDetailsTextField text]; // node ID as string</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    NSURL *baseURL = [NSURL URLWithString:@"http://tntfoss-vivekvpandya.rhcloud.com/node/"];</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    NSURL *nodeURL = [baseURL URLByAppendingPathComponent:nodeID]; // create node ID like "baseURL/node/1"</span></code></p>
+
+<p><code><span>  </span></code></p>
+
+<p><code><span>    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:nodeURL];</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    [request setHTTPMethod:@"DELETE"]; // make request a "DELETE" request</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration]; // get the default configuration object</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    NSString *userNamePassWordString = [NSString stringWithFormat:@"username:pasword"];</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    NSData *passWordData = [userNamePassWordString dataUsingEncoding:NSUTF8StringEncoding]; // get NSData form NSString</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    NSString *passWordString = [passWordData base64EncodedStringWithOptions:0]; // in http basic auth "Authorization" header accept encoded credential details</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    NSString *basicAuthString = [NSString stringWithFormat:@"Basic %@",passWordString]; // "Authorization" header format i.e "Authorization" : Basic 123jkh43qe2erf= "</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    [config setHTTPAdditionalHeaders:@{@"Authorization": basicAuthString,@"Accept":@"application/json"}]; // set headers on configuration</span></code></p>
+
+<p><code><span>    NSURLSession *session = [NSURLSession sessionWithConfiguration:config]; // create session</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    // create data task for our "DELETE" request</span></code></p>
+
+<p><code><span>  </span></code></p>
+
+<p><code><span>    NSURLSessionDataTask *deleteTask =  [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {</span></code></p>
+
+<p><code><span>       </span></code></p>
+
+<p><code><span>        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;</span></code></p>
+
+<p><code><span>        </span></code></p>
+
+<p><code><span>        if (!error &amp;&amp; httpResponse.statusCode == 204 ) {</span></code></p>
+
+<p><code><span>            </span></code></p>
+
+<p><code><span>            dispatch_async(dispatch_get_main_queue(), ^{ //multithreading</span></code></p>
+
+<p><code><span>                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"204" message:[NSString stringWithFormat:@" node %@ deleted",nodeID] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];</span></code></p>
+
+<p><code><span>                [alert show];</span></code></p>
+
+<p><code><span>            });</span></code></p>
+
+<p><code><span>            </span></code></p>
+
+<p><code><span>        }</span></code></p>
+
+<p><code><span>    }];</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>    [deleteTask resume];</span></code></p>
+
+<p><code><span>    </span></code></p>
+
+<p><code><span>}</span></code></p>
+
+<p><code> </code><span>Now try to reload page on your site it will say “page not found”.  You can also navigate to “admin” -&gt; “reports” -&gt; “dblog” to check log for the deletion we done.</span></p>
+<figure class="caption caption-img"><img alt="" data-editor-file-uuid="57b02df9-77de-4b54-a500-0a7ef6dff32b" height="92" src="/sites/default/files/inline-images/log.png" width="1073" /><figcaption>Log for deletion</figcaption></figure><p><span>Now obviously we don’t want such application that we enter node ID to delete it. We can make a fairly sophisticated app from this one that has login screen to validate user first and than a UITableView to show list of all nodes on our site and then we delete them from app. But I just wanted to focus on how to use “DELETE” request and pass credential for basic authentication. At last I would like to mention that if you have older alpha versions than you may get “Dependency Injection Error https://drupal.org/node/2182055” . </span></p>
+
+<p><span>I hope this would help you.</span></p></div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix" data-quickedit-field-id="node/14/field_tags/en/rss">
+  <h3 class="field-label">Tags: </h3>
+  <ul class="links">
+          <li class="taxonomy-term-reference-0"><a href="/taxonomy/term/3" property="schema:about">Drupal Planet</a></li>
+      </ul>
+</div>
+<div class="field field-node--comment field-name-comment field-type-comment field-label-hidden" data-quickedit-field-id="node/14/comment/en/rss">
+    <div class="field-items">
+          <div class="field-item" rel="schema:comment"><section id="comments" class="comment-wrapper">
+  
+  
+
+  
+</section>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

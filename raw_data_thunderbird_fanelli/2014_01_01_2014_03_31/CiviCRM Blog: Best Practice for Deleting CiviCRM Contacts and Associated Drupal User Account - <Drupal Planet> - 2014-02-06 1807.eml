@@ -1,0 +1,70 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Feb 2014 17:07:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Feb 2014 17:07:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: Best Practice for Deleting CiviCRM Contacts and Associated Drupal User Account
+Content-Transfer-Encoding: 8bit
+Content-Base: https://civicrm.org/blogs/lwupagano/best-practice-deleting-civicrm-contacts-and-associated-drupal-user-account
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: Best Practice for Deleting CiviCRM Contacts and Associated Drupal User Account</title>
+    <base href="https://civicrm.org/blogs/lwupagano/best-practice-deleting-civicrm-contacts-and-associated-drupal-user-account">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><p>Because of the way the synchronization process works with the UF_Match table, deleting records can be tricky business.   If done in the incorrect order, your CiviCRM database can end up with a bunch of Junk contact records.  Below is a best practice process for removing records, first the Drupal user record should be deleted then the CiviCRM record.</p>
+<h3>
+	Process to Follow</h3>
+<p>Step 1 - Identify the Identify the Contact record(s) to be merged/removed in CiviCRM and note the Drupal User ID for the record to be removed.</p>
+<p>Step 2 - Search for and locate the Drupal record for the CiviCRM Contact you are deleting that you identified in Step and use the Cancel Account button to delete the Drupal User record.</p>
+<p>Step 3 - Go back to CiviCRM and merge/delete the CiviCRM Contact record.</p>
+<p> </p>
+<p>	Step 1</p>
+<ul><li>
+		Identify the Contact record(s) to be merged/removed in CiviCRM.</li>
+<li>
+		Determine the record which is to be removed and note the Drupal User ID.</li>
+</ul><p><img height="240px;" src="https://lh4.googleusercontent.com/H2ZVd2PZvYfrMvFsnEWbAMbTkS1FYxnbvvyg-lpDrhREl9yDR7wZIGhefuSau50WhqWcTj_mH6C3w4erU6sgquNpBrtoBdpKUnUbb9mmKM5ewEHGMNyM1oZsww" width="431px;" /></p>
+<p>	Step 2</p>
+<ul><li>
+		From the Drupal People screen, locate the User record to be removed.  Note that the Drupal ID number should match the User ID from the CiviCRM Contact record.</li>
+</ul><p><img height="249px;" src="https://lh6.googleusercontent.com/sBCvfpGD2NL1XlP8pJs0bI4ditOJQgkiK0JYnodQpVRx67S_l2nFCUFOzrELx48lgo64D8q_gq0aL4zbRohkPYk1gC3O4eiLYtLBLBktSIg5h57hmnVhOVt-Vw" width="414px;" /></p>
+<ul><li>
+		At the bottom of the Edit/Account tab, choose Cancel account.</li>
+</ul><p><img height="35px;" src="https://lh5.googleusercontent.com/v58crti7v3Erx2l7AGEXUGWBuY1TQ1otmsHKF8ybFSEAtNtkSh3VhkixY7WS4FNTwGkk-JWIdga2-riZPvqznrcaaFBL_KVix-06eBbZYONgoh9ZdyPMzDzRGg" width="172px;" /></p>
+<p>Step 3</p>
+<ul><li>
+		Merge/Remove the CiviCRM Contact record(s) as normal in CivCRM.</li>
+</ul><h2>
+	<br />
+	 </h2>
+<h2>
+	Restoring a CiviCRM record from Trash</h2>
+<p>If you have accidently deleted a Contact record from CiviCRM, you should follow the process in the order outlined below to restore the contact and reestablish a Drupal User account.</p>
+<p>	Process to Follow</p>
+<ul><li>
+		Step 1 - Restore the CiviCRM Contact record from the trash.</li>
+<li>
+		Step 2 - Establish the connection to a Drupal User account.</li>
+</ul><p>If you have not yet deleted the Drupal User account that was associated with the deleted CiviCRM record and you edit the Drupal User account (from Drupal) that was associated previously, Drupal will reestablish the link to the CiviCRM record.<br />
+	If there is not an existing Drupal User account, you can create a new Drupal user account for the record through the normal CiviCRM process.</p>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/civicrm" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviCRM</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+          <li class="field-item even">
+        <a href="/tips" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tips for Users</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

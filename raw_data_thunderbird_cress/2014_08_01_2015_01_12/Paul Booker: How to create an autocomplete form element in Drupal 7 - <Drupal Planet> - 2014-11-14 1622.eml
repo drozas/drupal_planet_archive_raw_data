@@ -1,0 +1,87 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 14 Nov 2014 16:22:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 14 Nov 2014 16:22:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: How to create an autocomplete form element in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-autocomplete-form-element-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: How to create an autocomplete form element in Drupal 7</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-autocomplete-form-element-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php">
+&lt;?php
+ 
+function demo_menu() {
+  $items['demo-autocomplete-test'] = array(
+    'title' =&gt; 'Test autocomplete',
+    'page callback' =&gt; 'drupal_get_form',
+    'page arguments' =&gt; array('demo_form'),
+    'access arguments' =&gt; array('view published content'),
+    'type' =&gt; MENU_NORMAL_ITEM,
+  );
+  $items['demo-autocomplete-engine'] = array(
+    'page callback' =&gt; 'demo_autocomplete',
+    'access arguments' =&gt; array('view published content'),
+    'type' =&gt; MENU_CALLBACK,
+  );
+  return $items;
+}
+ 
+ 
+function demo_form($form, &amp;$form_state) {
+  $form = array();
+  $form['colors'] = array(
+    '#title' =&gt; t('Colors'),
+    '#type' =&gt; 'textfield',
+    '#maxlength' =&gt; 60,
+    '#autocomplete_path' =&gt; 'demo-autocomplete-engine',
+  );
+ 
+  $form['submit'] = array(
+    '#type' =&gt; 'submit',
+    '#value' =&gt; 'Submit',
+  );
+ 
+  return $form;
+}
+ 
+ 
+ 
+function demo_autocomplete($text) {
+  $results = array();
+  $query = db_select('colors', 'c');
+  $query
+      -&gt;condition('c.color', '%' . db_like($text) . '%', 'LIKE')
+      -&gt;fields('c', array('color'))
+      -&gt;orderBy('color', 'ASC');
+  $colors = $query-&gt;execute();
+ 
+  foreach ($colors as $row) {
+    $results[$row-&gt;color] = check_plain($row-&gt;color);
+  }
+ 
+  drupal_json_output($results);
+}
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/form" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">form</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/hookform" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_form</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/autocomplete" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">autocomplete</a></li><li class="taxonomy-term-reference-3"><a href="/drupal-developer/tags/hookmenu" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_menu</a></li><li class="taxonomy-term-reference-4"><a href="/drupal-developer/tags/drupaljsonoutput" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal_json_output</a></li><li class="taxonomy-term-reference-5"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-autocomplete-form-element-drupal-7"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="How to create an autocomplete form element in Drupal 7">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-autocomplete-form-element-drupal-7&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-autocomplete-form-element-drupal-7"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-autocomplete-form-element-drupal-7" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

@@ -1,0 +1,67 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Sep 2013 00:19:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Sep 2013 00:19:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: 4Sitestudios.com Drupal Blog: Creating a Squeeze Page to Access a Video Using the Webform Module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.4sitestudios.com/blog/sep-29-2013/creating-squeeze-page-access-video-using-webform-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>4Sitestudios.com Drupal Blog: Creating a Squeeze Page to Access a Video Using the Webform Module</title>
+    <base href="http://www.4sitestudios.com/blog/sep-29-2013/creating-squeeze-page-access-video-using-webform-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://www.4sitestudios.com/sites/default/files/styles/blog_featured_image/public/download-button-fertig1.jpg?itok=_jUYkgA3" width="600" height="175" alt="Squeeze page download button graphic" title="Squeeze page download button graphic" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Recently a client for an "inherited" (that is, one where we weren’t the original developer) Drupal 7 site asked us to change how a series of videos were presented. They needed to collect some demographic information from site visitors before making the videos available. This is a fairly standard use case (think whitepapers on an agency site), and the <a href="http://drupal.org/project/webform_protected_downloads">Webform Protected Downloads</a> module works pretty well if you’re dealing with PDFs. But the client wanted to make the videos appear in a lightbox. The original developer had simply made the content type inaccessible to anonymous users and required visitors to sign up for accounts to see the videos. That was, as you can guess, a less-than-ideal solution. Depending on how Drupal's new account settings were configured, there was either too high a barrier for legitimate users or too low a barrier to keep out spambots.</p> <p>In our solution, we first created a registration Webform. Then in a small custom module, we used hook_form_alter to add a second submit handler to the form, where we could set a cookie:</p> <pre>/**
+ * Implements hook_form_alter().
+ *
+ * Adds a second submit handler to the learning center registration webform
+ */
+function mymodule_form_alter(&amp;$form, &amp;$form_state, $form_id) {
+  if($form_id == 'webform_client_form_123') {
+    $form['#submit'][] = 'mymodule_set_cookie';
+  }
+}
+</pre> <p>I don’t like having the form ID hardcoded here, and if I ever re-use this code elsewhere I’ll probably come up with a more elegant solution.</p> <pre>/**
+ * Additional submit handler for video registration webform -
+ * Sets a cookie so that user doesn't have to register again to view additional
+ * videos.
+ */
+function mymodule_set_cookie() {
+  user_cookie_save(array('video-registered' =&gt; TRUE));
+}
+</pre> <p>Then in a preprocess function, we rewrite the link to the video. If the user is anonymous and doesn’t have the cookie set, they get a link to the webform. Otherwise, they get a Javascript link that launches a lightbox with the video:</p> <pre>/**
+ * Implements hook_preprocess_HOOK.
+ *
+ * Rewrite links to videos. For anonymous users without cookie set, link to
+ * registration form, otherwise link to video in a lightbox.
+ */
+function mymodule_node_resource_preprocess_full(&amp;$vars){
+  $cookie_name = 'Drupal_visitor_video-registered';
+  if (isset($_COOKIE[$cookie_name]) || user_is_logged_in()) {
+    $url = $vars['node']-&gt;field_embedded_url[LANGUAGE_NONE][0]['safe_value'];
+    $options = array(
+      'attributes' =&gt; array(
+        'class' =&gt; array('colorbox-resource-featured'),
+      )
+    );
+    $featured_link = l('Watch Video', $url, $options);
+  }
+  else {
+    $options = array(
+      'query' =&gt; array(
+        'destination' =&gt; current_path()
+      )
+    );
+    $featured_link = l('Register to Watch Video', 'registration-form', $options);  
+  }
+  $vars['featured_link'] = $featured_link;
+}
+</pre></div></div></div>
+  </body>
+</html>
+

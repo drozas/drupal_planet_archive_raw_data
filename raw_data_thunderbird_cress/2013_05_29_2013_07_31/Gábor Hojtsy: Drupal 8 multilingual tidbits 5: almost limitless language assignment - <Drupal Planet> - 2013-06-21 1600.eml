@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 21 Jun 2013 15:00:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 21 Jun 2013 15:00:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 5: almost limitless language assignment
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-jun-21/drupal-8-multilingual-tidbits-5-almost-limitless-language-assignment
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 5: almost limitless language assignment</title>
+    <base href="http://hojtsy.hu/blog/2013-jun-21/drupal-8-multilingual-tidbits-5-almost-limitless-language-assignment">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>As we touched on in <a href="http://hojtsy.hu/blog/2013-jun-19/drupal-8-multilingual-tidbits-4-highly-flexible-detection-options">the detection options tidbit</a> and when talking about <a href="http://hojtsy.hu/blog/2013-jun-17/drupal-8-multilingual-tidbits-3-simple-language-setup-optional-english">language configuration</a>, the site default language used to be a very key (and higly dangerous to change) setting, because all the things that were in an unspecified language were assumed to be in that language. In Drupal 8, one of our most important goals was to make everything know its language as far and wide as possible.</p>
+<h3>Extensible special languages</h3>
+<p>Not everything can have a language even if it has a language property. Drupal 7 has one special language, <em>Language neutral</em> for these cases. This "language" is assigned to content which is not specifically in a language. People also used this to designate when the language was not known but some language needed to be assigned later. In Drupal 8, these two roles are separated into "Not applicable" and "Not specified" respectively. Also, these two special languages are stored as configuration with the other administrator configured languages (but are not shown on the configuration page to avoid confusion). Modules and distributions can add more special languages like these easily. These are locked (cannot be edited or removed), and when shown in a language list, they show after the manually configurable languages.</p>
+</div></div></div>
+  </body>
+</html>
+

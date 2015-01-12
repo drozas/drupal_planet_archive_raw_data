@@ -1,0 +1,45 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Nov 2014 23:59:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Nov 2014 23:59:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wim Leers: Drupal 8's render pipeline
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wimleers.com/talk/drupal-8-render-pipeline
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wim Leers: Drupal 8's render pipeline</title>
+    <base href="http://wimleers.com/talk/drupal-8-render-pipeline">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>In Drupal 8, we&#8217;ve significantly improved the way pages are rendered. I will explain the entire render pipeline, which will also&nbsp;cover:</p>
+
+<ul>
+    <li>render caching — blocks and entities are now render cached&nbsp;automatically!</li>
+    <li>cache tags — finally we have the cache invalidation system we&#8217;ve always&nbsp;needed!</li>
+    <li>assets —&nbsp;only the necessary assets are loaded anymore, thanks to asset&nbsp;dependencies!</li>
+    <li>bubbling — rather than relying on global statics that broke caching, we now correctly bubble up all attached metadata — no more&nbsp;frustrations!</li>
+</ul>
+
+<p>But I will also explain what is going to be possible in Drupal&nbsp;8:</p>
+
+<ul>
+    <li>anonymous page loads: invalidating Varnish/<span class="caps">CDN</span>s with perfect&nbsp;precision</li>
+    <li>authenticated page loads: not completely regenerated on every page load, but assembled from render cached&nbsp;parts</li>
+    <li>alternative render strategies, like Big&nbsp;Pipe</li>
+</ul>
+
+<p>Where relevant, I&#8217;ll compare with Drupal 7, how you can write Drupal 7 code today that will be easy to upgrade to Drupal 8, and which Drupal 7 backports exist (hint: Big Pipe does&nbsp;exist!).</p>
+
+<p></div></p>
+<div class="field field-name-field-slideshare-link field-type-link-field field-label-inline clearfix"><div class="field-label">Slides:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="http://wimleers.com/talk-drupal-8-render-pipeline/">Drupal 8's render pipeline</a></div></div></div><div class="field field-name-field-conference field-type-text field-label-inline clearfix"><div class="field-label">Conference:&nbsp;</div><div class="field-items"><div class="field-item even">DrupalCamp Ghent</div></div></div><div class="field field-name-field-location field-type-text field-label-inline clearfix"><div class="field-label">Location:&nbsp;</div><div class="field-items"><div class="field-item even">Ghent, Belgium</div></div></div><div class="field field-name-field-date field-type-date field-label-inline clearfix"><div class="field-label">Date:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="date-display-single" property="dc:date" datatype="xsd:dateTime" content="2014-11-07T09:30:00+01:00">Nov 7 2014 - 09:30</span></div></div></div><div class="field field-name-field-duration field-type-number-integer field-label-inline clearfix"><div class="field-label">Duration:&nbsp;</div><div class="field-items"><div class="field-item even">45&nbsp;minutes</div></div></div><div class="field field-name-field-extra-info field-type-text-long field-label-inline clearfix"><div class="field-label">Extra information:&nbsp;</div><div class="field-items"><div class="field-item even"><p>See <a href="http://ghent2014.drupalcamp.be/sessions/drupal-8s-render-pipeline">http://ghent2014.drupalcamp.be/sessions/drupal-8s-render-pipeline</a>.</p>
+</div></div></div><ul class="tags">
+    <li><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li>
+</ul>
+  </body>
+</html>
+

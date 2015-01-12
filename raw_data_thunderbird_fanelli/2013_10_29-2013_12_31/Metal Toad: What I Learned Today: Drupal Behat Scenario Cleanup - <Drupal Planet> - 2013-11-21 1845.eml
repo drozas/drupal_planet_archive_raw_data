@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 21 Nov 2013 17:45:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 21 Nov 2013 17:45:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Metal Toad: What I Learned Today: Drupal Behat Scenario Cleanup
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.metaltoad.com/blog/what-i-learned-today-drupal-behat-scenario-cleanup
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Metal Toad: What I Learned Today: Drupal Behat Scenario Cleanup</title>
+    <base href="http://www.metaltoad.com/blog/what-i-learned-today-drupal-behat-scenario-cleanup">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I've been doing a lot more Behat testing recently. As my tests have gotten more complex, I've discovered that it was only a matter of "luck" that my earlier tests were properly cleaning up after themselves. What I mean, is that during my tests I fill out and submit a node form, checking that I successfully created it and that the appropriate users can see it. After each scenario you want to clean up any data that was created so you can run the test again and get the same result. The way the Drupal Behat extension works, it tracks nodes, users, roles and taxonomy terms you create using its methods, so that in its @AfterScenario function knows which nodes to delete. The problem is that when you submit the form using steps like the ones below, the extension does not track those nodes:</p><ul class="links inline"><li class="0 first last"><a href="http://www.metaltoad.com/blog/what-i-learned-today-drupal-behat-scenario-cleanup" rel="tag" title="What I Learned Today: Drupal Behat Scenario Cleanup">Read more</a></li>
+</ul>
+  </body>
+</html>
+

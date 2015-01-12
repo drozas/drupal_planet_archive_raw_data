@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 19 Aug 2013 19:46:12 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 19 Aug 2013 19:46:12 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Extending Open Atrium 2 With The Drupal Association
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/extending-open-atrium-2-with-drupal-association/?utm_source=rss&utm_medium=rss&utm_campaign=extending-open-atrium-2-with-drupal-association
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Extending Open Atrium 2 With The Drupal Association</title>
+    <base href="http://www.phase2technology.com/blog/extending-open-atrium-2-with-drupal-association/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=extending-open-atrium-2-with-drupal-association">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Now that Open Atrium 2 is <a title="BETA Time for Open Atrium 2" href="http://www.phase2technology.com/blog/beta-time-for-open-atrium-2/">in BETA release</a>, I&#8217;ve been getting more questions about how to extend functionality in Open Atrium (OA2) and how to create plugins. I&#8217;ll be answering these questions and giving an instructional demo of this during the inaugural  <a href="https://association.drupal.org/node/18318">Drupal Association webinar</a> this Wednesday (Aug 21st). You can register for this exciting webinar <a href="https://attendee.gotowebinar.com/register/2344396637293219840">here</a>.</p>
+<p>Here is a summary of what I&#8217;ll be discussing:</p>
+<h2>How to Add Functionality</h2>
+<p>During the webinar demo, I will be creating a basic &#8216;Task&#8217; functionality. A new section type called &#8216;Tasks&#8217; will be created that allows users to create &#8216;New Tasks&#8217; and the ability to show a listing of assigned tasks and due dates.</p>
+<p style="text-align: center;"><a href="http://www.phase2technology.com/wp-content/uploads/2013/08/oa2_task_demo.png"><img class="wp-image-5023 aligncenter" alt="oa2_task_demo" src="http://www.phase2technology.com/wp-content/uploads/2013/08/oa2_task_demo.png" width="577" height="337" /></a></p>
+<h2>How To Create A Content Type</h2>
+<p>The first step in adding functionality is creating a new Content Type called &#8216;Task&#8217;. Add fields for &#8216;Due Date&#8217; and &#8216;Assigned to User&#8217;. As mentioned in the <a style="font-size: 13px; line-height: 19px;" href="http://products.phase2technology.com/content/adding-support-groups">Open Atrium Technical Documentation</a>, the next step is to add the &#8216;Group Audience&#8217; and &#8216;Section Reference&#8217; fields. Now the Task content is integrated with the OA2 access control system.</p>
+<h2>Create A View</h2>
+<p>To display a list of tasks, we need to create a new View. Since we are using Panels, we want to create a &#8220;Content Pane&#8221; view. We&#8217;ll add the &#8216;Title&#8217;, &#8216;Due Date&#8217;, and &#8216;Assigned To&#8217; fields to the display. To integrate the View with OA2, we then add &#8216;Exposed Filters&#8217; for both  the &#8216;Group Audience&#8217; and &#8216;Section Reference&#8217; fields. Finally, in the &#8216;Allowed Settings&#8217; we enable &#8216;Use exposed widgets form as pane configuration&#8217;, &#8216;Exposed Form&#8221;&#8216; and &#8216;Fields Override&#8217; and set both the &#8216;Group Audience&#8217; and &#8216;Section Reference&#8217; filters to &#8216;Pane configuration form and exposed form&#8217;. This will allow the Space and Section filters to be set either in the Panel widget configuration, or by the user as exposed filters.</p>
+<h2>Create A Section Type</h2>
+<p>To create a new section layout, we go to the Panelizer configuration and select the &#8216;list&#8217; link for Section Pages. This shows the list of existing Panelizer layouts. Rather than starting from scratch, we can clone an existing layout, such as the &#8216;News Section&#8217;. We&#8217;ll call our new layout &#8216;Task Section&#8217; and in the content settings, we&#8217;ll replace the &#8216;Recent News&#8217; widget with the new &#8216;Task View&#8217; that we just created. When adding the Task View, we select &#8216;Active Space&#8217; and &#8216;Active Section&#8217; for the Space and Section filters, then change the display to a Table and enable the exposed filters.</p>
+<p>Next, we go to the Section Type taxonomy and add a new term for Task Section that uses the new Panelizer layout we just created to enable the Tasks in the list of allowed content types.</p>
+<h2>Testing The Tasks</h2>
+<p>Our new Task functionality is ready to use! We can go to one of our Spaces and create a new Section Page and give it a type of &#8216;Task Section&#8217;. Then we can create new Tasks within the section and see them displayed on the section page. We can also add our new Task View to the top-level Space page to show all of the tasks within the space.</p>
+<h2>Saving Our Work</h2>
+<p>Once we have tested our new Task functionality, it&#8217;s time to save our work as a new plugin module. We use Features to save our Task content type, fields, view, Panelizer layout and taxonomy terms to a new module. This module can be installed on any OA2 site to add basic Task functionality.</p>
+<p>This is a very simple example of extending Open Atrium 2 using normal Drupal site-building methods and without writing any code. This functionality could be expanded even further but this should give you an idea how easy it is to add new functionality to OA2. I hope you join me on Wednesday August 21st for the first Drupal Association webinar: <a href="https://attendee.gotowebinar.com/register/2344396637293219840">&#8220;Plugging in to Open Atrium 2.0 &#8211; Extending OA 2.0&#8242;s Capabilities&#8221;</a></p>
+<h1></h1>
+  </body>
+</html>
+

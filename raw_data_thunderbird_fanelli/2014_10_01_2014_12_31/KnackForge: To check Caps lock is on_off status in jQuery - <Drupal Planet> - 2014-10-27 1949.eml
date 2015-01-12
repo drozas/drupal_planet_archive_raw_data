@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 27 Oct 2014 18:49:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 27 Oct 2014 18:49:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: To check Caps lock is on/off status in jQuery
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/karalmax/check-caps-lock-onoff-status-jquery
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: To check Caps lock is on/off status in jQuery</title>
+    <base href="http://knackforge.com/blog/karalmax/check-caps-lock-onoff-status-jquery">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><div>I'm sure that this script will help you in some of your projects that needs a username and password.</div>
+<div>Sometimes when we want access to a secure page that asks for a username and password and we submit the information but we didn't know that the password was submitted in upper case, we get an error.</div>
+<div> </div>
+<div>Solution: </div>
+<div>
+<pre class="brush: bash; auto-links: true; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 4; toolbar: true; codetag">jQuery('#username').keypress(function(e) {
+  var s = String.fromCharCode( e.which );
+  if ( s.toUpperCase() === s &amp;&amp; s.toLowerCase() !== s &amp;&amp; !e.shiftKey ) {
+    jQuery('#capslockdiv').show();
+  }
+  else {
+    jQuery('#capslockdiv').hide();
+  }
+});
+jQuery('#password').keypress(function(e) {
+  var s = String.fromCharCode( e.which );
+  if ( s.toUpperCase() === s &amp;&amp; s.toLowerCase() !== s &amp;&amp; !e.shiftKey ) {
+    jQuery('#capslockdiv').show();
+  }
+  else { 
+    jQuery('#capslockdiv').hide();
+  }
+});
+</pre></div>
+<p>Sample HTML code</p></div></div></div>
+  </body>
+</html>
+

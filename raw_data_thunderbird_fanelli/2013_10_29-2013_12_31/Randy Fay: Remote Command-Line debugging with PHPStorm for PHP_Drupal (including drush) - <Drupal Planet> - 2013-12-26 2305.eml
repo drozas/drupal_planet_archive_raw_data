@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 26 Dec 2013 22:05:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 26 Dec 2013 22:05:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Randy Fay: Remote Command-Line debugging with PHPStorm for PHP/Drupal (including drush)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://randyfay.com/content/remote-command-line-debugging-phpstorm-phpdrupal-including-drush
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Randy Fay: Remote Command-Line debugging with PHPStorm for PHP/Drupal (including drush)</title>
+    <base href="http://randyfay.com/content/remote-command-line-debugging-phpstorm-phpdrupal-including-drush">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/topics/debugging">debugging</a></div><div class="field-item odd"><a href="/topics/planet-drupal">Planet Drupal</a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><h3>Introduction</h3>
+
+<p>XDebug with PHPStorm can do step-debugging on remote sessions started from the command line on a remote machine. You just have to set up a couple of environment variables, map the remote code to the local code that PHPStorm has at its disposal, and tunnel the xdebug connection to your workstation.</p>
+
+<p><em>Note: If you just want to debug a PHP script (or drush command) on the local machine, that's much easier. Just enter PHPStorm's Run/Debug configuration and create a new "PHP Script" configuration.</em></p>
+
+<h3>Overview of Setup</h3>
+
+<ul><li>We'll create a PHPStorm project that contains all the code we want to debug on the remote machine. This can be done via source control with matching code, by mounting the remote directory to your local machine, or any way you want.</li>
+<li>Create a mapping from server side directories to PHPStorm-side code (A "Server" configuration in PHPStorm)</li>
+<li>Use environment variables on the remote machine to tell xdebug what to do with the debugging session</li>
+<li>Tunnel the Xdebug TCP connection if necessary.</li>
+<li>Make PHPStorm listen for a connection</li>
+<li>Create a breakpoint somewhere early in the execution path</li>
+<li>Run the command-line tool on the remote server.</li>
+</ul><h3>Step-by-Step</h3>
+
+<ol><li>On the remote server install xdebug and set xdebug.remote_enable=1 In your xdebug.ini (or php.ini). For complete details see <a href="http://randyfay.com/node/130">Remote Drupal/PHP Debugging with Xdebug and PHPStorm</a>.</li>
+<li>Open your project/directory in PHPStorm; it must have exactly the same code as is deployed on the remote server. (You can optionally mount the remote source locally and open it in PHPStorm using sshfs or any other technique you want, see notes below.)</li>
+<li>If you're debugging drush, you probably need to copy it into your project (you don't have to add it to source control). PHPStorm is quite insistent that executing code must be found in the project.</li>
+<li>Create a debug configuration and a "Server" configuration in your project. The Server configuration is used to map code locations from the server to your PHPStorm code.  Run-&gt;Edit Configurations, Create PHP Web App, Create a server, give the server a name. Click "Use path mappings" and configure the mappings from your project to the remote server's code. (See <img src="http://www.randyfay.com/sites/default/files/PHPStorm_server_config.jpg" alt="PHPstorm server configuration" />)</li>
+<li>If your remote server cannot directly create a tcp connection to your workstation, you'll have to tunnel port 9000 to your local machine. <code>ssh -R 9000:localhost:9000 your_account@remote_server.example.com</code> - For more details and debugging, see </li>
+<li>Click the "Listen for PHP Debug Connections" button in PHPStorm. I call this the "unconditional listen" button, because it makes PHPStorm listen on port 9000 and accept any incoming connection, no matter what the IDE key. See <a href="http://randyfay.com/node/130">Remote Drupal/PHP Debugging with Xdebug and PHPStorm</a></li>
+<li>In PHPStorm, set a breakpoint somewhere that your PHP script is guaranteed to hit early in its execution. For example, if you're debugging most drush actions, you could put a breakpoint on the first line of drupal_bootstrap() in includes/bootstrap.inc.</li>
+<li>If the computer is not reachable from the server, you will need to tunnel the connection from the server to your workstation. <code>ssh -R 9000:localhost:9000 some_user_account@www.example.com</code>  For more details and debugging, <a href="/node/130">Remote Drupal/PHP Debugging with Xdebug and PHPStorm</a></li>
+<li>In your command-line shell session on the remote server set the environment variable XDEBUG_CONFIG. For example, <code>export XDEBUG_CONFIG="idekey=PHPSTORM remote_host=172.16.1.1 remote_port=9000"</code>  (Note that port 9000 is the default both for xdebug and for PHPStorm.)  If you're tunneling the connection then remote_host must be 127.0.0.1. If you're not tunneling, it must be the reachable IP address of the machine where PHPStorm is listening.</li>
+<li><code>export PHP_IDE_CONFIG="serverName=yourservername"</code> - the serverName is the name of the "server" you configured in PHPStorm above, which does the mapping of remote to local paths.</li>
+<li>On the command line run the command you want to run. For example <code>drush cc all</code> or <code>php /root/drush/drush.php status</code></li>
+<li>If all goes well you'll stop at the breakpoint. You can step-debug to your heart's content and see variables, etc.</li>
+</ol><h3>Drush+Drupal-Specific Hints</h3>
+
+<ul><li>I've had the best luck actually copying drush into my codebase so that its mappings and Drupal's mappings can be in the same directory.</li>
+<li>Once you have the environment variables set you can either use the "drush" command (which must be in your path) or use "php /path/to/drush/drush.php" with your drush options. Make sure you're using the drush that's mapped as a part of your project.</li>
+</ul><h3>Notes and resources</h3>
+
+<ul><li>We set the xdebug.remote_host in the XDEBUG_CONFIG environment variable; it could also have been configured in the xdebug.ini as <code>xdebug.remote_host=myworkstation.example.com</code>. (Note that the default is "localhost", so if you're tunneling the connection you don't actually have to set it.)</li>
+<li>Full details about <a href="http://xdebug.org/docs/remote">remote debugging on xdebug.org</a></li>
+<li>Debugging: Make sure that <em>only</em> PHPStorm is listening on port 9000. If something else (most notoriously php-fpm) is listening there, you'll have to sort it out. PHPStorm is happy to listen on another port, see the preferences, and you'll need to change your environment variable to something like <code>export XDEBUG_CONFIG="idekey=PHPSTORM remote_host=172.16.1.1 remote_port=9999</code></li>
+<li>You may want to use sshfs or some other technique to mount the remote code to your local machine. <code>sshfs your_account@server.example.com:~/drush /tmp/drush</code> would mount the contents of drush in the remote home directory to /tmp/drush (which must already exist) on your local machine. It must be writeable for PHPStorm to work with it as a project, so you'll have to work that out.</li>
+<li>The article that taught me everything I know about this is <a href="http://developer.sugarcrm.com/2012/11/21/command-line-xdebug-on-a-remote-server/">Command-line xdebug on a remote server</a>. Thanks!</li>
+</ul></div></div></div>
+  </body>
+</html>
+

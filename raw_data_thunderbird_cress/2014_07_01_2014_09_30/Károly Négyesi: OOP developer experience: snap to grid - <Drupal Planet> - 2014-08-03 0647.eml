@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 03 Aug 2014 05:47:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 03 Aug 2014 05:47:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: OOP developer experience: snap to grid
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/403
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: OOP developer experience: snap to grid</title>
+    <base href="http://www.drupal4hu.com/node/403">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>After writing my first Drupal 8 <a href="http://drupal4hu.com/node/400">contrib module</a> I have a new appreciation. Let me try to explain. It is certainly possible to write a letter on an empty sheet of paper but achieving tidy results is quite a lot easier if it's a lined sheet. In Drupal 7, the code flow in general is calling a function, getting an array, manipulating the array and passing it to another function. Pretty much anything goes. In Drupal 8, you are handed an object and the object has methods. Instead of trying to figure out which possible function are you continuing with, it is one of the methods. When passing on data, the receiving method (hopefully) has a helpful type hint which tells you what to pass in. Often even the argument name will be helpful too.</p>
+<p>It's exactly like having a lined paper: you still need to know how to produce legible handwriting but at least you have a guide. Another apt metaphor is lining up shapes in a drawing program. Yes, it's possible by hand and there's more freedom doing it but for most it's easier to just use the snap to grid feature.</p>
+<p>This blog post was inspired by <code>ConfigDevelAutoImportSubscriber</code> having a <code>$this-&gt;configManager</code> object. That I need a config manager I have copied from a core file doing similar things. So, I wanted to create an entity -- I already know doing that requires calling the <code>create</code> method of the relevant storage controller. But how do you get one? Well, <code>ConfigManagerInterface</code> only has 10 methods and only 1 looks even remotely relevant: <code>getEntityManager</code>. So now I have a <code>EntityManagerInterface</code> object. Look, a <code>getStorage</code> method.</p>
+<p><div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$entity_type_id </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">configManager</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getEntityTypeIdByName</span><span style="color: #007700">(</span><span style="color: #0000BB">$config_name</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$entity_storage </span><span style="color: #007700">= </span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">configManager</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getEntityManager</span><span style="color: #007700">()-&gt;</span><span style="color: #0000BB">getStorage</span><span style="color: #007700">(</span><span style="color: #0000BB">$entity_type_id</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$entity </span><span style="color: #007700">= </span><span style="color: #0000BB">$entity_storage</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">create</span><span style="color: #007700">(</span><span style="color: #0000BB">$data</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div></p>
+<p>We could call this "autocomplete driven development" cos the autocomplete in your IDE pretty much drives you forward. Oh yeah: trying to develope D8 without an IDE is not something I'd recommend.</p>
+  </body>
+</html>
+

@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 28 Sep 2013 22:54:58 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 28 Sep 2013 22:54:58 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Yuriy Babenko: When is Drupal not the right choice?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yuriybabenko.com/blog/when-drupal-not-right-choice
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Yuriy Babenko: When is Drupal not the right choice?</title>
+    <base href="http://yuriybabenko.com/blog/when-drupal-not-right-choice">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I've been developing with Drupal since the late 4.6 days (that's over seven years) and have been involved with hundreds of Drupal projects. Over this time I've been exposed to just about every type of project you can imagine, from mom & pop blogs, to government intranets, ecommerce sites, massive document libraries and social networks. While at the end of the day all projects got completed, some of them would have been much better-off being built on something other than Drupal.</p>
+
+<h3>What is Drupal?</h3>
+
+<p>Many people mistakingly equate Drupal with a CMS (Content Management System); while this may have been accurate in the very early days, it has not been so for quite a while. Drupal is primarily a framework, one that can be used to build a CMS, but out of the box it is nothing more than a toolset with some basic functionality - a codebase and some interface forms. Drupal is not a blogging platform, not an ecommerce store, not a forum, and not a social network, but it can be used to build all of these (and then some).</p>
+
+<p>With Drupal's recent vast adoption and general growth it can be very tempting to use it for everything, especially if that's your (or your company's) strength and comfort zone. An experienced Drupal developer can dissect the system, turn it sideways, and make it do things it was never even remotely intended for (while still following the best practices), but the tricky part is looking at every project objectively and deciding not whether you <em>can</em>, but whether you <em>should</em>.</p>
+
+<h3>The strengths</h3>
+
+<p>Drupal's tools are fantastic at structuring and managing content. The Entity, Field and Form APIs make managing content a pleasure, while modules like Taxonomy and Menu give us efficient ways of structuring, organizing, and filtering the content. Even on the presentation side of things we've got the flexible theme layer and tools like Display Suite to give us more options than anyone is likely to need. If your project's primary uses cases centre around creating, managing and viewing content, all this will combine for a great developer experience.</p>
+
+<h3>A large content base does not a content-driven site make</h3>
+
+<p>There's nothing wrong with managing millions of pieces of content within a Drupal site - this is very doable, has been done many times, and Drupal can be a good solution, but prior to starting the project you have to ask yourself, how will the site be used? If your users will be going through a relatively simple content creation flow, assigning content to containers, commenting and doing basic interactions with other site users, you're likely to get 90% of the way "there," with use & configuration of existing, third-party tools, and some straight-forward custom development for the remaining 10%. If this is the case, great, saddle up and go for it.</p>
+
+<p>On the other hand, if the project requires a complex content review flow, integration with a dozen third-party APIs, tricky UI elements, tons of user-driven events and tens of thousands of lines of custom modules to achieve your end goal, there's a good chance you're building an application and not a content-driven site. Take Twitter for example: massive amounts of content, but not content-driven; it's all about user interactions, not the tweets themselves.</p>
+
+<h3>The weaknesses</h3>
+
+<p>Among a myriad of small gripes and complaints (which any project has), there are two large, serious reasons to not build an <u>application</u> in Drupal.</p>
+
+<p><strong>Performance.</strong> Drupal has never been a fast performer; the philosophy of tailoring to everyone's needs resulted in large codebase, an overly normalized database and other selectively-unnecessary bloat to provide the desired flexibility. Any given project will often only take advantage of 30 - 40% (gut feeling estimate) of what Drupal is capable of out of the box. The remaining functionality does nothing but slow things down, and the architecture decisions made to achieve that functionality will also have impacted the performance of the parts you <em>are</em> using.</p>
+
+<p>The usual approach to dealing with Drupal's performance implications is to cache, cache, and cache some more. Everything from the database query results & the middleware, to front end resources & finally the request itself gets cached. If you are dealing with a content-driven site and a largely anonymous user base, this can be a cheap & effective solution (throw something like Varnish in front of your web server and you're ready to serve millions of requests), but with any application comes an authenticated user base, and caching suddenly isn't the answer to all your problems.</p>
+
+<p>Now you have to optimize a large codebase of contributed modules that you're likely not familiar with, and ones which were probably not tested in conjunction with the other modules you're using. Furthermore, to stick with the best practices, you're going to avoid modifying any contributed (or Drupal core) code, and try to work around the issues by tying into and modifying the flow & functionality from your custom modules. Welcome to your first nightmare, and one that directly leads to...</p>
+
+<p><strong>Development.</strong> Drupal development can be tricky. The programming itself is rarely anything "hard," but it takes a lot of effort & experience to understand the concepts, flow, and the implications of the changes you're making. Tasks which would be relatively trivial to implement in a custom application can take monumental amounts of work and add up quickly enough to affect the project's timeline, budget and end-of-the-day feasability.</p>
+
+<p>If you are a start up, building a proof of concept, or otherwise an application that is not 100% defined and may change at any moment (ie. a real agile project), Drupal is the last thing you want to be using. Pick a clean, lean, modern framework in whatever language you're most comfortable with and go at it - finding developers will be easier, iterating the project will be faster and simpler, and the entire life cycle will be a hundred times more natural. And of course, code bloat from unused functionality will be a hundred times smaller.</p>
+
+<h3>A real-world example</h3>
+
+<p>I'm currently part of a team developing a fairly large Drupal project that will end up supporting millions of users and pieces of content. Sounds like a perfect fit for Drupal, right?</p>
+
+<p>The main content type (let's say Article) has to go through a rigorous review process prior to being published and becoming accessible by end users. Here's the flow:</p>
+
+<ol>
+<li>User A creates a piece of content (which goes through a half-dozen custom UI tools and background integrations with external services) and submits it for review.</li>
+<li>User B comes along and performs review of type 1, by answering a series of questions (which can be added/subtracted/otherwise managed by the admin) and making a pass/fail decision after navigating through another couple UI widgets and modals.</li>
+<li>If User B failed the piece of content, it goes back to User A to re-start the flow, otherwise User B is instantly presented with the next review of type 2.</li>
+<li>Since the content passed review of type 1, two more users (C and D) must now come into the picture, manually start and complete their own type 2 reviews. Confirmation forms in modals everywhere.</li>
+<li>Once all three type 2 reviews have been finalized (have I mentioned the dozen modals in this process?), the system makes a decision based on the options the users have selected. The article can either restart the entire flow, get automatically published, or go to User E for review of type 3.</li>
+<li>User E fills out type 3 review and again, the system either re-starts the flow or publishes the content.</li>
+</ol>
+
+<p>Still following along? Now let's add things like automatically expiring non-completed reviews, scheduled and action-based notifications, ability to provide feedback to everyone involved in the review process (at pretty much any point in said process), a myriad of permission-related logic, and then multiply the entire thing a few times for some similar, but different flows.</p>
+
+<p>And to keep things interesting, requirements change on a daily basis.</p>
+
+<p>How's the Drupal fit looking now?</p>
+
+<p>This project is turning into an application that users use to interact with a large content base, and is certainly not your typical content-driven site. This is something that (ideally) should have been identified at the very start, and built on a framework that's more suitable for prototyping and rapid change.</p>
+
+<p>Building such applications on Drupal should be avoided, because unless your team is made up of expert developers with years of Drupal experience, you're quickly going to end up with an unmaintainable mess that will be impossible to develop further with anything resembling a positive return on dev investment.</p>
+
+<h3>tl;dr;</h3>
+
+<p>At the end of the day, it's in your (and your client's) best interest to scope out the projects properly, and pick the best tool for the job, which may not be the one you're most experienced with.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags</div><div class="field-items"><div class="field-item even"><a href="http://yuriybabenko.com/blog/tag/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div><div class="field-item odd"><a href="http://yuriybabenko.com/blog/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div></div></div>
+  </body>
+</html>
+

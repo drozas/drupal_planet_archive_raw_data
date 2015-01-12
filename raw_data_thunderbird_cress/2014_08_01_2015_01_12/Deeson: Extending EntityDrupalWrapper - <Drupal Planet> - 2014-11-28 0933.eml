@@ -1,0 +1,136 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 28 Nov 2014 09:33:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 28 Nov 2014 09:33:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson: Extending EntityDrupalWrapper
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.deeson.co.uk/labs/extending-entitydrupalwrapper
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson: Extending EntityDrupalWrapper</title>
+    <base href="https://www.deeson.co.uk/labs/extending-entitydrupalwrapper">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr" id="docs-internal-guid-267d043d-e8e1-13ce-a8dc-d44dd92a27c3">We'd all like to be writing better OO code with Drupal 7, wouldn't we?</p>
+<p dir="ltr">It's always been a <a href="https://www.deeson.co.uk/labs/programatically-access-field-data-using-entitymetadatawrapper-drupal">best practice of ours</a> to use the entity_metadata_wrapper() function when programming the additional logic that inevitably comes when constructing complex content types. But a pain point of this is that the code usually ends up in one hook_ implementation or another and any shared code tends to get arranged into functions in the .module file.</p>
+<p dir="ltr">In an ideal world, Drupal would have provided us with entity classes that we could extend at the bundle level to allow us to add feature-specific functionality. I had a bit of a eureka moment the other day, when I realised that we’re already quite close to this, and that it's actually quite trivial to extend the EntityDrupalWrapper class provided by entity_metadata_wrapper() with functionality specific to each entity type.</p>
+<p dir="ltr">Indeed, as I think about it, I'm wondering if this should be a new best practice?</p>
+<h3 dir="ltr">An overly simple example</h3>
+<p dir="ltr">Let’s imagine that we have a content type that is tied up with Organic Groups and that we use it as a way of grouping members into different organisations on our site. We’ll call it “company”.</p>
+<p dir="ltr">Let’s also imagine that we would like to send an email to each of the members of a company whenever one of them posts a comment.</p>
+<p dir="ltr">For the convenience of this example, let's forget that Rules exist for a moment!</p>
+<h3>Firstly, a quick note about autoloading</h3>
+<p>Drupal 8 takes advantage of the wonderful PSR-4 autoloading standard so that we no longer have to define includes in our module's .info file. The brilliant <a href="https://www.drupal.org/project/xautoload">X Autoload</a> module provides just the same functionality for Drupal 7. Since we’re going to be writing a lot more classes from now on, I’d recommend using it, especially as what we’re doing supports PHP 5.3 namespaces. My example below assumes that you're using it.</p>
+<h3 dir="ltr">The old way</h3>
+<p dir="ltr">So you’d probably start with a hook_comment_insert, and in there you’d probably grab the user, load the company that they belong to and start looping.</p>
+<p dir="ltr">The problem with this approach is that everything is inside of the hook implementation and if you take it out of the hook implementation, you’ll just be littering the code base with API-like functions. Your modules are soon going to get messy. Additionally, if you need to do something else non-related in hook_comment_insert() things are going to get even more messy.</p>
+<h3 dir="ltr">The new way(?)</h3>
+<p dir="ltr">What if in your hook_comment_insert, instead you just called a function on an entity wrapper?</p>
+<pre>
+$author_wrapper = new UserWrapper($comment-&gt;uid);
+$author_wrapper-&gt;emailColleagues([...]);</pre><p>Then, in my_module/src/EntityWrapper/User/UserWrapper.php (Drupal\my_module\EntityWrapper\User\UserWrapper.php) you’d make your class:</p>
+        
+    
+  
+
+
+
+  
+      <pre class="syntax">
+                  
+&lt;?php
+/**
+ * @file
+ * Firm Profile wrapper class.
+ */
+
+namespace Drupal\my_module\EntityWrapper\User;
+
+use \EntityDrupalWrapper;
+use Drupal\my_module\EntityWrapper\Node\CompanyWrapper;
+
+/**
+ * Wraps nodes of type firm_profile with additional functionality.
+ */
+class UserWrapper extends EntityDrupalWrapper {
+
+  /**
+   * Wrap a user object.
+   *
+   * @param int|object $data
+   *   A uid or user object.
+   */
+  public function __construct($data) {
+    parent::__construct(&#039;user&#039;, $data);
+  }
+
+  /**
+   * Send an email to all colleagues of this user.
+   *
+   * @param mixed $some_args
+   *   Whatever is needed here.
+   */
+  public function emailColleagues($some_args) {
+    foreach ($this-&gt;getColleagues() as $colleague) {
+      $colleague-&gt;email($some_args);
+    }
+  }
+
+  /**
+   * Send an email to this user.
+   *
+   * @param mixed $some_args
+   *   Whatever is needed here.
+   */
+  public function email($some_args) {
+    // Call something like drupal_mail() here;
+  }
+
+  /**
+   * Get a list of colleagues in the same company as this user.
+   *
+   * @return UserWrapper[]
+   *   An array UserWrappers.
+   */
+  public function getColleagues() {
+    $colleagues = array();
+    foreach ($this-&gt;getCompany()-&gt;getEmployees() as $employee) {
+      if ($employee-&gt;getIdentifier() !== $this-&gt;getIdentifier()) {
+        $colleagues[] = $employee;
+      }
+    }
+    return $colleagues;
+  }
+
+  /**
+   * Get the company for this user.
+   *
+   * Note that we can cleanly wrap relationships between entities.
+   *
+   * @return CompanyWrapper
+   *   A company wrapper object. Check it with -&gt;value() if you
+   *   need to make sure it has data.
+   */
+  public function getCompany() {
+    return new CompanyWrapper($this-&gt;field_company-&gt;raw());
+  }
+}
+        </pre>
+      </pre>
+  
+
+
+
+  
+    
+        
+          <p>How simple is that?! Look at all those reusable functions that we've placed directly against the relevant class. You’ll call getCompany() all the time and if you add functionality to the CompanyWrapper class then that will be ready to use as well.</p>
+<p>I’m quite convinced that my code is going to start looking very different from now on!</p>
+  </body>
+</html>
+

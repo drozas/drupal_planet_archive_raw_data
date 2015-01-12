@@ -1,0 +1,56 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 22 Jan 2014 17:07:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 22 Jan 2014 17:07:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: A Seamless Media Experience
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/seamless-media-experience
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: A Seamless Media Experience</title>
+    <base href="http://atendesigngroup.com/blog/seamless-media-experience">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/media-player_2.png" width="1000" height="600" alt="" /><p>One of the primary goals of <a href="http://atendesigngroup.com/work/colorado-public-radio">the new CPR.org website</a> was creating a great, seamless media experience. Part of this was the creation of a persistent audio player that worked on as many modern browsers and devices as possible. Creating this experience, though, was a bit of a process. The audio landscape is pretty scattered when you take a close look at HTML5 audio support and Flash support. So the first thing up was finding a library that let us use both types of audio to reach a wider audience.</p>
+
+<h2>jPlayer for HTML5 Audio</h2>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_HTML5_audio_and_video">HTML5 Audio</a> is an important step forward in bringing media to the masses. It allows browsers to natively play audio without the help of plugins, whereas Adobe Flash was the primary means for playing audio in the past. This is doubly necessary for the plethora of new devices that don’t use Adobe Flash. But HTML5 Audio isn’t exactly a silver bullet just yet. While all modern browsers support Audio, each browser supports different formats (especially when considering compressed formats like MP3 or AAC).</p>
+
+<p>The player on the site is using a library called <a href="http://jplayer.org/">jPlayer</a>, which provides HTML5 Audio and a Flash fallback. The change between players is transparent to site visitors and works well across the devices we tested. The site can play the audio files for stories and the audio streams that let you listen to live CPR programming anywhere you have an internet connection.</p>
+
+<h2>AJAX Navigation</h2>
+
+<p>The next issue is that if you throw an audio player on a page, and the users get excited about a link they see on the site the browser will leave the page and the audio will stop. We wanted to accomplish something more seamless, which leaves a couple options:</p>
+
+<ol>
+<li>Have an audio player that pops up in a new window</li>
+<li>Use AJAX for navigation, keeping the audio player on the page between requests</li>
+</ol>
+
+<p>The new window approach is tried-and-true, but does present a user experience we wanted to avoid: having a separate window is confusing, especially on mobile devices. On a mobile device that would essentially become a new tab/screen and prevent the site exploration that we wanted. Desktop users would still have to deal with a separate window that may or may not be visible.</p>
+
+<p>We opted to make the site use AJAX navigation and leverage HTML’s new <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history">History API</a>. This gives us the seamless navigation that the site uses and keeps the address of site resources clean, which is not only important from an <acronym title="Obsessive-compulsive disorder">OCD</acronym> standpoint but also for search engine’s and users a-like. To pull this off, we turned to the <a href="https://drupal.org/project/ajax_links_api">AJAX Links API</a> (“Ajaxify Drupal with JQuery Ajax”) module. The module will take a normal Drupal site and allow you to target a set of links to work via an AJAX load instead of via normal navigation.</p>
+
+<p>For the most part, the module seemed to work as needed out of the box. There were a few small changes we made and submitted back to the project as we came across issues. Many of these were feature additions, but we also ended up fixing some bugs along the way. In the end, we had diverted from the installed version quite a bit to make the functionality work with an updated jQuery, fixing bugs, and a few specifics from the site. Some of our changes included:</p>
+
+<ul>
+<li>Updated to work with jQuery 1.8</li>
+<li>Added <a href="https://drupal.org/node/2050663">“negative selector” support</a></li>
+<li>Fixed some issues with browser history navigation (forward &amp; back buttons)</li>
+<li>Fixed targeting of links to downloadable files, mailto: links, and external links</li>
+<li>Added custom callbacks for successful link navigation</li>
+<li>Fixing a couple smaller issues with the module: <a href="https://drupal.org/node/2135145">2135145</a>, <a href="https://drupal.org/node/2135135">2135135</a></li>
+</ul>
+
+<p>Some issues were outside of the AJAX module’s control though. Other modules like <a href="https://drupal.org/project/recaptcha">reCaptcha</a> and <a href="https://drupal.org/project/webform">Webform</a> had to be updated to submit and update via AJAX. We even wrote code to allow Polls to work via AJAX.</p>
+
+<p>In the end, we hope the site encourages listeners to enjoy the programs and stories they have come to love, but also explore CPR’s stories in word and graphic form. So, sit back with your favorite device, enjoy some audio streams, and catch up on some stories you may have missed on <a href="http://www.cpr.org/">CPR.org</a>.</p>
+  </body>
+</html>
+

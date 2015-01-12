@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 06 Aug 2013 06:36:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 06 Aug 2013 06:36:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: How to Display Maps using GMap, Views and Location in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/how-display-maps-using-gmap-views-and-location-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: How to Display Maps using GMap, Views and Location in Drupal 7</title>
+    <base href="http://webwash.net/tutorials/how-display-maps-using-gmap-views-and-location-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>In part one (<a href="http://webwash.net/node/157">How to Store Addresses in Drupal 7 Using Location Module</a>), we configured <a href="http://drupal.org/project/location">Location</a> to store and geocode addresses.</p>
+
+<p>We used "Location CCK" that ships with Location, to define a custom address field on the Article content type. This field allows us to enter in a postal address and then Location stores the address and <a href="http://en.wikipedia.org/wiki/Geocoding">geocodes</a> it. Now we need to display the address in an actual map.</p>
+
+<p>In this tutorial, we'll use two modules to create our map: <a href="http://drupal.org/project/views">Views</a> to build a block and <a href="http://drupal.org/project/gmap">GMap</a> for the actual map.</p>
+
+<p>The map that we'll create will be fairly basic. The block will only be visible on the article page if an address is entered in.</p>
+</div></div></div>
+  </body>
+</html>
+

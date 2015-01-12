@@ -1,0 +1,92 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 04 Jun 2013 04:57:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 04 Jun 2013 04:57:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Theming a Multi-level Responsive Menu in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/theming-multi-level-responsive-menu-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Theming a Multi-level Responsive Menu in Drupal 7</title>
+    <base href="http://highrockmedia.com/blog/theming-multi-level-responsive-menu-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/img_4981-edit-1890292691.jpg" width="880" height="448" alt="Theming a Multi-level Responsive Menu With Drupal 7" title="Theming a Multi-level Responsive Menu With Drupal 7" class="image-adaptive inline-adaptive" /></p>
+
+<p>In my last post, I discussed my new photography site I'm building and theming with Drupal. The site is responsive and I've been searching for an ideal responsive touch friendly multi-level menu. I looked at and tried several jQuery plugins, CSS3 styles and a few Drupal Modules but nothing was quite right.</p>
+
+<h2>The Issue</h2>
+
+<p>Part of the issue is that I need multi-level menus that are touch friendly, but many of the menus I looked at had severe UX drawbacks. It's confusing to click (touch) on a menu item, have it expand and then make it go to a link all at the same time. Flexnav solves this where it separates a linked menu item from navigation through the DOM itself.</p>
+
+<h2>Implementation</h2>
+
+<p>So FlexNav checks all the boxes on my touch friendly multi-level menu wish list. This is most of the task but the tricky part is dovetailing this into my Drupal theme. Part of the difficulty when digging into the Drupal API is fully understanding what's going on with the menu and how to alter it, of course without hacking core.</p>
+
+<h2>Digging into Drupal's API</h2>
+
+<p>I checked out all the documentation of menus within the Drupal API and looked at the code in the core file <code>menu.inc</code> but came up empty with adding an ID, class and attributes to the top level <code>&lt;ul&gt;</code> menu item but not any <code>&lt;ul&gt;</code> tags below it. I figured I could do this with jQuery and it's pretty trivial actually but by doing so the menu was just plain buggy. So that left me with the tried and true preprocess function, the bane of any Themer's existence.</p>
+
+<h2>A Solution</h2>
+
+<p>In my research, I found lots of people asking how to do this very same task in forum posts on drupal.org and Drupal Answers on Stack Exchange but as is often the case, there were varied and confusing suggestions. Finally I was looking at how the Drupal Bootstrap Theme implements its main menu and bingo, I found a solution that I could trivially implement into my own custom Unsemantic Framework based Drupal Theme. Note that I didn't use Bootstrap's actual menu as I don't like the way it prevents clicking on a top level menu item if it has sub-menu items.</p>
+
+<p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/prototype-1626774008.jpg" width="833" height="478" alt="Prototype - desktop menu on the left, mobile on the right" title="Prototype - desktop menu on the left, mobile on the right" class="image-adaptive inline-adaptive" /></p>
+
+<h2>API Functions</h2>
+
+<p>We'll be leveraging a few bits from the Drupal API here:</p>
+
+<ul>
+<li><em>function menu_tree</em> - To render the full menu tree</li>
+<li><em>function drupal_render</em> - To attach classes, attributes only to the main <code>&lt;ul&gt;</code> wrapper and not to its children.</li>
+<li><em>function menu_configure</em> - To build the links and specify the menu we want to theme for FlexNav. (In our case, the Main Menu.)</li>
+<li><em>function hook_css_alter</em> - This is just for good measure to unset the nasty <code>system.menu.css</code> file that plagues all themers. </li>
+</ul>
+
+<h2>The Code</h2>
+
+<p>The first bit of code goes into a <em>preprocess_page</em> function in your theme's template.php file.</p>
+
+<div class="geshifilter"><span style="color: #000000; font-weight: bold;">function</span> MYTHEME_preprocess_page<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #339933;">,</span> <span style="color: #000088;">$hook</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+<span style="color: #666666; font-style: italic;">// Primary nav.</span><br />
+<span style="color: #000088;">$vars</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'primary_nav'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900; font-weight: bold;">FALSE</span><span style="color: #339933;">;</span><br />
+<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$vars</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'main_menu'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+<span style="color: #666666; font-style: italic;">// Build links.</span><br />
+&nbsp; <span style="color: #000088;">$vars</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'primary_nav'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> menu_tree<span style="color: #009900;">&#40;</span>variable_get<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'menu_main_links_source'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'main-menu'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #666666; font-style: italic;">// Provide default theme wrapper function.</span><br />
+&nbsp; <span style="color: #000088;">$vars</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'primary_nav'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'#theme_wrappers'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'menu_tree__primary'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span><br />
+<span style="color: #009900;">&#125;</span></div>
+
+<p>Essentially the above grabs the links tree from the main menu and then creates a wrapper that we can then leverage with <code>function menu_tree</code> as such:</p>
+
+<div class="geshifilter"><span style="color: #009933; font-style: italic;">/**<br />
+* Theme wrapper function for the primary menu links<br />
+*/</span><br />
+<span style="color: #000000; font-weight: bold;">function</span> MYTHEME_menu_tree__primary<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; <span style="color: #b1b100;">return</span> <span style="color: #0000ff;">'&lt;ul class=&quot;flexnav&quot; data-breakpoint=&quot;769&quot;&gt;'</span> <span style="color: #339933;">.</span> <span style="color: #000088;">$vars</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'tree'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">.</span> <span style="color: #0000ff;">'&lt;/ul&gt;'</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span></div>
+
+<p>Note the custom class and data attribute here, this is the key to the entire exercise. The beauty in this is, it only gets added to the top level <code>&lt;ul&gt;</code> tag in our menu because we specified #theme_wrappers above. That's crucial for getting this all to work.  For good measure, I unset <code>system.menu.css</code> using a hook_css_alter function but that's optional, you just might need to do a few CSS overrides if you don't do this.</p>
+
+<p>Finally in the theme's <code>page.tpl.php</code> file, we render the menu:</p>
+
+<div class="geshifilter">&nbsp;&lt;div class=&quot;menu-button&quot;&gt;Menu&lt;/div&gt;<br />
+&nbsp; &lt;nav class=&quot;menu-navigation&quot;&gt;<br />
+&nbsp; &nbsp; <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">!</span><span style="color: #990000;">empty</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$primary_nav</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">?&gt;</span><br />
+&nbsp; &nbsp; <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> render<span style="color: #009900;">&#40;</span><span style="color: #000088;">$primary_nav</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span><br />
+&nbsp; <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">endif</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span></div>
+
+<p></nav></p>
+
+<p>As always, I learned an incredible amount of knowledge on this after working on this specific problem over the course of a few weeks and I'll be contributing back a lot of this code for some feature requests I have for my theme, Bamboo.</p>
+</div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix"><span class="field-label">Tags:&nbsp;</span><ul class="field-items tag-items"><li class="field-item odd first">Drupal</li><li class="field-item even">JQuery</li><li class="field-item odd">CSS</li><li class="field-item even">Responsive Design</li><li class="field-item odd last">Drupal Planet</li></ul></div><div class="field field-name-field-resources field-type-link-field field-label-above"><h2 class="field-label">Resources&nbsp;</h2><div class="field-items"><div class="field-item odd first"><a href="http://jasonweaver.name/lab/flexiblenavigation/" target="_blank">FlexNav</a></div><div class="field-item even"><a href="http://api.drupal.org/api/function/drupal_render/" target="_blank">function drupal_render</a></div><div class="field-item odd"><a href="https://api.drupal.org/api/drupal/includes!menu.inc/function/menu_tree/7" target="_blank">function menu_tree</a></div><div class="field-item even"><a href="https://api.drupal.org/api/drupal/modules!menu!menu.admin.inc/function/menu_configure/7" target="_blank">function menu_configure</a></div><div class="field-item odd"><a href="https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_css_alter/7" target="_blank">function hook_css_alter</a></div><div class="field-item even"><a href="https://drupal.org/project/bamboo" target="_blank">Drupal Bamboo on dupal.org</a></div><div class="field-item odd"><a href="http://highrockmedia.com/blog/drupal-theming-and-design-minimalistic-approach" target="_blank">Drupal Theming and Design: A Minimalistic Approach</a></div><div class="field-item even"><a href="https://drupal.org/project/bootstrap" target="_blank">[Drupal] Bootstrap</a></div><div class="field-item odd last"><a href="http://unsemantic.com/" target="_blank">Unsemantic</a></div></div></div>
+  </body>
+</html>
+

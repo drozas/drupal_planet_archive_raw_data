@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 18 Nov 2014 13:38:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 18 Nov 2014 13:38:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Joachim's blog: Building Fast and Flexible Application UIs with Entity Operations
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.noreiko.com/blog/building-fast-and-flexible-application-uis-entity-operations
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Joachim's blog: Building Fast and Flexible Application UIs with Entity Operations</title>
+    <base href="http://www.noreiko.com/blog/building-fast-and-flexible-application-uis-entity-operations">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Now I've finished the Big Monster Project of Doom that I've been on the last two years, I can talk more about some of the code that I wrote for it. I can also say what it was: it was a web application for activists to canvass the public for a certain recent national referendum (I'll let you guess which one).</p>
+<p>One of the major modules I wrote was <a href="https://www.drupal.org/project/entity_operations">Entity Operations</a> module. What began as a means to avoid repeating the same code each time I needed a new entity type soon became the workhorse for the whole application UI.</p>
+<p>The initial idea was this: if you want a custom entity type, and you want a UI for adding, editing, and deleting entities (much like with nodes), then you have to build this all yourself: hook_menu() items, various entity callbacks, form builders (and validation and submit handlers) for the entity form and the delete confirmation form. (The <a href="https://www.drupal.org/project/model">Model module</a> demonstrates this well.)</p>
+<p>That's a lot of boilerplate code, where the only difference is the entity type's name, the base path where the entity UI sits, and the entity form builder itself (but even that can be generalized, as will be seen).</p>
+<p>Faced with this and a project on which I knew from the start I was going to need a good handful of custom entities (for use with Microsoft Dynamics CRM, accessed with another custom module of mine, <a href="http://drupal.org/project/remote_entity">Remote Entity API</a>), I undertook to build a framework that would take away all the repetition.</p>
+<p>An Entity UI is thus built by declaring:</p>
+<ul><li>A base path (for nodes, this would be 'node'; we'll ignore the fact that in core, this path itself is a listing of content).</li>
+<li>A list of subpaths to form the tabs, and the operation handler class for each one</li>
+</ul><p>With this in hand, why stop at just the entity view and edit tabs? The operation handlers can output static content or forms: they can output anything. One of the most powerful enhancements I made to this early on was to write an operations handler that outputs a view. It's the same idea as the <a href="http://drupal.org/project/eva">EVA</a> module.</p>
+<p>So for the referendum canvassing application, I had a custom Campaign entity, that functioned as an Organic Group, and had as UI tabs several different views of members, views of contacts in the Campaign's geographic area, views of Campaign group content (such as tasks and contact lists), and so on.</p>
+<p>This approach proved very flexible and quick. The group content entities were themselves also built with this, so that, for example, Contact List entities had operations for a user to book the entity, input data, and release it when done working on it. These were built with custom operation handlers specific to the Contact List entity, subclassing the generic form operation handler.</p>
+<p>An unexpected bonus to all this was how easy it was to expose form-based operations to Views Bulk Operations and Services (as 'targeted actions' on the entity). This allowed the booking and release operations to work in bulk on views, and also to be done via a mobile app over Services.</p>
+<p>A final piece of icing on the cake was the addition of alternative operation handlers for entity forms that provide just a generic bare bones form that invokes Field API to attach field widgets. With these, the amount of code needed to build a custom entity type is reduced to just three functions:</p>
+<ul><li>hook_entity_info(), to declare the entity type to Drupal core</li>
+<li>hook_entity_operations_info(), to declare the operations that make up the UI</li>
+<li><a href="https://www.drupal.org/node/2240921">callback_entity_access()</a>, which controls the access to the operations</li>
+</ul><p>The module has a few further tricks up its sleeve. If you're using user permissions for your entities, there's a helper function to use in your hook_permission(), which creates permissions out of all the operations (so: 'edit foobar entities', 'book foobar entities', 'discombobulate foobar entities' and so on). The entity URI callback that Drupal core requires you to have can be taken care of by a helper callback which uses the entity's base path definition. There's a form builder that lets you easily embed form-based operations into the entity build, so that you can put the sort of operations that are single buttons ('publish', 'book', etc) on the entity rather than in a tab. And finally, the links to operation tabs can be added to a view as fields, allowing a list of entities with links to view, edit, book, discombobulate, and so on.</p>
+<p>So what started as a way to simplify and remove repetitive code became a system for building a whole entity-based UI, which ended up powering the whole of the application.</p>
+</div></div></div><ul class="links inline"><li class="comment-add first last"><a href="/comment/reply/32#comment-form" title="Share your thoughts and opinions related to this posting.">Add new comment</a></li>
+</ul>
+  </body>
+</html>
+

@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Nov 2014 18:47:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Nov 2014 18:47:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Watch Over My Shoulder
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/watch-over-my-shoulder
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Watch Over My Shoulder</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/watch-over-my-shoulder">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Article        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/4.1-WatchOverShoulder.jpg" alt="Pottery on wheel" width="45%" class="img-responsive img-thumbnail  margin-left" align="right" /></p>
+<p>            One of the best ways to learn useful tricks at the command line is to sit with someone and watch what they do. Due to the distributed nature of the Drupal community, we don't do nearly enough pair programming. Too often we work in isolation and then push our work on others when we finish. In this article I invite you to sit down beside me and watch over my shoulder as I explore Drupal 8 from the command line.</p>
+<h3>Navigating Drupal in the Bash Shell</h3>
+<p>            The instructions in this article will work for OSX, and Linux systems, such as Ubuntu, but not Windows.<br />
+            When reading command line instructions, there are two important characters we need to know about: <span class="geshifilter"><code class="php geshifilter-php">$</code></span> and <span class="geshifilter"><code class="php geshifilter-php">#</code></span>. When applied to the beginning of a line, these refer to the prompt. We don't type these characters when issuing our command. <span class="geshifilter"><code class="php geshifilter-php">$</code></span> signifies the command should be run as a regular user; <span class="geshifilter"><code class="php geshifilter-php">#</code></span> signifies the command is run as the administrative user (“root”).</p>
+<p>            As a themer, the first thing I want to explore is, of course, the themes. Let's begin by navigating to our Drupal folder. I start by opening up a terminal application. At the command line, I type <span class="geshifilter"><code class="php geshifilter-php">cd</code></span>, and then, using Finder, locate my Drupal folder. I then drag this folder onto the terminal application. It will automatically paste the path to the Drupal folder into my bash prompt. I press return, and bingo – we have navigated to the Drupal folder!</p>
+<p>            Let's take a peek inside the core folder of themes: we’ll navigate to the folder core/themes and then list (or <span class="geshifilter"><code class="php geshifilter-php">ls</code></span>) all files.</p>
+<pre>
+$ cd core/themes
+$ ls
+</pre><p>
+            There should be four things listed. See them all?</p>        </div>
+  </body>
+</html>
+

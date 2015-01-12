@@ -1,0 +1,47 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 24 Apr 2014 06:13:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 24 Apr 2014 06:13:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Jeremy Epstein: Sharing templates between multiple Drupal views
+Content-Transfer-Encoding: 8bit
+Content-Base: http://greenash.net.au/thoughts/2014/04/sharing-templates-between-multiple-drupal-views/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Jeremy Epstein: Sharing templates between multiple Drupal views</title>
+    <base href="http://greenash.net.au/thoughts/2014/04/sharing-templates-between-multiple-drupal-views/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Do you have multiple views on your Drupal site, where the content listing is themed to look exactly the same? For example, say you have a custom "search this site" view, a "featured articles" view, and an "articles archive" view. They all show the same fields &mdash; for example, "title", "image", and "summary". They all show the same content types &ndash; except that the first one shows "news" or "page" content, whereas the others only show "news".
+</p>
+<p>If your design is sufficiently custom that you're writing theme-level Views template files, then chances are that you'll be in danger of creating duplicate templates. I've committed this sin on numerous sites over the past few years. On many occasions, my Views templates were 100% identical, and after making a change in one template, I literally copy-pasted and renamed the file, to update the other templates.
+</p>
+<p>Until, finally, I decided that enough is enough &ndash; time to get <a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself">DRY</a>!
+</p>
+<p>Being less repetitive with your Views templates is actually dead simple. Let's say you have three identical files &ndash; <code>views-view-fields--search_this_site.tpl.php</code>, <code>views-view-fields--featured_articles.tpl.php</code>, and <code>views-view-fields--articles_archive.tpl.php</code>. Here's how you clean up your act:
+</p>
+<ol>
+<li>Delete the latter two files.</li>
+<li>Add this to your theme's <code>template.php</code> file:<br />
+<pre class="php"><code>&lt;?php
+function mytheme_preprocess_views_view_fields(&amp;$vars) {
+  if (in_array(
+    $vars[&#39;view&#39;]-&gt;name, array(
+      &#39;search_this_site&#39;,
+      &#39;featured_articles&#39;,
+      &#39;articles_archive&#39;))) {
+    $vars[&#39;theme_hook_suggestions&#39;][] =
+      &#39;views_view_fields__search_this_site&#39;;
+  }
+}
+</code></pre>
+</li>
+<li>Clear your cache (that being the customary final step when doing anything in Drupal, of course).</li>
+</ol>
+  </body>
+</html>
+

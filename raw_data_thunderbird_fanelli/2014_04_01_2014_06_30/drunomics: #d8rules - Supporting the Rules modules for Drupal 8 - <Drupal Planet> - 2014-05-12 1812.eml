@@ -1,0 +1,45 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 12 May 2014 16:12:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 12 May 2014 16:12:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: drunomics: #d8rules - Supporting the Rules modules for Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drunomics.com/en/blog/d8rules-supporting-rules-modules-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>drunomics: #d8rules - Supporting the Rules modules for Drupal 8</title>
+    <base href="http://drunomics.com/en/blog/d8rules-supporting-rules-modules-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Today, I've the pleasure to introduce the <a href="http://d8rules.org">#d8rules</a> initative, our combined effort to get the <a href="http://drupal.org/project/rules">Rules</a> module ported to Drupal 8 in time!</p>
+<p><a href="http://d8rules.org"><img alt="#d8rules logo" src="http://drunomics.com/files/d8rules_long_2.png" style="width: 580px; height: 138px;" /></a></p>
+<h3>Drupal 8 is coming...</h3>
+<p>Fortunately, the first beta of Drupal 8 is coming closer so it's time to make sure all the modules are ported and ready for Drupal 8. Unfortunately, the Rules module - my long term number one contributed module - is about to be left behind. I've worked a lot on Drupal 8 to get critical Entity API improvements like the new <a href="http://wolfgangziegler.net/new-entity-property-api-drupal-8">Entity Field API</a> (called Entity Property API at the time of the introduction) as well as the new Typed data API done. Of course, the work on core is time intensive, not "done" yet and won't stop - so there is not a lot contribution time left for my contributed modules. :/</p>
+<h3>So where is Rules for Drupal 8 now?</h3>
+<p>In short, it's not there yet. While quite a bit of work under the hood and planning has been done already, the main work - porting of the module itself - is still to be done. As Drupal 8 ships with quite a bunch of important improvements, this requires the rewrite of significant parts of the module. In Drupal 7, the Rules module had to solve a lot of hard problems like handling its configuration, configuration translation, dependency tracking, integrity checks and plugins, which all have solutions in Drupal 8 core now. That's <strong>awesome</strong>, but it requires us to adapt the previous Drupal 7 solutions to work inline with Drupal 8 best practices. However, more than that - the foundational metadata Rules needs is already there as well!</p>
+<h3>The foundation is (mostly) there</h3>
+<p>In Drupal 7 the creation of the <a href="http://drupal.org/project/entity">Entity API</a> module, in particular its Entity Metadata wrappers and the backing Entity Property Information, was driven by the needs of the Rules module. While the Rules module makes it simple to work with data for site builders, the Entity module makes it simple for developers first. Subsequently, the Rules module can build upon the easy API and make it accessible via the rule model and its UI. For Drupal 8, the Entity Field API and its underlying Typed Data API are that easy API upon which the Rules module can build upon. That's great, as it means we have the foundation we can build upon in place - but again, it changed (improved) substantially and will require us to adapt a lot of what's there. However, having the Typed Data API and all the necessary metadata built-in means that the out of the box module and entity type support of Rules for Drupal 8 will be substantially better as well.</p>
+<h3>Actions and conditions in core</h3>
+<p>We've got an Actions and Conditions API in core already, so one might think another huge part has been taken care off. Unfortunately, no - those APIs have been created/ported with other use cases in mind, so they do not cater for all the more advanced features Rules users are used to. While I tried to make sure they fit Rules needs as far as possible when they were introduced/updated, they do not fit our needs yet and it might be impossible to make them fit without breaking those APIs. For Rules 8.x we plan to work on improving those APIs (from contrib) as needed first, so we can ensure they fit Rules' requirements. Once we are sure everything works out we'll know what we have to adapt and whether improvements can be contributed to core. Depending on how that works out, we'll see whether we can build up on the core Action and Conditions API or there will be Rules' variants of those APIs (again :(). For more details please see the related issues:</p>
+<ul><li><a href="https://drupal.org/node/2245611">Rules 8.x Architecture</a> </li>
+<li><a href="https://drupal.org/node/2245015">Rules 8.x Roadmap</a></li>
+</ul><h3>We have a plan</h3>
+<p>We've quite some work to do to get Rules ported to Drupal 8. <a href="https://drupal.org/user/262198">klausi</a> and me estimated the task to be additional 1050 hours work (from here). With us, working on it in our spare time besides our other contributions (Entity Field API, Rest module in core, ..) we figured the module won't be ready before sometime in 2015, not unlikely even 2016. That's obviously too late, so we'd love to invest more of our time and work on it during work hours as well, such that we can deliver a ported version in 2014. Our companys cannot afford taking that investment alone, but are up for supporting us and enable us to work on a community rate of € 45/h net cost for the project. You can find more details on the project plan and estimations on our <a href="http://d8rules.org/content/funding-goal-project-milestones">initative site</a>.</p>
+<h3>Rules needs your help!</h3>
+<p>If you think the Rules module is a valuable tool and helps you building sites faster, please consider supporting our iniatitive! There is a limited goodie for the 50 first supporters pledging &gt;65$ - <a href="https://www.drupalfund.us/project/d8rules-support-rules-module-drupal-8">check it out</a>. If you are going to Drupalcon Austin and you'd love to help, consider <a href="https://docs.google.com/spreadsheet/ccc?key=0AlRKD0XsivA1dEYzMVl1cERvYUpXWDNscm8zNlpZeEE&amp;usp=drive_web#gid=0">signing up</a> for the #d8rules sprint! We'll get started porting either events, conditions or actions to the new API. Lastly, please help to spread the word! We've got supporter badges that you can embed on your site, and obviously our hash tag is <strong><a data-dnt="true" data-related="d8rules" data-size="large" data-url="http://d8rules.org" href="https://twitter.com/#d8rules" target="_blank">#d8rules</a></strong>!</p>
+<p class="rtecenter">
+<iframe allowfullscreen="" class="media-youtube-player" frameborder="0" height="330" src="//www.youtube.com/embed/gEH291mq48Y?wmode=opaque&amp;rel=0&amp;showinfo=0" title="#d8rules" width="517">Video of #d8rules</iframe></p>
+<p class="rtecenter"><a href="https://www.drupalfund.us/project/d8rules-support-rules-module-drupal-8"><img alt="" src="http://drunomics.com/files/d8rules_drupalfundus.png" style="width: 400px; height: 230px;" /></a></p>
+<p class="rtecenter"> </p>
+<h3>Resources</h3>
+<p>Iniative website: <a href="http://d8rules.org">http://d8rules.org</a><br />
+drupalfund.us campaign: <a href="https://www.drupalfund.us/project/d8rules-support-rules-module-drupal-8">https://www.drupalfund.us/project/d8rules-support-rules-module-drupal-8</a><br />
+Project page: <a href="http://drupal.org/project/rules">http://drupal.org/project/rules</a></p>
+  </body>
+</html>
+

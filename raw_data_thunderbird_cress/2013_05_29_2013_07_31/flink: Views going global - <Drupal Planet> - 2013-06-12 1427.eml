@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Jun 2013 13:27:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Jun 2013 13:27:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: flink: Views going global
+Content-Transfer-Encoding: 8bit
+Content-Base: http://flink.com.au/ramblings/views-going-global
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>flink: Views going global</title>
+    <base href="http://flink.com.au/ramblings/views-going-global">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://flink.com.au/sites/default/files/styles/large/public/field/image/empty%20toilet%20roll_0.jpeg"><img typeof="foaf:Image" src="http://flink.com.au/sites/default/files/styles/large/public/field/image/empty%20toilet%20roll_0.jpeg" width="480" height="360" alt="Views Contextual Filters aren&#039;t crap" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>This is about <a href="http://drupal.org/project/views">Views</a> <em>Contextual Filters</em>. </p>
+<p>No don't run away yet…. give me a sec… please. </p>
+<p>I am well aware that even seasoned site builders fear to tread into that hidden-by-default upper right-hand corner of the Views UI configuration page labelled "Advanced". Most of us have opened it once, seen the heading "Contextual Filters" and gone "Mwaaah… what's that cr@p and what good is it to me?"</p>
+<p>Well quite a lot of good, actually. If you can just hang in there, I'll get straight to the point. </p>
+<p>You need <em>contextual filters</em> instead of, or in addition to, normal filters when:<br />
+1) you want to pass arguments to a View that has no exposed filter UI or that needs its UI bypassed initially, e.g. from links elsewhere on the same or another site, or in an email or newsletter<br />
+2) you want to do funky stuff with <a href="http://drupal.org/project/panels">Panels</a> and the like, which we won't discuss here<br />
+3) you want to pass a filter argument to many different Views at once, residing as pages and in blocks, all from a single UI widget, which you can place as a little block anywhere on your site -- the <strong>picked once, operates site-wide</strong> (<strong>POOS</strong>) filter principle.</p>
+<p>That last quality facilitates UX enhancements many continue to ask for and for good reason.</p>
+<p>Here's a few use-cases:<br />
+o a visitors lands anywhere on a site, be it one for real estate, events or travel and enters state, city or postcode of interest; instantly all relevant pages on the site filter on the region entered, without the visitor having to re-enter their selection again, unless they wish to change it<br />
+o a user visits an online gift ship, enters maximum spend and... *poofff*... only sees applicable merchandise on any of the pages they visit<br />
+o same for date ranges, music genres... any taxonomy terms, any field occurring in more than one View on your site</p>
+<p>So how do you give your plain contextual filters the far-ranging wings of point 3) ? <strong>Views Global Filter</strong>, that's how. <a href="http://drupal.org/project/global_filter">Try it</a>. </p>
+<p>And if after that you still dislike contextual filters, write to us -- you'd be the first to complain.</p>
+<p>                                                                                 * * * </p>
+<p>Note re point 1) above: if you want to contextually pass to a View filter ranges, e.g. 50--150, rather than single values, check out <a href="http://drupal.org/project/contextual_range_filter">Views Contextual Range Filter</a></p>
+</div></div></div><div class="field field-name-field-file-under field-type-taxonomy-term-reference field-label-above">
+      <h3 class="field-label">File under:&nbsp;</h3>
+    <span class="field-items">
+                  <a href="/file-under/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Planet Drupal</a>            </span>
+</div>
+  </body>
+</html>
+

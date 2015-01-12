@@ -1,0 +1,87 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 17 Oct 2014 10:38:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 17 Oct 2014 10:38:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Triquanta Web Solutions: Automatically switch Drush versions per project
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.triquanta.nl/blog/automatically-switch-drush-versions-project
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Triquanta Web Solutions: Automatically switch Drush versions per project</title>
+    <base href="http://www.triquanta.nl/blog/automatically-switch-drush-versions-project">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-main-image field-type-image field-label-hidden">
+    <img src="http://www.triquanta.nl/sites/default/files/styles/content-full-width/public/drush-bigger.png?itok=Rh0OSh70" />  </div>
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Now that Drush has become standard equipment in every developer's toolbox, and Drupal 8 is around the corner, you may find yourself asking "Which Drush version should I use?" While Drush 6 has a stable release, only Drush 7 can be used with Drupal 8. Usually, I use Drush 7. It works well with both Drupal 7 and Drupal 8, and even though is doesn't have a stable release yet, it feels pretty stable to me.</p>
+<h2>
+	Combining Drush versions: the trouble begins</h2>
+<p>Unfortunately, when you use Drush 7 to run commands on a remote server which runs Drush 6, you will run into errors. For instance when doing a sql-sync:</p>
+<pre>
+<code>$ drush sql-sync @mysite-prod @self
+  You will destroy data in mysite and replace with data from example.com/mysite.
+  Do you really want to continue? (y/n): y
+  Starting to dump database on Source.                                                                                 [ok]
+  Database dump saved to                                                                                               [success]
+  /home/www-data/drush-backups/mysite/20141016113131/mysite_20141016_113132.sql.gz
+  The Drush sql-dump command did not report the path to the dump file produced.  Try upgrading the version of Drush you[error]
+  are using on the source machine.
+</code></pre><p>Obviously Drush 7 doesn't like to talk to Drush 6. So how do we solve that?</p>
+<h2>
+	Installing multiple Drush versions side-by-side</h2>
+<p>It's not too hard to install two Drush versions side-by-side, and use aliases or symlinks to choose a version. On my system I <a href="https://github.com/drush-ops/drush#installupdate---composer">installed Drush 7 using composer</a> and I installed Drush 6 using the <a href="https://github.com/drush-ops/drush#install---manual">manual method</a>.</p>
+<p>Next I created two symlinks called "drush6" and "drush7" in a directory in your $PATH variable. I use ~/bin, but it depends on your OS and configuration.</p>
+<pre>
+<code>$ cd ~/bin
+$ ln -s ~/drush-6.4.0/drush drush6
+$ ln -s ~/.composer/vendor/drush/drush/drush drush7
+</code></pre><p>Using those symlinks, I can use both versions anywhere on my system:</p>
+<pre>
+<code>$ drush6 --version
+ Drush Version   :  6.4.0
+
+$ drush7 --version
+ Drush Version   :  7.0-dev
+</code></pre><p>Now I can run <code>drush6 sql-sync @mysite-prod @self</code>to choose Drush 6 and avoid problems syncing with a remote server.</p>
+<h2>
+	Automating which version to use</h2>
+<p>It's nice to be able to choose, but wouldn't it be awesome if you can just run <code>drush ...</code>without having to think which version you need? If you're managing multiple sites on different servers, you don't want to spend your energy remembering which project requires which Drush version.</p>
+<p>At Triquanta we use git repositories, one for each project. I want to be able to specify the default Drush version per project, so I will never run the wrong Drush version by mistake. That's where this really simple bash script comes in:</p>
+<pre>
+<code>#!/bin/bash
+version=$(git config --get drush.version)
+if [ "$version" = '6' ];
+then
+    drush6 "$@"
+else
+    drush7 "$@"
+fi
+</code></pre><p>Save it as "drush" in a directory in your $PATH variable, and make it executable. Now when you execute <code>drush</code>, it will call this script, which by default runs Drush 7.</p>
+<pre>
+<code>$ drush --version
+ Drush Version   :  7.0-dev
+</code></pre><p>When a project requires Drush 6 instead, I set a variable "drush.version" in the git working copy:</p>
+<pre>
+<code>$ git config drush.version 6
+$ drush --version
+ Drush Version   :  6.4.0
+</code></pre><p>That's all there is to it. Regardless where you are within your git-managed directory structure (the site root, /sites/default/files/, etc.) the script will always know which drush version to use.</p>
+</div></div></div>
+<ul class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-hidden">
+
+      <li>
+      <a href="/blog-tags/drupal-8">Drupal 8</a>    </li>
+      <li>
+      <a href="/blog-tags/drush">Drush</a>    </li>
+      <li>
+      <a href="/onderwerp/drupal-planet">Drupal-planet</a>    </li>
+  
+</ul>
+  </body>
+</html>
+

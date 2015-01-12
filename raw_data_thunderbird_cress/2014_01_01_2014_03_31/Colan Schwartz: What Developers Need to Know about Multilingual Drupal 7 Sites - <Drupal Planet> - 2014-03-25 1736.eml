@@ -1,0 +1,69 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 25 Mar 2014 17:36:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 25 Mar 2014 17:36:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Colan Schwartz: What Developers Need to Know about Multilingual Drupal 7 Sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://colans.net/blog/what-developers-need-know-about-multilingual-drupal-7-sites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Colan Schwartz: What Developers Need to Know about Multilingual Drupal 7 Sites</title>
+    <base href="http://colans.net/blog/what-developers-need-know-about-multilingual-drupal-7-sites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <section class="field field-name-field-blog-topics field-type-taxonomy-term-reference field-label-inline clearfix view-mode-rss clearfix">
+
+      <h2 class="field-label">Topics:&nbsp;</h2>
+  
+  <ul class="field-items">
+
+    
+      <li class="field-item even" rel="schema:keywords">
+        <a href="/blog-topics/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a>      </li>
+
+    
+      <li class="field-item odd" rel="schema:keywords">
+        <a href="/blog-topics/localization" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Localization</a>      </li>
+
+    
+  </ul>
+
+</section>
+<div class="field field-name-field-body field-type-text-long field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="schema:articleBody"><p>When working with Drupal's language / locale components in code, we need to be aware of some issues to ensure that the multilingual subsystem works as we'd expect.</p>
+<ul><li><a href="#hard-coding-a-language-or-assuming-no-language-is-problematic">Hard-coding a language (or assuming no language) is problematic</a>
+<ul><li><a href="#retrieving-field-values">Retrieving field values</a></li>
+<li><a href="#setting-field-values">Setting field values</a></li>
+<li><a href="#alternatives">Alternatives</a></li>
+</ul></li>
+<li><a href="#translatable-title-fields-are-actually-different-fields">Translatable title fields are actually different fields</a></li>
+</ul><h3 id="hard-coding-a-language-or-assuming-no-language-is-problematic">Hard-coding a language (or assuming no language) is problematic</h3>
+<p>When working with fields, developers often set or get field data by explicitly providing the undefined language (the standard one set up if the language system isn't, "LANGUAGE_NONE" defined as "und").  This will cause code to fail whenever the Locale module is enabled (even if no additional languages are set up) because the default language then switches to something like "en".  Wouldn't it be better to have Drupal automatically work with the current language?</p>
+<h4 id="retrieving-field-values">Retrieving field values</h4>
+<p>The <a href="https://api.drupal.org/api/drupal/modules%21field%21field.module/function/field_get_items/7">field<em>get</em>items()</a> API call does this for you.  If you don't specify a language, it will default to the current language if one isn't specified.  So if you really do want to target a specific language, you can.</p>
+<p>For example,<br /><code>$value = $node-&gt;field_subtitle[LANGUAGE_NONE][0]['value'];</code></p>
+<p>...should generally be replaced with...<br /><code><br />
+$field_items = field_get_items('node', $node, 'field_subtitle');<br />
+$value = $field_items[0]['value'];<br /></code></p>
+<h4 id="setting-field-values">Setting field values</h4>
+<p>Unfortunately, there's no <em>field_set_items()</em> function in Drupal 7.  We can, however, still specify the current language when setting field data.</p>
+<p>Instead of<br /><code>$node-&gt;body[LANGUAGE_NONE][0]['format'] = 'full_html';</code></p>
+<p>...you'll probably want to use one of the global variables <a href="https://api.drupal.org/api/drupal/developer%21globals.php/global/language/7">$language</a> (for the interface language) or <a href="https://api.drupal.org/api/drupal/developer%21globals.php/global/language_content/7">$language_content</a> (for the content language) as in ...<br /><code><br />
+$langcode_current = $GLOBALS['language']-&gt;language;<br />
+$node-&gt;body[$langcode_current][0]['format'] = 'full_html';<br /></code></p>
+<p>It's best to always using the above techniques even if not setting up language translation initially.  Requirements change; your code will be ready to go whenever new languages are added.</p>
+<h4 id="alternatives">Alternatives</h4>
+<p>Assuming the current language, the <a href="https://drupal.org/project/entity">Entity API</a> module actually provides both setter and getter methods through its <a href="https://drupal.org/node/1021556">Entity metadata wrappers</a>.  However, it's another dependency and extra overhead that you may not want if you're not using it already.  It also makes things trickier to debug.  See <a href="https://drupal.stackexchange.com/questions/24699/whats-best-practice-when-working-with-the-languageund">What's best practice when working with the language[und]?</a> for a discussion on this.</p>
+<h3 id="translatable-title-fields-are-actually-different-fields">Translatable title fields are actually different fields</h3>
+<p>By default, field translation through the <a href="https://drupal.org/project/entity_translation">Entity Translation</a> module doesn't allow title fields to be translatable.  This is because title fields in Drupal 7 aren't implemented formally as fields using the <a href="https://drupal.org/node/443536">Field API</a>.  To get around this limitation, it's necessary to replace titles with translatable fields using the <a href="https://drupal.org/project/title">Title</a> module.</p>
+<p>To enable this for specific fields, it's necessary to click on the "replace" button for a title field in the Manage Fields tab for the content type / bundle.  This will switch basic use cases over to use the new "field_title" field instead of the default "title" field.</p>
+<p>Be aware that you'll have to update any views and custom code to use the new field.  If not done, titles will always be presented in the original language, and you'll wonder why translated titles aren't showing up.</p>
+<p>If you don't really need translated titles, it's best to leave the original titles as-is.  Otherwise, it gets complicated with multiple title fields.</p>
+</div></div></div><span rel="schema:url" resource="/blog/what-developers-need-know-about-multilingual-drupal-7-sites" class="rdf-meta"></span><span property="schema:name" content="What Developers Need to Know about Multilingual Drupal 7 Sites" class="rdf-meta"></span>
+  </body>
+</html>
+

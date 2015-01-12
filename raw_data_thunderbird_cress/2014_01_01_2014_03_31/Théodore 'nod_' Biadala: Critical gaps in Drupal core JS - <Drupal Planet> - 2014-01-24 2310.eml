@@ -1,0 +1,67 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 24 Jan 2014 23:10:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 24 Jan 2014 23:10:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Théodore 'nod_' Biadala: Critical gaps in Drupal core JS
+Content-Transfer-Encoding: 8bit
+Content-Base: http://read.theodoreb.net/2014/critical-gaps-in-drupal-js.html
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Théodore 'nod_' Biadala: Critical gaps in Drupal core JS</title>
+    <base href="http://read.theodoreb.net/2014/critical-gaps-in-drupal-js.html">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Here are the main problems with Drupal javascript:</p>
+
+<ol>
+<li><a href="#testing">no testing</a>,</li>
+<li><a href="#docs">no visible documentation</a>.</li>
+</ol>
+
+<h2><span id="testing">Testing</span></h2>
+
+<p>This one is a maintainer nightmare. We refactor away and break eveything in
+the process. Thankfully we can&#39;t break the <a href="https://drupal.org/node/2088121" title="Issue #2088121: Remove Overlay">overlay</a> anymore,
+but we have Views UI to break now! As well as various surprising
+components all over the place. Long story short, we need front-end testing.</p>
+
+<p>There was a core conversation at the last DrupalCon prague about <a href="https://prague2013.drupal.org/session/javascript-testing" title="DrupalCon Prague: javascript testing">javascript
+testing</a> where jessebeach, seutje and me talked about what was wrong
+and how we could get that going. The take away is that we need to find a
+framework to work with to set up our tests. If anyone has experience with a
+framework that might work with Drupal and the contrib space to write tests
+with, please let me know.</p>
+
+<p>It really is the main pain point right now, let us know your thoughts in the
+<a href="https://drupal.org/node/237566" title="Issue #237566: Automated JavaScript unit testing framework">javascript testing issue</a>.</p>
+
+<h2><span id="docs">Documentation</span></h2>
+
+<p>Next big issue is documentation. It is currently non-existant for javascript.
+There are comments in the code, but it&#39;s just not fun to read and we can&#39;t
+see the whole picture. There have been many discussions and arguments about
+what and how to do. A few weeks ago I spend a whole sunday writing <a href="https://drupal.org/sandbox/nod_/2161937" title="Sandbox: Write all JS according to JSDoc standard.">Drupal
+javascript with jsdoc</a> and comming up with a <a href="https://github.com/theodoreb/drupal-js-api" title="JSDoc template for Drupal">JSDoc theme</a> suitable for Drupal.</p>
+
+<p>All that work ended up online at the <a href="http://read.theodoreb.net/drupal-jsapi/" title="Drupal JS API"><strong>Drupal JS API</strong></a> site.
+And it is looking pretty damn good. For example, you can see everything
+contained in the <a href="http://read.theodoreb.net/drupal-jsapi/Drupal.html" title="Drupal — Drupal JS API"><code>Drupal</code></a> JS object. Ever wondered what was the
+list of all the <a href="http://read.theodoreb.net/drupal-jsapi/Drupal.behaviors.html" title="Drupal.behaviors — Drupal JS API"><code>Drupal.behaviors</code></a> in core? Or what exactly
+are objects created from the <a href="http://read.theodoreb.net/drupal-jsapi/Drupal.ProgressBar.html" title="Drupal.ProgressBar — Drupal JS API"><code>Drupal.ProgressBar</code></a> constructor? Of course
+there are lots of adjustments to make but it&#39;s a start.</p>
+
+<p>Right now it&#39;s pretty much patch worthy. There is still a couple of issues
+that would be nice to get in for easier documentation: <a href="https://drupal.org/node/2162837" title="Issue #2162837: Split up contextual.toolbar.js">Split up
+<code>contextual.toolbar.js</code></a> and <a href="https://drupal.org/node/2174589" title="Issue #2174589: Split up ckeditor.admin.js">Split up <code>ckeditor.admin.js</code></a>. Once those are in I&#39;ll make the patch so we can use JSDoc to
+generate documentation while we wait for a <a href="https://drupal.org/node/1337022#comment-6977250" title="Issue #1337022-80: Create/adopt JavaScript docs standards compatible with a JS documentation parser">Drupal API integration with JSDoc</a> and finally get some javascript documentation on <code>api.drupal.org</code>.</p>
+
+<p>There is still a long way to go for Drupal to become a javascript heaven. We
+can use all the help we can get to make that sooner rather than later.</p>
+  </body>
+</html>
+

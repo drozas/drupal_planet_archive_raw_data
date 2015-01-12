@@ -1,0 +1,34 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 05 Aug 2014 20:54:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 05 Aug 2014 20:54:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Routing in Drupal 8 (a Capital Camp Session)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/routing-in-drupal-8-a-capital-camp-session/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Routing in Drupal 8 (a Capital Camp Session)</title>
+    <base href="http://forumone.com/insights/routing-in-drupal-8-a-capital-camp-session/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Last week, our team <a title="Double the Fun: DC Drupalists Unite!" href="http://forumone.com/insights/double-the-fun-dc-drupalists-unite/">participated in the first Capital Camp and Gov Days</a>, graciously hosted at the National Institutes of Health in Bethesda, Maryland. It was a great event and we would like to thank the organizers and volunteers for making it such a success!</p>
+<p>On the second day of the conference, <a title="William Hurley" href="http://forumone.com/staff/william-hurley/">William Hurley</a> and I presented a session on <a href="http://2014.capitalcampandgovdays.com/capital-camp-and-gov-days/sessions/routing-drupal-8">Routing in Drupal 8</a>, reviewing what changes are being made in Drupal 8 and why these changes were necessary. One of the major variations in the new system compared to Drupal 7 is the alteration of the routing process. In Drupal, a route is a mapping between URL paths, their corresponding pages and access callbacks. In Drupal 7, these routes are defined by the hook menu, using a 1:1 path to route. Drupal 8 has done away with hook menus altogether, and we now have the ability to map one path to multiple routes.</p>
+<div id="attachment_3725" style="width: 710px" class="wp-caption alignnone"><img class="wp-image-3725 size-large" src="http://forumone.com/wp-content/uploads/2014/08/Drupal-8-Routing-1-700x288.png" alt="Drupal 8 Routing 1" width="700" height="288" /><p class="wp-caption-text">A visual diagram of a basic routing setup.</p></div>
+<p>When a request is made through your browser or mobile device, the routing is used to determine the active controller, and then you receive the appropriate response.</p>
+<p>So why the change in Drupal 8? The hook menu was far too complex to fully comprehend what it was doing at any given point, and it was extremely challenging to perform advanced tasks using it.</p>
+<p>Without delving into code specifics, in Drupal 8 we’re able to have a function inside a method, inside a class, rather than in one file (because everything in Drupal 8 exists in classes and methods). This means simpler routing while still maintaining functionality.</p>
+<p>In Drupal 7, a hook menu would like something like this:</p>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/08/D7-Hook.png"><img class="alignnone wp-image-3732 size-full" src="http://forumone.com/wp-content/uploads/2014/08/D7-Hook.png" alt="D7 Hook" width="438" height="449" /></a></p>
+<p>With Drupal 8, we have cleaner code and a simpler system with routing:</p>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/08/D8-Menu.png"><img class="alignnone wp-image-3733 size-full" src="http://forumone.com/wp-content/uploads/2014/08/D8-Menu.png" alt="D8 Menu" width="627" height="374" /></a></p>
+<p>For those who were unable to attend, check out our slides below for more on the topic.</p>
+<p><iframe style="border: 1px solid #CCC; border-width: 1px; margin-bottom: 5px; max-width: 100%;" src="//www.slideshare.net/slideshow/embed_code/37587123" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen="allowfullscreen"> </iframe></p>
+<p>In addition to presenting, I also had the chance to work on some Drupal 8 issues in Forum One’s Coder Lounge. It was a valuable opportunity to mentor local developers, meet other Drupal enthusiasts, and even reconnect with some friends I&#8217;d met at last month&#8217;s <a title="Drupal 8 Code Sprint at the Jersey Shore" href="http://forumone.com/insights/drupal-8-code-sprint-jersey-shore/">Jersey Shore code sprint</a> who made the trek to CapitalCamp to take part in our Drupal core sprints. As Drupal 8 inches closer to beta release, I&#8217;m proud to be part of a team that is actively contributing to the Drupal community.</p>
+  </body>
+</html>
+

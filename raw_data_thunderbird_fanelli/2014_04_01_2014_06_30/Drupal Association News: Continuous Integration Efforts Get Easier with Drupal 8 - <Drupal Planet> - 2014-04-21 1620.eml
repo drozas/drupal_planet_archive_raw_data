@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Apr 2014 14:20:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Apr 2014 14:20:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Association News: Continuous Integration Efforts Get Easier with Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: https://association.drupal.org/blog/leighc/continuous-integration-efforts-get-easier-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Association News: Continuous Integration Efforts Get Easier with Drupal 8</title>
+    <base href="https://association.drupal.org/blog/leighc/continuous-integration-efforts-get-easier-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><img class="left" src="https://association.drupal.org/files/d8logo_2.png" style="height: 180px; float: left; margin: 10px;" /></p>
+<p><em>At MidCamp (Midwest Drupal camp), I found out a really fascinating thing about Drupal 8: Support for PHPUnit is going to be part of the base distribution. This means a great deal to Solutions Architects and Developers at Promet because we have been striving to integrate automated tests into our build. Perhaps you remember from my talks or previous posts, number four of my <a href="http://www.prometsource.com/blog/continuous-integration-delivers-advantages-business">10 Principles of Continuous Integration</a> is "Self-Testing Build". This makes Drupal a much more sought-after platform for shops looking to fully embrace Continuous Integration.</em></p>
+<h2>
+	What do we do now?</h2>
+<p>Currently, Promet uses PHPUnit for testing purposes. Our team (<a href="http://www.prometsource.com/people/michelle-krejci">Michelle Krejci</a> and <a href="http://www.prometsource.com/people/will-milton">Will Milton</a>), have instituted the use of Behavioral Driven Development (BDD) using Travis-CI, Behat, Mink, PhantomJS, and PHPUnit. This provides our requirements, use-cases and a way to easily self-code-review. For those not familiar with <a href="http://docs.behat.org/guides/1.gherkin.html">Gherkin</a>, I urge you review it. It's a simple process to write use-cases <em>in English</em>, such that someone can program tests against it. The confidence this has given our team in our quality of code, and the confidence the client has in the outcome is phenomenal.</p>
+<p>Michelle can attest to this being the case. In a project she’s working on now, the tests are actually being used to get sign-off that work is complete. All of the tests were created ahead of time and the scenarios are added as needed; therefore, change orders are obvious because the tests are in version control. There is no question on what scenarios we are supporting, when one was added, or when a piece of work is completed to the specifications.</p>
+<h2>
+	So how do we improve on BDD?</h2>
+<p>The problem with this workflow is that we have to jump to the Functional Test level to test anything at all. In terms of testability, it’s a tiny improvement compared to the Simple Test workflow Drupal has now. However, we have seen improvement since we’ve moved from Selenium to PhantomJS. As you probably know, PhantomJS and Selenium both do browser testing.</p>
+<p>Selenium is a browser “driver”. Through javascript injection, it hooks into a browser allowing you to emulate a user “doing stuff” on a webpage. However, running those browsers is super slow. The startup time alone for each test is over a second… sometimes up to 5 or 6. Who has that kind of time?</p>
+<p>In the case of PhantomJS though, we aren’t testing specific browsers. In fact, PhantomJS is a browser, and a mighty fast one at that. This is fine for Promet where it is less significant whether specific browsers function a certain way. PhantomJS has improved our performance for testing over Selenium by strides.</p>
+<p>But there is something even better! <strong>Testing at a Unit Level!</strong></p>
+<p> </p>
+<center>
+	<img alt="d8pyramide.png" src="https://association.drupal.org/files/d8pyramide.png" style="border: none; -webkit-transform: rotate(0rad); width: 633px; height: 465px;" /></center>
+<p> </p>
+<p>Drupal has been nearly impossible until Drupal 8. We had the Simple Test framework that was baked into Drupal, but it did what I like to call the "Use a Car to Test Another Car" approach. Specifically, you had to have a full instance of Drupal running so that it could make a fake instance of Drupal so that you could test. Additionally, functional code isn't very encapsulated. That is, you can't specifically say, "My inputs are xyz, and my outputs are abc.". The lack of encapsulation is mostly due to frequent use of global variables and not being able to group functionality with data like you can with objects in Object Oriented Programming (OOP).</p>
+<p>Fear not. The new object oriented framework gives us easy access to new-fangled Dependency Injection, mocking of objects, and other programming patterns that allow us to consolidate a single unit of code. In our case, a unit is a single function within a class, which is the smallest unit of code that can be tested using PHPUnit.</p>
+<p>This inspires developers to not only write better, testable <a href="http://www.prometsource.com/drupal-development">code</a>, but in smaller testable units that are...(insert drumroll, please) Reusable, not to mention, easier to test.</p>
+<h2>
+	So how does Unit Testing make things easier?</h2>
+<p>In several situations, we could rid ourselves of functional tests altogether. If every single piece of a component is working as expected, then the sum of those parts would equal a feature that works as expected. Lastly, those tests run a couple of orders of magnitude faster than the PhantomJS tests. This means that the tests can easily be part of the build script and not just something that runs on Travis-CI.</p>
+<p>Speaking of Travis-CI, now we can integrate Travis-CI directly with Drupal. No more hacking the pieces together to get a testable environment outside the box.</p>
+<h2>
+	Final Thoughts</h2>
+<p>Overall, BDD is still flippin’ awesome and has its place in projects; we will still continue to use it. BDD is great for communicating directly with the client with something testable. However, Unit tests will allow us to build a set of reusable code at a lower cost to maintain. These unit tests allow us to better gauge our quality of code. I think these facts, speaking strictly as a Developer, will improve upon the testing process that we already have in place, particularly for our migrations and more technical projects with APIs and integrations. Looking into the future and our use of Drupal 8, I am excited for the availability of new unit test results to be used as insurance to our clients to backup our claims of <a href="http://www.prometsource.com/service/quality-assurance-qa">quality</a>. Developers happy and clients happy? Yes please! Thank you, Drupal 8.</p>
+</div></div></div>
+  </body>
+</html>
+

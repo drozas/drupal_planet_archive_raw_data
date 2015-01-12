@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 15 Jul 2013 06:20:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 15 Jul 2013 06:20:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dave Hall Consulting: Automated Security Reviews of Drupal Sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://davehall.com.au/blog/dave/2013/07/15/automated-security-reviews-drupal-sites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dave Hall Consulting: Automated Security Reviews of Drupal Sites</title>
+    <base href="http://davehall.com.au/blog/dave/2013/07/15/automated-security-reviews-drupal-sites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Most experienced Drupal developers have worked on sites with security issues.  Keeping modules up to date is a pretty straight forward process, especially if you pay attention to the <a href="https://drupal.org/security" rel="nofollow">security advisories</a>.  <a href="https://drupal.org/project/coder" rel="nofollow">Coder</a> can find security issues in your code.</p>
+<p>Recently I needed to perform a mass security audit to ensure a collection of sites were properly configured.  After searching and failing to find a module that would do what I needed, I decided to write my own.  The <a href="https://drupal.org/project/security_check" rel="nofollow">Security Check module for Drupal</a> checks basic configuration options to ensure a site configuration doesn't have any obvious security flaws.  <strong>This module isn't designed to find all flaws in your site.</strong></p>
+<p>Security Check works by checking a list of installed modules, settings for variables and permission assignments.  I hope that others in the community will have suggestions for other generic tests that can be implemented in the module.  If you have any ideas (or patches), please submit them <a href="https://drupal.org/node/add/project-issue/security_check" rel="nofollow">as issues in the queue</a>.</p>
+<p>This module isn't a substitute for a full security audit, which can be conducted in house or by a third party such as <a href="https://www.acquia.com/products-services/professional-services/offerings#security_audit" rel="nofollow">Acquia's Professional Service team</a>.  Security Check is designed to be run as part of an automated site audit to catch low hanging fruit.</p>
+<p>To use Security Checker install it in ~/.drush and then cd to any docroot and run "drush  security-check" or if you prefer to use an alias run "drush @example secchk" from anywhere.</p>
+  </body>
+</html>
+

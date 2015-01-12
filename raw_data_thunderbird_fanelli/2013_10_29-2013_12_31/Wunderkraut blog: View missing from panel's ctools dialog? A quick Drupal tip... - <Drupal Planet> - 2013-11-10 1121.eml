@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 10 Nov 2013 10:21:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 10 Nov 2013 10:21:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: View missing from panel's ctools dialog? A quick Drupal tip...
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wunderkraut.com/blog/view-missing-from-panels-ctools-dialog-a-quick-drupal-tip/2013-11-10
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: View missing from panel's ctools dialog? A quick Drupal tip...</title>
+    <base href="http://wunderkraut.com/blog/view-missing-from-panels-ctools-dialog-a-quick-drupal-tip/2013-11-10">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p>A simple hint that can save you quite some frustration with panels and views in Drupal:</p><p>In case a <a href="https://drupal.org/node/1583868" target="_blank">view content pane</a> seems to be missing from the ctools dialog (where you select what goes in your panels pane), don't tear your hair out, just check whether the "Argument input" is too restrictive in your view's "Pane settings" section of your view content pane. If the argument input setting is too restrictive (which it is often by default if you acitvate that setting), then that view content pane is simply not shown because the context (required) for the set argument input is not available and hence the content pane is filtered out.</p><p>To check, make the argument input either optional or set it to "No argument" (which is ideal for a quick check).</p><p>In the example below, the "From context" option without the "optional" setting was too restrictive, changing either helped - the views content pane was back being available in panel's ctools content dialog.</p><p><img alt="contentpanestip1.png" class="media-image" height="228" title="contentpanestip1.png" width="754" src="http://wunderkraut.com/sites/wunderkraut.com/files/contentpanestip1.png" /></p><p><img alt="contentpanestip2.png" class="media-image" height="561" title="contentpanestip2.png" width="608" src="http://wunderkraut.com/sites/wunderkraut.com/files/contentpanestip2.png" /></p><p> </p> </div>
+    </div>
+  </body>
+</html>
+

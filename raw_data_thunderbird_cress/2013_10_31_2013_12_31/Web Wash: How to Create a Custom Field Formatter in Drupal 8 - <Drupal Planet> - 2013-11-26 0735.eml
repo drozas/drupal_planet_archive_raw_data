@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 26 Nov 2013 07:35:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 26 Nov 2013 07:35:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: How to Create a Custom Field Formatter in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/how-create-custom-field-formatter-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: How to Create a Custom Field Formatter in Drupal 8</title>
+    <base href="http://webwash.net/tutorials/how-create-custom-field-formatter-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>In Drupal, field values are displayed to the end user via a field formatter. Formatters that come with fields are often pretty basic. If you want to change what a field displays, then the best way to do this is to write a custom formatter.</p>
+
+<p>A field formatter in Drupal 7 can be created in a few ways: first with code or using the <a href="https://drupal.org/project/custom_formatters">Custom Formatters</a> module.</p>
+
+<p>On the other hand, if you're using <a href="https://drupal.org/project/ds">Display Suite</a>, then you can create a "Display Suite Field" which is similar to a formatter.</p>
+
+<p>But now it's time to learn how to create a field formatter in Drupal 8.</p>
+
+<p>In this tutorial, we'll create a custom formatter for the link field that'll allow an editor to display an embedded YouTube video.</p>
+
+<p>The link field will be used to store a YouTube URL and the formatter will be used to display the embedded video.</p>
+</div></div></div>
+  </body>
+</html>
+

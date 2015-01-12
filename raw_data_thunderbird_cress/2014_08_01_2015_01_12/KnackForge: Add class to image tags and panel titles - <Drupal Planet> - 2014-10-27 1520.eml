@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 27 Oct 2014 15:20:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 27 Oct 2014 15:20:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Add class to image tags and panel titles
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/ganesan/add-class-image-tags-and-panel-titles
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Add class to image tags and panel titles</title>
+    <base href="http://knackforge.com/blog/ganesan/add-class-image-tags-and-panel-titles">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>      Nowadays twitter bootstrap theme has become famous among Drupal world due to its flexibility for responsive websites. It is very easy to apply responsive css to the web page by adding appropriate bootstrap classes. If you are new to the twitter bootstrap theme, see here <a href="http://getbootstrap.com/css/">http://getbootstrap.com/css/</a> for more details about classes. Is it easy to add class to drupal site pages ? If yes, what to do to add class to panel title and image tags ? Lets come to the heart of the topic.</p>
+<p><strong>Adding class to panel title</strong></p>
+<p>      Eventhough it is easy to apply responsive css to the web page, when comes to drupal site we need to follow some standard approaches for adding classes. I need to add class to panel title in one of my requirements. By sticking with standard approach for this, I found this hook template_preprocess_panels_pane very useful to add class to panel title. Below code snippet will explain more detail about the usage.</p>
+<pre class="brush: php; auto-links: true; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 4; toolbar: true; codetag">function themename_preprocess_panels_pane(&amp;$variables) {
+  $variables['title_attributes_array']['class'][] = 'your class';
+}  </pre><p>The above code snippet need to be written in theme's template.php file.</p>
+<p><strong>Adding class to img tags</strong></p>
+<p>      Then I need to add class to img tags to make the image responsive as one of my requirements. Similar to panel, I found this hook template_preprocess_image very useful to achieve this. See the below code snippet to know in detail</p></div></div></div>
+  </body>
+</html>
+

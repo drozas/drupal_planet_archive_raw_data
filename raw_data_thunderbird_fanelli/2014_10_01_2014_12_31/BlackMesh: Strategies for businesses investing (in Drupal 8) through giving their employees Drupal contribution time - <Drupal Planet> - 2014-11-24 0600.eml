@@ -1,0 +1,168 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 24 Nov 2014 05:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 24 Nov 2014 05:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: BlackMesh: Strategies for businesses investing (in Drupal 8) through giving their employees Drupal contribution time
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.blackmesh.com/blog/strategies-businesses-investing-drupal-8-through-giving-their-employees-drupal-contribution
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>BlackMesh: Strategies for businesses investing (in Drupal 8) through giving their employees Drupal contribution time</title>
+    <base href="http://www.blackmesh.com/blog/strategies-businesses-investing-drupal-8-through-giving-their-employees-drupal-contribution">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>By <a href="https://www.drupal.org/u/yesct">Cathy Theys</a>, with help from <a href="https://www.drupal.org/u/xjm">xjm</a>, <a href="https://www.drupal.org/u/schnitzel">Michael Schmid</a>, and <a href="https://www.drupal.org/u/kattekrab">Donna Benjamin</a>.</p>
+
+<ul><li><a href="#preface">Preface</a></li>
+  <li><a href="#contributing">Contributing</a></li>
+  <ul><li><a href="#paying">Companies paying their employees to contribute</a></li>
+    <li><a href="#types">Types of Contribution</a></li>
+    <ul><li><a href="#release">Contributing to Drupal 8 release</a></li>
+    </ul><li><a href="#benefits">Benefits of Contribution</a></li>
+  </ul><li><a href="#strategies">Strategies, concentrate resources</a></li>
+  <ul><li><a href="#reduce">Reduce ramp-up time.</a></li>
+    <li><a href="#accrue">Reduce pressure to work on client or internal deadlines.</a></li>
+    <li><a href="#time">Consolidate time.</a></li>
+    <ul><li><a href="#saving">Consolidate by saving up contribution time.</a></li>
+      <li><a href="#subset">Consolidate by giving fewer people more contribution time.</a></li>
+    </ul><li><a href="#long-term">Focus long-term.</a></li>
+    <li><a href="#rotate">Rotate.</a></li>
+  </ul><li><a href="#examples">Examples</a></li>
+  <li><a href="#help">Help for Businesses</a></li>
+  <li><a href="#summary">Summary</a></li>
+    <ul><li><a href="#corrections">Corrections</a></li>
+    <li><a href="#cathy">Contact me</a></li>
+  </ul><li><a href="#mentors">ps. Finding mentors</a></li>
+</ul><h2 id="preface">Preface</h2>
+<p>The target audience of this post is decision makers in businesses that are deciding if and how their employees might work on Drupal 8 in a way that helps Drupal 8 be released faster. There are benefits to the individuals and the company from every kind of contribution, even if it does not match the recommendations in this post.</p>
+
+<p>Do not let anything hold you back. Just doing it is better than not doing it at all. Contribution does not have to be perfect. Drupal is great at helping people get involved at whatever level they want to be involved.</p>
+
+<p>See these great resources to help you get started:
+</p><ul class="rteindent4"><li>general information on <a href="https://www.drupal.org/getting-involved">getting involved with Drupal</a>,</li>
+<li><a href="https://www.drupal.org/contributor-tasks">contributor task documents</a> for instructions on doing common contributor tasks,</li>
+<li><a href="https://www.drupal.org/core-mentoring">core office hours</a> where mentors help new contributors,</li>
+<li><a href="https://groups.drupal.org/node/446803">Drupal 8 critical office hours</a> to help people who are already contributors work on Drupal 8 critical issues, or</li>
+<li><a href="http://www.blackmesh.com/blog/looking-drupalcon-amsterdam-sprints-upcoming-sprints-you-attend">in-person sprints</a>.</li></ul><p>People will be helpful and supportive.</p>
+<h2 id="contributing">Contributing</h2>
+<p>There are lots of ways that businesses invest in Drupal. Some sponsor events like <a href="https://groups.drupal.org/events?type%5B%5D=regional">Drupal camps</a> or <a href="https://latinamerica2015.drupal.org/sponsors">DrupalCons</a>. Some help fund travel for key contributors to attend sprints (hearing about the need via word of mouth or an employee who knows of someone in need and brings it to their employer's attention). Some <a href="https://www.drupal.org/core-mentoring/sprint-resources">host sprints in their offices</a>. Some have <a href="https://assoc.drupal.org/membership">Drupal Association memberships</a>, are <a href="https://assoc.drupal.org/supporting-partners">Drupal Association Supporting Partners</a>, or join contribution alliances like <a href="http://www.largescaledrupal.com/">Large Scale Drupal</a>. Some produce training or documentation. Some contribute funding directly to community members working on a specific project. Some give money to teams or individuals via <a href="https://gratipay.com/for/drupal/?limit=100">Drupal Gratipay</a>.</p>
+<h3 id="paying" class="rteindent1">Companies paying their employees to contribute</h3>
+<p>Some businesses are giving their employees contribution time or are hiring people specifically to contribute.</p>
+
+<p>This post covers some ideas to make employee paid contribution time an even more effective investment, especially when companies want to help with getting Drupal 8 released.</p>
+<h3 id="types" class="rteindent1">Types of Contribution</h3>
+<p>Strategies in this post can apply in general to contributing:
+</p><ul class="rteindent4"><li>to any open source project,</li>
+<li>to a Drupal project, module, theme, distribution,</li>
+<li>to Drupal core,</li>
+<li>to Drupal.org infrastructure or testbot (Continuous Integration aka <a href="https://www.drupal.org/project/drupalci">Drupal.org CI 2.0</a>),</li>
+<li>on the <a href="https://www.drupal.org/security-team">security team</a></li>
+<li>by planning an <a href="https://groups.drupal.org/drupal-event-organization">event</a> like DrupalCon, a Drupal camp, or a sprint,</li>
+<li>by preparing talks or trainings for Drupal events,</li>
+<li>at a meta level by working in a governance group like the <a href="https://assoc.drupal.org/about/board">DA board</a> or a <a href="https://www.drupal.org/governance">Drupal Working Group</a>,</li>
+<li>to <a href="https://www.drupal.org/roadmap">Drupal.org improvements</a> like issue queue workflow, profiles, landing page content, or</li>
+<li>by building, maintaining, or sponsoring outside tools (like <a href="http://simplytest.me/project/drupal/8.0.x">simplytest.me</a> or <a href="http://drupical.com/">Drupical</a>).</li>
+</ul><p>Drupal is constantly improving its recognition and definition of contribution to include: organizing, communicating, fundraising, testing, documenting, mentoring, designing, architecting, reviewing, and coding.</p>
+
+<p>A particular interest to me is contributing to Drupal 8 and helping it get released sooner. (It is of interest to some businesses too :) which is what inspired this post.)</p>
+<h4 id="release" class="rteindent1">Contributing to Drupal 8 release</h4>
+<p>The Drupal 8 branch of the codebase was opened for development in early 2011. The first Drupal 8 beta was released October 1 2014. There are <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D">125 Drupal 8 critical issues</a> (some complex, some straightforward). A Drupal 8 release candidate will be tagged when there are zero critical issues, and once subsequent critical issues are resolved, one such release candidate will become the 8.0.0 release. There will be much rejoicing. (Check the <a href="https://www.drupal.org/core/release-cycle">Release cycle page on Drupal.org</a> for up-to-date release cycle information.)
+
+</p><p>What is really needed to help Drupal 8 get released?</p>
+
+<ul class="rteindent4"><li><a href="https://www.drupal.org/patch/review">Reviewing</a> <br />
+Lack of quality reviews is the biggest problem we have. People get good at giving quality reviews first by just reviewing. Their review skills will get better over time.</li>
+<li>Keeping critical <a href="https://www.drupal.org/contributor-tasks/write-issue-summary">issue summaries</a> clear and up-to-date <br />
+This is not easy busy work; this is much appreciated and important. Some issues will not be committed without an accurate summary. Summaries help people get involved with, stay involved in, and review issues.</li>
+<li>Adopting issues <br />
+An issue can have a working patch, but that is not sufficient to get it committed. Sometimes an issue needs someone to adopt it and not give up until it is marked fixed and committed. This person becomes familiar with the issue, and checks in on it to see what it needs: maybe a re-roll, maybe an issue summary update, maybe track down a particular person whose feedback is needed, … they pay attention to the issue and help it get whatever it needs so that issue gets committed.</li>
+<li>Focusing on development milestones and release blockers<br />
+Unblocking the <a href="https://www.drupal.org/node/2341575">beta-to-beta upgrade path</a> will enable more early adopters to begin investing resources in Drupal 8. Work on <a href="https://www.drupal.org/project/issues/search?projects=&amp;project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;issue_tags_op=%3D&amp;issue_tags=D8+upgrade+path">upgrade path issues</a>, other <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D">critical Drupal 8 issues which block release</a>, and <a href="https://www.drupal.org/node/2267715">release-blocking changes to Drupal.org</a> is the most direct way to accelerate the release itself.</li>
+<li>Paying attention to Drupal 8 news and priorities <br />
+Reading <a href="http://groups.drupal.org/core/updates">Drupal 8 updates</a> is a good way to stay up-to-date.</li>
+</ul><h3 id="benefits" class="rteindent1">Benefits of Contribution</h3>
+<p>What benefits would a company be looking for?</p>
+
+<ul class="rteindent4"><li>A quicker release of Drupal 8 means your organization can use <a href="https://www.drupal.org/drupal-8.0">all of Drupal 8's improvements</a> for real projects, as well as drive growth in Drupal-related businesses (like Drupal hosting and training).</li>
+<li>Employees with expertise in Drupal 8.</li>
+<li>Employees with better skills. (Employees will interact with a huge community of experts, and learn from them.)</li>
+<li>Employees with more skills. All Drupal 8 issues have to pass <a href="https://www.drupal.org/core-gates">core gates</a> in: documentation, accessibility, usability, performance, and testing. People who work on core issues learn about those areas.</li>
+<li>Employees with even more skills. Working with the community builds other valuable skills, that are not strictly about technology, applicable to internal processes as well as to client work.</li>
+<li>Saving money on training. Businesses just have to pay for one side of the "training", for their employee time. They do not have to pay for the trainer time like they would for on-site training, or pay for training classes for their employees to attend.</li>
+<li>Making connections with possible future additional employees.</li>
+<li>Raising the company's profile, brand recognition, and appeal. (See <a href="https://amsterdam2014.drupal.org/keynote-dries-buytaert">Dries's DrupalCon Amsterdam Keynote on contribution recognition</a>.)</li>
+<li>Steering the future of Drupal in ways that align with the company and the community.</li>
+</ul><h2 id="strategies">Strategies for businesses investing in getting Drupal 8 released sooner through giving their employees Drupal contribution time</h2>
+<h3 id="reduce" class="rteindent1">Reduce ramp-up time.</h3>
+<p>Sometimes people who are experts at their job, in a certain area, can feel ineffective or inefficient while contributing. Before telling everyone "Go contribute", businesses can:
+</p><ul class="rteindent4"><li>consult with an <a href="#mentors">experienced contributor or mentor</a> for advice on structuring your contribution policies or program ,</li>
+<li>share resources with employees about how to contribute,</li>
+<li>get employees tools that might help for contributing (they maybe not the same tools necessary for their job), and/or</li>
+<li>have employees attend a sprint that has mentoring for new contributors, or work with experienced contributors and mentors online in #drupal-contribute in <a href="https://www.drupal.org/irc">IRC</a>, in #drupal during <a href="https://www.drupal.org/core-mentoring">core mentoring hours</a>, or arrange for an <a href="#mentors">experienced contributor or mentor</a> to hold an event onsite (or virtually) for employees.</li>
+</ul><h3 id="accrue" class="rteindent1">Reduce pressure to work on client or internal deadlines.</h3>
+<p>Not every employee will be interested in spending work time on contribution. Instructing all employees to contribute may not have the best results.</p>
+
+<p>For example, if a company schedules certain time for contribution, say the last Friday of the month, for all employees to <em>optionally</em> spend the day contributing, some people will want to spend that time on client work, or internal projects, maybe because of a deadline, or maybe just because they do not want to contribute that day. People who want to contribute during the scheduled time will see their co-workers working on work projects and feel pressure to also not contribute.</p>
+
+<p>Something that can overcome this, is letting people who want to contribute, contribute during off time, so they are still working while the rest of their team is. They can keep track of their contribution time, and later exchange it for scheduled vacation or professional develop time going to conferences or training.</p>
+<h3 id="time" class="rteindent1">Consolidate time.<h3>
+</h3></h3><p>The following strategies center around an idea: <strong>Concentrate your resources</strong>.</p>
+
+<p>Let's take an example: a business who has 10 employees that is thinking about giving each person 4 hours of contribution time every week (10% time), or having one day a month where everyone contributes (5% time).</p>
+
+<p>4 hours a week, or one day a month is not enough to work on a complicated issue. The time would start with reading any new comments on an issue, maybe changing local environment (requirements are different for Drupal 8 compared to Drupal 7), seeing if any changes in the code base effect the issue, maybe verifying the problem still exists, … thinking, trying ideas, maybe there would be enough time to implement them, and post back to the issue, update the issue summary as needed and explain what was changed and why in a comment, but more likely, there would not be enough time. It depends on the complexity of the problem.</p>
+
+<p>There are things that a person can do with 4 hours a week that are helpful contributions. There are even things on issues blocking Drupal 8 release that people could do… but there are things where after 4 hours, a person is just understanding enough to get started ... and then they are out of time, and have to wait till next week. Where they might need to spend the 4 hours getting back up to speed again.</p>
+<h4 id="saving" class="rteindent1">Consolidate by saving up contribution time.</h4>
+<p>If employees have 4 hours a week contribution time, let them save it up for a couple months, and then use it in a chunk. For example, if someone does not contribute for 2 months, they could then have 36 hours of contribution time they could save up and take a (almost) full week to tackle a complicated problem, or tackle a bunch of not quite so complicated issues, without having the overhead of ramping up and context switching.</p>
+<h4 id="subset" class="rteindent1">Consolidate by giving fewer people more contribution time.</h4>
+<p>Instead of 10 people contributing 4 hours a week, pick 2 people from those that that want to contribute, give them each 20 hours a week.</p>
+
+<p>With 20 hours a week, there is time to work on a complex problem, and also respond to feedback quickly. This reduces the overhead of needing to come back up to speed, context switching, or rebasing on a code base that has changed a lot.</p>
+
+<p>With more consecutive time, people can concentrate on more complex problems, and stay up to date better, with less overhead. We can take that even further...</p>
+<h3 id="long-term" class="rteindent1">Focus long-term.</h3>
+<p>If instead of 10 people contributing 4 hours a week, you have 2 people contributing 20 hours a week, let them plan to do that for a few months.</p>
+
+<p>Some issues need someone to look after them, week after week, to see the issue through to completion.</p>
+
+<p>When someone shows they can make a reliable and ongoing contribution to the project, other experienced contributors, or project leaders will invest more into bringing that person up to speed and helping them get things done.</p>
+
+<p>Give people 3-4 months where they can plan on contributing.</p>
+<h3 id="rotate" class="rteindent1">Rotate.</h3>
+<p>After a few months, bring an employee back to full time client billable hours. And give another employee a turn to concentrate on contributing for 3-4 months.</p>
+
+<p>Employees learn so much while contributing. Returning to focus on client projects or in-house work with their team is an opportunity to share that learning with everyone in the company. The company benefits from the improved skills and new community connections that employee gained while contributing directly to the project.
+
+</p><p>This can also help to protect people from burning out on contributing.</p>
+<h2 id="examples">Examples</h2>
+<p>Here are some examples of businesses having their employees contribute. Some are recent, some have been doing this for years. [These are examples of direct Drupal core contribution by employers. There are many ways to contribute to Drupal, and many businesses contribute in different, valuable ways.]</p>
+
+<ul class="rteindent4"><li><a href="http://www.blinkreaction.com/blog/drupal-as-a-public-good-and-renewing-our-commitment">Blink Reaction had a sprint</a> for their employees and brought in local experienced contributors and mentors to help their employee contribution time be effective, and get help targeting issues that are currently relevant. Blink Reaction had their event on non-working hours, a Saturday, so people did not have to stop working during regular hours when they feel like they should be working on projects with deadlines. People who work a full day at the contribution event on Saturday, get a compensation day they can schedule to take later.</li>
+<li><a href="https://www.getpantheon.com/jobs?gh_jid=33200">Pantheon is hiring a contributor</a>, and going to bring in an experienced contributor to mentor that person for a week or two.</li>
+<li><a href="https://www.acquia.com/blog/announcing-office-cto-acquia">Acquia</a> has multiple full-time employees working on Drupal 8 issues.</li>
+<li><a href="http://chapterthree.com/blog/joining-chapter-three">Chapter Three employs one of Drupal 8's four branch maintainers to work on Drupal 8</a>.</li>
+<li><a href="http://nodeone.se/">NodeOne (now part of Wunderkraut)</a>), <a href="https://www.zivtech.com/">Zivtech</a>, <a href="https://www.erdfisch.de/">erdfisch</a>, <a href="http://comm-press.de/">comm-press</a>, <a href="http://cheppers.com/">Cheppers</a>, <a href="http://breaktech.com/">Breakthrough Technologies</a>, and <a href="">New Digital Partnership</a> (among others) dedicated 25-50% of one employee's time for several months to a particular Drupal core initiative.</li>
+<li>Freelancers and independents like <a href="http://poplarware.com/news/freelancer-contrib">Jennifer Hodgdon</a> (and many others) incorporate contribution work with their billable time.</li>
+<li><a href="https://previousnext.com.au/drupalgive">PreviousNext</a> hired Donna (kattekrab) Benjamin to help focus the company's community engagement activities. She spends half her time on client work to ensure her role is sustainable, and half her time on community activity, such as the community working group, Drupal Association board and organising events. She also works with the PreviousNext team to help them find their own niche for making a useful contribution. Lee (larowlan) Rowlands and John Albin also spend some of their paid time mentoring other PreviousNext staff to contribute, who all have 20% time to work on the Drupal project code or community.</li>
+<li><a href="http://www.amazeelabs.com/">Amazee Labs</a> built their own company website on Drupal 8 Alpha and continues to implement customer websites on Drupal 8. Employees are paid to: find issues in Drupal 8, open issues in the issue queues, fix them, post the fixes on the issues, and further work on the issues.
+</li><li>BlackMesh hired me. :) To work on Drupal 8 issues and to help others contribute to Drupal.</li>
+</ul><h2 id="help">Help for businesses</h2>
+<p>Sometimes it helps to have someone you can just talk to. You can talk to me. Reach out and ask any questions you have. I can answer them, or connect you with people who can.</p>
+<h2 id="summary">Summary</h2>
+<p>Contribute. Doing it in any way is better than doing it perfectly. These are some strategies for paying employees to contribute that will help Drupal 8 release sooner. Concentrate your resources. Talk to others about what works at their companies. Get help from experienced contributors and mentors.</p>
+<h3 id="corrections" class="rteindent1">Corrections</h3>
+<p>If there are corrections or missing examples, please let me know.</p>
+
+<p id="cathy">-Cathy<br /><a href="http://twitter.com/YesCT">@YesCT</a> or <a href="http://drupal.org/u/yesct">Drupal.org contact form</a></p>
+<h2 id="ps">ps.</h2>
+<h3 id="mentors" class="rteindent1">How to find and contact mentors and experienced contributors</h3>
+<p>See the list of core mentoring leads in <a href="http://cgit.drupalcode.org/drupal/tree/core/MAINTAINERS.txt">MAINTAINERS.txt</a>, and contact them in #drupal-contribute in <a href="https://www.drupal.org/irc">IRC</a> or via their Drupal.org contact pages. There are also more mentors beyond the mentoring maintainers, and there is not exactly a list of experienced contributors. So, please feel free to just contact me and I can put you into contact with others.</p></div></div></div><span class="submitted-by"></span><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/contributor" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Contributor</a></div><div class="field-item even"><a href="/tags/sprints" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Sprints</a></div><div class="field-item odd"><a href="/tags/drupal-8" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal 8</a></div></div></div>
+  </body>
+</html>
+

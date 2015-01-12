@@ -1,0 +1,59 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 31 Dec 2013 07:35:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 31 Dec 2013 07:35:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Edison Wong: Announcing TWBS LESS: Simple LESS Support for Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://edin.no-ip.com/blog/hswong3i/announcing-twbs-less-simple-less-support-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Edison Wong: Announcing TWBS LESS: Simple LESS Support for Drupal 7</title>
+    <base href="http://edin.no-ip.com/blog/hswong3i/announcing-twbs-less-simple-less-support-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-body">
+    <p><img alt="" src="http://d7e5flx326h4k.cloudfront.net/files/resize/remote/59d487becd5838c8de4c34c681b07817-199x81.png" style="float:right; height:81px; width:199px" width="199" height="81" />During <a href="https://drupal.org/project/twbs">TWBS</a> development I figure out that introducing <a href="http://lesscss.org/">LESS</a> support in Drupal 7 would be a great idea when combine with <a href="http://getbootstrap.com/">Bootstrap</a> and <a href="http://fontawesome.io/">Font Awesome</a>. After some research and development during Christmas holiday, I would like to introduce my helper module named <a href="https://drupal.org/project/twbs_less">"TWBS LESS"</a>. The goal of <a href="https://drupal.org/project/twbs_less">TWBS LESS</a> is to provide a handy support for LESS and act as the helper module for on going Drupal-Bootstrap-Remix development.</p>
+
+<p>Add your files just like any other CSS file, just with .less as the extension, and they will be automatically processed. No additional configuration is required.</p>
+
+<h3>Key Features</h3>
+
+<ul><li>Provide <a href="https://raw.github.com/drush-ops/drush/master/docs/make.txt">drush make</a> file for library download</li>
+	<li>Confirm library successfully initialized with <a href="https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_requirements/7">hook_requirements()</a></li>
+	<li>Support both LTR *.less and RTL *-rtl.less, as like as that of <a href="https://api.drupal.org/api/drupal/modules!locale!locale.module/function/locale_css_alter/7">locale_css_alter()</a> supported</li>
+	<li>If Drupal's CSS aggregation enabled, all .less will automatically compile at server-side by lessphp as .css before Drupal CSS aggregation</li>
+	<li>If Drupal's CSS aggregation disabled, all .less will link with rel set to "stylesheel/less" individually, so less.js will handle with client-side compile</li>
+	<li>Support <a href="https://github.com/abstract-open-solutions/fireless">FireLESS</a> for .less debug with <a href="https://getfirebug.com/">Firebug</a> in client-side compile mode</li>
+</ul><h3>Live Demo</h3>
+
+<p>TWBS LESS is now integrated into DruStack distribution, so you can try it in a live sandbox with <a href="http://simplytest.me/project/drustack/7.x-24.x">simplytest.me</a>.</p>
+
+<h3>Why Another LESS Module?</h3>
+
+<p>For general and generic LESS support you should consider another <a href="https://drupal.org/project/less">LESS CSS Preprocessor</a> module which started since 2010-03-04.</p>
+
+<p>On the other hand you should consider about using this module because of:</p>
+
+<ul><li>Purely design for assist <a href="https://drupal.org/project/twbs">TWBS</a>, which means you will have the best compatibility when using both together</li>
+	<li>Support both server-side pre-compile / client-side live-compile with debug mode enable; <a href="https://drupal.org/project/less">LESS CSS Preprocessor</a> only support server-side pre-compile</li>
+	<li>RTL support with *-rtl.less just as simple as CSS *-rtl.css that Drupal core supported; <a href="https://drupal.org/project/less">LESS CSS Preprocessor</a> require it to be named as "somename.css.less" style</li>
+	<li>Server-side pre-compile CSS as naming based on its original .less md5_file() result, which means even you add a single space the cache file will also be regenerate; <a href="https://drupal.org/project/less">LESS CSS Preprocessor</a> calculate based on filemtime()</li>
+	<li>Much simple implementation which handle all LESS support automatically as like as that of Drupal core CSS support; <a href="https://drupal.org/project/less">LESS CSS Preprocessor</a> coming with 3.5x times as compare in final downloadable archive size</li>
+</ul><p>Please feel free to test it out and comment with your idea. Let's enjoy simplified theme development with LESS ;-)</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a>  </div>
+<span property="dc:title" content=" Announcing TWBS LESS: Simple LESS Support for Drupal 7" class="rdf-meta"></span>
+  </body>
+</html>
+

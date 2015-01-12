@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 14 Dec 2014 17:28:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 14 Dec 2014 17:28:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: Drupal 8 and Backdrop CMS - A Brief Comparison
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/drupal-8-and-backdrop-cms-brief-comparison
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: Drupal 8 and Backdrop CMS - A Brief Comparison</title>
+    <base href="http://friendlymachine.net/posts/drupal-8-and-backdrop-cms-brief-comparison">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I recently had the opportunity to see Nate Haug deliver a presentation about the&nbsp;<a href="https://backdropcms.org/">Backdrop CMS</a> project and it&#39;s upcoming 1.0.0 release (Jan. 15). It had been a while since I had taken a look at Backdrop and I came away quite impressed with both its progress and direction.</p>
+<p>Many of you reading this will be familiar with Backdrop, but for those of you who haven&#39;t heard of the project, it is the first fork of the Drupal project, and the source of a great deal of controversy and angst in the Drupal community.</p>
+<p>Backdrop has been perceived as a threat by many Drupalists, but I think as we step through the features and approaches of the two projects, those fears will be at least somewhat allayed. My own take is that the two systems seem complementary instead of competitive.</p>
+<p>As a bit of background for the origin of Backdrop CMS, Nate told the story of his reaction to the massive changes in Drupal 8. He realized that his own business, <a href="https://webform.com/">Webform.com</a>, was going to have major issues with the upgrade path.</p>
+<p>It was going to take a huge effort to upgrade his site - we&#39;re talking many, many months -&nbsp;to simply replicate the work he had already done in Drupal 7. He didn&#39;t want to throw away the huge investment he had already made in his business and start over. His solution to the problem was forking Drupal to create&nbsp;Backdrop CMS.</p>
+<p>And then...all hell broke loose.</p>
+<h2>Feature Comparison</h2>
+<p>I&#39;ll set the controversy behind Backdrop aside&nbsp;and get straight into a comparison of the features. Keep in mind, however, I&#39;m using the term &quot;features&quot; here a bit loosely. That&#39;s because I also want to talk about how Backdrop is managed as well as other differences between&nbsp;the two projects. This list is not exhaustive. It just has some of the things that seem&nbsp;to me the most significant or interesting.</p>
+<h3>Target Market</h3>
+<p>I know many will squirm uncomfortably when I say this, but the target market for Drupal 8 is large enterprises. By contrast, the target for Backdrop is small to medium size businesses and non-profits - really the original market of the Drupal project. As we go through this list, you&#39;ll see how this targeting plays out in some of the decisions the two projects have made.</p>
+<h3>Configuration Management</h3>
+<p>This has been widely touted as <strong>the</strong> killer feature of Drupal 8. If you&#39;ve dreamed of having all the cool <a href="https://www.drupal.org/documentation/administer/config">configuration management</a> features in D8 available&nbsp;for Drupal 7, then Backdrop may be tempting&nbsp;because that is essentially what it&nbsp;offers. Instead of using YAML files to store configuration data, however, Backdrop uses JSON. Otherwise, it&#39;s pretty much the same.</p>
+<h3>Theming</h3>
+<p>Another one of the major additions to Drupal 8 is the <a href="https://www.drupal.org/node/2186401">Twig template engine</a>. This is a big plus for many front-end folks and it&#39;s something that is not available in Backdrop at this time -&nbsp;and I&#39;m not sure I would look for it in the <a href="https://github.com/backdrop/backdrop-issues/issues/83">near future</a>. Backdrop currently uses the Drupal 7 PHPTemplate theme engine.</p>
+<h3>Responsive Images</h3>
+<p>As a front-end developer, I have a particular interest in this one. Drupal 8 includes the <a href="https://drupalize.me/blog/201405/drupal-8-responsive-what-does-mean">Responsive Image</a> module, which is essentially a reworking of the <a href="https://www.drupal.org/project/picture">Picture</a> module in D7.</p>
+<p>At this writing, Backdrop doesn&#39;t have a responsive image solution. I asked Nate about this and he&#39;s not a fan of the Picture module approach (he favors using <a href="http://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/">srcset</a>, something that may&nbsp;possibly be added in versions 1.1 or 1.2 of Backdrop), so if&nbsp;that is something you require, it will need to be added as either a custom or&nbsp;contributed module.</p>
+<h3>Contributed Modules</h3>
+<p>Speaking of contrib, most of you reading this will be familiar with Drupal&#39;s massive collection of contributed modules. The contributed modules for Backdrop CMS will be hosted on GitHub and managed similar to how the jQuery project organizes its <a href="http://plugins.jquery.com/">plugin registry</a>. I don&#39;t think there have been any ports as of yet (all the energy is going to the 1.0.0 release), so this is pending.</p>
+<p>Some of you may have heard that Drupal 7 modules will be compatible with Backdrop. This isn&#39;t true, primarily due to modules needing to be rewritten to support configuration management. Porting a Drupal 7 module should be fairly straightforward, however. Instead of storing config in the variables table, it needs to be in JSON files. Here&#39;s a <a href="https://twitter.com/backdropcms/status/544009350906277890">video</a> that will help get you started.</p>
+<p>As a quick aside, having Backdrop (and eventually the contrib modules)&nbsp;<a href="https://github.com/backdrop/backdrop">hosted on GitHub</a>&nbsp;seems like it will be a more familiar and friendly environment for potential project contributors.</p>
+<h3>Project Organization</h3>
+<p>The &quot;do-ocracy&quot; that is the Drupal project has been <a href="https://www.lullabot.com/blog/podcasts/drupalizeme-podcast/52-drupal-community-leadership">much discussed</a> lately. Nate has organized the <a href="https://backdropcms.org/leadership">Backdrop CMS project</a> along the same lines as the Project Management Committee of the Apache project. That was very wise&nbsp;in my opinion. It bodes well for the project.</p>
+<h3>WYSIWYG</h3>
+<p>Another really nice thing in Drupal 8 is the inclusion of a default WYSIWYG editor. Love them or hate them, virtually every client wants one, so now with D8 you won&#39;t have to add one yourself for every project. As of version 1.0.0, Backdrop doesn&#39;t have this functionality, but look for it in version 1.1 or 1.2.</p>
+<p>I remember Nate saying something about it being ironic that Backdrop was launching both without Twig or a WYSIWYG since&nbsp;he and Backdrop co-founder Jen Lampton&nbsp;had been instrumental in bringing those to Drupal 8.</p>
+<p>I suppose I should mention that Backdrop minor versions - from 1.0 to 1.1, for example - will occur regularly at an interval of about three or four months. So for the features mentioned&nbsp;that may be in version 1.1 or 1.2, it means they can be expected in either&nbsp;late spring or late summer.</p>
+<h3>Panels and Views</h3>
+<p>How about Panels and Views in core? Yeah, I like it! And that&#39;s what you get with Backdrop. Drupal 8 provides Views in core, but not Panels. It may be a while before Panels is ready for D8, but it may also be a while <a href="http://drupalreleasedate.com/">before D8 is ready</a>,&nbsp;so I guess&nbsp;that&#39;s not a problem.</p>
+<h3>System Requirements and Backwards Compatibility</h3>
+<p>It may seem odd to group these two, but this is one point where the intended audiences (enterprise vs small organizations) are put into stark contrast. For example, Backdrop is intentionally friendly to cheap hosting. Drupal 8, by contrast, is almost certainly going to use more server resources than Drupal 7, <em>potentially</em> causing issues for those on shared hosting plans.&nbsp;</p>
+<p>For large organizations, the cost of hosting is not a big deal, but for some small organizations, it&nbsp;can be. So a solution architected to work well with limited resources may be attractive and also serves to highlight the different approaches between the two projects.</p>
+<p>With backwards compatibility, we see the same philosophical divergence. Drupal has never focused much on&nbsp;backwards compatibility, making it a pain in the ass (and often expensive) to upgrade across major versions. The benefit of that approach&nbsp;is that Drupal has been able to innovate without being constrained by past decisions.</p>
+<p>Backdrop, however, places a lot of value on carefully managing change so that existing sites can be upgraded affordably. I would recommend looking at <a href="https://backdropcms.org/philosophy">Backdrop&#39;s philosophy</a>, because it&#39;s there where you really find the motivations for the project and how it differs (and will differ more in the future) from the Drupal project. From system requirements, to upgrade path, to reaching out to hear voices not found in the issue queue, Backdrop CMS is consistently friendly to the needs of the little guy.</p>
+<h3>Wrap Up</h3>
+<p>Again, this isn&#39;t a comprehensive list of all the features or differences between the two systems. There is <a href="https://github.com/backdrop/backdrop-issues/issues/378">an issue</a> on GitHub that might be of some help in learning more as well as this <a href="https://www.drupal.org/drupal-8.0/features">Drupal 8 feature list</a>.</p>
+<p>To me, these two projects don&#39;t compete with one another. Sure, some enterprises may use Backdrop and many small organizations may use Drupal 8. But really, the changes in Drupal 8 are a move toward the enterprise and the talk around Drupal 8 has reinforced that message. Having an alternative for small organizations on a budget and with a need to preserve software investments isn&#39;t a bad thing.</p>
+<p>You may politely leave any comments below.</p>
+         <a href="/tags/drupal">Drupal</a>
+  </body>
+</html>
+

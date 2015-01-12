@@ -1,0 +1,50 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 14 Nov 2013 14:29:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 14 Nov 2013 14:29:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Advomatic: Responsive Iframes — yes it is possible
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.advomatic.com/blogs/dave-hansen-lange/responsive-iframes-yes-it-possible
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Advomatic: Responsive Iframes — yes it is possible</title>
+    <base href="http://www.advomatic.com/blogs/dave-hansen-lange/responsive-iframes-yes-it-possible">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-type-filefield field-field-image">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <a href="/blogs/dave-hansen-lange/responsive-iframes-yes-it-possible" class="imagecache imagecache-blog_thumb imagecache-linked imagecache-blog_thumb_linked"><img src="/files/imagecache/blog_thumb/5565161570_4dab8f4426_b.jpg" alt="" title=""  width="300" height="200" /><br /><span class="blog_image_title"></span></a>        </div>
+        </div>
+</div>
+<p>The Web has always had a love-hate relationship with 3rd-party content.&nbsp; Whether that external content is self-contained functionality brought into a website via <a href="http://en.wikipedia.org/wiki/Software_as_a_service">SaaS</a>, or to add a donation form to your website in a way that reduces your <a href="http://drupalpcicompliance.org/">PCI Requirements</a>, or to possibly connect your disparate web properties together.&nbsp; Back in the prehistoric days before responsive web development (a.k.a. two years ago) a common way to insert 3rd-party content was with an iframe. Something like:<br />
+<code>&lt;iframe src=&quot;http://example.com/widget&quot; width=&quot;300&quot; height=&quot;500&quot; /&gt;&lt;/iframe&gt;</code></p>
+<p>The challenge with responsive design is the hard-coded width and height.&nbsp; You might be able to choose reasonable settings for a desktop viewport, but a smaller mobile viewport may require something narrower and longer (or sometimes even wider and shorter).&nbsp; And as the user interacts with the iframe (e.g. submits a form) the content may shrink and grow. Iframes quickly become untenable in a responsive world.&nbsp; But often there is no alternative (<a href="http://www.salsalabs.com/">Salsa</a>, <a href="https://www.blackbaud.com/page.aspx?pid=285">Blackbaud NetCommunity</a>, <a href="http://www.wufoo.com/">Wufoo</a> and many other CRM/donation/form platforms do not have adequate JavaScript APIs).</p>
+<p>However there is a solution. We can use JavaScript to communicate between the iframe and the top-level page. With one slight problem &mdash; due to the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Same_origin_policy_for_JavaScript">same-origin policy</a> an iframe at a different domain can&#39;t use JavaScript to <em>directly</em> communicate with the parent page.&nbsp; Instead we have to use the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window.postMessage">postMessage()</a> method to do cross-window messaging. This is a bit awkward, but there&#39;s good news at the end of this blog post.</p>
+<h3>postMessage()</h3>
+<p>Let&#39;s start with a quick tutorial on how postMessage() works. We&#39;ll set up a line of communication from the parent to the iframe and then send CSS and JavaScript links that can be used to style and otherwise manipulate the content.</p>
+<div class="codeblock"><code>// Parent<br />var iframe = document.getElementById(&#039;the-iframe&#039;);<br />var tags = &#039;&lt;script type=&quot;text/javascript&quot; src=&quot;https://example.com/script.js&quot;&gt;&lt;/script&gt;&#039;;<br />tags += &#039;&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;https://example.com/styles.css&quot; /&gt;&#039;;<br />// Send a message to the iframe only if it contains content from<br />// https://frame.example.net.<br />iframe.contentWindow.postMessage(tags, &#039;https://frame.example.net&#039;);</code></div>
+<p>Before we get too far there is one caveat: You must be able to have a small snippet of JavaScript in the iframe (e.g. If your donation form&#39;s configuration tool allows you to insert JavaScript). Unfortunately many 3rd-party tools don&#39;t allow this. Other JavaScript we can send over to the iframe via postMessage(), but we need to start with something.</p>
+<div class="codeblock"><code>// Iframe<br />function listener(event) {<br />&nbsp; // Only listen to events from the top-level page.<br />&nbsp; if (event.origin !== &quot;http://example.com&quot; &amp;&amp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.origin !== &quot;https://example.com&quot; &amp;&amp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.origin !== &quot;http://dev.example.com&quot; &amp;&amp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; event.origin !== &quot;https://dev.example.com&quot;<br />&nbsp; ) {<br />&nbsp;&nbsp;&nbsp; return;<br />&nbsp; }<br />&nbsp; jQuery(&#039;head&#039;).append(event.data);<br />}<br />// We attach this differently for older versions of IE.<br />if (window.addEventListener) {<br />&nbsp; addEventListener(&quot;message&quot;, listener, false);<br />}<br />else {<br />&nbsp; attachEvent(&quot;onmessage&quot;, listener);<br />}</code></div>
+<p>The cross-window messaging security model can be two-sided. The sender ensures that the data is only sent to trusted domains and the receiver checks that the message came from trusted domains.</p>
+<h3>Resizing the iframe</h3>
+<p>To resize the iframe we need to communicate in the other direction &mdash; the iframe needs to tell the parent how big it is.</p>
+<div class="codeblock"><code>// Iframe.<br />/**<br /> * Send a message to the parent frame to resize this iframe.<br /> */<br />var resizeParentFrame = function() {<br />&nbsp; var docHeight = jQuery(&#039;body&#039;).height();<br />&nbsp; if (docHeight != parentDocHeight) {<br />&nbsp;&nbsp;&nbsp; parentDocHeight = docHeight;<br />&nbsp;&nbsp;&nbsp; // There is no need to filter this to specific domains, since the data is<br />&nbsp;&nbsp;&nbsp; // not sensitive, so just send it everywhere.<br />&nbsp;&nbsp;&nbsp; window.parent.postMessage(parentDocHeight, &quot;*&quot;);<br />&nbsp; }<br />};
+<p>// Check frequently to see if we need to resize again.<br />setInterval(resizeParentFrame, 250);</p></code></div>
+<p>&nbsp;</p>
+<div class="codeblock"><code>// Parent.<br />var listener = function (event, iframe) {<br />&nbsp; // Ignore messages from other iframes or windows.<br />&nbsp; if (event.origin !== &#039;https://frames.example.net&#039;) {<br />&nbsp;&nbsp;&nbsp; return;<br />&nbsp; }<br />&nbsp; // If we get an integer, that is a request to resize the window<br />&nbsp; var intRegex = /^\d+$/;<br />&nbsp; if (intRegex.test(event.data)) {<br />&nbsp;&nbsp;&nbsp; // Math.round() is important to make sure Internet Explorer<br />&nbsp;&nbsp;&nbsp; // treats this as an integer rather than a string (especially<br />&nbsp;&nbsp;&nbsp; // important if the code below were to add a value to the<br />&nbsp;&nbsp;&nbsp; // event.data, although currently we aren&#039;t doing that).<br />&nbsp;&nbsp;&nbsp; iframe.object.height(Math.round(event.data));<br />&nbsp; }<br />}<br />// Setup the listener.<br />if (window.addEventListener) {<br />&nbsp; addEventListener(&quot;message&quot;, listener, false);<br />}<br />else {<br />&nbsp; attachEvent(&quot;onmessage&quot;, listener);<br />}</code></div>
+<p>&nbsp;</p>
+<p>You can see these concepts in action on the <a href="https://www.globalzero.org/donate">Global Zero donate page</a>. On a soon-to-be-launched project we&#39;re also taking it one step further to pass other information to/from the iframe.</p>
+<p>If you do get this far, you&#39;ll note how this is a big pain in the arse; It will take several hours to get this all setup and QAed.&nbsp; The good news is that at some point in the future we won&#39;t have to do this.&nbsp; HTML5 has a new attribute for iframes called <a href="http://www.w3.org/TR/2011/WD-html5-20110525/the-iframe-element.html#attr-iframe-seamless">seamless</a>. A seamless iframe will inherit the parent&#39;s CSS and adapt in size to fit the contents.&nbsp; The bad news is that it has yet to be implemented by any browser<sup><a href="#one">1</a></sup>, so it&#39;s still a long way off.</p>
+<hr />
+<a href="http://www.flickr.com/photos/f2point8/5565161570/">Photo</a> by Bruce Denis<br />
+Thanks to <a href="http://benvinegar.github.io/seamless-talk/#/">Ben Vinegar</a> for confirming that I&#39;m not crazy to think this is the best way to do this.
+<p><sup><a id="one" name="one">1</a></sup> Some browsers currently have very superficial support &mdash; they only remove the default iframe border. But that&#39;s just simple CSS that your browser-reset CSS is likely dealing with anyway.</p>
+  </body>
+</html>
+

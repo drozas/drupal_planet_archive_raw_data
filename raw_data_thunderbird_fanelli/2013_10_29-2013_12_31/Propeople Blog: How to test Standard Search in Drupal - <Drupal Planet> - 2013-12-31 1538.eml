@@ -1,0 +1,83 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 31 Dec 2013 14:38:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 31 Dec 2013 14:38:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Propeople Blog: How to test Standard Search in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wearepropeople.com/blog/how-to-test-standard-search-in-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Propeople Blog: How to test Standard Search in Drupal</title>
+    <base href="http://wearepropeople.com/blog/how-to-test-standard-search-in-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It’s not a secret that QA engineers work with technical specifications, but sometimes there are no specs regarding the search functionality on a site and you end up with something like “Default search module”, or your PM will just say - “Simple search, nothing to test”. In this situation you can use only your imagination. This blog post is for those quality assurance engineers who might not know what “Standard Search in Drupal 7” really means, or how to test it.</p>
+
+<p>First thing you should know about the Standard Search in Drupal 7 is the way it indexes content. The content can either be reindexed manually, or be automatically marked for reindex after you add it (or edit existing content). The content that’s queued for reindexing will be indexed when cron runs. This can happen automatically through the use of a specific schedule, or, for testing purposes, you can run it manually from the Admin UI.</p>
+
+<p>To run cron, you have 2 options:
+</p><ol><li>Use the Administration Menu module - hover over the home icon in the toolbar and click Run cron.</li>
+<li>Go to Reports &gt; Status report (admin/reports/status), and under Cron maintenance tasks click run cron manually.</li>
+</ol><p><img typeof="foaf:Image" src="http://d3gda9raw7t781.cloudfront.net/sites/default/files/styles/services_full/public/1_5.png?itok=9tszM-0l" alt="" /></p>
+
+<p><strong>Note:</strong> If you use Apache Solr for your Search system, it may be not enough to just run cron once. It usually needs an additional 2 minutes after “run cron” to re-index results.</p>
+
+<p>The best way to start testing is getting to know the search configurations done on the site. If you go to configuration-&gt; search and metadata -&gt;search settings, you’ll find the configurations implemented for your search. Now, lets see them more closely.</p>
+
+<p>1. Drupal Search allows users with Use search permission to search for content and users separately. By default, both Node and User searches are active. In order to search for users, the user should have permission to view user profiles.</p>
+
+<p><img typeof="foaf:Image" src="http://d3gda9raw7t781.cloudfront.net/sites/default/files/2_4.png" alt="" /></p>
+
+<p>2.  By default Minimum word length to index is set to 3, that means that you will not be able to do a search if you don’t have at least one 3-character word in your search query.</p>
+
+<p><img typeof="foaf:Image" src="http://d3gda9raw7t781.cloudfront.net/sites/default/files/styles/services_full/public/3_0.png?itok=tgX50OxI" alt="" /></p>
+
+<p>This also means that if you search for nodes with title ”How to find a bug” you can find it by using the keywords: “find”, “bug” and “how”. 
+
+</p><p>You should get results in the following cases:
+</p><ul><li>Whole title (ex: how to find a bug)</li>
+<li>Long words (ex: find)</li>
+<li>Long word and short word (ex: to find )</li> 
+</ul><p>
+You should get a validation error for:
+</p><ul><li>Only short words (ex: to a)</li>
+</ul><p><img typeof="foaf:Image" src="http://d3gda9raw7t781.cloudfront.net/sites/default/files/styles/services_full/public/4.png?itok=307drta7" alt="" /></p>
+<p>
+You should get “No results” for:
+</p><ul><li>one long word and one word not from this sentence (ex: bug report)</li>
+</ul><p>
+Also search is indexing (saving) keywords separated by spaces. The following examples will not return any results:
+</p><ul><li>half or part of the word (ex: fin)</li>
+<li>words without spaces between them (ex: howtofind)</li>
+<li>words separated by underscores or something else (ex: how_to_find_a_bug)</li>
+</ul><p>
+Results should appear for these cases:
+</p><ul><li>With multiple spaces between words (ex: how   to   find  a  bug)</li>
+<li>Or in reverse order (ex: bug a find to how)</li>
+</ul><p>4. Lower/upper cases - Test your search by entering words with upper and lower cases (ex: InTerVIEw). This should work out of the box in case-insensitive mode.
+</p>
+
+<p>5. Don’t forget that this search should work not only with titles, but with all content bodies as well. Make sure to search for some keywords from the content, maybe you’ll find a little bug. You never know.
+</p>
+
+<p>6. Permissions - To know what permission the users have, go to Modules-&gt; Search-&gt; Permissions (or People and select the Permissions tab).
+</p>
+
+<p>By default, all users (Anonymous + authenticated) can view published nodes, so they should appear in the returned results (if you allow anonymous users to search, of course).
+In this case just unpublish the node and then enter its title in the search field. You know what result you should get.</p>
+
+<p>
+I hope this information will make your testing easier and more pleasant! Happy New Year!</p>
+</div></div></div><div class="form-item form-type-item">
+  <label>Language </label>
+ English
+</div>
+<div id="comment-wrapper-nid-1393"></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div></div></div><div class="field field-name-field-drupal-planet field-type-taxonomy-term-reference field-label-above"><div class="field-label">Check this option to include this post in Planet Drupal aggregator:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

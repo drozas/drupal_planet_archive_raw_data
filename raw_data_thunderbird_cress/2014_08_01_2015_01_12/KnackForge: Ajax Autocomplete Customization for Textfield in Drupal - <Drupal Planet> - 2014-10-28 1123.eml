@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 28 Oct 2014 11:23:25 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 28 Oct 2014 11:23:25 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Ajax Autocomplete Customization for Textfield in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/sujith/ajax-autocomplete-customization-textfield-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Ajax Autocomplete Customization for Textfield in Drupal</title>
+    <base href="http://knackforge.com/blog/sujith/ajax-autocomplete-customization-textfield-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Autocomplete is a feature for textfields in Drupal. It provides a dropdown list of matching options from the server. It is implemented through AJAX. To know how to add an autocomplete form element in Drupal visit <a href="https://www.drupal.org/node/854216">https://www.drupal.org/node/854216</a></p>
+<p><img alt="" src="http://www.solutionwatch.com/images/drupal_autocomplete2.gif" /></p><p> </p>
+<p>For customizing autocomplete we need to override the Drupal system file "misc/autocomplete.js". This can be achieved ideally in two ways:</p>
+<ul><li>
+<p>Replace the entire "autocomplete.js" with your customised version</p>
+<pre class="lang-cs prettyprint prettyprinted"><code>function MY_MODULE_js_alter(&amp;$javascript) {
+  $javascript['misc/autocomplete.js']['data'] = drupal_get_path('module', 'MY_MODULE') . '/js/autocomplete.js';
+}</code></pre></li>
+<li>
+<p>Override "Drupal.ACDB.prototype.search" with a custom behaviour in theme script.js or module js file, as long as it's added after /misc/autocomplete.js it will override it.</p></li></ul></div></div></div>
+  </body>
+</html>
+

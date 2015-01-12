@@ -1,0 +1,102 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 18 Jun 2014 23:21:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 18 Jun 2014 23:21:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Koumbit: AlternC 3.2 upgrade completed
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.koumbit.org/en/content/alternc-32-upgrade-completed
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Koumbit: AlternC 3.2 upgrade completed</title>
+    <base href="http://www.koumbit.org/en/content/alternc-32-upgrade-completed">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-kt-articles-category field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/en/taxonomy/term/26" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Technical article</a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>As announced on Monday, June 9th, a major upgrade of the AlternC control
+panel and associated servers took place on Sunday, June 15th. The
+upgrade went well, and most services resumed operations soon
+after. There were however some bugs for which we apologize.</p>
+
+<p>If you are still experiencing problems, please don't hesitate to write
+to support@koumbit.org. The information below can also be helpful.</p>
+
+<h1>Here is a list of notable improvements and features:</h1>
+
+<p>1- Webmail is now accessible via an improved interface named <a href="https://webmail.koumbit.net/roundcube">Roundcube</a>,
+which replaces SquirrelMail.</p>
+
+<p>2- AlternC 3.2 has many improvements in its interface.</p>
+
+<p>3- It is now possible to manage quotas of email addresses (more
+information to come).</p>
+
+<p>4- Arbitrary subdomains (TXT, CNAME, IPv6) can now be managed through
+the interface.</p>
+
+<p>5- "Catch-all" emails can now be configured to receive any emails sent
+to non-existant addresses ending in @yourdomain.com.</p>
+
+<p>6- An additional load balancing server improves the performance of
+websites.</p>
+
+<p>7- Cron jobs can now be configured by AlternC users.</p>
+
+<p>8- The new possibility of server side email filters makes it easier to
+manage vacation responders, via the Roundcube webmail interface, and
+also presents many other advantages.</p>
+
+<p>The update also makes possible these upcoming features, some of which
+will be ready this summer:</p>
+
+<ul>
+<li>Greatly improved statistics.</li>
+<li>Accessible logs of current server activity.</li>
+<li>Improvements of email performance.</li>
+<li>SSH access (maybe!)</li>
+</ul>
+
+<h1>Here is a list of some issues that we are still working to resolve.</h1>
+
+<p>1- Modifications of domain and subdomain configurations are not possible
+for now. We expect to resolve this issue this week.</p>
+
+<p>2- The old style "mail.example.com" domains are still working, now
+redirecting to https://webmail.koumbit.net/ . However your
+configurations should only use imap.koumbit.net, port 993 (or
+pop.koumbit.net, port 995) to access emails. If you wish to simply
+redirect people towards webmail, point them to
+https://roundcube.koumbit.net.</p>
+
+<p>3- With the replacement of SquirrelMail by Roundcube, it is not yet
+possible to access the address books used by some SquirrelMail
+users. You can still access it via
+https://webmail.koumbit.net/squirrelmail, but we'll stop supporting it
+>From January 2015, and definitely closed shortly after. A lot of
+features of SquirrelMail are currently are either NOT working or
+semi-working, such as password change and viewing the list of emails.</p>
+
+<p>4- Some users have experienced problems with .htaccess files. It seems
+that the upgrade has, for some users, allowed .htaccess files to block
+access to sites. It will be the task of the user to fix their .htaccess
+files.</p>
+
+<p>5- Websites were offline and email was delayed for a maximum of 5 hours
+on Sunday the 15 of June. But be assured that no emails were lost during
+or after the upgrade.</p>
+
+<p>6- The statistical reports are still available but the old statistics
+system no longer updates itself. A new system of web statistics will be
+available this week, and you will need to make configurations in order
+for it to record statistics for your websites.</p>
+
+<p>Thanks for your patience.</p>
+
+<p>The Koumbit sysadmins</p>
+</div></div></div><ul class="links inline"><li class="fr first last"><a href="/fr/node/217" class="language-link" lang="fr">Français</a></li></ul>
+  </body>
+</html>
+

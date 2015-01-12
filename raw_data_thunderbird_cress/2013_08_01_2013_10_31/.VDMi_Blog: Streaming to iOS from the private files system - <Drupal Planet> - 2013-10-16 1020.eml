@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Oct 2013 09:20:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Oct 2013 09:20:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: .VDMi/Blog: Streaming to iOS from the private files system
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vdmi.nl/blog/streaming-ios-private-files-system
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>.VDMi/Blog: Streaming to iOS from the private files system</title>
+    <base href="http://www.vdmi.nl/blog/streaming-ios-private-files-system">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-afbeelding field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/blog/streaming-ios-private-files-system"><img style="max-width: 40%; height: auto; float: left; margin-right: 1em;" align="left" hspace="10" typeof="foaf:Image" src="http://www.vdmi.nl/sites/vdmi.nl/files/styles/200_max_width/public/ios-logo.jpg?itok=eGJW9NUz" width="200" height="132" alt="Streaming to iOS from the private files system" /></a></div></div></div><div class="field field-name-field-samenvatting1 field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">Streaming to iOS from the private files system is broken by default in Drupal 7. Here&#039;s why, and how to fix it.</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The reason why <a href="http://www.vdmi.nl/drupal">Drupal</a> 7 private files doesn't support iOS streaming is because <strong>Drupal 7</strong> <a href="https://drupal.org/node/91934">doesn't</a> support byte range requests, the public files folder isn't protected, so that will be handled by Apache/Nginx directly, the private folder is protected though, so all requests will be handled by PHP. The iOS video player makes byte-range requests, even if the server doesn't support them, like the private file system, which results in a broken video. There are two ways to fix it, one easy way, and one more performant way.</p><ol><li>Install the <a href="https://drupal.org/project/resumable_download">Resumable Download</a> module, this module will fix it automatically.</li><li>Install the <a href="https://drupal.org/project/xsendfile">xsendfile</a> module. This requires some more work, as Apache needs <a href="https://tn123.org/mod_xsendfile/">mod_xsendfile</a>, but Nginx supports this by default. This method will be way more performant because file IO is done by Apache/Nginx, which makes PHP able to handle more requests.</li></ol><p>Don't forget to encode your files properly, MP4 x264 with the baseline profile should work on almost any device.</p></div></div></div>
+  </body>
+</html>
+

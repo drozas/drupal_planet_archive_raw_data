@@ -1,0 +1,133 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 20 Dec 2013 15:09:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 20 Dec 2013 15:09:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Are you a developer new to Drupal? Read this...
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/are-you-developer-new-drupal-read
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Are you a developer new to Drupal? Read this...</title>
+    <base href="http://deeson-online.co.uk/labs/are-you-developer-new-drupal-read">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p style="text-align: center;"><img alt="" src="/sites/default/files/uploads/druplicon.large_.png" style="width: 250px; height: 286px;" /></p>
+<h5>Deeson Online present a training plan for a skilled software developer coming to Drupal for the first time</h5>
+<h2>Drupal Basics</h2>
+<p>For someone not versed in Drupal at all, the <em><a href="http://www.usingdrupal.com/">Using Drupal</a></em> book by O'Reilly is the best place to start. This is particularly true for developers coming from a background in which the construction of a website using web UI tools is not a familiar concept.</p>
+<p>Once the tutorials in this book have been covered, the dev should have an excellent grounding of the basics of Drupal and should begin to understand why using the community modules are useful.</p>
+<h2>Drush</h2>
+<p>After the unpleasantness of having to use the GUI to make things, you can take a short rest and familiarise yourself with Drush <span style="font-family: Times;">–</span> a command line tool providing a number of useful resources for administering a Drupal site:</p>
+<ul>
+<li><a href="https://github.com/drush-ops/drush">Drush project repository</a></li>
+<li><a href="https://drupal.org/drush-faq">Drush FAQ</a></li>
+</ul>
+<h2>Coder and coding standards</h2>
+<p>Now you need to make sure your code adheres to our coding standards. The Drupal project specifies its own. If you are using PHP Storm IDE then you can follow this tutorial to set it up correctly:</p>
+<ul>
+<li><a href="http://tiger-fish.com/blog/writing-better-drupal-7-code-phpstorm-and-codesniffer">PHP Storm + code sniffer + Drupal coding standards</a></li>
+</ul>
+<p>There is also a Drupal module which checks your code for you. So set this up and have a go:</p>
+<ul>
+<li><a href="https://drupal.org/project/coder">Coder module</a></li>
+</ul>
+<h2>Writing your first theme</h2>
+<h3>Boostrap, sub-theming and Display Suite</h3>
+<p>It would then be advisable to look at how theming and sub-theming works with the bootstrap theme which we use here at Deeson Online:</p>
+<ul>
+<li><a href="https://drupal.org/project/bootstrap">Bootstrap module main page</a></li>
+<li><a href="https://drupal.org/node/1978010">How to create a boostrap sub theme</a></li>
+<li><a href="http://getbootstrap.com/">Boostrap documentation</a></li>
+</ul>
+<p>Whilst looking at theming and sub theming with the above, it would be advisable to install the Display Suite module at the same time and understand how that works. There is reasonable documentation for this linked from the module page:</p>
+<ul>
+<li><a href="https://drupal.org/project/ds">Display Suite module</a></li>
+<li><a href="https://drupal.org/node/644706">Tutorials and guides for Display Suite</a></li>
+</ul>
+<h2>Features</h2>
+<p>Now, you've created a whole lot of stuff above that only exists in the database.... and you probably feel dirty. If not, what kind of dev are you!?</p>
+<p>To get that stuff out of the DB and into code where it can be version controlled in Drupal 7 you need to use an add-on module called Features. Learn how to use this next:</p>
+<ul>
+<li><a href="https://drupal.org/project/features">Features</a></li>
+<li><a href="https://drupal.org/node/580026">Features documentation</a></li>
+</ul>
+<p>Drupal recognise that things only existing in the database is a problem, so the Features module is an attempt to rectify it but it is far from perfect. (In Drupal 8 this is solved in a whole new way, but that's for another day!)</p>
+<h2>Must-have modules</h2>
+<p>There are a number of 'must-have' modules that all projects will have. It would be good to familiarise yourself with these now:</p>
+<ul>
+<li><a href="http://drupal.org/project/pathauto">pathauto</a> - for setting automatic URL patterns for each content type on the system </li>
+<li><a href="http://drupal.org/project/admin_menu">admin_menu</a> - a better toolbar than the one shipped with Drupal. Enable admin_menu_toolbar as well after downloading this module</li>
+<li><a href="http://drupal.org/project/admin_views">admin_views</a> - replace the standard admin pages in Drupal with ones generated by the views module</li>
+<li><a href="http://drupal.org/project/recaptcha">captcha</a>  - add captcha to forms</li>
+<li><a href="http://drupal.org/project/wysiwyg">wysiwyg</a> - rich text editing (follow the README file instructions after enabling, you should use the CKEditor library with this)</li>
+<li><a href="http://drupal.org/project/date">date</a> - superior date handling tools, fields and views integration</li>
+<li><a href="http://drupal.org/project/devel">devel</a> - for dev environment <span style="font-family: Times;">–</span> provides development tools. Eg in custom code try dpm($my_variable); or kpr($myvariable) for neat debugging of data</li>
+<li><a href="http://drupal.org/project/email">email</a> - provides an email field</li>
+<li><a href="http://drupal.org/project/entity">entity</a> - provides superior entity api functions</li>
+<li><a href="http://drupal.org/project/entitycache">entitycache</a> - provides better caching of entities</li>
+<li><a href="http://drupal.org/project/entityreference">entityreference</a> - provides a field which allows one entity (eg a node) to reference another.</li>
+<li><a href="http://drupal.org/project/field_group">field_group</a> - group fields together on the node edit form in various ways</li>
+<li><a href="http://drupal.org/project/globalredirect">globalredirect</a> - basic redirect rules such as providing a 301 redirect from node/123 to it's aliased version</li>
+<li><a href="http://drupal.org/project/googleanalytics">google_analytics</a> - easy integration with Google analytics</li>
+<li><a href="http://drupal.org/project/link">link</a> - provides a link field to easily add a hyperlink to the page</li>
+<li><a href="http://drupal.org/project/masquerade">masquerade</a> - provides a block which allows the site admin to login as any other user of the site</li>
+<li><a href="http://drupal.org/project/media">media</a> - really good media handling (image library etc) for admins to manage their content</li>
+<li><a href="http://drupal.org/project/module_filter">module_filter</a> - a better module management screen</li>
+<li><a href="http://drupal.org/project/honeypot">honeypot</a> - spam protection for forms</li>
+<li><a href="http://drupal.org/project/metatag">metatag</a> - seo fields</li>
+<li><a href="http://drupal.org/project/entityqueue">entityqueue</a> - allows nodes to be placed and manually ordered in a queue. The queue can then be used as the basis of a carousel (via a view for example).</li>
+<li><a href="http://drupal.org/project/redirect">redirect</a> - allows site admin to create redirects on the site</li>
+<li><a href="http://drupal.org/project/strongarm">strongarm</a> - allows variables in the variable table to be exported via features</li>
+<li><a href="http://drupal.org/project/reroute_email">reroute_email</a> - stops development sites sending emails to real users</li>
+<li><a href="http://drupal.org/project/seckit">seckit</a> - adds a bunch of best practice security options</li>
+<li><a href="http://drupal.org/project/styleguide">styleguide</a> - provides an admin page which lists all HTML components in the current site styles, useful when reviewing them</li>
+<li><a href="http://drupal.org/project/views">views</a> - create listing pages and sql queries in the UI (this is also covered in <a href="http://www.usingdrupal.com/"><em>Using Drupal</em></a>)</li>
+<li><a href="http://drupal.org/project/webform">webform</a> - a (reasonably) simple way of allowing content editors create questionnaires on the site</li>
+</ul>
+<h2>Writing your first module</h2>
+<p>Congratulations <span style="font-family: Times;">–</span> you are now ready to write a module! The following tutorial will help with this:</p>
+<ul>
+<li><a href="https://drupal.org/node/1074360">Writing a Drupal module</a></li>
+</ul>
+<h2>What not to do</h2>
+<p>The fail module is an excellent piece of code to study as it gives a lot of commented examples of 'worst practice' in Drupal. Add it to a Drupal site with '<strong>drush dl fail</strong>'</p>
+<ul>
+<li><a href="https://drupal.org/project/fail">Fail module page</a></li>
+</ul>
+<h2>What to do</h2>
+<p>The examples in contrib project contain a whole load of modules which demonstrate how to use various components of the Drupal eco-system in code.</p>
+<ul>
+<li><a href="https://drupal.org/project/examples">Examples project</a></li>
+</ul>
+<p>Almost all these are worth studying except entity_example unless you are feeling masochistic (the eck module provides this functionality in an easier to digest form).</p>
+<h2>Advanced concepts</h2>
+<p>If you still want more, take a look at the following modules that will help in creating more complex sites:</p>
+<ul>
+<li><a href="http://drupal.org/project/context">context</a> - allows functionality on the site to be determined by 'context' ie where the user is and what they are doing</li>
+<li><a href="http://drupal.org/project/rules">rules</a> - allows events, conditions and actions on the site</li>
+<li><a href="http://drupal.org/project/commerce">commerce</a> - a superb e-commerce framework which is built with Drupal. The commerce kickstart distribution demonstrates its abilities superbly</li>
+<li><a href="http://drupal.org/project/master">master</a> - this module allows a module dependency listing per environment (dev, test, live). You can then script some of its drush commands to ensure the correct modules are enabled or disabled on each environment</li>
+<li><a href="http://drupal.org/project/eck">eck</a> - The entity construction kit allows the construction of entities. Entities exist on the same level as node or taxonomy. These are data containers</li>
+<li><a href="http://drupal.org/project/migrate">migrate</a> - This is a developer's tool used for data migrations into Drupal</li>
+<li><a href="http://drupal.org/project/wsif">wsif</a> - This is a developer tool providing a best practice framework for developing web service integrations into Drupal</li>
+<li><a href="http://drupal.org/project/behat_testing">behat_testing</a> - To learn how to write functional tests for your site (other <a href="http://drupal.org/project/drupalextension">behat testing</a> modules are available)</li>
+</ul>
+<h2>Other books</h2>
+<p>Some other useful books are:</p>
+<ul>
+<li><em><a href="http://www.apress.com/9781430228387">Pro Drupal 7 Development </a></em>- for programming concepts</li>
+<li><em><a href="http://shop.oreilly.com/product/0636920012269.do">High performance Drupal</a></em> - for creating performance sites in Drupal. A good grounding in a number of other tools we use as well</li>
+<li><em><a href="http://www.amazon.co.uk/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882">Clean Code</a></em> - how to write clean code</li>
+<li><em><a href="http://www.amazon.co.uk/gp/product/0137081073/ref=pd_lpo_sbs_dp_ss_1?pf_rd_p=103612307&amp;pf_rd_s=lpo-top-stripe&amp;pf_rd_t=201&amp;pf_rd_i=0132350882&amp;pf_rd_m=A3P5ROKL5A1OLE&amp;pf_rd_r=0NPTD9BEZX8FA8ZVWJRW">Clean Coder</a></em> - best practice and professional development which we agree with</li>
+<li><em><a href="http://phpsecurity.org/">PHP Security</a> </em>- The standard book on PHP security best practice</li>
+</ul>
+<p>So there you go. Get cracking <span style="font-family: Times;">– </span>and tell us how you get on!</p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/are-you-developer-new-drupal-read">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Are you a developer new to Drupal? Read this...</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/john-ennew">John Ennew</a> | 20th December 2013</div></div></div>
+  </body>
+</html>
+

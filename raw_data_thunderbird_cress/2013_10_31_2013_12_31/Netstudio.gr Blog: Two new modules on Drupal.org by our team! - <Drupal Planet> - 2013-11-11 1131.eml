@@ -1,0 +1,45 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 11 Nov 2013 11:31:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 11 Nov 2013 11:31:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Netstudio.gr Blog: Two new modules on Drupal.org by our team!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.netstudio.gr/en/blog/two-new-modules-drupalorg-our-team
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Netstudio.gr Blog: Two new modules on Drupal.org by our team!</title>
+    <base href="http://www.netstudio.gr/en/blog/two-new-modules-drupalorg-our-team">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://cdn.netstudio.gr/cdn/farfuture/7B2EXge2zxxhPWJrRCTRsKUMAywaWsErp3Lv0aUGJCY/mtime:1384169019/sites/default/files/styles/blog/public/field/image/screen_shot_2013-09-03_at_7.55.05_pm.png?itok=1t7R4e_a"><img typeof="foaf:Image" src="http://cdn.netstudio.gr/cdn/farfuture/7B2EXge2zxxhPWJrRCTRsKUMAywaWsErp3Lv0aUGJCY/mtime:1384169019/sites/default/files/styles/blog/public/field/image/screen_shot_2013-09-03_at_7.55.05_pm.png?itok=1t7R4e_a" width="566" height="362" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The creation of new modules that add extra functionality on Drupal and make it work exactly the way we want has become a daily occupation of our programmers. We often realize that our team’s modules are necessary for other Drupal community developers. In such cases we feel obliged to provide for free the code that we wrote, in order to be used by everyone, with the same exact way that we are using all those awesome modules that have been developed and published on Drupal.org!</p>
+<p>Two of our most recent modules that are published on Drupal.org is <a href="https://drupal.org/project/entity_translation_export_import" target="_blank">Entity Translation Export/Import</a> and <a href="https://drupal.org/project/node_translation_sitemap" target="_blank">Node Translation XML sitemap</a>.</p>
+<h3>Entity Translation Export/Import</h3>
+<p>This module provides the ability for mass export and import of content translations (nodes, categories, products). Of course one can translate content through Drupal’s translation UI and in most cases this is just enough. But there might be some cases, such as the existence of a large amount of content, in which massive export/import and editing in excel might save a lot of time.</p>
+<p>Entity Translation Export/Import gives the ability by just pressing a single button to export as many as content type fields as we want. Then we can open the file in excel and translate the fields in all available languages. Finally again with the press of a button we upload the file.. and we are ready! The translations have been applied.</p>
+<p>We benchmarked our content manager guy with both available ways. The results are enlightening:</p>
+<div id="pricetable2">
+<table><tbody><tr><td> </td>
+<td>UI translation</td>
+<td>Excel translation</td>
+</tr><tr><td>100 categories (terms)</td>
+<td>30 minutes</td>
+<td>7 minutes</td>
+</tr><tr><td>100 products</td>
+<td>45 minutes</td>
+<td>10 minutes</td>
+</tr><tr><td>100 pages translation (nodes)</td>
+<td>a couple of centuries... :)</td>
+<td>about 30 minutes</td>
+</tr></tbody></table></div>
+<h3>Node Translation XML sitemap</h3>
+<p>“Node Translation XML sitemap” doesn’t do anything extraordinary but it covers one very basic need. The ability of exporting xml sitemap of all the available languages of the site and not only from the original language.</p>
+<p>It sounds a little bit odd that such a famous system like Drupal lacks this ability, but it is also makes sense. Drupal 7 has two ways of translating. Internationalization and Entity Translation. Internationalization was the basic way of translating in Drupal 6 and this was continued in version 7, at least in the beginning. In the meantime Entity Translation was developed which is expected to be the main translation mechanism for Drupal 8. So Entity Translation as a subsequent system it had some inconsistencies with many famous Drupal modules and one of them was XML sitemap. As a consequence, every site that uses the modern Entity Translation, mainly the more recent ones, are in need of Node Translation XML Sitemap in order to be able to export sitemap for all the languages.</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,100 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 24 Mar 2014 20:43:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 24 Mar 2014 20:43:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Angie Byron: Drupal core committer takes Acquia Certification exam. You won't believe what happens next!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webchick.net/node/125
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Angie Byron: Drupal core committer takes Acquia Certification exam. You won't believe what happens next!</title>
+    <base href="http://webchick.net/node/125">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-upload field-type-file field-label-hidden"><div class="field-items"><div class="field-item even"><table class="sticky-enabled">
+ <thead><tr><th>Attachment</th><th>Size</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><span class="file"><img class="file-icon" alt="" title="application/pdf" src="/modules/file/icons/application-pdf.png" /> <a href="http://webchick.net/files/AcquiaCertificationStudyGuide.pdf" type="application/pdf; length=124176">AcquiaCertificationStudyGuide.pdf</a></span></td><td>121.27 KB</td> </tr>
+ <tr class="even"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="http://webchick.net/files/logo.png" type="image/png; length=6137">logo.png</a></span></td><td>5.99 KB</td> </tr>
+</tbody>
+</table>
+</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>TL;DR I passed. :P Here's  a run-down of what the experience was like.</p>
+<p><em>Up-front disclaimer: I work for <a href="http://www.acquia.com/">Acquia</a>. However, I was not involved in the creation of <a href="http://www.acquia.com/products-services/acquia-certification-program-overview">Acquia Certification</a> and had no insight to the test beforehand apart from a single sample question. I'm also writing this on my personal blog, rather than Acquia.com, because these are *my* thoughts/impressions, and haven't been vetted by anyone else. :) Carry on!</em></p>
+<h3>Some background</h3>
+<p>I'm originally from the United States (<a href="http://www.buzzfeed.com/babymantis/the-truth-behind-duck-duck-goose-a-visual-gui-1opu">Duck, Duck, Gray Duck</a> represent!) and moved to Canada in my early 20s to be with my now wife of 15 years. :) I had no family in Canada and very little work experience, so my only option was to come into Canada as a student. As a foreign student in Canada, you are only allowed to earn money through a job at the school you're attending. So, since I was already a huge nerd who'd been building all of my family's computers since I was a teenager, I knuckled down and got my <a href="http://certification.comptia.org/getCertified/certifications/a.aspx">A+ Certification</a> and then taught computer hardware and A+ prep courses in the evenings.</p>
+<p>So while I empathize with <a href="http://certifiedtorock.com/criticisms-of-certification-programs">detractors of certification</a>, and I'm sure <em>lots</em> of people would criticize A+ Certification in particular—and they'd pretty much be right on all counts—I do think certifications have their place. For me, it was an important enabler at a time when I was young and unestablished in my career, which allowed me to combine what I already knew from hands-on experience with a bit of book-cramming to get a piece of paper that allowed me to get a quite decent job. Many of the people I taught were older adults doing late-life career changes, or younger people like me trying to augment skills and knowledge they'd acquired as hobbyists into something that could be meaningful to a prospective employer (or at least their HR department).</p>
+<p>My interest in teaching is also what got me into Drupal in the first place. During <a href="https://developers.google.com/open-source/soc/">Google Summer of Code</a> in 2005, Drupal stood out among the list of mentoring organizations, not just because I'd seen it used on the old <a href="http://www.spreadfirefox.com/">Spread Firefox</a> website (which originally put Drupal on my radar), but also because one of the GSoC project ideas was the <a href="https://drupal.org/project/quiz">Quiz module</a>, which could help educators like me deliver web-based learning built on open source software. Cool! So I applied to write Quiz module for Drupal, and lo-and-behold that decision seems to have worked out pretty well. ;)</p>
+<p>However, although I've been very active in the Drupal community for almost 10 years(!), the last time I actually <em>built</em> a Drupal site of any level of seriousness was back in the Drupal 6 era, circa 2009. In late 2008, <a href="https://groups.drupal.org/node/126104">I was becoming more of a "project manager" at work</a> while at the same time <a href="http://buytaert.net/angela-webchick-byron">I was appointed Drupal 7 core co-maintainer</a> (which basically made me a "project manager" in the community as well), so although I read lots and lots of code, my knowledge of day-to-day troubleshooting of "real world" problems on Drupal sites is on much shakier ground these days. OTOH, I could tell you the <em>reason</em> behind almost every weird inconsistency in core, and also the names of all the main core developers' pets, so you know, there's that. ;)</p>
+<p>So, basically, I have a background in both taking and delivering training around certification, so I was of course intrigued to see what Acquia's take on Drupal certification was all about, and how it compared. I was also very curious how I would do on this exam, given I have several years of hard-fought "real world" experience on Drupal 4.6 => Drupal 6, but then much more academic (although <em>deeply</em> academic, since I read most of the core patches at one point or another) knowledge of Drupal 7, though a lot of it lost to the fog of Drupal 8, where we're actively removing most of that stuff. ;)</p>
+<h3>Preparation</h3>
+<p>Start by taking a look at the <a href="http://www.acquia.com/products-services/acquia-certified-developer-exam-blueprint">Acquia Certified Developer Exam Blueprint</a> which nicely outlines the "domains" (subject matter) that the test covers:</p>
+<hr />
+<blockquote><p>
+<strong>Domain 1.0: Fundamental Web Development Concepts</strong></p>
+<p>1.1. Demonstrate knowledge of HTML and CSS<br />
+1.2. Identify PHP programing concepts<br />
+1.3. Identify JavaScript and jQuery programing concepts<br />
+1.4. Demonstrate the use of Git for version control</p>
+<p><strong>Domain 2.0: Site Building</strong></p>
+<p>2.1 Demonstrate ability to create and configure Content Types with appropriate fields and field settings for building basic data structures<br />
+2.2. Demonstrate ability to configure field display and view modes for content types<br />
+2.3 Demonstrate ability to create and use Taxonomy vocabularies and terms for classification and organization of content<br />
+2.4 Demonstrate ability to configure Blocks for building layouts from information widgets<br />
+2.5 Demonstrate ability to build main and alternative navigation systems by using Menus<br />
+2.6 Demonstrate ability to create and configure Views for building content list pages, blocks and feeds</p>
+<p><strong>Domain 3.0: Front end development (theming)</strong></p>
+<p>3.1 Given a scenario, demonstrate ability to create a custom theme or sub theme<br />
+3.2 Demonstrate knowledge of theming concepts<br />
+3.3 Demonstrate ability to build or override PHP templates for defining layout content<br />
+3.4 Demonstrate ability to use theme () functions for overriding custom output<br />
+3.5 Demonstrate ability to write template pre-process functions for overriding custom output</p>
+<p><strong>Domain 4.0: Back end development (coding)</strong></p>
+<p>4.1 Demonstrate ability to develop Custom Modules using Drupal API for extending Drupal functionality<br />
+4.2 Demonstrate ability to work with Drupal's Database Abstraction Layer for managing tables and CRUD operations on data<br />
+4.3 Demonstrate ability to debug code and troubleshoot site problems<br />
+4.4 Demonstrate ability to write code using Drupal Coding Standards<br />
+4.5 Demonstrate ability to analyze and resolve site performance issues arising from site configuration and custom code<br />
+4.6 Demonstrate ability to analyze and resolve security issues arising from site configuration and custom code
+</p></blockquote>
+<hr />
+<p>My impression of this curriculum-wise is that it's a pretty complete list. If someone actually has knowledge of all of these concepts, as well as a couple of years experience learning what to do / what not to do in practical terms, they'd be a really decent, well-rounded Drupal developer.</p>
+<p>One thing I'd love to see in future revisions of the exam is a "Community" domain that demonstrates knowledge of how to engage and participate in the Drupal community. I terms of overall Drupal success, community interaction is just as fundamental a skill as knowing how to properly debug code or troubleshoot site problems, in my experience.</p>
+<p>I've attached a <a href="http://webchick.net/files/AcquiaCertificationStudyGuide.pdf">"study guide"</a> to the bottom of this post, which I prepared by going around and gathering links to free resources under each of these headings in case it's helpful to other folks rounding out their skills. (In particular, I needed to study up on performance and JavaScript, for example.) Since I prepared this <em>before</em> taking the exam, I don't think it will give anyone any particular advantage, but it'll at least save you a good half hour of Googling. :)</p>
+<h3>Exam pre-requisites</h3>
+<p>A couple of things you need to know ahead of time:</p>
+<p>1) There are two ways you can take the exam: either in "real life" through <a href="http://www.kryteriononline.com/host_locations/">one of Kryterion's worldwide test centers</a>, or online "proctored" exam via <a href="https://www.webassessor.com/">Web Assessor</a>.</p>
+<p>(Note: "Proctored" sounds like something horrible that might happen to you at a doctor's office, but it means "supervised" — they are going to record your face and your computer movements while you take the test and this will be reviewed by a human to make sure you're not cheating.)</p>
+<p>2) Whether you take it in real life or online, <strong>you *must* schedule a time for the exam, at least 24 hours in advance</strong>. You do that at <a href="https://www.webassessor.com/wa.do?page=publicHome&amp;branding=ACQUIA">Acquia Certification Program</a> site:</p>
+<ul>
+<li>Register for an account</li>
+<li>Pick the exam style you want ("onsite" vs "online" — be careful to click on the right one, the distinction is very subtle ;))</li>
+<li>Pay for it ($250, which puts it more on the low end... A+ is about $200 vs. Cisco/Microsoft which can be upwards of $1500). Unless of course you work for Acquia, since employees can get vouchers to take the exam for free. (<a href="https://www.acquia.com/careers">Did I mention we're hiring? ;)</a>)</li>
+<li>Pick a date/time. </li>
+</ul>
+<p>3) If you're doing the online method, you also need to download and install a software called "Sentinel Secure" to record your webcam/microphone/screen during the test (and this needs to be installed on your <em>actual</em> machine, not in e.g a virtual machine, since you could very easily cheat on the host machine if that were the case), as well as provide a "biometric profile." This involves typing your name like 12 times on the keyboard, and then taking a picture of your face via your web cam (you're required to have a web cam to take the test).</p>
+<p>If all of that sounds overly creepy to you, you should register for a real-life exam instead. ;)</p>
+<h3>Taking the exam</h3>
+<p>I went the online route, and here's what that experience was like.</p>
+<p>First, remember that you need to be at the computer the entire time until you finish the 60 question exam, which means up to 90 minutes. And while that sounds like plenty of time, the questions often require reading and re-reading to make sure you have all the details before picking an answer. So make sure you are properly hydrated, caffeinated, and have urinated ;) before your test time.</p>
+<p>Also, make sure you are in a quiet place and don't have any "real life" distractions happening during that 90 minutes. Web Assessor doesn't mess around. For example, a co-worker had to re-take the exam because he took the test in an office setting where people were seen walking behind his desk (because they could've been looking at his screen and whispering answers to him, presumably). For my part, I started mumbling along as I was reading a question and it gave me a warning to not read the test questions aloud. :P I'm sure if I'd kept that up, I would've had to do a force-retake as well.</p>
+<p>Then, close out of everything except for Firefox, IE, or Safari (for whatever bizarre reason you can't use Chrome). Log back into the <a href="https://www.webassessor.com/wa.do?page=publicHome&amp;branding=ACQUIA">Acquia Certification Program</a> site and you should see a link to your exam that becomes active within a few minutes of your test time.</p>
+<p>(Note: If you're like me and you do a dumb thing and accidentally pick the wrong date for your exam, you will find Kryterion's support actually helpful. I was able to call an 866 number and get a person on the phone within 30 seconds, and they had me up and rescdeduled in about 2 minutes. w00t!)</p>
+<p>Once in, it'll repeat your bio profile, you'll have to agree to a terms of use which basically says you're not allowed to talk about what's on the exam (so I'll be very vague about it here), and then you're off to the races.</p>
+<p>All questions are multiple choice. Most are single-answer, but a few are multiple answer. On any question you're allowed to check a box and "flag" it for later review, so if you're not sure of something you can always come back to it. You can review all of your answers at any time, the ones you've flagged will be starred so they stand out.</p>
+<p>Then at the end, you'll get your mark, as well as a breakdown of how you did per-domain, and you get this e-mailed to you as well (since obviously you can't take screenshots or copy/paste out of the Secure Sentinel app :P). A few minutes later you'll also get a fancy certificate to print out and badge for your website e-mailed to you as well.</p>
+<h3>Blah, blah, blah. How'd you do already?</h3>
+<p>I got.... <strong>85%</strong>! Which I was actually pretty happy with, especially since I've been told the highest exam mark atm is under 90%. :) (I did the worst on the "Basic Web Concepts" part. Damn you, CSS/JS.) Overall I'd say about 30% of the questions were easy for me, another 50% made me go "Hmmm" and about 20% I needed to flag, a handful of which required resorting to Wild Ass Guesses. ;)</p>
+<p>The reason I was able to score relatively high despite my lack of extensive hands-on D7 experience is that most of the questions on the exam are "scenarios" that are highly focused around common issues you hit in the "real world" while building Drupal sites, and most of these are pretty timeless (especially the site builder-related topics). This also makes the exam much harder to "book-cram" for, because unless you've smacked your head into the desk a few times with Drupal, you could have a hard time because all of the answers at least <em>sound</em> plausible.</p>
+<p>I found this format very refreshing and very <em>unlike</em> the A+ certification, which was to a large extent (at least back when I took it) a bunch of mindless memorization of useless facts. For example, I will forever have the number of pins in an IDE vs. floppy cable etched into my memory, even though that is <em>completely useless knowledge</em> because you know what? One fits, and the other one doesn't. :P~ So don't expect your ability to recite all of the hook_menu() bitmask flags from memory to help you much on this exam. (Darn, I had worked so hard on developing that party trick, too.)</p>
+<p>I also did spot a few typos and some places where question wording could be more clear, and I'll try and work with the certification team to clean those up (it'd be nice if there was a "report a problem with this question" link for things like that). But overall, this seems like a pretty solid entry point into certification for Drupal, and I'm looking forward to see what the team comes up with for the more focused and "hardcore" exams.</p>
+<p>Do you need to take this exam? If you've worked on Alexa top 1000 sites and/or have a great track record of public contributions on Drupal.org, obviously no: <a href="http://certifiedtorock.com/">your resume speaks for itself.</a> But if you've been prevented by either personal or professional circumstances from having built up a robust D.o profile or client base over the years, this certification seems like a pretty solid way to get your foot in the door at a Drupal company.</p>
+<p><img src="http://webchick.net/files/logo.png" alt="\m/" title="\m/" /></p>
+</div></div></div><div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/taxonomy/term/1" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd"><a href="/taxonomy/term/62" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">acquia</a></div></div></div>
+  </body>
+</html>
+

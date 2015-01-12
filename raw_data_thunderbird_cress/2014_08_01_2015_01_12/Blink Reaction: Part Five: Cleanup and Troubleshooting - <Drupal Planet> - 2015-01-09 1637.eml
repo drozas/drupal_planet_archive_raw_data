@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 09 Jan 2015 16:37:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 09 Jan 2015 16:37:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Blink Reaction: Part Five: Cleanup and Troubleshooting
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.blinkreaction.com/blog/part-five-cleanup-and-troubleshooting
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Blink Reaction: Part Five: Cleanup and Troubleshooting</title>
+    <base href="http://www.blinkreaction.com/blog/part-five-cleanup-and-troubleshooting">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p dir="ltr">Cleaning up is one of the advantages of working with VMs over a bare metal install. Since everything is in the disk image files, we only need to delete the VM. Vagrant provides two commands for this purpose:</p>
+<h4 dir="ltr">Stopping and Deleting the VM</h4>
+<p dir="ltr">Change to the directory containing the Vagrantfile, and then stop the VM:</p>
+<p dir="ltr">vagrant halt</p>
+<p dir="ltr">To delete the VM permanently:</p>
+<p dir="ltr">vagrant destroy</p>
+<p dir="ltr">That’s it!</p></div></div></div>
+  </body>
+</html>
+

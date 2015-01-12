@@ -1,0 +1,49 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 17 May 2014 14:03:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 17 May 2014 14:03:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Victor Kane: Getting comfy with the VirtualBox based Bitnami LAMP Virtual Machine Stack for Drupal Development
+Content-Transfer-Encoding: 8bit
+Content-Base: http://awebfactory.com.ar/node/525
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Victor Kane: Getting comfy with the VirtualBox based Bitnami LAMP Virtual Machine Stack for Drupal Development</title>
+    <base href="http://awebfactory.com.ar/node/525">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><p>A few days ago I shared my experience in setting up&nbsp;<a href="http://awebfactory.com/node/524">Bitnami LAMP Virtual Machine Stack using VirtualBox for Drupal development</a>&nbsp;on my MacBook Air. That article serves well for the initial setup with the latest version of VirtualBox. Now, a few days later, I would like to share "what I really had to do" to get comfy with this local laptop/workstation development environment, the actual steps necessary for acquiring a truly useful tool.</p>
+<h3>Short List ("back to work")</h3>
+<ul>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Obtain IP of running Bitnami Guest unless you are using static IP (recommended)</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Fix Local IP in /etc/hosts and login with terminal</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Mount codebase via sshfs and work with IDE, Atom, Sublime, etc. or else use Eclipse remoting.</span></li>
+</ul>
+<div>
+<h3>Long List ("Let's get a Drupal project up and running and get back to work already")</h3>
+<div>
+<ul>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;</span><span style="font-size: 0.9em; line-height: 1.5em;">Static address</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Set hostname and server names on Guest if not using Static address</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Fix Local IP in /etc/hosts/ and login with terminal</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Make sure terminal is bash and not dash</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Checkout codebase</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Set files permissions and refresh files via rsync</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Create database via http://phpmyadmin.bitnamilampvm</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Refresh db via rsync if not included in codebase and load local db</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Setup local /etc/hosts, in the Guest vm setup the virtual hosts, and restart apache</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Run in browser</span></li>
+<li><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp; &nbsp;Mount codebase via sshfs and work with IDE, Atom, Sublime, etc. or else use Eclipse remoting</span></li>
+</ul>
+</div>
+<div><span style="font-size: 0.9em; line-height: 1.5em;">&nbsp;</span></div>
+</div>
+<div>
+</div><!-- google_ad_section_end --><div class="og_rss_groups"></div><p><a href="http://awebfactory.com.ar/node/525" target="_blank">read more</a></p>
+  </body>
+</html>
+

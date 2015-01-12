@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 05 Dec 2013 19:45:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 05 Dec 2013 19:45:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Koumbit: How to make your site (more) responsive in under 5 minutes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.koumbit.org/en/articles/how-make-your-site-more-responsive-under-5-minutes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Koumbit: How to make your site (more) responsive in under 5 minutes</title>
+    <base href="http://www.koumbit.org/en/articles/how-make-your-site-more-responsive-under-5-minutes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>We've all figured out by now that the future of the web is for the sites we build to be accessible on as wide a variety of platforms as possible. The magic of responsive design means that one single web page can be viewed on a large range of devices. All of this works very well when we have the time to build our site from the ground up with this in mind, but how can an existing site be adapted to be more responsive? In particular, it's relatively easy to get Drupal to render image fields differently for different screen sizes, but how can existing IMG tags in inline content be displayed at different sizes, and how can a user place images on the page with a WYSIWYG editor without using separate image fields and still have them display correctly? Fortunately, there's an easy answer to this.</p>
+<!--break--><!--break--><p>While there are several modules that manage image fields (in no particular order, they include <a href="https://drupal.org/project/cs_adaptive_image">Client-side adaptive image</a>, <a href="https://drupal.org/project/adaptive_image">Adaptive Image</a>, <a href="https://drupal.org/project/resp_img">Responsive images and styles</a>, and <a href="https://drupal.org/project/picture">Picture</a>, which is a backport of a Drupal 8 core module), the module <a href="https://drupal.org/project/ais">Adaptive Image Styles</a> (AIS) does this while also integrating with the WYSIWYG module and handling inline images. Each of these modules has their various strengths and weaknesses; for example, AIS requires you to modify .htaccess to rewrite image paths (the maintainers also provide instructions for use with nginx). But if you want to handle inline images, AIS is probably the simplest.</p>
+<p>Once the module is installed and your webserver correctly configured, AIS will make any image with the class "responsive" resize to fit the current screen, using breakpoints configured in the module's administration options. The only thing left to do is to add this class to your image tags. For that, I wrote <a href="https://drupal.org/node/2146299">a patch which defines an input filter that you can add to your text formats</a>. Apply the patch, add the filter to the necessary text formats, and like magic all your images will be resized when necessary! (Make sure you configure this to run after any other input filters.) It's really that easy. Enjoy your newly responsive website!</p>
+  </body>
+</html>
+

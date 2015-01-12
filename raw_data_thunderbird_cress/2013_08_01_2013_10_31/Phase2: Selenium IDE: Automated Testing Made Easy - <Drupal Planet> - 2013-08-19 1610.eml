@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 19 Aug 2013 15:10:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 19 Aug 2013 15:10:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Selenium IDE: Automated Testing Made Easy
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/selenium-ide-automated-testing-made-easy/?utm_source=rss&utm_medium=rss&utm_campaign=selenium-ide-automated-testing-made-easy
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Selenium IDE: Automated Testing Made Easy</title>
+    <base href="http://www.phase2technology.com/blog/selenium-ide-automated-testing-made-easy/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=selenium-ide-automated-testing-made-easy">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Have you heard a lot about automated testing, but unsure about how to use it to aid in your QA process?</p>
+<p>Want to use automated tests, but lack the necessary programming skills to roll out your own tests?</p>
+<p>Then the folks at the <a href="https://code.google.com/p/selenium/">Selenium project </a>have created just the tool for you!</p>
+<p>For those of you who have experimented with browser automation and automated testing, <a href="http://docs.seleniumhq.org/">Selenium</a> will undoubtedly be familiar.  For those who haven’t encountered it before, Selenium is a software testing framework for the web that facilitates the automation of browsers.  The Selenium project produces two tools, the Selenium IDE and Selenium WebDriver (a more powerful and open ended tool that allows the user to script a huge variety of testing interactions. For more info see <a href="http://docs.seleniumhq.org/projects/webdriver/">here</a>).  The Selenium IDE is a simple but powerful Firefox extension that let&#8217;s users record and replay sets of browser interactions as test cases.</p>
+<p style="text-align: center;"><img class="wp-image-4986 aligncenter" alt="An image of the Selenium IDE user dialog with a sample test case displayed." src="http://www.phase2technology.com/wp-content/uploads/2013/08/selenium_ide.png" width="594" height="375" /></p>
+<p>For my first experiment with the IDE, I was able to create a test case that would generate a piece of test content on a Drupal 7 based site.  This success led me to consider the possibility of creating an automated test suite which when run, would stand up a full set of test content for any new environment on a site.  Furthermore, it clearly becomes possible to record a given test interaction, and then save that test case for on demand regression testing of the same feature. Also for those who have experience working with Selenium WebDriver, the IDE allows you to export test cases in a variety of languages for use through the WebDriver.</p>
+<p>By using the IDE and WebDriver in conjunction with a third party browser emulation service (<a href="https://saucelabs.com/home">Saucelabs</a> supports the Selenium project and provides in depth tutorials on writing Selenium scripts and running them through their service), it&#8217;s possible to almost fully automate cross-browser testing.  On our project for the <a href="http://www.phase2technology.com/client/georgia-technology-authority/">Georgia Technology Authority,</a> I used a script (put together by <a href="http://www.phase2technology.com/author/cjohnson/">Chris Johnson</a>) to capture screenshots of 48 pages in 8 different browsers, and on 3 different mobile devices (see the image below for an example of the output from the script).  I then only had to compare the screenshots for differences compared to our established baseline (in this case Chrome) in order to verify that the site was behaving well in all supported browsers.  Including the hour it took to run the script, this turned a task which initially took two days to run manually into a task that could be completed in half a day.</p>
+<p style="text-align: center;"><img class="wp-image-4989 alignnone" alt="screenshots of testing" src="http://www.phase2technology.com/wp-content/uploads/2013/08/screenshot_output.png" width="729" height="131" /></p>
+<p>I should note that the system is not perfect.  While experimenting with the IDE, I occasionally had to manually input steps that the record function had missed, but the tool makes it very easy to do so by allowing editing of individual interactions, and the addition of new interactions using an easy to understand set of commands, and (usually) easy to find element IDs.  For those interested in using the WebDriver tool, I should warn you that the tool has a relatively steep learning curve, and requires a reasonable level of programming knowledge in order to get started. To learn more about testing in Drupal, check out <a onclick="_gaq.push(['_trackPageview', '/internal-links/erikblog']);" href="http://www.phase2technology.com/author/esummerfield/">Erik Summerfield&#8217;s</a> blog post: <a href="http://www.phase2technology.com/blog/test-driven-drupal/">&#8220;Test Driven Drupal&#8221;</a></p>
+  </body>
+</html>
+

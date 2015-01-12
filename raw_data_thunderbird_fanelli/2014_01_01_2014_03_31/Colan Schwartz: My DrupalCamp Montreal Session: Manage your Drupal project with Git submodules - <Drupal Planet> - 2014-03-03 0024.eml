@@ -1,0 +1,54 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 02 Mar 2014 23:24:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 02 Mar 2014 23:24:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Colan Schwartz: My DrupalCamp Montreal Session: Manage your Drupal project with Git submodules
+Content-Transfer-Encoding: 8bit
+Content-Base: http://colans.net/blog/my-drupalcamp-montreal-session-manage-your-drupal-project-git-submodules
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Colan Schwartz: My DrupalCamp Montreal Session: Manage your Drupal project with Git submodules</title>
+    <base href="http://colans.net/blog/my-drupalcamp-montreal-session-manage-your-drupal-project-git-submodules">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <section class="field field-name-field-blog-topics field-type-taxonomy-term-reference field-label-inline clearfix view-mode-rss clearfix">
+
+      <h2 class="field-label">Topics:&nbsp;</h2>
+  
+  <ul class="field-items">
+
+    
+      <li class="field-item even" rel="schema:keywords">
+        <a href="/blog-topics/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a>      </li>
+
+    
+      <li class="field-item odd" rel="schema:keywords">
+        <a href="/blog-topics/revision-control" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Revision Control</a>      </li>
+
+    
+      <li class="field-item even" rel="schema:keywords">
+        <a href="/blog-topics/configuration-management" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Configuration Management</a>      </li>
+
+    
+  </ul>
+
+</section>
+<div class="field field-name-field-body field-type-text-long field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="schema:articleBody"><p>Several months ago, I ran <a href="http://www.drupalcampmontreal.com/en/maximizing-version-control-manage-your-drupal-project-git-submodules">a session on the subject</a> at <a href="http://www.drupalcampmontreal.com/en">DrupalCamp Montreal</a>.  I educated attendees on how Git submodules can be used with Drupal to take advantage of some Git features that wouldn't otherwise be realized.</p>
+<p>Here are the benefits of the approach (as discussed on <a href="https://drupal.stackexchange.com/questions/22124/whats-the-advantage-of-using-git-submodules-for-drupal-core-and-contrib/88279">Drupal Answers</a>):</p>
+<ul><li>You can git fetch/merge/pull updates for your contributed modules directly from <a href="http://drupal.org/">Drupal.org</a>. There is no need to manually download a new version of each, unpack and then commit (or do this with <a href="http://drush.ws/">Drush</a>).</li>
+<li>You can see upstream version history in your own Git log. This makes it easy to see where you're at; you can check if you've got specific upstream commits. Otherwise, all you can see are local changes and "Upgraded Blah from 2.3 to 2.4." log messages.</li>
+<li>You don't need to reapply (cherry-pick) custom changes to your contributed modules after upgrading them. If you use the one-Git-repository method, each contributed-module upgrade will overwrite anything you're previously patched and committed. This is a huge problem because developers often forget to do the reapplying, and then you're left with resolved issues that have been reverted. If you're using submodules, you simply maintain a custom branch, and merge upstream tags (or commit IDs) into it.</li>
+</ul><p>Randy Fay essentially wrote <a href="http://randyfay.com/content/drupal-deployment-git-submodules">the bible on the practice</a> in 2011, and there was even a <a href="https://drupal.org/project/dog">Drupal on Git initiative</a> with the community to standardize it.  But although there are clear benefits, Git submodules within the Drupal space aren't overly popular.  I do have a client who's using them, but generally, developers often work with a single repository.  (<a href="http://drush.ws/docs/make.txt">Drush makefiles</a> are still being used, but less so.)</p>
+<p>While great in theory, the problem is that it adds more moving parts to existing development processes.  I find that if can be difficult enough getting developers to follow all prescribed <a href="http://en.wikipedia.org/wiki/Devops">devops</a> directives.  Adding to the mix increases the risk of breakage and further problems.  So keeping things simple, with only one (1) repository, isn't a bad plan.</p>
+<p>I'll admit that I generally stick with the single-repository approach myself, mostly because I work with developers I'd rather not confuse, and most (if not all) of the <a href="/blog/drupal-7-performance-optimization-options-and-checklist#drupal-specific-hosting">Drupal-specific hosting providers</a> are only set up to support projects set up that way.</p>
+<p>It's worth noting that there is now an alternative, Git Subtree.  For a general overview, take a look at <a href="https://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/">Alternatives To Git Submodule: Git Subtree</a>, or <a href="http://getlevelten.com/blog/tom-mccracken/smarter-drupal-projects-projects-management-git-subtree">Smarter Drupal projects in projects management with git-subtree</a> for information on how it works with Drupal specifically.  I haven't tried this (yet) for any projects, but if I hear enough good things about it, I'll take it for a spin.</p>
+<p>See the attached file for my slides, and the <a href="https://www.youtube.com/watch?v=bqGeTFMNzyc">YouTube video</a> for the presentation itself.  I apologize for the less-than-stellar audio quality.  I wasn't given a microphone; we only had access to the one on the camera.</p>
+</div></div></div><section class="field field-name-field-files field-type-file field-label-above view-mode-rss"><h2 class="field-label">File(s):&nbsp;</h2><div class="field-items"><div class="field-item even" rel="" resource="http://colans.net/sites/default/files/blog/Maximizing%20version%20control%3A%20Manage%20your%20Drupal%20project%20with%20Git%20submodules.pdf"><span class="file"><img class="file-icon" alt="" title="application/pdf" src="/modules/file/icons/application-pdf.png" /> <a href="http://colans.net/sites/default/files/blog/Maximizing%20version%20control%3A%20Manage%20your%20Drupal%20project%20with%20Git%20submodules.pdf" type="application/pdf; length=129960">Maximizing version control: Manage your Drupal project with Git submodules.pdf</a></span></div></div></section><span property="schema:name" content="My DrupalCamp Montreal Session: Manage your Drupal project with Git submodules" class="rdf-meta"></span><span rel="schema:url" resource="/blog/my-drupalcamp-montreal-session-manage-your-drupal-project-git-submodules" class="rdf-meta"></span>
+  </body>
+</html>
+

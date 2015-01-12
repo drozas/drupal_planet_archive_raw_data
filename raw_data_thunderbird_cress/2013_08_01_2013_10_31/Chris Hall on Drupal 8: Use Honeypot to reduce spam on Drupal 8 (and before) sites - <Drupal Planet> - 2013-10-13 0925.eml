@@ -1,0 +1,61 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 13 Oct 2013 08:25:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 13 Oct 2013 08:25:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hall on Drupal 8: Use Honeypot to reduce spam on Drupal 8 (and before) sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://running-on-drupal8.co.uk/blog/honeypot-fight-drupal8-spam
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hall on Drupal 8: Use Honeypot to reduce spam on Drupal 8 (and before) sites</title>
+    <base href="http://running-on-drupal8.co.uk/blog/honeypot-fight-drupal8-spam">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/9/body/und/rss"><div class="field-items"><div class="field-item even"><h3>Introduction</h3>
+
+<p>These days putting up even a simple low-traffic website can attract large quantites of spam submissions (many of them automated) as soon as you expose any forms (registration forms, comment, contact forms etc.) the automated spambots start sniffing around. </p>
+
+<p>Having to wade through and inspect  long lists of comments in the approval queue just to make sure you don't miss the one or two genuine ones is both time consuming and soul destroying. The ability for spammers to use automated processes to find and submit forms means they don't have to worry too much about their hit rate so long as something sticks occaisionally, mostly they are just trying to get a link into a comment or a user profile page, sometimes they may be more malicious and looking for sites with open registration that allow them to post content.</p>
+
+<p>This site slowly began to be targeted until eventually I was recieving upto 20 spam submissions on a bad day. </p>
+
+<h3>Fight automation with automation</h3>
+
+<p>There are contrib. modules and services which allow you to fight spam without wasting your own time, but Drupal 8 doesn't have many contrib. modules yet, I was delighted to find that the <a href="https://drupal.org/project/honeypot" target="_blank">Honeypot module</a> had both commited to having a working version for Drupal 8 and also had versions for Drupal 8.  The Honeypot module provides two spam fighting techniques:</p>
+
+<ul><li>A concealed field that is not intended to be filled by humans</li>
+	<li>A time check, that blocks forms that are filled in impossibly fast</li>
+</ul><p>There are a number of configuration options that allow you to use one or both methods, and target particular forms on your site to add protection to. Currently Honeypot is successfully dealing with virtually all spam submissions on this site.</p>
+
+<p>Currently Honeypot is about the only option if you are running an experimental D8 site.</p>
+
+<h3>Mollom is not the only game in town</h3>
+
+<p>The default reaction of many Drupal developers to spam is <a href="http://mollom.com/" target="_blank">Mollom</a> (the <a href="https://drupal.org/project/mollom" target="_blank">module is here</a>), Mollom is a fairly heavy-weight approach however, you need to set up an account also. Recently I inherited a complicated D6 setup of related multi-sites (sharing users) with custom registration code etc. Previous devs. had installed Mollom, subsequently broken it with custom registration code, hacked Mollom to make it work, broken the processes again when SSL was setup and now there were hundreds of spam submissions a day. </p>
+
+<p>Rather than fix the mess I removed Mollom, installed Honeypot and virtually all the spam was stopped. The sites in question were pretty high traffic so had atrracted the attention of more serious spammers, there was one bot that tried multiple submissions on every attempt (including not filling fields and faking a long submission time) I wrote a small extra validation function for the registration form that stopped that. </p>
+
+<p>Mollom is very useful if you a suffering from large volumes of human spam, real people artfully trying to weave their spam and links into your comments etc. but most sites won't attract much of this attention (it is not worth their while), for a lot of the automated variety though it is overblown in my opinion and the complexity of it means that even despite it's pedigree I doubt there will be a Drupal 8 <a href="https://drupal.org/node/2050547" target="_blank">version for some while</a>. </p>
+
+<p>If you have a small site (or even a large one in many cases) running on D6 or D7 or D8 with an increasing spam problem then try Honeypot, a few minututes installation and setup and you will probably be grinning later on :). </p>
+
+<h3>Installation (this is still Drupal 8)</h3>
+
+<p>There is a release of Honeypot to got with the alpha-3 release of D8 and the dev, version for D8 is tracking D8 dev. pretty well, but you may have one or two installation issues depending on your exact code mix. I had to tweak a couple of things and am raising issues and supplying patches where I can. </p>
+
+<p>I will also also be attempting to get this site up-to alpha-4 code (currently it is technically about alpha 3.75 ;)) when that is released shortly so I will make an effort to submit any patches I need to apply to the Honeypot module over the next couple of weeks. </p>
+
+<h3>Blogging distribution</h3>
+
+<p>Honeypot is the only contrib. module I have installed (aside from blog). I expect there will be a few more. Eventually I hope to roll them all together into a stable, simple blogging distribution for D8.</p>
+
+<p> </p>
+</div></div></div><div  class="field field-node--field-blog-tags field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix clearfix" data-edit-id="node/9/field_blog_tags/und/rss"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0">planet</li><li class="taxonomy-term-reference-1">contrib</li><li class="taxonomy-term-reference-2">spam</li></ul></div>
+  </body>
+</html>
+

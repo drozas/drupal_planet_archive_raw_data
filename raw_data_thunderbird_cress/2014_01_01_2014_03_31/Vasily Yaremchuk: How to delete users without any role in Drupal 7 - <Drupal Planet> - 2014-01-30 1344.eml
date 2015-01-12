@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 Jan 2014 13:44:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 Jan 2014 13:44:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Vasily Yaremchuk: How to delete users without any role in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yaremchuk.ru/blog/how-delete-users-without-any-role-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Vasily Yaremchuk: How to delete users without any role in Drupal 7</title>
+    <base href="http://yaremchuk.ru/blog/how-delete-users-without-any-role-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>We faced of one of the projects that we supported with large amount of spam registrations. But there were valid users with assigned roles that should not be deleted.</p>
+<p>Short script was written to resolve this task:</p>
+<p><div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">require_once </span><span style="color: #DD0000">'./includes/bootstrap.inc'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">define</span><span style="color: #007700">(</span><span style="color: #DD0000">'DRUPAL_ROOT'</span><span style="color: #007700">, </span><span style="color: #DD0000">'&lt;path_to_you_Drupal_folder&gt;'</span><span style="color: #007700">); </span><span style="color: #FF8000">// optional<br /></span><span style="color: #0000BB">drupal_bootstrap</span><span style="color: #007700">(</span><span style="color: #0000BB">DRUPAL_BOOTSTRAP_FULL</span><span style="color: #007700">); </span><span style="color: #FF8000">// load Drupal to use Drupal API<br /></span><span style="color: #0000BB">$query </span><span style="color: #007700">= </span><span style="color: #DD0000">'SELECT users.uid as uid FROM {users} LEFT JOIN {users_roles} ON users.uid = users_roles.uid WHERE users.uid != 0 AND users_roles.uid IS null ORDER BY users.uid DESC LIMIT 300'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$result </span><span style="color: #007700">= </span><span style="color: #0000BB">db_query</span><span style="color: #007700">(</span><span style="color: #0000BB">$query</span><span style="color: #007700">);<br />while (</span><span style="color: #0000BB">$row </span><span style="color: #007700">= </span><span style="color: #0000BB">$result</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">fetchObject</span><span style="color: #007700">()) {<br />&nbsp; </span><span style="color: #0000BB">user_delete</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">uid</span><span style="color: #007700">);<br />}<br />echo </span><span style="color: #DD0000">'300 spam users were deleted!'<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div></p>
+<p>Let me explain this code in details:</p>
+<p>If we would like to use Drupal API and DB connection in any separate script not in our custom Drupal module we need to start with these lines:<br />
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">require_once </span><span style="color: #DD0000">'./includes/bootstrap.inc'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">define</span><span style="color: #007700">(</span><span style="color: #DD0000">'DRUPAL_ROOT'</span><span style="color: #007700">, </span><span style="color: #DD0000">'&lt;path_to_you_Drupal_folder&gt;'</span><span style="color: #007700">); </span><span style="color: #FF8000">// optional<br /></span><span style="color: #0000BB">drupal_bootstrap</span><span style="color: #007700">(</span><span style="color: #0000BB">DRUPAL_BOOTSTRAP_FULL</span><span style="color: #007700">); </span><span style="color: #FF8000">// load Drupal to use Drupal API<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div> </p>
+<p>Attention! You should  put your path instead ''.<br />
+Some times script can work without 'DRUPAL_ROOT' definition, but some times can't like in our case.</p>
+<p>Authenticated User role ID is 2. But there is no any record with that role ID in {users_roles} table, so we should select all user IDs that have no records in {users_roles} table <strong>users_roles.uid IS null</strong>.</p>
+<p>And do not forget to exclude Anonymous user record <strong>users.uid != 0</strong>!<br />
+Other wise we can delete record with 0 UID from  {users} table, that serve for Anonymous user purpose.</p>
+<p>Start to delete most resent users <strong>ORDER BY users.uid DESC</strong>.  </p>
+<p>Due to user_delete() function require pretty large number of SQL requests it is reasonable to set some limit <strong>LIMIT 300</strong>!  </p>
+<p>If there are a lot of spam users you can set cron task, for example:</p>
+<p>*/02 * * * *  /usr/bin/wget -O - -q -t 1 http://your_site.com/your_script_name.php &gt;/dev/null 2&gt;&amp;1</p>
+</div></div></div><!-- google_ad_section_end --><div class="field field-name-taxonomy-wp-blog-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Blog tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog-tags/drupal-faq">Drupal FAQ</a></li><li class="taxonomy-term-reference-1"><a href="/blog-tags/planet-drupal">Planet Drupal</a></li></ul></div>
+  </body>
+</html>
+

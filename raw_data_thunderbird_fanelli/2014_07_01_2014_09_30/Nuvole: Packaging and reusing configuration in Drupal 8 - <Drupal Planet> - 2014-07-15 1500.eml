@@ -1,0 +1,174 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 15 Jul 2014 13:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 15 Jul 2014 13:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Nuvole: Packaging and reusing configuration in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://nuvole.org/blog/2014/jul/15/packaging-and-reusing-configuration-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Nuvole: Packaging and reusing configuration in Drupal 8</title>
+    <base href="http://nuvole.org/blog/2014/jul/15/packaging-and-reusing-configuration-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-blog-subtitle field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">Bringing &quot;reusable features&quot; to Drupal 8.</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><em>This is a preview of Nuvole's training at DrupalCon Amsterdam: <a href="https://amsterdam2014.drupal.org/node/2808">An Effective Development Workflow in Drupal 8</a>.</em></p>
+
+<p>Configuration Management in Drupal 8 elegantly solves staging configuration between different environments addressing an issue that is still haunting even the most experienced Drupal 7 developer. In earlier posts we covered <a href="http://nuvole.org/blog/2014/jun/06/configuration-management-drupal-7-drupal-8">the new Configuration Management in Drupal 8</a>, seeing how it compares to Drupal 7 and Features, and even investigated <a href="http://nuvole.org/blog/2013/sep/03/configuration-management-and-features-look-drupal-8">how to manually simulate Features</a> in Drupal 8 last year. Recent developments and contrib modules can take us several steps closer.</p>
+
+<p>Configuration Management can get quite streamlined when using Git and <a href="https://github.com/drush-ops/drush">Drush 7</a> as explained below.</p>
+
+<p><strong>Step 1: Move staging configuration directory into a versionable location</strong></p>
+
+<p>By default Drupal 8 will place the staging directory under <code>sites/default/files</code> and it is considered a good practice to not version that location, but an alternative location can easily be specified in our <code>settings.php</code>:</p>
+
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$config_directories</span><span style="color: #007700">[</span><span style="color: #DD0000">'staging'</span><span style="color: #007700">] = </span><span style="color: #DD0000">'config/staging'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<p>Done that, we must rebuild the Drupal cache:</p>
+
+<div class="codeblock"><code>$ drush cache-rebuild </code></div>
+
+<p><strong>Step 2: Export active configuration into staging directory via Drush</strong></p>
+
+<p>The Configuration Management system exposes a set of very handy Drush commands: in order to “dump” all active configuration into our newly set staging directory we can just run:</p>
+
+<div class="codeblock"><code>$ drush config-export<br />The current contents of your export directory (config/staging) will be deleted. (y/n): y<br />Configuration successfully exported to config/staging.                                                     </code></div>
+
+<p><strong>Step 3: Push configuration changes and import it on the staging environment</strong></p>
+
+<p>Since the staging directory is under version control we can simply git-add all its content and push it to the remote repository. After having set-up the staging environment as an exact replica of our development environment (this is actually required for the configuration staging to work) we can start profiting from the new Drupal 8 CM system. Imagine we have changed the site name on dev, after having exported, committed and pushed that change, on the staging site we will simply run:</p>
+
+<div class="codeblock"><code>$ git pull<br /><br />$ drush config-import<br /><br />Config               Operation                <br />system.site          update<br />Import the listed configuration changes? (y/n): y<br />The configuration was imported successfully. </code></div>
+
+<p>For a more comprehensive overview of the Configuration Management system please refer to our previous blog post <a href="http://nuvole.org/blog/2014/jun/06/configuration-management-drupal-7-drupal-8">Configuration Management: Drupal 7 to Drupal 8</a>.</p>
+
+<h3>Packaging configuration</h3>
+
+<p>For those developers familiar with <a href="http://nuvole.org/blog/code-driven-development">code-driven development practices</a> the three steps above might resemble what the Features module does in Drupal 7 with its <code>features-update</code> and <code>features-revert</code> Drush commands.</p>
+
+<p>While Drupal 8 configuration staging capabilities are far more advanced than what Features could possibly provide, what the new Configuration Management system really lacks is the ability to package configuration.</p>
+
+<h3>Enter the Configuration development module</h3>
+
+<p>The <a href="https://www.drupal.org/project/config_devel">Configuration development</a> module, currently maintained by <a href="https://www.drupal.org/u/chx">chx</a>, serves two main purposes:</p>
+
+<ul><li>It automates the import of specified configuration files into the active storage. </li>
+<li>It automates the export of specified configuration objects into files.</li>
+</ul><p>The module offers a simple, global UI interface where a Drupal developer can set which configuration is automatically exported and imported any time they hit the “Save” button on a configuration setting page.</p>
+
+<p>In order to achieve a more modular configuration packaging it would be enough to set a specific module’s <code>config/install</code> directory as the actual export destination.</p>
+
+<p>Nuvole <a href="https://www.drupal.org/node/2300717">contributed a patch</a> to make that possible: instead of firing an auto-export every time a “Save” button is clicked the developer can, instead, specify in the module’s info file which configuration needs to be written back to that module’s install directory and run a simple Drush command to do that.</p>
+
+<h3>Reusable “features” in Drupal 8</h3>
+
+<p>One of the main advantages of having a standardized way of dealing with configuration means that modules can now stage configuration at installation time. In a way that’s something very close to what Features allowed us to do in Drupal 7.</p>
+
+<p>Say we have our news section up and running on the site we are currently working on and we would like to package it into a custom module, together with some other custom code, and ship it over a new project. The patched Config development module will help us to do just that! Here it is how:</p>
+
+<p><strong>Step 1: Download, patch and enable Configuration development module</strong></p>
+
+<p>We need to download and enable the Configuration development module <strong>version 8.x-1.x-dev</strong> and apply the  patch attached to <a href="https://www.drupal.org/node/2300717#comment-8955737">this Drupal.org issue</a>.</p>
+
+<p>After rebuilding the cache, we will have the <code>config-writeback</code> Drush command available. Let's have a closer look at what it is meant to do:</p>
+
+<div class="codeblock"><code>$ drush help config-writeback<br /><br />Write back configuration to a module's config/install directory. State which configuration settings you want to export in the module's info file by listing them under 'config_devel', as shown below:<br /><br />config_devel:<br />  - entity.view_display.node.article.default<br />  - entity.view_display.node.article.teaser<br />  - field.instance.node.article.body<br /><br /><br />Examples:<br /> drush config-writeback MODULE_NAME        Write back configuration to the specified module, based on .info file.<br /><br />Arguments:<br /> module                                    Module machine name.<br /><br />Aliases: cwb</code></div>
+
+<p><strong>Step 2: Find what configuration needs to be packaged</strong></p>
+
+<p>We now look for all configuration related to our site’s news section. In Drupal 8 most of the site configuration is namespaced with related components so, if we keep on using consistent naming conventions, we can easily list all news-related configuration by simply running:</p>
+
+<div class="codeblock"><code>$ drush config-list | grep news<br /><br />entity.form_display.node.news.default<br />entity.view_display.node.news.default<br />entity.view_display.node.news.teaser<br />field.instance.node.news.body<br />image.style.news_medium<br />menu.entity.node.news<br />node.type.news</code></div>
+
+<p><strong>Step 3: Package configuration</strong></p>
+
+<p>To package all the settings above we will create a module called <code>custom_news</code> and, in its info file, we will specify all the settings we want to export, listing them under the <code>config_devel:</code> directive, as follows:</p>
+
+<div class="codeblock"><code>$ cat modules/custom_news/custom_news.info.yml <br /><br />name: Custom News<br />type: module<br />description: 'Custom news module.'<br />package: Custom<br />core: 8.x<br />config_devel:<br />  - entity.form_display.node.news.default<br />  - entity.view_display.node.news.default<br />  - entity.view_display.node.news.teaser<br />  - field.instance.node.news.body<br />  - image.style.news_medium<br />  - menu.entity.node.news<br />  - node.type.news</code></div>
+
+<p>After enabling the module we will run:</p>
+
+<div class="codeblock"><code>$ drush config-writeback custom_news</code></div>
+
+<p>And we will have all our settings exported into the module’s install directory:</p>
+
+<div class="codeblock"><code>$ tree -L 3 modules/custom_news/<br /><br />modules/custom_news/<br />├── config<br />│   └── install<br />│       ├── entity.view_display.node.news.default.yml<br />│       ├── entity.view_display.node.news.teaser.yml<br />│       ├── field.instance.node.news.body.yml<br />│       ├── image.style.news_medium.yml<br />│       ├── menu.entity.node.news.yml<br />│       └── node.type.news.yml<br />└── custom_news.info.yml</code></div>
+
+<p>The Drush command above takes care of clearing all sensitive UUID values making sure that the module will stage the exported configuration cleanly, once enabled on a new Drupal 8 site.</p>
+
+<p>To get the news section on another site we will just copy the module to the new site's <code>./modules/</code> directory and enable it:</p>
+
+<div class="codeblock"><code>$ drush en custom_news<br /><br />The following extensions will be enabled: custom_news<br />Do you really want to continue? (y/n): y<br />custom_news was enabled successfully.      </code></div>
+
+<h3>Final evaluation: Drupal 7 versus Drupal 8</h3>
+
+<p>One of the main differences between working in Drupal 7 and in Drupal 8 is represented by the new Configuration Management system.</p>
+
+<p>While Features was proposing a one-stop solution for both configuration staging and packaging, Drupal 8 CM does a better job in keeping them separate, allowing developers in taking a greater control over these two different and, at the same time, complementary aspect of a solid Drupal development workflow.</p>
+
+<p>By using the method described above we can upgrade our comparison table between Drupal 7 and Drupal 8 introduced in <a href="http://nuvole.org/blog/2014/jun/06/configuration-management-drupal-7-drupal-8">one of our previous posts</a> as follows:</p>
+
+<table class="table table-striped table-bordered"><tr><th>Functionality</th>
+<th>D7 Core</th>
+<th>D7 Core + Features</th>
+<th>D8 Core (current)</th>
+<th>D8 Core (current) + Patched Config Devel</th>
+</tr><tr><td>Export full site config (no content)</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Export selected config items</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Track config changes (full site)</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Track config changes (selected items)</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Stage configuration</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Package configuration</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Reuse configuration in other projects</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Collaborate on the same project</td> 
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+</tr></table><p>The last "NO" deserves a brief explanation: Configuration Management allows two developers to work simultaneously on different parts of the same project if they are very careful: but "merging" the work would have to be done by version control (GIT or similar), that doesn't know about YAML or Drupal.</p>
+
+<h3>Some open issues</h3>
+
+<p>Contributed modules seem to be the best way to enhance the core Configuration Management system, much like what happened with Drupal 7 and Features. There are still several issues that should be considered for an optimal workflow, to match and improve what we already have in Drupal 7:</p>
+
+<ul><li><strong>Piping</strong>: the ability to relate configuration components based on both hard and logic dependencies, for example: I export a content type and, automatically, I get also its fields. If piping might have been too rigid, at times, it would be still useful to have in some configurable form.</li>
+<li><strong>Enhanced configuration diff</strong>: it might be useful to have the possibility to review what configuration is going to be installed before enabling a module, like it is now when importing staged configuration to the active storage.</li>
+<li><strong>Granularity</strong>: it is still impossible to export part of a configuration file, so we still depend on the core conventions for grouping configuration into files, and we can't export a single permission for example.</li>
+<li><strong>Ownership</strong>: we can't know if another module (or "feature") is tracking a component we wish to track; this could be useful in the perspective of maintaining several "modular" features.</li>
+<li><strong>Updates</strong>: we can reuse configuration by simply enabling a module, but this holds only for the initial installation; after a module is enabled, we don't have a clean way to import changes (say, to "upgrade" to a newer version of the feature) outside the standard workflow foreseen in Configuration Management.</li>
+</ul></div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even">Drupal 8, Drupal Planet, DrupalCon, Drush, Code Driven Development</div></div></div><div class="field field-name-field-blog-image field-type-image field-label-above"><div class="field-label">Image:&nbsp;</div><div class="field-items"><div class="field-item even"><img src="http://nuvole.org/sites/default/files/default_images/nuvole-square-logo.png" alt="" /></div></div></div>
+  </body>
+</html>
+

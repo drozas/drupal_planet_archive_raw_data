@@ -1,0 +1,68 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 13 Jul 2014 23:50:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 13 Jul 2014 23:50:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Miles Carter: Drupal views templating tutorial: Outputting the respective image fields of multiple associated taxonomy term references
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.milesjcarter.co.uk/blog/web-design-development/drupal-views-templating-tutorial-outputting-respective-image-fields-multiple-taxonomy-term-references/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Miles Carter: Drupal views templating tutorial: Outputting the respective image fields of multiple associated taxonomy term references</title>
+    <base href="http://www.milesjcarter.co.uk/blog/web-design-development/drupal-views-templating-tutorial-outputting-respective-image-fields-multiple-taxonomy-term-references/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Courtesy of - <a href="http://www.milesjcarter.co.uk/blog">Miles J Carter Photos on the Web Blog</a><br/>
+Source URL : <a href="http://www.milesjcarter.co.uk/blog/web-design-development/drupal-views-templating-tutorial-outputting-respective-image-fields-multiple-taxonomy-term-references/">Drupal views templating tutorial: Outputting the respective image fields of multiple associated taxonomy term references</a>
+<br/></p><h1>Using a custom field template to output taxonomy term references as their respective image fields, rather than as text or a link</h1>
+<div class="wp-caption aligncenter" style="width: 575px"><a href="http://www.milesjcarter.co.uk/blog/wp-content/uploads/2014/07/output.png"><img alt="output" src="http://www.milesjcarter.co.uk/blog/wp-content/uploads/2014/07/output.png" width="565" height="433" /></a><p class="wp-caption-text">The ingredient icons are term reference fields formatted to output as their respective image fields, rather than as a link or text</p></div>
+<p>The example situation is where a view displays a list of nodes or fieldable entities, for our example items on a menu, and each of these has one or more taxonomy term references, in this example the main ingredients. While it&#8217;s simple to output the term references as plain text or a link, showing an image or other field attached to the term reference instead of this presents problems.</p>
+<h2>Using views relationships</h2>
+<p>The obvious solution is to create a relationship to the taxonomy in the view set up, and add the image field via the relationship. However, this currently presents issues with duplicate rows being output. If an item in the view has more than one term reference, it is displayed once for each term reference. Because of how views works, setting &#8220;distinct&#8221; and &#8220;pure distinct&#8221; in the query settings does nothing as they are technically distinct results (each has a different term reference).</p>
+<p>The <a href="https://www.drupal.org/project/views_distinct">views_distinct</a> module should offer a solution to this kind of problem, but <a href="https://www.drupal.org/node/2158653">currently</a> it does not work in a way that can aggregate the required fields while filtering duplicates in this situation.</p>
+<h2>Creating the custom field template</h2>
+<p>In our example view, no relationship is used and the relevant term reference field is included in the field list</p>
+<p>If you have never made a views template before, click the link &#8220;Information&#8221; in the Other section of the view:</p>
+<p><a href="http://www.milesjcarter.co.uk/blog/wp-content/uploads/2014/07/themeinfo.png"><img class="aligncenter size-full wp-image-633" alt="themeinfo" src="http://www.milesjcarter.co.uk/blog/wp-content/uploads/2014/07/themeinfo.png" width="303" height="359" /></a></p>
+<p>&nbsp;</p>
+<p>This displays a list of possible templates to use in customising your view for each field in the view. The template names shown are ordered from least specific to most specific &#8211; the filename of the template determines which situtations it is used. The bolded template is the one currently being used. To make a new custom template, create a file in the theme&#8217;s templates directory with the name. Click the link next to it to get the default code which should go into the template. In this case we wish to control output in all situations the field appears, so the first custom template option (highlighted) is that used.</p>
+<p><a href="http://www.milesjcarter.co.uk/blog/wp-content/uploads/2014/07/themeinfo2.png"><img class="aligncenter size-medium wp-image-634" alt="themeinfo2" src="http://www.milesjcarter.co.uk/blog/wp-content/uploads/2014/07/themeinfo2-600x513.png" width="600" height="513" /></a></p>
+<p>&nbsp;</p>
+<p>From the helpful comment at the top of the file, it can be seen that the contents of the view item can be found in the $row object. By debugging this object the location of the ingredients term references and their respective image fields can be found.</p>
+<p>In this case the term reference field data is at:</p>
+<div class="syhi_block"><code>$row-&gt;field_field_ingredients</code></div>
+<p>and the image field at:</p>
+<div class="syhi_block"><code>$row-&gt;field_field_ingredients[INDEX]['raw']['taxonomy_term']['field_image']</code></div>
+<p>Where INDEX is the array index for multiple items.</p>
+<p>The <a href="https://api.drupal.org/api/drupal/modules!field!field.module/function/field_view_field/7">field_view_field()</a> function is useful here to display the image field without needing to worry about URLs and allows control of formatting, e.g. image style presets. We also need to use an isset() condition to prevent warnings being thrown where rows don&#8217;t have any term references.</p>
+<p>Putting this all together gives the example code:</p>
+<div class="syhi_block"><code><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/isset"><span style="color: #990000;">isset</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">field_field_ingredients</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000088;">$term</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">field_field_ingredients</span><span style="color: #339933;">;</span><br />
+<br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$term</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$ingredient</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">print</span> render<span style="color: #009900;">&#40;</span>field_view_field<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'taxonomy_term'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$ingredient</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'raw'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'taxonomy_term'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'field_image'</span><span style="color: #339933;">,</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #009900;">&#125;</span><br />
+<span style="color: #009900;">&#125;</span></code></div>
+<p>This outputs the image, but at it&#8217;s original size and with an ugly label that says &#8220;Image:&#8221;. To fix this, we need to use the optional fourth parameter of the field_view_field() function to control display and formatting of the field. The line inside the foreach() loop becomes:</p>
+<div class="syhi_block"><code><span style="color: #b1b100;">print</span> render<span style="color: #009900;">&#40;</span>field_view_field<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'taxonomy_term'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$ingredient</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'raw'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'taxonomy_term'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'field_image'</span><span style="color: #339933;">,</span> <br />
+<a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'label'</span><span style="color: #339933;">=&gt;</span><span style="color: #0000ff;">'hidden'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'settings'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'image_style'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'thumbnail'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></code></div>
+<p>This hides the label and sets the image style preset for the output to &#8216;thumbnail&#8217;.</p>
+<p>Final code:</p>
+<div class="syhi_block"><code><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/isset"><span style="color: #990000;">isset</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">field_field_ingredients</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000088;">$term</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">field_field_ingredients</span><span style="color: #339933;">;</span><br />
+<br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$term</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$ingredient</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #b1b100;">print</span> render<span style="color: #009900;">&#40;</span>field_view_field<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'taxonomy_term'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$ingredient</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'raw'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'taxonomy_term'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'field_image'</span><span style="color: #339933;">,</span> <br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'label'</span><span style="color: #339933;">=&gt;</span><span style="color: #0000ff;">'hidden'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'settings'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'image_style'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'thumbnail'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #009900;">&#125;</span><br />
+<span style="color: #009900;">&#125;</span></code></div>
+<p>Source - <a href="http://www.milesjcarter.co.uk/blog">Miles J Carter Photos on the Web Blog</a><br/>
+Read the Original Article : <a href="http://www.milesjcarter.co.uk/blog/web-design-development/drupal-views-templating-tutorial-outputting-respective-image-fields-multiple-taxonomy-term-references/">Drupal views templating tutorial: Outputting the respective image fields of multiple associated taxonomy term references</a>
+<br/></p>
+  </body>
+</html>
+

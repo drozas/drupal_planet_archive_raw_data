@@ -1,0 +1,88 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 24 Aug 2014 22:50:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 24 Aug 2014 22:50:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: Web Performance: A Guide to Building Fast Drupal Websites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/web-performance-guide-building-fast-drupal-websites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: Web Performance: A Guide to Building Fast Drupal Websites</title>
+    <base href="http://friendlymachine.net/posts/web-performance-guide-building-fast-drupal-websites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>What follows is part one in&nbsp;a series of posts on web performance that I've wanted to write for quite some time. In this series of posts I'll not only be talking about optimizing web performance generally, but also providing specific guidance for speeding up Drupal sites.</p>
+<p>Although I'm not a web performance specialist or expert, I have taken a <a href="http://friendlymachine.net/posts/how-evaluate-performance-responsive-websites">keen interest</a> in the topic in my work as a frontend developer building <a href="http://friendlymachine.net/posts/thoughts-building-responsive-websites">responsive websites</a>. I love building fast sites and&nbsp;have gained some experience over the years getting Drupal to shed some its inherent sluggishness.&nbsp;</p>
+<p>As a way of systematically tackling what can be a complex subject, we'll use the results of a test from <a href="http://www.webpagetest.org/">WebPageTest.org</a>, a Google-sponsored tool that provides very in-depth information about the performance&nbsp;of a site in nice, easily digestible chunks.</p>
+<!--break--></p>
+<h2>How Fast Is Fast Enough?</h2>
+<p>Before we get into the details of web performance we should first stop to ask&nbsp;how fast a site should be in order to qualify as "fast". Here are some research results <a href="http://blog.radware.com/applicationdelivery/applicationaccelerationoptimization/2014/01/55-web-performance-stats-youll-want-to-know/">courtesy of&nbsp;Radware</a> that might help bring things into focus:</p>
+<blockquote><ul>
+<li>64% of smartphone users expect pages to load in less than 4 seconds.</li>
+<li>The <a href="http://blog.radware.com/applicationdelivery/applicationaccelerationoptimization/2013/06/web-performance-poverty-line/">performance poverty line</a> (i.e. the plateau at which your website’s load time ceases to matter because you’ve hit close to rock bottom in terms of business metrics) for most sites is around 8 seconds.</li>
+</ul>
+</blockquote>
+<p>More guidance comes courtesy of Ilya Grigorek of Google. In his&nbsp;<a href="https://docs.google.com/presentation/d/1IRHyU7_crIiCjl0Gvue0WY3eY_eYvFQvSfwQouW9368/present#slide=id.g1e697bbb_0_7">recent presentation</a> at the Velocity conference, he cited research that indicates a <strong>target page render&nbsp;time should be 1000ms</strong> - or one&nbsp;second &nbsp;- to avoid "context switching" among users.</p>
+<p>Basically, if it takes a page longer than one&nbsp;second to render, you risk losing the attention of the user. If it takes longer than eight&nbsp;seconds for a page&nbsp;to render, it's similar in terms of business metrics (conversions, sales, etc) as if it took 30 seconds or a minute.</p>
+<p>If one second sounds impossibly ambitious, there is <a href="https://blog.kissmetrics.com/speed-is-a-killer/">further research</a> showing that <strong>a load time of three&nbsp;seconds or less is probably OK</strong>.&nbsp;</p>
+<p>The bottom line: your pages should load in under three seconds on desktop, and under 4 seconds on a mobile.</p>
+<p>Pretty harsh reality check, huh? Let's see what can be done to get our sites whipped into shape.</p>
+<h2>Test Results for this Analysis</h2>
+<p>In order for us to have a practical example for our discussion, I ran the <a href="http://friendlymachine.net/">Friendly Machine</a>&nbsp;site&nbsp;through WebPageTest. Here are&nbsp;the results (click to enlarge image):</p>
+<p><a href="/sites/default/files/web-page-test-results_0.jpg"><img alt="" src="/sites/default/files/web-page-test-results_0.jpg" /></a></p>
+<p>I recently completed a refresh of the design of this site with a lot of attention focused on keeping things fast. My target page load time was one second, so I was happy when the results consistently came in below that.</p>
+<p>Let's start our analysis by looking at the first number in the above table - under the heading "Load Time". You'll see the value is 0.662 seconds. That's pretty darn good, but if you scan across the table you may see something on the far right that's a bit confusing - a Fully Loaded Time of 0.761 seconds.</p>
+<h3>So what's the difference between Load Time and Fully Loaded Time?</h3>
+<p>Load Time is calculated from the time when the user started navigating to the page until the Document Complete event is fired. The Document Complete event is fired by the browser once the page has completed loading.</p>
+<p>The Fully Loaded time, on the other hand, also includes any metrics up until there is no network activity for two seconds. Most of the time this means watching for things being loaded by JavaScript in the background.</p>
+<h2>First Byte Time = Backend Performance</h2>
+<p>Whenever talk turns to web performance, it seems a lot of folks immediately start thinking of what's happening on the server. Although it's a very important piece of the puzzle, as we walk through this analysis, you'll see that most web performance issues actually reside on the frontend.</p>
+<p>Before we get ahead of ourselves, though, let's return to the results from our test and look at the next metric in our table, <strong>First Byte Time</strong> (highlighted in blue below) which tells us about performance&nbsp;on the server.</p>
+<p><a href="/sites/default/files/web-page-test-results-first-byte.jpg"><img alt="First Byte Time" src="/sites/default/files/web-page-test-results-first-byte.jpg" /></a></p>
+<p>This First Byte Time represents the&nbsp;time from when a user began navigating to the page until the first bit of the server response arrived at the browser. The target time for this on&nbsp;WebPageTest is <strong>a meager&nbsp;87 ms</strong>!</p>
+<p>This metric is also represented as the first in the series of letter grades you see at the top of the test results. You'll notice&nbsp;Friendly Machine got an "A" and I really wish I could take credit for it, but the truth is my host Pantheon -&nbsp;and the awesome backend performance they provide -&nbsp;are responsible for this metric scoring well.</p>
+<h2>Backend Drupal Performance</h2>
+<p>Let's pause here and talk specifically about backend Drupal performance. How would we address this metric if it hadn't scored well?&nbsp;This topic can get pretty deep, so we'll only review the most popular options, but they'll still be able to do wonders for improving this key metric if your site is not performing well.</p>
+<p>Let's start by discussing&nbsp;server resources (with a brief, tangential mini-rant about shared hosting).</p>
+<p>If you want a fast Drupal website, you really shouldn't be on a shared host, period. Although many of them will claim to be Drupal specialists, very few of them actually are. One giveaway is the number for PHP memory limit.</p>
+<p>Although this number <em>doesn't directly impact performance</em>, it can break your site if it's too low and is also useful for smoking out hosts that don't know Drupal.&nbsp;You can find this number at <em>admin/reports/status</em> and it will look something like the image below.</p>
+<p><img alt="PHP memory limit" src="/sites/default/files/php-memory-limit.jpg" /></p>
+<p>You can see on my site this number is at 256 megabytes and this is most likely where you want it, although if you have a simple site without Views or Panels, then 128M might work. If it's set at 64M, then it's too low and this is often what you'll find with shared hosting arrangements.&nbsp;</p>
+<p>Another issue with shared hosting - and one that <em>does</em> impact performance - is that your website is on a server with perhaps hundreds of other sites. If one of those sites gets hit with a large spike in traffic or some other issue, it can affect all the sites on that server as it gobbles up the available resources.</p>
+<p>Perhaps the biggest issue with shared hosting, however, is that advanced caching using tools like <a href="http://en.wikipedia.org/wiki/Memcached">Memcached</a>&nbsp;and <a href="http://en.wikipedia.org/wiki/Varnish_(software)">Varnish</a> are rarely, if ever, available.&nbsp;And when it comes to Drupal backend performance, caching is&nbsp;critical. The best you'll probably be able to do with regard to caching on shared hosting&nbsp;is using the <a href="https://www.drupal.org/project/boost">Boost module</a>, which we'll talk about in the next section.</p>
+<p>To ensure that server resources aren't an issue for your website, consider either a managed VPS or a Drupal host like Pantheon, both of which start at around $25 per month. Pantheon is what I recommend for small to medium sized sites because your site will scale better with them and they offer tremendous value, although they are a great fit for enterprise clients as well. If you have a bigger budget, Acquia or BlackMesh might fit the bill.</p>
+<p>Sure, these options cost more than the $7 per month the cheap hosts offer, but they will provide a professional level of service that will more than pay for itself over time.</p>
+<h3>Caching for Drupal Websites</h3>
+<p>We said caching was critical, so here are five of the most important caching solutions for a Drupal website:</p>
+<ol>
+<li>Drupal's built-in&nbsp;caching</li>
+<li>Boost module</li>
+<li>Memcached</li>
+<li>Varnish</li>
+<li>Views caching</li>
+</ol>
+<p>There are other options, of course, but these five cover most&nbsp;of the ground. Let's briefly go through them&nbsp;one at a time.</p>
+<h3>Drupal's Built-in Caching</h3>
+<p>Most of a Drupal site is stored in the database - nodes, information about blocks, etc. - and enabling the default caching will store the results of these database queries so that they aren't executed every time a page is requested. Enabling these&nbsp;settings alone can have a big impact on performance, particularly if&nbsp;your pages use a lot of views. This one is kind of a no-brainer.</p>
+<h3>Boost Module</h3>
+<p>The Boost module is pretty great. It works very well in tandem with Drupal caching, but it requires some <a href="https://www.drupal.org/node/1459690">additional configuration</a>. What you end up with after you have the module installed and configured is a caching system that stores the output of your Drupal site as static HTML pages. This takes&nbsp;PHP processing out of the equation,&nbsp;leading to another nice bump in performance.</p>
+<h3>Memcached</h3>
+<p>Memcached can speed up dynamic applications (like Drupal) by storing objects in memory. With Boost and Drupal caching, the data being cached is stored on the server's hard drive. With memcached, it's being stored in memory, something that greatly speeds&nbsp;up the response time for a request. Memcached works great in conjunction with both Boost and Drupal caching.</p>
+<h3>Varnish</h3>
+<p><a href="http://en.wikipedia.org/wiki/Varnish_(software)">Varnish</a> is an HTTP accelerator that, similar to memcached, stores data in memory. It's capable of serving pages much faster than Apache (the most common web server for Drupal sites). It can also be used in conjunction with memcached, although it's often the case that they are not used together and other advanced caching methods are instead implemented alongside Varnish.</p>
+<h3>Views Caching</h3>
+<p>Another type of database caching is Views caching. Views is a very popular, but rather resource intensive, Drupal module. Implementing Views caching can give your site a nice additional performance boost by possibly removing a few database queries from the build process.</p>
+<p>To set views caching, go to your view. On the right hand side, under <em>Advanced &gt; Other</em>, you'll see a link for Caching. Just go in and set a value - an hour is usually a good default - for each view on your site.</p>
+<h2>Wrapping Up Part One</h2>
+<p>Wow, long post and all we've really covered so far is backend performance and caching! This discussion hasn't&nbsp;been&nbsp;comprehensive by any means, but it does provide a great start.</p>
+<p>Next time we'll start digging into frontend performance, the&nbsp;area where most of our performance issues reside. What should be obvious so far&nbsp;is that web performance is a subject that is both deep and wide, but also critically important to building successful websites.</p>
+<p>If you have any comments about this post, you may politely leave them below.</p>
+        <a href="/tags/drupal">Drupal</a>      <a href="/tags/web-performance">Web Performance</a>
+  </body>
+</html>
+

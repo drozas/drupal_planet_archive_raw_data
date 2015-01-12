@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 17 Jun 2014 14:36:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 17 Jun 2014 14:36:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chromatic: Converting Drupal Text Formats with Pandoc
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.chromaticsites.com/blog/converting-drupal-text-formats-pandoc
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chromatic: Converting Drupal Text Formats with Pandoc</title>
+    <base href="http://www.chromaticsites.com/blog/converting-drupal-text-formats-pandoc">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+              <p>Switching the default text format of a field is easy. Manually converting existing content to a different input format is not. What about migrating thousands of nodes to use a different input format? That isn't anyone's idea of fun!</p>
+<p>For example, let's say that all of a site's content is currently written in markdown. However, the new editor wants to not only write all future content in the textile format, but also wants all previous content converted to textile as well for a consistent editing experience. Or perhaps you are migrating content from a site that was written in the MediaWiki format, but standard HTML is the desired input format for the new site and all of the content needs to be converted. Either way, there is a lot of tedious work is ahead if an automated solution is not found.</p>
+<p>Thankfully there is an amazing command line utility called <a href="http://johnmacfarlane.net/pandoc/">Pandoc</a> that will help us do just that. Pandoc converts text from one input syntax to another, freeing you to do less mind numbing activities with your time. Let's take a look at how Pandoc can integrate with Drupal to allow you to migrate your content from one input format to another with ease.</p>
+<p>After <a href="http://johnmacfarlane.net/pandoc/installing.html">installing it on your environment(s)</a>, below is the basic function that provides Pandoc functionality to Drupal. It accepts a string of text to convert, a <em>from</em> format, and a <em>to</em> format. It then returns the re-formatted text. It's that simple.</p>
+<pre class="prettyprint"><code>/**<br /> * Convert text from one format to another.<br /> *<br /> * @param $text<br /> *  The string of text to convert.<br /> * @param $from<br /> *  The current format of the text.<br /> * @param $to<br /> *  The format to convert the text to.<br /> *<br /> * @return<br /> *  The re-formatted text.<br /> */<br />function text_format_converter_convert_text($text, $from, $to) {<br />  // Create the command.<br />  $command = sprintf('pandoc -f %s -t %s --normalize', $from, $to);<br />  // Build the settings.<br />  $descriptorspec = array(<br />    // Create the stdin as a pipe.<br />    0 =&gt; array("pipe", "r"),<br />    // Create the stdout as a pipe.<br />    1 =&gt; array("pipe", "w"),<br />  );<br />  // Set some command settings.<br />  $cwd = getcwd();<br />  $env = array();<br />  // Create the process.<br />  $process = proc_open($command, $descriptorspec, $pipes, $cwd, $env);<br />  // Verify that the process was created successfully.<br />  if (is_resource($process)) {<br />    // Write the text to stdin.<br />    fwrite($pipes[0], $text);<br />    fclose($pipes[0]);<br />    // Get stdout stream content.<br />    $text_converted = stream_get_contents($pipes[1]);<br />    fclose($pipes[1]);<br />    // Close the process.<br />    $return_value = proc_close($process);<br />    // A valid response was returned.<br />    if ($text_converted) {<br />      return $text_converted;<br />    }<br />    // Invalid response returned.<br />    return FALSE;<br />  }<br />}</code></pre><p>
+We've written <a href="https://github.com/CHROMATIC-LLC/pandoc-text-format-converter">a barebones module</a> around that function that makes our conversions much easier. It has a basic administration page that accepts <em>from</em> and <em>to</em> formats, as well as the node type to act upon. It will then run that conversion on the Body field of every node of that type. It should be noted that this module makes no attempt to adjust the input format settings or to ensure that the modules required for parsing the new/old format are even installed on the site. So treat this module as a migration tool, not a seamless production ready solution!</p>
+<p><img src="http://blog-media.chromaticsites.com.s3.amazonaws.com/drupal/uploads/2014/06/text-formats.png" /></p>
+<p>Pandoc has quite a few features and options, so check out the documentation to see how it will best help you. You can also see the powers of Pandoc in action with <a href="http://johnmacfarlane.net/pandoc/try/">this online demo</a>. Let us know if you use <a href="https://github.com/CHROMATIC-LLC/pandoc-text-format-converter">our module</a> and as always, test any text conversions in a development environment before doing so on a live site! Please note: CHROMATIC nor myself bear any liability for this module's usage.</p>
+          </div>
+  </body>
+</html>
+

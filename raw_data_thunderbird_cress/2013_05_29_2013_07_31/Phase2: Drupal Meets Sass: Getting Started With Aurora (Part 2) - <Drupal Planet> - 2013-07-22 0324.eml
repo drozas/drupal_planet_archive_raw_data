@@ -1,0 +1,185 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 22 Jul 2013 02:24:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 22 Jul 2013 02:24:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Drupal Meets Sass: Getting Started With Aurora (Part 2)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-2/?utm_source=rss&utm_medium=rss&utm_campaign=drupal-meets-sass-getting-started-with-aurora-part-2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Drupal Meets Sass: Getting Started With Aurora (Part 2)</title>
+    <base href="http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-2/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=drupal-meets-sass-getting-started-with-aurora-part-2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>All of the fine folks who worked through <a title="Drupal Meets Sass: Getting Started With Aurora (Part 1)" href="http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-1/">Part 1</a> of this series now have their very own Sass/Compass/Aurora development environment and are rip roaring to go. If this doesn&#8217;t describe you, <a title="Drupal Meets Sass: Getting Started With Aurora (Part 1)" href="http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-1/">head on over to the last post</a> and start there. If it does, then we ride!</p>
+<p>In this post, we&#8217;ll run through a <a href="http://sass-lang.com/">Sass</a>/<a href="http://compass-style.org/">Compass</a> example, then we&#8217;ll dig into <a href="https://drupal.org/project/aurora">Aurora</a> a bit more and take a look at the goodies and code structure it provides, along with some notes on debugging tools.</p>
+<h2>Finally, some (Sass) code</h2>
+<p>You waited through the whole last post&#8211;you&#8217;ve earned it. Let&#8217;s look at some code.</p>
+<p>Before we dig into Aurora specifically, let&#8217;s run through a quick Sass primer. For this example, we&#8217;ll be overhauling this snippet of CSS:</p><pre class="crayon-plain-tag">.nav {
+  background: #131313;
+  border: 1px solid #fafafa;
+}
+
+.nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav ul li {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  background: #fafafa;
+}
+
+.nav ul li a {
+  color: #131313;
+}</pre><p>Looks pretty typical right? It&#8217;s just a basic horizontal nav with a border and some custom colors.</p>
+<p>Let&#8217;s identify some crappy CSS-isms of this code.</p>
+<ul>
+<li>We have hardcoded hex colors repeated in different places. If a color choice changes, we have to change it multiple times in the code.</li>
+<li>Selectors get long and repetitive once you&#8217;re a few levels deep&#8211;too much typing. Plus, long selectors make file sizes slightly bigger, which can add up on large stylesheets served to mobile devices.</li>
+<li>We have some repeated rules in both the 2nd and 3rd selector. This violates <a href="https://en.wikipedia.org/wiki/Don%27t_Repeat_Yourself">DRY</a>. Plus, again, too much typing.</li>
+<li>CSS is <a href="http://i.imgur.com/Dvx0ln3.gif">booooooring</a>.</li>
+</ul>
+<p>Let&#8217;s convert it to SCSS and see how it can be improved. First, we can rewrite the code by taking advantage of Sass&#8217;s nested rules.</p><pre class="crayon-plain-tag">.nav {
+  background: #131313;
+  border: 1px solid #fafafa;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+      display: inline;
+      background: #fafafa;
+
+      a {
+        color: #131313;
+      }
+    }
+  }
+}</pre><p>Whew, that really cleaned things up a bit. Now let&#8217;s see what we can do about those hardcoded colors.</p><pre class="crayon-plain-tag">$lightgray: #fafafa;
+$darkgray: #131313;
+
+.nav {
+  background: $darkgray;
+  border: 1px solid $lightgray;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+      display: inline;
+      background: $lightgray;
+
+      a {
+        color: $darkgray;
+      }
+    }
+  }
+}</pre><p>Nice! Now we can add those colors to more elements without having to memorize or copy/paste the hex value, and if we need to change one of them sitewide, we&#8217;re only changing it in one place.</p>
+<p>How about taking advantage of some Compass goodies for common tasks, such as forcing the &lt;ul&gt; to be laid out horizontally?</p><pre class="crayon-plain-tag">$lightgray: #fafafa;
+$darkgray: #131313;
+
+.nav {
+  background: $darkgray;
+  border: 1px solid $lightgray;
+
+  ul {
+    @include inline-list; /* Yay! */
+
+    li {
+      background: $lightgray;
+
+      a {
+        color: $darkgray;
+      }
+    }
+  }
+}</pre><p>And just like that we&#8217;re back in business. This is just the tiniest tip of the Sass/Compass iceberg, and you should definitely browse through the <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html">documentation for Sass</a> and the <a href="http://compass-style.org/reference/compass/">Compass reference</a> to see what else you can take advantage of. Plus, if you just found yourself wanting majestic examples of what Sass can do for you, check out Will O&#8217;Beirne&#8217;s <a title="A Quick Look at CSS Pre-processing For The Pac-12 Conference’s New Platform Theme" href="http://www.phase2technology.com/blog/a-quick-look-at-css-pre-processing-for-the-pac-12-conferences-new-platform-theme/">recent post on making use of Sass</a> for the <a href="http://pac-12.com/">Pac-12 conference site</a>.</p>
+<p>With some Sassy knowledge under your belt, let&#8217;s move along to the specifics of Aurora.</p>
+<h2>Aurora&#8217;s goodie bag</h2>
+<p>Sass and Compass by themselves are jam packed with cool stuff so Aurora doesn&#8217;t need to add much on its own, but it does give you a few extra things to play with.</p>
+<ol>
+<li><strong><a href="https://github.com/team-sass/singularity">Singularity</a></strong> is a Sassy grid system. Aurora used to encourage Susy grids but Singularity is the new way forward. The fact that Singularity is built by the core Sass team is gravy.</li>
+<li><strong><a href="https://github.com/team-sass/breakpoint">Breakpoint</a></strong> makes it simple to write media queries in Sass and has some preset media queries to use.</li>
+<li><strong><a href="https://github.com/Team-Sass/color-schemer">Color Schemer</a></strong> is a toolkit for generating color schemes (I know, weird name right?) and altering existing colors such as altering lightness or tint.</li>
+<li><strong><a href="http://jaredhardy.com/sassy-buttons/">Sassy Buttons</a></strong> are beautiful and simple CSS3 buttons created in a few lines of Sass.</li>
+<li><strong><a href="https://github.com/Team-Sass/toolkit">Toolkit</a></strong> is a &#8220;swiss army knife for Progressive Enhancement and Responsive Web Design&#8221; and includes a lot of miscellaneous helpers lacking in vanilla Sass/Compass.</li>
+<li><strong><a href="https://github.com/ksmandersen/compass-normalize">Compass Normalize</a></strong> allows you to use <a href="http://necolas.github.io/normalize.css/">normalize.css</a> without having to download it separately.</li>
+</ol>
+<p>Aurora comes with all of this out of the box, so feel free to start using anything that you find useful&#8211;no setup required.</p>
+<h2>Aurora&#8217;s code structure</h2>
+<p>Open up your custom subtheme&#8217;s directory and check out the &#8220;sass&#8221; directory. Assuming you used the &#8220;Corona&#8221; flavor of Aurora, it should look like this:</p><pre class="crayon-plain-tag">├── maintenance.scss
+├── partials
+│   ├── _base.scss
+│   ├── design
+│   │   └── _design.scss
+│   ├── _functions.scss
+│   ├── global
+│   │   ├── _defaults.scss
+│   │   ├── _extendables.scss
+│   │   ├── _forms.scss
+│   │   ├── _global.scss
+│   │   └── _type.scss
+│   ├── _mixins.scss
+│   ├── README.md
+│   └── _variables.scss
+├── print.scss
+├── README.md
+└── style.scss</pre><p></p>
+<p style="display: inline !important;">So let’s go down the line here.</p>
+<ul>
+<li><strong>maintenance.scss</strong> is used to generate maintenance.css which is specifically for styling the maintenance page. Add custom maintenance page styles here.</li>
+<li><strong>print.scss</strong> is used to generate print.css which is specifically for styling printed web pages. Add custom print styles here.</li>
+<li><strong>style.scss</strong> is used to generate style.css which is basically the compilation of all your SCSS into a single file which the browser can see. You shouldn’t add any code to this file besides perhaps some additional imports if you add new partials.</li>
+<li><strong>partials/</strong> is where your SCSS is actually going to go. We’ll take a deep dive in a moment.</li>
+</ul>
+<p>And if we dig into the partials directory a bit more, we discover:</p>
+<ul>
+<li><strong>_base.scss</strong> contains imports to partials that need to be included on all three generated stylesheets (i.e., print.css, maintenance.css, and style.css).</li>
+<li><strong>_functions.scss</strong> can hold all of your custom function partials.</li>
+<li><strong>_mixins.scss</strong> holds all of your custom mixins</li>
+<li><strong>_variables.scss</strong> holds custom variables in addition to some defaults that Aurora gives you. These include colors, font stacks, and breakpoints, among other things.</li>
+<li><strong>design/</strong> is meant to contain element-specific design styles. I recommend splitting these types of styles into files per site sections or site pages or features, so that you’re not clumping all non-global design styles into one file.
+<ul>
+<li><strong>_design.scss</strong> should be used to include the other (custom made) partials in the &#8220;design&#8221; directory.</li>
+</ul>
+</li>
+<li><strong>global/</strong> is where any general styles that should apply to the entire site.
+<ul>
+<li><strong>_defaults.scss</strong> should contain any catch-all default styles that don’t belong in the other files in this directory.</li>
+<li><strong>_extendables.scss</strong> is for any basic global classes you like to create and use such as .clearfix or .nopad.</li>
+<li><strong>_forms.scss</strong> should contain default form styles.</li>
+<li><strong>_global.scss</strong> contains no custom styles and merely imports the other files.</li>
+<li><strong>_type.scss</strong> sets default typographical styles.</li>
+</ul>
+</li>
+</ul>
+<h2>Some notes on debugging</h2>
+<p>A slight downside to using Sass is that the CSS that your browser sees isn&#8217;t CSS that you wrote, it&#8217;s CSS that was generated from the Sass that you wrote. The reason this is bad is that if you inspect an element in your browser&#8217;s development tools, the line numbers and code are different than in your Sass source.</p>
+<p>For example, say you want to reduce the padding on an element. So you open up Firebug or Chrome&#8217;s dev tools and inspect the element. You can see the CSS selector that targets it and the rule that sets the padding, and you can change it within the dev tools, but that&#8217;s not the same code that&#8217;s in your Sass, so you have to figure out where that code is in your source files. Or even worse, maybe you&#8217;re using a mixin or a variable rather than a raw &#8220;padding: 10px&#8221; property so that&#8217;s another level.</p>
+<p>Luckily, this is no longer an issue due to <a href="http://net.tutsplus.com/tutorials/html-css-techniques/developing-with-sass-and-chrome-devtools/">Sass source maps</a>. Chrome is smart enough to connect to your Sass source files and transparently use them instead of the compiled CSS when inspecting elements.</p>
+<p>To enable this, make sure &#8220;debug = true&#8221; is uncommented in your theme&#8217;s config.rb. Also, Chrome at the time of this writing requires you to open up chrome://flags and check the &#8220;Enable Developer Tools experiments&#8221; flag.</p>
+<p>Once that&#8217;s done and Chrome has been restarted to pick up that change, open up the dev tools and click the cog icon, click the &#8220;Experiments&#8221; tab, and check the &#8220;Support for Sass&#8221; checkbox. From here on out, Chrome&#8217;s dev tools will show you the Sass source of each of your styles whenever you&#8217;re inspecting an element rather than the compiled CSS source.</p>
+<p>You can also go to the &#8220;General&#8221; tab and click &#8220;Auto-reload CSS upon Sass save&#8221; so that you don&#8217;t have to manually refresh your page when you make a change to your Sass files. This little feature can really change your world.</p>
+<h2>Getting real</h2>
+<p>We&#8217;ve talked in abstracts for long enough. In the next and final post of the series, we&#8217;ll walk through theming a simple responsive design using Aurora, start to finish.</p>
+<p>Any questions so far? Comment away!</p>
+  </body>
+</html>
+

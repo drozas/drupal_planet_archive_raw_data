@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 16 Dec 2013 14:40:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 16 Dec 2013 14:40:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mediacurrent: Preparing for Drupal 8 Development - Blocks, Forms, and Pages
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.mediacurrent.com/blog/preparing-drupal-8-development-blocks-forms-and-pages
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mediacurrent: Preparing for Drupal 8 Development - Blocks, Forms, and Pages</title>
+    <base href="http://www.mediacurrent.com/blog/preparing-drupal-8-development-blocks-forms-and-pages">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://www.mediacurrent.com/sites/default/files/imagecache/thumb_blog_spotlight/drupal8ball.png" alt="" title=""  class="imagecache imagecache-thumb_blog_spotlight imagecache-default imagecache-thumb_blog_spotlight_default" width="200" height="150" /> <p>The transition from Drupal 7 to 8 can be intimidating, particularly if you're new to <a href="http://www.cmsobserver.com/drupal-8-and-symfony-2-framework/" target="_blank">Symfony 2</a> or OOP.</p>
+<p>Whereas hooks are used in Drupal 7 and before, Drupal 8 makes use of Object Oriented classes.  This is a bit different because you are taking the basic definition of something like a block and then are "extending" it to turn an abstract idea into something concrete.</p>
+<p>In any case, it is often easier to look at examples, so rather than talking in abstract terms, here are some code snippets related to making blocks, pages, and forms in Drupal 8:</p>
+<h3 style="padding-bottom:10px;">Defining a Block</h3>
+<p>In Drupal 8, blocks are defined by extending class “BlockBase”:</p>
+  </body>
+</html>
+

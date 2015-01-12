@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 25 Jul 2014 03:21:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 25 Jul 2014 03:21:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Another Drop in the Drupal Sea: Ways to shoot yourself in the foot: element validation
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.isaacsonwebdevelopment.com/blog/2014/07/24/ways-shoot-yourself-foot-element-validation
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Another Drop in the Drupal Sea: Ways to shoot yourself in the foot: element validation</title>
+    <base href="http://blog.isaacsonwebdevelopment.com/blog/2014/07/24/ways-shoot-yourself-foot-element-validation">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I needed to do some custom validation of fields on a form. So, I decided to use <a href="https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7#element_validate">#element_validate</a>. One of the fields I was validating appeared a bit strange to me, though. When I displayed its <code>$form_state['values']['field_face_palm']</code> information I saw that it looked like:</p>
+<pre>
+$field_face_palm['und'] = 'you_knucklehead'</pre><p> instead of like: </p>
+<pre>
+$field_face_palm['und'][0]['value'] = 'you_knucklehead'</pre>
+<p><a href="http://blog.isaacsonwebdevelopment.com/blog/2014/07/24/ways-shoot-yourself-foot-element-validation" target="_blank">read more</a></p>
+  </body>
+</html>
+

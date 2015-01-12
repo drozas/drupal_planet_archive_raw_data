@@ -1,0 +1,208 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 18 Aug 2014 06:37:01 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 18 Aug 2014 06:37:01 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Using Grunt, bootstrap, Compass and SASS in a Drupal sub theme
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/using-grunt-bootstrap-compass-and-sass-drupal-sub-theme
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Using Grunt, bootstrap, Compass and SASS in a Drupal sub theme</title>
+    <base href="http://deeson-online.co.uk/labs/using-grunt-bootstrap-compass-and-sass-drupal-sub-theme">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><style type="text/css">
+<!--/*--><![CDATA[/* ><!--*/
+
+pre {
+padding: 10px;
+width: 560px;
+}
+
+.post .meat p img:nth-child(n+1), .copy-jump-out p img:nth-child(n+1)  {
+margin-left: 0;
+}
+/*--><!]]>*/
+</style><p>If you have a separate front end design team from your Drupal developers, you will know that after static pages are moved into a Drupal theme there can be a huge gap in structure between the original files and the final Drupal site.</p>
+<p>We wanted to bridge the gap between our theme developers, UX designers, front end coders, and create an all encompassing boilerplate that could be used as a starting point for any project and then easily ported into Drupal.</p>
+<p>After thinking about this task for a few weeks it was clear that the best way forward was to use Grunt to automate all of our tasks and create a scalable, well structured sub theme that all of our coders can use to start any project.</p>
+<h3>What is Grunt?</h3>
+<p>Grunt is a Javascript task runner that allows you to automate repetitive tasks such as file minifying files, javascript linting, CSS preprocessing, and even reloading your browser.</p>
+<p>Just like bootstrap, there are many resources and a vast amount of plugins available for Grunt that can automate any task you could think of, plus it is very easy to write your own, so setting Grunt as a standard for our boilerplate was an easy decision.</p>
+<h3>The purpose of this post</h3>
+<p>We use bootstrap in most projects and recently switched to using SASS for CSS preprocessing bundled with Compass, so for the purpose of this tutorial we will create a simple bootstrap sub theme that utilises Grunt &amp; Compass to compile SASS files and automatically reloads our browser every time a file is changed.</p>
+<p>You can then take this approach and use the best Grunt plugins that suit your project.</p>
+<h3>Step 1. Prerequisites</h3>
+<p>To use Grunt you will need node.js and ruby installed on your system. Open up terminal, and type:</p>
+<pre style="background:#fff;color:#000">
+node <span style="color:#00f;font-weight:700">-</span>v
+</pre><pre style="background:#fff;color:#000">
+ruby <span style="color:#00f;font-weight:700">-</span>v
+</pre><p>If you don't see a version number, head to the links below to download and install them.</p>
+<p>Don’t have node? <a href="http://nodejs.org/" target="_blank">Download it here</a></p>
+<p>Don’t have ruby? <a href="http://code.tutsplus.com/tutorials/how-to-install-ruby-on-a-mac--net-21664" target="_blank">Follow this great tutorial</a></p>
+<h3>Step 2. Installing Grunt</h3>
+<p>Open up terminal, and type:</p>
+<pre style="background:#fff;color:#000">
+sudo npm install -g grunt-cli
+</pre><p>This will install the command line interface for Grunt. Be patient whilst it is downloading as sometimes it can take a minute or two.</p>
+<h3>Step 3. Installing Compass and Grunt plugins</h3>
+<p>Because we want to use the fantastic set of mixins and features bundled with Compass, lets install the Compass and SASS ruby gems.</p>
+<p>Open up terminal, and type:</p>
+<pre style="background:#fff;color:#000">
+sudo gem install sass 
+</pre><pre style="background:#fff;color:#000">
+sudo gem install compass
+</pre><p>For our boilerplate we only wanted to install plugins that we would need in every project, so we kept it simple and limited it to Watch, Compass and SASS to compile all of our files. Our team members can then add extra plugins later in the project as and when needed.</p>
+<p>So lets get started and use the node package manager to install our Grunt plugins.</p>
+<p>Switch back to Terminal and run the following commands:</p>
+<pre style="background:#fff;color:#000">
+sudo npm install grunt-contrib-watch —save-dev
+</pre><pre style="background:#fff;color:#000">
+sudo npm install grunt-contrib-compass —save-dev 
+</pre><pre style="background:#fff;color:#000">
+sudo npm install grunt-contrib-sass —save-dev
+</pre><h3>Step 4. Creating the boilerplate</h3>
+<p>Note: For the purposes of this tutorial we are going to use the bootstrap sub theme for our Grunt setup, but the same Grunt setup described below can be used with any Drupal sub theme.</p>
+<ul>
+<li>Create a new Drupal site</li>
+<li>Download the bootstrap theme into your sites/all/themes directory<br />
+<pre style="background:#fff;color:#000">
+drush dl bootstrap
+</pre></li>
+<li>Copy the bootstrap starter kit (<strong>sites/all/themes/bootstrap/bootstrap_subtheme</strong>) into your theme directory</li>
+<li>Rename <strong>bootstrap_subtheme.info.starterkit </strong>to<strong> bootstrap_subtheme.info</strong></li>
+<li>Navigate to <strong>admin/appearance</strong> and click “<strong>Enable, and set default</strong>" for your sub-theme.</li>
+</ul>
+<p>Your Drupal site should now be setup with Bootstrap and your folder structure should now look like this:</p>
+<p><img alt="" src="/sites/default/files/uploads/subtheme-structure.jpg" style="width: 404px; height: 271px;" /></p>
+<p>For more information on creating a bootstrap sub theme check out the <a href="https://www.drupal.org/node/1978010" target="_blank">community documentation</a>.</p>
+<h3>Step 5. Switching from LESS to SASS</h3>
+<p>Our developers liked less, our designers likes SASS, but after a team tech talk explaining the benefits of using SASS with Compass (a collection of mixins with an updater with some cleaver sprite creation), everyone agreed that SASS was the way forward.</p>
+<p>Officially Bootstrap is now packaged with SASS, so lets replace our .less files with .scss files in our bootstrap_subtheme so we can utilise all of the mixin goodness that comes with it SASS &amp; Compass.</p>
+<ul>
+<li>Head over to bootstrap and <a href="http://getbootstrap.com/getting-started/#download" target="_blank">download the SASS version</a></li>
+<li>Copy the <strong>stylesheets</strong> folder from <strong>boostrap-sass/assets/</strong> and paste it into your <strong>bootstrap_subtheme</strong></li>
+<li>Rename the <strong>stylesheets</strong> folder to <strong>bootstrap-sass</strong></li>
+<li>Create a new folder called <strong>custom-sass</strong> in <strong>bootsrap_subtheme</strong></li>
+<li>Create a new file in the <strong>custom-sass</strong> called <strong>style.scss</strong></li>
+<li>Import <strong>bootstrap-sass/bootstrap.scss</strong> into <strong>style.scss</strong></li>
+</ul>
+<p>​You should now have the following setup in your sub theme:<br /><img alt="" src="/sites/default/files/uploads/grunt-style-css.png" style="width: 672px; height: 233px;" /></p>
+<p class="p1"><span class="s1">We are all set!</span></p>
+<h3>Step 6. Setting up Grunt - The package.json &amp; Gruntfile.js</h3>
+<p>Now lets configure Grunt to run our tasks. Grunt only needs two files to be setup, a package.json file that defines our dependencies and a Gruntfiles.js to configure our plugins.</p>
+<p>Within bootstrap_subtheme, create a package.json and add the following code:</p>
+<pre style="background:#fff;color:#000">
+{
+  <span style="color:#036a07">"name"</span>: <span style="color:#036a07">"bootstrap_subtheme"</span>,
+  <span style="color:#036a07">"version"</span>: <span style="color:#036a07">"1.0.0"</span>,
+  <span style="color:#036a07">"author"</span>: “<span style="color:#00f;font-weight:700">Your</span> <span style="color:#00f;font-weight:700">Name</span><span style="color:#036a07">",
+  "</span>homepage<span style="color:#036a07">": "</span>http:<span style="color:#06f;font-style:italic">//homepage.com",</span>
+  <span style="color:#036a07">"engines"</span>: {
+    <span style="color:#036a07">"node"</span>: <span style="color:#036a07">"&gt;= 0.8.0"</span>
+  },
+  <span style="color:#036a07">"devDependencies"</span>: {
+      <span style="color:#036a07">"grunt-contrib-compass"</span>: <span style="color:#036a07">"v0.9.0"</span>,
+      <span style="color:#036a07">"grunt-contrib-sass"</span>: <span style="color:#036a07">"v0.7.3"</span>,
+      <span style="color:#036a07">"grunt-contrib-watch"</span>: <span style="color:#036a07">"v0.6.1"</span>
+  }
+
+}</pre><p><img alt="" src="/sites/default/files/uploads/package-json.png" style="color: rgb(34, 34, 34); font-family: Arial, Verdana, sans-serif; width: 672px; height: 255px;" /></p>
+<p>In this file you can add whichever plugins are best suited for your project, check out the full list of plugins at the official <a href="http://gruntjs.com/plugins" target="_blank">Grunt site</a>.</p>
+<h3>Install Grunt dependencies</h3>
+<p>Next, open up terminal, cd into <strong>sites/all/themes/bootstrap_subtheme</strong>, and run the following task:</p>
+<pre style="background:#fff;color:#000">
+sudo npm install
+</pre><p>This command looks through your <strong>package.json</strong> file and installs the plugins listed. You only have to run this command once when you set up a new Grunt project, or when you add a new plugin to <strong>package.json</strong>.</p>
+<p>Once you run this you will notice a new folder in your <strong>bootstrap_subtheme</strong> called <strong>node_modules</strong> which stores all of your plugins. If you are using git or SVN in your project, make sure to ignore this folder.</p>
+<p>Now lets configure Grunt to use our plugins and automate some tasks. Within <strong>bootstrap_subtheme</strong>, create a <strong>Gruntfile.js</strong> file and add the following code:</p>
+<pre style="background:#fff;color:#000">
+<span style="color:#6d79de;font-weight:700">module</span>.<span style="color:#0000a2;font-weight:700">exports</span> <span style="color:#687687">=</span> <span style="color:#00f;font-weight:700">function</span> (grunt) {
+    grunt.initConfig({
+        watch: {
+            src: {
+                files: [‘<span style="color:#687687">*</span><span style="color:#687687">*</span><span style="color:#06f;font-style:italic">/*.scss', '**/</span><span style="color:#687687">*</span>.php<span style="color:#036a07">'],
+                tasks: ['</span>compass:dev<span style="color:#036a07">']
+            },
+           options: {
+                livereload: true,
+            },
+        },
+        compass: {
+            dev: {
+                options: {
+                    sassDir: '</span>custom<span style="color:#687687">-</span>sass/scss<span style="color:#036a07">',
+                    cssDir: '</span>css<span style="color:#036a07">',
+                    imagesPath: '</span>assets/img<span style="color:#036a07">',
+                    noLineComments: false,
+                    outputStyle: '</span>compressed<span style="color:#036a07">'
+                }
+            }
+        }
+    });
+    grunt.loadNpmTasks('</span>grunt<span style="color:#687687">-</span>contrib<span style="color:#687687">-</span>compass<span style="color:#036a07">');
+    grunt.loadNpmTasks('</span>grunt<span style="color:#687687">-</span>contrib<span style="color:#687687">-</span>sass<span style="color:#036a07">');
+    grunt.loadNpmTasks('</span>grunt<span style="color:#687687">-</span>contrib<span style="color:#687687">-</span>watch<span style="color:#036a07">');
+};
+
+</span></pre><p>This file is pretty straight forward, we configure our watch tasks to look for certain files and reload our browser, and then we define our scss and css directories so that compass knows where to look.</p>
+<p>I won’t go into full detail with the options available, but visit the links below to see the documentation:</p>
+<p><a href="https://github.com/gruntjs/grunt-contrib-watch" target="_blank">Watch documentatation</a></p>
+<p><a href="https://github.com/gruntjs/grunt-contrib-compass" target="_blank">SASS documentatation</a></p>
+<p><img alt="" src="/sites/default/files/uploads/gruntfile-js.png" style="width: 709px; height: 447px;" /></p>
+<p> </p>
+<h3>Step 7. Enabling live reload</h3>
+<p>Download and enable the livereload module into your new Drupal site. By default, you will have to be logged in as admin for live reload to take effect, but you can change this under Drupal permissions.</p>
+<p>Once you enable livereload, refresh your browser window to load the livereload.js library.</p>
+<h3>Step 8. Running Grunt</h3>
+<p>We are all set! Head back over to Terminal and check you are in the bootstrap_subtheme directory, then type:</p>
+<pre style="background:#fff;color:#000">
+grunt watch
+
+</pre><p><img alt="" src="/sites/default/files/uploads/waiting.png" style="width: 470px; height: 213px;" /></p>
+<p>Now every time you edit a scss file, Grunt will compile your SASS into a compressed style.css file and automatically reload your browser.</p>
+<p>Give it a go by importing compass into the top of your style folder and changing the body background to be a compass mixin.</p>
+<pre style="background:#fff;color:#000">
+<span style="color:#00f;font-weight:700">@import</span> <span style="color:#036a07">'compass'</span>;
+<span style="color:#00f;font-weight:700">@import</span> <span style="color:#036a07">'../bootstrap-sass/bootstrap.scss'</span>;
+
+<span style="color:#06f;font-style:italic">/*
+* Custom overrides */</span>
+<span style="font-weight:700">body</span> {
+   @include <span style="color:#6d79de;font-weight:700">background</span>(linear-gradient(#eee, #fff));
+}
+
+</pre><p><img alt="" src="/sites/default/files/uploads/sass-grunt-import.png" style="width: 843px; height: 236px;" /></p>
+<p>To stop Grunt from watching your files, press <strong>Ctrl</strong> and <strong>C</strong> simultaneously on your keyboard.</p>
+<h3>Step 9. Debugging</h3>
+<p>One common problem you may encounter when using Grunt alongside live reload is the following error message:</p>
+<pre style="background:#fff;color:#000">
+Fatal error: Port 35729 is already in use by another process.
+
+</pre><p><img alt="" src="/sites/default/files/uploads/fatal-error.png" style="width: 470px; height: 213px;" /></p>
+<p>This means that the port being used by live reload is currently in use by another process, either by a different grunt project, or an application such as Chrome.</p>
+<p>If you experience this problem run the following command and find out which application is using the port.</p>
+<pre style="background:#fff;color:#000">
+lsof | grep 35729
+</pre><p>Simply close the application and run “grunt watch” again. If the error still persists and all else fails, restart your machine and try to stop Grunt from watching files before moving on to another project.</p>
+<h3>Next steps…</h3>
+<p>This is just a starting point on what you can achieve using Grunt to automate your tasks and gives you a quick insight to how we go about starting a project.</p>
+<p>Other things to consider:</p>
+<ul>
+<li>Duplicating the <strong>_variables.scss</strong> bootstrap file to override the default settings.</li>
+<li>Adding linted, minified javascript files using the <a href="https://github.com/gruntjs/grunt-contrib-uglify" target="_blank">uglify plugin</a></li>
+<li>Configure Grunt to automatically validate your markup using the <a href="https://github.com/code-computerlove/grunt-w3c-markup-validation/blob/master/README.md" target="_blank">W3C Markup Validator</a></li>
+<li>Write your own Grunt plugins to suite your own projects</li>
+</ul>
+<h5>Let me know your thoughts - you can share your ideas and views in the comments below.</h5>
+<p> </p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/using-grunt-bootstrap-compass-and-sass-drupal-sub-theme">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Using Grunt, bootstrap, Compass and SASS in a Drupal sub theme</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/david-allard">David Allard</a> | 18th August 2014</div></div></div>
+  </body>
+</html>
+

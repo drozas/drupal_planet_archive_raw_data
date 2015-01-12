@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 05 Jul 2014 09:27:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 05 Jul 2014 09:27:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: flink: Earl's chicken
+Content-Transfer-Encoding: 8bit
+Content-Base: http://flink.com.au/tips-tricks/ramblings/earls-chicken
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>flink: Earl's chicken</title>
+    <base href="http://flink.com.au/tips-tricks/ramblings/earls-chicken">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://flink.com.au/sites/default/files/styles/large/public/field/image/Earls%20chicken.jpg?itok=BXaiThga"><img typeof="foaf:Image" src="http://flink.com.au/sites/default/files/styles/large/public/field/image/Earls%20chicken.jpg?itok=BXaiThga" width="480" height="359" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Here’s a little history I pieced together about, Drupal, the Views module and the human condition.</p>
+<p>It must have been 4 years or so ago that the new Field API for D7 crystallises, requiring modifications to Views. So someone adds lines of code to make this happen. They don’t think much about those lines or the performance impact these may have. They don’t put a “hook” in to allow developers to alter the behaviour of those lines. Why would they? It’s a pretty trivial change. In fact it never crosses their minds to add the CPU cycles spent by that code to the view's performance stats.</p>
+<p>4 years go by.</p>
+<!--break--><p>
+Nobody is aware that if you piled up the seconds collectively wasted in that code across all Drupal sites using Views over a period of 4 years, it would amount to like,…. like higher than the Eiffel tower. So to speak…</p>
+<p>Until a couple of weeks ago some RdeBoer employs XHProf to find out why a client’s site is a little sluggish. And he finds those lines of code.  And although there’s no hook as such to bypass those lines, he finds a way without hacking the Views module to neutralise those lines, offering a simple switch on the UI. Like a Turbo button, it makes selected Views run faster.</p>
+<p>The customer is delighted. Now their site is finally speedy enough to go live! Another client quotes the results as “amazing”.</p>
+<p>Encouraged by the happy customers RdeBoer tarts up his module to share it with the Drupal community. Now everyone can enjoy similar speed improvements. He writes a little <a href="http://flink.com.au/tips-tricks/drupal-views-accelerator">blog post</a> about it. </p>
+<p>In a comment to that post @merlinofchaos confirms that those lines were indeed added with the introduction of the Field API. And that not showing how much time is spent in those lines is an oversight. </p>
+<p>RdeBoer smiles. Takes a sip of his wine. 4 years... Isn’t life funny? </p>
+<p>@merlinofchase goes back to the garden and throws another shrimp on the barbie. Metaphorically speaking. Might have been chicken. Have you seen Earl’s chicken? The photo above  that’s his chicken. He cooked that <a href="&lt;a">last week</a>. I would love a bit of that chicken. With its juices dripped over the veggies. Yummo!</p>
+<p>Meanwhile @someViewsDude has a not-so-constructive go via Twitter, email and the module’s issue queue ...</p>
+<p>My friend and colleague Susan concludes her writings with a beautiful phrase: “Breathe and do the next right thing”.</p>
+<p>Maybe we can all sit around Earl's barbie.  Try his chicken. It looks delish.<br /><br /></p>
+</div></div></div><div class="field field-name-field-file-under field-type-taxonomy-term-reference field-label-above"><div class="field-label">File under:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/file-under/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div></div>
+  </body>
+</html>
+

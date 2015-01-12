@@ -1,0 +1,69 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 31 Oct 2013 10:19:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 31 Oct 2013 10:19:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Yanniboi's Drupal Pit: There’s a Partyopoly in Drupal and you’re invited…
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yanniboi.wordpress.com/2013/10/31/partyopoly-intro/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Yanniboi's Drupal Pit: There’s a Partyopoly in Drupal and you’re invited…</title>
+    <base href="http://yanniboi.wordpress.com/2013/10/31/partyopoly-intro/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>So, <a href="https://drupal.org/sandbox/rlmumford/1905260">Partyopoly</a> is in alpha2 and I thought it was time to start talking about it. There is a long and well thought out description on the sandbox page, but it&#8217;s a bit <em>marketingy</em> and I am more of a fan of look and touch than lets think about it.</p>
+<blockquote><p>So <a href="http://demo.six-gs.com" title="Demo site">here</a> it is!</p></blockquote>
+<h2>The Journey</h2>
+<p>I have been working on this project for a long time on many different sites and iterations, but I wanted to figure out how the &#8216;package&#8217; as it currently exits works for someone who has never used it before&#8230;</p>
+<h3>Installing</h3>
+<p>Partyopoly is currently still in a sandbox. So the best way to get it on a server is to git clone the repository and then use &#8216;drush make&#8217; to build it the web root.</p>
+<pre class="brush: plain; title: ; notranslate">
+    cd /var/www/git
+    
+    git clone http://git.drupal.org/sandbox/rlmumford/1905260.git partyopoly
+    
+    drush make partyopoly/build-partyopoly.make /var/www/partyopoly
+</pre>
+<p>This will build drupal and download a huge amount of modules that partyopoly requires, while checking out the relative commit messages and in some cases applying various patches from the various issue queues.</p>
+<blockquote><p>Don&#8217;t you love distributed code?
+</p></blockquote>
+<p>Now you are able to install drupal as usuall and&#8230; Oh dear, it uses omega as a default theme!</p>
+<p><img src="http://blog.six-gs.com/content/images/2013/Oct/omega.jpg" alt="Omega theme on demo site" /></p>
+<p>Quick, throw <a href="http://drupal.org/project/marinelli" title="Marinelli theme">Marinelli</a> on there so that it at least has some skin!</p>
+<blockquote><p>Anyone else struggle to find simple clean drupal themes for demo sites?</p></blockquote>
+<p>Now we need to configure it a little.</p>
+<h3>Configuration</h3>
+<p>First things first, Partyopoly has a wonderful feature that is the Party Dashboard, but before we can take a closer look, we need to configure solr.</p>
+<p><strong>  No not SOLR! </strong></p>
+<p><em>Don&#8217;t worry, you can swap out the Solr Server with a Database Server and the indexes will still work out of the box.</em></p>
+<p>If you have never set up solr before these two posts should help:</p>
+<ul>
+<li><a href="http://lucene.apache.org/solr/4_4_0/tutorial.html" title="Solr System tutorial">System</a></li>
+<li><a href="https://drupal.org/node/1999310" title="Solr Drupal tutorial">Drupal</a></li>
+</ul>
+<p></br><br />
+Next head over to </p>
+<p>Configuration -&gt; Search and Metadata -&gt; Search API (/admin/config/search/search_api) and enable the Solr Server and the Party Index</p>
+<p>Next we can start adding Parties to the site. Go to the Party Dashboard (/admin/party). This should still be a bit boring because our index is empty, so click on Add Individual, fill in some details and save.</p>
+<p>We may need to clear caches or go back to the Party Index settings and tell it to index the first time, but we should now have our first Party on the Dashboard!</p>
+<blockquote><p>Boom!
+</p></blockquote>
+<p><img src="http://blog.six-gs.com/content/images/2013/Oct/desh_empty.jpg" alt="Empty Dashboard" /></p>
+<h3>Lets start building!</h3>
+<p>Lets add a few more Individuals and also an Organisation. Its starting to look pretty good.</p>
+<p><img src="http://blog.six-gs.com/content/images/2013/Oct/dash.jpg" alt="New Dashboard" /></p>
+<p><img src="http://blog.six-gs.com/content/images/2013/Oct/dash_rel.jpg" alt="Organisation - Employee relationships on Dashboard" /></p>
+<p>I can even add Individuals to said Organisation and kill off an employee!</p>
+<p><img src="http://blog.six-gs.com/content/images/2013/Oct/dash_dead.jpg" alt="Deceased Employee" /></p>
+<blockquote><p>Imaginary employee homocide is no joke, so lets not get carried away!</p></blockquote>
+<p>That is basically it! There are many more things that Partyopoly comes with, but as a first taste, I think that suffices.</p>
+<h4>Demo Site:</h4>
+<p>Feel free to click around the <a href="http://demo.six-gs.com" title="Demo site">demo site</a> to have a look, but don&#8217;t try to add/edit/delete any content&#8230; The site will crash! #lazysysadmin</p><br />  <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/yanniboi.wordpress.com/141/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/yanniboi.wordpress.com/141/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=yanniboi.wordpress.com&#038;blog=42518878&#038;post=141&#038;subd=yanniboi&#038;ref=&#038;feed=1" width="1" height="1" />
+  </body>
+</html>
+

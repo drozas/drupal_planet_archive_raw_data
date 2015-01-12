@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 31 Jul 2014 15:23:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 31 Jul 2014 15:23:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Migrate module automated test failures - policy change
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/436203
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Migrate module automated test failures - policy change</title>
+    <base href="https://groups.drupal.org/node/436203">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>The Drupal 8 committers have slightly changed the policy regarding automated test failures as we move toward release of 8.0.0. The traditional policy is that any proposed core patch must pass all automated tests at commit time. We are amending that slightly such that patches which solve <a href="https://www.drupal.org/node/45111#critical">Criticals</a>, but fail tests in a non-essential component, are allowed to proceed. For now, the only non-essential component is the Migrate framework. As announced previously, the Migrate framework is not release blocking for 8.0.0 so it should not hold back these Critical patches.</p>
+<p>When we do have a patch which is Critical but cannot easily be adjusted to pass Migrate's unit tests, we will</p>
+<ol>
+<li>File a postponed Major followup issue tagged 'Failing Migrate test'.  Describe the test that was disabled and the challenge in making it pass. The issue should link to this post so that folks understand why the test was disabled.
+</li><li>In your patch for the Critical issue, change the name of the failing test method from testFooBar() to failingTestFooBar() and add a @todo to its docblock referencing your follow up issue.
+</li><li>If we ever get <a href="https://www.drupal.org/node/301005">Add "expected fail" functionality to simpletest</a> (help wanted!), we will use that to skip tests instead of changing the method name.
+</li></ol>
+<p>Before release, we will revisit all issues tagged with 'Failing Migrate test' and make a determination about Migrate's suitability for 8.0.0. If deemed unsuitable, Migrate (or a specific migration path) can be added back into 8.1.0 or later.</p>
+  </body>
+</html>
+

@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 17 Jan 2014 09:35:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 17 Jan 2014 09:35:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: undpaul: Managing obsolete modules
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.undpaul.de/en/blog/2014/01/17/managing-obsolete-modules
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>undpaul: Managing obsolete modules</title>
+    <base href="http://www.undpaul.de/en/blog/2014/01/17/managing-obsolete-modules">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In every Drupal project, it is crucial for your application to be fully defined in code at every time and every state. When working with a configuration management based upon <a href="http://git-scm.com/">Git</a>, <a href="https://drupal.org/project/features">Features</a>, <a href="http://www.undpaul.de/en/blog/2013/06/26/simplify-your-development-workflow-drush-and-scripts">Drush based shell scripts</a> and <a href="http://www.undpaul.de/en/blog/2013/06/28/introducing-master-drupal">Master</a>, it is possible to represent your whole Drupal 7 application's configuration state in a traceable and reproducible way.</p>
+
+<h2>Watch your Drupal modules</h2>
+
+<p>This way your team has a good tool to manage the development of the application and even manage the state of the <em>Drupal</em> modules in your application. Especially in large <em>Drupal</em> projects it is always important to know the modules you are dealing with, what modules to enable and to know what modules you can disable. Even already disabled <em>Drupal</em> modules influence your system and the overall development experience of your team.</p>
+
+<p>For example, if you provide a large set of modules in your project, there will be a lot of noise for the developers when working on the sprint issues (e.g. a developer might find search results in the IDE for a code snippet in modules that are not meant to be enabled anymore). Therefore it is important all modules that should not be enabled are really disabled and uninstalled from the <em>Drupal</em> project. And, if possible, after that the modules should be removed from the file disk. As we are (hopefully) always dealing with a version control system like Git, we are safe to remove those modules without losing any information of the project's evolution.</p>
+
+<h2>Remove modules with <em>Master</em></h2>
+
+<p>In projects that have grown for several months and no-one had a look at the modules directory, it will be very painful and time intense to remove those obsolete modules. To ease such tasks in the development workflow, we created the <em>Master</em> module some time ago. With <a href="https://drupal.org/project/master">the latest release of <em>Master</em></a>, we have also introduced a new command to assist you in finding the modules you really don't need anymore in your directory.
+</div></div></div><div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/en/blog/tags/drupal-7">Drupal 7</a></div><div class="field-item odd"><a href="/en/blog/tags/configuration-management">configuration management</a></div><div class="field-item even"><a href="/en/blog/tags/master">master</a></div><div class="field-item odd"><a href="/en/blog/tags/drush">drush</a></div><div class="field-item even"><a href="/en/blog/tags/drupal-planet-english">drupal planet english</a></div></div></div>
+  </body>
+</html>
+

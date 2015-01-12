@@ -1,0 +1,49 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 21 Oct 2014 21:42:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 21 Oct 2014 21:42:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Automating Drupal Configuration
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/automating-drupal-configuration
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Automating Drupal Configuration</title>
+    <base href="http://atendesigngroup.com/blog/automating-drupal-configuration">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/drupal-configuration.png" width="1000" height="600" alt="" /><p>Last month at the <a href="https://groups.drupal.org/node/442058">Central Denver Drupal meeting</a>, Nick Switzer from Elevated Third showed how they are using a structured spreadsheet format for describing their Drupal configuration in a way that makes it easy to build. They based their spreadsheet format on <a href="http://www.palantir.net/blog/developing-drupal-sites-plan-or-perish">a template Palantir published</a> a while ago, and someone mentioned Lullabot has been using something similar. This looked to me a lot like what we were doing at Aten, even though we had missed the de facto standard that was developing. We are now using that de facto standard.</p>
+
+<p>This was particularly interesting to me because I've been doing a lot of work lately around <a href="http://atendesigngroup.com/blog/declarative-programming-and-drupal">declarative interfaces</a> and <a href="https://www.drupal.org/project/cinc">standardized Drupal configuration</a>. Spreadsheets are declarative and <a href="http://cinc.io/">CINC</a> has a working YAML import, so when we got to the question and answer portion of the presentation, I knew exactly what I wanted to ask: "Why are we still building Drupal sites manually when these spreadsheets contain everything we would need to automate it?"</p>
+
+<p>No one offered a reason <em>not</em> to automate this process, so I volunteered to present at <a href="https://groups.drupal.org/node/446158">this month's meeting</a> and show an automated process that did not yet exist. I have since built that process. It still needs a lot more testing and bug fixes, but it's already a compelling alternative to the traditional Drupal site building process.</p>
+
+<h2>Sheet2Module</h2>
+
+<p><a href="http://cinc.io/playground/sheet2module/">Sheet2Module</a> takes a Google spreadsheet and produces a Drupal module that will create the configuration described therein. The exported modules use YAML files for configuration, which works natively in Drupal 8, and works in Drupal 7 with the <a href="https://www.drupal.org/project/cinc">CINC YAML submodule</a>. With a standard spreadsheet format, Sheet2Module, and CINC YAML, <strong>you can build a reasonably complex Drupal site configuration in a few minutes</strong>. The process looks like this:</p>
+
+<ol>
+  <li>Describe your Drupal configuration in a Google spreadsheet.</li>
+  <li>Use Sheet2Module to auto-generate a module from that spreadsheet.</li>
+  <li>Enable that module to auto-generate your Drupal configuration.</li>
+  <li>(Optional) Spend the hours you would otherwise spend on Drupal configuration helping improve this process.</li>
+</ol>
+
+<p>Both Sheet2Module and CINC YAML almost certainly have bugs, as they've had very limited testing. Both are open source (CINC on Drupal.org, <a href="https://github.com/sreynen/cincio">Sheet2Module on GitHub</a>), and patches and pull requests will be met with enthusiastic appreciation. Beyond my appreciation, I'm convinced custom-tailored interfaces like this are the future of Drupal configuration, and you have a lot to gain from helping shape that future.</p>
+
+<p>Outside code contributions, simply trying out the process and giving feedback is very useful, and a good way to make sure this works for your own workflow. Even the incomplete current solution will likely save you hours on your next Drupal build, and you can still manually add any configuration that doesn't work automatically. So you have nothing to lose and hours to gain by trying it out.</p>
+
+<h2>Drupal Spreadsheet Standard</h2>
+
+<p>I suspect there are more than a few shops already using a similar spreadsheet format to describe Drupal configuration, so before we go too far down the path of building tools around this format, we should turn this into a real, documented community standard. To that end, I've started creating <a href="https://github.com/sreynen/Drupal-Configuration-Spreadsheet-Standard">a Drupal Configuration Spreadsheet Standard on GitHub</a>. If you're already using spreadsheets to describe your Drupal configuration, take a look at the documentation and contribute your own format improvements to the wider community. If you're just getting started using spreadsheets to describe your Drupal configuration, this is a good place to start.</p>
+
+<h2>Own Your Process</h2>
+
+<p>Even if you're not using spreadsheets to describe Drupal configuration, it's worth taking a look at this automation for ideas on how you can improve your own process. I've mentioned before that <a href="http://atendesigngroup.com/blog/declarative-programming-and-drupal">the declarative format for Drupal configuration</a> adopted in Drupal 8 (and available Drupal 7 with CINC) allows us all to customize our workflows. I'm going to keep mentioning it until this becomes common enough in the Drupal community that it's boring to mention. But for now, this is still a new and exciting space to be working in, and you should join the fun.</p>
+  </body>
+</html>
+

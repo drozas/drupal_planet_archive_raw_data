@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 31 Aug 2013 00:30:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 31 Aug 2013 00:30:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Lesser known PHP 5.3 gem: preg_filter
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/376
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Lesser known PHP 5.3 gem: preg_filter</title>
+    <base href="http://www.drupal4hu.com/node/376">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>preg_filter() is identical to preg_replace() except it only returns the (possibly transformed) subjects where there was a match. This is most useful with an array as the subject: previously you'd need to use preg_grep and preg_replace with the same regular expression to achieve this. It's obviously much faster to do a single command. Very handy!</p>
+  </body>
+</html>
+

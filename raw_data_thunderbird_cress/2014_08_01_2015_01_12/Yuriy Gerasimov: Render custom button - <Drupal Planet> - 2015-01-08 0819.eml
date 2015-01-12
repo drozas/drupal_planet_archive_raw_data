@@ -1,0 +1,70 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 Jan 2015 08:19:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 Jan 2015 08:19:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Yuriy Gerasimov: Render custom button
+Content-Transfer-Encoding: 8bit
+Content-Base: http://ygerasimov.com/render-custom-button
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Yuriy Gerasimov: Render custom button</title>
+    <base href="http://ygerasimov.com/render-custom-button">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Sometimes for our front-end development we need to have very granular control about how our form buttons being rendered. So instead of standard drupal markup we want to have something like</p>
+<div class="geshifilter">
+<pre class="drupal6 geshifilter-drupal6" style="font-family:monospace;"><span style="color: #66cc66;">&lt;</span>button <span style="color: #000000; font-weight: bold;">class</span>=<span style="color: #ff0000;">"bird-guide-zip-submit button pea-green"</span><span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>span <span style="color: #000000; font-weight: bold;">class</span>=<span style="color: #ff0000;">"hide-for-medium hide-for-large hide-for-xlarge"</span><span style="color: #66cc66;">&gt;</span>
+     <span style="color: #66cc66;">&lt;</span>i <span style="color: #000000; font-weight: bold;">class</span>=<span style="color: #ff0000;">"icon-magnifier"</span><span style="color: #66cc66;">&gt;&lt;/</span>i<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;/</span>span<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>span <span style="color: #000000; font-weight: bold;">class</span>=<span style="color: #ff0000;">"hide-for-tiny hide-for-small"</span><span style="color: #66cc66;">&gt;</span>Ok<span style="color: #66cc66;">&lt;/</span>span<span style="color: #66cc66;">&gt;</span>
+<span style="color: #66cc66;">&lt;/</span>button<span style="color: #66cc66;">&gt;</span></pre></div>
+<p>You would think that something like:</p>
+<div class="geshifilter">
+<pre class="drupal6 geshifilter-drupal6" style="font-family:monospace;"><span style="color: #0000ff;">$form</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'submit'</span><span style="color: #66cc66;">]</span> = <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">(</span>
+  <span style="color: #ff0000;">'#type'</span> =<span style="color: #66cc66;">&gt;</span> <span style="color: #ff0000;">'button'</span>,
+  <span style="color: #ff0000;">'#value'</span> =<span style="color: #66cc66;">&gt;</span> <span style="color: #ff0000;">'&lt;span class="hide-for-medium hide-for-large hide-for-xlarge"&gt;
+      &lt;i class="icon-magnifier"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;span class="hide-for-tiny hide-for-small"&gt;'</span> . <a href="http://api.drupal.org/api/function/t/6"><span style="color: #000066;">t</span></a><span style="color: #66cc66;">(</span><span style="color: #ff0000;">'Ok'</span><span style="color: #66cc66;">)</span> . <span style="color: #ff0000;">'&lt;/span&gt;'</span>,
+  <span style="color: #ff0000;">'#attributes'</span> =<span style="color: #66cc66;">&gt;</span> <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">(</span>
+    <span style="color: #ff0000;">'class'</span> =<span style="color: #66cc66;">&gt;</span> <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">(</span><span style="color: #ff0000;">'bird-guide-zip-submit'</span>, <span style="color: #ff0000;">'button'</span>, <span style="color: #ff0000;">'pea-green'</span><span style="color: #66cc66;">)</span>,
+  <span style="color: #66cc66;">)</span>,
+<span style="color: #66cc66;">)</span>;</pre></div>
+<p>would do the job but that is not the case as #value is being sanitized (that is great from security perspective). In order to change this behavior for one particular button we should use</p>
+<div class="geshifilter">
+<pre class="drupal6 geshifilter-drupal6" style="font-family:monospace;"> <span style="color: #ff0000;">'#theme_wrappers'</span> =<span style="color: #66cc66;">&gt;</span> <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">(</span><span style="color: #ff0000;">'mymodule_button'</span><span style="color: #66cc66;">)</span>,</pre></div>
+<p>And then define your custom theming function</p>
+<div class="geshifilter">
+<pre class="drupal6 geshifilter-drupal6" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">/**
+ * Implements hook_theme().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> mymodule_theme<span style="color: #66cc66;">(</span><span style="color: #66cc66;">)</span> <span style="color: #66cc66;">{</span>
+  <span style="color: #b1b100;">return</span> <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">(</span>
+    <span style="color: #ff0000;">'mymodule_button'</span> =<span style="color: #66cc66;">&gt;</span> <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">(</span>
+      <span style="color: #ff0000;">'render element'</span> =<span style="color: #66cc66;">&gt;</span> <span style="color: #ff0000;">'element'</span>,
+    <span style="color: #66cc66;">)</span>,
+  <span style="color: #66cc66;">)</span>;
+<span style="color: #66cc66;">}</span>
+ 
+<span style="color: #808080; font-style: italic;">/**
+ * Custom button theming function.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> theme_mymodule_button<span style="color: #66cc66;">(</span><span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">)</span> <span style="color: #66cc66;">{</span>
+  <span style="color: #0000ff;">$element</span> = <span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'element'</span><span style="color: #66cc66;">]</span>;
+ 
+  <span style="color: #0000ff;">$element</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'#attributes'</span><span style="color: #66cc66;">]</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'type'</span><span style="color: #66cc66;">]</span> = <span style="color: #ff0000;">'submit'</span>;
+  element_set_attributes<span style="color: #66cc66;">(</span><span style="color: #0000ff;">$element</span>, <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">(</span><span style="color: #ff0000;">'id'</span>, <span style="color: #ff0000;">'name'</span><span style="color: #66cc66;">)</span><span style="color: #66cc66;">)</span>;
+  <span style="color: #0000ff;">$element</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'#attributes'</span><span style="color: #66cc66;">]</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'class'</span><span style="color: #66cc66;">]</span><span style="color: #66cc66;">[</span><span style="color: #66cc66;">]</span> = <span style="color: #ff0000;">'form-'</span> . <span style="color: #0000ff;">$element</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'#button_type'</span><span style="color: #66cc66;">]</span>;
+  <span style="color: #b1b100;">return</span> <span style="color: #ff0000;">'&lt;button'</span> . <a href="http://api.drupal.org/api/function/drupal_attributes/6"><span style="color: #000066;">drupal_attributes</span></a><span style="color: #66cc66;">(</span><span style="color: #0000ff;">$element</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'#attributes'</span><span style="color: #66cc66;">]</span><span style="color: #66cc66;">)</span> . <span style="color: #ff0000;">'&gt;'</span> . <span style="color: #0000ff;">$element</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'#value'</span><span style="color: #66cc66;">]</span> . <span style="color: #ff0000;">'&lt;/button&gt;'</span>;
+<span style="color: #66cc66;">}</span></pre></div>
+<p>Be aware that when you use this technique you take responsibility for making sure you do not display any potentially harmful html in the #value as you do not sanitize it.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/taxonomy/term/2" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></div></div></div>
+  </body>
+</html>
+

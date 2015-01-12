@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 11 Mar 2014 02:06:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 11 Mar 2014 02:06:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Zero to Drupal: Quicktips with Charlie: Entity Metadata Wrapper and Null Values
+Content-Transfer-Encoding: 8bit
+Content-Base: http://zerotodrupal.com/content/quicktips-charlie-entity-metadata-wrapper-and-null-values
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Zero to Drupal: Quicktips with Charlie: Entity Metadata Wrapper and Null Values</title>
+    <base href="http://zerotodrupal.com/content/quicktips-charlie-entity-metadata-wrapper-and-null-values">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Last year I had the privilege of meeting <a href="https://plus.google.com/+CharlieSchliesser/posts">Charlie Schliesser</a>, a fellow developer here in St. Louis.  Little did I know, a few months later we'd actually be working together quite a bit as I took a new position with <a href="http://thejourney.org">my church</a> which utilized the services of the company he worked for.  Since that time, we've had several co-working sessions where we swap tips, talk about new technologies, get help with problems and leave inspired to do cool work.  Each time we depart, I feel like I have a few more tools in my toolbox and I'm eager to share them. With that in mind, I'd like to start a series of posts that share what we learn.  Feel free to leave comments, ask questions, or give feedback!</p>
+
+<h2>Entity_metadata_wrapper and Null Values</h2>
+
+<p>Are you a fan of <a href="http://drupalcontrib.org/api/drupal/contributions!entity!entity.module/function/entity_metadata_wrapper/7">entity_metadata_wrapper</a> from the <a href="http://drupal.org/project/entity" title="Drupal Project entity">entity</a> module? If you aren't, it's a great alternative to <a href="http://api.drupal.org/api/drupal/7/search/node_load" title="Drupal 7">node_load()</a>/<a href="http://api.drupal.org/api/drupal/7/search/entity_load" title="Drupal 7">entity_load()</a> that gives you chain-able, localized, and sanitized (if requested) access to fields and properties of any entity.  If you are hip to EMW, you've likely run into an issue where you try to access the value() of a field that isn't set on the object and EMW throws a nasty exception killing the page.</p>
+
+<p>This often happens when looping through nodes where a non-required field is blank (i.e. $wrapper->field_middle_name->value()) and is quite frustrating.  Before today, I'd try to avoid this issue by using <a href="http://api.drupal.org/api/drupal/7/search/field_get_items" title="Drupal 7">field_get_items()</a> or dumping the entity (using $wrapper->value()) and checking the value there.  Thankfully, today I found a <a href="http://stackoverflow.com/questions/18329870/drupal-entitymetadatawrapperexception-workaround">stackoverflow post</a> that provided a pretty elegant alternative.</p>
+
+<h2>The Solution</h2>
+
+<p>Who knew that the good folks who created EMW implemented the magic method __isset() on the <a href="http://drupalcontrib.org/api/drupal/contributions!entity!includes!entity.wrapper.inc/class/EntityMetadataWrapper/7">EntityMetadataWrapper</a> class? Now, we can do something like this to check for set values:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><ol><li style="font-family: monospace; font-weight: normal;"><div style="font-family: monospace; font-weight: normal; font-style: normal">  <span style="color: #000088;">$wrapper</span> <span style="color: #339933;">=</span> entity_metadata_wrapper<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'node'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">123</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></li><li style="font-family: monospace; font-weight: normal;"><div style="font-family: monospace; font-weight: normal; font-style: normal">  <span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$wrapper</span><span style="color: #339933;">-&gt;</span>__isset<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'field_middle_name'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></div></li><li style="font-family: monospace; font-weight: normal;"><div style="font-family: monospace; font-weight: normal; font-style: normal">    <span style="color: #666666; font-style: italic;">// Do something awesome with the middle name.</span></div></li><li style="font-family: monospace; font-weight: normal;"><div style="font-family: monospace; font-weight: normal; font-style: normal">  <span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span></div></li><li style="font-family: monospace; font-weight: normal;"><div style="font-family: monospace; font-weight: normal; font-style: normal">    <span style="color: #666666; font-style: italic;">// Don't do anything awesome, they don't have a middle name.</span></div></li><li style="font-family: monospace; font-weight: normal;"><div style="font-family: monospace; font-weight: normal; font-style: normal">  <span style="color: #009900;">&#125;</span></div></li></ol></pre></div>
+
+<p>Pretty neat huh?</p>
+ </div></div></div><h3>Tags</h3><ul class="inline"><li class="first"><a href="/tags/drupal-planet">drupal-planet</a></li>
+<li><a href="/tags/quick-tips">quick-tips</a></li>
+<li class="last"><a href="/tags/entitymetadatawrapper">entity_metadata_wrapper</a></li>
+</ul>
+  </body>
+</html>
+

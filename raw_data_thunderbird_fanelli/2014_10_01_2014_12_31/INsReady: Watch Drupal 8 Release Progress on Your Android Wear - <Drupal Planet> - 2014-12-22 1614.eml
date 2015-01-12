@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 22 Dec 2014 15:14:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 22 Dec 2014 15:14:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: INsReady: Watch Drupal 8 Release Progress on Your Android Wear
+Content-Transfer-Encoding: 8bit
+Content-Base: https://insready.com/en/blog/watch-drupal-8-release-progress-your-android-wear
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>INsReady: Watch Drupal 8 Release Progress on Your Android Wear</title>
+    <base href="https://insready.com/en/blog/watch-drupal-8-release-progress-your-android-wear">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Recently, I started building new projects on Drupal 8. Everyday, I spent some time on checking the progress of a few D8 issues that I needed and the overall D8 progress. I thought it might be fun to have some progress numbers to show up on my Moto 360 Watch, and it's almost Christmas, so I decided to build my own Watch Face for Android Wear to monitor Drupal 8 Release.</p>
+<p>The version 1.0 release of this watch face looks like the picture below </p>
+<p><img src="https://insready.com/sites/default/files/ReleaseWatchPhoto.png" /></p>
+<p><strong>Development Story</strong></p>
+<p>Thanks to <a href="https://drupalreleasedate.com/">Drupal 8 Release Project</a>, the app can easily get a few things down from the Internet:</p>
+<ul><li>The current number of critical issues</li>
+<li>The current number of major issues</li>
+<li>yesterday number of critical issues</li>
+<li>yesterday number of major issues</li>
+<li>Overall estimated Drupal 8 release date</li>
+</ul><p>The watch face logic and component is straightforward: </p>
+<ul><li>It has a simple (analog) watch. </li>
+<li>Every 6 hours (this interval is set by Drupal Release Date Project to crawl Drupal.org), the watch sends the signal to the companion handheld device to download the new data.</li>
+<li>The handheld device uses <a href="http://square.github.io/retrofit/">Retrofit</a> library (built by <a href="http://square.github.io/">Square</a>) to efficiently access <a href="https://github.com/gapple/drupalreleasedate/blob/master/api.md">Drupal Release Date Project API</a> and parse the JSON data.</li>
+<li>The handheld device calls the Data Layer API (the actual communication is over Bluetooth), and then to sync the data to Android Watch.</li>
+<li>The Android Wear app draws data on the watch face.</li>
+</ul><p><strong>Try the App</strong><br />
+The source code of this project is at <a href="https://github.com/INsReady/ReleaseWatch">ReleaseWatch</a><br />
+The Watch Face App is available on Google Play.<br /><a href="https://play.google.com/store/apps/details?id=com.insready.releasewatch"><br /><img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_60.png" /><br /></a></p>
+<p><strong>Merry Christmas! and if you have ways to improve or extend the project, please use the comments below to enlighten me! </strong></p>
+</div></div></div><div class="field field-name-field-files field-type-file field-label-above"><div class="field-label">Files:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="https://insready.com/sites/default/files/ReleaseWatchPhoto.png" type="image/png; length=317488">ReleaseWatchPhoto.png</a></span></div></div></div><div class="field field-name-field-tag field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tag:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/taxonomy/term/52" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Android Wear</a></div><div class="field-item odd"><a href="/en/taxonomy/term/53" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Watch Face</a></div><div class="field-item even"><a href="/en/taxonomy/term/54" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal 8</a></div><div class="field-item odd"><a href="/en/taxonomy/term/55" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Bluetooth</a></div><div class="field-item even"><a href="/en/taxonomy/term/56" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Retrofit</a></div><div class="field-item odd"><a href="/en/taxonomy/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal Planet</a></div><div class="field-item even"><a href="/en/taxonomy/term/57" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Google Play</a></div></div></div>
+  </body>
+</html>
+

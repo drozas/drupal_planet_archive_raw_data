@@ -1,0 +1,83 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 18 Jul 2013 16:23:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 18 Jul 2013 16:23:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupalpress, Drupal in the Health Sciences Library at UVA: Apache Solr Views and a terrible way to handle results per content type in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.hsl.virginia.edu/drupalpress/apache-solr-views-and-a-terrible-way-to-handle-results-per-content-type-in-drupal-7/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupalpress, Drupal in the Health Sciences Library at UVA: Apache Solr Views and a terrible way to handle results per content type in Drupal 7</title>
+    <base href="http://blog.hsl.virginia.edu/drupalpress/apache-solr-views-and-a-terrible-way-to-handle-results-per-content-type-in-drupal-7/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I&#8217;m betting on there being a better way to do this.  There just has to be.  But I haven&#8217;t figured it out, so here is how we&#8217;re using (abusing?) <a href="http://drupal.org/project/views_php">Views PHP</a> and <a href="https://drupal.org/project/apachesolr_views">ApacheSolr Views </a> to deliver results on a per-content type basis.</p>
+<div id="attachment_757" class="wp-caption alignleft" style="width: 129px"><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/07/2013-07-18_11-33-38.png"><img class="size-medium wp-image-757" alt="apachesolr views with per content type results" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/07/2013-07-18_11-33-38-119x300.png" width="119" height="300" /></a><p class="wp-caption-text">apachesolr views with per content type results</p></div>
+<p>To start with we create a new view</p>
+<div id="attachment_758" class="wp-caption alignleft" style="width: 310px"><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/07/Screen-Shot-2013-07-18-at-11.55.32-AM.png"><img class="size-medium wp-image-758" alt="choose the correct solr index" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/07/Screen-Shot-2013-07-18-at-11.55.32-AM-300x168.png" width="300" height="168" /></a><p class="wp-caption-text">choose the correct solr index</p></div>
+<p>After the new view is created load a bunch of fields on in &#8211; it may be useful to remember that &#8220;Bundle&#8221; will return a content type by name, the &#8220;content&#8221; will return all of the fielded content in an string, and &#8220;entity_id&#8221; has the node value.  One cool thing you can do with the node id is then pass that as an argument to another view using <a href="http://drupal.org/project/views_field_view">Views Field View</a> - be aware that this is somewhat performance naughty, but it&#8217;ll work if you want access to images in your results and don&#8217;t feel like creating a custom module to index images.</p>
+<div id="attachment_759" class="wp-caption alignleft" style="width: 310px"><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/07/Screen-Shot-2013-07-18-at-12.06.27-PM.png"><img class="size-medium wp-image-759" alt="exclude fields from display" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/07/Screen-Shot-2013-07-18-at-12.06.27-PM-300x145.png" width="300" height="145" /></a><p class="wp-caption-text">exclude fields from display</p></div>
+<p>After getting your fields loaded I set their values to &#8220;Exclude from display&#8221; in the field settings</p>
+<p>&nbsp;</p>
+<div id="attachment_760" class="wp-caption alignleft" style="width: 310px"><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/07/2013-07-18_12-10-34.png"><img class="size-medium wp-image-760" alt="Our view with a few fields loaded" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/07/2013-07-18_12-10-34-300x180.png" width="300" height="180" /></a><p class="wp-caption-text">Our view with a few fields loaded</p></div>
+<p>And of course don&#8217;t forget to add a Global: PHP field &#8211; here&#8217;s our view now</p>
+<p>&nbsp;</p>
+<p>In the Global PHP comes this fubar stank piece of code</p>
+<blockquote><p>&lt;?php<br />
+$type=$row-&gt;bundle; // Here we&#8217;ll get our content types<br />
+$content=$row-&gt;content; // This is all of the content per node that&#8217;s been indexed<br />
+$title=$row-&gt;label; // This is the node title<br />
+if ($type==&#8221;mobile_resource&#8221;)<br />
+{<br />
+$stop=&#8221;URL:&#8221;;<br />
+$startI = 1;<br />
+$stopI = strpos($content, $stop, $startI);<br />
+$text=substr($content, $startI, $stopI &#8211; $startI);<br />
+$trimtext=trim($text);<br />
+$startsAt = strpos($content, &#8220;URL:&#8221;) + strlen(&#8220;URL:&#8221;);<br />
+$endsAt = strpos($content, &#8220;Platform:&#8221;, $startsAt);<br />
+$result = substr($content, $startsAt, $endsAt &#8211; $startsAt);<br />
+$trimurl=trim($result, chr(0xC2).chr(0xA0)); // This will save someone time &#8211; be sure to trim the nbsp spaces from your content when needed</p>
+<p>echo &#8220;&lt;a href=\&#8221;$trimurl\&#8221;&gt;$title: $trimtext&lt;/a&gt;&#8221;; // and then print stuff as you see fit</p>
+<p>}<br />
+else if ($type == &#8220;cme_class&#8221;) // and more of the same<br />
+{<br />
+$stop=&#8221;Description:&#8221;;<br />
+$startI = 1;<br />
+$stopI = strpos($content, $stop, $startI);<br />
+$text=substr($content, $startI, $stopI &#8211; $startI);<br />
+$trimtext=trim($text);<br />
+$url=$row-&gt;path_alias;<br />
+echo &#8220;&lt;a href=\&#8221;$url\&#8221;&gt;$trimtext&lt;/a&gt;&#8221;;</p>
+<p>$startsAt = strpos($content, &#8220;Location:&#8221;) + strlen(&#8220;Location:&#8221;);<br />
+$endsAt = strpos($content, &#8220;Date and Time:&#8221;, $startsAt);<br />
+$location = substr($content, $startsAt, $endsAt &#8211; $startsAt);</p>
+<p>$startsAt2 = strpos($content, &#8220;Time:&#8221;) + strlen(&#8220;Time:&#8221;);<br />
+$endsAt2 = strpos($content, &#8220;Registration&#8221;, $startsAt2);<br />
+$time = substr($content, $startsAt2, $endsAt2 &#8211; $startsAt2);</p>
+<p>print(&#8220;&lt;h5&gt;Time: $time&lt;/h5&gt;&#8221;);<br />
+print(&#8220;&lt;h5&gt;Place: $location&lt;/h5&gt;&#8221;);<br />
+}<br />
+else if ($type == &#8220;employee_bio&#8221;) //etc<br />
+{<br />
+$startsAt = 1;<br />
+$endsAt = strpos($content, &#8220;My Education&#8221;, $startsAt);<br />
+$who = substr($content, $startsAt, $endsAt &#8211; $startsAt);<br />
+$url=$row-&gt;path_alias;<br />
+echo &#8220;&lt;a href=\&#8221;$url\&#8221;&gt;$who&lt;/a&gt;&#8221;;<br />
+}<br />
+else<br />
+{<br />
+$url=$row-&gt;path_alias;<br />
+echo &#8220;&lt;a href=\&#8221;$url\&#8221;&gt;$title&lt;/a&gt;&#8221;;<br />
+}<br />
+?&gt;</p></blockquote>
+<p>And really&#8230; I&#8217;m pretty embarrassed by this.   It&#8217;s raunchy and rank.  It works.  The<a href="https://drupal.org/project/facetapi"> facets facet</a> and so on&#8230; I just can&#8217;t believe that this is the way to do things.  I&#8217;ve looked at <a href="https://drupal.org/project/apachesolr_panels">Solr Panels</a> and feel like there must be a way to do better &#8211; maybe having multiple views pre-faceted by bundle at the view level and the made in to content panes?   Anyone with some sense of how to improve this is encouraged to chime in&#8230;. Bueller?  Bueller&#8230;.</p>
+  </body>
+</html>
+

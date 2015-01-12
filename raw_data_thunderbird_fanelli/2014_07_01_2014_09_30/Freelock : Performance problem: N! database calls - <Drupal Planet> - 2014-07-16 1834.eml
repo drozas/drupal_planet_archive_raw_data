@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Jul 2014 16:34:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Jul 2014 16:34:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Freelock : Performance problem: N! database calls
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.freelock.com/blog/john-locke/2014-07/performance-problem-n-database-calls
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Freelock : Performance problem: N! database calls</title>
+    <base href="http://www.freelock.com/blog/john-locke/2014-07/performance-problem-n-database-calls">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="g-plusone-wrapper" style="margin: 0 1em 1em 1em;float:right" ><g:plusone href="http://www.freelock.com/blog/john-locke/2014-07/performance-problem-n-database-calls" size="medium" annotation="bubble" width="250" ></g:plusone></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Kicking off some posts about various performance challenges we've fixed.</p>
+<h3>N Factorial</h3>
+<p>During a code review for a site we were taking over, I found this little gem:</p>
+<p><code>&lt;?php</code></p>
+<p><code>function charity_view_views_pre_render($view) {</code><br /><code>  // this code takes the rows returned from a view query after the query has been run, and formats it for display...</code><br /><code>  // snip to the code of interest:</code><br /><code>  usort($view-&gt;result, 'charity_view_sort_popular');</code><br /><code>}</code></p></div></div></div><div class="field field-name-taxonomy-vocabulary-5 field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/tag/performance">Performance</a></div><div class="field-item odd"><a href="/tag/technical">Technical</a></div><div class="field-item even"><a href="/tag/drupal">Drupal</a></div><div class="field-item odd"><a href="/tag/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

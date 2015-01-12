@@ -1,0 +1,89 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 22 Aug 2014 16:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 22 Aug 2014 16:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ThinkShout: Deploying a Jekyll Site on GitHub, Travis CI, and Amazon S3
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thinkshout.com/blog/2014/08/deployment-workflow-travis-jekyll-travis-s3
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ThinkShout: Deploying a Jekyll Site on GitHub, Travis CI, and Amazon S3</title>
+    <base href="http://thinkshout.com/blog/2014/08/deployment-workflow-travis-jekyll-travis-s3">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>When we <a href="http://thinkshout.com/blog/2014/03/technology-behind-thinkshout/">launched the new version of ThinkShout.com</a> last spring, something glaring was missing. That little something is what companies like Pantheon and Acquia have worked so hard to solve for more complex Drupal sites, namely a deployment workflow making it dead simple to deploy changes to your site and preview them before publishing to a production server. At the time of launch, we had some rudimentary tools in place, namely a set of Rake tasks to build the site and deploy to separate staging and production environments.</p>
+
+<p>This worked fine for the uber geeks among us, who had a full ruby stack running and were proficient using git and running terminal commands. But for those less technically inclined, not so good. Not to mention, the lack of automation meant lots of room for errror. The talented team at <a href="http://www.developmentseed.org/">Development Seed</a> created <a href="https://github.com/developmentseed/jekyll-hook">Jekyll hook</a>, a node based app that listens for notifications from GitHub then builds and deploys the site based on a number of configuration options or customizations to the build script. That seemed like a good solution, and we even started work on our own <a href="https://github.com/thinkshout/jekyll-hook">fork of the project</a>. It was moving along nicely, and we had it running on <a href="http://heroku.com">Heroku</a>, which largely eliminated the need for maintaining a server. Our customizations allowed us to deploy to S3 using the powerful <a href="https://github.com/laurilehmijoki/s3_website">s3_website gem</a> and deploy to different buckets depending on the branch being committed. Still, this solution required a good deal more care and maintenance than a typical site hosted on Pantheon or Aquia and lacked any built in visual status or notifications.</p>
+
+<p>Around the same time, I received a great tip while attending CapitalCamp: use Travis CI to test, build, and deploy the site. This was such a such a simple and great idea that I couldn&#39;t help but slap myself on the head for not thinking of it sooner. Travis is one of the leading continuous integration platforms with tight GitHub integration. It&#39;s free for open source projects and charges a modest monthly fee for private ones. It&#39;s also dead simple to configure, comes with loads of built in features, and requires little to no ongoing maintenance. While I knew of Travis, you can&#39;t help but see those nice &quot;build passing&quot; images on all your favorite open source projects, ![Build Passing](<a href="https://api.travis-ci.org/travis-ci/travis-web.svg?branch=master">https://api.travis-ci.org/travis-ci/travis-web.svg?branch=master</a>, I didn&#39;t realize just how powerful it can be. Some highlights include:</p>
+
+<ul>
+<li>Supports all the major platforms including PHP, Ruby, Node, Python, and Java.</li>
+<li>Lots of major databases and service are avaialble, E.g., MySql, PostgreSQL, Redis, Memcache, etc.</li>
+<li>Has built in notifications via email, IRC, and other popular services</li>
+<li>Can run your test suites and report back the status</li>
+<li>Built in deployment to a number of platforms such as Heroku and Amazon, in addition to your own server.</li>
+</ul>
+
+<p>The secret to all this Travis magic lies in a <code>.travis.yml</code> file located in the project root. For ThinkShout.com, it looks something like this:</p>
+<div class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ruby</span>
+<span class="l-Scalar-Plain">rvm</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2.0.0</span>
+<span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span> <span class="s">&quot;./_scripts/travis_build.sh&quot;</span>
+<span class="l-Scalar-Plain">branches</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">only</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">master</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">live</span>
+<span class="l-Scalar-Plain">env</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">global</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">secure</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">...</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">secure</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">...</span>
+<span class="l-Scalar-Plain">notifications</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">hipchat</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">rooms</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">secure</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">...</span>
+</code></pre></div>
+<p>I won&#39;t go through this line by line, <a href="http://docs.travis-ci.com/user/build-configuration/">there&#39;s great documentation for that</a>, but basically this tells Travis:</p>
+
+<ul>
+<li>That we need an environment running Ruby 2.0.0.</li>
+<li>To execute <code>./_scripts/travis_build.sh</code> for our build.</li>
+<li>To only trigger the build on the master and live branches.</li>
+<li>Triggers a notification in our HipChat project room.</li>
+</ul>
+
+<p>The build scrip is very simple as well:</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$TRAVIS_BRANCH</span> <span class="o">==</span> <span class="s1">&#39;master&#39;</span> <span class="o">]]</span> <span class="p">;</span> <span class="k">then</span>
+  bundle <span class="nb">exec </span>rake stage
+<span class="k">elif</span> <span class="o">[[</span> <span class="nv">$TRAVIS_BRANCH</span> <span class="o">==</span> <span class="s1">&#39;live&#39;</span> <span class="o">]]</span> <span class="p">;</span> <span class="k">then</span>
+  bundle <span class="nb">exec </span>rake publish
+<span class="k">else</span>
+  <span class="nb">echo</span> <span class="s1">&#39;Invalid branch. You can only deploy from master and live.&#39;</span>
+  <span class="nb">exit </span>1
+<span class="k">fi</span>
+</code></pre></div>
+<p>While we could put script commands directly into <code>.travis.yml</code>, having a bash script affords us some additional flexibility, in our case to deploy to different S3 buckets based on the branch being committed to.</p>
+
+<p>When all is said and done, we have a simple automated deployment workflow, as illustrate below</p>
+
+<p><img src="/assets/images/blog/jekyll-travis-s3.png" alt="deployment workflow"></p>
+
+<p>Now the ThinkShout.com deployment workflow goes something like this:</p>
+
+<ol>
+<li>Make a commit to the master branch. This can be done directly in GitHub, using Prose.io, or the old fashioned way in your own working copy. Note that new features are done in feature branches, which do not trigger a build, and are eventually merged into master for review.</li>
+<li>The changes are pushed to our staging site for review within a couple minutes.</li>
+<li>When everything looks good, a pull request is opened comparing master to live.</li>
+<li>After any final discussions are complete, the pull request is merged and the code is pushed to the production S3 bucket.</li>
+</ol>
+
+<p>That&#39;s it, done. No Ruby stack, no Jekyll build or compass compile, no worrying about S3 access keys. We&#39;re excited to refine this workflow further, including adding automated tests using PhantomJS, and put it to a real test for an upcoming site launch for a client. Stay tuned!</p>
+  </body>
+</html>
+

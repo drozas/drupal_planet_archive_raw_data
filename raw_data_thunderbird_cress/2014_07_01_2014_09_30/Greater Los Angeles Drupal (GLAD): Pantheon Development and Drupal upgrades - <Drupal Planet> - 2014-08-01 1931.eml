@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 01 Aug 2014 18:31:25 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 01 Aug 2014 18:31:25 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Greater Los Angeles Drupal (GLAD): Pantheon Development and Drupal upgrades
+Content-Transfer-Encoding: 8bit
+Content-Base: https://drupal.la/articles/pantheon-development-and-drupal-upgrades
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Greater Los Angeles Drupal (GLAD): Pantheon Development and Drupal upgrades</title>
+    <base href="https://drupal.la/articles/pantheon-development-and-drupal-upgrades">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I have been developing migrations for a new site on Pantheon.  The work flow is pretty easy.  You clone the environment, make your changes on your local machine then push to the dev site.  This allows you to install modules, change the configurations and then push this to Pantheon just using Git.</p>
+<p>There are a few gotchas like installing and enabling modules.  When you install a module it does this in code so just adding the folder into the git repository will install the module on Pantheon, but enabling the module is in the database.  Unless you do something like have a feature for installing modules you can end up with something different on Pantheon.  No big issue it is easy to enable a module and all is right with the world again.  This also means you learn quickly the value of the features module, if there is something in the database you want to synchronize you need to create a feature.  Things like content types, views etc.  </p>
+<p>Another big gotcha hit me last week.  Pantheon warns you all over their the place not to upgrade Drupal with Drush.  I did not update the Pantheon site with Drush but I headed the warnings on my local environment and updated my local environment with Drush.  Then later when Pantheon was on the same version I merged and pushed this back to Pantheon.  Admittedly I took some steps to merge that I did not understand, but after I did this push I pushed it to the test environment as well.  Trouble is when I went to the dev or test site all I saw was a screen waiting to install Drupal, and there was a warning stating that I had upgraded incorrectly and had to fix this.  Unfortunately the steps they gave did not resolve the situation (probably due to my ignorance).  Now I have a broken Pantheon site, and my backup was 30 days old.</p>
+<p>Turns out the fix was pretty easy, but sounded complex.  I restored the dev environment from backup.  Now it worked but was out of date.  I pulled to my local environment, this worked, and status stated that I was 70 commits ahead of head.  I looked through the log and found the last commit before I broke things.  I committed this and pushed.  My dev environment was working on Pantheon with my latest code.  Pushed this to the test environment and it was now working.</p>
+<p>After a great deal of worrying and hand wringing the solution was easy.  GIT is great!  </p>
+<p>Lessons learned:</p>
+<ul><li>When working in a Pantheon environment do not use drush to update Drupal, even on your local environment.
+</li>
+<li>Make backups often, you never know when you can use it.
+</li>
+</ul></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div></div>
+  </body>
+</html>
+

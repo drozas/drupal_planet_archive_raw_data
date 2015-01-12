@@ -1,0 +1,66 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 21 Aug 2013 23:16:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 21 Aug 2013 23:16:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Amazee Labs: The new face of Omega 4, Part II
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.amazeelabs.com/en/new-face-omega-4-part-ii
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Amazee Labs: The new face of Omega 4, Part II</title>
+    <base href="http://blog.amazeelabs.com/en/new-face-omega-4-part-ii">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Omega 4 looks very different than Omega 3. When we first wrote about <a href="node/1546">some of their differences</a> back in January, we reported on four major themes:</p>
+<ol><li>Zones &amp; Regions</li>
+<li>SASS</li>
+<li>Pluggable Layouts</li>
+<li>Polyfills</li>
+</ol><p>After getting our hands dirty for the first time with the new theme, these were the most obvious changes. And while these topics are still important to note for those still looking to make the transition from 3 to 4, there are other improvements to the theme which also deserve attention.</p>
+<p>In general, Omega 4 is a vastly more flexible version of its predecessor. As a follow-up post to our original findings, here are even more reasons why:</p>
+<h2>Extensions</h2>
+<p>Essentially, Omega 4’s theme extensions have been improved in four areas: layout, development, asset management, and compatibility improvements. We’ve touched on the new layouts before, but there’s more to them you should know:</p>
+<h4 style="color:#403f3f;">Total L​ay​out Control</h4>
+<p>With Omega 4 Layouts, you can define how pages are laid out through code. There are no predefined breakpoints which makes for a completely fluid (truly responsive) site.</p>
+<p>Layouts can be added via the “layouts” folder of an Omega 4 sub-theme.</p>
+<p><img alt="" src="http://blog.amazeelabs.com/sites/default/files/omega4-structure.jpg" style="width: 512px; height: 323px; " /></p>
+<p>Given the file structure in the example above, you could even switch your layout contextually with a hook_omega_layout_alter function:</p>
+<p><img alt="" src="http://blog.amazeelabs.com/sites/default/files/omega4-layoutswitch_0.jpg" style="width: 600px; height: 174px; " /></p>
+<p>This feature completely removes the need for the <a href="https://drupal.org/project/delta">Delta module</a> commonly used with Omega 3.</p>
+<h4 style="color:#403f3f;">Devel​opment, made easier</h4>
+<p>Some cool new features have also been added to assist in the theme development process. In a nutshell (and taken from a great resource, <a href="https://drupal.org/node/2060741">Omega 3.x vs. Omega 4.x - Comparing Apples and Oranges</a>), Omega 4 provides the following development additions:</p>
+<ul><li>Rebuild theme registry on page load</li>
+<li>Rebuild CSS and JS aggregates on page load</li>
+<li>Browser width indicator</li>
+<li>LiveReload</li>
+<li>Region demo mode</li>
+</ul><p>(Some pretty spiffy improvements if you ask us...)</p>
+<h4 style="color:#403f3f;">Asset Management</h4>
+<p>As in the <a href="https://drupal.org/project/magic">Magic module</a>, Omega 4 now makes use of Frontend best practices like moving JavaScript files to the footer, and excluding certain Javascript &amp; CSS. Polyfill libraries (as discussed in <a href="node/1546">our first Omega 3 post</a>) are also readily available through the theme’s settings.</p>
+<p>These features make for better site performance and happier Frontend lives.</p>
+<h4 style="color:#403f3f;">Browser &amp; Viewport Compatibility</h4>
+<p>Conditional HTML classes are now added, for example “lte-ie9” in Internet Explorer versions 8 and below. This is a big win when optimizing sites for cross-browser consistency.</p>
+<p>There’s also Cleartype support for Windows, customizable Viewport metatags, and ChromeFrame &amp; IE Edge support.</p>
+<h2>Drush Integration</h2>
+<p>Next — the powers of Drush! If you navigate (via the command line) to a Drupal site with Omega 4 &amp; Drush installed, there’s a slew of new Omega-specific commands, with two notable ones being omega-wizard (owiz) and omega-guard (ogrd).</p>
+<p><img alt="" src="http://blog.amazeelabs.com/sites/default/files/omega4-drush_0.jpg" style="width: 600px; height: 116px; " /></p>
+<p>Omega-wizard is a guide through the process of setting up and enabling a subtheme, and omega-guard enables the use of Omega 4‘s <a href="http://livereload.com/">LiveReload</a> built-in support.</p>
+<p>Have a look at the others as well. Omega-export and omega-revert can greatly assist during site-deployments.</p>
+<h2>Preprocess, Process, and Theme Files</h2>
+<p>And if you’re a developer fed up with the days of having cluttered, unorganized template.php files, this one’s for you. :)</p>
+<p>Omega 4 allows the themer to provide separate preprocess, process and theme functions to their Drupal site via organized, structured theme files. These files are autoloaded and are no longer to blame for overloaded template.php files, especially in the case of themes requiring a heavy load of PHP.</p>
+<p>Also, according to <a href="https://drupal.org/user/761344">fubhy</a>, the Omega 4 developer, “this feature has been improved tremendously since 3.x and performs much better now.”</p>
+<h2>SMACSS</h2>
+<p>Finally, and if you didn’t know already, <a href="http://smacss.com/">SMACSS</a> is where it’s at. Omega 4 has adopted the “Scalable and Modular Architecture for CSS” principals and applied them directly to both of its available subtheme starterkits.</p>
+<p>If you’re not familiar with SMACSS however, it’s basically just a guiding set of methodolgies to write maintainable CSS. Due to CSS’s flexible nature, it’s easy to make a mess of it. SMACSS helps with that.</p>
+<p>And if you’re going to use the omega-wizard Drush feature, go ahead and choose the “extended” starterkit. It has a fuller SASS structure included with more modular components, making it easier to understand and organize your project and different Drupal components.</p>
+<p>So that's it for now! We're still loving Omega 4. Are you?</p>
+</div></div></div>
+  </body>
+</html>
+

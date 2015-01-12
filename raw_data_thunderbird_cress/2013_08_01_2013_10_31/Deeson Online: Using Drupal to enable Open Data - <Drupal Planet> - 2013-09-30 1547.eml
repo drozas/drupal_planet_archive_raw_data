@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Sep 2013 14:47:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Sep 2013 14:47:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Using Drupal to enable Open Data
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/blog/using-drupal-enable-open-data
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Using Drupal to enable Open Data</title>
+    <base href="http://deeson-online.co.uk/blog/using-drupal-enable-open-data">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h1 class="h4">Using Drupal to enable Open Data</h1></div></div></div><div class="meta">By <a href="/category/author/graeme-blackwood">Graeme Blackwood</a> | 30th September 2013</div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>For the last few years, there has been a growing move toward making data available for use, reuse and redistribution by anyone who has an interest in doing so. <a href="http://en.wikipedia.org/wiki/Open_data">Open Data</a> is increasingly being embraced, or even mandated by governments across the globe, and is already being used in some <a href="https://nycopendata.socrata.com/" title="External link to the New York City Open Data website">really interesting ways</a>.</p>
+<p>During my time at <a href="https://prague2013.drupal.org/">DrupalCon</a> Prague last week, I had the opportunity to learn more about where Drupal fits in all this by attending an informal gathering (a BoF session) called "DKAN: The Drupal distribution for open data".</p>
+<h2>CKAN and DKAN</h2>
+<p><abbr title="Comprehensive Knowledge Archive Network">CKAN</abbr> is a non-Drupal system that has been developed to help people working with open data on the web. It's pretty powerful, but quite specific to the task in hand. However, it generally needs to be integrated with additional systems if there is a need to have it running alongside other web content (though my understanding is that they are working on some CMS capabilities).</p>
+<p>Because of this, CKAN is used alongside Drupal for many government websites to deliver open data across the world. Yet because CKAN is a completely different system, it doesn't take advantage of Drupal's huge developer base and all the extensibility that being on Drupal would offer. Enter <a href="http://getdkan.com">DKAN</a>, a Drupal distribution designed to leverage all the benefits of Drupal and the power of CKAN in one.</p>
+<p>DKAN means Drupal users don't need to learn another system or programming language if they want to start working with open data standards. The DKAN modules can also be taken separately and plugged into an existing website, making it very quick and easy to start working with open data right now.</p>
+<iframe allowfullscreen="" frameborder="0" height="315" src="//www.youtube.com/embed/wj-7x9f8SIQ?rel=0" width="100%"></iframe></p>
+<h2>What are the main differences between CKAN and DKAN?</h2>
+<p>DKAN is is still in development but is modelling itself on CKAN. Most of the core open data features of CKAN have been replicated and can be used right now by experienced Drupal teams, although there is work to do before they reach full parity. Also CKAN was specifically designed to handle huge, multi Gigabyte open datasets without much problem. Drupal is designed to do pretty well whatever you want, so there is an efficiency trade-off. But dealing with performance in Drupal is a well-trodden path and the same knowledge used to make huge Drupal sites highly performant can be applied to DKAN.</p>
+<p>So which should you use?</p>
+<h4>Use CKAN if:</h4>
+<ul>
+<li>You just want to manage data and open it up to the world</li>
+<li>Work with or are happy to learn Python, etc</li>
+<li>You are not interested in extending the system</li>
+<li>You are happy to integrate with another system (if required) and maintain two codebases</li>
+<li>You are handling massive datasets, though Drupal will probably be fine with good configuration</li>
+</ul>
+<h4>Use DKAN if:</h4>
+<ul>
+<li>You want to start using open data on an existing Drupal site</li>
+<li>Your current team works with Drupal or PHP/MySQL generally</li>
+<li>You want to integrate open data seamlessly with the wider experience on the website</li>
+<li>You want to get up and running quickly with open data, but also have plenty of options for extensibility in the future</li>
+</ul>
+<p>Over time, open data will power many more apps and services, empower research and development, improve decision making and generally increase knowledge and understanding across the world. Exciting times!</p>
+</div></div></div>
+  </body>
+</html>
+

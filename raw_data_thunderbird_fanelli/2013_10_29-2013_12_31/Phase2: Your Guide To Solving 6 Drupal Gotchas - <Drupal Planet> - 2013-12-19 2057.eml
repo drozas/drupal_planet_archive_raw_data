@@ -1,0 +1,102 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 19 Dec 2013 19:57:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 19 Dec 2013 19:57:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Your Guide To Solving 6 Drupal Gotchas
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/drupal-gotchas-that-might-burn-a-lot-of-time/?utm_source=rss&utm_medium=rss&utm_campaign=drupal-gotchas-that-might-burn-a-lot-of-time
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Your Guide To Solving 6 Drupal Gotchas</title>
+    <base href="http://www.phase2technology.com/blog/drupal-gotchas-that-might-burn-a-lot-of-time/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=drupal-gotchas-that-might-burn-a-lot-of-time">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">There are times when you run into an issue while maintaining your Drupal instance, when the problems are frustrating enough, yet the solution seemed to be extremely simple. Unfortunately, by the time you arrive at the solution, you&#8217;re already depressed by the amount of technical debt incurred in the process.</p>
+<p dir="ltr">Therefore, I compiled a short list of common issues I run into whenever things take a turn for the worse. Although this might not cater to all problems, it should mitigate a good number of issues so you can focus on development and not disaster recovery!</p>
+<h1 dir="ltr">None of my new code is executing on the site!</h1>
+<p><strong>Difficulty Level</strong>: Easy / Intermediate</p>
+<p><strong>Problem</strong>: You just took your first step into module development, you enabled the module on your site (if not, this is one problem!), and none of the new hooks you’re trying out are registering on the site.</p>
+<p><strong>Diagnosis</strong>: Go into your database and execute the following query:</p><pre class="crayon-plain-tag">SELECT * FROM system WHERE name = &lt;YOUR MODULE NAME&gt;</pre><p>Your module should show up whether the status is 0 or 1.  If it’s still 0, enable it.</p>
+<p><strong>Solution I</strong>: From the query, if you notice that the filename is showing a completely different path from where your actual code files are, you should adjust it so Drupal recognizes it.  It’s also a good sanity check to make sure disabling, uninstalling, and re-enabling the module will link the module correctly.  If you have drush installed, you can simply do all that by firing:</p><pre class="crayon-plain-tag">drush dis -y MODULE; drush pm-uninstall -y MODULE; drush en -y MODULE</pre><p><strong>Solution II</strong>: This is actually the first thing you should do every time you encounter any problem (it’s number 2 so the diagnosis and solution links nicely together in this article). Clear the cache and try again.  You can do this by navigating to the Performance section in site configurations (or fire this path /admin/content/clearcache). If you have drush, you can also clear cache by running drush cc all.</p>
+<p>This is critical especially if you have certain hooks in your module (e.g. hook_theme, hook_menu), which rely on cached data for performance reasons.</p>
+<h1 dir="ltr">My site is showing a blank / white screen!</h1>
+<p><strong>Difficulty Level</strong>: Easy / ???</p>
+<p><strong>Problem</strong>: You might’ve installed a new module or made new changes to your code when suddenly, any or all pages you navigate to yields a blank, white screen. It’s frustrating because you don’t know what to do next. (For future reference, we’ll call this the white screen of death or WSOD).</p>
+<p><strong>Solution</strong>: This is mainly because there are fatal errors with your code. While there is no one solution to this problem, it will help if you enable error reporting on your environment so you can identify what the problems are exactly (before I continue, don’t do this on production for security reasons&#8230;and, well, it&#8217;s embarrassing! You don’t want the world to know why your site is broken!). Keep in mind that errors are usually suppressed</p>
+<p>The easy way to do this is by putting the following in your settings.php file:</p><pre class="crayon-plain-tag">error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);</pre><p>Otherwise, read your server software documentation on how to get this enabled (in the right staging /development environment, of course).</p>
+<p><strong>Pro-tip</strong>: Maintain separate settings.php files so that your development environment always has this enabled at all times.  It&#8217;ll save you a ton of time the more verbose your site is.</p>
+<h1 dir="ltr">I got this “Allowed memory size of x bytes exhausted” error</h1>
+<p><strong>Difficulty Level:</strong> Easy</p>
+<p><strong>Problem</strong>: Let’s say you enabled error reporting from the last section, and you get an error “Allowed memory size of x bytes exhausted.” The site churns slowly before it gives up and either gives you this error or shows you the WSOD.</p>
+<p dir="ltr"><strong>Solution</strong>: This means that you need to increase your memory in your settings. This may be done in a few ways depending on what server software you’re using, but in most cases, you can simply add this line to your settings.php to avoid root changes to your configurations:</p>
+<p></p><pre class="crayon-plain-tag">ini_set('memory_limit', '512M');</pre><p>In most cases, you can go into your php.ini file and add this clause:</p><pre class="crayon-plain-tag">php_value memory_limit = "128M"</pre><p>(Restart your server software if you go this route).</p>
+<p>TAKE SPECIAL CARE WHEN SETTING THIS VALUE.  Finding a happy median will ensure your site will run at optimal speeds without sapping server resources. It may take some trial and error, but you’ll find the right value soon enough.  If this is not viable, contact your web host or administrator for other options or look into using less memory-hogging modules and/or algorithms.  Although it&#8217;s tempting to set a high value on your development environment, it&#8217;s always better to keep it as low as possible at all times so you don&#8217;t balloon an issue to something even worse.</p>
+<p dir="ltr">Reference: https://drupal.org/node/76156</p>
+<h1 dir="ltr">All pages on my site link to the front page only!</h1>
+<p><strong>Difficulty Level</strong>: Moderate</p>
+<p><strong>Problem</strong>: Ever encountered a scenario where no matter what pages you navigate to, it always leads to the homepage?  Even typing in direct URLs (e.g. www.example.com/about) still yields the same behaviors?</p>
+<p><strong>Diagnosis</strong>: Try typing in paths you know except with a q= at the end. For example, try www.example.com/q=about/my/company</p>
+<p><strong>Solution I:</strong> If your pages do start showing up, navigate to /admin/settings/clean-urls or /admin/config/search/clean-urls (or, in this case, try www.example.com/q=admin/settings/clean-urls or www.example.com/q=/admin/config/search/clean-urls) depending on whether you’re using Drupal 6 or 7 and enable clean URLs. You might have to log in using www.example.com/q=user.</p>
+<p><strong>Solution II</strong>: But what if clean URLs are already enabled? You might also need to check your server configurations to see if the extension to handle path aliasing is enabled. You might have to log in as root to make sure this is the case.</p>
+<p>Check the following (note: the following is for apache servers only):</p>
+<ol>
+<li dir="ltr">
+<p dir="ltr">Check that your vhost for your site has the AllowOverride All in the settings like this:<br />
+<em>&lt;Directory /path/to/site/&gt;</em><br />
+<em>    Options Indexes FollowSymLinks MultiViews</em><br />
+<em>    AllowOverride None</em><br />
+<em>    Order allow,deny</em><br />
+<em>    allow from all</em><br />
+<em>&lt;/Directory&gt;</em></p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Just in case, make sure you have the following line in your htaccess file<br />
+<em>RewriteEngine On</em></p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Worse comes to worse, log in as root (or an admin account), and enable the extension in your server software.  In most cases, if you’re using apache, you can simply achieve this by executing this one liner in the terminal:<br />
+a2enmod rewrite<br />
+Restart apache afterwards (<em>service apache restart</em> or <em>service httpd restart</em> depending on what OS you’re using.  The examples are for Ubuntu and CentOS respectively)</p>
+</li>
+</ol>
+<h1>It works fine on my end, but everyone else is seeing something different</h1>
+<p><strong>Difficulty Level</strong>: Moderate to Difficult</p>
+<p><strong>Problem</strong>: You may have a feature that seems to work fine on your end, but other people are reporting that they are finding odd behaviors like the page or feature doesn’t exist or they are showing old renditions…</p>
+<p><strong>Ideas: </strong>There is no silver bullet to this problem, but it may help to ask a few questions (for the purpose of this section, I also included some example scenarios, as well!)</p>
+<ul>
+<li>Is the feature designed in javascript and executed on the client-side? (In most cases, old code might be cached on the browser.  Clear the browser cache locally)</li>
+<li>Are there caching modules enabled on the site (e.g. memcache, varnish)? (You might need to make sure they&#8217;re cleared properly or set the TTL to a lower value.)</li>
+<li>Is it working for you as admin or another role? Is the feature highly permissions-reliant? (Stepping through the problem will help big time, but the <a href="https://drupal.org/project/devel" target="_blank">devel</a> module might be key here if traditional methods are too cumbersome).</li>
+<li>Does the end user have a certain browser plug-in that&#8217;s preventing them from accessing certain content? (For example, if you&#8217;re testing the site, and wondering why certain images or ads may not work, browser plugins like <a href="https://adblockplus.org/en/chrome" target="_blank">ad block</a> may be the culprit).</li>
+</ul>
+<h1 dir="ltr">I have some features in my hook_block definition that appear then disappear inconsistently, and I don’t know why!</h1>
+<p><strong>Difficulty Level</strong>: Difficult to comprehend at first</p>
+<p><strong>Problem</strong>: You like being neat, and your site has a ton of blocks that are placed via panels or contexts, and you only want to load all the assets relevant to the block within hook_block like so:</p><pre class="crayon-plain-tag">function my_module_block_view($delta = '') {
+ switch ($delta) {
+   case ‘block1:
+     drupal_add_js('js/script.js');
+     $block['subject'] = t(‘My block’);
+     $block[‘content’] = block1_content();
+     break;
+   case ‘block2’:
+     drupal_add_css(drupal_get_path('module', my_module) . '/css/style.css');
+     $block['subject'] = t(‘My other block’);
+     $block[‘content’] = block2_content();
+     break;
+ }
+ return $block;
+}</pre><p>However, it sometimes works and sometimes it breaks your block features and layout on production, no matter what kind of caching configurations you have.</p>
+<p><strong>Solution</strong>: Only leave static HTML content that you would like to cache within the block content. Try to add elements that fail to get loaded into cache outside the block in another layer such as hook_init() or the [‘#attached’] value in the render array (I mention both approaches depending on what version of drupal you use).</p>
+<p>Functions like drupal_add_js() and drupal_add_css() fail to work within these cached entities because the functions intertwine with other static components of the site (there is one rendition of compressed javascript and css), and for them to only be included sometimes will lead to consistency issues down the road when cron clears cache (at that point, you’re gambling on whether the function calls will get included or not.</p>
+<h1 dir="ltr">Conclusion</h1>
+<p>Reading this article will not solve all your problems. However, fixing these issues will not only enhance your knowledge of Drupal but also improve your debugging skills in general. It is also extremely helpful to make use of <a href="https://drupal.org/" target="_blank">Drupal.org</a> and other collaborative forums such as <a href="http://stackoverflow.com/" target="_blank">Stack Overflow</a> to get other&#8217;s experiences on the problem and also make the documentation on these issues more prevalent.</p>
+  </body>
+</html>
+

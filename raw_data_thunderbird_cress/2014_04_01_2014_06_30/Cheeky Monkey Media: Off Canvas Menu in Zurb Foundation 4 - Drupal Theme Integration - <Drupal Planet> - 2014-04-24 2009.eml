@@ -1,0 +1,429 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 24 Apr 2014 19:09:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 24 Apr 2014 19:09:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Cheeky Monkey Media: Off Canvas Menu in Zurb Foundation 4 - Drupal Theme Integration
+Content-Transfer-Encoding: 8bit
+Content-Base: http://cheekymonkeymedia.ca/blog/canvas-menu-zurb-foundation-4-drupal-theme-integration
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Cheeky Monkey Media: Off Canvas Menu in Zurb Foundation 4 - Drupal Theme Integration</title>
+    <base href="http://cheekymonkeymedia.ca/blog/canvas-menu-zurb-foundation-4-drupal-theme-integration">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="image">
+    <img src="http://cache.cheekymonkeymedia.ca.s3.amazonaws.com/styles/blog_thumb/s3/nodes/images/zurb-drup-hanging-out-like-homies.jpg?itok=OnEzYsJb" width="135" height="135" />  </div>
+
+  <div class="field-submitted-by field-wrapper">
+    Submitted by <a href="/users/joey-english" title="View user profile." class="username">Joey English</a> on Thu, April 24.  </div>
+
+  <div class="body field">
+    <p dir="ltr">At Cheeky Monkey Media, we’re huge proponents of Zurb’s Foundation framework. We use it almost exclusively for all of our projects, and it assists us throughout every step of that process. From building the first wireframes for client approval, to our final front-end theme, Foundation has become an essential tool for our development team. If you’re not familiar with Foundation, I encourage you to do some research, grab a copy of the amazing Drupal theme (actively maintained and supported by a great list of contributors), and dive in. Start integrating it into your own projects, and see why Foundation has fast replaced favorites like Omega, Mothership, Aurora, and more.</p>
+<p dir="ltr">As with all great things, however, nothing is quite perfect “out-of-the-box”.</p>
+<p dir="ltr">Recently, we’ve been seeing much more interest from clients in building responsive sites. Rather than having to convince them of its benefits, we’re finding clients are simply requesting designs from our creative team that are mobile-friendly. As designers and developers, we’ve enjoyed seeing this shift in client mentality, and we’re always happy to build a site using progressive, mainstream concepts, and design trends. One of those recent trends, and one thing we’re seeing a lot of demand for lately, is the ubiquitous off-canvas menu. If you’re using your phone as much as the rest of us are, you will have run into off-canvas quite a bit. It’s that nifty menu that slides in from the left or right side of the screen, usually offering up important functionality like navigation, search, and other features. We happen to appreciate its usefulness, and see its benefits for use on mobile and tablet devices.</p>
+<p dir="ltr">And therein lies the rub…</p>
+<p dir="ltr">At the time of this writing, Foundation’s Drupal theme is in version 7.x-4.0, supporting Foundation 4, and, rather unfortunately, not featuring the nifty off-canvas menu which Foundation has done an amazing job at implementing in most of its previous (and current) iterations. There is some reasoning behind the decision to leave this feature out, and while I agree with the logic, it’s a bit inconvenient for those of us using Foundation 4, but whom want the added functionality that off-canvas provided us in the past.</p>
+<p dir="ltr">With several clients requesting this feature, and our design team producing PSD’s with off-canvas as a highlight of the mobile experience, we had a few options. We could build a bespoke solution, something we’ve done on previous projects, or try and utilize Foundation assets and integrate them into the theme as seamlessly as possible. We chose the latter, and sadly, there was very little in the way of existing resources out there to assist us when we began running into issues with the integration. Thankfully, with a few helpful posts from the Zurb community, some hair-pulling, and one big ah-hah moment over a weekend of obsessing over getting this piece of functionality to work, we were able to come up with a decent solution that should, ostensibly, work on every Foundation 4 project moving forward; that is, until Foundation 5 is ready to be used on production sites, as it should include this feature when it’s ready for the mainstream.</p>
+<p dir="ltr">First, you’ll need a copy of the<a href="http://foundation.zurb.com/develop/download.html"> Foundation 5 code.</a> From the downloaded files, you’re going to copy and paste the CSS that adheres to the off-canvas elements, then add these to your theme. Personally, I suggest keeping things clean and adding them to a separate _off-canvas.scss file, and setting that in custom.scss as an @import. This should make it easier to troubleshoot if you run into any problems, and is just good practice to keep things segregated and organized.</p>
+
+<pre class="brush: css; " title="Sassy Off Canvas - sassy-off-canvass.css">
+.off-canvas-wrap {
+  -webkit-backface-visibility: hidden;
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.off-canvas-wrap.move-right,
+.off-canvas-wrap.move-left {
+  height: 100%;
+}
+
+.inner-wrap {
+  -webkit-backface-visibility: hidden;
+  position: relative;
+  width: 100%;
+  *zoom: 1;
+  -webkit-transition: -webkit-transform 500ms ease;
+  -moz-transition: -moz-transform 500ms ease;
+  -ms-transition: -ms-transform 500ms ease;
+  -o-transition: -o-transform 500ms ease;
+  transition: transform 500ms ease;
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.tab-bar {
+  -webkit-backface-visibility: hidden;
+  background: #333333;
+  color: white;
+  height: 2.8125rem;
+  line-height: 2.8125rem;
+  position: relative;
+  h1, h2, h3, h4, h5, h6 {
+    color: white;
+    font-weight: bold;
+    line-height: 2.8125rem;
+    margin: 0;
+  }
+  h1, h2, h3, h4 {
+    font-size: 1.125rem;
+  }
+  .menu-icon {
+    text-indent: 2.1875rem;
+    width: 2.8125rem;
+    height: 2.8125rem;
+    display: block;
+    line-height: 2.0625rem;
+    padding: 0;
+    color: white;
+    position: relative;
+    span {
+      position: absolute;
+      display: block;
+      width: 1rem;
+      height: 0;
+      left: 0.8125rem;
+      top: 0.3125rem;
+      -webkit-box-shadow: 1px 10px 1px 1px white, 1px 16px 1px 1px white, 1px 22px 1px 1px white;
+      box-shadow: 0 10px 0 1px white, 0 16px 0 1px white, 0 22px 0 1px white;
+    }
+    &:hover {
+      span {
+        -webkit-box-shadow: 1px 10px 1px 1px #b3b3b3, 1px 16px 1px 1px #b3b3b3, 1px 22px 1px 1px #b3b3b3;
+        box-shadow: 0 10px 0 1px #b3b3b3, 0 16px 0 1px #b3b3b3, 0 22px 0 1px #b3b3b3;
+      }
+    }
+  }
+}
+
+.left-small {
+  width: 2.8125rem;
+  height: 2.8125rem;
+  position: absolute;
+  top: 0;
+  border-right: solid 1px #1a1a1a;
+  left: 0;
+}
+
+.right-small {
+  width: 2.8125rem;
+  height: 2.8125rem;
+  position: absolute;
+  top: 0;
+  border-left: solid 1px #1a1a1a;
+  right: 0;
+}
+
+.tab-bar-section {
+  padding: 0 0.625rem;
+  position: absolute;
+  text-align: center;
+  height: 2.8125rem;
+  top: 0; }
+  @media only screen and (min-width: 40.063em) {
+    .tab-bar-section {
+      text-align: left; } }
+  .tab-bar-section.left {
+    left: 0;
+    right: 2.8125rem; }
+  .tab-bar-section.right {
+    left: 2.8125rem;
+    right: 0; }
+  .tab-bar-section.middle {
+    left: 2.8125rem;
+    right: 2.8125rem; }
+
+.left-off-canvas-menu {
+  -webkit-backface-visibility: hidden;
+  width: 15.625rem;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  overflow-y: auto;
+  background: #333333;
+  z-index: 1001;
+  box-sizing: content-box;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  -o-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+  left: 0;
+  * {
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+.right-off-canvas-menu {
+  -webkit-backface-visibility: hidden;
+  width: 15.625rem;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  overflow-y: auto;
+  background: #333333;
+  z-index: 1001;
+  box-sizing: content-box;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  -ms-transform: translate3d(100%, 0, 0);
+  -o-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  right: 0;
+  * {
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+ul.off-canvas-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  li {
+    label {
+      padding: 0.3rem 0.9375rem;
+      color: #999999;
+      text-transform: uppercase;
+      font-weight: bold;
+      background: #444444;
+      border-top: 1px solid #5e5e5e;
+      border-bottom: none;
+      margin: 0;
+    }
+    a {
+      display: block;
+      padding: 0.66667rem;
+      color: rgba(255, 255, 255, 0.7);
+      border-bottom: 1px solid #262626;
+      transition: background 300ms ease;
+      &:hover {
+        background: #242424;
+      }
+    }
+  }
+}
+
+.move-right {
+  > .inner-wrap {
+  -webkit-transform: translate3d(15.625rem, 0, 0);
+  -moz-transform: translate3d(15.625rem, 0, 0);
+  -ms-transform: translate3d(15.625rem, 0, 0);
+  -o-transform: translate3d(15.625rem, 0, 0);
+  transform: translate3d(15.625rem, 0, 0);
+  }
+  .exit-off-canvas {
+    -webkit-backface-visibility: hidden;
+    transition: background 300ms ease;
+    cursor: pointer;
+    box-shadow: -4px 0 4px rgba(0, 0, 0, 0.5), 4px 0 4px rgba(0, 0, 0, 0.5);
+    display: block;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1002;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+}
+
+@media only screen and (min-width: 40.063em) {
+  .move-right .exit-off-canvas:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.move-right {
+  > .inner-wrap {
+  -webkit-transform: translate3d(-15.625rem, 0, 0);
+  -moz-transform: translate3d(-15.625rem, 0, 0);
+  -ms-transform: translate3d(-15.625rem, 0, 0);
+  -o-transform: translate3d(-15.625rem, 0, 0);
+  transform: translate3d(-15.625rem, 0, 0); }
+  }
+  .exit-off-canvas {
+    -webkit-backface-visibility: hidden;
+    transition: background 300ms ease;
+    cursor: pointer;
+    box-shadow: -4px 0 4px rgba(0, 0, 0, 0.5), 4px 0 4px rgba(0, 0, 0, 0.5);
+    display: block;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1002;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+}
+
+@media only screen and (min-width: 40.063em) {
+  .move-left .exit-off-canvas:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.csstransforms.no-csstransforms3d .left-off-canvas-menu {
+  -webkit-transform: translate(-100%, 0);
+  -moz-transform: translate(-100%, 0);
+  -ms-transform: translate(-100%, 0);
+  -o-transform: translate(-100%, 0);
+  transform: translate(-100%, 0);
+}
+.csstransforms.no-csstransforms3d .right-off-canvas-menu {
+  -webkit-transform: translate(100%, 0);
+  -moz-transform: translate(100%, 0);
+  -ms-transform: translate(100%, 0);
+  -o-transform: translate(100%, 0);
+  transform: translate(100%, 0);
+}
+.csstransforms.no-csstransforms3d .move-left > .inner-wrap {
+  -webkit-transform: translate(-15.625rem, 0);
+  -moz-transform: translate(-15.625rem, 0);
+  -ms-transform: translate(-15.625rem, 0);
+  -o-transform: translate(-15.625rem, 0);
+  transform: translate(-15.625rem, 0);
+}
+.csstransforms.no-csstransforms3d .move-right > .inner-wrap {
+  -webkit-transform: translate(15.625rem, 0);
+  -moz-transform: translate(15.625rem, 0);
+  -ms-transform: translate(15.625rem, 0);
+  -o-transform: translate(15.625rem, 0);
+  transform: translate(15.625rem, 0);
+}
+
+.no-csstransforms .left-off-canvas-menu {
+  left: -15.625rem;
+}
+.no-csstransforms .right-off-canvas-menu {
+  right: -15.625rem;
+}
+.no-csstransforms .move-left > .inner-wrap {
+  right: 15.625rem;
+}
+.no-csstransforms .move-right > .inner-wrap {
+  left: 15.625rem;
+}
+</pre>
+
+<p dir="ltr">From here, you’ll want to modify your page.tpl.php file. What we chose to do was utilize the Top Bar, a feature currently in Zurb 4 that degrades quite nicely when used within the Off-Canvas menu, and some custom regions to get our main menu into the page. This allows the client to have control over this area just as they would with any other region on the page or within the site. We can add blocks to this region, add contexts for its usage on specific pages, or under certain conditions, really opening up the possibilities of what the menu can be used for. Imagine a scenario where, on user profile pages, the off-canvas menu included links to content creation tools, user settings, etc. After you download the tpl file, you’ll want to take your current page.tpl.php contents, and insert them within the Section with the class of “main-section.” This is basically your normal page contents, with everything else being the wrapper and structure of your off-canvas menu.</p>
+<pre class="brush: php; " title="Page Template page.tpl.php">
+<!--.page -->
+<div class="outer-page">
+  <div class="off-canvas-wrap">
+    <div class="inner-wrap">
+      <a class="mobile-logo" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
+        <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+      </a>
+      <nav class="tab-bar">
+        <section class="left-small">
+          <a class="left-off-canvas-toggle menu-icon" ><span></span></a>
+        </section>
+
+        <section class="middle tab-bar-section">
+          <h1 class="title"><a href="/">Home</a></h1>
+        </section>
+        <a href="#" class="right-search-toggle">
+           <section class="right-small">
+           </section>
+        </a>
+      </nav>
+
+    <aside class="left-off-canvas-menu">
+      <a class="mobile-logo-oc" href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
+        <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+      </a>
+
+      <?php if ($top_bar): ?>
+        <!--.top-bar -->
+        <?php if ($top_bar_classes): ?>
+        <div class="<?php print $top_bar_classes; ?>">
+        <?php endif; ?>
+          <nav class="top-bar expanded"<?php print $top_bar_options; ?>>
+            <ul class="title-area">
+              <li class="name"><h1>Main Menu</h1></li>
+            </ul>
+            <section class="top-bar-section">
+              <?php if ($top_bar_main_menu) :?>
+                <?php print $top_bar_main_menu; ?>
+              <?php endif; ?>
+              <?php if ($top_bar_secondary_menu) :?>
+                <?php print $top_bar_secondary_menu; ?>
+              <?php endif; ?>
+            </section>
+          </nav>
+        <?php if ($top_bar_classes): ?>
+        </div>
+        <?php endif; ?>
+        <!--/.top-bar -->
+      <?php endif; ?>
+
+      <?php if ($page['off_canvas']): ?>
+        <div class="off-canvas-region">
+          <div class="off-canvas-inner">
+            <ul class="off-canvas-list">
+              <li><label>Main Menu</label></li>
+            </ul>
+            <?php print render($page['off_canvas']); ?>
+          </div>
+        </div> <!-- /.off-canvas-region -->
+      <?php endif; ?>
+
+    </aside>
+    <!-- content goes here -->
+    <section class="main-section">
+
+    </section>
+    <a class="exit-off-canvas"></a>
+    </div>
+  </div>
+</div>
+</pre>
+
+<p dir="ltr">The final step here is to ignore the Javascript that comes with Foundation 5 for off-canvas functionality (a mistake I made and suffered with trying to troubleshoot for quite some time) and just implement these few simple lines into your scripts file.</p>
+<p dir="ltr">Shared File:</p>
+
+<pre class="brush: js; " title="Page Template page.tpl.php"class="brush: php; " title="Page Template page.tpl.php">
+  $(".left-off-canvas-toggle:not(.processed)").click(function() {
+        $(".off-canvas-wrap").toggleClass("move-right");
+      }).addClass('processed');
+      $(".exit-off-canvas:not(.processed)").click(function() {
+        $(".off-canvas-wrap").removeClass("move-right");
+      }).addClass('processed');
+      $(".right-off-canvas-toggle:not(.processed)").click(function() {
+        $(".off-canvas-wrap").toggleClass("move-left");
+      }).addClass('processed');
+      $(".exit-off-canvas:not(.processed)").click(function() {
+        $(".off-canvas-wrap").removeClass("move-left");
+      }).addClass('processed');
+</pre>
+
+<p dir="ltr">There are some tweaks that can be made from here, and I recommend that if you’re looking for more robust cross-browser support, you look into the current string of threads over on the Zurb community to see what works best for your needs. For us, this solution has resolved a big need for our clients, and is now allowing us to deliver beautiful off-canvas menus on every project, while keeping everything clean, organized, and Zurby.</p>  </div>
+
+  <div class="field-cta-buttons field-wrapper">
+    <div class="cta-wrap">
+	<h3>Learn more about...</h3>
+	<a href="../services/drupal-web-development" class="button" onClick="_gaq.push(['_trackEvent', 'LearnMore', 'Click', 'Web Development']);">Web Development</a>
+	<a href="../services/web-development-design" class="button" onClick="_gaq.push(['_trackEvent', 'LearnMore', 'Click', 'Web Design']);">Web Design</a>
+	<a href="/web-design-company" class="button" onClick="_gaq.push(['_trackEvent', 'LearnMore', 'Click', 'Cheeky Monkey Media']);">Cheeky Monkey Media</a>
+</div>  </div>
+<div class="field-categories inline field-wrapper clearfix"><h2 class="field-label">Categories: </h2><ul class="links inline"><li class="taxonomy-term-reference-0" class="field-item even"><a href="/categories/drupal">Drupal</a></li><li class="taxonomy-term-reference-1" class="field-item even odd"><a href="/categories/drupal-planet">Drupal Planet</a></li><li class="taxonomy-term-reference-2" class="field-item even odd even"><a href="/categories/how">How To</a></li><li class="taxonomy-term-reference-3" class="field-item even odd even odd"><a href="/categories/theming">Theming</a></li></ul></div><div class="field-tags inline field-wrapper clearfix"><h2 class="field-label">Tags: </h2><ul class="links inline"><li class="taxonomy-term-reference-0" class="field-item even"><a href="/tags/zurb-foundation">Zurb Foundation</a></li><li class="taxonomy-term-reference-1" class="field-item even odd"><a href="/tags/themes-drupal">themes for drupal</a></li></ul></div>
+  </body>
+</html>
+

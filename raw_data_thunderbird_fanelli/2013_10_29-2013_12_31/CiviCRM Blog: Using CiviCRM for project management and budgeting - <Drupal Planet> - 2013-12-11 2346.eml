@@ -1,0 +1,112 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 11 Dec 2013 22:46:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 11 Dec 2013 22:46:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: Using CiviCRM for project management and budgeting
+Content-Transfer-Encoding: 8bit
+Content-Base: https://civicrm.org/blogs/chrischinchilla/using-civicrm-project-management-and-budgeting
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: Using CiviCRM for project management and budgeting</title>
+    <base href="https://civicrm.org/blogs/chrischinchilla/using-civicrm-project-management-and-budgeting">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><div>
+	At <a href="http://greenrenters.org" target="_blank">Green Renters</a> we have tried to incorporate as much of what we do into CiviCRM as possible, we figured that there was no point having a central repository of how everyone engages with our organisation if the information wasn't complete, so we sought to consolidate as much of what we do into CiviCRM as possible. This is a post explaining how we incorporated and integrated project management and accounting into our CiviCRM.</div>
+<div>
+	 </div>
+<div>
+	<strong>Caveats</strong></div>
+<div>
+	We are a small and simple organisation, so have simple requirements for accounting, project management etc… So the data objects present in CiviCRM for undertaking these tasks work for us. If you have more complex requirements, then they probably wont work for you.</div>
+<div>
+	 </div>
+<div>
+	There's a reasonable amount of Drupal integration here, these could be replaced with CiviCRM functionality such as reports, profiles etc if you wanted to.</div>
+<div>
+	 </div>
+<div>
+	We are currently using Drupal 6, which isn't officially supported by CiviCRM any more and this especially applies to a lot of the Drupal integration we use. We had to do a lot of hot fixes to get some views integrations to work that get broken every time we upgrade CiviCRM.</div>
+<div>
+	 </div>
+<div>
+	Bearing in mind the above, screenshots will be in Drupal 6, so you may see different options on your site (probably better options!) but I always feel that seeing a practical example is far better than a made up demo.</div>
+<div>
+	 </div>
+<div>
+	<strong>"Projects"</strong></div>
+<div>
+	We opted to use campaigns in CiviCampaign as a 'project', the non-correct terminology doesn't bother us, in some respects, projects within nonprofits are often campaigns of sorts anyway. By using campaigns you also are able to relate other CiviCRM data objects to them, like contributions and activities.</div>
+<div>
+	<img alt="" src="https://greenrentersimages.s3.amazonaws.com/campaignsscreenshot.PNG" /></div>
+<div>
+	 </div>
+<div>
+	<strong>Budget tracking</strong></div>
+<div>
+	This was far simpler to accomplish than we expected and is mainly achieved by just posting negative contributions and associating them to a campaign, there are also more complex ways this could be setup, such as adding custom fields for sub classifying payments and also using soft credits to represent payments that a staff member was reimbursed for. We use 'pending' payments to represent payment requests or submitted (depending if it's coming in or out of the organisation) and update these to completed when they have been paid.</div>
+<div>
+	<img alt="" src="https://greenrentersimages.s3.amazonaws.com/feequote.PNG" /><img alt="" src="https://greenrentersimages.s3.amazonaws.com/hourlypaymentrequest.PNG" /><img alt="" src="https://greenrentersimages.s3.amazonaws.com/softcreditforreimbursement.PNG" /></div>
+<div>
+	 </div>
+<div>
+	<strong>Workshop handling</strong></div>
+<div>
+	Our main bread and butter income is running workshops and we're using different participant types and statuses to represent bookers, presenters, admins and attendees of each workshop, 'registering' each relevant contact to the event when it's created. This allows us to see who relates to each event, even if they're not actually a physical attendee. We have created a series of price sets to help assist with our standard hourly rates for services and use a free text box that allows us to insert the quantity (of materials or hours) that we are charging for. We have also customised receipts so that when sent to participants of a certain type (i.e. 'booker'), the terminology of the receipt is changed to reflect a quote or invoice.</div>
+<div>
+	<img alt="" src="https://greenrentersimages.s3.amazonaws.com/participantroles.PNG" /><img alt="" src="https://greenrentersimages.s3.amazonaws.com/paymentsets.PNG" /></div>
+<div>
+	 </div>
+<div>
+	<strong>Budget reporting</strong></div>
+<div>
+	A lot of our income comes from grant funded projects and it's important for us to quickly know how much money is left in a project's pot. To accomplish this we created a Drupal view combined with the <a href="https://drupal.org/project/views_calc‎" target="_blank">views calc</a> module that allows us to filter per project and get a summary of what's been spent. By utilising views, this offers a myriad of customisation options.</div>
+<div>
+	<img alt="" src="https://greenrentersimages.s3.amazonaws.com/budgetreport.PNG" /></div>
+<div>
+	 </div>
+<div>
+	<strong>Project management</strong></div>
+<div>
+	For very basic project management we use activities assigned to a campaign and these are displayed in a Drupal view and can filtered by assignee, project, priority etc.</div>
+<div>
+	<img alt="" src="https://greenrentersimages.s3.amazonaws.com/task.PNG" /><img alt="" src="https://greenrentersimages.s3.amazonaws.com/projecttasks.PNG" /></div>
+<div>
+	 </div>
+<div>
+	<strong>Summary</strong></div>
+<div>
+	We have a lot more smoothing out we can and should to to our set up but we hope it gives at least a rough idea of some of the potential for using CiviCRM for a multitude of tasks that it may not be specifically designed for, if you are willing to accept a few compromises and semantic inconsistencies and embrace the ease of keeping everything in the same place.</div>
+<div>
+	 </div>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/civicrm" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviCRM</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/civicampaign" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviCampaign</a>      </li>
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/civicontribute" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviContribute</a>      </li>
+          <li class="field-item odd">
+        <a href="/civicrm-blog-categories/community" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Community</a>      </li>
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/finance-and-accounting" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Finance and Accounting</a>      </li>
+          <li class="field-item even">
+        <a href="/civicrm-blog-categories/interface-and-design" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Interface and design</a>      </li>
+          <li class="field-item odd">
+        <a href="/civicrm-blog-categories/case-studies-and-user-stories" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Case studies and user stories</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

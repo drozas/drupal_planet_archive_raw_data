@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 07 Oct 2014 14:02:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 07 Oct 2014 14:02:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Where’s the Message in Panels Node Edit Forms?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/wheres-the-message-in-panels-node-edit-forms/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Where’s the Message in Panels Node Edit Forms?</title>
+    <base href="http://forumone.com/insights/wheres-the-message-in-panels-node-edit-forms/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Why are my messages (errors, status, etc.) not showing up on my panel override of a node add/edit page?</p>
+<p>I wrestled with this problem for longer than I should have, all because I couldn’t find <a href="https://www.drupal.org/node/2164161#comment-8577099" target="_blank">this simple Drupal post</a>.</p>
+<p>Essentially, I was adding the “Messages” block to the panel content of my node/edit page that I was overriding. Thus, no matter what I did, that message area would never render.</p>
+<p>My finding is that <code class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="enlighter">drupal_get_message</code> is a unique function. Once you call it, all messages are cleared from it, so calling it again essentially will be too late to see any messages that might have been there. <code class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="enlighter">page.tpl.php</code> calls this function, and Panels never gets a chance to try to get the messages that might be waiting to be displayed.</p>
+<p>As a result, adding the following as a module or theme pre-process hook will keep the page from calling messages (replacing “<strong>MyThemeOrModule</strong>” with the appropriate name, of course):</p>
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="enlighter">function MyThemeOrModule_preprocess_page(&amp;$variables) {
+
+  // This disables message-printing on a content type edit page so panels can print it
+  if (isset($variables['page']['content']['system_main']['content']['form_id']['#id'])) {
+    if ($variables['page']['content']['system_main']['content']['form_id']['#id'] == 'edit-MyContentTypeName-node-form') {
+      $variables['show_messages'] = FALSE;
+    }
+  }
+}</pre>
+<p>Be sure to replace “<strong>MyContentTypeName</strong>” with the machine name of your content type. If you have doubts, look at the value in <code class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="enlighter">$variables['page']['content']['system_main']['content']['form_id']['#id']</code> while looking at the content type’s edit page. We add this IF statement to make sure we disable page-level messages on this edit form and not on the entire site.</p>
+<p><code class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="enlighter">$variables['show_messages'] = FALSE;</code> is what actually disables the messages from being displayed at the page level so Panels has a chance to display them instead.</p>
+<p>Messages. Displayed.</p>
+<p>&nbsp;</p>
+  </body>
+</html>
+

@@ -1,0 +1,34 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 28 Sep 2013 20:45:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 28 Sep 2013 20:45:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hertzog: First Bug
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chertzog.com/post/first-bug
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hertzog: First Bug</title>
+    <base href="http://chertzog.com/post/first-bug">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p> When setting up this site, I first bug I ran into was that the “Number of posts on front page” setting was mysteriously missing. Additionally, so was the front page.</p>
+<p>So I remembered hearing about the default “list” pages being replaced by views. After enabling the Views module, there it was, a view for the front page. Great!</p>
+<p>Then knowing that I wanted to get this site listed on Drupal Planet, I would need to create a “Planet Specific” feed. One vocabulary and one taxonomy term later, Done. </p>
+<p>To test things out, I created a bunch of test nodes.  That’s when I noticed that I only wanted 5 posts on a page for the taxonomy term list pages. Yes these lists are available in views, but I wanted to keep things simple, and just use the taxonomy module pages.</p>
+<p>I remembered that the Posts per page setting resided in Site Information settings, but it wasn’t there. So digging into the code in the node module, I found this:</p>
+<p class="”code-header”">D8 node.module</p>
+<pre class="prettyprint"><code>function node_form_system_site_information_settings_form_alter(&amp;$form, &amp;$form_state, $form_id) {<br />&nbsp; $form['front_page']['default_nodes_main'] = array(<br />&nbsp;&nbsp;&nbsp; '#type' =&gt; 'select',<br />&nbsp;&nbsp;&nbsp; '#title' =&gt; t('Number of posts on front page'),<br />&nbsp;&nbsp;&nbsp; '#default_value' =&gt; \Drupal::config('node.settings')-&gt;get('items_per_page'),<br />&nbsp;&nbsp;&nbsp; '#options' =&gt; drupal_map_assoc(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30)),<br />&nbsp;&nbsp;&nbsp; '#access' =&gt; (\Drupal::config('system.site')-&gt;get('page.front') == 'node'),<br />&nbsp;&nbsp;&nbsp; '#description' =&gt; t('The maximum number of posts displayed on overview pages such as the front page.'),<br />&nbsp; );<br />&nbsp; $form['#submit'][] = 'node_form_system_site_information_settings_form_submit';<br />}</code></pre>  
+<p>So the setting was there, why wasn’t it showing?</p>
+<p>Since this form alter was leveraging the hook_FORM_ID_alter(),  I had to assume that the form ID must have changed. Doing an inspect element on the form, and looking for the form_id confirmed my suspicions. </p>
+<p>The “_form” had been dropped from the “system_site_information_settings” form ID. So simply dropping the “_form” from the form alter call, fixed the issue.</p>
+<p>See the patch issue for Drupal 8: <a href="https://drupal.org/node/2099821">https://drupal.org/node/2099821</a></p>
+<p>All is well with the world.</p>
+</div></div></div><div class="field field-node--field-category field-name-field-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories</div><div class="field-items"><div class="field-item even"><a href="/category/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

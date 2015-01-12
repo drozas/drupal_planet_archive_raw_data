@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 11 Dec 2014 21:03:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 11 Dec 2014 21:03:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: All TestBase derived tests now enforce strict configuration schema adherence by default
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/451983
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: All TestBase derived tests now enforce strict configuration schema adherence by default</title>
+    <base href="https://groups.drupal.org/node/451983">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Configuration schema was originally introduced to help describe configuration for translations. Then it expanded considerably and is now used to export configuration entities automatically for example (unless you want to write code to manually define what to export). Configuration schema is also used to automatically typecast values to their expected types. This ensures that although PHP and web forms in general favour strings over all other types, the right types are used when saving configuration. That is important so when deploying configuration, only actual changes will show up in the difference, no random type changes. Schema enforces certain rules and best practices of configuration on its users, for example that each piece in the active configuration should have an owner. Finally configuration schema based configuration validation helps find several types of bugs in code that is otherwise not or incorrectly tested.</p>
+<p>Therefore after a month+ of work to make all core tests pass strict configuration schema checking, we are making TestBase default to strictly check all configuration against configuration schemas. There are only a few tests exempt from this in the testing of the configuration system itself. This affects all contributed module developers writing TestBase (WebTestBase, KernelTestBase, etc.) extending tests. This may result in new test failures which indicate either issues in your schema, your configuration, your tests, migrations, etc. Either way it indicates that in some cases unexpected data structures are generated.</p>
+<p><a href="https://www.drupal.org/node/2391795">Read more in the change notice</a>.
+</p>
+  </body>
+</html>
+

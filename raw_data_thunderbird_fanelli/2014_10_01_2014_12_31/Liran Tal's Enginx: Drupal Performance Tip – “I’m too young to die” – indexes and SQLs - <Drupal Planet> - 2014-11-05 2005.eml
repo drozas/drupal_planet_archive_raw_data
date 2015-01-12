@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Nov 2014 19:05:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Nov 2014 19:05:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Liran Tal's Enginx: Drupal Performance Tip – “I’m too young to die” – indexes and SQLs
+Content-Transfer-Encoding: 8bit
+Content-Base: http://enginx.com/blog/drupal-performance-improvement-im-young-die-2/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Liran Tal's Enginx: Drupal Performance Tip – “I’m too young to die” – indexes and SQLs</title>
+    <base href="http://enginx.com/blog/drupal-performance-improvement-im-young-die-2/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="seriesmeta">This entry is part 1 of 1 in the series <a href="http://enginx.com/series/drupal-performance-tips/" class="series-60" title="Drupal Performance Tips">Drupal Performance Tips</a></div><p><em>In the spirit of the computer video game <a href="http://doom.wikia.com/wiki/Doom" target="_blank">Doom </a>and its <a href="http://doom.wikia.com/wiki/Skill_level" target="_blank">skill levels</a>, we&#8217;ll review a few ways you can improve your <a href="http://drupal.org" target="_blank">Drupal </a>speed performance and optimize for better results and server response time. These tips that we&#8217;ll cover may be at times specific to Drupal 6 versions, although you can always learn the best practices from these examples and apply them on your own code base.</em></p>
+<div style="width: 256px" class="wp-caption aligncenter"><img src="http://adamatomic.com/pics/blog/doom/doom2.jpg" alt="Doom" width="246" height="175" /><p class="wp-caption-text">Doom</p></div>
+<p><strong>Using indexes</strong>, and <strong>proper SQL queries</strong> can boost performance by a huge factor, especially if the affected tables are very big (millions of rows). Take a look at the diff below showing a fix to a not so proper, and ill-advised use of querying the database:</p>
+<p><a href="http://enginx.com/wp-content/uploads/2014/11/drupal_perf-1.png"><img class="aligncenter  wp-image-498" src="http://enginx.com/wp-content/uploads/2014/11/drupal_perf-1.png" alt="drupal_perf-1" width="857" height="238" /></a></p>
+<p>The bad performing query took anything between 6 to 60 seconds to run, depending on the data, and database load, and database&#8217;s current cache state. The newer query takes milliseconds.</p>
+
+<!-- Easy AdSense V7.43 -->
+<!-- [leadout: 1 urCount: 1 urMax: 0] -->
+<div class="ezAdsense adsense adsense-leadout" style="text-align:center;margin:12px;">  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- enginx-blog-wide-post -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-9677997565991773"
+     data-ad-slot="6746030703"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<!-- Easy AdSense V7.43 -->
+<p>The post <a rel="nofollow" href="http://enginx.com/blog/drupal-performance-improvement-im-young-die-2/">Drupal Performance Tip &#8211; &#8220;I&#8217;m too young to die&#8221; &#8211; indexes and SQLs</a> appeared first on <a rel="nofollow" href="http://enginx.com">Liran Tal&#039;s Enginx</a>.</p>
+  </body>
+</html>
+

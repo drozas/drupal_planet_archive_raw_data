@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 07 Jan 2014 07:18:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 07 Jan 2014 07:18:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Larry Garfield: Beyond Abstract classes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.garfieldtech.com/blog/beyond-abstract
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Larry Garfield: Beyond Abstract classes</title>
+    <base href="http://www.garfieldtech.com/blog/beyond-abstract">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>Recently, Anthony Ferrara has been posting a periodic <a href="http://blog.ircmaxell.com/search/label/Beyond">"Beyond" series</a> about software design philosophy.  <a href="http://blog.ircmaxell.com/2013/11/beyond-inheritance.html">Some in particular</a> have hinted at concepts I've been pondering as well.  With his blessing, therefore, consider this a continuation of that series.</em></p>
+<p>PHP 5.4 is not exactly new, but it's finally starting to see actual usage by a decent number of people.  Its most notable new feature is <a href="http://www.php.net/traits">Traits</a>, which in PHP are implemented as, essentially, compile-time copy-paste.  Conceptually, though, they're a way to mix functionality into a class without using inheritance, and without requiring a separate distinct object for composition.  (At least in PHP; the term "trait" appears in other languages for similar but subtly different tools.)  That's not to say that they're a surrogate for composition; they most certainly are not. They serve a different purpose, that is, providing code for a class to reuse without using inheritance.</p>
+<p>Recently, I was reading an article (the link to which, of course, I cannot now locate) discussing the implementation of inheritance, such as it is, in Go, Rust, and other new-wave concurrent languages.  It made an interesting point that crystallized for me why it is I am so excited about traits.  Specifically, it noted that there are not one but two kinds of code reuse: <em>interface reuse</em> and <em>code reuse</em>.</p>
+<p><a href="http://www.garfieldtech.com/blog/beyond-abstract" target="_blank">read more</a></p>
+  </body>
+</html>
+

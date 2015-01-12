@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 03 Jan 2014 01:32:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 03 Jan 2014 01:32:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Tyler Frankenstein: Build a Pebble Application to Record a Geo Position in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tylerfrankenstein.com/code/build-pebble-application-record-geo-position-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Tyler Frankenstein: Build a Pebble Application to Record a Geo Position in Drupal</title>
+    <base href="http://tylerfrankenstein.com/code/build-pebble-application-record-geo-position-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-page-tags field-type-taxonomy-term-reference field-label-hidden clearfix"><ul class="links"><li class="taxonomy-term-reference-0"><a href="/tags/drupal-7x" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7.x</a></li><li class="taxonomy-term-reference-1"><a href="/tags/jdrupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">jdrupal</a></li><li class="taxonomy-term-reference-2"><a href="/tags/pebble" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">pebble</a></li><li class="taxonomy-term-reference-3"><a href="/tags/pebblegap" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">pebblegap</a></li><li class="taxonomy-term-reference-4"><a href="/tags/geofield" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">geofield</a></li><li class="taxonomy-term-reference-5"><a href="/tags/services" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">services</a></li><li class="taxonomy-term-reference-6"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet drupal</a></li></ul></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><img alt="" class="media-image" height="395" style="line-height: 1.5; width: 180px; height: 119px; float: right; margin-left: 1em; margin-bottom: 1em;" width="600" typeof="foaf:Image" src="http://www.tylerfrankenstein.com/sites/default/files/Family-of-3-Pebbles.jpg" />This tutorial describes how to build a <a href="https://getpebble.com/">Pebble</a> "smart watch" application for a <a href="https://www.drupal.org">Drupal</a> website using the <a href="http://developer.getpebble.com/2/guides/javascript-guide.html">PebbleKit Javascript Framework</a>.</p><p>The application itself will be fairly simple. It will wait for you to click the "Select" button on the Pebble watch. Once the button is clicked, the app will grab your current latitude and longitude coordinates. It will then use the <a href="https://drupal.org/project/services">Services</a> module to create an Article node and save the coordinates onto a <a href="https://drupal.org/project/geofield">Geofield</a> on your Drupal site.</p><p>Let's get started!</p><p></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 13 Nov 2013 20:05:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 13 Nov 2013 20:05:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Palantir: Git Workflow 2: Features Boogaloo
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.palantir.net/blog/git-workflow-2-features-boogaloo
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Palantir: Git Workflow 2: Features Boogaloo</title>
+    <base href="http://www.palantir.net/blog/git-workflow-2-features-boogaloo">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="featured-blog-image">  
+      <img typeof="foaf:Image" src="http://www.palantir.net/sites/default/files/styles/bloglandingpage-thumbnail/public/blog/images/Rubber_duck_meme.jpg?itok=fi_nRvMq" width="262" height="175" alt="The WAT duck in the version-control room: configuration management." title="The WAT duck in the version-control room: configuration management." />  </span>
+            <p>After the <a href="http://palantir.net/blog/how-git-what-you-want">previous post</a> about sticking to a Git workflow, questions came in about the <del>elephant</del> WAT duck in the version-control room: configuration management.</p>
+<p>Since Drupal’s configuration and the content live together in the same database, deploying and tracking configuration changes can get messy. In Drupal 8, this will no longer be the case and all will be well. Unfortunately, that’s a bit of a ways off. If you’re using a framework other than Drupal, feel free to scroll to the comment form at the bottom and add your own tales of woe and/or triumph regarding the deployment and tracking of configuration settings.</p>
+<p>My advice to fellow Drupalistas is a simple two-parter. First part: Use Features to get config into code and Git to get code where you want it. Second part: Don’t screw it up. This post details how to go about that second part.</p>
+<h2>Use Features for Deployment ...</h2>
+<p>I recommend "<a href="https://drupal.org/project/features">featurizing</a>" configuration as much as you can. Whenever possible, I make extensive use of a combination of modules like Features, Strongarm, Features Extra, and other Features adjuncts as necessary, and then I add to the mix a lot of update hooks. It's a bit cumbersome and Features can be a bit of a beast, so I try to mitigate that by doing the following <strike>two</strike> <strike>three</strike> <em>n</em> things:</p>
+<ol><li><strong>Combine your field bases.</strong> When featurizing nodetypes, all field_base definitions should be combined into a single file. It’s tempting to roll a separate feature for each content type. I tried this once, but that caused conflicts wherever fields were shared across content types. These conflicts were hard to track down, because whichever one got enabled or reverted most recently would override the other content types’ field definitions. The result was myriad little discrepancies. Some things would appear overridden even after a features-revert-all. This can be avoided by combining all field_bases into one feature. Do this even if you don’t have fields shared by multiple content types, because it’ll save you having to refactor your features when you need to share fields someday.</li>
+<li><strong>Limit the number of fingers in the pie.</strong> Each project needs a single release manager to administer the release plan. By the same token, it also needs a single Features manager to administer the featurization workflow. If multiple people are updating features and writing update hooks in the same sprint, that almost always leads to a headache.</li>
+<li><strong>Avoid featurizing when you don’t have to.</strong> You can define, for example, a View in code and maintain it that way without even using Features. There are also small configuration items that can be managed with Features+Strongarm, but if those are the only thing you need Features for, then you might skip the headache and just run a bash script that does some variable_set()s via Drush. Features is a great big power tool but sometimes all you need is a little pair of tweezers. You don't have to use the power tool all the time. However, if you're already using it for something, it can also be convenient to put everything together.<br /><br />
+This will be different for every project, and this is where you will use your own judgement no matter how detailed your prescribed workflow is.
+</li>
+<h2>… Even Though Features is Not Really Meant for Deployment</h2>
+<li><strong>Watch out! Remember that Features isn’t actually meant for deployment.</strong> I should probably feel deep shame for misusing Features so egregiously. But I don’t, because there isn’t a better option for deploying configuration without damaging content prior to Drupal 8, may its release be swift and glorious.<br /><br />
+However this can result in strange behavior, and sometimes you have to hack your feature to avoid fun “gotchas.” Example: What do you suppose would happen if you featurize a view whose display is access-restricted by role on a site that has completely different roles? If you guessed “pick a role seemingly at random and grant access to the view to that role,” then you win a big gift basket full of <a href="https://www.destroyallsoftware.com/talks/wat">WAT</a>. The reason it does this is that roles get exported as raw role IDs. If your site has a user role called “super powerful adminstrator” with RID = 4 and you deploy to a site where “random user who just signed up” has RID = 4, then you have a potential problem when deploying features.
+<p>Features generates something like this:</p>
+<blockquote><p>
+<code><br />
+  $handler-&gt;display-&gt;display_options['access']['role'] = array(<br />
+	4 =&gt; ‘4’,<br />
+  );<br /></code></p></blockquote>
+<p>But you can trick it into specifying role by name instead of ID like so:</p>
+<blockquote><p><code><br />
+// Finds the role by name. If not found, then it’s nobody.<br />
+$super_powerful_rid = ($role = user_role_load_by_name(‘super powerful adminstrator’)) ? $role-&gt;rid : NULL;</code></p>
+<p>// This is how Views sets access. Replace number with your role’s ID.<br />
+$handler-&gt;display-&gt;display_options['access']['role'] = array(<br />
+	$super_powerful_rid  =&gt; $super_powerful_rid ,<br />
+);<br /></p></blockquote>
+<p>So that if there is a role with the right name, you allow them access, and if not, you don’t allow access to anyone until someone goes in and sorts out the role mismatch. Much safer.</p>
+<p>Rules does pretty much the same thing:</p>
+<blockquote><p><code><br />
+"IF" : [<br />
+    	{ "user_has_role" : { "account" : [ "account" ], "roles" : { "value" : { "4" : "4" } } } },<br />
+],<br /></code></p></blockquote>
+<p>Depending on what your rule does, this could be pretty disastrous. Imagine you execute a heavy query every time one of your super special admins views, which is fine. But now it’s running on every. single. pageview. Not good.</p>
+<p>Once again, hacking your feature saves the day:</p>
+<blockquote><p><code><br />
+// This part goes outside of the Rule declaration<br />
+$rid = ($role = user_role_load_by_name(super powerful administrator)) ? $role-&gt;rid : NULL;</code></p>
+<p> …</p>
+<p>"IF" : [<br />
+{ "user_has_role" : { "account" : [ "account" ], "roles" : { "value" : { "$rid" : "$rid" } } } },<br />
+],<br /></p></blockquote>
+<p>You can also use this to let users set configuration that is used by your feature without giving them access to the rule or view definition itself. Just stick a `variable_get()` in there, and revert the feature regularly (say, via a cron job), and views and rules can use your users’ configurable values relatively securely. Just don’t forget to escape your user inputs, kids.</p></li>
+</ol><h2>So, Wait. What Does This Have To Do With Git?</h2>
+<p>Well, there is one big danger to hacking your features. Since it’s not what Features is expecting, Features will steamroll right over your clever hacks with every `drush features-update`. Each update presents the risk of unexpectedly going back to whatever hardcoded values Features sees fit to include. Your best defense against this backslide is to review your staged changes verrry carefully.<br /><code><br />
+git add my_features_stuff/<br />
+git diff --cached<br /></code></p>
+<p>If Features does clobber your hacks, you’ll have to tiptoe through your code and cherry-pick the parts you want to keep. I find that Netbeans has a nice way of displaying changes and letting you click to revert a chunk to the unstaged version. Save and repeat until only the changes you want are staged. Then commit. </p>
+<p>Congratulations! You did the wrong thing the right way, and it will work great, unless it doesn’t. In the latter case, I hope you followed all the previous advice about having a designated Features manager and making frequent, small commits. Otherwise, best of luck in that impending war with your past self.</p>
+  </body>
+</html>
+

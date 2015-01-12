@@ -1,0 +1,113 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 04 Dec 2013 21:01:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 04 Dec 2013 21:01:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This (two!) weeks in Drupal Core: December 4, 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/383968
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This (two!) weeks in Drupal Core: December 4, 2013</title>
+    <base href="https://groups.drupal.org/node/383968">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>The last two weeks have been absolutely ACTION PACKED Drupal 8 core-wise. Let's see if I can remember it all. :)</p>
+<ul>
+<li>The <a href="https://groups.drupal.org/imp">Migrate in Core team</a> had their first <a href="https://drupal.org/node/2125717">core patch land</a>! This provides the underlying architecture for migrations, as well as a variable-to-CMI migration as a proof of concept. Drupal 8 will provide migrations from Drupal 6 and Drupal 7 both. If you're curious to see how it works, read the <a href=”https://drupal.org/node/2141805”>change notice</a> for a quick overview, and the <a href="https://drupal.org/node/2127611">excellent documentation</a> for more details. BIG congrats to mikeryan, chx, marvil07, bdone, jessehs, mpgeek, BTMash, fastangel, mongolito404, Moshe Weitzman, eliza411, YesCT, dawehner, and cosmicdreams!</li>
+<li>Ding, dong! <a href="https://drupal.org/node/2088121">Overlay module is dead!</a> My ears are still ringing a bit from all of the cheers and applause. :P~ However, rather than the module simply being booted to /dev/null, it has instead been replaced by a nifty <a href="https://drupal.org/node/787896">"Back to site" button</a> that shows up when you're in an admin context, and takes you back to where you were on your main site:<br />
+<img src="https://groups.drupal.org/files/Screen Shot 2013-12-04 at 9.43.31 AM.png" alt="When on an admin page, a 'Back to site' link appears in the top left portion of the toolbar." /><br />
+After <a href="https://groups.drupal.org/node/375153">extensive usability testing</a>, this solution was found to solve the same "lost context" problem as the Overlay, but with a few thousand fewer lines of code. :) Let us all build nod_ a statue, as well as yoroy, lisarex, and Bojhan from the UX team.</li>
+
+<li>Alex Pott, single-handedly responsible for almost 50% of the commits in Drupal 8 since he became a core maintainer, is nearing the end of his savings account + <a href="https://www.gittip.com/alexpott/">Gittip</a> supplements that have allowed him to focus on core full time the past few months. Alex is <a href="http://alex.vit-al.com/node/16">actively seeking diverse community funding to sustain his momentum independently</a>. If you're a business excited about the new awesome things Drupal 8 will bring, this would be an excellent way to very directly support all of D8 contributors' efforts.</li>
+<li><a href="https://drupal.org/node/2142291">drupal 8.0-alpha6</a> shipped, and <a href="https://groups.drupal.org/node/377783">alpha 7 is due on December 16</a>. Get your patches in now! <a href="https://drupal.org/project/issues/search/drupal?issue_tags_op=%3D&amp;issue_tags=alpha+target">Here's the current hit-list.</a></li>
+<li>There were also <a href="https://drupal.org/SA-CORE-2013-003">security releases</a> of Drupal 6 and 7, which <a href="https://drupal.org/project/issues/search/drupal?issue_tags_op=%3D&amp;issue_tags=SA-CORE-2013-003">we are are in the process of forward-porting to Drupal 8 now</a>. If you can help here to ensure expedient patching, that would be great!</li>
+</ul>
+<h2 id="help">Where can I help?</h2>
+<ul>
+<li>Performance-wise, <a href="https://drupal.org/node/2073819">remove  drupal_add_css()</a>, <a href="https://drupal.org/node/2073823">remove drupal_add_js()</a>, and <a href="https://drupal.org/node/1830588">remove drupal_set_title()</a> are all very close, and fixing these helps to enable render caching, as well as get us to beta 1 sooner.</li>
+<li>If you're interested in learning Drupal 8 OO best practices, the ongoing effort to <a href="https://drupal.org/node/1971384">Convert page callbacks to Controllers</a> and <a href="https://drupal.org/node/2112569">Convert non-controller forms to FormInterface</a> is still happening. Read the <a href="https://drupal.org/node/1953342">docs on how to get started</a>, as well as <a href="https://drupal.org/node/2117411">Form API-specific info</a>.</li>
+<li>The Accessibility team is seeking help with the <a href="https://groups.drupal.org/node/366873">Green by 2014</a> initiaitve, which aims to ensure that there are zero accessibility-related test failures by 2014! Read that post for info on getting started.</li>
+<li>If you eat HTML and CSS for breakfast, the ongoing <a href="https://groups.drupal.org/node/283223">Style Guide for Drupal 8's admin theme</a> effort needs helping hands. See if you can help with any of the <a href="https://drupal.org/project/issues/search?projects=&amp;status[]=Open&amp;issue_tags_op=%3D&amp;issue_tags=styleguide">issues tagged "styleguide"</a>.</li>
+<li>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</li>
+</ul>
+<!--break--><!--break--><h2 id="commits">Notable Commits</h2>
+<p>The best of <code> git log --since "2 weeks ago" --pretty=oneline</code> (232 commits in total):</p>
+<p>In addition to the ones mentioned above:</p>
+<ul>
+<li>In PerformanceVille, we're making great progress on removing dynamic page elements to allow render caching to be awesome. Some relevant commits:
+<ul>
+<li><a href="https://drupal.org/node/2115061">Issue #2115061 by JeroenT, tim.plunkett: Remove direct calls to drupal_add_html_head_link().</a></li>
+<li><a href="https://drupal.org/node/2102489">Issue #2102489 by InternetDevels: Remove drupal_set_title in views module controllers.</a></li>
+<li><a href="https://drupal.org/node/2102449">Issue #2102449 by amateescu, swentel: Remove drupal_set_title in field_ui module controllers.</a></li>
+<li><a href="https://drupal.org/node/2102445">Issue #2102445 by disasm: Remove drupal_set_title in content_translation module controllers.</a></li>
+<li><a href="https://drupal.org/node/2102369">Issue #2102369 by vijaycs85, JeroenT, ACF, rteijeiro, -enzo-, tim.plunkett: Remove drupal_set_title in custom block module controllers and entitylist controllers.</a></li>
+</ul>
+<p>See the <a href="#help">Where can I help?</a> section for how to help push this area further!</p></li>
+
+<li>Meanwhile, in Entity Field API-topia, lots of refactoring that helps bring these APIs closer to solid ground:
+<ul>
+<li><a href="https://drupal.org/node/2047229">Issue #2047229 by fago, smiletrl, Berdir, effulgentsia, amateescu: Make use of classes for entity field and data definitions.</a></li>
+<li><a href="https://drupal.org/node/2076445">Issue #2076445 by plach, andypost, yched, Gábor Hojtsy: Make sure language codes for original field values always match entity language regardless of field translatability.</a></li>
+<li><a href="https://drupal.org/node/2142549">Issue #2142549 by amateescu, yched: Support multi-column field types in base tables.</a></li>
+<li><a href="https://drupal.org/node/1988612">Issue #1988612 by effulgentsia, yched, Wim Leers, Berdir, Pancho: Apply formatters and widgets to rendered entity base fields, starting with node.title.</a></li>
+</ul>
+</li>
+<li>In "API changes you should be aware of" Land:
+<ul>
+<li><a href="https://drupal.org/node/1998638">Issue #1998638 by damiankloip, dawehner, kim.pepper, cosmicdreams, larowlan, Damien Tournoud: Replace all remaining superglobals with Symfony Request object</a> removed all instances of $_GET, $_POST, and so on with the Symfony Request object. So from now on, just say "no" to $GLOBALS! </li>
+<li>Additionally, <a href="https://drupal.org/node/2131851">Issue #2131851 by tim.plunkett: Form errors must be specific to a form and not a global</a> changed the signature of various form error-handling functions to now take a $form_state argument.</li>
+</ul>
+<p>As always, see <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the whole list of Drupal 8 API changes.</p></li>
+<li>From the Isle of Usability, we bring you:
+<ul>
+<li><a href="https://drupal.org/node/675446">Issue #675446 by mgifford, RobLoach, amateescu, nod_, longwave, oxyc, rteijeiro, tomyouds, Jelle_S, mcrittenden, Sutharsan, hansyg, Angry Dan, clemens.tolboom, droplet | Dave Reid: Use jQuery UI Autocomplete</a> (instead of our own custom, less-accessible version)</li>
+<li><a href="https://drupal.org/node/1255696">Issue #1255696 by dagmar, lslinnet, swentel, jenlampton, sun: Move field type modules into separate 'Field type' package</a> (to help break up the modules listing some)</li>
+<li><a href="https://drupal.org/node/1986074">Issue #1986074 by LewisNyman, Outi, mcjim, edward_or, ry5n, Bojhan, yoroy: Buttons style update</a>. I mean, seriously, just *look* at how awesome our buttons are now!
+<p><img src="https://groups.drupal.org/files/6.buttons.png" alt="Updated button styles for Seven style guide" />
+</p></li>
+</ul>
+</li>
+<li>And finally, from the Developer Experience-opolis, two big wins to tell you about:
+<ul>
+<li><a href="https://drupal.org/node/2138867">Issue #2138867 by chx: Allow dangling commas in annotations</a> makes annotations approximately 56,832% less annoying to work with</li>
+<li><a href="https://drupal.org/node/2118991">Issue #2118991 by Berdir, dawehner: Use abstract service definitions to minimize copy &amp; pasted service definitions</a> is a huge win for the ongoing fight against verbosity.</li>
+</ul>
+</li>
+</ul>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>Vijay Nandwani and Matthew Lechleider put together a great tutorial on <a href="http://hellobrothisisfree.x10.mx/blog/node/2">how to add a user interface "tour" of your module</a> using Drupal 8's Tour module.</li>
+<li>December 3 was <a href="http://www.idpwd.com.au/">International Day of People with Disabilities (IDPwD)</a>, and Dries marked the occasion with a write-up of <a href="http://buytaert.net/drupal-web-accessibility-to-the-core">all the ways Drupal aims to be an inclusive community and platform</a>. Jesse Beach made a sister post <a href="https://groups.drupal.org/node/383053">celebrating the individuals who help make our stellar accessibility possible</a>.</li>
+<li>As part of their ongoing Drupal 8 Field API series, yched, swentel, and amateescu wrote an article about <a href="http://realize.be/drupal-8-field-api-series-part-4-entity-form-displays-and-display-modes">entity (form) displays and display modes</a>, which does a deep-dive into this API and the improvements it offers over Drupal 7.</li>
+<li>Also in Field API land, check out Ivan Zugec's tutorial on <a href="http://webwash.net/tutorials/how-create-custom-field-formatter-drupal-8">How to Create a Custom Field Formatter in Drupal 8</a>. It demonstrates turning a regular ol' boring link field into a snazzy YouTube player embedding link field!</li>
+<li>For the more design-inclined, Danny Englander wrote a great guide on <a href="http://highrockmedia.com/blog/porting-contrib-theme-drupal-8-get-twiggy-with-it">porting your theme from Drupal 7 to Drupal 8 (Get Twig-gy With It)</a>. This goes over the syntax changes, file changes, and more. And best of all, it's pretty short! :)</li>
+<li>Steve Burge from Open Source Training provides an overview of the major changes in Drupal 8 since September in <a href="http://www.ostraining.com/blog/drupal/drupal-8-november-2013/">The State of Drupal 8: November 2013</a>. Useful if you've missed a few installments of This Week in Core.</li>
+<li>If you want a more extensive D8 deep-dive, yours truly will also be giving a <a href="https://www.acquia.com/resources/webinars/drupal-8-preview-what-expect">Webinar on Drupal 8 and what to expect</a> on Tuesday, Dec. 10. Be there or be square! ;) (but please, no heckling. :D)</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<ul>
+<li>DrupalCamp Vienna happened Nov 22 - 24, and Josef Dabernig posted a <a href="http://2013.drupalcamp.at/drupalcamp-vienna-2013-its-wrap-tastes-schnitzel">great summary of the event</a>.</li>
+<li> Among the sprinters was Janez Urevc who organized a <a href="https://groups.drupal.org/node/380128">Drupal media sprint at DrupalCamp Vienna</a> and wrote up a summary of the results. Awesome work! Janez is running regular media initiative meetings <a href="https://groups.drupal.org/node/358353">the first friday of every month</a>, which puts the next one this Friday, December 6 at 8 p.m. GMT<br />
+<href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=Drupal+8+media+%22first+friday%22+meeting&amp;iso=20131101T21&amp;p1=736&amp;am=30">(please help me I do not understand time)</href="http://www.timeanddate.com/worldclock/fixedtime.html?msg=drupal+8+media+%22first+friday%22+meeting&amp;iso=20131101t21&amp;p1=736&amp;am=30"></li>
+<li>This coming weekend (December 7-8) has been dubbed <strong>Drupal Sprint Weekend</strong>, there will be sprints literally all over the globe! Check out <a href="https://groups.drupal.org/node/382753">London</a>, <a href="https://groups.drupal.org/node/381233">Manchester</a>, <a href="https://groups.drupal.org/node/381033">Phillipenes</a>, <a href="https://groups.drupal.org/node/374828">India</a>, <a href="https://groups.drupal.org/node/383138">Japan</a>, <a href="https://groups.drupal.org/node/380943">Boston</a>, and <a href="https://groups.drupal.org/node/372778">New York City</a>! If you ever wanted to get involved in core and didn't know where to start, now might be a great time. :) There's also an upcoming <a href="https://groups.drupal.org/node/332998">Drupal Global Sprint Weekend on January 25 and 26</a> so if you missed the boat this time around, be sure to get your local community on the map next time!</li>
+<li>If Drupal 7 is more your style, there's also the <a href="http://www.mediacurrent.com/blog/drupal-7-code-sprint-december-7th-2013-d7ond7">D7onD7</a> virutal sprint, to try and give D7 contrib some extra love.</li>
+<li>Camp-wise, there's <a href="http://www.drupagora.com/2013/">Drupagora in Paris</a> on December 5, and <a href="https://2013.drupalcampchicago.org/">DrupalCamp Chicago</a> on December 7.</li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Attachment</th><th>Size</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="https://groups.drupal.org/files/Screen Shot 2013-12-04 at 9.43.31 AM.png">Screen Shot 2013-12-04 at 9.43.31 AM.png</a></td><td>15.83 KB</td> </tr>
+</tbody>
+</table>
+  </body>
+</html>
+

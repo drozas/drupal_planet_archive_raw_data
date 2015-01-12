@@ -1,0 +1,71 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys: $label2                                                                        
+Date: Wed, 02 Oct 2013 19:16:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 02 Oct 2013 19:16:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This Week in Drupal Core: October 2, 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/335828
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This Week in Drupal Core: October 2, 2013</title>
+    <base href="https://groups.drupal.org/node/335828">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>The most notable Drupal core news since last time around is <a href="https://prague2013.drupal.org/">DrupalCon Prague</a> happened, with lots of Drupal 8 sessions, sprints, and all-around goodness.</p>
+<p>Dozens of core developers spent over 30 hours in 20 dedicated brainstorms and deep-dives to solve <a href="https://groups.drupal.org/node/324278">hard problems</a> in Drupal 8 core, focusing on three critical areas: Drupal 8 API completion, developer experience (DX), and performance. The notes from these talks can be found at <a href="http://bit.ly/prague-notes">http://bit.ly/prague-notes</a> and are making their way to the issue queue.</p>
+<p>And, of course, lots and lots of sprinting! There were 120+ sprinters on Monday, before the conference even started, which required folks to sprint on the floor since we ran out of tables and chairs. :) Friday's sprints sported hundreds more, in both the main contribution sprint room and the Get Involved with Core Sprint, and about 30 hardcore folks even stayed the weekend past the conference. The RTBC queue for Drupal 8 core was 170+ issues by Monday.</p>
+<p><img src="http://farm8.staticflickr.com/7332/9963614865_0e7fd208ed_z.jpg" alt="100s of people in the sprint room on Friday" /></p>
+<p>Photo credit: <a href="http://www.flickr.com/photos/amazeelabs/9963614865/sizes/z/in/pool-2141068@N20/">Amazee Labs</a></p>
+<p>DrupalCon was also a time of taking a step back and looking at what we can do better process-wise going forward, during Core Conversations such as <a href="https://prague2013.drupal.org/session/d8-lessons-learned-and-how-we-can-make-d9-better">D8 lessons learned and how we can make D9 better</a> and <a href="https://prague2013.drupal.org/session/future-friendly-evolution-and-drupal-release-cycle">Future-friendly evolution and the Drupal release cycle</a>. Funding was also a hot topic, as we seek to make core development more sustainable. Entity/Field API developer <a href="https://drupal.org/user/39567">Yves Chedemois</a> was able to <a href="https://www.drupalfund.us/project/funding-yched-complete-d8-entity-field-api">successfully raise funds for a new laptop in about 24 hours</a>! As a community, we should also be proud that Drupal 8 co-maintainer <a href="https://drupal.org/user/157725">Alex Pott</a> continues to hold the <a href="https://www.gittip.com/">#1 spot of Gittip recipients</a>, and we'd love to see more contributions flow his way to give him more time to keep Drupal 8 commits humming along <a href="http://alex.vit-al.com/node/15">before he needs to resume employment somewhere</a>.</p>
+<p>The community also put in significant effort to ramp up work on tools and materials to help upgrade modules to Drupal 8, including:</p>
+<ul>
+<li>A core conversation by <a href="https://drupal.org/user/79230">Joe Shindelar</a> about <a href="https://prague2013.drupal.org/session/we-need-teach-people-drupal-8.-now">how to teach Drupal 8 <em>now</em></a>, with a later BoF on the same topic (<a href="https://docs.google.com/a/acquia.com/document/d/1HjLdTA8bb-Ynjz1-VHvQmu7yz4wE1xOep8cosbrQMLc/edit">notes here</a>).</li>
+<li>Two "labs" on what modules look like in Drupal: <a href="https://prague2013.drupal.org/session/your-first-drupal-8-module">Your First Drupal 8 Module</a> for an overview of major APIs and patterns, and <a href="https://prague2013.drupal.org/session/upgrade-your-module-drupal-8">Upgrade YOUR module to Drupal 8</a> for a walkthrough of D7 vs. D8 code and hands-on, real-time module upgrade experience.</li>
+<li>An initiaitve to <a href="https://drupal.org/node/1880976">port Examples module to Drupal 8</a></li>
+<li>Creating a <a href="https://drupal.org/node/2099351">battleplan for Coder / Coder Upgrade</a>, which still needs feedback!</li>
+<li>Adding Drupal 8 <a href="https://drupal.org/node/2043409#comment-7883051">Module Builder scaffolding code</a> to ease people into new APIs.</li>
+<li>Several "hard problems" discussions around improving the "DX" (developer experience) of Drupal 8 core, informed by the <a href="http://bit.ly/pants-problems">direct feedback from folks porting their modules</a>. A <a href="https://drupal.org/community-initiatives/drupal-core/d8dx">D8DX battleplan</a> is to be posted within the next few days).</li>
+</ul>
+<p>And, as a cherry on top of the "make Drupal 8 easier to upgrade to" sundae, Dries announced during the <a href="https://prague2013.drupal.org/session/drupal-8-leadership-qa">Drupal 8 Leadership Q&amp;A</a> session that Drupal 8 will provide a <a href="https://drupal.org/node/1052692">migration path</a> from both Drupal 6 and Drupal 7 sites, as well as provide the "core" of Migrate module out of the box, in order to support other migration paths in the future!</p>
+<p>There are many opportunities in the above links to get involved, so if you want to get a start on the Drupal 8 learning curve early, and help others through the hump as well, please jump in!</p>
+<h2>Notable Commits</h2>
+<p>The best of <code> git log --since &quot;2 weeks ago&quot; --pretty=oneline</code> (147 commits in total):</p>
+<ul>
+<li><a href="https://drupal.org/node/1199946">#1199946 by alexpott, fubhy, bojanz, steinmb, chx, catch: Remove module_disable()</a>: In order to help expedite critical CMI work, and to prevent data integrity problems, the disabled modules functionality has been removed, in favor of uninstalling modules to stop their code from running. There's a critical issue to <a href="https://drupal.org/node/2081873">restore disabling modules in a temporary/debug capacity</a>.</li>
+<li><a href="https://drupal.org/node/1952062">#1952062 by vijaycs85, willyk, pfrenssen, vasi1186, CMS Dude, manningpete, penyaskito, kfritsche, Gábor Hojtsy: Remove legacy (node copy based) translation module</a>: Huge props to the multilingual team for unifying Drupal 7's conflicting (node vs field) translation approaches into a single system for Drupal 8.</li>
+<li><a href="https://drupal.org/node/731724">#731724 by larowlan, andypost, dixon_, tsvenson: Convert comment settings into a field</a>: This awesome site builder change allows comments to be used on any entity type, not just nodes, by simply adding a "Comment settings" field.</li>
+<li><a href="https://drupal.org/node/1908440">#1908440 by chx, clemens.tolboom, Cottser, heddn, YesCT: Relax PHP file storage permissions</a>: This patch made it so that Drupal 8 and Drush/editors/other tools are once again in harmony if your web server and command line users are different.</li>
+<li><a href="https://drupal.org/node/1605290">#1605290 by amateescu, msonnabaum, Caseledde, damiankloip, beejeebus, catch, Berdir, Wim Leers: Enable entity render caching with cache tag support</a>: From the "kick-ass performance improvement" department, the output of all entities is now cached by default. And, thanks to the cache tagging system that was added earlier in Drupal 8, any individual entity's caches will be cleared automatically when anything referencing the entity has changed!</li>
+<li><a href="https://drupal.org/node/1751194">#1751194 by Cottser, mikl, benjifisher: Introduce hook_theme_suggestions_HOOK() and hook_theme_suggestions_HOOK_alter()</a>: Now, instead of smooshing theme suggestions in with other preprocess logic, Drupal 8 offers dedicated hooks for an improved "themer experience."</li>
+<li><a href="https://drupal.org/node/2090353">#2090353 by dawehner: Don't require use statements in plugin classes.</a> Down with verbosity! Now, plugin classes can automatically pull in annotation-related dependencies without them having to be listed at the top of the file.</li>
+<li><a href="https://drupal.org/node/1908570">(various) Update or create hook_help() texts for D8 core modules</a>: <a href="https://drupal.org/user/98730">ifrik</a> led a <a href="https://groups.drupal.org/node/331773">documentation sprint at DrupalCon Prague</a>, during which 28 contributors helped ensure that all core modules have accurate help text. Great job!</li>
+</ul>
+<h2>Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>You can find a <a href="http://www.youtube.com/playlist?list=PLpeDXSh4nHjR5UnjrgWCo8YvCSs7TTZpY">full list of all DrupalCon Prague session videos</a>, which are chock full of Drupal 8 action!</li>
+<li>In <a href="http://previousnext.com.au/blog/introducing-entityformcontroller">Introducing the EntityFormController</a>, Tim Eisenhuth provides a before and after view of how entities define their forms, highlighting one of Drupal 8's neat new APIs in the process!</li>
+<li>In <a href="http://www.codeenigma.com/en/blog/drupal-8-might-be-useful">Drupal 8 Might Be Useful</a>, Greg Harvey runs through the awesome site builder improvements in Drupal 8, as presented by Kristof De Jaeger in his <a href="https://prague2013.drupal.org/session/drupal-8-site-builders">Drupal 8 for Site Builders</a> talk at DrupalCon Prague.</li>
+<li>In <a href="http://bryanbraun.com/2013/09/21/please-stop-stewing-and-start-blogging-about-drupal">Please, stop stewing, and start blogging about Drupal</a>, Bryan Braun pleads with all Drupalistas everywhere to start sharing knowledge with one another about anything and everything Drupal. At least <a href="http://chertzog.com/">one D8-related blog</a> has spun up in response.</li>
+<li><a href="http://enginx.com/tags/drupal8">Liran Tal's Drupal 8 blog series</a> has a few more entries, including <a href="http://enginx.com/content/drupal-8-module-development-2-adding-basic-routing">routing system</a> and <a href="http://enginx.com/content/drupal-8-module-development-3-adding-settings-page-revision">settings page</a> changes.</li>
+<li>Brian Vuyk walks readers through creating a basic module in <a href="http://pingv.com/blog/drupal-8-isnt-scary-pt-1-introduction-creating-hello-world-module">Drupal 8 isn't Scary, Pt. 1: Introduction &amp; Creating a Hello World Module</a></li>
+<li>Wim Leers's post at <a href="http://wimleers.com/talk/really-fast-drupal-8">Building really fast websites with Drupal 8</a> provides the intro and slides to his <a href="https://prague2013.drupal.org/session/building-really-fast-websites-drupal-8">session on performance at DrupalCon</a>.</li>
+<li>Kendall Toten at MediaCurrent gives a run-down of <a href="http://www.mediacurrent.com/blog/drupal-8-mobile-initiative">The Drupal 8 Mobile Initiative</a> in this webinar.</li>
+</ul>
+<h2>Drupal 8 in "Real Life"</h2>
+<p>Events coming up in the next couple of weeks that have a decent amount of content dedicated to Drupal 8 include:</p>
+<ul>
+<li><strong>Oct 4</strong>: The inaugural <a href="https://groups.drupal.org/node/314898">Contrib Sprint Initiative (CSI)</a> sprint kicks off at MD Systems in Zürich, Switzerland. This is a monthly sprint to help make contributed modules production-ready on Drupal 8.</li>
+<li><strong>Oct 4-5</strong>: <a href="http://2013.pnwdrupalsummit.org/">Pacific Northwest Drupal Summit</a> in Vancouver, British Columbia, Canada, with talks on <a href="http://2013.pnwdrupalsummit.org/sessions/phpunit-and-drupal-8-no-unit-left-behind">PHPUnit</a>, the <a href="http://2013.pnwdrupalsummit.org/sessions/paradigm-shift-drupal-7-hooks-drupal-8-plugins">pradigm shift from hooks to plugins</a>, using <a href="http://2013.pnwdrupalsummit.org/sessions/integrated-analytics-drupal-8-and-statistics-api">Drupal 8's statistics API</a>, and a <a href="http://2013.pnwdrupalsummit.org/sessions/coming-soon-drupal-8-near-you">live demo of Drupal 8</a>.</li>
+<li><strong>Oct 11</strong>: <a href="http://drupaldelphia.com/">Drupaldelphia</a> in Philadelphia, Pennsylvania, USA there are proposed sessions on <a href="http://drupaldelphia.com/program/schedule/sessions/your-first-drupal-8-module">Your First Drupal 8 Module</a>, <a href="http://drupaldelphia.com/program/schedule/sessions/drupal-8-routing-method-madness">Drupal 8 Routing</a>, and <a href="http://drupaldelphia.com/program/schedule/sessions/drupal-8-design-patterns-dependency-injection">Dependency Injection</a>.</li>
+</ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Lots of headway on really tough problems, and expect more big patches to land as the RTBC queue slowly recovers from DrupalCon Prague.</p>
+  </body>
+</html>
+

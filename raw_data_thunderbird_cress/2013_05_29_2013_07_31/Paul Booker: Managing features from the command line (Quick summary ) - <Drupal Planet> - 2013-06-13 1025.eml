@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 13 Jun 2013 09:25:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 13 Jun 2013 09:25:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Managing features from the command line (Quick summary )
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-development-services/command-lines/managing-features-command-line-quick-summary
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Managing features from the command line (Quick summary )</title>
+    <base href="http://www.paulbooker.co.uk/drupal-development-services/command-lines/managing-features-command-line-quick-summary">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>To revert all features ..</p>
+<pre class="brush: bash">
+drush fra -y
+drush cc all
+</pre><p>
+To revert a specific feature..</p>
+<pre class="brush: bash">
+drush fr -y feature
+drush cc all
+</pre><p>
+If a feature has been overridden, it can be reverted. This means that the version in the database is destroyed and the version defined in code, in your feature, is used. </p>
+<p>If you're deploying code to one of you servers you would  ..</p>
+<pre class="brush: bash">
+git pull
+drush fra -y 
+drush cc all
+</pre><p>
+To update your feature ..</p>
+<pre class="brush: bash">
+drush fu -y feature
+drush cc all
+</pre><p>
+Updating an overridden feature will ensure that the version of the feature defined in code is made to match the version stored in the database.</p>
+<p>A feature is overridden when a user uses the UI to make configuration changes. These changes are stored in the database, and override what is stored in code. </p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal-development-services/tags/feature" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">feature</a></div><div class="field-item odd"><a href="/drupal-development-services/tags/drush" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drush</a></div><div class="field-item even"><a href="/drupal-development-services/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-development-services/command-lines/managing-features-command-line-quick-summary"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Managing features from the command line (Quick summary )">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-development-services/command-lines/managing-features-command-line-quick-summary"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

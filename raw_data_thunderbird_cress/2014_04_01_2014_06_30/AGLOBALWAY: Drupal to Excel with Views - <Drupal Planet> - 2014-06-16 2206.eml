@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 16 Jun 2014 21:06:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 16 Jun 2014 21:06:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Drupal to Excel with Views
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/drupal-excel-views
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Drupal to Excel with Views</title>
+    <base href="http://www.aglobalway.com/content/drupal-excel-views">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Every now and then we need to export a bunch of content from our Drupal site into a spreadsheet. This can easily be accomplished through views with modules like <a href="https://drupal.org/project/views_export_xls" title="views excel export">Views Excel Export</a>, which allows you to add a new display for your view. Also, you can add it as an attachment to your existing view, creating a button. Click, and you download a spreadsheet (or CSV, there are options!) just like that. Modules like this one work really well if your data structure is straightforward, and there is no need to format your spreadsheet. What happens if you want it to look a certain way, add borders to columns or rows? What if your view is referencing Entities? Suddenly Views Excel Export doesn't quite cut it anymore. Enter <a href="https://drupal.org/project/phpexcel" title="php excel module for Drupal">PHP Excel</a>. While this module has no UI to speak of, it does add <a href="https://phpexcel.codeplex.com/">PHP Excel</a> to your Libraries folder in your Drupal installation. The PHP Excel library gives you a ton of functions that allow you to format an Excel spreadsheet, as well as write to it directly. Let's say we wish to output our "Events" view to Excel. By creating our own custom module, we can call our view programmatically after referencing the PHP Excel library:</p>
+<p>	<code><br />
+&lt;?php<br />
+  function my_custom_spreadsheet_view() {<br />
+      libraries_load('PHPExcel');<br />
+      $view = views_get_view('events');<br />
+      $view---&gt;set_display('page');<br />
+      $view-&gt;pre_execute();<br />
+      $view-&gt;execute();<br />
+      ...<br />
+  }</code></p>
+<p>?&gt;<br /></p>
+<p>Rather than calling</p>
+<p><code> $view-&gt;render(); </code></p>
+<p>, we can use</p>
+<p><code> dpm($view-&gt;results); </code></p>
+<p>to find and extract the exact information we want. Assign your data to variables so that you can loop through your Events and write them to Excel in the format you like.</p>
+<p>  <code><br />
+&lt;?php<br />
+$events = $view---&gt;results;<br />
+// start writing to row 5 of your spreadsheet<br />
+$rowID = 5;<br />
+foreach($events as $event =&gt; $e){<br />
+// do magic with your data<br />
+ ...<br />
+    $objPHPExcel-&gt;setActiveSheetIndex(0)<br />
+            -&gt;setCellValue('A'.$rowID, $data)<br />
+            -&gt;setCellValue('B'.$rowID, $data1)<br />
+            -&gt;setCellValue('C'.$rowID, $data2)<br />
+            ...<br />
+    // move to the next row for the next Event<br />
+    $rowID++;<br />
+  }<br />
+?&gt;<br /></code></p>
+<p><a href="https://phpexcel.codeplex.com/">PHP Excel</a> comes with a number of examples, simple and complex. Use these to learn how to format and generate your spreadsheet when you call your custom function.</p>
+ </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

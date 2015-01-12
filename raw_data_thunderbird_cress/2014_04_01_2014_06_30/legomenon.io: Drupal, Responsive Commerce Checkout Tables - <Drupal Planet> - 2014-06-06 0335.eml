@@ -1,0 +1,112 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 06 Jun 2014 02:35:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 06 Jun 2014 02:35:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: legomenon.io: Drupal, Responsive Commerce Checkout Tables
+Content-Transfer-Encoding: 8bit
+Content-Base: http://legomenon.io/article/drupal-responsive-commerce-checkout-tables
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>legomenon.io: Drupal, Responsive Commerce Checkout Tables</title>
+    <base href="http://legomenon.io/article/drupal-responsive-commerce-checkout-tables">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--name-title-field field--type-text field--label-hidden"><div class="field__items"><div class="field__item even">Drupal, Responsive Commerce Checkout Tables</div></div></div><div class="field field--name-field-image field--type-image field--label-hidden"><div class="field__items"><div class="field__item even" rel="og:image rdfs:seeAlso" resource="http://legomenon.io/sites/default/files/field/image/wooooooresponsivetables.jpg"></div></div></div><div class="field field--name-body field--type-text-with-summary field--label-hidden"><div class="field__items"><div class="field__item even" property="content:encoded"><p>Providing a responsive checkout is an important feature of any eCommerce site. Drupal Commerce if themed correctly handles this fairly sweet; except for one element, tables.</p>
+<p>Here is a quick solution which leverages <a href="http://johnpolacek.github.io/stacktable.js/" target="_blank">stacktable.js</a>. Automatically applying it to each views table instance during the checkout process. Simply add more form_id's to extend this functionality to other pages.</p>
+
+<pre>
+<div class="prism-wrapper" rel="php"><pre><code class="language-php">
+
+/**
+ * @file
+ * stacktable.module
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function stacktable_form_alter(&amp;$form, $form_state, $form_id) {
+  switch ($form_id) {
+    case 'commerce_checkout_form_checkout':
+    case 'commerce_checkout_form_review':
+      $form['#attached']['library'][] = array('stacktable', 'stacktable.js');
+      $form['#attached']['js'][] = drupal_get_path('module', 'stacktable') . '/js/stacktable.module.js';
+
+      // We don't know if other view tables exist.
+      $form['#attached']['js'][] = array(
+        'data' =&gt; array('hivqld' =&gt; array(
+          'table' =&gt; '.' . drupal_html_class($form_id) . ' .views-table'),
+        ),
+        'type' =&gt; 'setting',
+      );
+    break;
+  }
+}
+
+/**
+ * Implements hook_library().
+ */
+function stacktable_library() {
+  $library = libraries_get_path('stacktable.js');
+
+  $libraries['stacktable.js'] = array(
+    'title' =&gt; 'Stacktable.js',
+    'website' =&gt; 'http://johnpolacek.github.io/stacktable.js',
+    'download url' =&gt; 'https://github.com/johnpolacek/stacktable.js/zipball/master',
+    'version' =&gt; array(),
+    'js' =&gt; array(
+      $library . '/stacktable.js' =&gt; array(
+        'scope' =&gt; 'header',
+      ),
+    ),
+    'css' =&gt; array(
+      $library . '/stacktable.css' =&gt; array(
+        'type' =&gt; 'file',
+        'media' =&gt; 'screen',
+      ),
+    ),
+  );
+
+  return $libraries;
+}
+</code></pre></div>
+</pre>
+
+<p> & the JavaScript which takes our form_id; applying to all child view tables.</p>
+
+<pre>
+<div class="prism-wrapper" rel="javascript"><pre><code class="language-javascript">
+/**
+ * @file
+ * stacktable.module.js
+ */
+
+(function($) {
+
+  Drupal.behaviors.stacktable = {
+    attach: function(context, settings) {
+      var table = settings.hivqld.table;
+
+      $(table).once(&quot;stacktable&quot;, function() {
+        $(table, context).stacktable();
+      });
+    }
+  };
+
+}(jQuery));
+
+</code></pre></div>
+</pre>
+
+<p>Make sure you have the stacktable.js library located at, sites/all/libraries/stacktable.js/stacktable.js - yes the folder is called stacktable.js xD.</p>
+<ul><li>sites/all/libraries/stacktable.js/stacktable.js</li><li>sites/all/libraries/stacktable.js/stacktable.css</li></ul>
+<p>Finally here is an example of the above code in use. For me it really was a case of plug & play, <a href="http://johnpolacek.github.io/stacktable.js/" target="_blank">stacktable.js</a> is a fantastic library.</p>
+<p><img alt="" src="/sites/default/files/wooooooresponsivetables_small_0.jpg" width="100%" /></p></div></div></div>
+  </body>
+</html>
+

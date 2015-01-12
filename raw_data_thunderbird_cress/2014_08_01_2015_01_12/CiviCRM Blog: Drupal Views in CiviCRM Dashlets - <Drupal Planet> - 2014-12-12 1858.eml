@@ -1,0 +1,74 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 12 Dec 2014 18:58:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 12 Dec 2014 18:58:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: Drupal Views in CiviCRM Dashlets
+Content-Transfer-Encoding: 8bit
+Content-Base: https://civicrm.org/blogs/brandonferrell/drupal-views-civicrm-dashlets
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: Drupal Views in CiviCRM Dashlets</title>
+    <base href="https://civicrm.org/blogs/brandonferrell/drupal-views-civicrm-dashlets">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><p dir="ltr" id="docs-internal-guid-13ccb544-3fcd-ff6b-cdb2-d15fbfe436a0">Here at<a href="https://skvare.com"> Skvare</a>, we strive to make Drupal and CiviCRM work as one to accomplish goals in a way that is simple and intuitive. Continuing our work in Drupal/CiviCRM integrations, we’ve cooked something new up for you all. We would now like to take this opportunity to introduce Views in Dashlets.</p>
+<h3 dir="ltr">
+	What is Views in Dashlets?</h3>
+<p dir="ltr">Views in Dashlets is a Drupal module that allows one to create a dashlet containing a Drupal View. That is right, in addition to CiviCRM reports you can use the power of Drupal Views to create a customizable experience. This opens grand new opportunities to use our imagination and drive to strengthen the bond between Drupal and CiviCRM. A majority of the functionality of Views is currently at your fingertips, with further enhancements on the horizon.</p>
+<h3 dir="ltr">
+	How did we get to this point?</h3>
+<p dir="ltr">We had the idea of rendering a View in a dashlet, but that’s all it was. An idea. We researched extensively trying to find out how exactly a dashlet works. Curiously, I created a forum post where I received a small piece of knowledge and took our first big step in creating this module. After that, it was a matter of development of ideas. Thank you totten for the quick and helpful response.</p>
+<h3 dir="ltr">
+	Basic Instructions</h3>
+<p dir="ltr">It is very simple to create a dashlet. All you have to do is:</p>
+<ol dir="ltr"><li>
+		Open/create your view and add a new “CiviCRM Dashlet” display</li>
+<li>
+		Configure the display to your liking and save</li>
+<li>
+		Visit <a href="http://www.yourdomain.com/civicrm">www.yourdomain.com/civicrm</a> and click “Configure Dashboard”</li>
+<li>
+		Add your created dashlet to a column and click “Done”</li>
+</ol><p dir="ltr">And now your brand new dashlet is on your dashboard!</p>
+<h3 dir="ltr">
+	Why Views in Dashlets?</h3>
+<ul dir="ltr"><li>
+		Simplicity -- Using CiviCRM reports to create dashlets is a great feature of CiviCRM, but new reports require PHP and SQL coding skills. Some organizations have staff with these skills, but many do not. Many more people do have the ability to use site-building techniques to create Views through its powerful UI.</li>
+<li>
+		Customize - Customize your view to render your CiviCRM or Drupal data just how YOU want it. Quickly add sorts, filters, fields, relationships, no results behaviors, and rewrite field output functionality.</li>
+<li>
+		Style - Make it pretty! Use View’s built in style features to wrap fields in html elements and add classes to fields for css styling.</li>
+<li>
+		Content -- More than just data, place content on the dashboard. Display a node, add links to documentation, or list your latest Drupal Commerce orders. If it can be Viewed, it can be on the Dashboard.</li>
+<li>
+		Combine - Use in combination with the <a href="https://www.drupal.org/project/civicrm_entity">CiviCRM Entity</a> and <a href="https://www.drupal.org/project/entityreference">Entity Reference</a> modules to create rich data structure displays combining Drupal content with CiviCRM data. Also, there are tons of great modules that expand Views functionality and most will work with Views in Dashlets.</li>
+<li>
+		Reuse - Use the same view for a Drupal page and CiviCRM dashlet.</li>
+<li>
+		Much more that we have not thought of!</li>
+</ul><h3 dir="ltr">
+	"What can I do to help?"</h3>
+<p dir="ltr">If you would like to join the journey of Views in Dashlets then go ahead and create an issue. This issue could be a bug report or even a feature request. Views in Dashlets is a work in progress, but there is ALOT you can do with it already. We would be very grateful for your feedback. This is a team effort, and our community is the number one team.</p>
+<p dir="ltr">For more information, visit the project page at <a href="https://www.drupal.org/sandbox/brandonferrell/2389543">https://www.drupal.org/sandbox/brandonferrell/2389543</a></p>
+<p dir="ltr"><img alt="" height="436" src="http://i.imgur.com/xibBoQO.png" width="539" /><img alt="" height="426" src="http://i.imgur.com/P1O4Xye.png" width="745" /></p>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/civicrm" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviCRM</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+          <li class="field-item even">
+        <a href="/civicrm-blog-categories/release" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Release</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

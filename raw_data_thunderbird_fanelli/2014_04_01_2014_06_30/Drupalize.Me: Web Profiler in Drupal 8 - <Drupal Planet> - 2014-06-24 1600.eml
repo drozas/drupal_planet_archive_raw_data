@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 24 Jun 2014 14:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 24 Jun 2014 14:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupalize.Me: Web Profiler in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalize.me/blog/201406/web-profiler-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupalize.Me: Web Profiler in Drupal 8</title>
+    <base href="http://drupalize.me/blog/201406/web-profiler-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden text-content text-secondary"><div class="field-items"><div class="field-item even"><p class="p1">Profiling your site is extremely useful not only for debugging and performance testing but also for learning about how your site handles requests.</p>
+<p class="p1">Symfony 2 comes with a bundle (like a Drupal module but for Symfony) called WebProfiler Bundle which collects information about each request made to your application and allows you to visualize it in the browser.</p>
+<p class="p1">Drupal 8 doesn’t include the Web Profiler bundle in core. However, there already is a <a href="https://drupal.org/project/webprofiler">contrib module</a> for it. Make sure to install any dependencies before enabling the module.</p>
+<p class="p1">The module will render a fixed bar at the bottom of each page for users with the <em>View webprofiler toolbar</em> permission. The bar provides a summary of the collected data from the profiler.</p>
+<p class="p2"><img alt="" src="http://drupalize.me/sites/default/files/resize/blog_post_images/screen_shot_2014-06-17_at_08.57.48-775x88.png" style="width: 775px; height: 88px;" title="Web Profiler toolbar" width="775" height="88" /></p></div></div></div>
+  </body>
+</html>
+

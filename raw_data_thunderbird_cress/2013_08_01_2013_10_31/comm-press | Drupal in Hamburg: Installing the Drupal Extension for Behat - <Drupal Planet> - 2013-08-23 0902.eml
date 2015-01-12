@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 23 Aug 2013 08:02:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 23 Aug 2013 08:02:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: Installing the Drupal Extension for Behat
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/installing-drupal-extension-behat
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: Installing the Drupal Extension for Behat</title>
+    <base href="http://comm-press.de/en/blog/installing-drupal-extension-behat">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Using Behat with Drupal</h2>
+By Frank Ralf
+<p>To use Behat for Drupal testing you should install the Drupal Extension (<a href="https://drupal.org/project/drupalextension">https://drupal.org/project/drupalextension</a>) which provides Drupal specific step definitions and drivers.</p>
+
+<h3>Installing using Composer</h3>
+
+<p>Just follow the instructions at <a href="https://drupal.org/project/drupalextension">https://drupal.org/project/drupalextension</a>.</p>
+
+<p>You have to create a new <strong>composer.json</strong> file in your Behat directory. If there is already one from your initial Behat installation just rename it. (You should not add the following code to an existing composer.json file. The Drupal Extension will care for all dependencies itself.) You might also have to rename (or delete) the <em>composer.lock</em> file to be able to run Composer.</p>
+
+<div class="codeblock"><code>{<br />&nbsp; &quot;require&quot;: {<br />&nbsp;&nbsp;&nbsp; &quot;drupal/drupal-extension&quot;: &quot;*&quot;<br />&nbsp; },<br />&nbsp; &quot;minimum-stability&quot;: &quot;dev&quot;,<br />&nbsp; &quot;config&quot;: {<br />&nbsp;&nbsp;&nbsp; &quot;bin-dir&quot;: &quot;bin/&quot;<br />&nbsp; }<br />}</code></div>
+
+<p>Now just run Composer from the command line (here Windows PowerShell):
+<code>composer install</code>
+Composer will update some already installed components and then install the Drupal Extension.</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130816/installing_drupal_extension.png" rel="lightbox[field_picture][Installing Drupal Extension for Behat]" title="Installing Drupal Extension for Behat"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130816/installing_drupal_extension.png?itok=1gYXTtUe" width="712" height="599" alt="Installing Drupal Extension for Behat" title="Installing Drupal Extension for Behat" /></a></div></div></div></div></p>
+
+<h3>Set up a Drupal project</h3>
+
+<ol>
+<li>Create a Drupal project folder. </li>
+<li>Run <strong>behat --init</strong></li>
+<li>Create a <strong>behat.yml</strong> file (see <a href="https://drupal.org/project/drupalextension">https://drupal.org/project/drupalextension</a> point 3.)</li>
+<li>Then at least modify the <strong>FeatureContext.php</strong> file according to point 10.</li>
+</ol>
+
+<h3>Check your installation</h3>
+
+<p>To check if everything went fine run
+<code>behat -dl</code> 
+to get the definition list of all available steps. There should be some new Drupal specific entries.</p>
+
+<p>As the list might be a bit overwhelming try filtering the list by some Drupal specific term like "node": 
+<code>behat -d &#039;node&#039;</code></p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130816/new_drupal_step_definitions.png" rel="lightbox[field_picture][New Drupal step definitions]" title="New Drupal step definitions"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130816/new_drupal_step_definitions.png?itok=UufuUWTq" width="800" height="448" alt="New Drupal step definitions" title="New Drupal step definitions" /></a></div></div></div></div></p>
+
+<h3>What's next?</h3>
+
+<p>The Drupal Extension comes with three different drivers for interacting with a Drupal site (<a href="http://www.dspeak.com/drupalextension/drivers.html">http://www.dspeak.com/drupalextension/drivers.html</a>). The distribution contains some example settings and feature files for these drivers. I'll show how to run these example files in my next blog post on the Drupal Extension for Behat. So stay tuned.</p>
+  </body>
+</html>
+

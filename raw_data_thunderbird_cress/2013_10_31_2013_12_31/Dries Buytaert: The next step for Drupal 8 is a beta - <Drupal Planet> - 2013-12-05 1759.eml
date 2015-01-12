@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 05 Dec 2013 17:59:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 05 Dec 2013 17:59:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dries Buytaert: The next step for Drupal 8 is a beta
+Content-Transfer-Encoding: 8bit
+Content-Base: http://buytaert.net/the-next-step-for-drupal-8-is-a-beta
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dries Buytaert: The next step for Drupal 8 is a beta</title>
+    <base href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Topic:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Over the past two years, we've built <a href="https://drupal.org/drupal-8.0">Drupal 8</a> into what will be the most flexible, future-proof Drupal version ever. Core developers have contributed thousands of hours of work to expanding Drupal 8's capabilities and modernizing our APIs.
+</p><p>We're several months into Drupal 8's <a href="https://drupal.org/core/release-cycle#api-completion">API completion phase</a>, and we're <a href="https://groups.drupal.org/node/364138">releasing monthly alphas</a> as we nail down key APIs, refine the developer experience, and continue vital work on performance. To finish Drupal 8, we must focus on essentials, so I'd like to ask the Drupal developer community to look ahead to the next big step: the first Drupal 8 beta.</p>
+<h2>When does alpha become beta?</h2>
+<p>Earlier in the year, we announced that Drupal 8's first beta would be released once we had a stable data upgrade path from Drupal 7. At DrupalCon Prague, however, the Drupal core developer team made a bold decision: instead of using Drupal's <code>update.php</code> database update script to convert Drupal 7 sites to Drupal 8 on the fly, Drupal 8 core will instead include a robust <a href="https://groups.drupal.org/imp">data migration API</a> (based on the popular <a href="https://drupal.org/project/migrate">migrate module</a>) to migrate data from existing sites into new Drupal 8 installations. This means that Drupal 8 core will provide reliable, extensible migration from <em>Drupal 6</em> as well as Drupal 7.  We believe this to be important for organizations running older versions of Drupal can reliably modernize their sites.</p>
+<h3>Data migration no longer blocks a beta release</h3>
+<p>In order to make this important data migration change possible for Drupal 8, the initial Drupal 8.0 release will be primarily intended for building <em>new</em> Drupal sites, and the finished data migration path for <em>existing</em> Drupal 6 or 7 sites may be provided in a later Drupal 8 release, like Drupal 8.1. (For more information on how we might improve the Drupal release cycle after the release of Drupal 8, see the <a href="https://drupal.org/node/2135189">proposal to manage the Drupal 8 release cycle</a>.)</p>
+<p>This means that a data upgrade path from Drupal 7 is no longer a prerequisite for releasing Drupal 8.0-beta1. Instead, we will focus on what testers and contributed module authors most need from a Drupal 8 beta: (1) a stable data model and (2) stable critical APIs.</p>
+<h3>Stable data model</h3>
+<p>A stable data model means that developers should not need to perform data migrations <em>between</em> beta releases of Drupal 8 (except where necessary to resolve critical issues).  The Drupal 8 data model includes database schemas, file-based configuration storage, and storage services like the Entity and State systems.</p>
+<h3>Stable critical APIs</h3>
+<p>To provide contributed module developers with a useful milestone for module porting, beta 1 will include stable critical APIs. These are fundamental APIs that most or all contributed modules depend on, including the configuration system, the Entity and Field API, the Plugin API, and the Routing and Menu systems.</p>
+<p>Other API changes approved by core maintainers will continue through the end of the API completion phase, but after the first beta, we will shift from away removing deprecated code and instead retain more backward compatibility layers. (Module/theme developers who wish to go through the porting process only once should wait for the first <a href="https://drupal.org/core/release-cycle#rc">release candidate</a>.)</p>
+<h2>What issues are blocking beta1?</h2>
+<p>Drupal core maintainers determine which specific issues must be resolved to meet the criteria above. We have worked with core developers to identify a <a href="https://drupal.org/project/issues/search/drupal?version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">list of beta-blocking issues</a>. There are currently <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">48 of these "beta blockers" outstanding</a>. As you can see, there are many difficult problems in this list that need to be solved. <strong>We need your help to resolve these issues</strong> so that we can release beta1 and expand Drupal 8's reach to new testers and contributors.</p>
+<h2>It's focus time!</h2>
+<p>While the end of Drupal 8's development cycle is in sight, there's still a lot of work to do. Now more than ever it's essential to focus on the critical issues that will bring Drupal 8 closer to release. If we don't, we risk pushing Drupal 8's release off for many more months. The sooner we create a beta, the sooner we can release Drupal 8 to the world.</p>
+<p>Many people looking forward to Drupal 8's release aren't sure how best to help out. I'd like to ask all <a href="http://drupalcode.org/project/drupal.git/blob_plain/refs/heads/8.x:/core/MAINTAINERS.txt">sub-system maintainers</a> to watch their sub-system's issue queues closely to help new contributors triage issues and fix bugs, especially for <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">beta-blocking issues</a>. I'd also like to ask everyone to review patches carefully, <a href="https://drupal.org/core/release-cycle/api-completion">make only necessary API changes</a>, and document APIs clearly. Or, if you aren't able to work on Drupal 8 issues directly, consider sponsoring core developers for Drupal 8 contribution.</p>
+<p>Help us make Drupal 8 the best release of Drupal yet by working on our alpha releases and toward a Drupal 8 beta!</p>
+</div></div></div>
+  </body>
+</html>
+

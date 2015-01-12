@@ -1,0 +1,71 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 03 Jul 2014 13:47:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 03 Jul 2014 13:47:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Bernt & co’s Drupal Gotchas Second Edition
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.wunderkraut.com/blog/bernt-cos-drupal-gotchas-second-edition/2014-07-03
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Bernt & co’s Drupal Gotchas Second Edition</title>
+    <base href="http://www.wunderkraut.com/blog/bernt-cos-drupal-gotchas-second-edition/2014-07-03">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    Half a year ago I wrote a blog post about various stumble blocks I had run into in my first year as a Drupal developer. I called them gotchas because they were not necessarily bugs - they might just be Drupal’s way of doing things which may confuse people new to or experienced with Drupal. Sometimes they are annoyances - they could be called paper cuts too. The post got some attention - which was great because people started sending me tips about things they ran into. Now there is time for a new round! 
+  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p>Half a year ago I wrote a blog post about various stumble blocks I had run into in my first year as a Drupal developer. I called them gotchas because they were not necessarily bugs - they might just be Drupal’s way of doing things which may confuse people new to or experienced with Drupal. Sometimes they are annoyances - they could be called papercuts too. </p><p>The post got some attention - which was great because people started sending me tips about things they ran into. Now there is time for a new round! </p><p>First I’d like to start with an update to my previous post - good news! </p><h2>Outdated gotcha<span>: </span>Features module and taxonomy</h2><p>In the comments <strong>Damien McKenna</strong> pointed out</p><p class="quote-green">Features v2 now uses the machine name and labels for permissions, roles and vocabularies, making exporting those much easier than it used to be.</p><p>Which is true. It was just that we were using the “<code>Taxonomy Access Fix</code>” module in that project, and it was not using the machine names. But that module has been updated to also use vocabulary names. Things do get better in Drupal! </p><h2>New gotchas I have found</h2><h3>GOTCHA 1: Trying to be consistent about naming? Not too fast! </h3><p>I can’t believe that I didn’t stumble into this one before, I have a feeling it hits a lot of people new to Drupal: When starting a new project, you might want to be consistent about naming, and give a custom project module and theme the same name. </p><p>Well, buddy, that is asking for trouble! And different trouble every time to confuse you even more - a search of any error message that pops up might not give you the cause as the first result in Google. </p><p>This duplicate naming problem can of course happen between your own custom modules and contrib projects you add from drupal.org. </p><p><strong>Andreas</strong> also adds that you will also run into trouble if give your site profile the same name as your theme (and possibly also module names). </p><p>This is documented in Drupal's documentation, which you of course have read thoroughly: <a href="https://www.drupal.org/node/143020">https://www.drupal.org/node/143020</a></p><p>Tips for best practice in naming: <a href="http://drupal.stackexchange.com/questions/851/best-practice-for-avoiding-module-theme-profile-name-clashes">http://drupal.stackexchange.com/questions/851/best-practice-for-avoiding...</a></p><h3>Gotcha 2: Where was that module again? </h3><p>In a direct response to the original blogpost, reddit user <strong>tranam</strong> mentioned: </p><p class="quote-green">The biggest gotcha in Drupal, as far as I'm concerned, is having a modules folder, and a sites/all/modules folder. </p><p><a href="http://www.reddit.com/r/drupal/comments/1vuneh/bernts_drupal_gotchas/">http://www.reddit.com/r/drupal/comments/1vuneh/bernts_drupal_gotchas/</a></p><h3>Gotcha 3: Updating a module doesn’t </h3><p><strong>Lauri</strong> mentioned this:</p><p class="quote-green">You're trying to update a module and it doesn't update. drush up, drush updb, disable, enable, delete, download, etc.. and it's still the same! Then a colleague points out the obvious: You have the module installed in more than one place, like <code>/sites/all/modules</code> and <code>/sites/all/modules/contrib</code> or even a submodule of another module.</p><p>To find out if this is your problem, you can run <code>SELECT * FROM system</code>  to see the actual path that drupal has associated with a specific module. </p><h3>Gotcha 4: The pesky feature that won’t revert (multilingual sites)</h3><p>So you just pushed a git commit to a server, and you’re trying to revert the feature, but it just won’t happen. You have tried the magic cache-clearing/php-fpm reloading/cache-clearing incantation several times already, but no no no no go. </p><p>Then you look at the feature diff, and you notice that .. you were looking at the feature page in a different language from it was made in. Aargh! </p><h3>Gotcha 5: Browser based language detection is killed by page caching</h3><p><strong>Florian</strong> told me abot this one: If you have page caching enabled the browser based language detection will not work due to a bug in core.</p><p>This dropbucket snippet might work for you though: <a href="http://dropbucket.org/node/728">http://dropbucket.org/node/728</a></p><h3>Gotcha 6: Dragging and dropping around in panels don't work</h3><p>Juho V tipped me about this one - and Sampo provided the workaround: </p><div><img alt="3lvkbfhv5w.gif" class="media-image" height="960" title="3lvkbfhv5w.gif" width="1052" src="http://www.wunderkraut.com/sites/wunderkraut.com/files/3lvkbfhv5w.gif" /></div>
+<pre>
+[11.57.59] Sampo: Sulla on exposed formi tossa. Disabloi se view, draggaa toi paikalleen ja toimii.</pre>
+<p>Decrypted from Finnish it reads: You have an exposed form in there. Disable that view, drag it to it’s position and it will work. The exposed form is what breaks the drag and drop, so you better just disable that display. </p><h3>Gotcha 7: Administer Content permission is powerful but not that powerful</h3><p><strong>Mario</strong> notified me about this one: </p><p>Administer Content permission sounds all powerful: But if you're not user 1 you can still not access unpublished content if it is not edited by yourself. </p><p>You also need "<code>Bypass content access control</code>" permission - or you could use the “<code>view_unpublished</code>” module. </p><h3>Gotcha 8: Multiple meanings of “vid” in the database</h3><p>This has baffled me, at least, when poking around in the database trying to figure out how to solve a case. And I am not the only one: <a href="http://drupal.stackexchange.com/questions/13266/what-does-vid-mean">http://drupal.stackexchange.com/questions/13266/what-does-vid-mean</a></p><p><strong>marcvangend</strong> at Drupal Answers writes in <a href="http://drupal.stackexchange.com/a/13269">http://drupal.stackexchange.com/a/13269</a> :</p><p class="quote-green">Unfortunately, <code>vid</code> can mean multiple things. That's not ideal, but I have not seen it causing problems (other than mild confusion now and then).<br /><br /><span>In the context of nodes, it means 'version id'. For every node in the node table, Drupal can save multiple versions in the </span><code>node_revisions</code><span> table. The version id is the unique identifier in the </span><code>node_revisions</code><span> table. (This is the </span><code>vid</code><span> you see in your query.)</span><br /><br /><span>In the context of taxonomy, vid means '</span><code>vocabulary id</code><span>'. A vocabulary is a collection of related terms. Every vocabulary has a unique id.</span><br /><br /><span>In the context of the Views module, vid means 'view id'.</span></p><h3>Gotcha 9: EntityFieldQuery executed from cron checks access right</h3><p><strong>Teemu</strong> reported this one: If you are running EntityFieldQueries from cron, you might not get the expected results because EFQ does indeed add it’s own access checks. </p><p>Solution: </p>
+<pre>
+  $query = new EntityFieldQuery();
+  $query-&gt;entityCondition('entity_type', 'node')
+    -&gt;fieldCondition('field_something_id', 'value', $something_id)
+<strong>    -&gt;addMetaData('account', user_load(1));</strong></pre>
+<p>The last line makes it sure its loaded as Dries. </p><p>An alternative is apparently to use this one (which was added in Drupal 7.15):    </p>
+<pre>
+ -&gt;addTag('DANGEROUS_ACCESS_CHECK_OPT_OUT')</pre>
+<h3>Gotcha 10: Blocking users does not block immediately</h3><p><strong>Reigo</strong> reported this experience: </p><p>I once discovered a blocked user who had logged in before he was blocked, and he was still active! So after blocking, empty the session table.</p><p><strong>Note:</strong> Emptying the session table will also log out ALL the site’s users - so you might think twice about that. One option is to remove the session for that specific user id. </p><h3>Gotcha 11: Want to disable the query pager? We’ll trip you up</h3><p>If you have a query object and wish to return all items, you might try and set the limit to null or false to disable the pager. No go: </p><p><a href="https://api.drupal.org/api/drupal/includes%21pager.inc/function/PagerDefault%3A%3Alimit/7">https://api.drupal.org/api/drupal/includes%21pager.inc/function/PagerDef...</a></p>
+<pre>
+public function PagerDefault::limit</pre>
+<p>States: </p>
+<pre>
+Specify the maximum number of elements per page for this query.
+The default if not specified is 10 items per page.
+$limit: An integer specifying the number of elements per page. If passed a false value (FALSE, 0, NULL), the pager is disabled.</pre>
+<p>Did you think that a disabled pager would return all results? Sorry, <strong>daften</strong> states this <a href="https://api.drupal.org/comment/13964#comment-13964">https://api.drupal.org/comment/13964#comment-13964</a></p><p class="quote-green">I would expect disabling the pager would mean everything is shown, instead nothing is returned.</p><p>Gotcha :) </p><h3>Gotcha 12: Views with date filter not returning what you want</h3><p>I was struggling with a view with filters for a date field, that did not return what I wanted. I suppose the following conversation speaks for itself: </p>
+<pre>
+[15:08:17] Ilmari: ha!
+[15:08:19] Ilmari: I got it
+[15:08:26] Ilmari: Guess what, its the granularity
+[15:08:32] Ilmari: It is set to "day"
+[15:08:38] Ilmari: instead of seconds
+[15:08:56] Ilmari: In the "settings" part of the filter (separate settings)
+[15:09:16] Ilmari: Filter granularity =&gt; Day
+[15:09:21] Ilmari: should be =&gt; Second
+[15:10:36] Ilmari: Did you find "Filter granularity" under "Settings" for the filter?
+[15:11:08] Bernt: I didn't find that
+[15:11:09] Ilmari: Pretty annoying that the default is a day
+[15:11:18] Ilmari: Content: Date - end date:value2 (yesterday) | Settings
+[15:11:25] Ilmari: --&gt; "Settings"
+[15:11:32] Bernt: Oh hah there!! GRRRRRRR hitting my head in the wall
+[15:11:36] Ilmari: :D
+[15:11:36] Bernt: or on the desk, it is closer
+[15:12:02] Ilmari: I've encountered that exact problem several times, i always forgot to check those settings..
+[15:12:22] Ilmari: ..and the default "day" granularity doesn’t really make sense, usually
+[15:12:56] Bernt: Thanks man
+[15:13:45] Ilmari: heh
+[15:13:50] Ilmari: Glad I could help this time
+[15:13:50] Bernt: Well, another GOTCHA for my list</pre>
+<p>So when you are working with a date field in views, remember to check what the granularity setting of the field is. Date defaults to day, which doesn’t work too well if you are more interested in now! </p><h3>Gotcha 13: Site name in a feature that depends on .. </h3><p><strong>Florian</strong> reported this find: </p><p>Don't export the site name in a feature that's a dependency of an installation profile, or you won't be able to install. </p><p>It just happens that the installer checks the site name to test if Drupal has already been installed or not, so if you add that variable to a feature, then it thinks that the installation has already been done.</p><p>In the meantime, you can just set the title during an install task (that runs later in the process). </p> </div>
+    </div>
+  </body>
+</html>
+

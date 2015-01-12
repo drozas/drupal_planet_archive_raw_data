@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 12 Sep 2014 14:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 12 Sep 2014 14:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: PHP 5.5 Generators and Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/php-55-generators-and-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: PHP 5.5 Generators and Drupal</title>
+    <base href="http://deeson-online.co.uk/labs/php-55-generators-and-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>PHP 5.5 introduces <a href="http://php.net/manual/en/language.generators.syntax.php">generator functions</a>.  Generator functions return an object that can be iterated over - often to be used with a foreach loop, for example:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">function</span> gen_one_to_three<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$i</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">1</span><span style="color: #339933;">;</span> <span style="color: #000088;">$i</span> <span style="color: #339933;">&lt;=</span> <span style="color: #cc66cc;">3</span><span style="color: #339933;">;</span> <span style="color: #000088;">$i</span><span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #666666; font-style: italic;">// Note that $i is preserved between yields.</span>
+    yield <span style="color: #000088;">$i</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #000088;">$generator</span> <span style="color: #339933;">=</span> gen_one_to_three<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #b1b100;">foreach</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$generator</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #b1b100;">echo</span> <span style="color: #0000ff;">&quot;<span style="color: #006699; font-weight: bold;">$value</span><span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+
+<p>Which will output:</p><div>1</div><div>2</div><div>3</div><p>(Example taken from php.net).</p><p>PHP calls the generator function when it needs values - when the generator yields a value the state of the generator is saved, so it can then be resumed when the next value is required. This can lead to significant performance boosts over creating an array which only exists to be looped over as less memory is needed.</p><p>There is more detail on <a href="http://codingexplained.com/coding/php/introduction-to-php-generators">http://codingexplained.com/coding/php/introduction-to-php-generators</a>.</p><h2>So how can this apply to Drupal …</h2><p>A render array might look like...</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000088;">$wrapper</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+  <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'container'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'#attributes'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'class'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'class'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  ‘item<span style="color: #339933;">-</span>one’ <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #009900;">&#40;</span> … <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  ‘item<span style="color: #339933;">-</span>two’ <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #009900;">&#40;</span> … <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  ‘item<span style="color: #339933;">-</span>three’ <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #009900;">&#40;</span> … <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div>
+
+<p>The <a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/element_children/7">element_children</a> function returns an array which contains the array keys of the children array elements. This breaks from the standard PHP foreach pattern where you perform operations directly on the value created by the foreach loops - I don’t think this is ideal - I had to look twice to see what was happening the first time I saw it.</p>
+
+<p>Using generators, you can use a more typical php pattern - the following is equivalent to the above.</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span>element_children_generator<span style="color: #009900;">&#40;</span><span style="color: #000088;">$variables</span><span style="color: #009900;">&#41;</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$key</span> <span style="color: #339933;">=&gt;</span> <span style="color: #339933;">&amp;</span><span style="color: #000088;">$element</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #339933;">...</span>
+  <span style="color: #000088;">$element</span><span style="color: #009900;">&#91;</span>‘<span style="color: #666666; font-style: italic;">#example’] = ‘example’; 
+</span>  dpm<span style="color: #009900;">&#40;</span><span style="color: #000088;">$element</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #339933;">...</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+
+<p>
+As well as being a more typical PHP pattern, referencing the element within the loop is cleaner.</p><p>There are downsides to this approach too. A developer familiar with Drupal may have to look twice to see what is going on with the yield keyword. Obviously this can’t go into Drupal 7 Core (which supports php 5.2.5+), and I wouldn’t recommend it for Contrib either for the same reason. </p>
+
+<p>However since PHP 5.3 and below is EOL I think this pattern is well worth adopting in your own projects with low risk.</p></div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/php-55-generators-and-drupal">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>PHP 5.5 Generators and Drupal</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/chris">Chris</a> | 12th September 2014</div></div></div>
+  </body>
+</html>
+

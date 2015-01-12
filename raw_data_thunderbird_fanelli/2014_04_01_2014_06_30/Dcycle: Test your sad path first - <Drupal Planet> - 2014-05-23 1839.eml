@@ -1,0 +1,131 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 23 May 2014 16:39:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 23 May 2014 16:39:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dcycle: Test your sad path first
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dcycleproject.org/blog/63/test-your-sad-path-first
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dcycle: Test your sad path first</title>
+    <base href="http://dcycleproject.org/blog/63/test-your-sad-path-first">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>One of the techniques I use to make sure I write tests is to write them before I do anything else, which is known as test-driven development. If you develop your functionality before writing a test, in most cases you will never write the test to go with it, because you will be pressured to move on to new features.</p>
+
+<p>I have found, though, that when writing tests, our team tends to think only about the happy path: what happens if everything goes according to plan.</p>
+
+<p>Let me give an quick example: let's say you are developing a donation system for anonymous users to make donations on your site. The user story calls for a form where a donation amount can be entered before redirecting the user to the payment form. Using test-driven development and Drupal's Simpletest framework, we might start by writing something like this in our <a href="http://dcycleproject.org/node/44">site deployment module</a>'s <code>.test</code> file:</p>
+
+<pre><code>// @file mysite_deploy.test
+
+class MysiteDonate extends DrupalWebTestCase {
+
+  ...
+
+  public function testSite() {
+
+    $edit = array(
+      'amount' =&gt; 420,
+    );
+    ...
+    $this-&gt;drupalPost('donate', $edit, 'Donate now!');
+    ...
+    $this-&gt;assertText('You are about to donate $420', 'The donation amount has been recorded');
+  }
+
+  ...
+}
+</code></pre>
+
+<p>When you first run this test it will fail, and your job as a developer will be to make this test pass. That's test-driven development.</p>
+
+<p>The problem with this approach is that it only defines the happy path: what should happen when all goes according to plan. It makes no provision for the sad path: what happens if a user puts something other than a number? What happens if 0 is entered? These are known as sad paths, and most teams never think about them until they occur (human nature, I guess).</p>
+
+<p>To make sure we think about the sad path, I start by making sure the right questions are asked during our Agile sprint planning sessions. In the case of the "donation" user story mentioned above, the following business questions should be asked during sprint planning:</p>
+
+<ul>
+<li>What's the minimum donation? Obviously it should not be possible to donate $0, but is $0.01 OK?</li>
+<li>Is there a maximum donation? Should the system bring you to the checkout page if you enter 1 billion dollars in the donation box?</li>
+</ul>
+
+<p>Often, the client will not have thought of that, and will answer something like: sure there should be a minimum and a maximum, and we also want site administrators to be able to edit those. Let's say team agrees on this (and the extra work it entails), the admin interface too should be tested.</p>
+
+<p>Once the sprint planning session is over, I will start by writing the test based on business considerations above, and also integrating other sad paths I can think of, into my test.</p>
+
+<p>Here is what our test might look like now, assuming we have a <code>setUp()</code> function which enables our <a href="http://dcycleproject.org/node/44">site deployment module</a> and dependent features (including roles); and we are using the <code>loginAsRole()</code> method, <a href="http://dcycleproject.org/blog/45">documented here</a>:</p>
+
+<pre><code>// @file mysite_deploy.test
+
+class MysiteDonate extends DrupalWebTestCase {
+
+  ...
+
+  public function testSite() {
+
+    // Manage minimum and maximum donation amounts.
+    $this-&gt;drupalGet('admin/options');
+    $this-&gt;assertText('Access denied', 'Non-admin users cannot access the configuration page');
+    $this-&gt;loginAsRole('administrator');
+    $edit = array(
+      'minimum' =&gt; '50',
+      'maximum' =&gt; $this-&gt;randomName(),
+    );
+    $this-&gt;drupalPost('admin/option', $edit, 'Save');
+    $this-&gt;assertText('Minimum and maximum donation amounts must be numeric');
+    $edit['maximum'] = '40';
+    $this-&gt;drupalPost('admin/option', $edit, 'Save');
+    $this-&gt;assertText('Minimum amount must be equal to or less than maximum donation amount');
+    $edit['maximum'] = '30';
+    $this-&gt;drupalPost('admin/option', $edit, 'Save');
+    $this-&gt;assertText('Minimum maximum donation amounts have been saved');
+    $this-&gt;drupalLogout();
+
+    // Make a donation, sad path
+    $edit = array(
+      'amount' =&gt; '&lt;script&gt;alert("hello!")&lt;/script&gt;',
+    );
+    $this-&gt;drupalPost('donate', $edit, 'Donate now!');
+    $this-&gt;assertText('Donation amount must be numeric', 'Intercept non-numeric input.');
+    $edit['amount'] = 29;
+    $this-&gt;drupalPost('donate', $edit, 'Donate now!');
+    $this-&gt;assertText('Thanks for your generosity, but we do not accept donations below $30.');
+    $edit['amount'] = 41;
+    $this-&gt;drupalPost('donate', $edit, 'Donate now!');
+    $this-&gt;assertText('Wow, $41! Do not do this through our website, please contact us and we will discuss this over the phone.');
+
+    // Make a donation, happy path
+    $edit['amount'] = 30;
+    $this-&gt;drupalPost('donate', $edit, 'Donate now!');
+    $this-&gt;assertText('You are about to donate $30', 'The donation amount has been recorded');
+  }
+
+  ...
+}
+</code></pre>
+
+<p>The above example is a much more complete portrait of what your site should do, and documenting everything in a failing test even before you or someone else starts coding ensures you don't forget validations and the like.</p>
+
+<p>One interesting thing to note about our complete test is that sad paths actually take up <em>a lot</em> more effort than the happy path. There are many advantages to thinking of them first:</p>
+
+<ul>
+<li>The client can be involved in making business decisions which can affect the sad path.</li>
+<li>The entire team (including the client) is made aware as early as possible about sad path considerations, and the extra work they entail.</li>
+<li>Nothing is taken for granted as obvious: time is set aside for sad path development.</li>
+<li>The sad path becomes an integral part of your user story which can be part of the demo. Often in Agile sprint reviews, if no one has ever thought of the sad path, only the happy path is demonstrated.</li>
+<li>There is less technical debt associated with sad path development: you are less likely to get a panicked call from your client once your site goes live about getting dozens of 50 cent donations when the payment processor is taking a dollar in fees.</li>
+<li>Your code will be more secure: you will think about how your system can be hacked and integrate hacking attempts (and the appropriate response) directly into your test.</li>
+<li>You will be more confident putting a failing test on a feature branch and handing it to junior developers: they will be less likely to forget something.</li>
+<li>Thinking of the sad path can make you reconsider how to define your features: a contact form or commenting system can seem trivial when you only think of the happy path. However, when you take into account how to deal with spam, you might decide to not allow comments at all, or to allow only authenticated users to post comments or use the contact form.</li>
+</ul>
+
+<p>Note that as in all test-driven development, your test is not set in stone. It is like any other code: developers can modify it as long as they follow the spirit of your test. For example, maybe your config page is not <code>admin/option</code> but something else. Developers should feel that they own the test and can change it to fit the real system.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/blog" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">blog</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

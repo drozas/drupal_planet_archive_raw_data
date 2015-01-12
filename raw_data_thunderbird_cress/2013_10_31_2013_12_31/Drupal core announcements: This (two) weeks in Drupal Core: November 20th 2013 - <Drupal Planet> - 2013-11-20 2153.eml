@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 20 Nov 2013 21:53:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 20 Nov 2013 21:53:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This (two) weeks in Drupal Core: November 20th 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/377338
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This (two) weeks in Drupal Core: November 20th 2013</title>
+    <base href="https://groups.drupal.org/node/377338">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>What's new with Drupal 8?</h2>
+<h3>Config translation UI in core</h3>
+<p>We now have a <a href="https://drupal.org/node/1952394">config translation UI in core</a>! The module builds forms off of configuration schemas and automatically attaches translation operations to overview and edit forms. Whilst working on this module dozens of core bugs and DX issues were identified and resolved, all of which made Drupal 8 better.<br />
+Congratulations to everyone who worked on the issue for the last six months. With 27 people credited, the issue tied with <a href="https://drupal.org/node/11218">this issue</a> for the  record number of people listed in a commit message. Here’s the monolithic commit message in entirety:<br />
+<code>Issue #&lt;a href=&quot;https://drupal.org/node/1952394&quot;&gt;1952394&lt;/a&gt; by vijaycs85, tstoeckler, webflo, Gábor Hojtsy, Schnitzel, falcon03, YesCT, kfritsche, Ryan Weal, dagmita, likin, toddtomlinson, nonsie, Kristen Pol, dawehner, tim.plunkett, penyaskito, EclipseGC, larowlan, robertdbailey, helenkim, David Hernández, EllaTheHarpy, lazysoundsystem, juanolalla, R.Hendel, Kartagis: Add configuration translation user interface module.</code>
+</p>
+<h3>PHP 5.4</h3>
+<p>Major news this fortnight is that <a href="https://drupal.org/comment/8168907#comment-8168907">Drupal 8 will officially require php 5.4</a>. PHP 5.3 is approaching EOL, and PHP 5.4 offering us some cool features to improve DX and performance. To quote Dries:</p>
+<blockquote><p>Given that PHP 5.3 will be end-of-life in about 8 months and that the PHP team won't provide security fixes for PHP 5.3, we'll have to start making PHP 5.4 compatibility bugs critical security bugs.</p></blockquote>
+<h3>Green by 2014 initiative</h3>
+<p>The accessibility team have announced a major initiative to have Drupal 8 pass all automated accessibility tests by 2014. For more info see: <a href="https://groups.drupal.org/node/366873">the announcement</a> or <a href="https://drupal.org/project/issues/search/?issue_tags_op=%3D&amp;issue_tags=Green+by+2014">the open issues</a></p>
+<h3>Testbot stats</h3>
+<p>Interested in how many tests our awesome bots run? Or how long they take? Or how many fail on average? Check out these <a href="https://groups.drupal.org/node/372153">Cool testbot stats</a> collated by @jthorson.</p>
+<h3>Drupal 8 Documentation proposal</h3>
+<p>Continuing from last installments announcements regarding api docs, @jhodgdon posted <a href="https://groups.drupal.org/node/371853">a (somewhat) radical proposal for Drupal 8 developer docs</a>, feedback required.</p>
+<h2>Notable Commits</h2>
+<p>The best of <code> git log --since &quot;2 week ago&quot; --pretty=oneline</code>.<br />
+Another fortnight mostly focussed on cleanup and bug-fixes (82 in total) which move us that little bit closer to a stable release.</p>
+<ul>
+<li>Issue #<a href="https://drupal.org/node/1886448">1886448</a> by dawehner, sun, Berdir, ParisLiakos: Rewrite the theme registry into a proper service.</li>
+<li>Issue #<a href="https://drupal.org/node/1952394">2085201</a> by jessebeach, tim.plunkett, dawehner, yoroy: Use sensible block categories (rather than module-name categories).</li>
+</ul>
+<h2>Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>Albert Volkman of Mediacurrent writes about <a href="http://www.mediacurrent.com/blog/drupal-contrib-barn-raising">Contrib barn raising for Drupal 8</a></li>
+<li>Shyamala Rajaram of Unimity Solutions wrote <a href="http://www.unimitysolutions.com/blog/drupal-camp-delhi-core-drupal-8-sprint">a summary</a> of a recent Drupal 8 sprint in Delhi</li>
+<li>Another great Drupal 8 article from Ivan Zugec of WebWash on <a href="http://webwash.net/tutorials/how-create-administration-form-drupal-8">how to create an admin form in Drupal 8</a></li>
+<li><a href="http://previousnext.com.au/blog/potential-default-content-solution-drupal-8-core">A potential default content solution for Drupal 8 core</a> by yours truly</li>
+<li>Nick Veenhof of Acquia wrote up the battle plans for <a href="https://www.acquia.com/blog/battleplan-search-solr-drupal-8">Search and Solr in Drupal 8</a>. In summary - ApacheSolr and Search API modules will join forces to focus on Search API module. Nice!</li>
+</ul>
+<h2>Drupal 8 in "Real Life</h2>
+<p>Upcoming events thanks to drupical.com</p>
+<ul>
+<li><strong>November 22-24</strong> DrupalCampNW 2013 United Kingdom, Manchester</li>
+<li><strong>November 22-24</strong> DrupalCamp Vienna 2013 - Connecting Open Minds, Austria, Wien</li>
+<li><strong>November 28-30</strong> Drupal 3Days Cochabamba, Bolivia, Cochabamba</li>
+<li><strong>December 2nd</strong> Cornell DrupalCamp 2013 United States, Ithaca, NY</li>
+</ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

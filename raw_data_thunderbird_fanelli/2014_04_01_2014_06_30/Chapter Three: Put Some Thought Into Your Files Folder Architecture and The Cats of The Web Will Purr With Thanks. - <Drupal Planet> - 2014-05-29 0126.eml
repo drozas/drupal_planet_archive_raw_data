@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Put Some Thought Into Your Files Folder Architecture and The Cats of The Web Will Purr With Thanks.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/put-some-thought-your-files-folder-architecture-and-cats-web-will-purr-thanks%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Put Some Thought Into Your Files Folder Architecture and The Cats of The Web Will Purr With Thanks.</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/put-some-thought-your-files-folder-architecture-and-cats-web-will-purr-thanks%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Recently, I had the special fun of migrating a new client’s site over to a new host. Everything was going smoothly and quickly until I got to the Files folder. It contained a 4-gigabyte hodgepodge of images, thumbnails, pdfs, known site backups and unknown site backups (Yes, unknown! I don't count the WordPress version of the site from six years ago as a "known about" backup). It got me thinking about one part of Drupal that I think many take for granted: The Files system. Drupal is three-part system: Database, Code and Files. When planning a site architecture, often the Files folder gets treated like the red-headed step child of the three; forgotten, neglected and rather ignored. <img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/File-Blog-Graphic.jpg"> However, that’s not the way it should be. Drupal is a content management system. No matter what type of content, whether doc, image, or a PowerPoint on how many kittens and puppies it takes to make a good calendar, Files are just as much content as the text describing said cute kittens and puppies. And this type of content is much easier to manage then most people think. I’m not talking about the Media module, a hopeful dream of the Drupal world that I still believe in and could still use some more loving. I’m just talking about what comes after "sites/default/files/..." When writing new content, we often upload files and images along with our post about how our cat fell asleep in the kitchen sink. Instead of just having all those images and files placed first level in the Files folder, why not have them go into a "blog" folder or a "fluffy" folder. That way we don’t need to look at 10,000 images upon opening the Files folder. When adding a file upload field to a content type, you can set a default path to house the files that will be uploaded. Using tokens, you can create default path structures that handle all the folder architecture for you. I like to separate folders by content type, year/month/day uploaded, taxonomy term, and/or type of file. An example token setup for a default path may look like this: [node:content-type]/[node:created:short] or [node:content-type]/[node:nid]. The benefit is that whenever I go into the Files folder, I have instant information about the files contained inside. An image with the name of 348jkdldhisoj.png is not helpful to me, but if it’s located at say "sites/default/files/blog/may2013/img/cat_photos/348jkdldhisoj.png," then I have a good idea of what that image is. If you are naming a folder without the use of tokens, be descriptive as to what that folder actually contains. Don’t label it “images” and expect the world to know what that universally means. The point I’m making is you don't have all of your files on your computer located on your desktop, do you? No, you have them in human-readable, ordered folders. When I’m looking for my legally downloaded episodes of Family Guy, I don't want to have to look through a folder that also contains clips of my sister’s cat getting scared by his own image in the mirror (although that one always makes me laugh when I come across it). So put the same thought into your Drupal sites/default/files folder. Your site, the cats of the web, and your local Drupal support guy will appreciate it.</p><br />
+  </body>
+</html>
+

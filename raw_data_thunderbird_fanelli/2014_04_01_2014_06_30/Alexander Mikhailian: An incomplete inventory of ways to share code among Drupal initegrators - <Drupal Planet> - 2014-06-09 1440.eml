@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 09 Jun 2014 12:40:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 09 Jun 2014 12:40:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Alexander Mikhailian: An incomplete inventory of ways to share code among Drupal initegrators
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mikhailian.mova.org/node/242
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Alexander Mikhailian: An incomplete inventory of ways to share code among Drupal initegrators</title>
+    <base href="http://mikhailian.mova.org/node/242">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image1 field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/node/242"><img typeof="foaf:Image" src="http://mikhailian.mova.org/sites/default/files/styles/medium/public/drupal-diver-monochromelightblue.png?itok=2O_2IdhL" width="208" height="220" alt="" /></a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Whenever a team starts working on a new Drupal-based website, there's an inevitable discussion on how to organize collaboration. Three questions come up regularly:</p>
+
+<ol><li>How and when to use <a href="https://drupal.org/project/features">Features</a>, <a href="https://drupal.org/project/features_extra">Features Extra</a> and <a href="https://drupal.org/project/features_override">Features Override</a> modules</li>
+<li>How to organize production, testing and development environments and where to develop — on a shared server or locally </li>
+<li>How to share source code.</li>
+</ol><p>Out of the three, the question of the source code is the most contentious. One reason is that while everyone and their friend are already on git, most of the teams that implement Drupal websites do not really need a version control system where developers can cherry-pick and merge changes or analyze bugs by navigating commit histories. Instead, teams are usually interested in incremental backup systems where
+each team member can be sure that he can roll back his own and other people's changes until everything works again.</p>
+
+<p>Below is the inventory of way to share source code in Drupal projects.</p>
+
+<h2>Incremental backup</h2>
+
+<h3>Incremental backup with drush</h3>
+
+<p>One way of ensuring incremental backups without the overhead of git or other version control system is to use drush. Drush keeps a backup of previous module versions in ~/drush-backups — there is enough info to revert manually to the previously known good state. This setup is ideal for small projects with a handful of custom modules that can be kept in their own git repositories.</p>
+
+<blockquote>
+  <p>When in doubt, don't put your Drupal project in git. Use drush and its build-in backup mechanism.</p></blockquote></div></div></div>
+  </body>
+</html>
+

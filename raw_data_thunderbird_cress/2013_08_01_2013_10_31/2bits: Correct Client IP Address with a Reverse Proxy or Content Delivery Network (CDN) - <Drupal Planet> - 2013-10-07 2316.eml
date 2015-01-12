@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 07 Oct 2013 22:16:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 07 Oct 2013 22:16:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: 2bits: Correct Client IP Address with a Reverse Proxy or Content Delivery Network (CDN)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://2bits.com/articles/correct-client-ip-address-reverse-proxy-or-content-delivery-network-cdn.html
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>2bits: Correct Client IP Address with a Reverse Proxy or Content Delivery Network (CDN)</title>
+    <base href="http://2bits.com/articles/correct-client-ip-address-reverse-proxy-or-content-delivery-network-cdn.html">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    Using a Reverse Proxy and/or a Content Delivery Network (CDN) has become common practice for Drupal and other Content Management Systems.
+One inconvenient aspect of this is that your web server no longer gets the correct IP address, and neither does your application. The IP address is that of the machine that the reverse proxy is running on.
+In Drupal, there is code in core that tries to work around this, by looking up the IP address in the HTTP header HTTP_X_FORWARDED_FOR, or a custom header that you can set.
+<p><a href="http://2bits.com/articles/correct-client-ip-address-reverse-proxy-or-content-delivery-network-cdn.html" target="_blank">read more</a></p>
+  </body>
+</html>
+

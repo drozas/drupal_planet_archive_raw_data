@@ -1,0 +1,98 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 02 Sep 2014 09:50:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 02 Sep 2014 09:50:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Microserve: Omega 4.x: setup and comparison
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.microserveltd.co.uk/blogs/drupal-development/omega-4x-setup-and-comparison
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Microserve: Omega 4.x: setup and comparison</title>
+    <base href="http://www.microserveltd.co.uk/blogs/drupal-development/omega-4x-setup-and-comparison">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/field/image/logo_76_0.png?itok=0OZ8E9_5"><img typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/field/image/logo_76_0.png?itok=0OZ8E9_5" width="420" height="240" alt="Omega" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>About a year ago I wrote<a href="http://herbal-jazz.net/2013/07/drupal-theming-zen-vs-omega/"> a post on my personal blog about theming with Zen versus theming with Omega</a>, and someone pointed out that there was a new release of Omega. However, until now, I've not been able to look and see how it differs. Armed with a free week to do some personal learning and keen to finally try installing and playing with Sass for the first time, Omega 4 became my guinea pig.</p>
+<p>This post serves two purposes: it's partly a comparison between Omega 3 and Omega 4, but it also documents how to create an Omega 4 subtheme and set up Sass for the first time.</p>
+<h2>Before we begin</h2>
+<h3>About Omega 4.x</h3>
+<p>Omega is one of the best-known themes for Drupal, with over 80,000 installations at time of writing. Version 4.x takes a huge step away from 3.x. It's not just different: it feels like a whole new piece of software. The<a href="http://drupal.org/project/omega"> project page</a> says:</p>
+<p style="margin-left: 40px;">Omega 4.x is a base theme framework aimed at themers who want to gain full control over the theme through code, rather than a user interface. If you depend on the user interface you can continue using Omega 3.x.</p>
+<p>Nearly everything has been rewritten - the CSS has been optimized and cleaned up, partly to conform to new Drupal 8 standards, making it more future-proof; there are premade layouts available; and some functionality has been split out into extensions, while other bits have been combined into the main theme.</p>
+<p>There are also some new features, including a browser width indicator (useful if you're doing responsive development in the browser). My favourite thing is the Drush integration: for 3.x you had to install<a href="https://www.drupal.org/project/omega_tools"> Omega Tools</a> to get Drush commands, but it's now all built in.</p>
+<h3>Differences</h3>
+<p>While I didn’t like the UI for rearranging components, that's probably one of the features I miss the most. In fact, there are a lot of differences in the theme settings: namely, in Omega 3, you could overlay the grid columns, but all you get in Omega 4 is a region demonstration. Everything else is now handled in code.</p>
+<p align="center"><img alt="I can get this sort of thing from the block page... why do I need it permanently?" height="431px;" src="https://lh4.googleusercontent.com/yqVCSYbaD02w_JnKLyJIOjB7ed2Zyb-W_2rIvyVM1lGEd2LDIN7cVuvzSUIEGzqdWUYD3A5qx3OFjgJAsXiT-C6YHtuI4sgVDNg3ZYAg2H0ZopZRGDanTsYoyuppdssNGg" width="624px;" /></p>
+<p align="center"><em>I can get this sort of thing from the block page... why do I need it permanently?</em></p>
+<p>That does (in theory) make it easier to create new layouts. One of my biggest criticisms of Omega 3 was that it was so difficult to change the grid, but now you can<a href="https://www.drupal.org/node/1936958"> create multiple layouts</a> . I can see that being useful for a multi-site installation, and, if you pair it with <a href="https://www.drupal.org/project/context"> Context</a> , it could be useful for page-by-page layouts. You can also use the ones provided with Omega or its default subtheme Ohm - I've become quite a fan of Hero (above).</p>
+<p>There's no more configuration through<a href="https://www.drupal.org/project/delta"> Delta</a> (although I'm assured that's still possible, despite the project page explicitly stating that "Omega 4.x should NOT be used with Omega Tools and Delta"), but pleasingly, there's no more enormous and unwieldy .info file with two dozen files attached. Everything has been shifted into the backend, and the CSS is all compiled with Sass/Compass now.</p>
+<p>It is worth pointing out that the huge, unwieldy .info file will return if you choose to stop serving the theme settings from a variable. This will export the settings and put them into the .info file, improving the performance.</p>
+<p>For those who have delved into Sass before, you should find it easy enough to start using Omega 4 straight away. I’ve never used Sass before, so this will be a learning curve for me.</p>
+<p>If you're looking for a starting point, you can try looking at the official<a href="https://www.drupal.org/node/819164"> Omega theme documentation</a>, but I warn you that it's not the best place to go for information about installing Ruby and other component features.</p>
+<h2>Installation</h2>
+<p>Before I begin I just want to link to<a href="https://www.digitalocean.com/community/tutorials/how-to-create-an-omega-4-drupal-subtheme-on-an-ubuntu-vps"> this awesome tutorial on creating new Omega subthemes</a> by Daniel Sipos, which cleared up lots of things for me. Without that I'd probably still be trying to install Sass several days later.</p>
+<p>So if you're looking for a real tutorial, go there. I'll just skim through basics. I'm not going to hold hands, but I will provide links where possible.</p>
+<h3>Omega itself</h3>
+<p>First and foremost, you'll need to download and install Omega. Whether you do it through <a href="http://drush.ws/"> Drush</a> or by visiting the project page and downloading a zip file is up to you.</p>
+<p>Make sure you use the<a href="https://www.drupal.org/node/1736938"> latest development version</a> (20th August) rather than the stable release: it<a href="https://www.drupal.org/node/2232431"> fixes a bug</a> that meant the right extensions weren’t being found.</p>
+<p>Why are we installing Omega first? Easy: when you make your subtheme in Drush, it'll tell you what version of Ruby you need to install for Sass to work.</p>
+<h3>Ruby</h3>
+<p>In order to use<a href="http://sass-lang.com/"> Sass</a> , make sure you have<a href="https://www.ruby-lang.org/en/"> Ruby</a> installed. If you're on a Mac, it should already be there, although you might want to<a href="http://rvm.io/rvm/install"> try installing RVM (Ruby Version Manager)</a> .</p>
+<p>It's worth pointing out that if you're on a production server it's<a href="https://www.drupal.org/node/1663122"> best practice not to install Sass</a> unless you absolutely have to. Use Sass in your dev environment, fine, but only upload your compiled CSS files to your server.</p>
+<p>Alternatively, if you don't want to use Sass at all, don't bother installing Ruby and ignore the contents of the Sass directories.</p>
+<h3>Omega subtheme</h3>
+<p>Once RVM is set up, create a subtheme. If you're feeling brave you can<a href="http://drupal.stackexchange.com/questions/76611/omega-4-manually-installing-a-subtheme"> do it manually</a> , but if you've got Drush installed it's so much easier just to run through the wizard with this command:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">$ drush omega<span style="color: #339933;">-</span>wizard</pre></div>
+<p>Run that inside the site directory, follow the instructions, and enable it if you want. See? Much easier than copying and renaming files. And all on a new Drupal installation, too: I really appreciated that I didn't have to install anything to create a subtheme.</p>
+<h3>Gems and finishing</h3>
+<p>Finally, navigate (in your command line) to the base folder for your theme. You should get a notice:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">ruby<span style="color: #339933;">-</span>1<span style="color: #339933;">.</span>9<span style="color: #339933;">.</span>3<span style="color: #339933;">-</span>p547 is not installed<span style="color: #339933;">.</span>
+To install <span style="color: #b1b100;">do</span><span style="color: #339933;">:</span> <span style="color: #339933;">&amp;</span><span style="color: #666666; font-style: italic;">#39;rvm install ruby-1.9.3-p547&amp;#39;</span></pre></div>
+<p>If you do, then go ahead and install it. The Ruby version is related to the exact version of Omega you've installed, so pay close attention to the version number and run the command as it’s written.</p>
+<p>In the base directory for the theme, you'll see there's a file called "Gemfile". This dictates which gems should be installed for the theme to work. Just run this command:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">$ bundle install</pre></div>
+<p>That should fetch and download everything you need, and that's pretty much it!</p>
+<p>The<a href="https://www.digitalocean.com/community/tutorials/how-to-create-an-omega-4-drupal-subtheme-on-an-ubuntu-vps"> blog post I mentioned</a> has more information about installation and some troubleshooting, so refer to that if you're stuck.</p>
+<p>Now you can start editing the files in the themename/sass folder. Run this in your command line:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">$ compass watch</pre></div>
+<p>for live updates (it will "watch" the SCSS files and automatically compile them when you save a change).</p>
+<h2>Creating layouts</h2>
+<p>Creating a new subtheme is much easier in Omega 4 than in 3 (or even Zen), with a caveat of "if you have Ruby and Sass already installed". If you've got to here and are thinking "yikes, that's a whole lot of work" or "that's too much command line work", you might think about trying<a href="https://www.drupal.org/project/zen"> Zen</a> or<a href="https://www.drupal.org/project/sasson"> Sasson</a> instead.</p>
+<p>But if you've got this far, chances are you want to create a layout that's not a 1-2-1 grid layout. There are a couple of ways to go: you can copy one supplied by Omega/Ohm (such as Hero) and modify it, or you can create your own.</p>
+<p align="center"><img alt="Layout options for Omega 4 - default plus &quot;Hero&quot; from Ohm" height="347px;" src="https://lh6.googleusercontent.com/jHVoDn_nlyG91Vd2hN0yJm71a-JD2I4SWPF1dPQ6TshALqH5y8eMmTRgycVrEiEQpSMMunBQaD3NmfsEMWVJ-aZwOEbH2QNluF-VTcvm3TsRe2AzOB2U5CHS1diBfOXHkg" style="border: none; transform: rotate(0.00rad); -webkit-transform: rotate(0.00rad);" width="400px;" /></p>
+<p align="center"><em>Layout options for Omega 4 - default plus "Hero" from Ohm</em></p>
+<p>I quite like Hero, so I stuck to using that. You can see some of the basic layout options on the Appearance page. This is as close to Omega 3's user interface as you'll get.</p>
+<p>Luckily, there are some articles on Drupal.org about creating a new layout for Omega.<a href="https://www.drupal.org/node/1936958"> This first one</a> explains the basics - what you'll need in order for the layout to work - while<a href="https://www.drupal.org/node/1936980"> a second one</a> goes into a little more detail about folder and file structure.</p>
+<p>This is much more complicated than Omega 3, but at least you can change the layout and grid if you want to. You could take some inspiration from around the web to create something new - including<a href="https://gridsetapp.com/"> Gridset</a> - and it seems to be quite similar to creating a new subtheme. They come complete with a pseudo-info file and everything!</p>
+<p>It can be easier to make those grids if you use<a href="http://susy.oddbird.net/"> Susy</a> and<a href="http://breakpoint-sass.com/"> Breakpoint</a> , two Sass extensions that'll do the grunt work for you. Then it’s on to the styling!</p>
+<h2>Sass</h2>
+<p>It took me a while to get my head around "how Sass works". I understood the variables and mixins - that was what I was most keen to try - but I found it hard to understand partials and compiling the files.</p>
+<p>Actually, it was all a lot easier than I expected. You write your SCSS files then add them all to one main file with several @includes in it. Lots of people have written about their chosen directory structures; Omega gives you some folders as a starting point. Check out<a href="http://alwaystwisted.com/post.php?s=2013-01-07-structuring-my-sass-101-part-1"> Stu Robson's "Structuring my Sass 101" post</a> too.</p>
+<p>One thing to bear in mind is that many people offering advice about file structures are not using Drupal (or an Omega subtheme)! You might find their advice isn't always relevant.</p>
+<p>Finally, it's important to consider how you can integrate your Sass files and your version control. Some suggest<a href="http://blakehaswell.com/post/41093845406/stop-committing-css-to-version-control"> only committing the uncompiled files</a> for several reasons, such as forcing other developers to use the “correct”, while others say it doesn't make much difference. Right now I'm primarily a back-end developer, so I'm not sure what the best workflow is, but I’ll be interested to find out what does and doesn’t work.</p>
+<h2>Wrapping it up</h2>
+<h3>So who is Omega 4.x for?</h3>
+<p>You should consider using Omega 4.x if ...</p>
+<ul><li>...you're comfortable with getting your hands dirty and don't mind coding a layout from scratch.</li>
+<li>...you like using, have used, or want to start using Sass to write your CSS.</li>
+<li>...you want to create a whole new layout from scratch, with a custom grid system.</li>
+<li>...you don't need a user interface to modify the theme settings.</li>
+<li>...you're making a push towards more modular,<a href="http://smacss.com/"> SMACSS</a> -based CSS.</li>
+</ul><p>Otherwise, you might want to consider using Omega 3.x, or a different theme altogether.</p>
+<h3>Other useful links</h3>
+<ul><li><a href="http://css-tricks.com/musings-on-preprocessing/">Musings on Preprocessing | CSS-Tricks</a></li>
+<li><a href="http://alwaystwisted.com/">Always Twisted</a> - Sass blogging by Stu Robson</li>
+<li><a href="https://www.drupal.org/node/819164">Omega theming handbook</a></li>
+<li><a href="https://www.drupal.org/node/2060741">Omega 3.x vs. Omega 4.x - Comparing Apples and Oranges</a></li>
+</ul></div></div></div>
+  </body>
+</html>
+

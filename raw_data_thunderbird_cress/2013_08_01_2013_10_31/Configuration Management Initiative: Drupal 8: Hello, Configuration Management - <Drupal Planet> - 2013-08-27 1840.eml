@@ -1,0 +1,195 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 27 Aug 2013 17:40:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 27 Aug 2013 17:40:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Configuration Management Initiative: Drupal 8: Hello, Configuration Management
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupal8cmi.org/drupal-8-hello-configuration-management
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Configuration Management Initiative: Drupal 8: Hello, Configuration Management</title>
+    <base href="http://drupal8cmi.org/drupal-8-hello-configuration-management">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img src="http://drupal8cmi.org/sites/default/files/styles/large/public/field/image/choose-case.png?itok=hFUXxzp8" width="445" height="343" alt="pick your hello world case" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>If you have not read Alex Bronstein's (<a href="https://drupal.org/user/78040">effulgentsia</a>'s) excellent blog post about creating your first Drupal 8 module, go read it: <a href="http://effulgentsia.drupalgardens.com/content/drupal-8-hello-oop-hello-world">Drupal 8: Hello OOP, Hello world!</a> This post will expand on Alex's discussion and introduce the <a href="https://drupal.org/node/1667894">new configuration API</a> in Drupal 8. Here we will have the modest goal of making the display of the text "Hello, World!" configurable -- more specifically, we will give site administrators the ability to make the text UPPERCASE or Title Case. I can tell you are excited.</p>
+<p>Fortunately, the <code>.info.yml</code> file does not need to change:</p>
+<h2>hello.info.yml</h2>
+<pre>
+name: Hello 
+core: 8.x 
+type: module 
+</pre><p>
+We need to add some code to the routing file, and it will follow a similar organization as before:</p>
+<h2>hello.routing.yml</h2>
+<pre>
+hello: 
+  pattern: '/hello' 
+  defaults: 
+    _content: '\Drupal\hello\Controller\HelloController::content' 
+  requirements: 
+    _permission: 'access content'
+
+hello_settings:
+  pattern: '/hello/config'
+  defaults:
+    _form: 'Drupal\hello\Form\HelloConfigForm'
+  requirements:
+    _permission: 'administer site configuration'
+</pre><p>
+Notice that instead of adding <code>_content</code>, this route adds a <code>_form</code> so that when a visitor goes to <code>hello/config</code>, the <code>HelloConfigForm</code> will get called. So far so good.</p>
+<p>The .module file also should look rather familiar:</p>
+<h2>hello.module</h2>
+<pre>
+/**
+ * Implements hook_menu().
+ */
+function hello_menu() {
+  $items['hello'] = array(
+    'title' =&gt; 'Hello',
+    'route_name' =&gt; 'hello',
+  );
+  $items['hello/config'] = array(
+    'title' =&gt; 'Hello Configuration',
+    'route_name' =&gt; 'hello_settings',
+  );
+  return $items;
+}
+</pre><p>
+The second of the two <code>$items</code> connects the URL <code>hello/config</code> with the route <code>hello_settings</code>, which will appear again in the next few code examples. Still seems fairly straightforward.</p>
+<p>When the Hello module is installed, we want to have a default case setting configured, so let's make the text title case by default.</p>
+<h2>config/hello.settings.yml</h2>
+<pre>
+case: title
+</pre><p>
+Out of the box, Drupal's new configuration system uses two directories for configuration: active and staging. When the Hello module is enabled, the configuration system will look in the Hello module's <code>config</code> directory and find <code>hello.settings.yml</code>. Then it will create a new file in the "active" configuration directory, also named <code>hello.settings.yml</code>, with the same single line that reads <code>case: title</code>. The default location for the active and staging directories is <code>sites/default/files/config_xxx</code>, with xxx being a hash that is unique to each Drupal installation for security purposes (security options were discussed at length in this thread: <a href="https://groups.drupal.org/node/155559">https://groups.drupal.org/node/155559</a>).</p>
+<p>Although we could have accomplished the same thing in an install file by implementing <code>hook_install()</code> and calling <code>Drupal::config('hello.settings')-&gt;set('case', 'title')-&gt;save();</code>, the preferred -- and easier -- method is to provide default configuration for the module in a <code>config</code> directory (as we have done). </p>
+<p>The <code>HelloController</code> class needs to be altered so that it will display the correct case:</p>
+<h2>lib/Drupal/hello/Controller/HelloController.php</h2>
+<pre>
+namespace Drupal\hello\Controller;
+
+use Drupal\Core\Controller\ControllerBase;
+
+class HelloController extends ControllerBase {
+  public function content() {
+    $config = $this-&gt;config('hello.settings');
+    $case = $config-&gt;get('case');
+    if ($case == 'upper') {
+      $markup = t('HELLO, WORLD!');
+    }
+    elseif ($case == 'title') {
+      $markup = t('Hello, World!');
+    }
+
+    return array(
+      '#markup' =&gt; $markup,
+    );
+  }
+}
+</pre><p>
+While <code>hello.install</code> interacted with the configuration system using the <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal.php/class/Drupal/8">Drupal class</a>, calling <code>Drupal::config()</code>, the Drupal class exists only to support legacy code. In <code>HelloController</code> we take another shortcut of sorts by extending a fairly recent addition to Drupal core, <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Controller%21ControllerBase.php/class/ControllerBase/8">ControllerBase</a>. This class was created to "<a href="https://drupal.org/node/2060189">stop the boilerplate code madness</a>" by providing access to a number of utility methods, including <code>config()</code>. This class should only be used for "trivial glue code," and I think our Hello, World! module qualifies.</p>
+<p>To give site administrators the ability to change the display from title case to uppercase, we will use a form. Much like putting the controller in <code>lib/Drupal/hello/Controller/HelloController.php</code>, the code for the configuration form goes in <code>lib/Drupal/hello/Form/HelloConfigForm.php</code>. It's not a requirement, but it is a convention to put forms in a Form directory and use the word Form in the filename. Here is the code for the form:</p>
+<h2>lib/Drupal/hello/Form/HelloConfigForm.php</h2>
+<pre>
+/**
+ * @file
+ * Contains \Drupal\hello\Form\HelloConfigForm.
+ */
+
+namespace Drupal\hello\Form;
+
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Extension\ModuleHandler;
+use Drupal\system\SystemConfigFormBase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * Configure text display settings for this the hello world page.
+ */
+class HelloConfigForm extends SystemConfigFormBase {
+
+  /**
+   * Constructs a \Drupal\hello\Form\HelloConfigForm object.
+   *
+   * @param \Drupal\Core\Config\ConfigFactory $config_factory
+   *   The factory for configuration objects.
+   * @param \Drupal\Core\Extension\ModuleHandler $module_handler
+   *   The module handler.
+   */
+  public function __construct(ConfigFactory $config_factory, ModuleHandler $module_handler) {
+    $this-&gt;configFactory = $config_factory;
+    $this-&gt;moduleHandler = $module_handler;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container-&gt;get('config.factory'),
+      $container-&gt;get('module_handler')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormID() {
+    return 'hello_settings';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, array &amp;$form_state) {
+    $config = $this-&gt;configFactory-&gt;get('hello.settings');
+    $case = $config-&gt;get('case');
+    $form['hello_case'] = array(
+      '#type' =&gt; 'radios',
+      '#title' =&gt; t('Configure Hello World Text'),
+      '#default_value' =&gt; $case,
+      '#options' =&gt; array(
+        'upper' =&gt; t('UPPER'),
+        'title' =&gt; t('Title'),
+      ),
+      '#description' =&gt; t('Choose the case of your "Hello, world!" message.'),
+    );
+
+    return parent::buildForm($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &amp;$form, array &amp;$form_state) {
+    $this-&gt;configFactory-&gt;get('hello.settings')
+      -&gt;set('case', $form_state['values']['hello_case'])
+      -&gt;save();
+
+    parent::submitForm($form, $form_state);
+  }
+}
+</pre><p>
+This form contains what was previously described as "<a href="https://drupal.org/node/2049159">boilerplate madness</a>" and illustrates the preferred way of interacting with Drupal's configuration system: via dependency injection. The "boilerplate" parts include the <code>use</code> statements near the top, the <code>__construct()</code> method, and the <code>create()</code> method.</p>
+<p>Dependency injection is the design pattern that all of the cool kids use. It allows developers the ability to <a href="http://symfony.com/doc/current/components/dependency_injection/introduction.html"> standardize and centralize the way objects are constructed</a>. If you want to read more about dependency injection, check out Crell's <a href="https://drupal.org/node/1953342">WSCCI Conversion Guide</a> or <a href="https://drupal.org/node/1539454">this change record</a>. If you want to watch a presentation about it, check out Kat Bailey's talk <a href="https://portland2013.drupal.org/session/dependency-injection-drupal-8">Dependency Injection in Drupal 8</a>. If you want to explain it to a five year old, read <a href="http://stackoverflow.com/a/1638961">this stackoverflow answer</a>.</p>
+<p>For the <code>HelloConfigForm</code>, dependency injection enables code like this: <code>$config = $this-&gt;configFactory-&gt;get('hello.settings')</code>. It's a lot more code than writing <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal.php/function/Drupal%3A%3Aconfig/8">Drupal::config()</a> or <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Controller%21ControllerBase.php/function/ControllerBase%3A%3Aconfig/8">ControllerBase::config()</a> -- and we could have dropped three of the four <code>use</code> statements and omitted two of the methods -- but I assure you that dependency injection is the preferred method.</p>
+<p>The rest of the code should look rather familiar if you already know about writing modules with Drupal 7. You can read more about the <code>{@inheritdoc}</code> in <a href="https://drupal.org/node/1906474">this issue</a>, but the basic idea is that it is less code. (If you want to read more about forms in Drupal 8, check out <a href="http://effulgentsia.drupalgardens.com/content/drupal-8-forms-oop-style">Drupal 8: Forms, OOP style</a>).</p>
+<p>This may seem like a fair amount of code just to use the configuration system, but in fact this Hello module takes advantage of multiple new features offered by Drupal 8. The meat of this process could be reduced to four steps, and only the last two access configuration:</p>
+<ol><li>Implement <code>hook_menu()</code></li>
+<li>Add a route in <code>hello.routing.yml</code></li>
+<li>Create a controller to display the text</li>
+<li>Create a configuration form</li>
+</ol><p>Of course the most important part of this code is that we're using Drupal's new configuration system. This Hello module stores its configuration data in a configuration file (and in the database in the cache_config table), and each time the form is changed <code>sites/default/files/config_xxx/active/hello.settings.yml</code> is updated, thus allowing the ability to transfer configuration between sites. That, however, is a topic for another post.</p>
+<p>Until then, you can come to this site to learn more about the Configuration Management Initiative, find links to documentation, issues that need work, and much more. If you would like to get involved, the issues that are the most important for Configuration Management are listed on <a href="http://drupal8cmi.org/focus">http://drupal8cmi.org/focus</a>.</p>
+<p> </p>
+<p>ACKNOWLEDGEMENTS<br />
+A special thanks to <a href="https://drupal.org/user/65776">xjm</a> and <a href="https://drupal.org/user/78040">effulgentsia</a>, who both read an earlier draft of this post and helped me improve it.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/planet">planet</a></li></ul></div>
+  </body>
+</html>
+

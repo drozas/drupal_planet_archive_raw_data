@@ -1,0 +1,83 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 03 Jun 2013 22:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 03 Jun 2013 22:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Four Kitchens: A better way to theme Field Collections
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fourkitchens.com/blog/2013/06/03/better-way-theme-field-collections
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Four Kitchens: A better way to theme Field Collections</title>
+    <base href="http://fourkitchens.com/blog/2013/06/03/better-way-theme-field-collections">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-body">
+    <p>Field collections are at the same time one of my most favorite and least favorite aspects of working with Drupal 7. Since they are entities they can be extremely powerful and flexible site building tools, and I see lots of unrealized potential in that, on the other hand theming can be tricky and, for lack of better word, generally feels “icky.” There is little documentation online about best practices with almost all links pointing back to this <a href="https://drupal.org/node/1155752">thread on how to theme field collections</a>. The proposed solutions in this thread are a mixed bag — mostly bad — but some that may work, but they certianly don&#8217;t follow any best practices in drupal theming. I&#8217;ll admit I have shipped field collection theming that, while working, did make me feel “dirty.” Below was a clean solution that — while simple — is maintainable and, hopefully easy to&nbsp;follow.</p>
+<p>I created a quick function that pulled out the themed items from the field collection and organized them into an easy to theme array. The theming then felt a lot more natural, like working with a views rows&nbsp;template.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<span style="color: #009933; font-style: italic;">/**
+ * Creates a simple text rows array from a field collections, to be used in a
+ * field_preprocess function.
+ *
+ * @param $vars
+ *   An array of variables to pass to the theme template.
+ *
+ * @param $field_name
+ *   The name of the field being altered.
+ *
+ * @param $field_array
+ *   Array of fields to be turned into rows in the field collection.
+ */</span>
+ 
+<span style="color: #000000; font-weight: bold;">function</span> rows_from_field_collection<span style="color: #009900;">(</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #339933;">,</span> <span style="color: #000088;">$field_name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$field_array</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+  <span style="color: #000088;">$vars</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'rows'</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #b1b100;">foreach</span><span style="color: #009900;">(</span><span style="color: #000088;">$vars</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'element'</span><span style="color: #009900;">]</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'#items'</span><span style="color: #009900;">]</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$key</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$item</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$entity_id</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$item</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'value'</span><span style="color: #009900;">]</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$entity</span> <span style="color: #339933;">=</span> field_collection_item_load<span style="color: #009900;">(</span><span style="color: #000088;">$entity_id</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$wrapper</span> <span style="color: #339933;">=</span> entity_metadata_wrapper<span style="color: #009900;">(</span><span style="color: #0000ff;">'field_collection_item'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$entity</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$row</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">foreach</span><span style="color: #009900;">(</span><span style="color: #000088;">$field_array</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$field</span><span style="color: #009900;">)</span><span style="color: #009900;">{</span>
+      <span style="color: #000088;">$row</span><span style="color: #009900;">[</span><span style="color: #000088;">$field</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$wrapper</span><span style="color: #339933;">-&gt;</span><span style="color: #000088;">$field</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">value</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span>
+    <span style="color: #000088;">$vars</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'rows'</span><span style="color: #009900;">]</span><span style="color: #009900;">[</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$row</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ <span style="color: #009900;">}</span>
+<span style="color: #009900;">}</span></pre></div>
+<p>In this function we pull in the “variables” array from the field template, the field name and an array of fields that we want to extract, and then load them into our own rows array which gets attached to the variables array for use in our template. It uses the entity_metadata_wrapper that is like a swiss army knife of sanity and clean code for Drupal 7. If you aren&#8217;t familar with it, start with this <a href="http://drupal.org/node/1021556">documentation page about entity metadata wrappers</a>, and follow up with some quick googling. It&#8217;ll make you and your code&nbsp;happy.</p>
+<p>Below is the function being called and our custom field template being established. One thing that keeps our code simple is that all fields in the field collection are required eliminating the need to check for the variables existence in the&nbsp;template.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<span style="color: #000000; font-weight: bold;">function</span> THEME_preprocess_field<span style="color: #009900;">(</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #339933;">,</span> <span style="color: #000088;">$hook</span><span style="color: #009900;">)</span><span style="color: #009900;">{</span>
+  <span style="color: #b1b100;">if</span> <span style="color: #009900;">(</span><span style="color: #000088;">$vars</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'element'</span><span style="color: #009900;">]</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'#field_name'</span><span style="color: #009900;">]</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'field_achievements'</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$vars</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'theme_hook_suggestions'</span><span style="color: #009900;">]</span><span style="color: #009900;">[</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'field__achievements_collected'</span><span style="color: #339933;">;</span>
+ 
+    <span style="color: #000088;">$field_array</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span><span style="color: #0000ff;">'field_award'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'field_award_presenter'</span><span style="color: #339933;">,</span><span style="color: #0000ff;">'field_year'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    rows_from_field_collection<span style="color: #009900;">(</span><span style="color: #000088;">$vars</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'field_achievements'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$field_array</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+<span style="color: #009900;">}</span></pre></div>
+<p>Finally below is the field&nbsp;template.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<span style="color: #009933; font-style: italic;">/**
+ *  Field formatter for the field_achievements field collection.
+ */</span>
+<span style="color: #000000; font-weight: bold;">?&gt;</span>
+&lt;dl&gt;
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">foreach</span><span style="color: #009900;">(</span><span style="color: #000088;">$rows</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$row</span><span style="color: #009900;">)</span><span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>
+    &lt;dt&gt;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$row</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'field_award'</span><span style="color: #009900;">]</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>&lt;/dt&gt;
+    &lt;dd&gt;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$row</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'field_award_presenter'</span><span style="color: #009900;">]</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>&lt;/dd&gt;
+    &lt;dd&gt;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$row</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'field_year'</span><span style="color: #009900;">]</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>&lt;/dd&gt;
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">endforeach</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>
+&lt;/dl&gt;</pre></div>
+<p>We had a number of fields that were just sets of text data that needed to be output in definition lists. The function could be easily modifed to render the fields instead of just the values by using <span class="geshifilter"><code class="text geshifilter-text">entity_view()</code></span>. Next steps for this approach would be to refactor to use entity info to get the fields so that it can be generic and would no longer require the need to pass in the fields that you&nbsp;want.</p>
+<p>There is hope for theming within the module itself. There is <a href="https://drupal.org/node/1157794">a promising issue in the queue</a> that looks like it makes the native theming more sane. Since it&#8217;s such a big change it doesn&#8217;t look likely that it&#8217;ll make it into the 1.0 branch, so we may need to wait for the next version before it drops. Perhaps there is space for an add-on contrib module that cleans up the&nbsp;theming.</p>
+  </div>
+  </body>
+</html>
+

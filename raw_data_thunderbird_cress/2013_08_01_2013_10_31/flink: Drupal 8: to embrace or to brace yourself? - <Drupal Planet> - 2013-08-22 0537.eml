@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys: $label2                                                                        
+Date: Thu, 22 Aug 2013 04:37:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 22 Aug 2013 04:37:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: flink: Drupal 8: to embrace or to brace yourself?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://flink.com.au/ramblings/drupal-8-embrace-or-brace-yourself-seven-tips-and-traps-make-d7-developers-smile-and-go-arrgh
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>flink: Drupal 8: to embrace or to brace yourself?</title>
+    <base href="http://flink.com.au/ramblings/drupal-8-embrace-or-brace-yourself-seven-tips-and-traps-make-d7-developers-smile-and-go-arrgh">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://flink.com.au/sites/default/files/styles/large/public/field/image/smoking-steam-train.jpg"><img typeof="foaf:Image" src="http://flink.com.au/sites/default/files/styles/large/public/field/image/smoking-steam-train.jpg" width="350" height="438" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2> Seven tips and traps that make D7 developers  go :-)  and @#%CONTENT%amp;*!</h2>
+<p>When a steam train like D8 rolls your way, resistance is futile. You either jump aside --and some "big" names have done so-- or you jump aboard. </p>
+<p>For D7 developers wanting to join the D8 ride, this article critiques some common D8 misconceptions, hopefully making onboarding less precarious. </p>
+<p><strong>1. "I need to learn a lot about Symfony."</strong><br /><code>FALSE</code>! Unless you work on core you need to learn just as much about HTTP Kernel and Symfony CMF, as you learned about the internals of D7's core menu system, i.e. <em>nothing</em>.<br />
+And isn't that little, easy-to-find and easy-to-read .routing.yml file an improvement over the now much leaner <code>hook_menu()</code> ? So stop whinging.<br />
+Oh, and if it makes you feel better... a lot of code perceived to be Symfony, is in fact home grown core D8.<br /><strong>D8: +1</strong><br /><br /><br /><img style="width:290px; float:right; margin-left: 10px;" title="Woman riding tiger in surf" alt="Woman riding tiger in surf" src="/sites/default/files/ride-tiger-in-surf.jpg" /><br /><strong>2. "I'm using my debugger to step through all this container code, trying to figure out how dependency injection is implemented and I'm getting frustrated and don't  understand."</strong><br />
+Stop doing that! Just accept that when you put your class in the right spot, it will be sucked into the system automagically and leave it at that. Ride the tiger, don't fight the tiger. You didn't need to know how a <a href="http://drupal.org/project/views&quot;">Views</a> filter handler in D7 got "injected" either, but that didn't stop you writing one.<br /><strong>D8: +1</strong></p>
+<p><strong>3. "My hooks are dead and gone and I need to put my implementations into classes."</strong><br />
+Yeah, so what? <em>"Opgeruimd staat netjes!"</em> is a Dutch saying that is harder to translate into English than copying your functions from .module and .inc files and pasting them into a .php file that resides in a well-organised auto-findable class file structure. Then put <code>class … extends … {… }</code> around the contents and adjust the method signatures where necessary.<br />
+Get over it and get coding. Start here: <a href="https://drupal.org/node/1985716">D7 to D8 upgrade: fields, widgets and formatters</a>.<br /><strong>D8: +1</strong></p>
+<p><strong>4. "Ok, so I've started on my first D8 field formatter class and I get error messages I don't understand."</strong><br />
+You mean like this one:<br /><em>Doctrine\Common\Annotations\AnnotationException: [Syntax Error] Expected PlainValue, got ')' at position 649 in class Drupal\leaflet\Plugin\field\formatter\LeafletDefaultFormatter.</em><br />
+Yep,  not very clear I admit. "At position 649…" -- are they expecting us to count the number of characters? And from where? What about a line number? This error is probably due to you inserting a superfluous comma before your closing parenthesis. This is precisely what the Drupal coding standards insist on for arrays, but it's bad in Doctrine annotations.<br />
+However worse than a vague error message is no error at all and your class not working. For classes other than the stock standard, it can be tedious to find the correct spot in the directory hierarchy for the class to be noticed by the auto-loader. Some diagnostic tool would be welcome.<br /><strong>D8: -1</strong></p>
+<p><strong>5. "Because <a href="https://drupal.org/requirements">D8 requires PHP 5.3.10 or later</a> can I now safely employ some of the language <a href="http://www.php.net/manual/en/migration53.new-features.php">features that 5.2.x didn't have</a> ?"</strong><br />
+Yes! Most notably <conde>const, javascript-style closures (anonymous functions) and the nifty binary shorthand for the tertiary conditional operator <code>?:</code><br /><code>$value = isset(somelongarrayname[$key][0]['name']) ? somelongarrayname[$key][0]['name'] : 'not set';</code></conde></p>
+<p>becomes:</p>
+<p><code>$value = somelongarrayname[$key][0]['name']  ?: 'not set';</code></p>
+<p>Better?<br /><strong>D8: +1</strong></p>
+<p><strong>6. "{{Twig}} is breaking by back."</strong><br />
+Oh come off it! Twig is easy and syntactically not a great departure from PHPTemplate. But your templates end up cleaner and easier to work with for themers. Check out this <a href="http://symfony.com/doc/current/book/templating.html">one-page tutorial</a>. See? It's not hard.<br />
+Then copy an existing core .html.twig template and adjust to fit your needs.<br /><strong>D8: +1</strong></p>
+<p><strong>7. "I need to learn Oh-Oh..."</strong><br />
+Yes, Object Oriented basics would be good. Copying &amp; pasting and following patterns found in other modules will get you started producing working D8 code. To understand what overriding is and not to forget to call the parent in the first line of the function body will be a bonus. So read up and don't be baffled by symbols like <code>::</code> and <code>-&gt;</code> or the use of camelCase.<br />
+Also, look at this way: in the process of learning D8, you'll learn how the rest of the world does programming. Not a bad skill to have.<br /><strong>D8: +1</strong></p>
+<p>To summarise, in the words of the goddess of victory: <em>Just do it!</em></p>
+<p>Add your own D8 tips and traps to the comments below!</p>
+<p>1st picture: <a href="http://www.moosicmountainwild.com/currentrr/Western%20Maryland%20Railroad.htm">Western Maryland Railroad</a><br />
+2nd picture: <a href="http://www.sodahead.com">SodaHead</a></p>
+</div></div></div><div class="field field-name-field-file-under field-type-taxonomy-term-reference field-label-above">
+      <h3 class="field-label">File under:&nbsp;</h3>
+    <span class="field-items">
+                  <a href="/file-under/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Planet Drupal</a>            </span>
+</div>
+  </body>
+</html>
+

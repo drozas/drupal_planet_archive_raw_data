@@ -1,0 +1,113 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 10 Jul 2014 22:53:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 10 Jul 2014 22:53:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal core updates for July 10, 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/432813
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal core updates for July 10, 2014</title>
+    <base href="https://groups.drupal.org/node/432813">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>The past two weeks have seen steady progress on Drupal 8, with the release of <a href="https://www.drupal.org/node/2296363">drupal 8.0-alpha13</a>, <a href="https://twitter.com/xjmdrupal/status/486904081676763136">the Clearing of the RTBC Queue</a>, <a href="https://www.drupal.org/node/2297545">the expected deployment of Semantic Versioning support on Drupal.org</a>, the launch of the <a href="https://groups.drupal.org/node/430243">#D8CX initiative</a>, and <a href="http://www.drupalcommerce.org/blog/14871/launching-commerce-drupal-8">the announcement about the roadmap for Drupal Commerce for Drupal 8</a>!</p>
+<h3>Updates to api.drupal.org</h3>
+<p>If you go to <a href="https://api.drupal.org/api/drupal/8" title="https://api.drupal.org/api/drupal/8">https://api.drupal.org/api/drupal/8</a> you'll notice a few updates:</p>
+<ul>
+<li>A few months ago, we updated the landing page with a list of topics, which were mostly just stubs. Documentation has now been written for most of the topics that are linked from the landing page.</li>
+<li>There's <a href="https://api.drupal.org/api/drupal/services/8">a list of Services</a> on the right sidebar, which you can filter by tag and name keywords — and each service has its own page, with appropriate cross-linking (list of code that uses the service on the service page, and if a service name is used in code, it should link to the service page)</li>
+<li>The <a href="https://api.drupal.org/api/drupal/classes/8">Classes page</a> now lists Traits as well as classes and interfaces</li>
+<li>For hooks like <a href="https://api.drupal.org/api/drupal/core!modules!system!system.api.php/function/hook_form_FORM_ID_alter/8"><code>hook_form_FORM_ID_alter()</code></a>, you can now see a list of functions that implement it (previously this only worked for hooks like <a href="https://api.drupal.org/api/drupal/core!modules!system!system.api.php/function/hook_form_alter/8"><code>hook_form_alter()</code></a> where the function name was <code>modulename_hookname()</code>, but now it works for ALL_CAPS replacements as well).</li>
+</ul>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>Last week, we fixed 1 critical issue and 5 major issues, and opened 2 criticals and 10 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">97 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">614 major issues</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem-space of one of these issues, and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>, we could use your help!</p>
+<ul>
+<li>We need people to review <a href="https://www.drupal.org/node/2260457">Issue #2260457: Allow config entities to remove dependent configuration keys when dependencies are deleted</a>. Uninstalling modules in Drupal 8 will remove any configuration that has a dependency on that module. This will keep your site working but at the moment the delete is a bit greedy! Two other related issues, <a href="https://www.drupal.org/node/2212081">#2212081</a> and <a href="https://www.drupal.org/node/1881630">#1881630</a> could use some work too.</li>
+<li><a href="https://www.drupal.org/node/2293773">Issue #2293773: Field allowed values use dots in key names - not allowed in config</a> is nearly done, but we need to decide on the best of two paths forward, code review and commit.</li>
+<li><a href="https://www.drupal.org/node/2268939">Issue #2268939: Config overrides not updated when config changes</a> needs review.</li>
+<li><a href="https://www.drupal.org/node/2256521">Issue #2256521: New plan, Phase 2: Implement menu links as plugins, including static admin links and views, and custom links with menu_link_content entity, all managed via menu_ui module</a> needs extensive code reviews, API changes documented, a change record drafted, and existing change records that will need updates identified and updated to reference the issue.</li>
+<li>There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">7 beta-blockers</a> that need to be done to provide a stable data model and stable critical APIs (including a couple of the issues above), and <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status[]=1&amp;status[]=13&amp;status[]=8&amp;status[]=14&amp;status[]=4&amp;version[]=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+deadline">14 non-critical issues that significantly change the data model or critical APIs, and therefore can only be committed before the first beta is released</a>. Please help move them forward!</li>
+</ul>
+<h3>More ways to help</h3>
+<p><a href="https://www.drupal.org/node/1679344">Issue #1679344: Race condition in node_save() when not using DB for cache_field</a> recently caused a Drupal.org outage. The issue already has a proposed resolution recommended in comment #24 — help out by creating a patch for either D7 or D8.</p>
+<p>Additionally, there are a bunch of easy documentation issues which need some help moving forward. For each of these, there is a "Child Issues" sidebar. Look there for issues that are "active", "needs work", or "needs review":</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2269389">Issue #2269389: Make sure plugin developer info is discoverable</a></li>
+<li><a href="https://www.drupal.org/node/2294117">Issue #2294117: Some @defgroup topics should be moved/renamed</a></li>
+<li><a href="https://www.drupal.org/node/1908570">Issue #1908570: Update or create hook_help() texts for D8 core modules</a></li>
+</ul>
+<p>If you want to get started with the core development process, this is a great way to get your first commit in core!</p>
+<p>You can also search the Drupal Core issue queue for issues tagged "Novice": <a href="https://www.drupal.org/project/issues/search/drupal?status[]=Open&amp;version[]=8.x&amp;component[]=documentation&amp;issue_tags=Novice">the ones in the "documentation" component</a> are especially good for new contributors.</p>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+<p>You can also help by <a href="https://www.gittip.com/DrupalCoreGittipTeam/">sponsoring Drupal core development</a>.
+</p>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code>git log --since &quot;2014-06-25&quot; --pretty=oneline</code> (201 commits in total):</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2144263">Issue #2144263 by fago, yched, alexpott, Berdir, plach, andypost, effulgentsia, michaelfavia: Decouple entity field storage from configurable fields</a> — this important step in completing the Drupal 8 Entity Field API removed the hardcoded assumption that additional (non-base) fields had to be provided by the Field module (because only that was capable of creating the necessary tables for it), as the entity storage had those specific interfaces in the relevant methods. This change completes work done across DrupalCons Portland, Prague, and Austin! Great job team!</li>
+<li><a href="https://www.drupal.org/node/2286357">Issue #2286357 by tim.plunkett: Introduce Display Variants, use for the block rendering flow</a> — ports the concept of Variants from Panels/CTools into Drupal core.</li>
+<li><a href="https://www.drupal.org/node/2016629">Issue #2016629 by larowlan, neclimdul, sun, alexpott, jibran, ParisLiakos, donquixote, effulgentsia, msonnabaum: Refactor bootstrap to better utilize the kernel.</a>:
+<ul>
+<li>By loading the kernel a lot earlier, we can take advantage of its features to remove superglobals from the bootstrap process and deprecate drupal_bootstrap().</li>
+<li>It also makes the code cleaner and more testable, opening the door to more kernel-based testing.</li>
+</ul>
+</li>
+<li><a href="https://www.drupal.org/node/2231595">Issue #2231595 by beejeebus, Steven Merrill, kim.pepper, Wim Leers, msonnabaum: Add a cache backend that checks an inconsistent cache, then falls back to a consistent cache backend.</a> — this allows a site running on a cluster to cache some things locally (e.g.: APC) and other things remotely (e.g.: MySQL, Memcached or Redis), reducing network traffic and improving performance.</li>
+<li>Some new improvements:
+<ul>
+<li><a href="https://www.drupal.org/node/1906806">Issue #1906806 by Berdir, damiankloip, Sifro, dawehner: You can now add views relationships based on entity references</a></li>
+<li><a href="https://www.drupal.org/node/1999312">Issue #1999312 by baisong, lokapujya, botanic_spark, attiks: The Responsive Image module now has an "empty image" option so you can hide images on certain devices.</a></li>
+<li><a href="https://www.drupal.org/node/2227601">Issue #2227601 by mparker17, cs_shadow, swentel, lanchez, mgifford: You can now choose to hide field labels in an accessible way with a "- Visually Hidden -" label option.</a></li>
+<li><a href="https://www.drupal.org/node/936704">Issue #936704 by Matt V., swentel, tim.plunkett, Jalandhar, jimi-o: Drupal now asks for confirmation before deleting all your log messages.</a></li>
+</ul>
+</li>
+<li>Some bug fixes:
+<ul>
+<li><a href="https://www.drupal.org/node/1468582">Issue #1468582 by mgifford, janusman, edward_or, tstoeckler, alanburke, Schnitzel, dcmouyard, LewisNyman: Added meta tags to tell mobile devices that the site is responsive, so they shouldn't render the desktop version</a></li>
+<li><a href="https://www.drupal.org/node/2290261">Issue #2290261 by tim.plunkett, amool: the full configuration export would crash if the php_fileinfo extension was not installed</a></li>
+<li><a href="https://www.drupal.org/node/2277281">Issue #2277281 by dobe, amitgoyal, michaelfavia | drumm: Removed the 128-character cap on allowed file extensions</a></li>
+<li><a href="https://www.drupal.org/node/578400">Issue #578400 by aaronschachter, melsi, Gábor Hojtsy, valthebald, idflood, sign, Damien Tournoud: Pages that are titled simply "0" are now displayed.</a></li>
+<li><a href="https://www.drupal.org/node/2154775">Issue #2154775 by er.pushpinderrana, barnettech, kirkkala, InternetDevels | Wim Leers: You can now see your cursor while editing a title in-place</a></li>
+<li><a href="https://www.drupal.org/node/2282599">Issue #2282599 by LewisNyman, joachim: Drop-down menus now work in Stark</a></li>
+</ul>
+</li>
+<li>A whole bunch of deprecated functions were deleted, most notably <a href="https://www.drupal.org/node/2294093"><code>arg()</code></a>.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Excited to learn more about the changes coming up in Drupal 8, but don't like reading patch files? Here are some of the best articles from the past two weeks:</p>
+<ul>
+<li>Amber Matz of <a href="http://drupalize.me/">Drupalize.Me</a> wrote a great <a href="http://drupalize.me/blog/201406/accessibility-features-drupal-8">analysis of the accessibility improvements in Drupal 8</a>.</li>
+<li>Daniel Sipos of <a href="http://www.webomelette.com/">Web Omelette</a> explains <a href="http://www.sitepoint.com/drupal-8-version-entityfieldquery/">how the Entity Field Query service works in Drupal 8</a>.</li>
+<li>Kristof van Tomme of <a href="http://pronovix.com/">Pronovix</a> explains how <a href="http://pronovix.com/blog/behat-coverage-all-drupal-how-it-could-be-done">we could get Behat coverage for all of Drupal</a>.</li>
+<li>Steve Burge of <a href="https://www.ostraining.com">OSTraining</a> talks about <a href="https://www.ostraining.com/blog/drupal/drupal-8-july-2015/?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed%3A+ostrainingdrupal+%28OSTraining+Drupal%29">the State of Drupal 8</a>.</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<p>Want to meet up with other Drupal folks excited about moving Drupal 8 forward? Code sprints are an ideal way to meet new friends, contribute to Drupal core and/or contrib, learn, share tips/tricks and discover new talent.</p>
+<p>Two big events, <a href="http://2014.tcdrupal.org/">Twin Cities DrupalCamp</a> (in <strong>Minnesota, USA</strong>) and <a href="http://2014.drupalaton.hu/">Drupalaton</a> (in <strong>Lake Balaton, Hungary</strong>), will be holding massive, 4-day Drupal 8 sprints on <strong>Aug 7-10</strong>. Help us make sure there is space for everyone by signing up ahead of time!</p>
+<ul>
+<li><a href="https://docs.google.com/spreadsheet/ccc?key=0AtDYnjV5l0uydGFjekZSM1ROR040eldUeEU4OU1JNFE#gid=0">Sign up for TCDrupalCamp sprints here!</a></li>
+<li><a href="https://docs.google.com/spreadsheet/ccc?key=0Aqxsrc5BVkagdEtJeGpzVEVJaGhhWURGTk1HWWRIeUE#gid=0">Sign up for Drupalaton sprints here!</a></li>
+</ul>
+<p>Here are some other upcoming events:</p>
+<ul>
+<li><strong>July 10</strong>: Forum One is hosting a <a href="https://www.eventbrite.com/e/drupal-8-code-sprint-with-forum-one-tickets-11921354091">Code Sprint</a> at their offices in <strong>Washington DC</strong>.</li>
+<li><strong>July 12-13</strong>: <a href="http://jerseyshoredrupal.github.io/">Drupal 8 at the Jersey Shore</a> in <strong>New Jersey, USA</strong>, has room for 40 Drupal 8 sprinters. <a href="https://twitter.com/drupalcampnj">@drupalcampnj</a></li>
+<li><strong>July 16</strong>: DesignHammer is hosting a <a href="http://designhammer.com/blog/drupal-coder-lounge-designhammer-0">Drupal Coder Lounge</a> event in <strong>Durham, North Carolina, USA</strong> to help work on Drupal 8 core and update documentation and contribtued modules for Drupal 8.</li>
+<li><strong>July 17-20</strong>: <a href="http://2014.drupalcorn.org/sprint">DrupalCorn</a> in <strong>Iowa, USA</strong> will have a Drupal 8 contributed module sprint. <a href="https://twitter.com/drupalcorn">@drupalcorn</a></li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

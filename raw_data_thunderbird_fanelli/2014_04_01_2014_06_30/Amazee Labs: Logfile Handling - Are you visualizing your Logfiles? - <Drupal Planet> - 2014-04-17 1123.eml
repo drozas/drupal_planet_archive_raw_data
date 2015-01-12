@@ -1,0 +1,50 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 17 Apr 2014 09:23:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 17 Apr 2014 09:23:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Amazee Labs: Logfile Handling - Are you visualizing your Logfiles?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.amazeelabs.com/en/logfile-handling-are-you-visualizing-your-logfiles
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Amazee Labs: Logfile Handling - Are you visualizing your Logfiles?</title>
+    <base href="http://blog.amazeelabs.com/en/logfile-handling-are-you-visualizing-your-logfiles">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><img alt="" src="http://blog.amazeelabs.com/sites/default/files/logfiles.jpg" title="Optional title" /></p>
+<p>We are crazy about graphs and statistics. No wonder we also want to get a feel for the health of our Drupal sites in some way. On our video wall, one screen is dedicated to showing us errors per server to get a better understanding for how good we are doing. You cannot reach zero here, but you see if something fails miserably when things go over 9,000!</p>
+<p>We can use our logging information for several things - visualizing error messages is just one use case. As an example, we store the generated data a bit longer to audit some processes, for example, content modification or deletion which is logged by the content module. However, let's jump in!</p>
+<h3>Architecture</h3>
+<p>Our setup is currently pretty simple. The so called <a href="http://www.elasticsearch.org/overview/">Elasticsearch ELK Stack</a> (ELK stands for Elasticsearch Logstash Kibana) provides many more possibilities to setup for scalability. For our current size and needs we are happy with the way we set it up. It is straight forward and empowers us to make use of the data that is otherwise stored in the Drupal databases mostly unnoticed.</p>
+<h3>Drupal - Syslog Module</h3>
+<p>We make use of the <a href="https://drupal.org/documentation/modules/syslog">Syslog functionality</a> within Drupal to ship the Syslogs to our Local 7 endpoint of Syslog. From there, the messages are passed to Logstash.</p>
+<p>Enabling Syslog is a straightforward thing:</p>
+<pre><code>drush en syslog
+drush vset syslog_identity yoursite_com
+drush vset syslog_facility 184
+drush dis dblog
+</code></pre><p>The remaining settings are left default, but you can change the information that is logged to your needs.</p>
+<h3>Logstash</h3>
+<p><a href="http://logstash.net/">Logstash</a>, written by Jordan Sissel, is the Swiss Army knife in our setup. You can think of it as Multiple Input - Multiple Output System. It features many In and Output Types (check the <a href="http://logstash.net/docs/1.4.0/">documentation section of the Logstash website</a> for more information). We use the Syslog listener of Logstash and feed this data into our Elasticsearch instance. We create a new index every day to ease the process with retaining the logfiles. The current setup does not need further separation to this, Logstash allows us to split up the messages passed along from Drupal into separate searchable fields. For example, we split the site name, username, module, severity into separated fields.</p>
+<h3>Elasticsearch</h3>
+<p>All log entries are passed on from Logstash to Elasticsearch for indexing, search and storage. Elasticsearch is a quite young but powerful tool. It handles sharding and replication over many nodes with ease and has fantastic performance in searching.</p>
+<h3>Kibana</h3>
+<p><a href="http://www.elasticsearch.org/overview/kibana">Kibana</a> is the frontend to Elasticsearch. It allows you to query the data stored within Elasticsearch and displays this information in graphs, diagrams tailored to your needs. We have several graphs we use daily. For example, we show all exceptions thrown on our video wall to see when something goes down. A sudden change in quantity of the errors gives us a hint to look into it. We also go trough the errors after deployments to ensure no fatal exceptions happen and are able to fix things that wouldn't be noticed otherwise.</p>
+<h3>Want to hear more?</h3>
+<p>Got curious to see what you can achieve with those tools? I'll is speaking at <a href="http://campus.meteotest.ch/doku.php?id=vortraege:logging">Campus Berne</a> on 22. April 2014 - You can register yourself on <a href="http://techup.ch/1436/campus-bern-logging-mit-kibana-logstash-und-graylog">TechUp</a>.</p>
+<h3>Stay in the loop – join our newsletter!</h3>
+<div class="createsend-button" data-listid="r/38/463/903/1B9E511923E0A38B" style="height:27px;display:inline-block;"> </div>
+<script type="text/javascript">
+<!--//--><![CDATA[// ><!--
+(function () { var e = document.createElement('script'); e.type = 'text/javascript'; e.async = true; e.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://btn.createsend1.com/js/sb.min.js?v=2'; e.className = 'createsend-script'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(e, s); })();
+//--><!]]>
+</script><p> </p>
+</div></div></div>
+  </body>
+</html>
+

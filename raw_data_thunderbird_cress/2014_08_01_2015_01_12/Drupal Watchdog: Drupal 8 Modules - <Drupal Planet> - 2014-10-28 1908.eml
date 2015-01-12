@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 28 Oct 2014 19:08:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 28 Oct 2014 19:08:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Drupal 8 Modules
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-3/issue-2/drupal-8-modules
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Drupal 8 Modules</title>
+    <base href="http://drupalwatchdog.com/volume-3/issue-2/drupal-8-modules">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Feature        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p>This article will be more about the patterns you need to use during Drupal 8 development than how to fit the various pieces together. </p>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/3.2-modules-math.jpg" class="img-responsive img-thumbnail margin-left" alt="Implements of Mathematics" width="50%" align="right" />There’s good reason for this approach: fitting the pieces together has plenty of examples, change records, and whatnot – but many pieces of the puzzle are entirely new to Drupal developers. </p>
+<h3>The Background</h3>
+<p>The first half of this article provides general PHP information which uses Drupal as an example, but is not Drupal specific. The idea behind this is that the knowledge can be reused well (indeed, this was also a design goal for Drupal 8).</p>
+<h4>Classes, Objects, Interfaces</h4>
+<p>In Drupal 7, <span class="geshifilter"><code class="php geshifilter-php">stdClass</code></span> was used at a lot of places; ergo, classes (like <span class="geshifilter"><code class="php geshifilter-php">stdClass</code></span>) and objects (instances of a class, like node, user, etc.) should be familiar. <span class="geshifilter"><code class="php geshifilter-php">stdClass</code></span> is a class without methods, and the properties are not defined ahead of time. In PHP, it’s valid to set any property on an object, even if it’s not defined on its class. So, <span class="geshifilter"><code class="php geshifilter-php">stdClass</code></span> worked much like an associated array, except that it used arrows instead of brackets. Another important distinction between arrays and objects is passing them to a function: in PHP5, if a function/method gets an object and then changes the object, it will affect the object everywhere – objects are not copied every time, while arrays are. </p>        </div>
+  </body>
+</html>
+

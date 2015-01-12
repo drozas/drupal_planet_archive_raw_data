@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Managing your Drush Aliases
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/managing-your-drush-aliases%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Managing your Drush Aliases</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/managing-your-drush-aliases%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>If you are like me, you have a lot of Drush aliases in your life, aliases for local sites, sites on dev servers, sites at Pantheon, sites at Acquia, sites all over the place.</p><br />
+<br />
+<p>To get all of the aliases for your Pantheon sites, log into your Pantheon account and click the link in the top right corner of the "Your Sites" page to download.</p><br />
+<br />
+<p><img alt="Pantheon screenshot" border="0" src="http://chapterthree.com/sites/default/files/Selection_009.png"></p><br />
+<br />
+<p>&nbsp;</p><br />
+<br />
+<p>To get these aliases at Acquia, click on the cloud link, click the "Drush and API" option on the left navigation and then the download button at the top of that page.</p><br />
+<br />
+<p>&nbsp;</p><br />
+<br />
+<p><img alt="Acquia screenshot" border="0" height="593" src="http://chapterthree.com/sites/default/files/Selection_010.png" width="554"></p><br />
+<br />
+<p>If all of your sites are local or on your own server, I've <a href="https://github.com/mrf/generate-drush-aliases">done a little work on a script</a> that can generate an alias file for you. It has some bugs and makes a lot of assumptions about how you organize things (pull requests welcome!), but it works for most Drupal sites that it finds.</p><br />
+<br />
+<p>Once you have dumped all of the alias files that you have collected in your ~/.drush folder and typed&nbsp;<code>drush site-alias,</code> you will probably be confronted with a long long list of aliases. These names are often something cryptic, usually a 4-letter abbreviation for the site or something equally difficult to remember.</p><br />
+<br />
+<p>The trick I use to keep this list manageable is to rename the generated files to include a pointer to the service. So sitename.aliases.drushrc.php becomes a.sitename.aliases.drushrc.php for Acquia sites, and pantheon.aliases.drushrc.php becomes p.aliases.drushrc.php.</p><br />
+<br />
+<p>Now, when I type <code>drush site-alias,</code> all of my aliases are prepended with an @a an @p an @local or an @dev. I like to keep my names short for less typing, but you can make them longer for readability.</p><br />
+<br />
+<p>I find that it is much easier to remember where a site is hosted than what it is called at that host. When I'm looking for an alias, I type <code>drush sa | grep @p</code> and I get spit back a shortened list of relevant aliases from a particular host.</p><br />
+<br />
+<p>Now that your alias list is more manageable, head over to the <a href="http://drush.ws">Drush documentation</a> and dream up cool new ways to <a href="http://drush.ws/examples/example.aliases.drushrc.php">make your aliases even more powerful</a>.</p><br />
+  </body>
+</html>
+

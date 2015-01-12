@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 24 Jul 2013 10:45:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 24 Jul 2013 10:45:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 10: context specific text translation APIs
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-jul-24/drupal-8-multilingual-tidbits-10-context-specific-text-translation-apis
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 10: context specific text translation APIs</title>
+    <base href="http://hojtsy.hu/blog/2013-jul-24/drupal-8-multilingual-tidbits-10-context-specific-text-translation-apis">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>In <a href="http://hojtsy.hu/blog/2013-jul-23/drupal-8-multilingual-tidbits-9-deployment-friendly-automated-downloads">the previous tidbit</a>, we looked at how Drupal 8 downloads software translations automatically, but what do software translations include? There are several new translation APIs for software translation in Drupal 8. Prior Drupal versions had the rule that you should use t() and format_plural() with little exceptions. Drupal 8 has much more complexity in this area, which may be a bliss or a curse depending on how you look at it. It definitely brings translation support to several areas that were not or poorly covered before. Buckle up, this 'tidbit' is more like a deep-dive into the woods of the API!</p>
+<p>If you are not comfortable with code-talk, your key take-away should be that we now support a bigger part of the software to translate and in more flexible ways. We'll cover configuration translation from the user perspective for example in detail in later tidbits.</p>
+</div></div></div>
+  </body>
+</html>
+

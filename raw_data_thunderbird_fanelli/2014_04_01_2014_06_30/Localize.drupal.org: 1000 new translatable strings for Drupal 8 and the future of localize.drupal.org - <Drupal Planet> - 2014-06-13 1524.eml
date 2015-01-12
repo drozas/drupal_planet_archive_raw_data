@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 13 Jun 2014 13:24:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 13 Jun 2014 13:24:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Localize.drupal.org: 1000 new translatable strings for Drupal 8 and the future of localize.drupal.org
+Content-Transfer-Encoding: 8bit
+Content-Base: https://localize.drupal.org/node/6433
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Localize.drupal.org: 1000 new translatable strings for Drupal 8 and the future of localize.drupal.org</title>
+    <base href="https://localize.drupal.org/node/6433">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As we kept following the changes made to Drupal 8 and the dozens of new ways of adding translatable strings to code in the new version, we worked on support for TWIG translation constructs and all kinds of YAML file sources (routing titles, menu items, action links, local tasks, configuration schemas, etc) recently as well as some misc new APIs like TranslationWrapper objects. Huge thanks to the amazing work of @ksenzee, @herom and @hron84 building string extraction support for these in <a href="https://drupal.org/project/issues/search?projects=Translation+template+extractor&amp;project_issue_followers=&amp;issue_tags_op=%3D&amp;issue_tags=Drupal+8+compatibility">our not very well loved issue queue</a>.</p>
+<p>Support for these APIs is now rolled out live on localize.drupal.org and I sent Drupal 8 alpha12 to be parsed again with the new code. The result is the <strong>number of strings made available for translation jumped from 6820 to 7769</strong>, making available almost a thousand previously hidden strings. (Also almost 800 new files are considered now for source strings, jumping from 3972 to 4722). For comparison, Drupal 7's latest release only contains 4645 strings to translate. <a href="https://localize.drupal.org/node/5853">Our advice from last June</a> that this may not be the time to jump on translating it all yet still stands though.</p>
+<p>The quest is not over. API changes that affect translatability are still made. The latest one is the logger API that replaces watchdog(). We still need to <a href="https://drupal.org/node/2285063">igure out how to support that in string extraction</a>. Help needed there! I'm not sure how the string extraction based method can sustain itself for Drupal 9, we'll need to take a hard look at this definitely. We are doing out best now in Drupal 8 to cover what is possible.</p>
+<p>The largest outstanding item keeps being <a href="https://drupal.org/node/1933988">support for shipped configuration translatables</a>. All the default user roles, filters, views, content types, menus and so on that Drupal 8 itself supports to be translated with sources from localize.drupal.org, so only the server side part on our side is missing still. There are probably hundreds of translatable strings hidden there still.</p>
+<p>That said, it is not only the Drupal 8 API support that is a bit lacking, we need more volunteers to help with the site itself. The site's biggest contributor <a href="http://makina-corpus.com/blog/metier/2014/the-state-of-localize-drupal-org-in-2014">Sebastien Corbin posted about the state of the site in January</a> and that is still pretty accurate. I submitted a Core conversation proposal for DrupalCon Amsterdam to at least <a href="https://amsterdam2014.drupal.org/session/working-group-future-localizedrupalorg">start assembling a working group around the site</a> with people who can devote time in a sustainable fashion. We all rely on this site for so much and it gets so little love!</p>
+<p><a href="https://localize.drupal.org/node/6433" target="_blank">read more</a></p>
+  </body>
+</html>
+

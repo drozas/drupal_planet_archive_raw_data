@@ -1,0 +1,45 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 17 Apr 2014 12:29:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 17 Apr 2014 12:29:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Frederick Giasson: Configuring and Using OSF Entities (Screencast)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fgiasson.com/blog/index.php/2014/04/17/configuring-and-using-osf-entities-screencast/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Frederick Giasson: Configuring and Using OSF Entities (Screencast)</title>
+    <base href="http://fgiasson.com/blog/index.php/2014/04/17/configuring-and-using-osf-entities-screencast/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rfr_id=info%3Asid%2Focoins.info%3Agenerator&amp;rft.title=Configuring and Using OSF Entities (Screencast)&amp;rft.aulast=Giasson&amp;rft.aufirst=Frederick&amp;rft.subject=Open Semantic Framework&amp;rft.subject=OSF Academy&amp;rft.subject=OSF for Drupal&amp;rft.subject=OSF Web Services&amp;rft.subject=Planet Drupal&amp;rft.subject=Structured Dynamics&amp;rft.source=Frederick Giasson&#8217;s Weblog&amp;rft.date=2014-04-17&amp;rft.type=blogPost&amp;rft.format=text&amp;rft.identifier=http://fgiasson.com/blog/index.php/2014/04/17/configuring-and-using-osf-entities-screencast/&amp;rft.language=English"></span>
+<p>This screencalcast introduces you to one of the most important <a title="OSF for Drupal" href="https://drupal.org/project/osf">OSF for Drupal</a> connector: the <a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Managing_Resource_Types_and_Entities">OSF Entities module</a>. This module creates a new Entity Type called <code>Resource</code>. The description of these entities is managed directly into the <a title="Open Semantic Framework" href="http://opensemanticframework.org">Open Semantic Framework (OSF)</a>. All the calls to the core entity API function like: <code>entity_load()</code>, <code>entity_save()</code>, <code>entity_create()</code> and <code>entity_delete()</code> are operated with different calls to different OSF web service endpoints.</p>
+<p>What this means for a Drupal developer is that they can use Drupal&#8217;s Entity API to manage instance records that are hosted remotely in a OSF instance. They don&#8217;t have to know how OSF works in order to take advantage of it. They just have to use the API they are used to use. This new Entity Type supports the following Drupal features:</p>
+<ol>
+<li>Full Entity API</li>
+<li>Entities caching</li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Modifying_and_Revising_Resources">Revisioning</a></li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Using_the_SearchAPI">SearchAPI</a></li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Templates_Selection">Templates selection with inference on their type</a></li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/List_of_Supported_Field_Type_and_Field_Widgets_by_OSF_Entities">29 field widgets</a></li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Exporting_Resources">Export feature in 6 formats</a></li>
+</ol>
+<p>The screencast introduces you to the following aspects of the OSF Entities module:</p>
+<ol>
+<li>Introduction to the architecture of the OSF Entities module</li>
+<li>Exposing the available entities in OSF into Drupal Bundles and Fields</li>
+<li>Browsing and searching for <code>Resource</code> entities</li>
+<li>Managing Resource Type bundles</li>
+<li>Introduction to the <code>OSF Entity Reference</code> field widget</li>
+<li>Creating and updating <code>Resource</code> entities</li>
+</ol>
+<p>&nbsp;</p>
+<p><center><br />
+<a href="https://www.youtube.com/watch?v=S2uOKzW7OEw"><div style="margin:10px;overflow:hidden;display:table;line-height:0;text-align:center;width:400px;" class="aligncenter"><img class="shadow_curl  wp-image-2376 size-full" src="http://fgiasson.com/blog/wp-content/uploads/2014/04/tut_7_blog_400.png" alt="tut_7_blog_400" width="400" height="223"  style="padding:0 !important; margin:0 !important; max-width:100% !important;"><br/><img src="http://fgiasson.com/blog/wp-content/plugins/shadows/shadow_curl.png" class="shadow_img" style="margin:0 !important;height:10px;width:100%;"></div></a></center></p>
+  </body>
+</html>
+

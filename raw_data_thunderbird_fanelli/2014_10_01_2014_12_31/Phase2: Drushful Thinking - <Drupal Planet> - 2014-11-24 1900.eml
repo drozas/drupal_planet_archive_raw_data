@@ -1,0 +1,92 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 24 Nov 2014 18:00:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 24 Nov 2014 18:00:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Drushful Thinking
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/drushful-thinking/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Drushful Thinking</title>
+    <base href="http://www.phase2technology.com/blog/drushful-thinking/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>What is Drush?</h2>
+<p>If you&#8217;re asking that question right now then congratulations! You are one of the lucky people who will have your life changed today! Cancel everything and read up on <a href="https://github.com/drush-ops/drush">Drush</a>, the command line bridge to Drupal.</p>
+<h2>Everybody knows about Drush, ya Dingus!</h2>
+<p>That&#8217;s more like it. Who doesn&#8217;t love Drush, right? Right!</p>
+<p>But more and more, I find myself seeing people reinventing things that Drush already handles because they just don&#8217;t know all that Drush can do. It&#8217;s getting frustrating, and I want to fix that.</p>
+<h1>First, The Basics</h1>
+<h2>Stuff everybody knows</h2>
+<p>Here are a few Drush commands that most people know and love, just to get them out of the way:</p>
+<ul>
+<li>drush updb: run pending database updates</li>
+<li>drush cc all: clear all caches</li>
+<li>drush dl &lt;something&gt;: download the &lt;something&gt; module</li>
+<li>drush en &lt;something&gt;: enable the &lt;something&gt; module</li>
+</ul>
+<h2>Stuff everybody knows (Features Edition<b>™</b>)</h2>
+<p>And if you&#8217;re using Features, you&#8217;re probably familiar with:</p>
+<ul>
+<li>drush fra: revert all Features</li>
+<li>drush fe: export a new or updated Feature with a new component</li>
+<li>drush fu &lt;featurename&gt;: update the &lt;featurename&gt; Feature with updated site config</li>
+<li>drush fr &lt;featurename&gt;: revert the site&#8217;s config to the current state of the &lt;featurename&gt; Feature</li>
+</ul>
+<h2>Aliases</h2>
+<p>For a lot of the fun stuff, you&#8217;ll have to understand Drush aliases. If you don&#8217;t, here&#8217;s the gist: Drush aliases give you an easy way to run Drush commands on remote Drupal sites, as opposed to only being able to use it on your local sites. If you&#8217;re constantly SSH&#8217;ing into different environments just to run a couple quick commands, you need to stop doing that.</p>
+<p>There&#8217;s <a href="http://www.astonishdesign.com/blog/drush-aliases-what-why-and-how">lots</a> <a href="https://www.deeson.co.uk/labs/drupal-drush-aliases-and-how-use-them">of</a> <a href="http://www.bariswanschers.com/blog/working-drush-alias-files-teams">documentation</a> about Drush aliases and how to create your own, but most of the docs lack notes on some of the lesser known awesome things you can do with aliases. Keep reading, sailor.</p>
+<p>Well, one more thing. This is probably a good time to mention a couple quick commands.</p>
+<p>Firstly, let&#8217;s run an arbitrary shell command on our dev environment.</p><pre class="crayon-plain-tag">drush @foo-dev exec echo $SOMETHING</pre><p>Or maybe we should just go ahead and SSH in to do something a little more complex.</p><pre class="crayon-plain-tag">drush @foo-dev ssh</pre><p>Or maybe we need to do a bunch of aliased commands, but we want to do it without SSH&#8217;ing in (because the commands require local files or something). We can make a Drush alias persist until we tell it to stop using:</p><pre class="crayon-plain-tag">drush site-set @foo-dev</pre><p>And then when we&#8217;re done doing what we do, we can just run it again without the &#8220;@foo-dev&#8221; argument to unset it.</p>
+<p>Now, keep reading, sailor.</p>
+<h1>Syncing Ship</h1>
+<p>(Warning: these headlines are going to get worse and worse)</p>
+<p>One of the most common things to do with Drush aliases is to sync stuff from one alias to another.</p>
+<p>For example, want to sync the dev site database down into your local?</p><pre class="crayon-plain-tag">drush sql-sync @foo-dev @foo-local</pre><p>How about files? Sync &#8216;em!</p><pre class="crayon-plain-tag">drush rsync @nexderm-dev:%files @nexderm:%files</pre><p>Or maybe some unwashed sent you a DB dump and you have to import it the old fashioned way?</p><pre class="crayon-plain-tag">cat ~/path/to/file.sql | drush sql-cli</pre><p>Sometimes you want to drop your entire database before importing, to make sure you don&#8217;t get any tables left behind from your old install that aren&#8217;t supposed to be there. That&#8217;s as easy as:</p><pre class="crayon-plain-tag">drush sql-drop</pre><p>Sometimes, it&#8217;s useful to be able to automate running arbitrary SQL commands on multiple environments, and that&#8217;s pretty easy too. Say for example that you quickly want to get the username for uid 1 on the prod environment (the &#8220;drush user-information&#8221; command would be much better for this, but shut up).</p><pre class="crayon-plain-tag">drush @foo-prod sqlq 'select name from users where uid = 1'</pre><p>That one is also good for automation, like if you want to write a quick script that changes the username for uid 1 on all environments.</p>
+<h1>Drupal Without Drupal</h1>
+<p>It&#8217;s often useful to run one-off arbitrary code within the context of Drupal, without having to actually put it in the codebase somewhere. This is typically done one of two ways:</p>
+<p>If it&#8217;s just a short one-liner, then there&#8217;s the ever-useful &#8220;php-eval&#8221; (aka &#8220;ev&#8221;) command. For example, let&#8217;s inspect a node object.</p><pre class="crayon-plain-tag">drush @foo-dev php-eval 'print_r(node_load(123));'</pre><p>Or if it&#8217;s a longer one, then we can just throw our code into a PHP file, and run it using:</p><pre class="crayon-plain-tag">drush php-script filename.php</pre><p></p>
+<h1>Reports Cohorts</h1>
+<p>Drush is really good at getting us information from Drupal without waiting for a full page load.</p>
+<p>How many times have you navigated to the Watchdog page and sat through page load after page load while you went through the pagination and added filtering and blah blah blah to find an error message? Stop doing that! Do this instead:</p><pre class="crayon-plain-tag">drush watchdog-show</pre><p>There are a lot of useful options for watchdog-show, such as:</p>
+<ul>
+<li>&#8211;tail (continuously show new messages)</li>
+<li>&#8211;full (show the full output, with all of the fields, instead of the summarized version)</li>
+<li>&#8211;severity (such as &#8220;&#8211;severity=error&#8221;)</li>
+<li>&#8211;count (show more than the default 10, such as &#8220;&#8211;count=100&#8243;)</li>
+</ul>
+<p>And I&#8217;d bet you&#8217;re familiar with &#8220;drush vget&#8221; to get variables, but did you know you can pass &#8220;&#8211;format=whatever&#8221; to get the results formatted as JSON or CSV or YAML or a bunch of other things, for easy scripting?</p>
+<p>Another one of my favorites is this charm, which basically prints out the stuff you see on the Status Report page in Drupal. It&#8217;s nice for sanity checking before pushing releases live.</p><pre class="crayon-plain-tag">drush status-report</pre><p>And then there&#8217;s this guy, which prints out a bunch of useful info about the current installation, such as DB info, path to PHP executable and .ini file, Drupal version, Drupal root, etc. It&#8217;s a nice first step when debugging a broken install.</p><pre class="crayon-plain-tag">drush status</pre><p>And for those times when you need to edit a config file (php.ini, or settings.php, or an alias file, or .htaccess, etc.), you can run this to let you choose which of those files to edit and it&#8217;ll open it up in an editor for you:</p><pre class="crayon-plain-tag">drush config</pre><p></p>
+<h1>Using Users</h1>
+<p>Drush is nothing short of a miracle when it comes to user management.</p>
+<p>First of all, there&#8217;s the ever-annoying task of logging in as this user or that user. You usually don&#8217;t know the password, or maybe you&#8217;re just too lazy to type it. Run this to open up your browser with a one-time login link so you can skip all of that malarky:</p><pre class="crayon-plain-tag">drush user-login name-or-uid</pre><p>Or, if you&#8217;re slightly less lazy, and just want to change the password to something so that you can log in the old fashioned way:</p><pre class="crayon-plain-tag">drush user-password name-or-uid --password=test1234</pre><p>Then there&#8217;s the &#8220;fun&#8221; process of adding a user and filling out the form. Skip that:</p><pre class="crayon-plain-tag">drush user-create person123 --mail=&quot;what@isthis.com&quot; --password=&quot;letmein&quot;</pre><p>Once that&#8217;s done, you probably want to give that new user some roles. For role stuff, you have this:</p><pre class="crayon-plain-tag">drush user-add-role &quot;user editor&quot; person123
+drush user-remove-role &quot;user editor&quot; person123</pre><p>But watch out! The role you need to add doesn&#8217;t exist yet! Let&#8217;s add it, and give it some permissions.</p><pre class="crayon-plain-tag">drush role-create 'user editor'
+drush role-add-perm 'user editor' 'administer users'</pre><p>If you just need to show information about a user, such as email address, roles, UID, etc., try this. I&#8217;m embarrassed to say that I&#8217;ve been using raw SQL for this for years.</p><pre class="crayon-plain-tag">drush user-information name-or-uid</pre><p></p>
+<h1>Fields of Dreams</h1>
+<p>One of the most under-used things that Drush gives you is field management tools. I&#8217;m going to be lame here and just copy and paste the docs, since they&#8217;re pretty self explanatory.</p><pre class="crayon-plain-tag">Field commands: (field)
+ field-clone Clone a field and all its instances. 
+ field-create Create fields and instances. Returns urls for field editing. 
+ field-delete Delete a field and its instances. 
+ field-info View information about fields, field_types, and widgets. 
+ field-update Return URL for field editing web page.</pre><p></p>
+<h1>Other Schtuff</h1>
+<p>Here are some great commands that don&#8217;t really fit into any clear-cut categories.</p>
+<p>It has some neat archiving tools:</p><pre class="crayon-plain-tag">drush archive-dump #backup code, files, an DB to a single package
+drush archive-restore #expand one of those archives into a full Drupal site</pre><p>Somewhat similar to those is this one, which will download and install Drupal, serve it using a little built-in server, and log you in, all in one command. Note that this one includes about a bazillion options and is super duper powerful.</p><pre class="crayon-plain-tag">drush core-quick-drupal</pre><p>Drush also lets you play with the cache, which can save a lot of time when debugging a caching issue:</p><pre class="crayon-plain-tag">drush cache-get your-cid your-bin
+drush cache-set your-cid your-data your-bin your-expire</pre><p>There are a couple unknown commands for working with contrib:</p><pre class="crayon-plain-tag">drush pm-info modulename #display included files, permissions, configure link, version, dependencies, etc. 
+drush pm-releasenotes modulename #show the release notes for the version of module that you're using</pre><p>Run cron! Not exciting, but super useful.</p><pre class="crayon-plain-tag">drush cron</pre><p>Have you ever been in the middle of debugging and you know that something is happening in a form_alter (or some other hook) but you&#8217;re not sure in which module? Try this command, which will tell you all of the implementations of a given hook, and let you choose one to view the source code of it.</p><pre class="crayon-plain-tag">drush fn-hook form_alter</pre><p>And finally, this bad boy is basically &#8220;Drush docs in a box&#8221; and has a TON of useful info. Seriously, try it now.</p><pre class="crayon-plain-tag">drush topic</pre><p></p>
+<h1>Drushful Thinking</h1>
+<p>There&#8217;s a giant heap of useful Drush commands, some of which you hopefully hadn&#8217;t seen before. So what, right?</p>
+<p>The &#8220;so what&#8221; is that it&#8217;s useful to start thinking in terms of &#8220;how can Drush do this for me?&#8221; and you&#8217;ll often find that the answer is &#8220;pretty easily.&#8221;</p>
+<p>Play a game with yourself. Next time you&#8217;re working on site building or anything that involves a lot of clicky clicky in the Drupal UI, give yourself a jellybean or a chip or something every time you do something in Drush instead of in the UI.</p>
+<p>But why? Well for one, before you know it, you&#8217;ll be spending  much less time waiting on page loads. But secondly, Drush lends itself to automation, and thinking in terms of Drush naturally leads you to think in terms of automating and scripting things, which is a great place to be.</p>
+<p>Practice some Drushful Thinking! And let me know any of your favorite Drush tips and tricks in the comments. Check out <a href="http://www.drushcommands.com/">drushcommands.com</a> for some more inspiration.</p>
+<img src="http://track.hubspot.com/__ptq.gif?a=457100&k=14&bu=http%3A%2F%2Fwww.phase2technology.com&r=http%3A%2F%2Fwww.phase2technology.com%2Fblog%2Fdrushful-thinking%2F&bvt=rss&p=wordpress" style="float:left;" xml:base="http://www.phase2technology.com/feed/" width="1" height="1" border="0" align="right"/>
+  </body>
+</html>
+

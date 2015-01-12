@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 02 Dec 2013 09:14:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 02 Dec 2013 09:14:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Kristof De Jaeger: Drupal 8 Field API series part 4: entity (form) displays and display modes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://realize.be/drupal-8-field-api-series-part-4-entity-form-displays-and-display-modes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Kristof De Jaeger: Drupal 8 Field API series part 4: entity (form) displays and display modes</title>
+    <base href="http://realize.be/drupal-8-field-api-series-part-4-entity-form-displays-and-display-modes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="submitted"><span class="meta">Written on December 2, 2013 - 10:14</span></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>This is part 4 of the Drupal 8 Field API series. We skipped part 3 about field types as the dust hasn't settled yet in terms of API changes. Once we get there, we'll make sure we'll talk about the massive changes that have happened in that area.</p>
+
+<p>In this part, we'll talk about new API's which are, strictly speaking, not part anymore of Field API, they now belong to the Entity Field API. However, the reason the changes exist, directly comes out of a big problem in Drupal 7 in Field API: scattered storage.</p>
+
+<h3>Entity display</h3>
+
+<p>In Drupal 7, parameters controlling how to render the various "parts" of an entity view in a given view mode were scattered in many separate locations:
+<ul>
+<li>in $instance['display'] for each individual (Field API) field in the bundle</li>
+<li>in the 'field_bundle_settings_[entity_type]_[bundle]' variable for the 'extra fields' in the bundle</li>
+<li>in other places for contrib additions that are not one of the two above (most notably field_group module)</li>
+</ul>
+</p>
+
+<p>In Drupal 8, all those parameters ("options") for all those parts ("components") are centralised in one single EntityDisplay configuration object - which means they can be deployed with CMI - for each entity bundle and view mode. You can access these objects with the entity_get_display() function. All available methods can be found in <a href="https://api.drupal.org/api/drupal/core%21modules%21entity%21lib%21Drupal%21entity%21EntityDisplayBaseInterface.php/8">EntityDisplayBaseInterface</a>.</p>
+
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />entity_get_display</span><span style="color: #007700">(</span><span style="color: #DD0000">'node'</span><span style="color: #007700">, </span><span style="color: #DD0000">'article'</span><span style="color: #007700">, </span><span style="color: #DD0000">'default'</span><span style="color: #007700">)<br />&nbsp; </span><span style="color: #FF8000">// Set 'component_1' to be visible, with weight 1.<br />&nbsp; </span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setComponent</span><span style="color: #007700">(</span><span style="color: #DD0000">'component_1'</span><span style="color: #007700">, array(<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'weight' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">1</span><span style="color: #007700">,<br />&nbsp; ))<br />&nbsp; </span><span style="color: #FF8000">// Set 'component_2' to be hidden.<br />&nbsp; </span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">removeComponent</span><span style="color: #007700">(</span><span style="color: #DD0000">'component_2'</span><span style="color: #007700">)<br />&nbsp; -&gt;</span><span style="color: #0000BB">save</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<p>Also new in D8 is that all entity and field rendering hooks now receive this EntityDisplay object as a parameter. This means you have direct access to the configuration in your functions, instead of having to figure them out by calling functions to get the definition of field instances, extra fields or other configurations. For the full list of all hooks affected, scroll to the resources part at then end of this article for the change record link.</p>
+
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">hook_node_view</span><span style="color: #007700">(</span><span style="color: #0000BB">Node $node</span><span style="color: #007700">, </span><span style="color: #0000BB">EntityDisplay $display</span><span style="color: #007700">, </span><span style="color: #0000BB">$view_mode</span><span style="color: #007700">, </span><span style="color: #0000BB">$langcode</span><span style="color: #007700">) {<br />&nbsp; if (</span><span style="color: #0000BB">$display</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getComponent</span><span style="color: #007700">(</span><span style="color: #DD0000">'mymodule_addition'</span><span style="color: #007700">)) {<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$node</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">content</span><span style="color: #007700">[</span><span style="color: #DD0000">'mymodule_addition'</span><span style="color: #007700">] = array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'#markup' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">mymodule_addition</span><span style="color: #007700">(</span><span style="color: #0000BB">$node</span><span style="color: #007700">),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'#theme' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'mymodule_my_additional_field'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp; );<br />&nbsp; }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<p>Note that currently only Field API fields and extra fields are handled by the EntityDisplay object. This is going to change when we introduce component type plugins so everyone will be able to store and access configuration. For more information, follow <a href="https://drupal.org/node/1875974">https://drupal.org/node/1875974</a>.
+
+<h3>Entity form display</h3>
+
+<p>Just like with the display settings, form settings are scattered all over the place: 
+<ul>
+<li>in $instance['widget'] for each individual (Field API) field in the bundle</li>
+<li>in the 'field_bundle_settings_[entity_type]_[bundle]' variable for the 'extra fields' in the bundle</li>
+<li>in other places for contrib additions that are not one of the two above (most notably field_group module)</li>
+</ul>
+
+<p>In Drupal 8, all those parameters ("options") for all those parts ("components") are centralised in one single EntityFormDisplay configuration object for each entity bundle and <strong>form mode</strong>.This object uses the same <a href="https://api.drupal.org/api/drupal/core%21modules%21entity%21lib%21Drupal%21entity%21EntityDisplayBaseInterface.php/8">EntityDisplayBaseInterface</a> as the EntityDisplay object. The consequence of this API is the birth of the counterpart of view modes: form modes.</p>
+
+<p>The direct use case for this was the hacky workaround in Drupal 7 for showing Field API fields on the user registration page. In Drupal 8, you can now configure which fields are available on the user registration page or the edit page. However, more interesting possibilities with this new API will certainly pop up when Drupal 8 is released, most notable inline entity forms.</p>
+
+<h3>UI impact</h3>
+
+<img src="http://realize.be/files/manage-tabs.png" style="padding: 0;" />
+
+<p>In Drupal 7, the place to manage the fields and control the order in forms is done on the 'manage fields' screen. In Drupal 8, this has has been split out in the 'manage fields' and the 'manage form display' screens. Widget settings are now also managed on this new screen, which allows you to have different widget settings depending on the form mode. The form displays screen also have a 'hidden' region, which allows you to hide certain fields on certain form modes.</p>
+
+<h3>Display modes</h3>
+
+<p>Drupal 7 has the concept of 'view modes', previously build modes in D6. In D8, we now also have form modes and both of them are configuration entities. Drupal 8 also ships with a UI to manage these display modes. You do not have to rely anymore on contributed modules like 'View modes' or 'Display Suite'.</p>
+
+<img src="http://realize.be/files/view-modes-screen.png" style="padding:0" />
+
+<p>Note: the classes will move around soon, see <a href="https://drupal.org/node/2031725">https://drupal.org/node/2031725</a>, renaming the EntityDisplay object to EntityViewDisplay.</p>
+
+<h3>Resources</h3>
+
+<ul>
+<li>Change record: <a href="https://drupal.org/node/1875952">Introduced EntityDisplay config entities.</a></li>
+<li>Change record: <a href="https://drupal.org/node/2012166">Introduced EntityFormDisplay config object.</a></li>
+<li>Change record: <a href="https://drupal.org/node/1907792">Entity & field rendering hooks receive an additional EntityDisplay parameter.</a></li>
+<li>Change record: <a href="https://drupal.org/node/2012144">View Modes are stored in the config system.</a></li>
+<li>Change record: <a href="https://drupal.org/node/2104695">field_bundle_settings() has been removed.</a></li>
+<li>Change record: <a href="https://drupal.org/node/2102175">field_behaviors_widget() is removed</a></li>
+</ul></div></div></div><div class='sexybookmarks-default'></div>
+  </body>
+</html>
+

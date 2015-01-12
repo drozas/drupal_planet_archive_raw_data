@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Pick on Your Performance Issues
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/pick-your-performance-issues%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Pick on Your Performance Issues</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/pick-your-performance-issues%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Performance should be in the mind of every Drupal developer and site builder as they are building a site. But let's be honest, while getting everything to just plain work and look good, speed doesn't always get to hold that #1 spot in your mind. Freeing up brain energy from potential performance issues is not necessarily a bad thing. Predicting which issues will have the biggest impact once a site launches is a task best left to wizards and sages. The best way to analyze and then tackle a site's performance issues is with data from the live production site. There are <a href="http://www.joedog.org/siege-home/">plenty</a> of <a href="http://httpd.apache.org/docs/2.2/programs/ab.html">tools</a> to help simulate that data, but nothing replaces good hard production data. Luckily <a href="https://drupal.org/project/views_cache_bully">Views Cache Bully</a> has come to the rescue of distracted developers everywhere. Set it, forget it, and rest easy knowing that you now have one less reason for why your site might be crawling.</p><br />
+<br />
+<h3>Why views caching?</h3><br />
+<br />
+<p>Most the views on your site display the exact same information over and over, they just display it to different users. I know, I know, you are a prolific blog writer, but do you really publish a new post every 5 minutes? If you are feeling conservative, set the defaults to a short value and keep bumping them up as you come to realize how little these things change. Even if you only serve the cached results to five users that means five less trips through PHP and the database for those visitors.</p><br />
+  </body>
+</html>
+

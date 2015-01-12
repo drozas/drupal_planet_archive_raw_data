@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 29 Aug 2013 06:46:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 29 Aug 2013 06:46:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Liran Tal's enginx: OG Content Access
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.enginx.com/content/og-content-access
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Liran Tal's enginx: OG Content Access</title>
+    <base href="http://www.enginx.com/content/og-content-access">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p></p><p><img src="https://drupal.org/files/images/pgpcontact.png" width="200" height="199" style="float: left; margin-right: 8px;" /></p>
+<p><a href="http://drupal.org" rel="nofollow">Drupal</a> has a flexible access control list (<a href="http://en.wikipedia.org/wiki/Access_control_list" rel="nofollow">ACL</a>) system, where it provides permissions and roles (also known as <a href="http://en.wikipedia.org/wiki/Rbac" rel="nofollow">RBAC</a>, Role Based Acess Control) per user. This eases administrators job by allowing them to group users into different classes or cateogories (roles) to create differentiation in user's capabilities. While this fits most web applications built on top of Drupal it doesn't fit them all.</p>
+<p>Drupal's fault at this is that it is designed to be <strong>very</strong> permissive by default. In most cases, this means that users are generally allowed to see everything (even though they may not be able to create, edit or delete). This is the case with <a href="https://drupal.org/project/og" rel="nofollow">Organic Groups</a> as well. When users in a Drupal+OG website becomes a member of a community, they may not be able to create/edit/delete some content types, but they will definitely, by default, be able to see (have read permissions, per say) all of the content in that group.</p>
+<p>This is where <a href="https://drupal.org/project/og_content_access" rel="nofollow">OG Content Access</a> module comes in... it provides the ability to rely on <a href="https://drupal.org/project/og_user_roles" rel="nofollow">group-specific roles</a> for providing (view/load) access to specific content. The use-case is as follows: you have a group with several content types - blog, announcements, file downloads. Any members of that group will automatically have access to view any of the above contents. You can control access to create, delete, and edit content for different roles, yes, but every member will <strong>always</strong> have access to view all of the contents of a group.</p>
+<p><a href="http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-2" rel="nofollow">With this module you can restrict viewing each content to different members by setting the role which is allowed to view/access each content and then</a>, within the group context you may assign roles as necessary for each member.</p>
+<p>I've actually explained more about the mechanics of how this works in a series of previous articles:</p>
+<p>1. <a href="http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-1" rel="nofollow">http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-1</a></p>
+<p>2. <a href="http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-2" rel="nofollow">http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-2</a></p>
+<p>3. <a href="http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-3" rel="nofollow">http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-3</a></p>
+<p>4. <a href="http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-4" rel="nofollow">http://enginx.com/content/implementing-user-specific-role-based-access-control-node-type-group-part-4</a></p>
+ </div></div></div><!-- google_ad_section_end --><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal-planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div></div></div>
+  </body>
+</html>
+

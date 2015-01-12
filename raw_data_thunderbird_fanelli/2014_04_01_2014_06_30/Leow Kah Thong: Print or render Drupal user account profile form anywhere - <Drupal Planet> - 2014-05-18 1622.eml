@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 18 May 2014 14:22:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 18 May 2014 14:22:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Leow Kah Thong: Print or render Drupal user account profile form anywhere
+Content-Transfer-Encoding: 8bit
+Content-Base: http://kahthong.com/2014/05/print-or-render-drupal-user-account-profile-form-anywhere
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Leow Kah Thong: Print or render Drupal user account profile form anywhere</title>
+    <base href="http://kahthong.com/2014/05/print-or-render-drupal-user-account-profile-form-anywhere">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Code below allows you to render the Drupal user edit form anywhere.  Replace UID with the user account ID to edit.</p>
+<div class="codeblock"><code>$account = user_load(UID);<br />module_load_include('inc', 'user', 'user.pages');<br />$form_state = array();<br />$form_state['build_info']['args'] = array($account);<br />form_load_include($form_state, 'inc', 'user', 'user.pages');<br />print render(drupal_build_form('user_profile_form', $form_state));</code></div>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/form" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">form</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/api" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">api</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/profile" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">profile</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/account" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">account</a></div></div></div>
+  </body>
+</html>
+

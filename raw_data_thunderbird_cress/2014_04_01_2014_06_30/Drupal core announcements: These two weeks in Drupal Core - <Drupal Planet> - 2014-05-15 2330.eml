@@ -1,0 +1,118 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 15 May 2014 22:30:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 15 May 2014 22:30:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: These two weeks in Drupal Core
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/422783
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: These two weeks in Drupal Core</title>
+    <base href="https://groups.drupal.org/node/422783">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>The past two weeks saw the Drupal community rally together to support each other and recognize the hard work involved in making Drupal awesome, starting with the launch of the Drupal Core Gittip Team and the news that Alex Pott had been hired by Chapter Three to work on Drupal 8 development full-time. It also saw some great performance improvements in Drupal 8 and a handful of Developer Experience improvements.</p>
+<h3>Drupal Core Gittip Team</h3>
+<p>On Friday, May 2nd, Cathy Theys (YesCT) and Alex Pott (alexpott) launched the <a href="https://www.gittip.com/DrupalCoreGittipTeam/">Drupal Core Gittip Team</a>, a new funding effort to allow companies and individuals to support the people who are regularly contributing their own time, without compensation, to Drupal Core development. (See their <a href="http://yesct.net/drupal-core-gittip-team">announcement and Team FAQ</a> for more information.) A weekly contribution to the Core Gittip team is a great way for individuals and companies (and you!) to both help Drupal 8 and improve the long-term sustainability of Drupal Core development.</p>
+<h3>Sponsored Drupal 8 development</h3>
+<p>On Tuesday May 6th, <a href="http://www.chapterthree.com/blog/alex-pott/joining-chapter-three">Alex Pott announced that Chapter Three had hired him to work on Drupal 8 full-time</a>, and that he would be using his Gittip income to support the rest of the Drupal Core Gittip team. This came a year and thirty-five days after he <a href="http://buytaert.net/alex-pott">became a Drupal co-maintainer</a> and nine months after <a href="http://alex.vit-al.com/node/15">he asked for the community's help to continue to support his Drupal 8 development work</a>.</p>
+<p>In response to Alex's announcement, Dries blogged about <a href="http://buytaert.net/the-investment-case-for-employing-a-drupal-core-contributor">the investment case for employing a Drupal core contributor</a> and Jennifer Hodgdon responded with <a href="http://poplarware.com/news/freelancer-contrib">the case for a small Drupal shop contributing to Drupal</a>.</p>
+<h3>Contrib fundraising initiatives</h3>
+<p>Nick Veenhof <a href="http://drupalsear.ch/node/681">announced that the Search API team were able to meet (and exceed!) their goal to fund the porting of Search API to Drupal 8 along with the next sprint date</a>.</p>
+<p>And, Wolfgang Ziegler (fago) <a href="http://drunomics.com/en/blog/d8rules-supporting-rules-modules-drupal-8">announced</a> the <a href="http://d8rules.org/">#d8rules initiative, an effort to get the Rules module ported to Drupal 8</a>.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>Last week, we fixed 13 critical issues and 16 major issues, and opened 11 criticals and 12 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">115 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">545 major issues</a>.</p>
+<p>4 beta-blocking issues were fixed last week. There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">20 of 163 beta blockers</a> that must be resolved before we can <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">release a Drupal 8 beta</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>.</p>
+<ul>
+<li><a href="https://drupal.org/node/2183231">#2183231: Make ContentEntityDatabaseStorage generate static database schemas for content entities</a> is a big patch to the Entity Field API which could use some code reviews and testing with your own custom content entities if you have them.</li>
+<li><a href="https://drupal.org/node/2224887">#2224887: Language configuration overrides should have their own storage</a> could use everything from code reviews to manual testing. In particular, testing #2224887 by creating translated configuration and importing/exporting the configuration changes would be very helpful (note that you don't need to be bilingual to test these: Drupal has a <a href="https://localize.drupal.org/translate/languages/xx-lolspeak">Lolspeak language</a> that you can use for testing)</li>
+<li>There are two field API beta blockers that each need a champion to bring them home: <a href="https://drupal.org/node/2224761">Field instances should support cross-field-type, extensible, extra configuration for use cases like translation sync</a> (which will support translation synchronization) and <a href="https://drupal.org/node/2005434">Let 3rd party modules store extra configuration in EntityDisplay</a> (which will support contributed modules like <a href="https://drupal.org/project/ds">Display Suite</a>).</li>
+</ul>
+<h3>More ways to help</h3>
+<ul>
+<li>We'd appreciate your feedback on <a href="https://drupal.org/node/2136029">helping us decide if and how to extend D6 security support 12 months past an 8.0.0 release</a> so that everyone has a chance to migrate their old sites to Drupal 8.</li>
+<li>We're also looking for help <a href="https://drupal.org/node/1393358">reviewing all the issues tagged as "revisit before beta" and "revisit before RC"</a>: some of the issues in this list haven't been updated for over 18 months so they need triaging.</li>
+<li>The WSCCI initiative also needs help <a href="https://drupal.org/node/2244777">writing change records and documentation for all the menu changes from 7 to 8</a>.</li>
+</ul>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+<p>You can also help by <a href="https://www.gittip.com/DrupalCoreGittipTeam/">sponsoring Drupal core development on Gittip</a>.
+</p>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code>git log --since &quot;2014-04-30&quot; --pretty=oneline</code> (147 commits in total):</p>
+<p>There were a number of commits that improved performance directly and indirectly:</p>
+<ul>
+<li><a href="https://drupal.org/node/2099131">Issue #2099131</a> by jessebeach, Wim Leers, catch, Berdir, benjifisher, martin107, andypost: Use #pr_render pattern for entity render caching.<br />
+This slight change to the render pipeline allows Drupal to cache the render array, in addition to the resulting HTML. Preliminary tests showed that, from a warm cache, this change makes full page loads between <em>15 and 25% faster</em>. Woohoo!</li>
+<li><a href="https://drupal.org/node/2226761">Issue #2226761</a> by Wim Leers: Change all default settings and config to fast/safe production value.<br />
+This changes the default settings for new sites so that HTML and Twig caching, CSS and JavaScript aggregation are all turned on, and Twig debugging and Twig auto-reloading is turned off.<br />
+It also introduced an <code>example.settings.local.php</code> with examples of how to toggle these settings on development sites.</li>
+<li><a href="https://drupal.org/node/2257709">Issue #2257709</a> by znerol, Wim Leers: Remove the interdependence between the internal page cache and management of the Cache-Control header for external caches.<br />
+This commit is part of an ongoing effort to modernize the page caching mechanisms in core. This change makes the Symfony Response object responsible for setting the Cache-Control HTTP header.</li>
+<li><a href="https://drupal.org/node/2228261">Issue #2228261</a> by beejeebus, kim.pepper, alexpott, Wim Leers | catch: Add a local, PhpStorage-based cache backend.<br />
+This will make it possible to cache data on the filesystem when it makes sense to do so.</li>
+<li><a href="https://drupal.org/node/2241249">Issue #2241249</a> by Wim Leers: First step in making search results pages cacheable: add the associated SearchPage's cache tag.</li>
+</ul>
+<p>To improve the developer experience (DX):</p>
+<ul>
+<li><a href="https://drupal.org/node/2079797">Issue #2079797</a> by ParisLiakos, Xano, amateescu, tim.plunkett: Provide a trait for $this-&gt;t() and this-&gt;formatPlural().<br />
+Previously, any class that containing at least one translatable string needed to define a <code>t()</code> function that called <code>\Drupal::translation()-&amp;gt;translate(...)</code> in order for the string extractor to determine what needed to be translated.<br />
+This patch reduces the boilerplate code to a single line: <code>use StringTranslationTrait;</code> through the use of a <a href="http://www.php.net/manual/language.oop5.traits.php">PHP Trait</a>. Classes with this trait can still call <code>$this-&amp;gt;t()</code> to make strings translatable.<br />
+Reducing boilerplate code for the win!</li>
+<li><a href="https://drupal.org/node/2241633">Issue #2241633</a> by sun: Simplify site-specific service overrides.<br />
+You can now override a service in your module by simply adding a <code>services.yml</code> file.</li>
+<li><a href="https://drupal.org/node/2257835">Issue #2257835</a> by tim.plunkett, sun, Jalandhar: Move form submission logic out of FormBuilder int a new class.</li>
+</ul>
+<p>And...</p>
+<ul>
+<li><a href="https://drupal.org/node/2039163">Issue #2039163</a> by Reinmar, Wim Leers: Update CKEditor library to 4.4.<br />
+Did you know that the <a href="http://docs.ckeditor.com/#!/guide/dev_widgets">CKEditor Widgets feature</a> introduced in CKEditor 4.3 was <a href="http://dev.ckeditor.com/ticket/9764">specifically developed for Drupal 8</a> as a way to make accessible, easy-to-use templates in body content?<br />
+This patch updated CKEditor from 4.2 to 4.4, adding this feature and unblocking a couple of other ones.</li>
+<li><a href="https://drupal.org/node/2116363">Issue #2116363</a> by Berdir, jessebeach | fago: Unified repository of field definitions (cache + API)&gt;<br />
+This milestone Entity Field API commit concludes work begun at DrupalCon Prague and unblocks the removal of legacy D7 field API code.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Here are a selection of the best blog posts about Drupal 8 in the past few weeks:</p>
+<ul>
+<li>Lee Rowlands of PreviousNext continues his series on Writing Drupal 7 code with an eye towards Drupal 8 with <a href="http://www.previousnext.com.au/blog/drupal-8-now-object-oriented-plugins-drupal-7">an article on Object-Oriented plugins in Drupal 7</a>.</li>
+<li>Wes Roepken of Blink Reaction explains <a href="http://www.blinkreaction.com/blog/how-to-set-up-symfony">how to set up a Symfony2 project</a>.</li>
+<li>Angie Byron (webchick) begins a series called The Ultimate Guide to Drupal 8 with a blog post about the <a href="https://www.acquia.com/blog/ultimate-guide-drupal-8-episode-1-authoring-experience-improvements">authoring experience improvements</a>, and follows it up with <a href="https://www.acquia.com/blog/ultimate-guide-drupal-8-episode-2-mobile-improvements">a guide to the mobile improvements</a>.</li>
+<li>Brian Lewis and Morten Birch Heide-Jørgensen (mortendk) <a href="https://modulesunraveled.com/podcast/106-all-things-drupal-8-and-twig-mortendk-modules-unraveled-podcast">talk about all things Drupal 8 and Twig</a> on the Modules Unraveled Podcast episode 106.</li>
+<li>Vivek Pandya (<a href="https://drupal.org/user/2836629">vivekvpandya</a>) writes about his <a href="http://tntfoss-vivekvpandya.rhcloud.com/node/11">progress creating an example iOS application that connects to Drupal 8 with RESTful web services</a> as part of Google Summer of Code 2014, beginning with <a href="http://tntfoss-vivekvpandya.rhcloud.com/node/14">how to use HTTP DELETE</a>.</li>
+<li>In Symfony news, Fabien Potencier (fabpot) talks about <a href="http://fabien.potencier.org/article/72/the-rise-of-composer-and-the-fall-of-pear">the Rise of Composer and the Fall of PEAR</a> as he announces <a href="http://symfony.com/blog/end-of-pear-support-for-symfony">the end of PEAR support for Symfony</a>.</li>
+<li><a href="http://www.amazeelabs.com/en">Amazee labs</a> <a href="https://twitter.com/Schnitzel/status/461116491224854528">launched their corporate website on Drupal 8</a>! They're also going to be <a href="https://austin2014.drupal.org/session/building-full-site-drupal-8-alpha">hosting a session about what they learned</a> at DrupalCon Austin.</li>
+<li>Mike Gifford continues his series on accessibility improvements built into Drupal core with <a href="https://groups.drupal.org/node/422598">an overview of the accessibility issues that affect administrators</a>.</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<p>There are a whole bunch of camps and sprints happening this coming weekend (May 16, 17th and 18th)!</p>
+<ul>
+<li><a href="http://2014.drupal.ie/">Drupal Open Days 2014</a> in <strong>Dublin, Ireland</strong> on May 16th and 17th, with a session on building Multilingual sites in D8.</li>
+<li><a href="http://www.drupalcampwroclaw.pl/">DrupalCamp Wrocław</a> in <strong>Wrocław, Poland</strong> on May 16th, 17th and 18th has sessions on CKEditor in Drupal 8, Drupal 8 on mobile platforms, and a session on what to look for today so as not to get left behind when Drupal 8 is released.</li>
+<li><a href="http://2014.drupalcamp.es/">DrupalCamp Spain 2014</a> in <strong>Valencia, Spain</strong> on May 16th, 17th and 18th with a Drupal Core Criticals sprint and sessions about CMI, Sessions in D8, Commerce in D8 and a couple of talks on Migrate in D8.</li>
+<li><a href="http://moldcamp.com/">MoldCamp 2014</a> in <strong>Chisinau, Moldova</strong> on May 17th and 18th, featuring sessions on Guzzle and what to expect in Drupal 8.</li>
+<li><a href="http://2014.drupalalpeadria.org/">Drupal Camp Alpe-Adria</a> in <strong>Portoroz, Slovenia</strong> on May 17th and 18th, with sessions on the D8 Entity API, Rules in D8 and CMI; and with D8 sprints.</li>
+<li><a href="https://groups.drupal.org/node/420588">TC Drupal Spring Sprint</a> in <strong>Minneapolis, MN</strong> on May 17th, featuring a documentation sprint!</li>
+<li><a href="https://groups.drupal.org/node/420768">Albany Drupal Sprint Day</a> in <strong>Albany, NY</strong> on May 18th.</li>
+</ul>
+<p>Also coming up are:</p>
+<ul>
+<li><a href="http://drupalcamp.fi/">DrupalCamp Helsinki</a> on <strong>May 23rd and 24th</strong> in Helsinki, Finland, featuring sessions on Symfony, Media Management in Drupal 7 and 8, D8 JavaScript, D8 Routing and Menus, D8 Theming and multiple sessions on Twig. And, to top it all off, there will be code sprints.</li>
+<li><a href="http://soleil2014.drupalcamp.fr/">DrupalCamp Soleil 2014</a> in Montpellier in the south of France on <strong>May 24th and 25th</strong>, featuring an non-non-conference on Drupal 8.</li>
+<li>A <a href="https://groups.drupal.org/node/419478">Drupal 8 Code Sprint</a> in Leuven, Belgium on <strong>May 25th</strong>.</li>
+<li><a href="http://2014.drupalcampyorkshire.co.uk/">DrupalCamp Yorkshire 2014</a> in Leeds, West Yorkshire, England on <strong>May 31st and June 1st</strong>.</li>
+</ul>
+<p>Don't forget that <a href="https://austin2014.drupal.org/">DrupalCon Austin</a> is quickly approaching! The extended sprints start on <a href="https://groups.drupal.org/node/412138">May 31st and run until June 8th</a>. If you plan to participate in any way (remotely <em>or</em> in-person), please <a href="https://docs.google.com/spreadsheet/ccc?key=0AlRKD0XsivA1dEYzMVl1cERvYUpXWDNscm8zNlpZeEE&amp;usp=drive_web#gid=0">sign up ahead of time</a> so we can plan for your attendance!</p>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

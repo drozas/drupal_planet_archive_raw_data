@@ -1,0 +1,64 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 Aug 2013 11:09:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 Aug 2013 11:09:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: The forgotten xdebug slows down things. Turn it off!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/forgotten-xdebug-slows-down-things-turn-it
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: The forgotten xdebug slows down things. Turn it off!</title>
+    <base href="http://comm-press.de/en/blog/forgotten-xdebug-slows-down-things-turn-it">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Speed up drupal on dev env</h2>
+By Cathy Theys
+<p>I work remotely, which means limited opportunities to watch over people's shoulders and for people to accidentally see me do silly things and make recommendations. At the Drupalcon Portland Drupal 8 Multilingual sprint extended days, I got to sit in a room with other contributors to core, right next to people! While I was waiting for tests to run (or was it waiting for drush -y si to finish?) I complained about how slow it was. A few minutes later, a thoughtful comment from someone (someone = Gábor) was: "Do you have xdebug on? Turn it off."</p>
+
+<p>[Aside: We say contributing to core is good for Drupal shops for many reasons. Here is another reason: devs learn stuff that improves them for when they work on client billable hours back in the shop. <a href="https://drupal.org/community-initiatives/drupal-core">Get involved with contributing to Drupal 8.</a> (Notice the link there to mentoring.) ]</p>
+
+<p>Wow! I had turned xdebug on ages ago when debugging something and forgotten to turn it off!</p>
+
+<p>Things are a lot faster now. :) Here are instructions for how to tell if it's enabled. To turn it off, find the lines in your php.ini and comment them out.</p>
+
+<p>I have a mac, but steps for other types of machines will be similar: find which php you are running, check the php.ini, comment out the lines if they not already, stop and re-start the webserver, verify by checking an info.php that xdebug is off.</p>
+
+<h3>command line</h3>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130606/terminal.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130606/terminal.png?itok=Bv_P79WB" width="800" height="585" alt="" /></a></div></div></div></div></p>
+
+<h4>command line history</h4>
+
+<div class="codeblock"><code> 1110&nbsp; cd<br /> 1111&nbsp; which php<br /> 1112&nbsp; find /Applications/MAMP/bin/php/php5.3.14 -name php.ini -print<br /> 1113&nbsp; grep &quot;xdebug.profiler_enable&quot; /Applications/MAMP/bin/php/php5.3.14/conf/php.ini<br /> 1114&nbsp; grep &quot;xdebug&quot; /Applications/MAMP/bin/php/php5.3.14/conf/php.ini<br /> 1115&nbsp; vi /Applications/MAMP/bin/php/php5.3.14/conf/php.ini<br /> 1116&nbsp; cd foo<br /> 1117&nbsp; ls info.php<br /> 1118&nbsp; echo &quot;&lt;?php phpinfo();&quot; &gt; info.php<br /> 1119&nbsp; history</code></div>
+
+<h3>Or in MAMP Pro, something like:</h3>
+
+<h4>1. Find what version of php MAMP Pro is running</h4>
+
+<h4>2. Open the php.ini for that version</h4>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130606/mamppro.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130606/mamppro.png?itok=vqSSOhgW" width="800" height="376" alt="" /></a></div></div></div></div></p>
+
+<h4>3. Search for xdebug and comment out the lines</h4>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130606/mamppro-xdebug.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130606/mamppro-xdebug.png?itok=NqrSNbyZ" width="800" height="420" alt="" /></a></div></div></div></div></p>
+
+<h4>4. Restart!</h4>
+
+<p>Remember to restart the webserver.</p>
+
+<h4>5. Check info.php to verify</h4>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130606/info.php_.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130606/info.php_.png?itok=vAR9qjzY" width="800" height="566" alt="" /></a></div></div></div></div></p>
+
+<h3>Note</h3>
+
+<p>Note to self: next time I turn on xdebug, do it with a script which writes a job to cron to turn it back off in 12 hours.</p>
+  </body>
+</html>
+

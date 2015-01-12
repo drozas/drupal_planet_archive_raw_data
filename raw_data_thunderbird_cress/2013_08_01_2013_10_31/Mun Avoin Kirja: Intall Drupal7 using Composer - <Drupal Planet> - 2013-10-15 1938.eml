@@ -1,0 +1,80 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 15 Oct 2013 18:38:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 15 Oct 2013 18:38:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mun Avoin Kirja: Intall Drupal7 using Composer
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mun Avoin Kirja: Intall Drupal7 using Composer</title>
+    <base href="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><strong>Use Case:</strong> Every time I start a Drupal project I have to run lots of commands using Drush, first Download Drupal, Site Install, Make new directory to store contrib modules, Download my favorite Modules, enable them and disable some modules which is enabled by default with Drupal standard installation. This have been my routine task, even for creating some test task. Things were getting pretty boring.</p>
+<p>At first I thought of creating an installation profile and using it as base for all project, but again the Modules and Drupal Core keeps on updating and its doesn't feel right to update the application just after installing. So, I was looking for some clever solutions, which lead me towards some crazy hack/ideas.</p>
+<blockquote><p>
+<strong>Note:</strong> This approach uses Composer and Drush, so, its expected you have both installed. I usually install both globally in my local machine.
+</p></blockquote>
+<p>Being a PHP Developer I thought of combining the power of <a href="http://getcomposer.org/" target="_blank">Composer</a> with <a href="http://www.drush.org/" target="_blank">Drush</a> to make my task easier. There is a <a href="https://drupal.org/project/composer" target="_blank">Drupal Module for Composer</a> and some <a href="https://drupal.org/project/composer_manager" target="_blank">Composer Manager module</a>, but when I checked it was for Drupal 8 and still in alpha, and I am not sure what it does. After searching around I found <a href="https://packagist.org/packages/thecodingmachine/drupal" target="_blank">Drupal 7 package</a> in <a href="https://packagist.org/" target="_blank">packagist.org</a> by <strong>David Négrier</strong> from <a href="http://www.thecodingmachine.com/" target="_blank">The Coding Machine</a>. So, I started to extend the Drupal Package provided by David for my needs, and created a new composer.json file. </p>
+<p>I'll walk along with this example, so, now my folder in web directory contains only one file as in the picture below</p>
+<p>
+<a href="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-1.jpg" rel="lightbox[composer]"><br /><img alt="Install Drupal7 with Composer" src="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-1.jpg" style="height:462px; max-width:100%" /><br /></a></p>
+<p>The <strong>composer.json</strong> file contains:</p>
+<div class="geshifilter">
+<pre class="text geshifilter-text">{
+	"name": "tinkune/tinkune",
+	"description": "The Jason Drush Test",
+	"keywords": ["drupal-site", "tinkune"],
+	"require" : {
+		"thecodingmachine/drupal": "7.23.*@dev"
+	},
+ 
+	"scripts": {
+		"post-install-cmd": [
+			"mkdir sites/all/modules/contrib",
+			"drush site-install standard --db-url=mysql://root:@localhost/tinkune --account-name=admin --account-pass=admin --site-name=Tinkune -y",
+			"drush dl ctools views admin_menu module_filter",
+			"drush pm-disable toolbar overlay -y",
+			"drush en ctools views views_ui admin_menu module_filter -y"
+		]
+	}
+}</pre></div>
+<p>As you can see, the post-install-cmd contains all the Drush commands, this might not be sustainable solution but it works perfectly, so, before starting any project I can copy this <strong>composer.json</strong> file and edit names, database and needed modules and run only one command and my New Drupal site is set.</p>
+<p>Now I Download, Install and enable some modules with just one command</p>
+<div class="geshifilter">
+<pre class="text geshifilter-text">composer install</pre></div>
+<p>The picture below shows Drupal being downloaded and installed and also the modules I mentioned in the JSON file.</p>
+<p>
+<a href="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-2.png" rel="lightbox[composer]"><br /><img alt="Install Drupal7 with Composer" src="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-2.png" style="height:462px; max-width:100%" /><br /></a></p>
+<p>There is an extra directory called <strong>vendor</strong> which the Composer creates and also the composer.lock files to lock the state.</p>
+<p>
+<a href="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-3.jpg" rel="lightbox[composer]"><br /><img alt="Install Drupal7 with Composer" src="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-3.jpg" style="height:462px; max-width:100%" /><br /></a></p>
+<p>Also the modules I downloaded and installed inside contrib folder</p>
+<p>
+<a href="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-4.jpg" rel="lightbox[composer]"><br /><img alt="Install Drupal7 with Composer" src="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-4.jpg" style="height:462px; max-width:100%" /><br /></a></p>
+<p>Now when I go to my site, its ready to be Built.</p>
+<p>
+<a href="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-5.png" rel="lightbox[composer]"><br /><img alt="Install Drupal7 with Composer" src="http://rajibpaudyal.com/sites/default/files/pictures/drupal7-composer/Drupal7-composer-5.png" style="height:462px; max-width:100%" /><br /></a></p>
+<blockquote><p>
+<strong>Note:</strong> There is serious limitations regarding updating/using the Composer after this. Unless some smooth solution appears somewhere, I am going to use this for Drupal 7 sites. Drupal 8 looks well integrated with Composer and Packagist, hopefully some solution appeasrs for D7 too.<br /><strong>Last but not least:</strong> Many Thanks to David, His Package in Packagist and his <a href="http://blog.thecodingmachine.com/content/installing-drupal-using-composer" target="_blank">blog</a>
+</p></blockquote>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/composer" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Composer</a></div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div></div></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_facebook_large" displaytext="facebook"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_twitter_large" displaytext="twitter"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_reddit_large" displaytext="reddit"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_slashdot_large" displaytext="slashdot"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_googleplus_large" displaytext="googleplus"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_linkedin_large" displaytext="linkedin"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_technorati_large" displaytext="technorati"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_delicious_large" displaytext="delicious"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_stumbleupon_large" displaytext="stumbleupon"></span>
+<span st_url="http://www.rajibpaudyal.com/blog/intall-drupal7-using-composer" st_title="Intall Drupal7 using Composer" class="st_digg_large" displaytext="digg"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-5bb5bf3b-c916-f6b-ac56-c95b661eac79"});</script></div></div>
+  </body>
+</html>
+

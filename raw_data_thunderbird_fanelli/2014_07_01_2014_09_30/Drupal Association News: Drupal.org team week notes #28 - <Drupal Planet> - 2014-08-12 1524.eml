@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 12 Aug 2014 13:24:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 12 Aug 2014 13:24:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Association News: Drupal.org team week notes #28
+Content-Transfer-Encoding: 8bit
+Content-Base: https://assoc.drupal.org/blog/tvn/drupal.org-team-week-notes-28
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Association News: Drupal.org team week notes #28</title>
+    <base href="https://assoc.drupal.org/blog/tvn/drupal.org-team-week-notes-28">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><img class="left" src="https://association.drupal.org/files/do.png" /></p>
+<h2>Upcoming deployments</h2>
+<p>This week we are planning to deploy a solution for <a href="https://www.drupal.org/node/968994">multiple values for listings of current companies and organizations</a>, a fix for <a href="https://www.drupal.org/node/2125029">wrong 'open issues' count on user project page</a>, an upgrade <a href="https://www.drupal.org/node/2098117">Fasttoggle to 7.x-1.5</a>, and a few smaller patches.</p>
+<p>To stay up-to-date with bigger Drupal.org changes and deployments you can subscribe to <a href="https://www.drupal.org/news/change-notifications-drupalorg">Drupal.org change notification emails</a>. You will receive an update from us every Thursday.</p>
+<h2>Introducing Drupal.org Terms of Service and Privacy Policy</h2>
+<p>Several days ago we published drafts of the <a href="https://www.drupal.org/news/introducing-drupalorg-tos-and-privacy-policy">Drupal.org Terms of Service and Privacy Policy</a>. The drafts will become official documents on September 4th, 2014. The next three weeks is your opportunity to review the drafts and give us your feedback.</p>
+<h2>Previous deployments</h2>
+<p>A lot of big and small changes went live since our last update. Most noticeably, we deployed:</p>
+<ul><li>infrastructure and software changes to support <a href="https://www.drupal.org/node/2170443">semantic versioning of Drupal core releases</a> and successfully created an 8.0.x branch,</li>
+<li><a href="https://www.drupal.org/node/1710850">RESTful web services</a> (RESTws module) for Drupal.org. This is an important first step towards making Drupal.org more easily integrated with other systems and services. We are actively working to document how the community should begin using these web services to improve how systems like Testbots and Dreditor interact with Drupal.org.</li>
+</ul><p>Other deployments include:</p>
+<ul><li><a href="https://www.drupal.org/node/2296199">Highlight active tab on /supporters page</a></li>
+<li><a href="https://www.drupal.org/node/2296195">Update Organization supporters view to display all items</a></li>
+<li><a href="https://www.drupal.org/node/2255093">Implement badges: add Hosting Supporters</a></li>
+<li><a href="https://www.drupal.org/node/2173779">Update DrupalorgVersioncontrolLabelVersionMapperGit for semantic versioning in Drupal 8</a></li>
+<li><a href="https://www.drupal.org/node/2307129">Packaging error: drupalorg_drush.drush.inc file access denied</a></li>
+<li><a href="https://www.drupal.org/node/2299547">[Performance] Implement render_cache module for comments</a></li>
+<li><a href="https://www.drupal.org/node/2310011">Comment render caching breaks comments with patches attached</a></li>
+<li><a href="https://www.drupal.org/node/2125951">Implement hook_node_delete() to clear forum block cache when forum topic is being deleted</a></li>
+<li><a href="https://www.drupal.org/node/2047813">Clean up /search page</a></li>
+<li><a href="https://www.drupal.org/node/2127423">Add a hover state for all green buttons</a></li>
+<li><a href="https://www.drupal.org/node/2293519">Need visual deliniation between post and signatures</a></li>
+<li><a href="https://www.drupal.org/node/2312131">Navigation links in https://www.drupal.org/drupal-7.0 are not clickable</a></li>
+<li><a href="https://www.drupal.org/node/956062">Add distinctive color to css a:visited on D.o</a></li>
+<li><a href="https://www.drupal.org/node/2206237">Create (or increase usage of) forum descriptions</a></li>
+<li><a href="https://www.drupal.org/node/2267789">Add a reference to supporting organizations on projects</a></li>
+<li><a href="https://www.drupal.org/node/2316057">Move field cache to memcache</a></li>
+<li><a href="https://www.drupal.org/node/2315837">Project information project pages showing at the top of the page</a></li>
+</ul><p>Thanks to <a href="https://www.drupal.org/u/ergonlogic">ergonlogic</a>, <a href="https://www.drupal.org/u/fabianx">FabianX</a>, <a href="https://www.drupal.org/u/steven-jones">Steven Jones</a>, <a href="https://www.drupal.org/u/dyannenova">DyanneNova</a> and <a href="https://www.drupal.org/u/jaypan">Jaypan</a> for working with us on the issues listed above and making those deployments possible.</p>
+<h2>Drupal.org infrastructure news</h2>
+<p>The Drupal.org CDN roll out is complete. There has been minimal issue with the EdgeCast CDN deployment on Drupal.org, however, we have successfully mitigated an issue which involved caching White Screen of Death (WSOD) pages in Varnish and the EdgeCast CDN.</p>
+<p>The load balancer rebuilds are in progress and should be deployed sometime this month.  The initial deployment of the updated load balancer failed. This prompted us to build out a load balancer staging environment to assist with testing and architecting a safer load balancer build. Once we finish testing this environment, we will push the changes to production.</p>
+<p>Testing and configuration of the new Git servers also continues to progress. SELinux rules and a copy of cgit are now successfully running on the Git staging environment.</p>
+<p>Two full time staff have started at the Drupal Association during the month of July. With new staff on board we have had time to brainstorm and talk through the bigger projects and goals for Drupal.org infrastructure. Our current focus is on our deployment process, with <a href="https://www.drupal.org/u/isntall">Archie Brentano</a> leading development environment improvements, and <a href="https://www.drupal.org/u/mixologic">Ryan Aslett</a> leading the workflow and QA process (BDD testing) improvements.  </p>
+<h2>Drupal.org User Research</h2>
+<p>At the end of July Whitney Hess visited the Drupal Association office in Portland (Oregon) and we started to summarize the information we collected during almost 30 user interviews we conducted previously. We already can say that some of the findings are unexpected and pretty interesting. We are looking forward to sharing those with the community once we have initial user personas developed.</p>
+<p>---<br />
+As always, we’d like to say thanks to all volunteers who are working with us, and thanks to the Drupal Association <a href="https://drupal.org/supporters">Supporters</a> who make it possible for us to work on these projects. </p>
+<p>Cross-posting from <a href="https://groups.drupal.org/node/437758">g.d.o/drupalorg</a>.</p>
+<p>Follow us on Twitter for regular updates: <a href="https://twitter.com/drupal_org">@drupal_org</a>, <a href="https://twitter.com/drupal_infra">@drupal_infra</a></p>
+</div></div></div><div class="field field-name-taxonomy-vocabulary-4 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Personal blog tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/taxonomy/term/588">week notes</a></div></div></div>
+  </body>
+</html>
+

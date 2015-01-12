@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 04 Jul 2014 20:45:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 04 Jul 2014 20:45:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal 8 and iOS: Use Caching with NSURLRequest
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tntfoss-vivekvpandya.rhcloud.com/node/51
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal 8 and iOS: Use Caching with NSURLRequest</title>
+    <base href="http://tntfoss-vivekvpandya.rhcloud.com/node/51">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/51/title/en/rss">Use Caching with NSURLRequest</span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/51/body/en/rss">
+    <div class="field-items">
+          <div class="field-item" property="schema:text"><p>I am Vivek Pandya and I am working on Google Summer of Code 2014 project to build an iOS application for Drupal 8 site. In this article I am sharing my experience about caching retrieved data from Durpal 8 REST web service with in iOS7 application.</p>
+
+<p>While writing iOS application that loads data(JSON) like a list of articles it is better to use cache mechanism provided by NSURLSession api. An NSURLRequest instance specifies how local cache is used by setting NSURLRequestCachePolicy values: with NSURLRequestProtocolCachePolicy, NSURLRequestReloadIgnoringCacheData<strong>, </strong>NSURLRequestReturnCacheDataElseLoad<strong>, </strong>NSURLRequestReturnCacheDataDontLoad<strong> </strong>etc.</p>
+
+<p>The default cache policy for an NSURLRequest is NSURLRequestUseProtocolCachePolicy. While working with REST endpoint HTTP is default protocol so when NSCachedURLResponse does not exist for the request the NSURLSession will fetch data for that request.</p>
+
+<p>If cached response exist than NSURLSession api will make HEAD request to the resource and check for cached data's validity by examining various response header like “Last-Modified” , “Cache-Control” etc. And if it finds data to be stale one it will load the data again otherwise returns cached data.</p>
+
+<p>But, before using this cache mechanism at iOS side we have to make our Drupal site pages cacheable to do so navigate to “admin/config/development/performance” and set time limit value for page cache. Save the configuration. Now to verify whether Drupal has really enabled cache for pages or note try HEAD request with any REST api client like Postman, in response header you should be able to see “Cache-Control : max-age=&lt;seconds&gt;” here seconds should be same as you specified in configuration. See the picture below to get more clarity.</p>
+<img alt="" data-editor-file-uuid="9b454cd3-e6e0-40ef-ba12-185a0ee9ec22" height="286" src="/sites/default/files/inline-images/cache.png" width="588" /><p>Now while creating request object with iOS SDK set it's caching policy to NSURLRequestProtocolCachePolicy. Now run the code , first time it will take normal time to load the data but next time onwards it will only reload the data if it has been changed or max-age value has expired.</p>
+
+<p>For more details please refer to URLLoading system guide by Apple.</p>
+
+<p> </p></div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix" data-quickedit-field-id="node/51/field_tags/en/rss">
+  <h3 class="field-label">Tags: </h3>
+  <ul class="links">
+          <li class="taxonomy-term-reference-0"><a href="/taxonomy/term/3" property="schema:about">Drupal Planet</a></li>
+      </ul>
+</div>
+<div class="field field-node--comment field-name-comment field-type-comment field-label-hidden" data-quickedit-field-id="node/51/comment/en/rss">
+    <div class="field-items">
+          <div class="field-item" rel="schema:comment"><section id="comments" class="comment-wrapper">
+  
+  
+
+  
+</section>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

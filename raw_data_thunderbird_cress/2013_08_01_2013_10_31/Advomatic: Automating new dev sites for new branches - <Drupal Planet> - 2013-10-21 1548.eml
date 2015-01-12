@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Oct 2013 14:48:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Oct 2013 14:48:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Advomatic: Automating new dev sites for new branches
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.advomatic.com/blogs/dave-hansen-lange/automating-new-dev-sites-new-branches
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Advomatic: Automating new dev sites for new branches</title>
+    <base href="http://www.advomatic.com/blogs/dave-hansen-lange/automating-new-dev-sites-new-branches">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-type-filefield field-field-image">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <a href="/blogs/dave-hansen-lange/automating-new-dev-sites-new-branches" class="imagecache imagecache-blog_thumb imagecache-linked imagecache-blog_thumb_linked"><img src="/files/imagecache/blog_thumb/branching-illustration2x.png" alt="" title=""  width="300" height="194" /><br /><span class="blog_image_title"></span></a>        </div>
+        </div>
+</div>
+<p>Over the past few years we&#39;ve moved away from using <a href="http://subversion.apache.org/">Subversion</a> (SVN) for version control and we&#39;re now using <a href="http://git-scm.com/">Git</a> for all of our projects.&nbsp; Git brings us a lot more power, but because of its different approach there are some challenges as well.&nbsp;</p>
+<p>Git has powerful <a href="http://en.wikipedia.org/wiki/Branching_%28revision_control%29">branching</a> and this opens up new opportunities to start a new branch for each new ticket/feature/client-request/bug-fix. There are several different branching strategies: <a href="http://nvie.com/posts/a-successful-git-branching-model/">Git Flow</a> is common for large ongoing projects, or we use a <a href="http://www.acquia.com/blog/pragmatic-guide-branch-feature-git-branching-strategy">more streamlined workflow</a>.&nbsp; This is great for client flexibility &mdash; a new feature can be released to production immediately after it&#39;s been approved, or you can choose to bundle several features together in an effort to reduce the time spent running deployments.&nbsp; Regardless of what branching model you choose you will run into the issue where stakeholders need to review and approve a branch (and maybe send it back to developers for refinement) before it gets merged in.&nbsp; If you&#39;ve got several branches open at once that means you need several different dev sites for this review process to happen.&nbsp; For simple tasks on simple sites you might be able to get away with just one dev site and manually check out different branches at different times, but for any new feature that requires database additions or changes that won&#39;t work.&nbsp;</p>
+<p>Another trend in web development over the past few years has been to automate as many of the boring and repetitive tasks as possible. So we&#39;ve created a Drush command called <a href="https://drupal.org/sandbox/dalin/2113355">Site Clone</a> that can do it all with just a few keystrokes:</p>
+<ol>
+<li>Copies the codebase (excluding the files directory) with rsync to a new location.</li>
+<li>Creates a new git branch (optional).</li>
+<li>Creates a new /sites directory and settings.php file.</li>
+<li>Creates a new files directory.</li>
+<li>Copies the database.</li>
+<li>Writes database connection info to a global config file.</li>
+</ol>
+<p>It also does thorough validation on the input parameters (about 20 different validations for everything from checking that the destination directory is writable, to ensuring that the name of the new database is valid, to ensuring that the new domain can be resolved).</p>
+<p>Here&#39;s an example of how it&#39;s run:</p>
+<div class="codeblock"><code>drush advo-site-clone --destination-domain=test.cf.local --destination-db-name=test --git-branch=test<br />---VALIDATION---<br />no errors
+<p>---SUMMARY---<br />Source path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : /Users/dave/Sites/cf<br />Source site&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : sites/cf.local<br />Source DB name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : cf<br />Destination path&nbsp;&nbsp;&nbsp; : /Users/dave/Sites/test.cf.local<br />Destination site&nbsp;&nbsp;&nbsp; : sites/test.cf.local<br />Destination DB name : test<br />New Git branch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : test</p>
+<p>Do you really want to continue? (y/n): y<br />Starting rsync...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [status]<br />Rsync was successful.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [success]<br />Creating Git branch...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [status]<br />Switched to a new branch &#039;test&#039;<br />Git branch created.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [success]<br />Created sites directory.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [success]<br />Updated settings.php.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [success]<br />Created files directory.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [success]<br />Starting DB copy...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [status]<br />Copied DB.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [success]<br />Complete&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [success]</p></code></div>
+<p>There are a few other things that we needed to put in place in order to get this working smoothly. We&#39;ve set up DNS wildcards so that requests to a third-level subdomain end up where we want them to.&nbsp; We&#39;ve configured Apache with a <a href="http://httpd.apache.org/docs/2.2/vhosts/mass.html#simple">VirtualDocumentRoot</a> so that requests to new subdomains get routed to the appropriate webroot.&nbsp; Finally we&#39;ve also made some changes to our project management tool so that everyone knows which dev site to look at for each ticket.</p>
+<p>Once you&#39;ve got all the pieces of the puzzle you&#39;ll be able to have a workflow something like:</p>
+<ol>
+<li>Stakeholder requests a new feature (let&#39;s call it foo) for their site (let&#39;s call it bar.com).</li>
+<li>Developer clones an existing dev site (bar.advomatic.com) into a new dev site (foo.bar.advomatic.com) and creates a new branch (foo).</li>
+<li>Developer implements the request.</li>
+<li>Stakeholder reviews on the branch dev site (foo.bar.advomatic.com). Return to #3 if necessary.</li>
+<li>Merge branch foo + deploy.</li>
+<li>@todo decommission the branch site (foo.bar.advomatic.com).</li>
+</ol>
+<p>Currently that last step has to be done manually.&nbsp; But we should create a corresponding script to clean-up the codebase/files/database/branches.</p>
+<p>Automate all the things!</p>
+  </body>
+</html>
+

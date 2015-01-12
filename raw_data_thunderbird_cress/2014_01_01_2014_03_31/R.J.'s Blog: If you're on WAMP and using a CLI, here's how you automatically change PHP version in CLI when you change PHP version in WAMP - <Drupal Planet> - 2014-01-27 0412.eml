@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 27 Jan 2014 04:12:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 27 Jan 2014 04:12:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: R.J.'s Blog: If you're on WAMP and using a CLI, here's how you automatically change PHP version in CLI when you change PHP version in WAMP
+Content-Transfer-Encoding: 8bit
+Content-Base: http://rjtownsend.com/blog/if-youre-wamp-and-using-cli-heres-how-you-automatically-change-php-version-cli-when-you-change
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>R.J.'s Blog: If you're on WAMP and using a CLI, here's how you automatically change PHP version in CLI when you change PHP version in WAMP</title>
+    <base href="http://rjtownsend.com/blog/if-youre-wamp-and-using-cli-heres-how-you-automatically-change-php-version-cli-when-you-change">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div id="comment-wrapper-nid-65"></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Over the weekend, I updated my local Drupal development environment to use WAMP instead of XAMPP, simply because WAMP lets you switch between versions of PHP. Unfortunately WAMP doesn't set the PATH to PHP so in your CLI you need to update PATH manually either in your environment variables (Windowz) or in .bashrc (Cygwin/*nix). I searched for a way to automate this and couldn't find anything so I wrote this small snippet to do it automatically.</p></div></div></div><!-- google_ad_section_end --><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline inline"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/snippets" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">snippets</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

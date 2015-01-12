@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 16 Jun 2014 14:48:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 16 Jun 2014 14:48:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: Quick Tip: Syncing Databases Between Drupal Websites with Backup and Migrate
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/quick-tip-syncing-databases-between-drupal-websites-backup-and-migrate
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: Quick Tip: Syncing Databases Between Drupal Websites with Backup and Migrate</title>
+    <base href="http://friendlymachine.net/posts/quick-tip-syncing-databases-between-drupal-websites-backup-and-migrate">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>A common scenario that Drupal developers and site builders run into is the challenge of keeping the database in sync between the dev, testing and production versions of a site. Web hosts like <a href="https://www.getpantheon.com/">Pantheon</a> (highly recommended) make this a snap, but what if you're using a VPS or some other hosting that doesn't have that functionality? One popular option is to <a href="https://www.digitalocean.com/community/tutorials/how-to-migrate-and-sync-drupal-sites-with-drush">use Drush</a>, but that isn't a good fit for everyone.</p>
+<p><a href="https://drupal.org/project/backup_migrate">Backup and Migrate</a> (BaM) can be a great tool for helping with this sort of problem. In this post we'll talk about using BaM for this task and include a very handy companion service that makes things even easier. What I often see with site builders who are using Backup and Migrate is the manual downloading of backup files and then doing a manual restore from the downloaded file.</p>
+<p>A great alternative to that process is setting up an Amazon S3 bucket (cloud storage) where you can directly place your backups from Backup and Migrate. Once each version of the site has the S3 bucket set up, keeping the database in sync becomes a snap.</p>
+<!--break-->
+<p>Setting up an account with Amazon Web Services is free - you get <span>5 GB of Amazon S3 storage, 20,000 get requests, 2,000 put requests, and 15GB of data transfer each month for one year</span> with the free account. If you start to use the service more heavily, you pay for what you use, but for most dev scenarios, you probably won't incur fees.</p>
+<p>Amazon has a <a href="http://docs.aws.amazon.com/AmazonS3/latest/gsg/GetStartedWithS3.html">nice tutorial</a> to walk you through the process of getting started with the service.</p>
+<p>Once you have an account with AWS, you head back to Backup and Migrate on your Drupal site - <code>/admin/config/system/backup_migrate</code>. Go to the <strong>Destinations</strong> tab and you'll see an 'Add Destination' link as in the image below. Click that link and in the list on the next page, select '<strong>Amazon S3 Bucket'</strong> as the destination.</p>
+<p><a href="http://friendlymachine.net/sites/default/files/uploads/images/add-destination.jpg"><img src="http://friendlymachine.net/sites/default/files/uploads/images/add-destination-small.jpg" alt="Add Backup and Migrate destination" width="800" height="484" /></a></p>
+<p>You'll most likely be prompted to add a PHP library - simply follow the link provided in the prompt and download the library to the 'libraries' folder of your site. It's really easy, so don't be put off.</p>
+<p>The next step is to fill in the form you see below with the information from your S3 bucket.</p>
+<p><a href="http://friendlymachine.net/sites/default/files/uploads/images/add-S3-bucket.jpg"><img src="http://friendlymachine.net/sites/default/files/uploads/images/add-E3-bucket-small.jpg" alt="Add S3 bucket" width="800" height="484" /></a></p>
+<p>That's pretty much all there is to it. Make sure everything is working by running a manual backup to the new S3 bucket destination. A good next step is to configure scheduled backups on the target machine so you can periodically restore a fresh copy on your other environment(s).</p>
+<p>To restore your database from the S3 bucket in the UI, you just go to the 'Destination' you have configured in Backup and Migrate for the bucket and click the 'restore' link next to the copy you want to use. A nice twist is using Drush to help with some of this.</p>
+<p>If you're brand new to Drush but would like to learn, here's a <a href="https://www.digitalocean.com/community/tutorials/a-beginner-s-guide-to-drush-the-drupal-shell">good place</a> to start. If you'd just like to know how to use Drush and Backup and Migrate together, here's a <a href="http://www.only10types.com/2011/03/drush-backup-and-migrate-command.html">good tutorial</a> on that topic.</p>
+<p>If you have any comments on this post, you may politely leave them below.</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,80 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 Aug 2013 11:09:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 Aug 2013 11:09:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: Wrapping my head around phpunit conversion and coverage
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/wrapping-my-head-around-phpunit-conversion-and-coverage
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: Wrapping my head around phpunit conversion and coverage</title>
+    <base href="http://comm-press.de/en/blog/wrapping-my-head-around-phpunit-conversion-and-coverage">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>phpunit</h2>
+By Cathy Theys
+<p>Conversions of Simpletest UnitTestBase to PHPUnit is already underway. Getting more hands helping will speed the conversion. First step is getting phpunit to run, looking at some of the output and reading a few background issues.</p>
+
+<p>I have more information to digest. But for now, I'm hoping that this will be something simple, and self-contained that people can do right now. It is a little bit of preparation.</p>
+
+<h4>Pre-requisit: xdebug</h4>
+
+<p>I already have xdebug installed, so to turn it on, I uncomment some lines in my php.ini file. And restart apache.</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130705/xdebug-uncommented.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130705/xdebug-uncommented.png?itok=1ctx8DpD" width="800" height="299" alt="screenshot of unix command line showing finding php.ini and checking xdebug is uncommented." /></a></div></div></div></div></p>
+
+<h4>PHPUnit comes with Drupal</h4>
+
+<p>In a drupal root, do a git pull --rebase to get the most recent d8. (It changes really fast.)</p>
+
+<p>Then,</p>
+
+<div class="codeblock"><code>cd core</code></div>
+
+<p>And run:</p>
+
+<div class="codeblock"><code>php ./vendor/phpunit/phpunit/phpunit.php --coverage-html ../../coverage-d8</code></div>
+
+<p>which will generate html output of test coverage and put it in a directory (the coverage-d8 directory, two levels back up in my case).</p>
+
+<p>It runs pretty quickly, but then takes a bit to generate the html.</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130705/phpunit-command2.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130705/phpunit-command2.png?itok=1re8QUkd" width="800" height="648" alt="screenshot of command line showing the phpunit coverage command" /></a></div></div></div></div></p>
+
+<h3>Look at the results</h3>
+
+<p>From there, I get a index file I can navigate through. It starts like:</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130705/results-index2.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130705/results-index2.png?itok=aflFxenT" width="800" height="262" alt="screenshot of the coverage html index, shows click on folders to navigate" /></a></div></div></div></div></p>
+
+<p>There are lots of places to add test coverage. But, for now let's just look at core / lib / Drupal / Component. We should be able to get 100% test coverage there. Right now, it looks like:</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130705/component2.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130705/component2.png?itok=MBZyNRCT" width="800" height="319" alt="screenshot of component directory showing low, medium, high coverage of parts" /></a></div></div></div></div></p>
+
+<h3>Try it</h3>
+
+<p>Please try and run the php coverage command. Let me know how long it takes you to get it working on your system, trying to get that same point, where you can see the coverage results for Component. I'm hoping it takes around 15 minutes. Tweet at me @ctheys or ping YesCT in irc to let me know you got that far, and any stumbling blocks you might have run into along the way.</p>
+
+<h3>Background</h3>
+
+<ul>
+<li><a href="https://drupal.org/node/1938068">1938068 [Meta] Convert UnitTestBase to PHPUnit</a></li>
+<li>An example: <a href="https://drupal.org/node/2030173">2030173 Convert system module's ValidNumberStepUnitTest to phpunit</a></li>
+<li>Another example: <a href="hhttps://drupal.org/node/2003800">2003800 Convert system module's Bootstrap unit tests to phpunit</a></li>
+<li><a href="http://phpunit.de/manual/3.0/en/code-coverage-analysis.html">PHPUnit Manual Code-Coverage Analysis</a></li>
+<li><a href="https://drupal.org/node/1567500">1567500 [meta] Replace the testing framework with PHPUnit + Ditch and rewrite Simpletest, it is broken beyond repair</a></li>
+</ul>
+
+<h3>Related</h3>
+
+<p><a href="http://comm-press.de/en/blog/forgotten-xdebug-slows-down-things-turn-it">The forgotten xdebug slows down things. Turn it off!</a></p>
+
+<p>-YesCT :)</p>
+  </body>
+</html>
+

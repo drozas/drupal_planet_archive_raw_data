@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Nov 2014 16:36:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Nov 2014 16:36:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Different, Not Difficult
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/different-not-difficult
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Different, Not Difficult</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/different-not-difficult">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Article        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p>As AppNeta’s developer evangelist, I work with customers in five different programming languages to monitor application performance. Drupal is just one part of one language, but I’ll always have a soft spot for it because it’s where I learned to program. When I get a chance, I like to keep my skills sharp by contributing to the community-maintained TraceView integration module. Last spring, I decided to port it and learn Drupal 8 the hard way.</p>
+<p>         Like most Drupal developers, I’d never tried writing Symfony code or using Composer to manage packages. Before attempting it, I decided to research both Symfony in its own right and how it is being leveraged to rewrite Drupal.  Thankfully, there were many rich tutorials on “the basics” even then, and, after a relatively painless porting process, I had the module running with a skeletal Symfony bundle inside it.</p>
+<p>         Initially, I relied on the same strategy as the Drupal 7 version of the TraceView module, which monitors hook execution time by installing two additional modules: an “early” module with a very low weight and a “late” module with a very high weight. As each hook was removed from core, I moved its implementations from the modules into the bundle and tagged that event with listeners at maximum and minimum priority.</p>        </div>
+  </body>
+</html>
+

@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 11 Nov 2013 18:03:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 11 Nov 2013 18:03:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: D8 Core Developer Docs (somewhat radical) proposal
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/371853
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: D8 Core Developer Docs (somewhat radical) proposal</title>
+    <base href="https://groups.drupal.org/node/371853">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>A few of us have been working on a proposal for making the Drupal 8.x developer docs more discoverable.</p>
+<p>The thing is... We have some pretty good API reference docs on api.drupal.org, and most people know about them. The D8 landing page there is a bit lame right now, but we can fix it (and plan to).</p>
+<p>However, we also have some pretty good API tutorial/expanded docs on <a href="https://drupal.org/developing/api" title="https://drupal.org/developing/api">https://drupal.org/developing/api</a>, which, judging by page hit statistics from Google Analytics, many people do not know about. And the reference docs on api.drupal.org are not well connected to the API tutorials.</p>
+<p>So... We've come up with a plan to move the developing/api docs to api.drupal.org, via a separate Git repository where we'd write the docs (instead of writing them on drupal.org). It's kind of a radical change, so before we adopt it, we'd like to get some feedback. The issue is:<br />
+<a href="https://drupal.org/node/2106873" title="https://drupal.org/node/2106873">https://drupal.org/node/2106873</a><br />
+and there's all kinds of information there, including a proof of concept site where you can see how it would look.</p>
+<p>Please go there, check out the proposal in the issue summary, click through to the test site, and tell us what you think on that issue. (I'm closing comments here -- we'd like comments to go on the issue.)</p>
+<p>Thanks!</p>
+  </body>
+</html>
+

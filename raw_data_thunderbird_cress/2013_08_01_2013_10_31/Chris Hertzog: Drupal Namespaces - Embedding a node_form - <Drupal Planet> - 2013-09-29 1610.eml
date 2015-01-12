@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 29 Sep 2013 15:10:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 29 Sep 2013 15:10:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hertzog: Drupal Namespaces - Embedding a node_form
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chertzog.com/post/drupal-namespaces-embedding-node-form
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hertzog: Drupal Namespaces - Embedding a node_form</title>
+    <base href="http://chertzog.com/post/drupal-namespaces-embedding-node-form">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>As a module maintainer working on porting my modules to Drupal 8, and being a self taught Drupal PHP developer (PSR what?), one of the biggest new things to deal with are namespaces.</p>
+<p>The way finally understood it was when I equated namespaces to <code class="prettyprint">module_load_include()</code>. In Drupal 7, when there were functions that existed in an include file that wasn’t loaded, you could call <code class="prettyprint">module_load_include(‘file_type’, ‘module_name’, ‘path/to/filename’)</code>. This would load the file, and then you could use whatever you needed from that include.</p>
+<p>Additionally it has been Drupal best practice to always prefix your functions/classes/etc with the module name to avoid conflicts. So you would have things like:</p>
+<p class="code-header">D7 Relation module</p>
+<pre class="prettyprint"><code>class RelationQuery extends EntityFieldQuery {<br />...<br />}</code></pre>
+<p>Now even though all of the classes from Drupal 8 namespaces are loaded by the autoloader provided by symphony (<a href="https://drupal.org/node/1320394">https://drupal.org/node/1320394</a>), we need to tell Drupal which class we need to use. </p>
+<p>Now for an example.</p>
+<p>Say we wanted to create our own page that embedded the node add form.<br />
+In Drupal 7, we could do the following</p>
+<p class="code-header">D7 embedded node form</p>
+<pre class="prettyprint"><code>$type = "post";<br />module_load_include("pages.inc", "node");<br />$output = node_add($type);<br />return $output;</code></pre>
+<p>In Drupal 8 we could still load the include and call <code class="prettyprint">node_add()</code> directly, but what fun is that!  (plus there is a todo for removing <code class="prettyprint">node_add()</code>). So lets use the new namespace stuff.</p>
+<p class="code-header">D8 embedded node form</p>
+<pre class="prettyprint"><code>use Drupal\node\Controller\NodeController;<br />$type = node_type_load("post");<br />$output = NodeController::add($type);<br />return $output;</code></pre>
+<p>Not too bad. It’s the same number of lines of code.</p>
+<p>It’s just (slightly) different lines of code.</p>
+</div></div></div><div class="field field-node--field-category field-name-field-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories</div><div class="field-items"><div class="field-item even"><a href="/category/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 02 Aug 2014 18:25:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 02 Aug 2014 18:25:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Cruiskeen Consulting: The Joys of Configuration!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://cruiskeenconsulting.com/blog/joys_configuration
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Cruiskeen Consulting: The Joys of Configuration!</title>
+    <base href="http://cruiskeenconsulting.com/blog/joys_configuration">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss view-mode-rss"><div class="field-items"><div class="field-item even"><p>At the moment we're working on a fairly BIG Drupal 6-Drupal 7 migration for the <a title="Twin Cities Daily Planet" href="http://tcdailyplanet.net" target="_blank">Twin Cities Daily Planet. </a></p>
+<p>As part of that I am attempting to get the rather unwieldy site completely under code and configuration management.  The code part is well understood (well, at least by others) and semi working for us, so I'm not going to talk about the issues of getting sites under control of git - lots of others have written about that.  I am going to talk about the configuration management part.</p>
+<p>I have always been more than a little disheartened by the use of Features to control all those icky parts of the site that are held in the database rather than code.  For one thing, that's not really what Features was intended to do - it was intended to pile up a single hunk of site functionality and turn it into a feature.  This I can dig, but from a general site administration viewpoint it is a pretty awkward tool.   So I was really excited to realize that this whole configuration issue is being seriously worked on in Drupal 8, and that all of those messy things in the database will now get written out into flat config files that can actually be code managed.  I was even MORE excited to see a few  months back that there is now a <a title="Configuration module on d.o." href="https://drupal.org/project/configuration" target="_blank">configuration module</a> for Drupal 7. This looked to me like it was <strong>exactly</strong> what the Doctor. ordered.   But as often happens, the drug seems to have some side effects.</p>
+<p></div></div></div><div class="field field-name-taxonomy-vocabulary-8 field-type-taxonomy-term-reference field-label-hidden view-mode-rss view-mode-rss"><ul class="field-items"><li class="field-item even"><a href="/taxonomy/term/75">Drupal</a></li><li class="field-item odd"><a href="/taxonomy/term/189">Planet Drupal</a></li></ul></div>
+  </body>
+</html>
+

@@ -1,0 +1,98 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 28 Mar 2014 00:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 28 Mar 2014 00:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Darren Mothersele: Drupal Theme Generator Demo
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.darrenmothersele.com//blog/2014/03/28/drupal-theme-generator-demo
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Darren Mothersele: Drupal Theme Generator Demo</title>
+    <base href="http://www.darrenmothersele.com//blog/2014/03/28/drupal-theme-generator-demo">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I&#39;ve been playing with the idea of automatically generating Drupal themes
+from static HTML/CSS/JS using annotations in the HTML markup.  I put together
+a basic proof-of-concept of a tool to generate a Drupal theme, ctools
+layout and style plugins, and view modes and templates.</p>
+
+<p>Last night at the <a href="http://www.drupalshowandtell.com/">Drupal Show and Tell</a>
+event in London I gave a live demo
+of the theme generator in action. The event was recorded, so will be online
+eventually, but for now I&#39;ve recorded this demo as a couple of attendees
+suggested this would give a better idea of the detail that couldn&#39;t be
+seen on the screen during the live demo.</p>
+
+<!--break-->
+
+<p>My interest in this area came about through wanting to bring design into the
+development workflow of an agile project, and move away from the
+&#39;throw it over the fence&#39; mentality in design deliverables.
+You can read more about how this came about in my previous blog post
+<a href="http://darrenmothersele.com/blog/2014/03/12/automatic-drupal-theme-generation/">Death of the Themer</a>.</p>
+
+<h3>Assembly, not Deconstruction</h3>
+
+<p>Traditionally implementation of a design was done via a process of deconstruction
+from a PSD into flat HTML and CSS, and then another process of deconstruction
+in CMS implementation of the design. You can&#39;t design a responsive site in Photoshop
+so luckily this is changing. PSDs were horrible to work with as amends take far too
+long, and while Photoshop may be good to quickly mock up style ideas, pages
+designed in Photoshop tend rely too much on intuition, implications about how things
+would work, and tend to come with an implied &quot;you get the idea&quot;.</p>
+
+<h3>Atomic Design</h3>
+
+<p>As I&#39;ve mentioned in earlier posts, I&#39;m excited about the emerging trend towards
+atomic design (see <a href="http://bradfrostweb.com/blog/post/atomic-web-design/">Brad Frost</a>)
+as it brings a more &#39;development&#39; style process into design. Treating the process
+as that of designing a system of re-usable components, rather than just designing
+pages.</p>
+
+<p>This moves implementation of a design from a process of deconstruction, to a process
+of assembly, so brings the world of dev and design closer together. Either bringing
+design into the development workflow, or bringing development processes into
+design (depending on which way around you look at it).</p>
+
+<p>With an atomic approach to design, and with something like SMACSS for
+modular CSS, the process of converting to a Drupal theme can be automated.
+Because the markup/styles are &#39;componentised&#39; we can annotate the source code to
+document the conversion process and then use automated tools to manage the process.</p>
+
+<h3>Demo</h3>
+
+<p>Here&#39;s a demo of the proof-of-concept:</p>
+
+<div class='embed-container'><iframe src='https://player.vimeo.com/video/90315757' frameborder='0' webkitAllowFullScreen mozallowfullscreen allowFullScreen>https://player.vimeo.com/video/90315757</iframe></div>
+
+<h3>Next...</h3>
+
+<p>You can download/fork the code from the
+<a href="https://github.com/darrenmothersele/hyde">GitHub Hyde repo</a>. You&#39;ll need to patch the
+QueryPath module as it needs the latest version of the QueryPath library and the QP
+module doesn&#39;t include the right files to make this work by default.</p>
+
+<p>A lot of work needs to be done. This is very rough proof-of-concept code, but I
+think this shows the concept can work, and worthy of further development.</p>
+
+<p>Some feedback from last night included:</p>
+
+<ul>
+<li>Generate an actual theme. At the moment the theme is just an object stored in the DB/cache, but
+I had planned for this to be a ctools exportable. An earlier version I started working on generated actual
+theme files, perhaps it would be better to switch back to this approach?</li>
+<li>How to handle logic in template files? Shouldn&#39;t this be handled in pre-process?</li>
+<li>Stub code generation for pre-process functions</li>
+<li>Adding extra custom fields for display only? The example given was a date field that was displayed twice on page, once for date stored in field and once for time stored in same field.</li>
+</ul>
+
+<p>Drop me a line if you&#39;ve got any other ideas, or want to get involved, or
+want to help fund building this properly! :)</p>
+  </body>
+</html>
+

@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 17 Jun 2014 06:13:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 17 Jun 2014 06:13:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Liran Tal's Enginx: Drupal Performance Tuning for Better Database Utilization – Introduction
+Content-Transfer-Encoding: 8bit
+Content-Base: http://enginx.com/blog/drupal-performance-tuning-better-database-response-time/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Liran Tal's Enginx: Drupal Performance Tuning for Better Database Utilization – Introduction</title>
+    <base href="http://enginx.com/blog/drupal-performance-tuning-better-database-response-time/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="seriesmeta">This entry is part 1 of 1 in the series <a href="http://enginx.com/series/drupal-performance-tuning-for-better-database-utilization/" class="series-54" title="Drupal Performance Tuning for Better Database Utilization">Drupal Performance Tuning for Better Database Utilization</a></div><p><a href="https://drupal.org/home" target="_blank">Drupal </a>is a great CMS or CMF, whichever your take on it, but it can definitely grow up to be a resources hog with all of those contributed modules implementing hooks to no avail. It is even worse when developers aren&#8217;t always performance oriented (or security oriented god save us all) and this can (unknowingly) take it&#8217;s toll on your web application performance.</p>
+<p>Drupal performance tuning has seen it&#8217;s share through many presentation decks, tutorials, and even dedicated books such as <a href="http://www.packtpub.com/" target="_blank">PacktPub&#8217;s </a><a href="http://www.packtpub.com/drupal-6-performance-tips-to-maximize-and-optimize-your-framework/book" target="_blank">Drupal 6 Performance Tips</a> but it seems to be an always continuing task to get great performance so here are some thoughts on where you should start looking.</p>
+<p><a href="http://enginx.com/wp-content/uploads/2014/06/meme-drupal-database-performance.jpg"><img class="aligncenter size-full wp-image-437" src="http://enginx.com/wp-content/uploads/2014/06/meme-drupal-database-performance.jpg" alt="meme-drupal-database-performance" width="430" height="538" /></a></p>
+<p>&nbsp;</p>
+<p>Checklist for glancing further into Drupal&#8217;s rabbit hole and getting insights on tuning your web application for better performance:</p>
+<ol>
+<li>Enable MySQL slow query log to trace all the queries which take a long time (usually &gt;1 is enough, and with later versions of MySQL or compliant databases like Percona or MariaDB you can also specify milliseconds for the slow query log)</li>
+<li>Enable MySQL slow query log to also log any queries without indexes</li>
+<li>Make sure to review all of those query logs with EXPLAIN to figure out which queries can be better constructed to employ good use of indexes. Where indexes are missing it&#8217;s worth reviewing if the database would benefit from modifying existing indexes (and not breaking older queries)</li>
+<li>Use <a href="http://www.percona.com/software/percona-toolkit" target="_blank">percona-toolkit</a> to review out standing queries</li>
+<li>Use <a href="http://newrelic.com/" target="_blank">New Relic&#8217;s</a> PHP server side engine which can tune into your web application and provide great analysis on function call time, wall time, and overall execution pipelines. While it&#8217;s not a must, I&#8217;ve personally experienced it and it&#8217;s a great SaaS offering for an immediate solution without having to need to install alternatives like <a href="http://xhprof.io/" target="_blank">XHProf</a> or <a href="https://code.google.com/p/webgrind/" target="_blank">Webgrind</a>.</li>
+</ol>
+<p>&nbsp;</p>
+
+<!-- Easy AdSense V7.21 -->
+<!-- [leadout: 2 urCount: 1 urMax: 0] -->
+<div class="ezAdsense adsense adsense-leadout" style="text-align:center;margin:12px;">  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- enginx-blog-wide-post -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-9677997565991773"
+     data-ad-slot="6746030703"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<!-- Easy AdSense V7.21 -->
+<p>The post <a rel="nofollow" href="http://enginx.com/blog/drupal-performance-tuning-better-database-response-time/">Drupal Performance Tuning for Better Database Utilization &#8211; Introduction</a> appeared first on <a rel="nofollow" href="http://enginx.com">Liran Tal&#039;s Enginx</a>.</p>
+  </body>
+</html>
+

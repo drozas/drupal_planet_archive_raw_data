@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 17 Dec 2013 06:31:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 17 Dec 2013 06:31:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: INsReady: A demo for open hardware meeting open software: Arduino + Android + Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: https://insready.com/en/blog/demo-open-hardware-meeting-open-software-arduino-android-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>INsReady: A demo for open hardware meeting open software: Arduino + Android + Drupal</title>
+    <base href="https://insready.com/en/blog/demo-open-hardware-meeting-open-software-arduino-android-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>A few years ago, when the Android just came out, I did a project <a href="http://drupal.org/node/659772">Drupal + Services Module + Beer = BeerCloud on Android and iPhone</a>. Now, I feel it's the time to bring this <strong>open</strong> vertical integration even further to complete an open <a href="http://en.wikipedia.org/wiki/Ubiquitous_computing">ubiquitous computing</a> model or tech stack. The previous project stack has already covered OS, Database, Web Server, CMS, Mobile Device; for this new project, let's bring wearables or sensors into the picture. </p>
+<p>At <a href="http://www.techyizu.org/events/hackyizu-2013-hardware-edition/">HackYiZu 2013 event</a>, Shanghai, China, my colleague <a href="https://insready.com/en/users/jerenus">Jerenus Zheng</a> and I want to build a concrete example to demo the idea above as well as showing the power of each open component. Therefore, we came up with the detailed plan below: </p>
+<ul></ul><ol>1. Connect a sound sensor with Arduino</ol><ol>2. Connect either/both Bluetooth Low Enegry module or/and NFC module to the Arduino</ol><ol>3. Use BLE or NFC to stream the sound data to an Android 4.0+ device</ol><ol>4. Build an app on the Android device to send the data to Drupal</ol><ol>5. Use <a href="https://drupal.org/project/views">Views</a> and <a href="https://drupal.org/project/charts">Charts</a> modules on Drupal to visualize the sound data collected during the event</ol><p>The complete software/hardware stack for this project is below:</p>
+<ul><li>Presentation: Drupal 7 + Views + Charts</li>
+<li>REST API: <a href="https://drupal.org/project/services">Services</a> module</li>
+<li>REST Client and Drupal API library on Android: <a href="https://github.com/INsReady/DrupalCloud">DrupalCloud</a></li>
+<li>Database: MariaDB</li>
+<li>Web Server: Nginx</li>
+<li>Language layer: PHP-FPM + APC</li>
+<li>Arduino + Bluetooth: <a href="http://www.dfrobot.com/index.php?route=product/product&amp;filter_name=bluno&amp;product_id=1044">Bluno</a></li>
+<li>NFC module: <a href="http://www.dfrobot.com/index.php?route=product/product&amp;filter_name=nfc&amp;product_id=892#.UqxVBZDtlb8">NFC Module for Arduino</a></li>
+<li>Sound sensor: <a href="http://www.dfrobot.com/index.php?route=product/product&amp;filter_name=sound&amp;product_id=83">Analog Sound Sensor</a></li>
+</ul><p>We spent about 15 hours on debugging Bluetooth Low Enengry on the Bluno board as well as the demo app provided by the hardware vendor (This part could be much shorter, but we didn't detect the impact of an unstable power supply from a USB until very late). Because we needed to catch up the deadline of the event and we already spent most of time on BLE, therefore we couldn't get time to use NFC module. Then, we used about 20 minutes to connect all the parts together and to prepare the presentation for the event. The final hardware part (excluding my phone Nexus 5) is below:<br /><img src="https://insready.com/sites/default/files/IMG_20131208_184430.jpg" width="100%" /><br /><br />
+On the other hand, regarding the software, first we wrote a simple loop, using Arduino IDE to collect sound level (decibel) every half a second (the code can be found on <a href="http://www.dfrobot.com/index.php?route=product/product&amp;filter_name=sound&amp;product_id=83">Analog Sound Sensor</a> documentation), then broadcasting this data using BLE (the sample code can be found on <a href="http://www.dfrobot.com/index.php?route=product/product&amp;filter_name=bluno&amp;product_id=1044">Bluno</a> documentation). Then, we modifed the sample app provided by <a href="http://www.dfrobot.com/index.php?route=product/product&amp;filter_name=bluno&amp;product_id=1044">Bluno</a> to create our demo app and added some <a href="https://github.com/INsReady/DrupalCloud">DrupalCloud</a> sample code to forward the data to the Drupal Services. On the Drupal side, we created a Content Type called "Bluno" and one Integer field for storing decibel. So, whenever our demo app receives the decibel number (about half a second), it calls DrupalCloud to create a node with decibel number on Drupal via Services. Finally, we created a simple Views with Chart display format to visualize all the bluno nodes.</p>
+<p>We explained the idea at our presentation of the event, and made people screaming/cheering for a while, therefore a nice graph was generated below:<br /><img src="https://insready.com/sites/default/files/Screenshot%20from%202013-12-14%2021%3A29%3A35.png" width="100%" /><br /></p>
+<p>Due to the limited time, we couldn't make our demo code nice enough to publish online. But, this project has been fun, and we are looking forward to creating a useful or meaningful project based on the idea above, also to publishing an open source library to deal with new connectivity (BLE or NFC) on Arudino. I hope this blog can envision us with openness of the hardware and software as well as the open connecitivty between them. </p>
+<p>* We thank <a href="http://www.techyizu.org/">Techyizu</a> for organizing HackYiZu 2013 event and thank <a href="http://www.dfrobot.com/">DFRobots</a> and other sponsors for sponsoring the hardware.</p>
+</div></div></div><div class="field field-name-field-files field-type-file field-label-above"><div class="field-label">Files:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="file"><img class="file-icon" alt="" title="image/jpeg" src="/modules/file/icons/image-x-generic.png" /> <a href="https://insready.com/sites/default/files/IMG_20131208_184430.jpg" type="image/jpeg; length=870513">IMG_20131208_184430.jpg</a></span></div><div class="field-item odd"><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="https://insready.com/sites/default/files/Screenshot%20from%202013-12-14%2021%3A29%3A35.png" type="image/png; length=20690">Screenshot from 2013-12-14 21:29:35.png</a></span></div></div></div><div class="field field-name-field-tag field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tag:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/taxonomy/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

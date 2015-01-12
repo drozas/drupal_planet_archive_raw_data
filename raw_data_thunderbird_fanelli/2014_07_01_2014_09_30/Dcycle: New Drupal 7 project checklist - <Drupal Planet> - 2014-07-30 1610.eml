@@ -1,0 +1,124 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 30 Jul 2014 14:10:25 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 30 Jul 2014 14:10:25 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dcycle: New Drupal 7 project checklist
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dcycleproject.org/blog/66/new-drupal-7-project-checklist
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dcycle: New Drupal 7 project checklist</title>
+    <base href="http://dcycleproject.org/blog/66/new-drupal-7-project-checklist">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I had this checklist documented internally, but I keep referring back to it so I'll make it available here in case anyone else needs it. The idea here is to document a minimum (not an ideal) set of modules and tasks which I do for almost all projects.</p>
+
+<h2>Questions to ask of a client at the project launch</h2>
+
+<ul>
+<li>Is your site bilingual? If so is there more than one domain?</li>
+<li>What type of compatibility do you need: tablet, mobile, which versions of IE?</li>
+<li>How do you see your post-launch support and core/module update contract?</li>
+<li>Do you need SSL support?</li>
+<li>What is your hosting arrangement?</li>
+<li>Do you have a contact form?</li>
+<li>What is your anti-spam method? Note that <a href="http://www.popsci.com/article/technology/rip-captcha?src=SOC&amp;dom=fb">CAPTCHA is no longer useful</a>; I like <a href="https://mollom.com">Mollom</a>, but it's giving me more and more false positives with time.</li>
+<li>Is WYSIWYG required? I strongly suggest <a href="http://readwrite.com/2012/04/17/why-you-need-to-learn-markdown">using Markdown instead</a>.</li>
+<li>Confirm that all emails are sent in plain text, not HTML. If you're sending out HTML mail, <a href="http://www.aweber.com/blog/email-marketing/plain-text-vs-html-email-2014.htm">do it right</a>.</li>
+<li>Do you need an on-site search utility? If so, some thought, and resources, need to go into it or it will be frustrating.</li>
+<li>What kind of load do you expect on your site (anonymous and admin users)? This information can be used for load testing.</li>
+<li>If you already have a site, should old paths of critical content map to paths on the new site?</li>
+<li>Should users be allowed to create accounts (with spam considerations, and see if an admin should approve them).</li>
+</ul>
+
+<h2><a href="http://www.scrumalliance.org/community/articles/2013/september/what-is-sprint-zero">Sprint Zero</a>: starting the project</h2>
+
+<p>Here is what should get done in the first Agile sprint, aka Sprint Zero:</p>
+
+<ul>
+<li>If you are using <a href="http://dcycleproject.org/blog/46/continuous-deployment-drupal-style">continuous integration</a>, a Jenkins job for tracking the master branch: this job should fail if any test fails on the codebase, or if quality metrics (<a href="https://www.drupal.org/project/coder">code review</a>, for example, or <a href="http://pdepend.org">pdepend</a> metrics) reach predefined thresholds.</li>
+<li>A Jenkins job for pushing to dev. This is triggered by the first job if tests pass. It pushed the new code to the dev environment, and updates the dev environment's database. <a href="http://dcycleproject.org/blog/48/do-not-clone-database">The database is never cloned</a>; rather, a <a href="http://dcycleproject.org/blog/44/what-site-deployment-module">site deployment module</a> is used.</li>
+<li>An issue queue is set up and the client is given access to it, and training on how to use it.</li>
+<li>A wiki is set up.</li>
+<li>A dev environment is set up. This is where the code gets pushed automatically if all tests pass.</li>
+<li>A prod environment is set up. This environment is normally updated manually after each end of sprint demo.</li>
+<li>A git repo is set up with a basic Drupal site.</li>
+<li>A custom module is set up in <code>sites/*/modules/custom</code>: this is where custom function go.</li>
+<li>A <a href="http://dcycleproject.org/blog/44/what-site-deployment-module">site deployment module</a> in <code>sites/all/modules/custom</code>. All deployment-related code and dependencies go here. A <a href="http://dcycleproject.org/blog/30/basic-test"><code>.test</code></a> file and an <a href="http://dcycleproject.org/blog/65/basic-install-file-deployment-module"><code>.install</code></a> should be included.</li>
+<li>A site development module is set up in <code>sites/*/modules/custom</code>, which is meant to contain all modules required or useful for development, as dependencies.</li>
+<li>A custom theme is created.</li>
+<li>An initial feature is created in <code>sites/*/modules/features</code>. This is where all your features will be added.</li>
+<li>A "sites/*/modules/patches" folder is created (with a README.txt file, to make sure it goes into git). This is where core and contrib patches should go. Your site's maintainers should apply these patches when core or contrib modules are updated. Patch names here should include the node id and comment number on Drupal.org.</li>
+</ul>
+
+<h2>Basic module list (always used)</h2>
+
+<ul>
+<li><a href="https://drupal.org/project/views">views</a></li>
+<li><a href="https://drupal.org/project/context">context</a></li>
+<li><a href="https://drupal.org/project/strongarm">strongarm</a></li>
+<li><a href="https://drupal.org/project/admin_menu">admin_menu</a></li>
+<li><a href="https://drupal.org/project/markdown">markdown</a></li>
+<li><a href="https://drupal.org/project/transliteration">transliteration</a></li>
+<li><a href="https://drupal.org/project/globalredirect">globalredirect</a></li>
+<li><a href="https://drupal.org/project/redirect">redirect</a></li>
+<li><a href="https://drupal.org/project/config_builder">config_builder</a>, almost always useful to create a single form allowing clients to change site variables.</li>
+<li><a href="https://drupal.org/project/context">context</a></li>
+<li><a href="https://drupal.org/project/features">features</a></li>
+<li><a href="https://drupal.org/project/logintoboggan">logintoboggan</a></li>
+</ul>
+
+<h2>Development modules (not enabled on production)</h2>
+
+<p>I normally create a custom development module with these as dependencies:</p>
+
+<ul>
+<li><a href="https://drupal.org/project/diff">diff</a></li>
+<li><a href="https://drupal.org/project/devel">devel</a></li>
+<li>realistic_dummy_content_api (part of <a href="https://drupal.org/project/realistic_dummy_content">realistic_dummy_content</a>)</li>
+<li><a href="https://drupal.org/project/coder">coder</a></li>
+<li>context_ui (part of <a href="https://drupal.org/project/context">context</a>)</li>
+<li>views_ui (part of <a href="https://drupal.org/project/views">views</a>)</li>
+<li><a href="https://drupal.org/project/devel">devel</a></li>
+<li><a href="https://drupal.org/project/devel_themer">devel_themer</a></li>
+<li><a href="https://drupal.org/project/masquerade">masquerade</a></li>
+<li><a href="https://drupal.org/project/search_krumo">search_krumo</a></li>
+<li><a href="https://drupal.org/project/simpletest_turbo">simpletest_turbo</a></li>
+<li>devel_generate (part of <a href="https://drupal.org/project/devel">devel</a>)</li>
+<li>config_builder_ui (part of <a href="https://drupal.org/project/config_builder">config_builder</a>)</li>
+</ul>
+
+<h2>Multilingual modules</h2>
+
+<ul>
+<li><a href="https://drupal.org/project/i18n">i18n</a></li>
+<li><a href="https://drupal.org/project/potx">potx</a></li>
+<li><a href="https://drupal.org/project/l10n_update">l10n_update</a></li>
+</ul>
+
+<h2>Launch checklist</h2>
+
+<ul>
+<li>Design a custom 404, error and maintenance page.</li>
+<li>Path, alias and permalink strategy. (Might require <a href="https://drupal.org/project/pathauto">pathauto</a>.)</li>
+<li>Think of adding revisions to content types to avoid clients losing their data.</li>
+<li>Don't display errors on production.</li>
+<li>Optimize CSS, JS and page caching.</li>
+<li>Views should be cached.</li>
+<li>System messages are properly themed.</li>
+<li>Prevent very simple passwords.</li>
+<li><a href="http://linuxdev.dk/blog/sending-drupal-log-enteries-syslog">Using syslog instead of dblog</a> on prod</li>
+</ul>
+
+<h2>In conclusion</h2>
+
+<p>Most shops, and most developers, have some sort of checklist like this. Mine is not any better or worse than most, but can be a good starting point. Another note: I've seen at least three Drupal teams try, and fail, to implement a "Drupal Starter kit for Company XYZ" and keep it under version control. The problem with that approach, as opposed to a checklist, is that it's not lightweight enough: it is a software product which needs maintenance, and after a while no one maintains it.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/blog" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">blog</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

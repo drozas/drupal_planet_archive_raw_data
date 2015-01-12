@@ -1,0 +1,76 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 21 May 2014 19:30:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 21 May 2014 19:30:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: OpenConcept: Translating user-entered strings in D7
+Content-Transfer-Encoding: 8bit
+Content-Base: https://openconcept.ca/blog/matt/translating-user-entered-strings-d7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>OpenConcept: Translating user-entered strings in D7</title>
+    <base href="https://openconcept.ca/blog/matt/translating-user-entered-strings-d7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-fulltext"><div class="field-items"><div class="field-item even"><p>The <a href="https://drupal.org/project/i18n">Internationalization suite of modules</a> do a pretty good job of making everything translatable in Drupal 7. But, if you're writing a module that stores its data outside variables or entities, you might notice a few gaps.</p>
+<p>On a recent project, I noticed that field display settings (<a href="https://api.drupal.org/api/drupal/modules!field_ui!field_ui.api.php/function/hook_field_formatter_settings_form/7">field formatter settings</a> for those familiar with the <a href="https://drupal.org/node/443536">Field API</a>) are not translatable by default. In many cases, this is fine because the field settings in core modules don't make sense to translate: for example, the number of characters to trim a summary at or the image style to use.</p>
+<!--break--><h2>Never use <tt>t($user_entered_string)</tt>!</h2>
+<p>It's tempting to solve this problem by passing the variable through <tt>t()</tt> as you're outputting it (e.g.: <tt>$label = t($settings['label'])</tt>), however doing so is a bad idea!</p>
+<h3>Why <tt>t($variable)</tt> is usually a bad idea</h3>
+<p>To quote <a href="https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/t/7">the documentation for the <tt>t()</tt> function</a>,</p>
+<blockquote><p>You should never use t() to translate variables, such as calling</p>
+<p><tt><br />
+t($text);<br />
+</tt>
+</p></blockquote>
+<p>There are a few reasons for this:</p>
+<ul>
+<li>
+<p>In addition to actually translating text at run-time, the <tt>t()</tt> function is also used by text-extraction routines to find text that needs to be translated, and build databases of text to be translated for translation teams.</p>
+<p>Both the Internationalization's built-in string translator and the <a href="https://drupal.org/project/potx">Translation template extractor</a> module (which powers <a href="https://localize.drupal.org/">the Drupal Translations site</a>) ignore calls to <tt>t()</tt>, whose first argument contains any variable (e.g.: <tt>t($var)</tt>, <tt>t($var . 'text')</tt>, etc.): these won't even show up as being available to translate!</p>
+</li>
+<li>The <tt>t()</tt> system doesn't support updates to existing strings. When user data is updated, the next time it's passed through <tt>t()</tt>, <em>a new record is created</em> instead of an update. The database bloats over time and any existing translations are orphaned with each update.</li>
+<li>The <tt>t()</tt> system assumes any data it receives is in English. User data may be in another language, producing translation errors.</li>
+</ul>
+<p>The only case in which variables can be passed safely through <tt>t()</tt> is when the string in the variable will be passed through <tt>t()</tt> elsewhere.</p>
+<h3>Why <tt>t($user_entered_string)</tt> is a security risk</h3>
+<p>To quote the <tt>t()</tt> function documentation again,</p>
+<blockquote><p>It is especially important never to call</p>
+<p><tt><br />
+t($user_text);<br />
+</tt></p>
+<p>, where $user_text is some text that a user entered - doing that can lead to cross-site scripting and other security problems.</p>
+</blockquote>
+<p>For example, a malicious translator could enter HTML in their translations (a <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">cross-site scripting (XSS)</a> attack).</p>
+<h2>Introducing <tt>i18n_string()</tt></h2>
+<p>So, what is a module developer to do? As it turns out, the <a href="https://drupal.org/project/i18n">Internationalization project</a>'s <em>String translation</em> sub-module (<tt>i18n_string</tt>) has a function named <a href="http://drupalcontrib.org/api/drupal/contributions!i18n!i18n.module/function/i18n_string/7"><tt>i18n_string()</tt></a>, which makes it easy to store and retrieve translations of user-entered strings with only minimal changes to your module.</p>
+<h3>Remembering your keys</h3>
+<p>To ensure strings get updated, not orphaned, <tt>i18n_string()</tt> requires a <tt>$key</tt> parameter that uniquely identifies that instance of the string to store and load the string.</p>
+<p>For example, if the string is always displayed the same way, a simple key will suffice (like a <a href="https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/variable_set/7">variable name</a>). However, if the string has variants, like a block title (each block could have a different title) or a field formatter setting (each content type could have different settings for each of its display modes; and there could be more than one field of that type in a content type), you'll want to construct the key from the identifiers that make that variant unique (e.g.: blocks are uniquely identified by module and delta; field formatter settings are uniquely identified by entity, bundle, view mode and field name).</p>
+<h3>Registering and translating strings</h3>
+<p>The <tt>i18n_string()</tt> function has two operations: registering a user-entered string when it's saved (this is referred to as <em>updating</em> the string in the API) and translating (retrieving) the string when it's displayed.</p>
+<p>To register a string, call:</p>
+<div class="codeblock geshifilter"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />i18n_string</span><span style="color: #007700">(</span><span style="color: #0000BB">$key</span><span style="color: #007700">, </span><span style="color: #0000BB">$value</span><span style="color: #007700">, array(</span><span style="color: #DD0000">'update' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">TRUE</span><span style="color: #007700">));<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+<p>... where <tt>$value</tt> is whatever the user entered. Note you should still store <tt>$value</tt> somewhere so you can provide a default if the user doesn't have <tt>i18n</tt> installed (more about this later).</p>
+<p>Note that it's really easy to insert this call into your existing code: you don't have to change the way your module already stores / retrieves the setting.</p>
+<p>To translate a string, call:</p>
+<div class="codeblock geshifilter"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$string_to_display </span><span style="color: #007700">= </span><span style="color: #0000BB">i18n_string</span><span style="color: #007700">(</span><span style="color: #0000BB">$key</span><span style="color: #007700">, </span><span style="color: #0000BB">$value</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+<p>... where <tt>$value</tt> is whatever the user saved earlier. As with any user-entered string, make sure you've <a href="https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/check_plain/7"><tt>check_plain()</tt></a>ed or <a href="https://api.drupal.org/api/drupal/includes!common.inc/function/filter_xss/7"><tt>filter_xss()</tt></a>ed it</p>
+<p>Again, note that it's really easy to insert this call into your existing code.</p>
+<h3>Best practices</h3>
+<p>Currently, the <tt>i18n_string()</tt> function isn't part of D7 core (although it exists in the form of <a href="http://hojtsy.hu/blog/2014-may-19/drupal-8-multilingual-tidbits-15-configuration-translation-basics">translatable configuration</a> in D8 core), you have to ensure <tt>i18n_string()</tt> is available before you call it, otherwise you'll get "Call to undefined function" errors.</p>
+<p>The documentation on <a href="https://drupal.org/node/1114010">using the i18n API from other modules</a> suggests wrapping calls to it in functions which check if the function has been defined and calls it if it does (or acts as if nothing happened if it doesn't exist):</p>
+<div class="codeblock geshifilter"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">_mymodule_translate</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">, </span><span style="color: #0000BB">$string</span><span style="color: #007700">, </span><span style="color: #0000BB">$langcode </span><span style="color: #007700">= </span><span style="color: #0000BB">NULL</span><span style="color: #007700">) {<br /> return </span><span style="color: #0000BB">function_exists</span><span style="color: #007700">(</span><span style="color: #DD0000">'i18n_string'</span><span style="color: #007700">) ? </span><span style="color: #0000BB">i18n_string</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">, </span><span style="color: #0000BB">$string</span><span style="color: #007700">, array(</span><span style="color: #DD0000">'langcode' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$langcode</span><span style="color: #007700">)) : </span><span style="color: #0000BB">$string</span><span style="color: #007700">;<br />}</p>
+<p>function </span><span style="color: #0000BB">_mymodule_translate_update</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">, </span><span style="color: #0000BB">$string</span><span style="color: #007700">, </span><span style="color: #0000BB">$langcode </span><span style="color: #007700">= </span><span style="color: #0000BB">NULL</span><span style="color: #007700">) {<br /> return </span><span style="color: #0000BB">function_exists</span><span style="color: #007700">(</span><span style="color: #DD0000">'i18n_string'</span><span style="color: #007700">) ? </span><span style="color: #0000BB">i18n_string</span><span style="color: #007700">(</span><span style="color: #0000BB">$name</span><span style="color: #007700">, </span><span style="color: #0000BB">$string</span><span style="color: #007700">, array(</span><span style="color: #DD0000">'update' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">TRUE</span><span style="color: #007700">, </span><span style="color: #DD0000">'langcode' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">$langcode</span><span style="color: #007700">)) : </span><span style="color: #0000BB">FALSE</span><span style="color: #007700">;<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+<p>Note that the <em>translate</em> function above returns its <tt>$string</tt> parameter if <tt>i18n_string()</tt> isn't available.</p>
+<h2>Conclusion</h2>
+<p>The <tt>i18n_string()</tt> function makes it easy to bolt translation on to existing code without changing the way your module works.</p>
+<p>If you want to see an example of how I solved the field display setting translation problem for the <a href="https://drupal.org/project/registration">Entity registration module</a>, you can see my patch at <a href="https://drupal.org/node/2234915">#2234915: Registration link text (field formatter label) is not translatable</a>.</p>
+</div></div></div><section class="field field-name-field-portfolio-topic field-type-taxonomy-term-reference field-label-above view-mode-fulltext"><h2 class="field-label">Topic:&nbsp;</h2><ul class="field-items"><li class="field-item even"><a href="/topic/custom-functionality">Custom Functionality</a></li><li class="field-item odd"><a href="/topic/multilingual">Multilingual</a></li><li class="field-item even"><a href="/topic/planet">Planet</a></li><li class="field-item odd"><a href="/topic/security">Security</a></li></ul></section><section class="field field-name-field-taxonomy-services field-type-taxonomy-term-reference field-label-above view-mode-fulltext"><h2 class="field-label">Services:&nbsp;</h2><ul class="field-items"><li class="field-item even"><a href="/services/drupal-development">Drupal Development</a></li><li class="field-item odd"><a href="/services/multilingual-web-development">Multilingual Web Development</a></li></ul></section>
+  </body>
+</html>
+

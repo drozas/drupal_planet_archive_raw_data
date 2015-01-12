@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 04 Aug 2014 09:39:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 04 Aug 2014 09:39:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Microserve: Coding in the Cloud
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.microserveltd.co.uk/blogs/drupal-development/coding-in-the-cloud-with-codio
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Microserve: Coding in the Cloud</title>
+    <base href="http://www.microserveltd.co.uk/blogs/drupal-development/coding-in-the-cloud-with-codio">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/field/image/codio_0.jpg?itok=IhPAnYLT"><img typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/field/image/codio_0.jpg?itok=IhPAnYLT" width="420" height="240" alt="Codio: a cloud IDE" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>An old timer like myself couldn't help but be filled with trepidation when it was revealed I'd be acting as the company guinea pig to give cloud based development a viability road test on my latest project.</p>
+<p>No matter how cool I played it, the momentary panic at the thought of working without the tried and tested 'REAL' software apps installed on my macbook, must have been visible on my face.</p>
+<h2>You'll have to pry my favourite text editor out of my cold dead hands!</h2>
+<p>I've been used to the same comfy workflow for the last few years.</p>
+<p>A local environment comprising of the same trusty text editor/IDE, a LAMP stack running on MAMP and code versioning using GIT. There was just something about 'cloud based coding' that didn't seem to ring true.</p>
+<h2>Pause For Thought</h2>
+<p>Then when i really thought about it, I began to examine just how much of my professional and personal life had already drifted into the cloud and in most cases for the better.</p>
+<p>Thanks to Google, Dropbox and Apple amongst others, my email, calendars, notepads, files, photos, videos and documents have for the most part been in the cloud for ages. Do I miss opening up MS Word to write a letter? No.</p>
+<p>Then I thought about how much easier life as a Drupal developer had become since adopting tools like Drush, Git and more recently, the Pantheon platform. (in essence 'cloud' based tools themselves.) So, thinking about it, cutting the last few remaining ties to local, machine specific workflow seemed less of an imposition and more like the next natural step in the evolution of web development.</p>
+<h2>Where to start?</h2>
+<p>After a bit of googling 'cloud based IDE', you'll see there's already quite a few choices. Most seem to follow a similar basic subscription paradigm (one or a number of free public projects and a paid for plan for private/production projects.)</p>
+<p>In most cases they provide a fully functioning text/code editor with text highlighting support, basic options for uploading, renaming and deleting files, a cloud based LAMP stack, some kind of terminal or command line and a selection of optional 'plugin' tools.</p>
+<h2>Roadtest</h2>
+<p>I've been testing Codio: <a href="https://codio.com/">https://codio.com/</a></p>
+<p>The site I've been working on is a Drupal 7 site that arrived with us, half built.</p>
+<p>Codio handled the import of the existing database and files without much hassle and pulled in the code base via Git.</p>
+<p>I was able to install drush as a Codio ‘part' (plugin) and was installing essential modules via Codio's command line terminal in no time.</p>
+<p>There's a nice file tree in the left pane and the editor itself is a real pleasure to use.</p>
+<p>I was impressed to find text highlighting support for SASS/LESS out of the box and it had decent poke at autocomplete of attributes.</p>
+<p>There's a handy tab in the main menu which opens your project 'box' in a new tab or window and on a decent sized screen, it's pretty easy to get a nice comfortable layout with your code in one window and the running site in another.</p>
+<p>One of the best things about Codio is that all changes to code are instant, with no saving or incremental Git commits needed. You only need to refresh your site to see it update.</p>
+<p>Once you've done a tranche of work you're happy with, you can commit as you normally would, either using the in-built terminal or the GUI menus.</p>
+<h2>Conclusion</h2>
+<p>By the end of day one I had been totally sold. The feeling of freedom was, well.. liberating. The next day I had to set up a new mac to use at work, and usually this process eats up half a day of downloading latest versions of software, configuring, chasing licences etc. In this case I literally just turned on the new laptop, installed my browser of choice, logged into Codio and I was away!</p>
+<p>Of course, with everything, there are some niggles. The most obvious downside to cloud based development is, that when your connection is spotty or you suffer an outage, you're immediately incapacitated. A few days in and the Codio servers themselves had a few hours of intermediate drop outs. You can imagine how frustrating this might be if you were riding up close to a deadline.</p>
+<p>But on the whole the good far outweighed the bad and I'm sure that service and reliability is only going to improve as web based coding becomes the norm... Which i'm now convinced it will before too long.</p>
+<h2>Pros and Cons of Web Based Development</h2>
+<h3>Pros</h3>
+<ul><li>Code anywhere that has a connection</li>
+<li>Collaborate more easily with other developers</li>
+<li>No local apps needed other than a browser</li>
+<li>Platform agnostic (Makes things like Chromebooks slightly more viable as a stripped down development machine)</li>
+<li>Less chance of incompatible files being shared between collaborators</li>
+<li>Fewer problems for code team Sysadmins.</li>
+</ul><h3>Cons</h3>
+<ul><li>Reliant on reliable internet connection and host server</li>
+<li>Basic file, folder housekeeping can be a bit laborious.</li>
+</ul><p>*I should point out that my experiences are with Codio IDE, but there are many other alternatives available. Cloud 9 seems to be proving very popular for instance.<br />You can find a rundown of some of the most popular here:<br /><a href="http://www.hongkiat.com/blog/cloud-ide-developers/">http://www.hongkiat.com/blog/cloud-ide-developers/</a></p>
+ </div></div></div>
+  </body>
+</html>
+

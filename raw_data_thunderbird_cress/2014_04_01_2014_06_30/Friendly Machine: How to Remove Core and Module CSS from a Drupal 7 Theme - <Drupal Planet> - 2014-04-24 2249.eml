@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 24 Apr 2014 21:49:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 24 Apr 2014 21:49:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: How to Remove Core and Module CSS from a Drupal 7 Theme
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/how-remove-core-and-module-css-drupal-7-theme
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: How to Remove Core and Module CSS from a Drupal 7 Theme</title>
+    <base href="http://friendlymachine.net/posts/how-remove-core-and-module-css-drupal-7-theme">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>In the post on <a href="http://friendlymachine.net/posts/case-against-drupal-base-themes">base themes</a> that I wrote earlier this week, I pointed out that core adds a lot of CSS to your site that you may not want. If you find yourself overriding this CSS in your themes, you definitely have some bloat that you could trim down. You also run into this issue quite a bit with contributed modules. Views, Flexslider and Superfish are modules that typically add a lot of CSS I don't want.</p>
+<p>So how to get rid of this potentially unwanted code? Below I've included a function that you can drop in your template.php file. Of course you need to replace YOUR_THEME in the function name with the name of your theme.</p>
+<p><code> function YOUR_THEME_css_alter(&amp;$css) { <br />// Remove Drupal core css <br />$exclude = array( <br />'modules/aggregator/aggregator.css' =&gt; FALSE, <br />'modules/block/block.css' =&gt; FALSE, <br />'modules/book/book.css' =&gt; FALSE, <br />'modules/comment/comment.css' =&gt; FALSE, <br />'modules/dblog/dblog.css' =&gt; FALSE, <br />'modules/field/theme/field.css' =&gt; FALSE, <br />'modules/file/file.css' =&gt; FALSE, <br />'modules/filter/filter.css' =&gt; FALSE, <br />'modules/forum/forum.css' =&gt; FALSE, <br />'modules/help/help.css' =&gt; FALSE, <br />'modules/menu/menu.css' =&gt; FALSE, <br />'modules/node/node.css' =&gt; FALSE, <br />'modules/openid/openid.css' =&gt; FALSE, <br />'modules/poll/poll.css' =&gt; FALSE, <br />'modules/profile/profile.css' =&gt; FALSE, <br />'modules/search/search.css' =&gt; FALSE, <br />'modules/statistics/statistics.css' =&gt; FALSE, <br />'modules/syslog/syslog.css' =&gt; FALSE, <br />'modules/system/admin.css' =&gt; FALSE, <br />'modules/system/maintenance.css' =&gt; FALSE, <br />'modules/system/system.css' =&gt; FALSE, <br />'modules/system/system.admin.css' =&gt; FALSE, <br />'modules/system/system.base.css' =&gt; FALSE, <br />'modules/system/system.maintenance.css' =&gt; FALSE, <br />'modules/system/system.messages.css' =&gt; FALSE, <br />'modules/system/system.menus.css' =&gt; FALSE, <br />'modules/system/system.theme.css' =&gt; FALSE, <br />'modules/taxonomy/taxonomy.css' =&gt; FALSE, <br />'modules/tracker/tracker.css' =&gt; FALSE, <br />'modules/update/update.css' =&gt; FALSE, <br />'modules/user/user.css' =&gt; FALSE, <br />'misc/vertical-tabs.css' =&gt; FALSE, <br />// Remove contrib module CSS <br />drupal_get_path('module', 'views') . '/css/views.css' =&gt; FALSE, ); <br />$css = array_diff_key($css, $exclude); <br />}</code></p>
+<p>This bit of code is something that I sorted out from a couple of different places. The <a href="https://drupal.org/project/tao">Tao</a> base theme uses something similar and Mike Herchel showed off some of <a href="https://github.com/mherchel/bastard/blob/master/template.php">his resets</a> in a recent presentation at Florida DrupalCamp where I picked up a few I had missed. </p>
+</div></div></div>
+  </body>
+</html>
+

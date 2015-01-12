@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 23 Aug 2013 21:00:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 23 Aug 2013 21:00:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Easy quick jump menus with ctools (really easy!)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wunderkraut.com/blog/easy-quick-jump-menus-with-ctools-really-easy/2013-08-23
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Easy quick jump menus with ctools (really easy!)</title>
+    <base href="http://wunderkraut.com/blog/easy-quick-jump-menus-with-ctools-really-easy/2013-08-23">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    In the right context, jump menus can be a useful part of your user interface, using only a fraction of the space of a standard list-based menu, and working nicely on mobiles and small screens. Learn how to create them quickly, easily and without writing any javascript code!  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p><span>The only dependency you need is the </span><a href="https://drupal.org/project/ctools">Ctools</a> module. You quite likely have that <a href="https://drupal.org/project/usage/ctools">installed already</a>, but do get it if you don’t.</p><p>A jump menu is just a &lt;select&gt; form element, which contains url paths and labels as its &lt;option&gt; tags. A button or - more frequently - javascript code then takes the user to the selected page.</p><p>So, with the introductions out of the way, this is how you do it:</p><p><span>1. We need to create an array of options for our select element, just like you would do with any normal </span><a href="https://api.drupal.org/api/drupal/developer%21topics%21forms_api_reference.html/7">form</a> in Drupal. So we create the array and assign pairs of URLs and the wanted labels. These might come from entities returned by a query, menu items, or just about anything with a url and a description. We can set them manually here, as an example:</p>
+<pre>
+<span>$options </span>= array();
+
+$options[‘node/123’] = t(‘Check my node’);
+
+$options[‘node/1234’] = t(‘Check my other node’);</pre>
+<p> </p><p>2. Then we call ctools_include,  that will nicely add the necessary javascript for us:</p>
+<pre>
+<span>ctools_include</span>('jump-menu');</pre>
+<p> </p><p><span>3. Now all we have to do to have a working jump menu form is to pass our options array to the ctools_jump_menu() function and then pass the result to drupal_get_form:</span></p>
+<pre>
+<span>$form </span>= ctools_jump_menu(array(), $form_state, $options, array());
+
+<span>$output </span>= drupal_get_form($form);</pre>
+<p><span>The fourth argument of the ctools_jump_menu is an array of settings that you can use to modify various aspects of the jump menu, such as a submit button, the title and so on. Read about all the options </span><a href="http://drupalcontrib.org/api/drupal/contributions!ctools!includes!jump-menu.inc/function/ctools_jump_menu/7">here</a>.</p><p>The code can be inserted in a block content callback, or a page callback, for example. Or, it can be directly printed using <a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_render/7">drupal_render()</a>.</p><p>So there you have it, a working jump menu in 6 lines of code, very quickly done and without any javascript code necessary. Done! :)</p><p> </p> </div>
+    </div>
+  </body>
+</html>
+

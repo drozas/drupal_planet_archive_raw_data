@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 28 Nov 2014 19:34:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 28 Nov 2014 19:34:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Ref debug, an alternative for dpm
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.wunderkraut.com/blog/ref-debug-an-alternative-for-dpm/2014-11-28
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Ref debug, an alternative for dpm</title>
+    <base href="http://www.wunderkraut.com/blog/ref-debug-an-alternative-for-dpm/2014-11-28">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    I looked for a simple debugger to use in the fronted, and discovered PHP-ref.
+  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <div>I like to keep things simple and clean. I like devel when using simple debugging on the frontend (for more advance debugging I am using xdebug), put devel adds a lot of overhead - like many drupal modules it tries to cover a lot of issues, and therefore it adds a lot of things you maybe not need. So I tested some of the debuggers you could use with php in the frontend, and I really like PHP-ref - simple and clean, just the way I liked it.</div><div> </div><div>So now I have wrapped it out to a moudle - Ref debug. With it you could do debugging on entities and direct in code as an replacement for devels dpm() - instead you use r(), and to that you could add functions, variables, classes etc.</div><div> </div><div>You could check it out over att <a href="https://www.drupal.org/project/ref_debug">drupal.org</a>.</div><div> </div><div> </div><div> </div> </div>
+    </div>
+  </body>
+</html>
+

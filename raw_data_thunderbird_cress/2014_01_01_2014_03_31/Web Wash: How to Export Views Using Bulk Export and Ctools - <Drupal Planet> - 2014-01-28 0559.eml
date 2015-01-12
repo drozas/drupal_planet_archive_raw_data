@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 28 Jan 2014 05:59:58 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 28 Jan 2014 05:59:58 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: How to Export Views Using Bulk Export and Ctools
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/how-export-views-using-bulk-export-and-ctools
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: How to Export Views Using Bulk Export and Ctools</title>
+    <base href="http://webwash.net/tutorials/how-export-views-using-bulk-export-and-ctools">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>So you created a module that you want to put on drupal.org. But just before you release it, you realise it could do with a few default <a href="https://drupal.org/project/views">views</a>.</p>
+
+<p>You may think you can use <a href="https://drupal.org/project/features">Features</a> for this, but Views allows you to ship default views by creating a <code>module.views_default.inc</code> and implementing <code>hook_views_default_views</code>.</p>
+
+<p>Now, <a href="https://drupal.org/project/ctools">Ctools</a> can be used to generate the required export code that needs to be placed in <code>hook_views_default_views</code>. We'll use a sub-module in Ctools called "Bulk Export" to generate the code.</p>
+
+<p>It's important to understand that there is a difference between "Bulk Export" and Features. The difference is that you can only export CTools' <a href="https://drupal.org/node/928026">configuration objects</a> using "Bulk Export". Whereas, Features offers full API for integrating any module with it.</p>
+
+<p>In this tutorial, you'll learn how to export default views using "Bulk Export".</p>
+</div></div></div>
+  </body>
+</html>
+

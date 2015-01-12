@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 30 Nov 2014 21:23:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 30 Nov 2014 21:23:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: There is a module for that!: Printing debugging info for forms
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thereisamoduleforthat.com/content/printing-debugging-info-forms
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>There is a module for that!: Printing debugging info for forms</title>
+    <base href="http://thereisamoduleforthat.com/content/printing-debugging-info-forms">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>During development, it's useful to quickly find information about form elements. Quickly is the key word here, and adding a <code>dpm</code> in a <code>hook_form_alter</code> then removing it becomes tedious.</p>
+
+<p>Here's a very simple module to add debug information to the <code>title</code> attribute of all form elements:
+<script src="https://gist.github.com/infojunkie/c0195f034a5eaa420ad2.js"></script></p>
+  </body>
+</html>
+

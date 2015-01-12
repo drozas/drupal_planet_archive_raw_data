@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 15 Jun 2013 22:17:58 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 15 Jun 2013 22:17:58 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ShooFlyDesign: Migrating Squarespace to Drupal - Part 1: Giant XML File of Doom
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.shooflydesign.org/buzz/migrate-squarespace-drupal-xml
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ShooFlyDesign: Migrating Squarespace to Drupal - Part 1: Giant XML File of Doom</title>
+    <base href="http://www.shooflydesign.org/buzz/migrate-squarespace-drupal-xml">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>This is Part 1 in a series of posts on migrating a site from Squarespace 5 into Drupal 7.  This is an overview of what we're doing and why, mostly discussing the format of the Squarespace 5 XML file, which is undocumented.  My hope is to make the process of importing Squarespace data easier for everyone else.</p>
+
+<h2>The Mission</h2>
+
+<p>I'm working on a fairly large site (<a href="http://www.apertureexpert.com/">ApertureExpert.com</a>), currently running on <a href="http://www.squarespace.com/">Squarespace</a> 5, migrating to Drupal 7.  Squarespace is an excellent platform with many virtues, but it doesn't allow the level of customization that my client is looking for, so we're moving the site to Drupal.  Now, of course you lose the built-in, high-availability hosting, and some of the very good polished UI that Squarespace gives you, so this move is not for everyone. But if you want control, and to have your blog, forums, and e-commerce wrapped up in a single package, Drupal is your friend.  One example: my client wants users to have all their purchased products, forum posts, and comments available through their user profile.  Squarespace can't do that, Drupal can.</p>
+
+<p>This site has been active for several years now, and has a very active community of users, so the first big task was to import all of those items into Drupal.  Fortunately, <a href="http://5help.squarespace.com/customer/portal/articles/765574-how-do-i-export-my-journal-entries-or-site-data-">Squarespace 5 will let you export your entire website as XML</a>.  Note: it doesn't look like Squarespace 6 (the current version) supports full site export.  There is a <a href="http://help.squarespace.com/customer/portal/articles/724556-can-i-export-my-site-">WordPress-compatible export</a> that you could import into Drupal using <a href="https://drupal.org/project/wordpress_migrate">WordPress Migrate</a> (or, obviously, into WordPress), but it seems to cover only blog posts.  This site is older, running Squarespace 5, so we can get everything.</p>
+
+<p>Now that we have exported data, what can we do with it?</p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/buzz/migrate-squarespace-drupal-xml">Read more</a></div></div></div>
+  </body>
+</html>
+

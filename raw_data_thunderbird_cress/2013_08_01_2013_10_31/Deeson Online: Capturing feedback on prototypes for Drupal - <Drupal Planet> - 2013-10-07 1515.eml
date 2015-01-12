@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 07 Oct 2013 14:15:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 07 Oct 2013 14:15:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Capturing feedback on prototypes for Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/blog/capturing-feedback-prototypes-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Capturing feedback on prototypes for Drupal</title>
+    <base href="http://deeson-online.co.uk/blog/capturing-feedback-prototypes-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h1 class="h4">Capturing feedback on prototypes for Drupal</h1></div></div></div><div class="meta">By <a href="/category/author/graeme-blackwood">Graeme Blackwood</a> | 7th October 2013</div><div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="/sites/default/files/styles/580-360/public/post/prototyping-blog.jpg?itok=txQ8Ndti" alt="Capturing feedback on prototypes for Drupal" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>At DrupalCon Prague, I organised a BoF session (an informal gathering focusing on a certain topic) to discuss capturing feedback on prototypes from clients and generally collaborating more closely throughout the design process.</p>
+<p>The challenge is that the client (often meaning many individuals) will almost always have a great deal of understanding about who their users are and what they want. Their input is extraordinarily valuable. However, we're not always very good at capturing it in the right way, at the right time, from the right people.</p>
+<p>BoF attendees had similar stories and difficulties, and agreed that there's no one 'right way' to prototype and gather feedback.</p>
+<h2>A sketch is worth<br />a thousand words</h2>
+<p>Enabling the client to easily contribute effectively at the prototyping stage is really important. But not always easy when it comes to design.</p>
+<p>Almost everyone can hold a pen and sketch on paper and this is a really effective way of grounding ideas in reality. When face-to-face collaboration is difficult or impossible, Google Hangouts can be used with webcams pointing at the paper while each party sketches their ideas. If you talk as you draw, the Hangout will switch to your camera – it works really well.</p>
+<p>Another method suggested was to provide the client with some basic training in a simple wireframing tool like Balsamiq, and encourage them to express their ideas through it if they really don't want to sketch. Having used computer-produced wireframes in the past, I have found them to be too hi-fidelity and misinterpreted as design, so this is always worth bearing in mind. Collaborate, then interpret, test and refine collaboratively.</p>
+<h2>Capturing feedback on static prototypes</h2>
+<p>Whether you are sketching low-fidelity prototypes or working up static designs like jpgs, feedback needs to be captured on these. Acrobat has reasonable annotation tools for PDFs, and this was once considered perfectly acceptable. But you end up with loads of versions and it quickly gets quite horrible to manage.</p>
+<p>A few of us in the BoF use <a href="http://www.invisionapp.com" title="Visit the InVision website">InVision app</a> for presenting and capturing feedback on hi-fidelity visual design work. I prefer to only use InVision for discussing mood boards or specific design elements, rather than full-page prototypes, because HTML prototypes are a far more effective way to do this. Feedback on hi-fidelity, static designs will largely be limited to how an interface looks, not how it behaves when interacted with.</p>
+<h2>Capturing feedback on interactive prototypes</h2>
+<p>Fully interactive prototypes can more accurately communicate interactions and behaviours including, but not limited to, those that happen when the design responds to the capabilities of different devices. For people who aren't HTML/CSS gurus, <a href="http://www.axure.com">Axure</a> is a good choice.</p>
+<p>If you have some basic knowledge in HTML/CSS, or are prepared to learn, HTML prototypes are in my opinion the most effective way of communicating the reality of an interface, and can be produced quickly using frameworks like <a href="http://getbootstrap.com/" title="Visit the Bootstrap website">Bootstrap</a> or <a href="http://foundation.zurb.com/" title="Visit the Foundation website">Foundation</a>. These tools make it very easy to experiment with ideas; responsive, multi-device (mobile, tablet, desktop etc) layout changes, different UIs etc.</p>
+<p>I use Bootstrap for my HTML prototypes. It's quick and the rest of the team is familiar with the markup it produces, so can pick up and make edits easily. Standardising around frameworks is always important in larger teams. To help describe my decisions, I use Bootstrap's <a href="http://getbootstrap.com/javascript/#popovers">'popovers'</a> for annotations. But <em>capturing feedback</em> directly on HTML pages remains a tough problem to solve.</p>
+<p>Recently, I hunted around for a tool that allows any user to add comments directly to my prototypes in the browser, and found <a href="http://www.protonotes.com/">Protonotes</a>. Protonotes is a really useful start and has certainly improved the feedback process, but because all the notes added are relative to the left and top of the browser window, the notes are only really good on fixed-width layouts. Even then they depend on the size of the browser window remaining roughly the same.</p>
+<p>I am yet to find a perfect way of capturing feedback on responsive HTML prototypes. Maybe someone could create a firebug-like element picker, and when clicking on an element, a Bootstrap popover is created in the DOM via the nested selector. Just thinking aloud now. I'm looking forward to someone solving this problem!</p>
+<h3>Live collaboration on HTML prototypes</h3>
+<p>The last thing we discussed was collaborating live on HTML prototypes. This involves making live edits to your HTML and CSS so that you can refine the prototype together. I don't do this often in a collaborative environment, but when there is debate about things like the visual weight of one element versus another, or the language of a label or heading, it's far more effective to <em>see</em> the options than to debate about opinions.</p>
+<p>I use browser-based code inspection tools like Firebug and Chrome inspector for this, but you could also have your coding program open and just refresh your browser. Teams and clients alike love the process – it's extremely effective when there are strong opinions and no clear 'right' answers.</p>
+<p>If you get browser <a href="https://addons.mozilla.org/en-US/firefox/addon/cssupdater/" title="Check out CSS Updater">CSS synching</a> set up, you can even make edits in the inspector and synch them to your CSS file, avoiding having to redo all the work later. Of course, this isn't for everyone. You have to be pretty confident with your coding skills to be happy doing this. And sometimes changes end up being too big to handle on the fly, so need to be picked up later and sent for review.</p>
+<p>I really enjoyed the BoF – it was great to hear from other people about their processes and hopefully everyone else found it as interesting as I did!</p>
+</div></div></div>
+  </body>
+</html>
+

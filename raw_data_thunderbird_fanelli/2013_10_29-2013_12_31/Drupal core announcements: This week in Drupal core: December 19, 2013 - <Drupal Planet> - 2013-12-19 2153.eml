@@ -1,0 +1,101 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 19 Dec 2013 20:53:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 19 Dec 2013 20:53:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This week in Drupal core: December 19, 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/390693
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This week in Drupal core: December 19, 2013</title>
+    <base href="https://groups.drupal.org/node/390693">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Bonjour, it is that time of year again, we hope that you are getting ready for the holidays and New Year. If not, then we are ready with final edition of <a href="https://groups.drupal.org/taxonomy/term/98113 ">This Week in Drupal Core</a> of 2013! :)</p>
+<h2 id="new">What's new with Drupal 8?</h2>
+<h4>A new D8 alpha</h4>
+<p><a href="https://drupal.org/node/2159461">Drupal 8.0-alpha7</a> was released today! Download it, try it out, and explore the latest-and-greatest in Drupal 8. There will be a new alpha release come mid-January. Watch this spot for more details!</p>
+<h4>PHP 4 support EOL in D6</h4>
+<p>As part of efforts to <a href="https://drupal.org/node/2135189">improve the core release cycle</a>, <a href="https://www.acquia.com/blog/d8migrate">support data migration from Drupal 6 to Drupal 8</a> (<a href="https://groups.drupal.org/imp">join up here</a>!), and make best use of our limited security team resources, we've decided to <a href="https://groups.drupal.org/node/390343">stop supporting PHP 4 for Drupal 6 as of March 1, 2014</a>.</p>
+<h4>Last week's top criticals</h4>
+<p>Two of last week's <a href="https://groups.drupal.org/node/388748#top">top criticals</a> have been fixed thanks to everyone's focused efforts!</p>
+<ul>
+<li><a href="https://drupal.org/node/2156931">Shortcuts are entities</a> now and decoupled from menu links, which both unblocks work on configuration synchronization and cleans up signifiant technical debt in the menu system. Thanks to <a herf="https://drupal.org/user/729614">amateescu</a> and <a herf="https://drupal.org/user/241634">tim.plunkett</a> for recognizing the importance of this issue early and carrying it through.</li>
+<li>Meanwhile, a <a href="https://drupal.org/node/2151829">memory-hogging upstream Doctrine bug</a> that was causing all sorts of chaos on the testbots was patched in core as a stopgap measure, courtesy efforts by <a href="https://drupal.org/user/99340">dawehner</a> and <a href="https://drupal.org/user/9446">chx</a>. The regression <a href="https://github.com/doctrine/common/issues/307">still needs to be resolved upstream</a>, but the memory issues were severe enough that we committed an emergency fix and <a href="https://drupal.org/node/2157189">opened a policy discussion for similar cases in the future</a>.
+</li>
+</ul>
+<h4>Theme negotiation</h4>
+<p>A new theme negotiator service is added to <a href="https://drupal.org/node/2158619">replace 'theme callback' form hook_menu()</a> and move us closer to removing the legacy menu and routing technical debt. Thanks dawehner, David Rothstein, and tim.plunkett!</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>In the past week, we've fixed 9 critical issues and 5 major issues, and opened 1 critical and 12 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">115 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">488 major issues</a>.</p>
+<p>So what's the big picture? How long is it going to take to release Drupal 8.0? Here's a look at the criticals we've opened versus fixed each month since API freeze on July 1:</p>
+<p><img src="https://groups.drupal.org/files/issues-status.png" alt="Critical issues posted and fixed. In July 2013, many more criticals were posted than were fixed, but now many more are fixed than posted!" /><br />
+Since September, we are consistently resolving more critical issues than we file each month. This is exactly what needs to happen during this point in the release cycle. (Keep in mind that December is still in progress!)</p>
+<p>Taking a wider view at the history of Drupal 8, here's the trend of our outstanding critical technical debt since the 8.x branch was opened in March 2011:</p>
+<p><img src="https://groups.drupal.org/files/outstanding-issues.png" alt="Outstanding critical issues. The number increases steeply starting in Sept. 2012, peaks in Aug. 2013, and has been dropping since." /></p>
+<p>Note that the number of critical issues is dropping steeply -- hooray! -- but there's also still a very long way to go. We need to reduce our technical debt more quickly for a mid-2014 release. To this end, <em>please</em> help us by focusing only on the most important issues, avoiding unnecessary and disruptive changes, and leaving nice-to-haves for Drupal 8.1 or later. (<a href="https://drupal.org/node/2135189">Read more about how we're improving the Drupal 8 release cycle</a>.)</p>
+<p><i>* Observant Drupal 8 enthusiasts will notice that the above chart looks very different from <a href="http://drupalreleasedate.com/chart/samples">drupalreleasedate.com</a>. That's because we're only looking at the "true" (final) priority of issues, to filter out distortions from changes in core policy (e.g., when we recategorized <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Needs+change+notification">outstanding change records</a> from critical to major). The historical data comes from <a href="https://drupal.org/node/2020471">queries against the Drupal.org database</a>.</i></p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented.</p>
+<ul>
+<li><a href="https://drupal.org/node/1862202">Objectify the language negotiation system</a> (blocks numerous language CMI conversions)</li>
+<li><a href="https://drupal.org/node/2042807">Convert search plugins to use a ConfigEntity and a PluginBag</a> (blocks node rank conversion to CMI)</li>
+<li><a href="//drupal.org/node/2047633”">Move definition of menu links to hook_default_menu_links(), decouple key name from path, and make 'parent' explicit</a> (removes hook_menu() and will iron out the new routing system; also fixes a performance regression.)</li>
+<li><a href="//drupal.org/node/2114707”">Allow per-bundle overrides of field definitions</a> (allows for node titles to have potentially different labels per node type from the managed fields screen and also fixes a performance regression)</li>
+</ul>
+<h3>More ways to help</h3>
+<p>If core's toughest criticals aren't on your to-do list this week, there are lots of other places to jump in and help with conversions and cleanups in core. The <a href="https://drupal.org/node/2148479">Drupal 8 "meta meta"</a>, compiled by vijaycs85, is a great place to start if you want to dig your teeth into a technical problem but aren't sure where to start. Here are a few of the meta meta's metas (ha!) that are all important for finishing Drupal 8:</p>
+<ul>
+<li>In our <a href="https://groups.drupal.org/node/315498">two-step process to convert core to the new routing system</a>, we've completed the first step (removing the backwards-compatibility layer to the legacy routing system), but we still have lots of work to do to <a href="https://drupal.org/node/1971384">clean up our page controllers and remove unneeded page callbacks</a>. These issues are a great way to learn about Drupal 8's routing system and become more familiar with Drupal 8's object-oriented paradigms and best practices.</li>
+<li>Now that Views is in core, we're <a href="https://drupal.org/node/1823450">converting core listings to Views</a> to make Drupal more customizable and to remove redundant, legacy code. If you can build a view, you can probably help review and test these issues! The conversions are also a great opportunity to learn about Drupal 8 features like the configuration system and the Plugin API.</li>
+<li>
+</li><li>After removing drupal_set_breadcrumb() from Drupal 8, now we are very close to removing <a href="//drupal.org/node/1830588”">drupal_set_title()</a> as well. These issues are very important and will help in improving caching behavior in Drupal 8. Take a look and see if you can help cleaning up the remaining uses.</li>
+</ul>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.
+</p>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code> git log --since &quot;1 week ago&quot; --pretty=oneline</code> (53 commits in total):</p>
+<ul>
+<li><a href="https://drupal.org/node/2145041">Issue #2145041 by tim.plunkett: Allow dynamic routes to be defined via a callback.</a> A big DX win for D8 routing!</li>
+<li>To resolve known performance regressions in Drupal 8 a new major issue is fixed now: <a href="https://drupal.org/node/1786490">Issue #1786490 by Berdir, amateescu, damiankloip, Wim Leers, dawehner: Add caching to the state system.</a>. This patch shaves 3600 ms (!) off of a typical page request. Awesome work!</li>
+<li>Views block conversions continue this week with <a href="https://drupal.org/node/1938062">Issue #1938062 by dawehner, tstoeckler, slashrsm, tim.plunkett, olli, pcambra, YesCT, damiankloip: Convert the recent_comments block to a view</a>.</li>
+<li><a href="https://drupal.org/node/2155785">Issue #2155785 by alexpott, vijaycs85: Image_field_instance_update() can not handle default images with a fid greater than 9</a>. An amusing bug exposed during ongoing work on the configuration management system.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>Symfony author <a href="https://drupal.org/user/1467782">Fabien Potencier</a> talked about fund raising in <a href="http://fabien.potencier.org/article/71/sensiolabs-raises-5-million-euros-to-boost-the-symfony-ecosystem">SensioLabs raises 5 million euros to boost the Symfony ecosystem</a></li>
+<li>If you don’t know about twig yet you can watch a <a href="http://www.undpaul.de/en/blog/2013/12/11/twig-screencast">screencast</a>.</li>
+<li>Gábor Hojtsy and jessebeach shared an interesting conversation about <a href="https://www.acquia.com/blog/how-become-community-leader">how to become a community leader</a> last week.</li>
+<li>If you want to start working on Drupal 8 and don't where to start, here is a nice read about <a href="http://www.appnovation.com/blog/top-resources-getting-started-drupal-8">top resources for getting started with Drupal 8</a>.</li>
+<li>A fun place to get more info about <a href="http://live-drupal8wins.gotpantheon.com/most-popular">most popular things in Drupal 8</a>.</li>
+<li>Here are some <a href="http://blog.mobiloitte.com/whats-new-in-drupal-8">unexpected things about Drupal 8</a>.</li>
+<li>Finally, some Drupal 8 contrib related news: <a href="http://blog.amazeelabs.com/en/our-drupal-must-reads-2013">our Drupal must reads of 2013</a>.</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life</h2>
+<ul>
+<li><strong>Jan. 25-26</strong>: Mark your calendars for the next <a href="https://groups.drupal.org/node/332998">Global Sprint Weekend</a>. Join local user groups around the planet for a weekend of Drupal 8 contribution. The sprint weekend will be a great opportunity to engage your local community, and there are lots of resources on the sprint page to help get new people involved. Events are already planned everywhere from Illinois to Budapest to Montréal to Spain. <a href="https://groups.drupal.org/node/332998/edit">Add yours today</a>!
+</li>
+<li><strong>24-30 March 2014</strong>: <a href="https://groups.drupal.org/node/313468">Drupal Developer Days Szeged</a>: DevDays is still a ways off, but it will be the most important Drupal 8 developer event before <a href="https://austin2014.drupal.org/">DrupalCon Austin</a> in June, so consider whether you can attend! See <a href="//groups.drupal.org/node/390298”">Join us for a week of Drupal 8 in March!</a> by Gábor Hojtsy for more details.</li>
+<li><strong>DrupalCon Austin</strong>: <a href="https://association.drupal.org/node/18928">Five Reasons We Are Excited About DrupalCon Austin</a>: We all love DrupalCons and Drupal Association has shared some intresting facts about upcoming DrupalCon Austin. </li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+<p>Also, just a reminder that This Week in Drupal Core is taking the next two weeks off for the holidays. See you again on January 8!</p>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Attachment</th><th>Size</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="https://groups.drupal.org/files/issues-status.png">issues-status.png</a></td><td>16.6 KB</td> </tr>
+ <tr class="even"><td><a href="https://groups.drupal.org/files/outstanding-issues.png">outstanding-issues.png</a></td><td>29.03 KB</td> </tr>
+</tbody>
+</table>
+  </body>
+</html>
+

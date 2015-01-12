@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Nov 2014 12:41:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Nov 2014 12:41:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Drupal Views exposed filter as Links
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/suresh/drupal-views-exposed-filter-links
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Drupal Views exposed filter as Links</title>
+    <base href="http://knackforge.com/blog/suresh/drupal-views-exposed-filter-links">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>In Drupal views, we have the option of exposing the filters to users. By default, the exposed filters are displayed as Select boxes. Recently in a multilingual project, there was a requirement to display Courses based on Language. And the Languages had to be shown as links. In order to achieve this functionality, the Views exposed filter had to be customized.</p>
+<p>To start with the customization, we need to alter "views_exposed_form" using <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_alter/7">hook_form_alter</a></p>
+<pre class="brush: php; auto-links: true; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 4; toolbar: true; codetag">function module_name_form_alter(&amp;$form, &amp;$form_state, $form_id) {
+  global $language;
+  if ($form['#id'] == 'views-exposed-form-course-listing-page') {
+    $links = $form['language']['#options'];
+    $vars = array();
+    foreach ($links as $tid =&gt; $term_name) {
+      if ($language-&gt;language != $tid &amp;&amp; $tid != 'All')  {
+        $options = array(
+          'attributes' =&gt; array(
+            'class' =&gt; array( 'course-filter-tab' . $tid),
+            'id' =&gt; $tid,
+          ),
+          'html' =&gt; TRUE,
+        ),
+        $language_list = language_list();
+        $language_title = $language_list[$tid]-&gt;name;
+        $vars['items'][] = l($language_title, "course", $options);
+      }
+    }
+    $vars['type'] = 'ul';
+    $vars['attributes']['class'] = array('course-tabbed-filter');
+    $prefix = theme('item_list', $vars);
+    $form['links'] = array(
+      '#markup' =&gt; $prefix,
+    );
+  }  
+}
+       </pre><p>The above code will help us render the select box as link, but to make the links functional we need some jQuery code.</p></div></div></div>
+  </body>
+</html>
+

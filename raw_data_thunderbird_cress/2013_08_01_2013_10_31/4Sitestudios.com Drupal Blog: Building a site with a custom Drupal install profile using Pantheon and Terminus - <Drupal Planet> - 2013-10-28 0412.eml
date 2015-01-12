@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 28 Oct 2013 04:12:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 28 Oct 2013 04:12:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: 4Sitestudios.com Drupal Blog: Building a site with a custom Drupal install profile using Pantheon and Terminus
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.4sitestudios.com/blog/oct-28-2013/building-site-custom-drupal-install-profile-using-pantheon-and-terminus
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>4Sitestudios.com Drupal Blog: Building a site with a custom Drupal install profile using Pantheon and Terminus</title>
+    <base href="http://www.4sitestudios.com/blog/oct-28-2013/building-site-custom-drupal-install-profile-using-pantheon-and-terminus">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://www.4sitestudios.com/sites/default/files/styles/blog_featured_image/public/drushheader.jpg?itok=c73A2Ij5" width="600" height="175" alt="Drush header graphic" title="Drush header graphic" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script><p>We’re big fans of <a href="http://getpantheon.com/">Pantheon</a> here at 4Site Studios. Even if a client site doesn’t end up being hosted there for whatever reason, we’ll probably still develop the site on Pantheon because their development tools fit very nicely into our small team’s workflow. The biggest pain point we’ve had was with the initial site provisioning, since we develop most of our sites using a custom install profile, <a href="http://4sitestudios.com/4site-hub-virtual-legos">4Site Hub</a>. Custom start states are available as part of the Pantheon One (formerly Zeus) package, but most of our clients don’t have pockets that deep. So I developed a kludgy workaround involving Drush make and importing the resulting tarball through the Pantheon dashboard. It was ugly, but it worked.</p>
+<p>The recent introduction of Pantheon’s <a href="https://github.com/pantheon-systems/terminus">Terminus</a> CLI has us well on the way to a much more elegant, automatable solution. The shellscript below is derived from example commands included in the Terminus readme. It still requires that the person creating the site have Drush (and the Terminus Drush extension) installed locally, on a *nix-like machine, but I have visions of a site builder (or even a project manager or account manager) soon being able to provision a new site simply by filling out a form on our Intranet.</p>
+<p>Using the script is very straightforward. Just <code>cd</code> to the main sites directory on your local machine and run the script (don't forget to <code>chmod +x</code> after you download, and customize the script with the URL of your makefile and the name of your install profile). Then answer four questions (the sitename, site description, and your Pantheon login and password), then go out for your beverage of choice. When you return, you should have a site at <code>dev-sitename.gotpantheon.com</code>, and a local clone of the site code at <code>./sitename</code>.</p>
+<p>There are two major items of note in the script. First, the Drush alias files that Pantheon generates don’t work with Drush 6.0 yet, so I’ve added --strict=0 to all the Drush commands that use aliases. Second, I’m adding keys for the Pantheon appserver and codeserver to my known_hosts file, in order to prevent a couple of annoying “Are you sure you want to continue connecting (yes/no)?” prompts. I’m not independently verifying these keys before adding them, so the script theoretically is vulnerable to man-in-the-middle attacks. Since I’m storing the keys mere moments after the servers are created I’m not too worried, but if you’re especially paranoid you might opt for a different solution.</p>
+<p>Okay, here’s the script. Comments or suggestions for improvement are welcome!</p>
+<pre class="prettyprint" style="width: auto;overflow: auto;max-width: 600px">#!/bin/bash
+
+# Get user input for site specifics and Pantheon credentials
+echo "Enter machine name for new site:"
+read sitename
+echo "Enter description for new site:"
+read site_description
+echo "Enter your Pantheon username (usually your email address):"
+read pantheon_user
+echo "Enter your Pantheon password:"
+read pantheon_password
+
+# Authenticate on Pantheon
+drush pauth $pantheon_user --password=$pantheon_password
+
+# Create the site on Pantheon using Pantheon's drops-7 upstream as the base
+drush psite-create $sitename --label="$site_description" --product=21e1fada-199c-492b-97bd-0b36b53a9da0
+
+# Update Drush aliases
+drush paliases
+
+# Determine the site_uuid of the newly created site.
+site_uuid=$(drush psite-uuid $sitename)
+
+# Change the connection mode on the dev environment to SFTP.
+drush psite-cmode $site_uuid dev sftp
+
+# Add code and dev servers to known_hosts so we don't get 'Are you sure you wish
+# to continue connecting (yes/no)?' later
+# TODO: Clean this up so we only sort once
+ssh-keyscan -p 2222 -t rsa,dsa appserver.dev.$site_uuid.drush.in 2&gt;&amp;1 | sort -u - ~/.ssh/known_hosts &gt; ~/.ssh/tmp_hosts
+cat ~/.ssh/tmp_hosts &gt;&gt; ~/.ssh/known_hosts
+ssh-keyscan -p 2222 -t rsa,dsa codeserver.dev.$site_uuid.drush.in 2&gt;&amp;1 | sort -u - ~/.ssh/known_hosts &gt; ~/.ssh/tmp_hosts
+cat ~/.ssh/tmp_hosts &gt;&gt; ~/.ssh/known_hosts
+
+# Download Drush makefile and use it to build the site on Pantheon dev
+# We need --strict=0 because Pantheon's drush alias files don't work with Drush
+# 6.0 yet
+drush -y @pantheon.$sitename.dev make --no-core --strict=0 https://path.to/makefile.make
+
+# Install the site. Remember to grab the password, or use drush uli later.
+drush -y @pantheon.$sitename.dev si --strict=0 --site-name="$site_description" profile-name
+
+# Commit the changes.
+drush psite-commit $site_uuid dev --message="Installed Drupal with profile-name."
+
+# Change the connection mode back to git.
+drush psite-cmode $site_uuid dev git
+
+# Clone a local copy of the repository
+mkdir $sitename
+git clone ssh://codeserver.dev.$site_uuid@codeserver.dev.$site_uuid.drush.in:2222/~/repository.git $sitename
+
+# All done!
+echo "Site build finished!"
+</pre></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,94 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 10 Nov 2013 06:12:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 10 Nov 2013 06:12:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Error aggregation and alerting with Drupal 7 and Raygun.io
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/error-aggregation-and-alerting-drupal-7-and-raygunio
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Error aggregation and alerting with Drupal 7 and Raygun.io</title>
+    <base href="http://www.pixelite.co.nz/article/error-aggregation-and-alerting-drupal-7-and-raygunio">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/error-aggregation-and-alerting-drupal-7-and-raygunio&amp;count=horizontal&amp;via=&amp;text=Error%20aggregation%20and%20alerting%20with%20Drupal%207%20and%20Raygun.io&amp;counturl=http%3A//www.pixelite.co.nz/article/error-aggregation-and-alerting-drupal-7-and-raygunio" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/error-aggregation-and-alerting-drupal-7-and-raygunio&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/error-aggregation-and-alerting-drupal-7-and-raygunio" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/error-aggregation-and-alerting-drupal-7-and-raygunio" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-hero-image">
+    <img typeof="foaf:Image" src="http://www.pixelite.co.nz/sites/default/files/styles/hero_image_article/public/raygun-dash-800.png?itok=kPL7KvWe" alt="" />  </div>
+
+  <div class="field-body">
+    <p>Being able to work out when an issue started occurring an what impact it is having on real people using your site is critical business information that too often gets overlooked.</p>
+
+<h2>Existing (core) modules that can help</h2>
+
+<p>Drupal core ships with a few modules that go some way as to helping you track down application errors:</p>
+
+<ul>
+<li><strong>dblog</strong> - writes PHP error and watchdog messages to the database, where they can be filtered. On cron the old messages are optionally truncated at pre-defined intervals.</li>
+<li><strong>syslog</strong> - writes PHP error and watchdog messages to the syslog on the server. Logs are plain text and can be parsed by numerous standard programs (e.g. grep, Splunk).</li>
+</ul>
+
+<p>The main issue with the above modules is that they:</p>
+
+<ul>
+<li>fail to aggregate errors for you - if the issue happens 1 or 1,000 times, you have no way no knowing this without working it out yourself</li>
+<li>provide enough detail in order to fix the underlying issue - there is no stacktrace, no line numbers etc</li>
+<li>are not application version specific - you don't know what release introduced the bug</li>
+<li>cannot log PHP white screens of death - for instance exceeding the PHP max execution time will not result in a watchdog entry, so you are potentially missing really important information.</li>
+</ul>
+
+<h2>Introducing the Raygun.io module</h2>
+
+<p>The <a href="https://drupal.org/project/raygun">Raygun.io</a> module aims to solve this problem by replacing the PHP's exception and error handler with custom error handlers. These handlers simply send the error and all it's surrounding metadata off to a third party server - in this case <a href="http://raygun.io/">Raygun.io</a>.</p>
+
+<p>Raygun.io takes care of the aggregation and alerting around the errors. You can choose to have immediate notifications for new errors, or receive daily summaries of the days activity.</p>
+
+<p>The error sending happens asynchronously so any errors will not hold up your main web thread from executing (useful if there are firewall(s) between your Drupal web servers and the internet).</p>
+
+<h2>Screenshots</h2>
+
+<p>Main dashboard that can you filter by time and application version:</p>
+
+<p><a href="/sites/default/files/article_images/raygun-dash.png" >
+<img src="/sites/default/files/styles/medium/public/article_images/raygun-dash.png?itok=sK3GsS5F" width="220" height="171" alt=""  class="image-medium" /></a></p>
+
+<p>Error drilldown:</p>
+
+<p><a href="/sites/default/files/article_images/raygun-error.png" ><img src="/sites/default/files/styles/medium/public/article_images/raygun-error.png?itok=fSNg04k9" width="220" height="199" alt=""  class="image-medium" /></a></p>
+
+<p>Drupal configuration form for the module:</p>
+
+<p><a href="/sites/default/files/article_images/raygun-settings.png" ><img src="/sites/default/files/styles/medium/public/article_images/raygun-settings.png?itok=E4SIKc7I" width="143" height="220" alt=""  class="image-medium" /></a></p>
+
+<h2>Comments</h2>
+
+<p>Let me know if you have used third party error aggregation and alerting modules with your Drupal site and what lessons you have learned.</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/errors" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">errors</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/thirdpartyintegration" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">thirdpartyintegration</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="https://drupal.org/project/raygun">Raygun.io drupal module</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

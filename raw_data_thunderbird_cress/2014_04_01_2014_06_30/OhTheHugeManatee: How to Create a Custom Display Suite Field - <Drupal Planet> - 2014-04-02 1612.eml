@@ -1,0 +1,100 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 02 Apr 2014 15:12:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 02 Apr 2014 15:12:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: OhTheHugeManatee: How to Create a Custom Display Suite Field
+Content-Transfer-Encoding: 8bit
+Content-Base: https://ohthehugemanatee.org/blog/2014/04/02/how-to-create-a-custom-display-suite-field/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>OhTheHugeManatee: How to Create a Custom Display Suite Field</title>
+    <base href="https://ohthehugemanatee.org/blog/2014/04/02/how-to-create-a-custom-display-suite-field/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>A few months ago I posted about <a href="https://ohthehugemanatee.org/blog/2014/01/03/how-to-create-a-custom-panels-pane">how to create a custom Panels pane</a>, a critical reference for anyone who uses Panels layouts. The other part of the toolkit for quick and awesome layouts is the <a href="https://drupal.org/projects/ds">Display Suite</a> module. With DS you can create new &ldquo;Display modes&rdquo; for your content, to be reused around the site. For example, on one recent site I had four standard ways to display my nodes: Full, Teaser, Mini-Teaser, and Search Result. DS made this configuration a cinch.</p>
+
+<p>But just as in Panels you sometimes need a pane that isn&rsquo;t provided out of the box, in Display Suite you sometimes want to add a field that isn&rsquo;t really a field on your content. In a recent site build, I used this capability to include information from the Organic Groups a user belongs to on his profile as it appears in search results.</p>
+
+<p>DS offers some ability to create this kind of custom field through the UI, but I&rsquo;m talking about more complicated outcomes where you need/want to use custom code instead. This is actually even easier than custom panels panes.</p>
+
+<p>In our example, we will display the user&rsquo;s name, but backwards. Obviously you can do much more complex things with this, but it&rsquo;s nice to have a simple example!</p>
+
+<h1>Declare your fields</h1>
+
+<p>First we have to tell Display Suite about our new custom field. We do this with <a href="http://drupalcontrib.org/api/drupal/contributions!ds!ds.api.php/function/hook_ds_fields_info/7">hook_ds_fields_info()</a>.</p>
+
+<figure class='code'><figcaption><span>mymodule.module</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//@file: Add a custom suite to display suite for Users.</span>
+</span><span class='line'>
+</span><span class='line'><span class="sd">/**</span>
+</span><span class='line'><span class="sd"> * Implements hook_ds_fields_info().</span>
+</span><span class='line'><span class="sd"> * Declare my custom field.</span>
+</span><span class='line'><span class="sd"> */</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">mymodule_ds_fields_info</span><span class="p">(</span><span class="nv">$entity_type</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nv">$fields</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nv">$entity_type</span> <span class="o">==</span> <span class="s1">&#39;user&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nv">$fields</span><span class="p">[</span><span class="s1">&#39;backwards_username&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Backwards Username&#39;</span><span class="p">),</span>
+</span><span class='line'>      <span class="s1">&#39;field_type&#39;</span> <span class="o">=&gt;</span> <span class="nx">DS_FIELD_TYPE_FUNCTION</span><span class="p">,</span>
+</span><span class='line'>      <span class="s1">&#39;function&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;mymodule_backwards_username&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="nv">$entity_type</span> <span class="o">=&gt;</span> <span class="nv">$fields</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Any guesses whathappens next? That&rsquo;s right, we have to write our render function under the name we just declared. You can put anything here, really anything renderable at all.</p>
+
+<figure class='code'><figcaption><span>mymodule.module</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="sd">/**</span>
+</span><span class='line'><span class="sd"> * Render function for the Backwards Username field.</span>
+</span><span class='line'><span class="sd"> */</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">mymodule_backwards_username</span><span class="p">(</span><span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$field</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">strrev</span><span class="p">(</span><span class="nv">$field</span><span class="p">[</span><span class="s1">&#39;entity&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s it. So simple, you&rsquo;ll wonder why you ever did it any other way!</p>
+  </body>
+</html>
+

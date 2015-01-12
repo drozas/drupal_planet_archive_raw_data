@@ -1,0 +1,71 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 14 Aug 2014 15:43:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 14 Aug 2014 15:43:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Making Sense of Drupal Views Relationships and Entity References
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/making-sense-drupal-views-relationships-and-entity-references
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Making Sense of Drupal Views Relationships and Entity References</title>
+    <base href="http://atendesigngroup.com/blog/making-sense-drupal-views-relationships-and-entity-references">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>If you're not already familiar with the subject, check out <a href="http://atendesigngroup.com/about/joel-steidl">Joel Steidl</a>'s intro to <a href="http://atendesigngroup.com/blog/getting-started-references-drupal">Entity References</a></em>.</p>
+
+<p>Drupal has some powerful tools for creating and managing complex content relationships. Views relationships using Entity References across more than one content type can be used to establish multi-tiered content relationships. The results can be great, but setting up Entity References across content types with Views can be... well, complicated.</p>
+
+<p>We recently added new functionality to a client’s site that involved Entity References to group content and display it dynamically. The project included a sidebar of links to all the related content that spanned three content types. This wasn’t really possible as a menu block because the links needed to contain some of the actual content. I also considered doing all of this in code but that could mean running a number of extra database queries on every page load. With Views, all of that can be easily cached.</p>
+
+<p>When it comes to relationships in Views, creating a relationship from one content type to another, the number of permutations is usually small enough that it only takes a few minutes to try all of them until you get the desired output. When you try to relate content to content to content, the permutations of configuration options in Views gets a little unwieldy. And, I create and/or modify Views with complicated relationships so infrequently that I never remember how to do it. Trying to debug the query built by Views looks even scarier.
+<!--break-->
+<a href="http://atendesigngroup.com/about/clayton-dewey">Clayton Dewey</a> was able to assist me, and we got relationships working even when needing to chain five different nodes together through their reference fields.</p>
+
+<p>Here’s one portion of the sidebar:<br /><br />
+<img src="/sites/default/files/Should_the_Media_Actively_Support_Transitional_Justice_Efforts____International_Center_for_Transitional_Justice.png"><br /></p>
+
+<p>Rather than go through the specific case with our client, I’ve setup a very general one.</p>
+
+<p>Content Type A has an entity reference field to Content Type B.  Content Type B has an entity reference field to Content Type C:<br /><br />
+<img src="/sites/default/files/content_type_overview.jpg"><br /></p>
+
+<p>Here’s how that content relates.<br /><br />
+<img src="/sites/default/files/node_example.jpg"></br /></p>
+
+<p>When trying to set this up in views, relationship descriptions for entity reference fields don’t help.  Is it <em>A bridge to the Content entity that is referencing Content via field_other_content</em>
+or is it <em>A bridge to the Content entity that is referenced via field_content</em>?</p>
+
+<p><em>A bridge to the Content entity that is referenced via field_content</em> means your entity is referenced by another via an entity reference field. <em>A bridge to the Content entity that is referencing Content via field_other_content</em> means your entity has the reference field. This will become more clear as we go through our example.</p>
+
+<p>Let’s say we’re on the page for node 4, of Content Type C, and on this page we want to list all the related nodes that are of Content Type C. To do that, you need the B node referencing your C node. Then the A node referencing the B node.  Next all the B nodes referenced by the A node. Finally, all C nodes referenced by the B nodes. Phew!</p>
+
+<p>To do this with Views, we start with a contextual filter of the current node.<br /><br />
+<img src="/sites/default/files/contextual%20filter.png"><br /></p>
+
+<p>Next we setup the layers of relationships. First from that C node to the B node. Thus we’re using an entity reference relationship called <em>A bridge to the Content entity that is referencing Content via field_c.</em>
+Each B node has an entity reference field to its C nodes. To make things easier to read we’re setting the Identifier and the Administrative title.<br /><br />
+<img src="/sites/default/files/The%20B%20node%20relationship.png"><br /></p>
+
+<p>To get the A node we need another relationship for the entity reference field in A nodes I’ve named field_b. <em>A bridge to the Content entity that is referencing Content via field_b.</em> Again, the content this relationship gives you is doing the referencing.  And we’re connecting it to the previous relationship.<br /><br />
+<img src="/sites/default/files/The%20A%20node%20relationship.png"><br /></p>
+
+<p>Now we want to go back down the chain and get all B nodes. So, now we’ve got content that is referenced. So, we use <em>A bridge to the Content entity that is referenced via field_b.</em> Again, include the previous relationship.<br /><br />
+<img src="/sites/default/files/all%20b%20nodes%20relationship.png"><br /></p>
+
+<p>To get all C nodes it’s done the same way.<br /><br />
+<img src="/sites/default/files/all%20c%20nodes%20relationship.png"><br /></p>
+
+<p>Finally, to output the titles of all those C nodes, we use the correct relationship for that field. For this Views preview we use the nid of C 4, and get the following output of node titles:<br /><br />
+<img src="/sites/default/files/relationship_test_result_1.png"><br /></p>
+
+<p>You’ll want to turn on caching for the database queries and if possible, for the rendered HTML in query settings.</p>
+
+<p>See, that wasn’t so hard, was it?</p>
+  </body>
+</html>
+

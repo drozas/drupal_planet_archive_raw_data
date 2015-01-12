@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 01 Mar 2014 18:15:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 01 Mar 2014 18:15:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Agaric Collective: Code-driven development
+Content-Transfer-Encoding: 8bit
+Content-Base: http://agaric.com/blogs/code-driven-development
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Agaric Collective: Code-driven development</title>
+    <base href="http://agaric.com/blogs/code-driven-development">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="lead">Reading about development being <em>code-driven</em> on a software developer's blog is a bit surprising, isn't it? As if development was not all about writing code in this industry. Yet some developers use the term to distinguish their method of building web sites with Drupal.</p>
+<p>Judging by the top <a href="https://www.google.de/search?client=safari&amp;rls=en&amp;q=code+driven+development&amp;ie=UTF-8&amp;oe=UTF-8&amp;gfe_rd=cr&amp;ei=48IRU72aOcqK8Qev-IDQAw#q=code+driven+development&amp;rls=en">20 Google search results</a> at the time of writing, the term <em>code-driven development</em> seems to be used exclusively by some in the Drupal community. The only matches not related to Drupal are about <em>test-driven development</em>, demonstrating a lack of other references. Like any community people working with Drupal come up with their own terms for idiosyncratic concepts. However the term code-driven development is misleading and the problem it wants to solve is certainly not unique to Drupal.</p>
+<p>Drupal is a breed of content management system for the web that does not require coding skills to customise. Almost every aspect of a Drupal website can be configured through a web UI. An ecosystem of extensions called modules is available and can be added easily to an existing site following the same philosophy. One such extension, the views module, even provides a UI for creating database queries and displaying their results in a highly customisable fashion. All that power is based on storing the configuration that defines the behaviour of a site inside its database along with the content. </p>
+<p>Essentially a web content management system like Drupal enables a person, called a <em>site-builder</em>, to define the behaviour of a website entirely through configuration. The way this is achieved has some serious drawbacks though: If development of new features is supported by a team of engineers, distributing configuration changes poses serious challenges. It is not impossible to manage, but it can become a tedious work quickly, which might outweigh the advantages of using Drupal over a framework.</p>
+<p>A solution to the challenges posed by Drupal's architecture has been pioneered by making use of the notorious <a href="http://drupal.org/project/features">Features module</a>. The idea is to export configuration data from the database and put it into a version control system alongside with the source code. Some people in the community call this approach <em>code-driven development</em>. Obviously, putting configuration files into a version control system does not make their content <a href="http://en.wikipedia.org/wiki/Source_code">source code</a>.</p>
+<p>Eventually the Drupal community came up with the right name for the solution. One of the key new features of Drupal 8 is called <a href="https://groups.drupal.org/build-systems-change-management/cmi">Configuration Management</a>.</p>
+  <ul class="inline">
+      <li><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="" class="badge badge-info"><i class="icon-tag icon-white"></i> Drupal Planet</a></li>
+    </ul>
+  </body>
+</html>
+

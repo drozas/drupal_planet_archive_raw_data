@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 21 Jan 2014 07:01:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 21 Jan 2014 07:01:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: Display Custom View Modes on Individual Nodes Using Display Suite
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/display-custom-view-modes-individual-nodes-using-display-suite
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: Display Custom View Modes on Individual Nodes Using Display Suite</title>
+    <base href="http://webwash.net/tutorials/display-custom-view-modes-individual-nodes-using-display-suite">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>When it comes to managing the look and feel of a content page, nothing can beat <a href="https://drupal.org/project/ds">Display Suite</a>. It's become an essential module for when you need to change the layout and fields on a node or any entity page.</p>
+
+<p>Today I want to talk about a piece of functionality that you may not be aware of in Display Suite. It's the ability to switch the view mode will be used for an individual node.</p>
+
+<p>Let me explain, when you go to a node page (node/1) the "Full content" view mode is displayed. But, you can only have a single version of this view mode for each content type.</p>
+
+<p>Display Suite can be setup to allow authors to select a specific view mode on an individual node.</p>
+
+<p>Instead of displaying "Full content", you could, on a select group of nodes use another view mode called "Feature landing page".</p>
+
+<p>This functionality is not exclusive to Display Suite. You can do similar stuff using <a href="https://drupal.org/project/panels">Panels</a> or <a href="https://drupal.org/project/panelizer">Panelizer</a>.</p>
+
+<p>In this tutorial, we'll create a custom view mode called "Full content feature" and we'll allow an editor to select which one will be used on individual nodes.</p>
+</div></div></div>
+  </body>
+</html>
+

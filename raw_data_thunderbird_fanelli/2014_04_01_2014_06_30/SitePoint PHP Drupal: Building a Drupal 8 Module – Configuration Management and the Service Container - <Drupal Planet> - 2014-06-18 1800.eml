@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 18 Jun 2014 16:00:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 18 Jun 2014 16:00:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: SitePoint PHP Drupal: Building a Drupal 8 Module – Configuration Management and the Service Container
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.sitepoint.com/building-drupal-8-module-configuration-management-service-container/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>SitePoint PHP Drupal: Building a Drupal 8 Module – Configuration Management and the Service Container</title>
+    <base href="http://www.sitepoint.com/building-drupal-8-module-configuration-management-service-container/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><p>In the <a href="https://www.sitepoint.com/building-drupal-8-module-blocks-forms/">previous article on Drupal 8</a> module development, we’ve looked at creating block types and forms. We’ve seen that blocks are now reusable and how everything we need to do for defining block types happens in one single class. Similarly, form generation functions are also grouped under one class with specific methods performing tasks similar to what we are used to in Drupal 7. </p>
+
+<p>In this tutorial, I will continue where we left off. I will illustrate how we can turn our <code>DemoForm</code> into a form used to store a value through the Drupal 8 configuration system. Following that, we will talk a bit about the service container and dependency injection by way of illustration.</p>
+
+<p>Don’t forget that you can check out <a href="https://bitbucket.org/upchuk/drupal-8-demo">this repository</a> if you want to get all the code we write in this tutorial series.</p>
+
+<h1 id="configuration-forms">Configuration forms</h1>
+
+<p>When we first defined our <code>DemoForm</code>, we extended the <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Form%21FormBase.php/class/FormBase/8">FormBase</a> class which is the simplest implementation of the <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Form%21FormInterface.php/interface/FormInterface/8">FormInterface</a>. However, Drupal 8 also comes with a <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Form%21ConfigFormBase.php/class/ConfigFormBase/8">ConfigFormBase</a> that provides some additional functionality which makes it very easy to interact with the configuration system. </p>
+
+<p>What we will do now is transform <code>DemoForm</code> into one which will be used to store the email address the user enters. The first thing we should do is replace the extended class with <code>ConfigFormBase</code> (and of course <em>use</em> it):</p>
+
+[code language="php"]
+use Drupal\Core\Form\ConfigFormBase;
+
+class DemoForm extends ConfigFormBase {
+[/code]
+
+<p>Before we move on to changing other things in the form, let’s understand a bit how simple configuration works in Drupal 8. I say <em>simple</em> because there are also configuration entities that are more complex and that we will not cover today. As it stands now, configuration provided by modules (core or contrib) is stored in YAML files. On enabling a module, this data gets imported into the database (for better performance while working with it). Through the UI we can change this configuration which is then easily exportable to YAML files for deployment across different sites.</p>
+
+<p>A module can provide default configuration in a YAML file located in the <code>config/install</code> folder in the module root directory. The convention for naming this file is to prefix it with the name of the module. So let’s create one called <code>demo.settings.yml</code>. Inside this file, let’s paste the following:</p>
+
+[code]
+demo:
+  email_address: demo@demo.com
+[/code]
+
+<p>This is a nested structure (like an associative array in PHP). Under the key <code>demo</code>, we have another key&#124;value pair. And usually to access these nested values we use a dot(<code>.</code>). In our case <code>demo.email_address</code>. </p>
+
+<p>Once we have this file in place, an important thing you need to remember is that this file gets imported only when the module is installed. So go ahead and reinstall it. And now we can turn back to our form and go through the methods that need adapting one by one. </p></p><p><em>Continue reading %<a rel="nofollow" href="http://www.sitepoint.com/building-drupal-8-module-configuration-management-service-container/">Building a Drupal 8 Module &#8211; Configuration Management and the Service Container</a>%</em></p>
+  </body>
+</html>
+

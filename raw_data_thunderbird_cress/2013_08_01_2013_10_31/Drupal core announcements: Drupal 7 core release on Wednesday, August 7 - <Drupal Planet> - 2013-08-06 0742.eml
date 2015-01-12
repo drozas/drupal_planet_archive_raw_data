@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 06 Aug 2013 06:42:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 06 Aug 2013 06:42:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal 7 core release on Wednesday, August 7
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/310488
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal 7 core release on Wednesday, August 7</title>
+    <base href="https://groups.drupal.org/node/310488">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-type-datestamp field-field-start7">
+    <div class="field-items">
+            <div class="field-item odd">
+                      <div class="field-label-inline-first">
+              Start:&nbsp;</div>
+                    <span class="date-display-single">2013-08-07 (All day) America/New_York</span>        </div>
+        </div>
+</div>
+<div class="field field-type-text field-field-event-type">
+    <div class="field-items">
+            <div class="field-item odd">
+                    Sprint        </div>
+        </div>
+</div>
+<div class="field field-type-userreference field-field-organizers">
+      <div class="field-label">Organizers:&nbsp;</div>
+    <div class="field-items">
+            <div class="field-item odd">
+                    <a href="/user/14705" title="View user profile.">David_Rothstein</a>        </div>
+        </div>
+</div>
+<p>The monthly Drupal core bug fix release window is this Wednesday, and since it has been a while since the last Drupal 7 bug fix release, I've decided to go ahead and plan to release Drupal 7.23 on that date.  Per our release policy, this will be a bug fix release only (no security fixes).</p>
+<p>The final patches for 7.23 have been committed and the code is frozen (excluding documentation fixes and fixes for any regressions that may be found in the next couple days).  So, now is a wonderful time to update your development/staging servers to the latest 7.x code and help us catch any regressions in advance.</p>
+<p>The relevant change records for Drupal 7.23 are listed below.  This is not the full list of changes, rather only a list of notable API additions and data structure changes that might affect a number of other modules, so it's a good place to start looking for any problems:</p>
+<ul>
+<li><a href="https://drupal.org/node/2058503">Human-readable labels have been added to image styles</a></li>
+<li><a href="https://drupal.org/node/2058463">The default ordering of CSS files has changed for sites using right-to-left languages</a></li>
+</ul>
+<p>You might also be interested in the tentative <a href="http://drupalcode.org/project/drupal.git/blob/refs/heads/7.x:/CHANGELOG.txt#l2">CHANGELOG.txt</a> for Drupal 7.23 and the corresponding list of important issues that will be <a href="http://drupal.org/project/issues/search/drupal?issue_tags=7.23%20release%20notes">highlighted in the Drupal 7.23 release notes</a>.</p>
+<p>If you do find any regressions, please report them in the <a href="http://drupal.org/project/issues/drupal?version=7.x">issue queue</a>.  Thanks!</p>
+<p>Upcoming release windows after this week include:</p>
+<ul>
+<li>Wednesday, August 21 (security release window)</li>
+<li>Wednesday, September 4 (bug fix release window)</li>
+</ul>
+<p>For more information on Drupal core release windows, see the documentation on <a href="http://drupal.org/documentation/version-info#when">release timing</a> and <a href="http://drupal.org/node/1173280">security releases</a>, and the <a href="http://groups.drupal.org/node/260803">discussion</a> that led to this policy being implemented.</p>
+  </body>
+</html>
+

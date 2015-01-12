@@ -1,0 +1,121 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 18 Dec 2014 00:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 18 Dec 2014 00:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Installing Solr for development
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/installing-solr-development
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Installing Solr for development</title>
+    <base href="http://www.pixelite.co.nz/article/installing-solr-development">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="intro">Intro</h2>
+
+<p><a href="http://lucene.apache.org/solr/">Solr</a> is an open source search engine with many powerful <a href="http://lucene.apache.org/solr/features.html">features</a>.</p>
+
+<p>I encounter a lot of experienced developers that either don’t know how to use it or avoid it as it’s in the <strong>to hard/scary</strong> basket.
+In this introductory article we’ll talk briefly about how to install Solr in order to use it for development.</p>
+
+<p>There are many ways to install and configure Solr but in this article I’ll show you how to set it up quickly so you can get started developing with it. While the installation and setup will be generic to any framework you want to develop with, I’ll also, show you a couple of extra steps if you’re using Drupal.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>The only real hard requirement/prerequisite for running Solr is Java. Version 1.6 is recommended for Solr version 4 and upward. <a href="http://www.ubuntu.com/">Ubuntu</a> and Mac should come with Java pre-installed.</p>
+
+<p>I’m not a windows guy so sorry you guys are on your own There’s pleant of resources out <a href="https://www.google.co.nz/webhp?sourceid=chrome-instant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#safe=off&amp;q=installing%20solr%20on%20windows">there</a>.</p>
+
+<p>You can find out the version of Java you are running with the following command.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>java -version
+
+java version <span class="s2">&quot;1.7.0_72&quot;</span>
+Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.7.0_72-b14<span class="o">)</span>
+Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 24.72-b04, mixed mode<span class="o">)</span></code></pre></div>
+
+<p>I am using Ubuntu 14.04 but the instructions in this article should work if you’re on a Mac or another variant of *nix</p>
+
+<h2 id="download">Download</h2>
+
+<p>Open a terminal and make a folder we can use for working in, and change to that directory:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir solr
+<span class="nv">$ </span><span class="nb">cd </span>solr</code></pre></div>
+
+<p>Navigate to the <a href="http://lucene.apache.org/solr/mirrors-solr-latest-redir.html">Solr download page</a> and find the closest mirror for you. At the time of this article the latest version of Solr is 4.10.2.</p>
+
+<p>Copy the download link for either the solr-VERSION.tar.gz or the solr-VERSION.zip. You don’t want the solr-VERSION-src.tgz (this is the source code and will need to be compiled) and download it with wget.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -c http://mirrors.sonic.net/apache/lucene/solr/4.10.2/solr-4.10.2.tgz</code></pre></div>
+
+<h2 id="unpack">Unpack</h2>
+
+<p>Once downloaded (it’ll be about 150M) we can un-compress it and change into the directory.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>tar -zxvf solr-4.10.2.tgz
+<span class="nv">$ </span><span class="nb">cd </span>solr-4.10.2/</code></pre></div>
+
+<h2 id="make-a-working-copy">Make a working copy</h2>
+
+<p>In the current directory there is a folder called <strong>example</strong> we want to make a copy of this folder.</p>
+
+<p>We could just use the <strong>example</strong> folder but it’s nice to leave that clean on case you want to use this copy of Solr for other sites as well. So we’ll make a copy and then change directory into the newly created copy.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cp -prv example my_solr
+<span class="nv">$ </span><span class="nb">cd </span>my_solr</code></pre></div>
+
+<h2 id="make-it-work">Make it work</h2>
+
+<p>Now we’re ready to run it for the first time. To run Solr it’s really simple. Simply run:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>java -jar start.jar</code></pre></div>
+
+<p>You should see a whole bunch of output (to stop solr press <strong>CTRL^C</strong>).
+After a few seconds if you open your browser and navigate to <a href="http://0.0.0.0:8983/solr/">http://0.0.0.0:8983/solr/</a> you should see something similar to the following (the actual screen may differ depending on your version)</p>
+
+<p><img src="/img/solr/dashboard.png" alt="Solr dashboard" /></p>
+
+<p>That’s it. Solr is now set up and ready to use.
+Depending on your client frame work you may need to makes some config changes to Solr itself.
+Consult the installation instructions of your chosen framework.
+If you’re using Drupal keep reading and I’ll show you the steps required to make Solr ready for Drupal integration.
+First lets stop SOlr from running by hitting <strong>CTRL^C</strong> in your terminal.</p>
+
+<h2 id="modules">Modules</h2>
+
+<p>There are a couple of modules you can use for Drupal integration with Solr.
+I wont go into the Drupal configuration side of things (I’ll leave that for another day) but will talk about the steps required to get the Solr server we’ve set up ready for Drupal usage depending on the Solr module you’ve chosen.</p>
+
+<h3 id="search-api-and-apachesolr">Search API and ApacheSolr</h3>
+
+<p>If you’re using the <a href="http://drupal.org/project/search_api">search_api</a> you will need to ensure you have the <a href="http://drupal.org/project/search_api_solr">search_api_solr</a> module installed. Otherwise the <a href="http://drupal.org/project/apachesolr">apachesolr</a> module is the way to go.</p>
+
+<p>In both the <a href="http://drupal.org/project/search_api_solr">search_api_solr</a> and <a href="http://drupal.org/project/apachesolr">apachesolr</a> modules, you’ll find a folder called <strong>solr-conf</strong> in this folder there will be version folders <strong>4.x</strong>, <strong>3.x</strong> etc.
+Choose the version of Solr you downloaded. This folder contains all the config files you need to install in your Solr install.
+I could probably write a whole bunch of articles about the contents of these files but since this is a beginner tutorial we’ll just take the easiest route.</p>
+
+<p>You want to copy the contents of the <strong>solr-conf/4.x/</strong> folder into your solder core.
+We can do this with the following, go back to your terminal, and run (change the path to your Drupal module):</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cp -v **/path/to/apachesolr/or/search_api_solr/**solr-conf/4.x/* solr/collection1/conf/</code></pre></div>
+
+<p>That will copy the config for your Drupal site into the <strong>my_solr/solr/collection1/conf/</strong> directory.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Solr is now ready for use by your Drupal install. You can run it whenever you like by changing into the <strong>my_solr</strong> directory and starting it.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>java -jar start.jar</code></pre></div>
+
+<p>I wouldn’t recommend using this setup in production. However, for developing on your local machine, it’s perfectly fine.</p>
+
+<p>In the next article, I’ll talk about how to configure the <a href="http://drupal.org/project/search_api">search_api</a> and <a href="http://drupal.org/project/search_api_solr">search_api_solr</a> to use Solr as a search engine for your Drupal site.</p>
+  </body>
+</html>
+

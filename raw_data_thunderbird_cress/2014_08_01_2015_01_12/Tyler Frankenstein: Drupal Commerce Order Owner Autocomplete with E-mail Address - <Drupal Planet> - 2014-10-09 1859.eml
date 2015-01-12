@@ -1,0 +1,67 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 09 Oct 2014 17:59:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 09 Oct 2014 17:59:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Tyler Frankenstein: Drupal Commerce Order Owner Autocomplete with E-mail Address
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tylerfrankenstein.com/code/drupal-commerce-order-owner-autocomplete-e-mail-address
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Tyler Frankenstein: Drupal Commerce Order Owner Autocomplete with E-mail Address</title>
+    <base href="http://tylerfrankenstein.com/code/drupal-commerce-order-owner-autocomplete-e-mail-address">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>When creating an order as an admin in Drupal Commerce, we can specify the user that owns the order if we know their user name. This works well in most cases, but to be able to search by the user's e-mail address would be helpful too. I've had a few requests from clients for this feature. So without further ado, let's ado it!</p>
+<pre>/**
+ * Implements hook_menu().
+ */
+function my_module_menu() {
+  $items = array();
+  $items['my_module/commerce/order-owner/autocomplete'] = array(
+    'page callback' =&gt; 'my_module_commerce_order_owner_autocomplete',
+    'access arguments' =&gt; array('configure order settings'),
+    'type' =&gt; MENU_CALLBACK
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function my_module_form_commerce_order_ui_order_form_alter(&amp;$form, &amp;$form_state, $form_id) {
+  // Attach our custom autocomplete to the order owner name input so we can
+  // search by e-mail address.
+  $form['user']['name']['#autocomplete_path'] = 'my_module/commerce/order-owner/autocomplete';
+}
+
+/**
+ * Queries results for the commerce order owner autocomplete.
+ */
+function my_module_commerce_order_owner_autocomplete($string) {
+  $matches = array();
+  $query = db_select('users', 'u');
+  $query
+    -&gt;fields('u', array('uid', 'name', 'mail'))
+    -&gt;condition(db_or()
+      -&gt;condition("u.mail", '%' . db_like($string) . '%', 'LIKE')
+      -&gt;condition("u.name", '%' . db_like($string) . '%', 'LIKE')
+    )
+    -&gt;condition('u.uid', 0, '&lt;&gt;')
+    -&gt;range(0, 10);
+  $results = $query-&gt;execute();
+  foreach ($results as $row) {
+    $key = "$row-&gt;name";
+    $matches[$key] = "$row-&gt;name - $row-&gt;mail ($row-&gt;uid)";
+  }
+  drupal_json_output($matches);
+}
+</pre>
+<p></div></div></div>
+  </body>
+</html>
+

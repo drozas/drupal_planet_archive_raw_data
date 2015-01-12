@@ -1,0 +1,188 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 20 Jul 2013 15:42:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 20 Jul 2013 15:42:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mikkel Høgh: Presenting the Opening Hours Module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mikkel.hoegh.org/blog/2013/07/20/presenting-the-opening-hours-module/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mikkel Høgh: Presenting the Opening Hours Module</title>
+    <base href="http://mikkel.hoegh.org/blog/2013/07/20/presenting-the-opening-hours-module/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-teaser.png" width="583" height="180" title="Opening hours on Copenhagen Public Libraries’ web site" ></p>
+
+<p>Do you need to tell your visitors when you are open for business? Your
+office hours, when the service desk is open?</p>
+
+<p>Then <a href="https://drupal.org/project/opening_hours">Opening Hours</a> might be the module for you. In this post, I&rsquo;m
+going demonstrate how the module can be used, as well as some of the API
+capabilities for extending it.</p>
+
+<h2>The backstory</h2>
+
+<p>In the autumn of 2011, <a href="http://bibliotek.kk.dk/">Copenhagen Public Libraries</a> decided that it
+was about time they got a better solution for their opening hours.</p>
+
+<p>Since the current site was first launched in 2009, we had been using a
+hacked up version of another Drupal module, “office hours”, which was,
+to say it mildly, rather user-hostile. It used a cascading rule system
+to determine the opening hours, and suffice to say that people other
+than myself understood how to use it.</p>
+
+<p>So, we were given the task of coming up with something better, so
+<a href="https://twitter.com/rasmusluckow">@rasmusluckow</a>, Joan (who sadly didn&rsquo;t live to see it deployed), and
+I made a plan, and I started building the module in november 2011.</p>
+
+<p>The plan was to create an administration interface similar to Google
+Calender, with a very visual representation of what&rsquo;s going on.</p>
+
+<p>Copenhagen Public Libraries was still on Drupal 6 back (in fact, it
+still is), so we decided to build it for both versions. That meant we
+could not easily take advantage of all the new fields hotness in Drupal
+7, but it has made it a lot easier to maintain both versions together.</p>
+
+<p>After a lot of development work, tests, and changes, we got the new
+system live some time in spring 2012. I remember making an informal bet
+with <a href="https://twitter.com/kasperg">@kasperg</a> that I had managed to fix all the wierd date and
+timezone bugs. As it turns out, I lost…</p>
+
+<p>Since the start, the module has <a href="https://drupal.org/project/opening_hours">been available on Drupal.org</a>,
+but it has seen rather limited use outside the <a href="http://ting.dk/">Ding.TING</a> project for
+which it was intended.</p>
+
+<p>I hope to rectify that, and one of the ways is to provide more
+documentation, making it easier to get started with the module.</p>
+
+<h2>Installation and configuration</h2>
+
+<p>The module is fairly simple to install as Drupal modules go. It depends
+on the <a href="https://drupal.org/project/tipsy">Tipsy</a> and <a href="https://drupal.org/project/date">Date module</a> (for date popups). If you use
+<a href="https://drupal.org/project/drush">drush</a>, you can get and install the requirements with a couple of
+commands:</p>
+
+<pre><code>drush dl date tipsy opening_hours
+drush en taxonomy date_popup tipsy opening_hours
+</code></pre>
+
+<p><img class="right" src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-regional-settings.png" width="222" height="269" title="Regional settings" ></p>
+
+<p>If not, download these modules manually, and enable Date Popup, Tipsy
+tooltips, as well as Opening hours on the modules page. You might also
+want to enable taxonomy for categorising opening hours, but more on that
+later.</p>
+
+<p>The Date API settings will allow you to configure which day the week
+starts with (monday in most places, sunday in the U.S.).</p>
+
+<h4>Nota bene</h4>
+
+<p>While writing this, I found a bug in the Opening Hours module, that
+causes the admin interface not to load correctly, when the opening hours
+block is inserted on all pages. If you want to follow this tutorial, you
+will need to <a href="https://drupal.org/node/1348432/release">get the latest version of this module</a>,
+at the time of this writing, 7.x-1.5-beta1.</p>
+
+<h3>Node type settings</h3>
+
+<p>First off, we need to enable Opening Hours on the node type. In this
+example, we&rsquo;re using car dealerships, but it could anything that needs
+opening hours.</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-nodetype.png" width="691" height="469" title="Node type settings" ></p>
+
+<h3>Your first opening hours</h3>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-node-tab.png" width="253" height="138" title="The opening hours tab" ></p>
+
+<p>To use the opening hours, go to a node of the type you just enabled
+opening hours on, and click the opening hours tab. Then you should see
+something like this:</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-empty.png" width="411" height="279" title="No hours yet" ></p>
+
+<p>Click the empty cells below the dates to add hours to that date. This
+brings up this dialog:</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-dialog-empty.png" width="609" height="430" title="Empty dialog" ></p>
+
+<p>The basic use case is quickly managed. Fill out open and closing times,
+and if this is the general rule, you can set it to repeat every week.</p>
+
+<p>So if you have open every monday 9:00-17:30, you would do something like
+this:</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-dialog-filled.png" width="613" height="433" title="Filled dialog" ></p>
+
+<p>Repeating this for all week days, we get something like this:</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-week-filled.png" width="502" height="203" title="Filled out week" ></p>
+
+<p>If you made a repeat rule, you can use the navigation at the top to
+switch to one of the following weeks and see the same hours.</p>
+
+<h3>Displaying your hours</h3>
+
+<p>Now, you have your hours entered, you probably also want to display them
+on your site. The easiest way to accomplish this, is to insert the
+opening hours block on the page via the Drupal&rsquo;s block administration:</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-block-position.png" width="496" height="99" title="Block administration" ></p>
+
+<p>Once done, you can see the opening hours on the node page, like this:</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-block-display.png" width="690" height="425" title="Block administration" ></p>
+
+<h3>Overriding</h3>
+
+<p>Now, that&rsquo;s all well and good, but how about exceptions. Next week,
+monday is closed?</p>
+
+<p>No problem, just go back to the administration interface, navigate to
+the week in question and click the hours for the day in question.</p>
+
+<p>To mark this day as closed, simply delete its opening hours by clicking
+“Delete this instance”.</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-editing.png" width="612" height="433" title="Editing hours" ></p>
+
+<p>If you switched weeks before deleting, you should be presented with a
+dialog like this one:</p>
+
+<p><img src="http://mikkel.hoegh.org/images/static/2013-07-20-opening-hours-delete-select.png" width="414" height="326" title="Editing hours" ></p>
+
+<p>This is presented, since you’re deleting something from the middle of
+the chain of repeated events, so your intentions might be different,
+depending on the situation. You can choose between:</p>
+
+<ol>
+<li>Deleting the hours instance for just this week. In this example, that
+means that this monday will be closed, but all previous and following
+mondays will remain the same.</li>
+<li>Deleting this week and all following instances. In this example, it
+means that the monday in question will be close, as well as all
+mondays after it.</li>
+<li>Deleting the entire series. In this example, that means that all
+mondays ever will appear to be closed.</li>
+<li>Cancelling the deletion, leaving everything as it was.</li>
+</ol>
+
+
+<p>There&rsquo;s a similar workflow when you edit hours, so you can go to say,
+week 42 and change the hours, and then apply them to all the following
+weeks to have different winter opening hours, for example.</p>
+
+<h3>To be continued</h3>
+
+<p>There&rsquo;s a lot more ground to cover – categorisation, segments,
+customisation and API, and this already took half a day to write, so I&rsquo;m
+going to pick this up later and expand on it.</p>
+  </body>
+</html>
+

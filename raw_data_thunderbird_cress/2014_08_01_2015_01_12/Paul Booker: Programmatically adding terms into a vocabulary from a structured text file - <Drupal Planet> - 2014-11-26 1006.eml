@@ -1,0 +1,104 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 26 Nov 2014 10:06:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 26 Nov 2014 10:06:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Programmatically adding terms into a vocabulary from a structured text file
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/code-snippet/programmatically-adding-terms-vocabulary-structured-text-file-0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Programmatically adding terms into a vocabulary from a structured text file</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/programmatically-adding-terms-vocabulary-structured-text-file-0">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php">
+/**
+    * Implements hook_install().
+    */
+function artist_install() { 
+  artist_install_vocabularies();  
+  artist_install_terms();
+}
+
+ /**
+    * Installs artist module's default terms that are read from
+    * text files in the module's includes folder.
+    */
+function artist_install_terms() {
+  foreach (array_keys(artist_vocabularies()) as $machine_name) {
+    $v = taxonomy_vocabulary_machine_name_load($machine_name);
+    $wrapper = entity_metadata_wrapper('taxonomy_vocabulary', $v);
+
+    if ($wrapper->term_count->value() == 0) {
+      $path = drupal_get_path('module', 'artist') . '/includes/terms_' . $v->machine_name . '.txt';
+      $lines = file($path, FILE_SKIP_EMPTY_LINES);
+      artist_install_term_tree($wrapper, $lines);
+    } 
+  }
+}
+
+/**
+ * Installs a term tree.
+ * @param $vwrapper
+ *   EntityMetadataWrapper of a taxonomy_vocabulary entity.
+ * @param $lines
+ *   Array of lines from the term text file. The iterator must be set
+ *   to the line to parse.
+ * @param $last
+ *   Either NULL or the parent term ID.
+ * @param $depth
+ *   Current depth of the tree.
+ */
+function artist_install_term_tree($vwrapper, &$lines, $last = NULL, $depth = 0) {
+  $wrapper = NULL;
+  while ($line = current($lines)) {
+    $name = trim($line);
+    $line_depth = max(strlen($line) - strlen($name) - 1, 0);
+    if ($line_depth < $depth) {
+      return;
+    }
+    else if ($line_depth > $depth) {
+      $tid = $wrapper ? $wrapper->tid->value() : NULL;
+      artist_install_term_tree($vwrapper, $lines, $tid, $depth+1);
+    }
+    else {
+      $data = array(
+        'name' => $name,
+        'vid' => $vwrapper->vid->value(),
+        'parent' => array($last ? $last : 0),
+      );
+      $term = entity_create('taxonomy_term', $data);
+      $wrapper = entity_metadata_wrapper('taxonomy_term', $term); $wrapper->save();
+      next($lines);
+   } 
+ }
+}
+
+/**
+    * Installs terms into default vocabularies.
+    */
+   function artist_update_7201(&$sandbox) {
+     artist_install_terms();
+}
+</pre><p>
+In the preceding code, term names are read from text files that have tab indentation to symbolize the term hierarchy</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/taxonomy" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">taxonomy</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/term" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">term</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/entity" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">entity</a></li><li class="taxonomy-term-reference-3"><a href="/drupal-developer/tags/entitycreate" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">entity_create</a></li><li class="taxonomy-term-reference-4"><a href="/drupal-developer/tags/entitymetadatawrapper" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">entity_metadata_wrapper</a></li><li class="taxonomy-term-reference-5"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/programmatically-adding-terms-vocabulary-structured-text-file-0"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Programmatically adding terms into a vocabulary from a structured text file">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/code-snippet/programmatically-adding-terms-vocabulary-structured-text-file-0&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/programmatically-adding-terms-vocabulary-structured-text-file-0"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/programmatically-adding-terms-vocabulary-structured-text-file-0" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

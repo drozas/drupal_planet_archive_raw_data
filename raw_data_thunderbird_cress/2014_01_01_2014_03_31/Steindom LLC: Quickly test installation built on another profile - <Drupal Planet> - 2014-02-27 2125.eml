@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 27 Feb 2014 21:25:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 27 Feb 2014 21:25:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Steindom LLC: Quickly test installation built on another profile
+Content-Transfer-Encoding: 8bit
+Content-Base: http://steindom.com/articles/quickly-test-installation-built-another-profile
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Steindom LLC: Quickly test installation built on another profile</title>
+    <base href="http://steindom.com/articles/quickly-test-installation-built-another-profile">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Drupal installation profiles are usually just starting points for a new site, but sometimes you want to leave an installation profile untouched, adding your own additions in a separate space and leaving a "clean" upgrade path for future versions of the profile. Here's a handy script I use for such situations.</p>
+<!-- break --><p>
+Let's say you're building a site on top of an installation profile such as <a href="https://drupal.org/project/commons">Drupal Commons</a>, and you want to treat Commons like you treat Drupal Core (that is, leaving it untouched). What I did was create a module which gets enabled after Commons is installed, at which point all of the customizations unique to this site are made.</p>
+<p>Anyone who works with installation profiles recognizes the need to quickly wipe your database and start the installation process over again, to make sure that everything installs cleanly. However, in this scenario, there's no need to keep re-installing the profile, since it's not changing.</p>
+<p>The following script will check for a database snapshot of the installed profile (in this case, "commons"), and if it's absent, it will use <a href="https://github.com/drush-ops/drush">drush</a> to install the site and save a backup of the database. Then it will enable my custom module. On subsequent runs, since it will find the database snapshot, it won't re-install the profile, but instead it will just dump the database and import the snapshot, and then enable the custom module.</p>
+<p></p><div class="geshifilter"><div class="bash geshifilter-bash"><span class="co0">#!/bin/bash</span><br /><br /><span class="kw3">cd</span> drupal<br /><br /><span class="kw1">if</span> <span class="br0">[</span><span class="br0">[</span> <span class="sy0">!</span> <span class="re5">-f</span> ..<span class="sy0">/</span>snapshot.sql <span class="br0">]</span><span class="br0">]</span>; <span class="kw1">then</span><br /><br />
+  <span class="kw3">echo</span> <span class="st0">"Installing profile."</span><br />
+  drush site-install <span class="re5">-y</span> <span class="re5">-v</span> <span class="st_h">'commons'</span> \<br />
+    <span class="re5">--site-name</span>=<span class="st_h">'My Drupal Site'</span> \<br />
+    <span class="re5">--site-mail</span>=<span class="kw3">test</span><span class="sy0">@</span>test.com \<br />
+    <span class="re5">--account-name</span>=admin \<br />
+    <span class="re5">--account-pass</span>=admin \<br />
+    <span class="re5">--account-mail</span>=<span class="kw3">test</span><span class="sy0">@</span>test.com \<br />
+    install_configure_form.site_default_country=US<br /><br />
+  <span class="kw3">echo</span> <span class="st0">"Saving database snapshot."</span><br />
+  drush sql-dump <span class="re5">-v</span> <span class="re5">--result-file</span>=..<span class="sy0">/</span>snapshot.sql<br /><br /><span class="kw1">else</span><br /><br />
+  <span class="kw3">echo</span> <span class="st0">"Dropping database."</span><br />
+  drush sql-drop <span class="re5">-y</span> <span class="re5">-v</span><br /><br />
+  <span class="kw3">echo</span> <span class="st0">"Importing database snapshot."</span><br />
+  drush sql-cli <span class="sy0">&lt;</span> ..<span class="sy0">/</span>snapshot.sql<br /><br /><span class="kw1">fi</span><br /><br /><span class="kw3">echo</span> <span class="st0">"Enabling custom module."</span><br />
+drush en <span class="re5">-y</span> <span class="re5">-v</span> custom_module<br /><br /><span class="kw3">cd</span> ..</div></div>
+<p>An idea to further refine this: after the entire process is finished, import the database snapshot into a temporary database. Then, the next time the script is run, drop the old tables and rename the temp tables so they get placed in the actual database. Might make it a little faster.</p>
+</div></div></div><div class="field field-name-submitted-by field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">Submitted by <span class="username">Joel Stein</span> on February 27, 2014.</div></div></div><div class="field field-name-field-article-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal">Drupal</a>, <a href="/tags/drupal-planet">Drupal Planet</a>, <a href="/tags/php">PHP</a>, <a href="/tags/drush">drush</a></div></div></div>
+  </body>
+</html>
+

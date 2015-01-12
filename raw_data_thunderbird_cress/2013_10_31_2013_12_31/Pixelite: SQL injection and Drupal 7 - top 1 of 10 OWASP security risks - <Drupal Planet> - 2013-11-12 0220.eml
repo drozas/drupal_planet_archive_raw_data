@@ -1,0 +1,115 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 12 Nov 2013 02:20:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 12 Nov 2013 02:20:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: SQL injection and Drupal 7 - top 1 of 10 OWASP security risks
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: SQL injection and Drupal 7 - top 1 of 10 OWASP security risks</title>
+    <base href="http://www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks&amp;count=horizontal&amp;via=&amp;text=SQL%20injection%20and%20Drupal%207%20-%20top%201%20of%2010%20OWASP%20security%20risks&amp;counturl=http%3A//www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-hero-image">
+    <img typeof="foaf:Image" src="http://www.pixelite.co.nz/sites/default/files/styles/hero_image_article/public/query.png?itok=LfrFuRmR" alt="" />  </div>
+
+  <div class="field-body">
+    <p>As part of the <a href="http://www.pixelite.co.nz/tag/owasp">series of blog posts on the top 10 OWASP web application security risks</a> and how to defend against them in Drupal 7, here is the first post in the series. This post deals with the top security hole - classified as "injection".</p>
+
+<p>From the <a href="https://www.owasp.org/index.php/Top_10_2013-A1-Injection">OWASP top 10 security risks</a>:</p>
+
+<blockquote>
+Injection flaws, such as SQL, OS, and LDAP injection occur when untrusted data is sent to an interpreter as part of a command or query. 
+</blockquote>
+
+<p>For this post I will cover SQL injection and how Drupal 7's built in tools can help you avoid this.</p>
+
+<h2>Database abstraction layer</h2>
+
+<p>The easiest way is to use the database abstraction layer effectively. By writing your database queries in this manner not only are you defending against injection from unclean inputs, but you are also ensuring your query will execute on <em>all</em> supported databases (MySQL, PostgreSQL, SQLite and other contributed types e.g. <a href="https://drupal.org/project/oracle">Oracle</a>). So this method is great for portability and security.</p>
+
+<p>Example insert query showing the abstraction layer:</p>
+
+<pre><code>$nid = db_insert('node')
+  -&gt;fields(array('title', 'uid', 'created'))
+  -&gt;values(array(
+    'title' =&gt; 'Example',
+    'uid' =&gt; 1,
+    'created' =&gt; REQUEST_TIME,
+  ))
+  -&gt;execute();
+</code></pre>
+
+<p>See the <a href="https://drupal.org/developing/api/database">documentation for more information on the database abstraction layer</a>.</p>
+
+<p>Dynamic select queries are possible by adding to the query object:</p>
+
+<pre><code>// Create an object of type SelectQuery.
+$query = db_select('users', 'u');
+// Add extra detail to this query object: a condition, fields and a range.
+$query-&gt;condition('u.uid', 0, '&lt;&gt;');
+$query-&gt;fields('u', array('uid', 'name', 'status', 'created', 'access'));
+$query-&gt;range(0, 50);
+$result = $query-&gt;execute();
+</code></pre>
+
+<p>Adding tags to your queries allows you (or another module) to alter the query before executed. The best example of this is the node_access tag.</p>
+
+<pre><code>$query-&gt;addTag('node_access');
+</code></pre>
+
+<p>By adding that simple tag onto any SELECT query, it ensures that all returned node IDs node access restrictions placed on it. All queries that retrieve a list of nodes (or node IDs) for display to users should have this tag (this touches on a few other OWASP security risks).</p>
+
+<h2>Custom queries with db_query()</h2>
+
+<p>If you do need to write extremely fast (never alterable and simple) or extremely custom (multiple complex joins, subqueries, temporary tables) SQL you can elect for the less standardised method db_query(). Note that this should never be the first choice for queries and should only ever be used to SELECT queries if possible.</p>
+
+<p>With db_query() you need to perform any sanitisation of the query yourself, luckily there are built in methods you can take advantage of here.</p>
+
+<p>Example select query showing the raw SQL:</p>
+
+<pre><code>$result = db_query('SELECT n.nid, n.title, n.created FROM {node} n WHERE n.uid = :uid', array(':uid' =&gt; $uid))-&gt;fetchAll();
+</code></pre>
+
+<p>With the above example you can see the uid parameter is escaped as it is passed in as an argument. In general if you are creating raw SQL with any form of string concatination you are most likely doing it wrong.</p>
+
+<p>See the <a href="https://api.drupal.org/api/drupal/includes%21database%21database.inc/function/db_query/7">documentation for more information on db_query()</a>.</p>
+
+<p>What if you ask you need to select information from dynamic tables with db_query()? This can be solved with the function db_escape_table():</p>
+
+<pre><code>$result = db_query('SELECT cid, data, created, expire, serialized FROM {' . db_escape_table($this-&gt;bin) . '} WHERE cid IN (:cids)', array(':cids' =&gt; $cids));
+</code></pre>
+
+<p>See the <a href="https://api.drupal.org/api/drupal/includes!database!database.inc/function/db_escape_table/7">documentation for more information on db_escape_table()</a>.</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/owasp" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">owasp</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/security" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">security</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="https://www.owasp.org/index.php/Top_10_2013-Top_10">OWASP top 10 security risks 2013</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

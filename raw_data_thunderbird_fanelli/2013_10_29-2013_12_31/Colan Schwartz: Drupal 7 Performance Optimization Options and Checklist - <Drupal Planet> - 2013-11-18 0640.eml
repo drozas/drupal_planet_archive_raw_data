@@ -1,0 +1,127 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 18 Nov 2013 05:40:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 18 Nov 2013 05:40:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Colan Schwartz: Drupal 7 Performance Optimization Options and Checklist
+Content-Transfer-Encoding: 8bit
+Content-Base: http://colans.net/blog/drupal-7-performance-optimization-options-and-checklist
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Colan Schwartz: Drupal 7 Performance Optimization Options and Checklist</title>
+    <base href="http://colans.net/blog/drupal-7-performance-optimization-options-and-checklist">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <section class="field field-name-field-blog-topics field-type-taxonomy-term-reference field-label-inline clearfix view-mode-rss clearfix">
+
+      <h2 class="field-label">Topics:&nbsp;</h2>
+  
+  <ul class="field-items">
+
+    
+      <li class="field-item even" rel="schema:keywords">
+        <a href="/blog-topics/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a>      </li>
+
+    
+      <li class="field-item odd" rel="schema:keywords">
+        <a href="/blog-topics/performance" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Performance</a>      </li>
+
+    
+      <li class="field-item even" rel="schema:keywords">
+        <a href="/blog-topics/caching" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Caching</a>      </li>
+
+    
+      <li class="field-item odd" rel="schema:keywords">
+        <a href="/blog-topics/images" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Images</a>      </li>
+
+    
+  </ul>
+
+</section>
+<div class="field field-name-field-body field-type-text-long field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="schema:articleBody"><p>As great as Drupal 7 core can be, it doesn't scale well for Web sites with a lot of content and/or a lot of users.  To make it perform better under these scenarios, it's necessary to make use of several strategies, tools and techniques.</p>
+<p>Although some of items mentioned here can simply be enabled on all Drupal sites to increase performance, I would instead recommend that folks target problematic areas that will be different for each and every situation.  Take a holistic perspective, and whittle down problem areas to reach a specific performance target.  Basically, it's essential to take measurements before and after making changes.  Otherwise, you could be increasing complexity unnecessarily and targeting the wrong areas, thereby missing opportunities for larger gains.</p>
+<p>I've split this article into several categories listed below.  Click on any of these to jump directly to the respective section.</p>
+<ol><li><a href="#configuration-best-practices">Configuration Best Practices</a></li>
+<li><a href="#views-caching">Views Caching</a></li>
+<li><a href="#system-administration">System Administration</a></li>
+<li><a href="#cache-replacements">Cache Replacements</a></li>
+<li><a href="#cache-and-optimize-specific-components">Cache and Optimize Specific Components</a></li>
+<li><a href="#external-caching">External Caching</a></li>
+<li><a href="#cache-warming-priming">Cache Warming / Priming</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#drupal-specific-hosting">Drupal-Specific Hosting</a></li>
+<li><a href="#tools">Tools</a></li>
+<li><a href="#useful-references">Useful References</a></li>
+</ol><hr /><h2><a name="configuration-best-practices" id="configuration-best-practices">Configuration Best Practices</a></h2>
+<ul><li>Disable unused and non-essential modules.  Loading additional code unnecessarily will consume additional server resources.</li>
+<li>Disable the <a href="https://drupal.org/documentation/modules/statistics">Statistics</a> module as it writes to the database on every hit.  You're probably using <a href="https://drupal.org/project/google_analytics">Google Analytics</a> anyway.</li>
+<li>Disable the <a href="https://drupal.org/documentation/modules/update">Update Manager</a> module on Production.  As part of your DevOps process, after synchronizing your Development/Integration server with Staging or Production, enable it there.  Your Production server doesn't need to spend time polling drupal.org.</li>
+<li>Enable <a href="https://drupal.org/node/326504">site-wide caching over at Administer » Configuration » Development » Performance</a>.</li>
+<li><a href="http://en.wikipedia.org/wiki/Portable_Network_Graphics#Comparison_to_JPEG">Convert non-transparent images to JPGs</a>.</li>
+</ul><h2><a name="views-caching" id="views-caching">Views Caching</a></h2>
+<p>As the <a href="https://drupal.org/project/views">Views</a> module is the most popular contributed module, most of us are using it to display content is various ways.  Views instances should be cached so that when accessed, a cached copy is returned instead of having to rebuild each view every time it's loaded.  There are two (2) options here.</p>
+<ul><li>Time-based caching for each view display (ships with Views)</li>
+<li><a href="https://drupal.org/project/views_content_cache">Views Content Cache</a>: Update each view only when its constituent element have been updated.</li>
+</ul><p>If you've got a lot of content and are using Views paging, you may want to consider using <a href="https://drupal.org/project/views_litepager">Views Litepager</a>.  It will work around slow COUNT queries on InnoDB tables, those using the default table-engine type in MySQL.</p>
+<h2><a name="system-administration" id="system-administration">System Administration</a></h2>
+<ul><li><a href="http://en.wikipedia.org/wiki/Alternative_PHP_Cache#Alternative_PHP_Cache_.28APC.29">Alternative PHP Cache (APC)</a> for PHP &lt; 5.5.  (This is part of core PHP in newer versions.)</li>
+<li><a href="http://arstechnica.com/information-technology/2012/12/web-served-part-3-bolting-on-php-with-php-fpm/">PHP-FPM</a> (a FastCGI implementation) instead of mod_php.</li>
+<li><a href="http://blog.simplytestable.com/switching-from-apache-to-nginx/">Nginx</a>: An alternative to the ubiquitous Apache Web server.</li>
+<li><a href="https://drupal.org/documentation/modules/syslog">Syslog: OS-integrated logging</a>: Send logs to your operating system instead of writing to your database.</li>
+<li>Solid state drives (SSDs):  These cost more, but if you can afford it, use them instead of classic hard disk drives (HDDs) in your server hardware.</li>
+<li><a href="/blog/improving-drupal-7-performance-after-period-inactivity">Disable automatic cron &amp; run a proper cron job</a>:  Ensure that users aren't running periodic tasks before they see content.</li>
+</ul><h2><a name="cache-replacements" id="cache-replacements">Cache Replacements</a></h2>
+<p>The default Drupal-site caching is not very efficient.  As a result, alternative mechanisms have sprung up to fill the void.</p>
+<ul><li><a href="https://drupal.org/project/memcache">Memcache API and Integration</a> or <a href="https://drupal.org/project/memcache_storage">Memcache Storage</a></li>
+<li><a href="https://drupal.org/project/filecache">File Cache</a></li>
+<li><a href="https://drupal.org/project/redis">Redis</a> (a key-value store)</li>
+</ul><h2><a name="cache-and-optimize-specific-components" id="cache-and-optimize-specific-components">Cache and Optimize Specific Components</a></h2>
+<p>If there are specific components of your site that need a performance boost, the following list will help you target certain areas in specific ways.</p>
+<ul><li>Cache entities with <a href="https://drupal.org/project/entitycache">Entity Cache</a>.</li>
+<li>Cache entity view modes with <a href="https://drupal.org/project/display_cache">Display Cache</a>.</li>
+<li>Improve CSS/JS performance with <a href="https://drupal.org/project/advagg">Advanced CSS/JS Aggregation</a> or <a href="https://drupal.org/project/agrcache">Aggregate cache</a>.</li>
+<li>Cache <a href="https://drupal.org/project/panels">Panels</a> content with <a href="https://drupal.org/project/panels_content_cache">Panels Content Cache</a> or <a href="https://drupal.org/project/panels_hash_cache">Panels Hash Cache</a>.</li>
+<li>Load images only when needed with <a href="https://drupal.org/project/lazyloader">Image Lazyloader</a> or similar modules.</li>
+<li>Minify JS files with <a href="https://drupal.org/project/speedy">Speedy</a>.</li>
+<li>React to page-not-found errors quicker with <a href="https://drupal.org/project/fast_404">Fast 404</a>.</li>
+<li>Speed up your site by removing no-longer-available modules with <a href="https://drupal.org/project/missing_module">Missing Module</a>.</li>
+<li>Cache components with logged-in users via <a href="https://drupal.org/project/authcache">Authenticated User Page Caching (Authcache)</a>.</li>
+</ul><h2><a name="external-caching" id="external-caching">External Caching</a></h2>
+<p>It's possible to place another application in front of yours that will serve cached copies of your Web pages.  This is called "HTTP acceleration" or "reverse proxy caching".  There's really only one game in town, but it has some helpful add-ons.</p>
+<ul><li><a href="https://en.wikipedia.org/wiki/Varnish_(software)">Varnish</a></li>
+<li><a href="https://drupal.org/project/varnish">Varnish HTTP Accelerator Integration</a></li>
+<li><a href="https://drupal.org/project/expire">Cache Expiration</a></li>
+</ul><h2><a name="cache-warming-priming" id="cache-warming-priming">Cache Warming / Priming</a></h2>
+<p>If caching systems are used heavily (for a lot of content), it may take quite a while for cached data to get rebuilt whenever caches are cleared.  If this is the case, it's worth considering a tool to rebuild these after any clearing happens.  Otherwise, the first users hitting the site afterwards will experience slow page-load times.</p>
+<ul><li><a href="https://drupal.org/project/drush_ecl">Drush Entity Cache Loader</a></li>
+<li><a href="https://drupal.org/project/cache_warmer">Cache Warmer</a></li>
+</ul><h2><a name="services" id="services">Services</a></h2>
+<p>There are several services that can be used in conjunction with your Drupal site to monitor and/or increase performance.</p>
+<ul><li><a href="http://en.wikipedia.org/wiki/Content_delivery_network">Content delivery networks (CDNs)</a> such as <a href="https://www.cloudflare.com/">CloudFlare</a></li>
+<li><a href="http://projectpaas.com/">ProjectPAAS</a> along with its <a href="https://drupal.org/project/paas">connector module</a>: Drupal-specific performance service.</li>
+<li><a href="http://newrelic.com/php/drupal">New Relic</a>: General performance monitoring that supports Drupal.  Works nicely with Pantheon.</li>
+<li><a href="https://drupal.org/project/blazemeter">BlazeMeter Module for Load and Performance Testing</a>: General service that works with a plug-in module.</li>
+</ul><h2><a name="drupal-specific-hosting" id="drupal-specific-hosting">Drupal-Specific Hosting</a></h2>
+<p>There are some fine folks out there that will manage the infrastructure for you.  If you don't need to be managing your own software stack, it's probably best to let others do it.  The options below generally include infrastructural features mentioned in this post.</p>
+<ul><li><a href="http://www.getpantheon.com/">Pantheon</a>: Generally recommended and very popular.</li>
+<li><a href="http://acquia.com/products-services/acquia-cloud">Acquia Cloud</a>: Relatively expensive compared to other options.</li>
+<li><a href="https://omega8.cc/">Omega8.cc</a>: Uses <a href="http://www.aegirproject.org/">Aegir</a>.  See their technical comparison of these three services over at <a href="https://omega8.cc/compare/pricing">The Pricing - does it have to be complex?</a>.</li>
+<li><a href="http://praxis.coop/">Praxis Labs</a>' <a href="http://praxis.coop/en/services/valkyrie">Valkyrie</a>: Uses Aegir &amp; <a href="https://drupal.org/project/devshop">DevShop</a>.  Not quite ready for production, but keep an eye on it.</li>
+</ul><h2><a name="tools" id="tools">Tools</a></h2>
+<p>There are several tools available for tracking your performance.</p>
+<ul><li>The <a href="https://drupal.org/project/pasc">Performance and Scalability Checklist</a> module</li>
+<li>The <a href="https://drupal.org/project/performance">Performance Logging and Monitoring</a> module</li>
+<li>Slow query logging with the <a href="https://drupal.org/project/devel">Devel</a> module</li>
+<li>The <a href="http://us1.php.net/manual/en/intro.xhprof.php">XHProf</a> PHP profiler</li>
+</ul><h2><a name="useful-references" id="useful-references">Useful References</a></h2>
+<p>Some great tips can be found at the following links.</p>
+<ul><li><a href="http://www.netmagazine.com/features/top-15-drupal-performance-tips">Top 15 Drupal performance tips</a></li>
+<li><a href="http://www.chapterthree.com/blog/nick-lewis/four-easy-fix-mistakes-will-kill-site-performance">Four easy to fix mistakes that will kill site performance</a></li>
+</ul></div></div></div><span rel="schema:url" resource="/blog/drupal-7-performance-optimization-options-and-checklist" class="rdf-meta"></span><span property="schema:name" content="Drupal 7 Performance Optimization Options and Checklist" class="rdf-meta"></span>
+  </body>
+</html>
+

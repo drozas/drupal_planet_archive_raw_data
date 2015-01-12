@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 Oct 2014 18:26:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 Oct 2014 18:26:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: How to set complex string variables with Drush vset
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/how-set-complex-string
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: How to set complex string variables with Drush vset</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/how-set-complex-string">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I recently ran into an issue where <code>drush vset</code> was not setting a string variable (in this case, a time period that would be used in <code>strtotime()</code>) correctly:</p>
+<p></p><div class="codeblock"><code># Didn't work:<br />$ drush vset custom_past_time '-1 day'<br />Unknown options: --0, --w, --e, --k.  See `drush help variable-set`      [error]<br />for available options. To suppress this error, add the option<br />--strict=0.</code></div>
+<p>Using the <code>--strict=0</code> option resulted in the variable being set to a value of <code>"1"</code>.</p>
+<p>After scratching my head a bit, trying different ways of escaping the string value, using single and double quotes, etc., I finally realized I could just use <code>variable_set()</code> with drush's <code>php-eval</code> command (shortcut <code>ev</code>):</p></div></div></div>
+  </body>
+</html>
+

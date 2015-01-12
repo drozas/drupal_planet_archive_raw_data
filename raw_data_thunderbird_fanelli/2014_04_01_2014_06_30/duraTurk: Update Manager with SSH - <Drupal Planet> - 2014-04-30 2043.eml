@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 30 Apr 2014 18:43:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 30 Apr 2014 18:43:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: duraTurk: Update Manager with SSH
+Content-Transfer-Encoding: 8bit
+Content-Base: http://duraturk.wordpress.com/2014/04/30/update-manager-with-ssh/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>duraTurk: Update Manager with SSH</title>
+    <base href="http://duraturk.wordpress.com/2014/04/30/update-manager-with-ssh/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>This gonna be short and sweet.</p>
+<p>If you need/want the Drupal Update Manager to work through SSH then you need to install the &#8220;libssh2-php&#8221; php package on your Ubuntu server. You know the Update Manager; it&#8217;s the admin interface when you install a module or theme, or more importantly if you are doing system-wide updates.<br />
+<a href="http://duraturk.files.wordpress.com/2014/04/update_manager.jpg"><img src="http://duraturk.files.wordpress.com/2014/04/update_manager.jpg?w=300&#038;h=205" alt="Update Manager" width="300" height="205" class="alignnone size-medium wp-image-31" /></a></p>
+<p>If you do not have the &#8220;libssh2-php&#8221; package installed then the only option you will have is FTP.<br />
+<a href="http://duraturk.files.wordpress.com/2014/04/update_manager_ftp.jpg"><img src="http://duraturk.files.wordpress.com/2014/04/update_manager_ftp.jpg?w=300&#038;h=222" alt="FTP Only" width="300" height="222" class="alignnone size-medium wp-image-32" /></a></p>
+<p>Unless you have a very specific reason, you do not want to run an FTP server on your Ubuntu server. Especially, when you have alternatives like SFTP and SCP for transferring files and they are based on SSH.</p>
+<p>Now to enable the SSH option on the Update Manager page, you need to install the &#8220;libssh2-php&#8221; package and reload your apache server.</p>
+<pre class="brush: plain; title: ; notranslate">
+apt-get install libssh2-php
+service apache2 reload
+</pre>
+<p>Now you have the SSH option on the same page.<br />
+<a href="http://duraturk.files.wordpress.com/2014/04/update_manager_ssh.jpg"><img src="http://duraturk.files.wordpress.com/2014/04/update_manager_ssh.jpg?w=300&#038;h=214" alt="SSH Option" width="300" height="214" class="alignnone size-medium wp-image-33" /></a></p>
+<p>Well, that being said, using Drush would be a better choice for these operations but there might be times where you need this.</p><br />Filed under: <a href='http://duraturk.wordpress.com/category/drupal/'>Drupal</a>, <a href='http://duraturk.wordpress.com/category/php-5-5-2/'>Php 5.5</a>, <a href='http://duraturk.wordpress.com/category/ubuntu/'>Ubuntu</a> Tagged: <a href='http://duraturk.wordpress.com/tag/drupal-planet/'>Drupal Planet</a>, <a href='http://duraturk.wordpress.com/tag/libssh2-php/'>libssh2-php</a>, <a href='http://duraturk.wordpress.com/tag/ssh/'>SSH</a>, <a href='http://duraturk.wordpress.com/tag/update-manager/'>Update Manager</a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/duraturk.wordpress.com/30/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/duraturk.wordpress.com/30/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=duraturk.wordpress.com&#038;blog=67650576&#038;post=30&#038;subd=duraturk&#038;ref=&#038;feed=1" width="1" height="1" />
+  </body>
+</html>
+

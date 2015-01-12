@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 05 Jan 2014 02:23:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 05 Jan 2014 02:23:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Google Code-In student blog: How to setting up LoLogin Drupal 8 module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://codein-stdent.at/?q=node/11
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Google Code-In student blog: How to setting up LoLogin Drupal 8 module</title>
+    <base href="http://codein-stdent.at/?q=node/11">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>LoLogin module was released! It is simple and helpful module for auth users by LinkedIn. LoLogin use OAuth for authentication.<br />
+So, go to installation!</p>
+<h2>Create LinkedIn app</h2>
+<p>Go to: <a href="https://www.linkedin.com/secure/developer">https://www.linkedin.com/secure/developer</a> . Click "Add New Application" button.<br /><img src="http://habrastorage.org/storage3/6e4/9e3/09d/6e49e309d6e340d261559f72c67be468.png" /></p>
+<p>Fill company name, application name(Your site name), application description(your site description), website URL, application use(your site thematic), write you contacts in contact info, mark  "r_basicprofile". In OAuth 1.0 Accept Redirect URL write: yoursiteurl.com/llogin and OAuth 1.0 Cancel Redirect URL: yoursiteurl.com/llogin too. Agree with rules and click "Add application".</p>
+<p>Application will provide you 4 keys:</p>
+<p><img src="http://habrastorage.org/storage3/26a/76d/9bb/26a76d9bb10324ef5be115a7c8908210.png" /><br />
+Them will be used later.</p>
+<h2>Install and setting up module</h2>
+<p>1. Download latest version of "LoLogin" and extract it to modules folder on your site.<br />
+2. Go to your website admin panel. Go to "Extend" and select "LoLogin" module to install. Save changes.<br />
+3. Go to "Configuration". Find "LinkedIn Authentication" in "Web services" block. Paste Linked in 4 keys here in appropriate fields. Like a in my site:<br /><img src="http://habrastorage.org/storage3/943/a67/eba/943a67eba1c0b909c3bd03a935d29bda.png" /><br />
+Click "Save configuration".<br />
+4. Go to "Structure". Find in right block "LoLogin"<br /><img src="http://habrastorage.org/storage3/477/d5e/409/477d5e409dd314a3c1fc6729669edf1f.png" /><br />
+Click on it. You will see settings form:<br /><img src="http://habrastorage.org/storage3/73c/df5/b0e/73cdf5b0eaf79b4000147a2687205533.png" /><br />
+You can control: "title", "region"(where module showing) and another like in another modules. We need to make module only for anonymous:<br /><img src="http://habrastorage.org/storage3/cdb/b9e/a7f/cdbb9ea7f85fd9bad5cccc8031530f60.png" /></p>
+<p>Click "Save". Module setting up finished!</p>
+<p>In site pages module will locked south as:<br /><img src="http://habrastorage.org/storage3/aea/308/848/aea308848f9cda45fe730ae2bccca632.png" /></p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/?q=taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/?q=taxonomy/term/2" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal-planet</a></li><li class="taxonomy-term-reference-2" rel="dc:subject"><a href="/?q=taxonomy/term/6" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">modules</a></li></ul></div>
+  </body>
+</html>
+

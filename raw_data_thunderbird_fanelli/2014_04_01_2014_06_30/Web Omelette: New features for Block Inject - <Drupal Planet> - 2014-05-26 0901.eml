@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 26 May 2014 07:01:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 26 May 2014 07:01:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: New features for Block Inject
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/new-features-block-inject
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: New features for Block Inject</title>
+    <base href="http://www.webomelette.com/new-features-block-inject">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>I've worked recently on some new features for my contrib module <a href="https://drupal.org/project/block_inject">Block Inject</a> and I thought I'd share with you what's new.</p>
+
+<p>Based on some feature requests from the community, I've implemented two new things that make this module more flexible. They are available in the <code>7.x-1.2alpha5</code> release onwards.</p>
+
+<h2>Theming</h2>
+
+<p>First, the injected region is now wrapped in a <code>&lt;div&gt;</code> with some default classes on it for easy styling. I've also created an alter hook for this so you can add easily your own classes there depending on the <code>$node</code> object the region is injected in.</p>
+
+<p>An example implementation of this hook:</p>
+
+<pre><code>function hook_block_inject_attributes_alter($attributes) {
+  if ($attributes['node']-&gt;type == 'article') {
+    $attributes['attributes']['class'][] = 'article-block-inject';
+  }
+}
+</code></pre>
+
+<p><p>The <code>$attributes</code> parameter is an array with two values: the node object and another attributes array that gets transformed into HTML attributes by the <a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_attributes/7">drupal_attributes()</a> function.</p>
+
+<h2>Site building</h2>
+
+<p>The second new feature of the module is the possibility to specify default paragraph offsets for an inject region depending on some conditions related to the node body field.</p>
+
+<p>For example, when creating the inject region you can set it so that the region gets injected 5 paragraphs lower than the middle if the total number of paragraphs is over 20. Or move the region higher by 2 paragraphs if the total number of paragraphs equals 6.</p>
+
+<p>Feel free to check it out and let me know what you think.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/cool-drupal-module">Cool Modules</a></span> | <span class="field-item odd"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/new-features-block-inject" st_title="New features for Block Inject" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/new-features-block-inject" st_title="New features for Block Inject" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/new-features-block-inject" st_title="New features for Block Inject" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

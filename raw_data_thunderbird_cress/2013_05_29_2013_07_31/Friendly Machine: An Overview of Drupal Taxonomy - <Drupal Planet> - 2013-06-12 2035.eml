@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Jun 2013 19:35:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Jun 2013 19:35:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: An Overview of Drupal Taxonomy
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/overview-drupal-taxonomy
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: An Overview of Drupal Taxonomy</title>
+    <base href="http://friendlymachine.net/posts/overview-drupal-taxonomy">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>In this lesson we're going to talk about taxonomy. In my experience it's another one of those things in Drupal that uses unfortunate terminology and ends up confusing new users. But the truth is, taxonomy is pretty simple to get your head around and will be a huge help in your site building efforts.</p>
+<h2>The Lowdown on this Tutorial</h2>
+<p>We're going to break this topic down by first explaining the concepts. Next we'll take a brief tour of where Drupal keeps all the knobs and switches for managing taxonomy and then we'll wrap it up by discussing some very useful modules that extend the built-in functionality of the Taxonomy module.</p>
+<p>If you've been keeping up with this <a href="http://friendlymachine.net/learning-drupal">tutorial series</a>, you'll know it uses my free <a href="http://friendlymachine.net/posts/free-drupal-theme">installation profile</a>, Foundation, for the examples. Using Foundation along with the lessons can save some time in getting up to speed on this topic. It includes several pre-configured modules and views related to the topic of taxonomy that serve as good examples of how it can help with your site building. </p>
+<h2>Taxonomy Defined</h2>
+<p>Let's begin by defining taxonomy. You may remember it from your high school biology class as a systematic way of categorizing things. In biology, the classifications involve plants and animals, but in Drupal the categories are for your content.</p>
+<div class="ad-block"> </div>
+<p>If you're coming from WordPress, this system is very similar to the Categories you'll find in that CMS. In Drupal, however, it's a little more complex - big surprise, right? That's OK. Like I said, it's not that bad. </p>
+<p>To really understand Drupal's taxonomy or classification system, we have to get a handle on both <em><strong>vocabularies</strong></em> and <em><strong>terms</strong></em>. Vocabularies are really just categories. That's all they are. Terms are simply the items that go inside a vocabulary. Let's look a little deeper at <em>terms</em> and <em>vocabularies</em> using an example.</p>
+<h2>A Hypothetical Vocabulary</h2>
+<p>By default, Drupal comes with one vocabulary defined - <em>Tags</em>. It's a generic, default way to start classifying your content. But let's say we have a site that provides information about the nutritional content of various foods. We'll probably want to create a new vocabulary (aka category) that we'll call <em>Foods</em>.</p>
+<p>Under that vocabulary we'll start adding some <em>terms</em> to break our content down into more specific classifications - terms like <em>Dairy</em>, <em>Grains</em>, <em>Poultry</em>, <em>Vegetables</em> and <em>Fruits</em>. As you might guess, these will end up being not only terms themselves, but also the headings for sub-categories as we continue drilling down to more specific terms. For example, under <em>Fruits</em> we might have <em>Apples</em>, <em>Bananas</em>, etc. You can see that it won't take long before we have a very extensive hierarchy with hundreds, or even thousands, of terms.</p>
+<p>Of course the point of all this categorization is to make it easier to sort our content and expose how each node is related to the others. If you think back to the <a href="http://friendlymachine.net/posts/advanced-views-concepts-and-resources">previous lessons</a> on Views, you'll start seeing how these two modules - Taxonomy and Views - work hand-in-glove to provide a way of creating and displaying content relationships in a relatively simple way.</p>
+<h2>How to Use Taxonomy</h2>
+<p>Let's kick this section off by looking at where we create and manage our vocabularies and terms. In Drupal 7, under <em>Structure</em> &gt; <em>Taxonomy</em> you'll find a screen like the one below.</p>
+<p><a href="http://friendlymachine.net/sites/default/files/uploads/images/_learning_drupal/taxonomy-page.jpg"><img src="http://friendlymachine.net/sites/default/files/uploads/images/_learning_drupal/taxonomy-page-small.jpg" alt="Taxonomy page" title="Click to view larger image." width="730" height="291" /></a></p>
+<p>You'll see that in this screenshot from Foundation, we have two vocabularies, the default <em>Tags</em>, which I've chosen to use as the blog categories, and a second titled, <em>Utility tags</em>. This second vocabulary/category is used to mark content as special in some way - for example, to be featured on the home page.</p>
+<p>I won't go through the steps of creating vocabularies or terms because it's very simple and I'm certain you can handle that without much trouble. But what we are going to look at is how we can make our new vocabularies available for use when creating content. You see, when you create a new vocabulary, it isn't automatically available on your <em>Add content</em> form. We have to add it manually.</p>
+<p>To do this, we'll need to add a field to the content types where we want to be able to use the vocabulary. If you're using Foundation, head to <em>Structure</em> &gt; <em>Content Types</em> and then select <em>Manage fields</em> under the Article content type. You'll see something similar to the image below.</p>
+<p><a href="http://friendlymachine.net/sites/default/files/uploads/images/_learning_drupal/add-taxonomy-content-type.jpg"><img src="http://friendlymachine.net/sites/default/files/uploads/images/_learning_drupal/add-taxonomy-content-type-small.jpg" alt="Add taxonomy field to content type" title="Click to view larger image." width="730" height="354" /></a></p>
+<p>Note the big red arrow. What you see is that I've added a field to my content type. It's a <em>term reference</em> and it associates the vocabulary <em>Utility tags</em> with the content type. In this case it allows me to tag an article as one that should be added to the home page (via a view).</p>
+<p>But if we return to the example of a <em>Foods</em> vocabulary, this is where we could add it as well. We would simply add a new field and under field type, select <em>Term reference</em> and then set the desired widget (select list, checkboxes, etc.). After we click save, we'll be prompted for the vocabulary name and some default settings for the field.</p>
+<p>After we've done this, we'll be able to tag our content with the terms we've defined when we're creating or editing the page. It's pretty simple, but if you want your users to be able to see the vocabulary terms on the page (so they might click them to view related content), we're not quite finished.</p>
+<p>Go back to <em>Structure</em> &gt; <em>Content Types</em> and then select <em>Manage display</em> under the Article content type. You'll see something similar to the image below.</p>
+<p><a href="http://friendlymachine.net/sites/default/files/uploads/images/_learning_drupal/taxonomy-manage-display.jpg"><img src="http://friendlymachine.net/sites/default/files/uploads/images/_learning_drupal/taxonomy-manage-display-small.jpg" alt="Manage taxonomy display" title="Click to view larger image." width="730" height="374" /></a></p>
+<p>You'll notice that in this case we have our <em>Utility tags</em> hidden from our site's visitors. But in the case of our hypothetical <em>Foods</em> vocabulary, we'd want to make sure it was displaying so that our site's visitors could use it to find and perhaps sort related content.</p>
+<p>If this was what we wanted to do, I would also recommend enabling the <em>Taxonomy term </em>view (included by default with Views) and customizing the display of the pages that site visitors will see when they click on a taxonomy term. It would be in this view where you might expose a dropdown to your users that would let them easily sort through the content associated with the various terms you've defined.</p>
+<h2>Related Modules</h2>
+<p>That wasn't so bad, was it? It won't be long before you'll want to do all sorts of things with taxonomy and below are a few modules that will help.</p>
+<h4>Taxonomy Menu</h4>
+<p>This <a href="https://drupal.org/project/taxonomy_menu">module</a> will allow you to turn your vocabularies into menus. In my experience, the module works great so long as you don't try to disable any menu items. I've always had disabled items get re-added after cron runs, but otherwise no problems.</p>
+<h4>Tagadelic</h4>
+<p>You know those tag clouds you've seen on some sites? This <a href="https://drupal.org/project/Tagadelic">module</a> is one way you can do that with Drupal.</p>
+<h4>Taxonomy Breadcrumb</h4>
+<p>In the example we used in this tutorial, we saw how quickly you can create a deep vocabulary structure. The <a href="https://drupal.org/project/taxonomy_breadcrumb">Taxonomy Breadcrumb</a> module is a useful way of helping your users keep track of where they are.</p>
+<h2>The Rest...</h2>
+<p>Finally I'll leave you with the <a href="https://drupal.org/project/modules/?f[0]=im_vid_3%3A71&amp;f[1]=bs_project_sandbox%3A0&amp;solrsort=iss_project_release_usage%20desc">full list</a> of taxonomy related modules - only 372 of them for you to sort through! Gotta love Drupal, huh? </p>
+<p>That's it for this lesson. We're a bit more than a fifth of the way through this series. Stay up to date via the series <a href="http://friendlymachine.net/learning-drupal.rss">RSS feed</a> or by subscribing to <a href="#region-sidebar-second">email updates</a> for the blog. If you'd like to comment on anything in this lesson, you can do so on this <a href="https://drupal.org/node/2018263">discussion thread</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

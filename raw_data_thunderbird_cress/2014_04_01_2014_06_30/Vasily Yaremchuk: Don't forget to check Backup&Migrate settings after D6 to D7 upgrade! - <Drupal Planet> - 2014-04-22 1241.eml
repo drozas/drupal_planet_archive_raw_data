@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Apr 2014 11:41:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Apr 2014 11:41:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Vasily Yaremchuk: Don't forget to check Backup&Migrate settings after D6 to D7 upgrade!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yaremchuk.ru/blog/dont-forget-check-backupmigrate-settings-after-d6-d7-upgrade
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Vasily Yaremchuk: Don't forget to check Backup&Migrate settings after D6 to D7 upgrade!</title>
+    <base href="http://yaremchuk.ru/blog/dont-forget-check-backupmigrate-settings-after-d6-d7-upgrade">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Several days ago we upgraded simple Drupal 6 site to Drupal 7. After core upgrade process was finished we turned on all necessary modules such as Admin menu and Backup &amp; Migrate.</p>
+<p>Some features required custom update by scripts and some manual work, we made backup before this activity.<br />
+... something went wrong and we go back by restoring DB via Backup&amp;Migrate module and site wend down :-(  </p>
+<p>When we took a look on DB backup script we found that there was empty dump with the structure of some tables.<br />
+So as a result the data in several tables was killed.</p>
+<p>When we repeated upgrade process again and took a look on Backup&amp;Migrate advanced settings we were shocked</p>
+<p> <img src="/sites/default/files/bm.png" alt="incorrect table exclude settings" title="incorrect table exclude settings" /></p>
+<p>By some reason all tables was excluded from backup. </p>
+<p>After we align B&amp;M settings backup became works correctly :-)</p>
+<p>The main idea of this post due to automatic upgrade process you should double check settings of contributed modules, upgrade can make them different according initial state. </p>
+<p>And, of course, backups is necessary part of site development activity but you should be sure that your backups correct. </p>
+</div></div></div><!-- google_ad_section_end --><div class="field field-name-taxonomy-wp-blog-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Blog tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog-tags/planet-drupal">Planet Drupal</a></li><li class="taxonomy-term-reference-1"><a href="/blog-tags/drupal-faq">Drupal FAQ</a></li></ul></div>
+  </body>
+</html>
+

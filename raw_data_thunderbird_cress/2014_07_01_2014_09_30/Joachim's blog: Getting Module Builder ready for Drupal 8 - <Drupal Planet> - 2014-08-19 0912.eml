@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 19 Aug 2014 08:12:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 19 Aug 2014 08:12:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Joachim's blog: Getting Module Builder ready for Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.noreiko.com/blog/getting-module-builder-ready-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Joachim's blog: Getting Module Builder ready for Drupal 8</title>
+    <base href="http://www.noreiko.com/blog/getting-module-builder-ready-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I've just made a commit to <a href="https://www.drupal.org/project/module_builder">Module Builder</a> that adds unit tests. This is a big deal, because having these frees me up to start making the big changes that are needed for supporting Drupal 8's new structures: routes, plugins, forms, and so on.</p>
+<p>The biggest challenge is going to be the interface. Currently, you give Module Builder just a module name and a list of hook names, and it does the necessary. On the command line it's nice and simple:</p>
+<p><div class="codeblock"><code>drush mb mymodule install schema node_insert form_alter views_data_alter</code></div></p>
+<p>The first parameter is the module name, and everything that follows is a hook name. Now we add to the mix requests such as a form called MyModuleCakeToppingForm, or an entity type plugin, or a route bake_my_cake and its page controller. How to elegantly specify all that over the command line, without making it horribly unwieldy and impossible to remember how to use?</p>
+<p>It's also going to be an interesting exercise in reading my own documentation and seeing how much sense it makes after something like 7 months away from the code.</p>
+<p>From what I recall, Module Builder uses a hierarchy of component generators to build your module. Taking our example above, the first thing that happens is that the Module generator class kicks in. 'So, you want a module, do you?' it asks, 'You'll need some of these.' And it begins to assemble a list of further generators, for the components it needs: an info file, and the hooks generator. The hooks generator does the actual job of examining your list of requested hooks, and decides based on that that you need three code files: a .module, a .install, and a .views.inc. So by now we have a tree of generators like this:</p>
+<pre>
+- Module
+-- Info file
+-- Hooks
+--- Code file: .module
+--- Code file: .install
+--- Code file: .views.inc
+</pre><p>
+This is not a class hierarchy; this is a tree of objects where each generator has a list of the generators beneath it, and is responsible for collecting data from them. Once we have the tree, we iteratively have each generator assemble the data it wants to contribute, starting with the Module generator at the top.</p>
+<p>The original plan when I wrote this system was to make the smallest granularity be a file. The leaves of the generator tree would assemble the text for their file's contents, and the Module generator would collect the files up and return them to the caller for output (either in the UI, or to write them directly).</p>
+<p>However, while the original intention of this system was that it could be generalised to base components other than modules (so profiles and themes, which are both supported to some extend but lack the UI, see above!), it's also proven to be extendable downwards to smaller components, and to be worthwhile to do so.</p>
+<p>Enter the Form generator. Once we have a generic Function generator (and its child class the HookImplementation), we can create a Form generator. Given a form machine name, 'foo_form', it simply knows to add three copies of the Function generator: 'foo_form', 'foo_form_validate', 'foo_form_submit', along with the correct parameters and some boiler plate code.</p>
+<p>And we can specialize this further: the AdminSettingsForm simply extends the Form generator, and adds a menu item component, which itself ensures hook_menu() is requested.</p>
+<p>At this point it starts to get a bit complicated, as we have components that request other components that are in totally different parts of the component tree. That's the point at which I think I was when I realized I needed tests so that I can refactor and clean up the messy bits of this, and enhance and extend it, without breaking what's already there.</p>
+<p>So that's the current state of Module Builder: not yet ready for Drupal 8, but has lots of potential. At this point, I'd really welcome input on the Drush interface, as that's the big quandary. And any input on new Drupal 8 component generators would be great too; there are a few open issues in the queue. And finally, Module Builder is a complex beast; should anyone looking at the code find it baffling and impenetrable, do please file a documentation issue to highlight the problem and request clarification.</p>
+</div></div></div>
+  </body>
+</html>
+

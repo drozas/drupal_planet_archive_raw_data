@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Jun 2013 18:23:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Jun 2013 18:23:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Propeople Blog: Debugging tests from console using PHPStorm and XDebug
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wearepropeople.com/blog/debugging-tests-from-console-using-phpstorm-and-xdebug
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Propeople Blog: Debugging tests from console using PHPStorm and XDebug</title>
+    <base href="http://wearepropeople.com/blog/debugging-tests-from-console-using-phpstorm-and-xdebug">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Lately, here at <a href="http://wearepropeople.com">Propeople Drupal Agency</a>, we have been facing exotic situations when tests pass using UI but fail when drupal.org testbot runs them. The main difference is that testbot runs tests using the <em>core/run-tests.sh</em> script (drupal 8). For this case we needed to debug the test execution, but we found out that it is not an easy task to set up the IDE for that (in my case PHPStorm). In this article we would like to share how to set up PHPStorm to debug running tests from console.</p><p>First of all, in <em>Run\Debug Configurations</em> you need to add PHP Script.</p><p><img alt="" class="media-image" height="435" width="770" typeof="foaf:Image" src="http://wearepropeople.com/sites/default/files/1_3.png" /></p><p>File falues the path to <em>run-tests.sh file</em>. You can use Browse functionality to find the file. Value of Arguments in my case is <em>--php /usr/bin/php --url <a href="http://localhost/services8">http://localhost/services8</a> --verbose --execute-test Drupal\system\Tests\Upgrade\MailUpgradePathTest</em> (change your url and test class name accordingly)</p><p>And the trick is to use <em>--execute-test</em> parameter instead of <em>--class</em>. In case you use <em>--class</em>, the script will run another process under the hood and you won't get XDebug tracing the code for you. That process is run using the <em>–execute-test</em> parameter.</p><p><img alt="" class="media-image" height="536" width="770" typeof="foaf:Image" src="http://wearepropeople.com/sites/default/files/2_2.png" /></p><p>The next time you run debugging of your tests – you will have XDebug interrupting the process and now you can trace your code.</p><p>Happy debugging!</p> </div></div></div><div class="control-group form-type-item form-item">
+  <label class="control-label">Language </label>
+<div class="controls"> English
+</div></div>
+<div id="comment-wrapper"></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/tutorials" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorials</a></div></div></div><div class="field field-name-field-drupal-planet field-type-taxonomy-term-reference field-label-above"><div class="field-label">Check this option to include this post in Planet Drupal aggregator:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

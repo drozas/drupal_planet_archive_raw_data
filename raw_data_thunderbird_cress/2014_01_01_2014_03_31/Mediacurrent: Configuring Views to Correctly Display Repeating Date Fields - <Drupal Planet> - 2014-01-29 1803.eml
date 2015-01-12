@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 29 Jan 2014 18:03:25 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 29 Jan 2014 18:03:25 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mediacurrent: Configuring Views to Correctly Display Repeating Date Fields
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.mediacurrent.com/blog/configuring-views-correctly-display-repeating-date-fields
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mediacurrent: Configuring Views to Correctly Display Repeating Date Fields</title>
+    <base href="http://www.mediacurrent.com/blog/configuring-views-correctly-display-repeating-date-fields">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://www.mediacurrent.com/sites/default/files/imagecache/thumb_blog_spotlight/1006.png" alt="" title=""  class="imagecache imagecache-thumb_blog_spotlight imagecache-default imagecache-thumb_blog_spotlight_default" width="200" height="152" /> <p>Configuring Views and Date is a simple enough task for any reasonably experienced site builder, but I’ve found that configuring Views to correctly handle and display repeating events is another matter. To get us started, I’ve installed the following modules:&nbsp;</p>
+<p>- <a href="https://drupal.org/project/views" target="_blank">Views</a><br /><span style="white-space: pre;">	</span>Views UI<br /><br />- <a href="https://drupal.org/project/date" target="_blank">Date</a>&nbsp;<br /><span style="white-space: pre;">	</span>Date Repeat Field<br /><span style="white-space: pre;">	</span>Date Views<br /><br />I created a content type called “Event”.&nbsp;The next step is to add and configure a Date field. While configuring, make sure you set “Repeating Date” to “Yes”.&nbsp;</p>
+  </body>
+</html>
+

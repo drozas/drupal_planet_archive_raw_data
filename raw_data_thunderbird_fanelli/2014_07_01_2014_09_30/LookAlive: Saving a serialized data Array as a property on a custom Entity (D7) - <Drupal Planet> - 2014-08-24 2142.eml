@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 24 Aug 2014 19:42:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 24 Aug 2014 19:42:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LookAlive: Saving a serialized data Array as a property on a custom Entity (D7)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://lookalive.co.uk/blog/saving-serialized-data-array-property-custom-entity-d7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LookAlive: Saving a serialized data Array as a property on a custom Entity (D7)</title>
+    <base href="http://lookalive.co.uk/blog/saving-serialized-data-array-property-custom-entity-d7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Doing some initial prototyping work on the Comstack module I hit this question without a clear answer. For clarity here's a chunk of the schema structure for a Message Type (exportable entity).</p>
+<div class="codeblock"><code>/**<br /> * Implements hook_schema().<br /> */<br />function comstack_schema() {<br />&nbsp; $schema = array();</p>
+<p>&nbsp; $schema[&#039;comstack_message_type&#039;] = array(<br />&nbsp;&nbsp;&nbsp; &#039;description&#039; =&gt; &#039;Stores information about all defined {comstack_message} types.&#039;,<br />&nbsp;&nbsp;&nbsp; &#039;fields&#039; =&gt; array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;id&#039; =&gt; array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;type&#039; =&gt; &#039;serial&#039;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;not null&#039; =&gt; TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;description&#039; =&gt; &#039;Primary Key: Unique {comstack_message} type ID.&#039;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ),<br />&nbsp;&nbsp;&nbsp; ...<br />&nbsp;&nbsp;&nbsp; &#039;delivery_methods&#039; =&gt; array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;type&#039; =&gt; &#039;text&#039;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;not null&#039; =&gt; FALSE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;size&#039; =&gt; &#039;big&#039;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;serialize&#039; =&gt; TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#039;description&#039; =&gt; &#039;A serialized array of allowed send methods for this type.&#039;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ),</code></div>
+<p>Following the instructions on how to create an exportable Entity as over here on d.o <a href="https://www.drupal.org/node/1021526" title="https://www.drupal.org/node/1021526">https://www.drupal.org/node/1021526</a> and here <a href="https://www.drupal.org/node/1021576" title="https://www.drupal.org/node/1021576">https://www.drupal.org/node/1021576</a></p>
+<p>The second link has the following code which is the submit process where the form values are wrapped up and a new entity put together for you before saving.</p>
+<div class="codeblock"><code>/**<br /> * Form API submit callback for the type form.<br /> */<br />function profile2_type_form_submit(&amp;$form, &amp;$form_state) {<br />&nbsp; $profile_type = entity_ui_form_submit_build_entity($form, $form_state);<br />&nbsp; ...</code></div>
+<p>So how do we construct a form which will allow for arbitrary array structures? Like this (in your form function)!</p>
+<div class="codeblock"><code>&nbsp; $form[&#039;delivery_methods&#039;] = array(<br />&nbsp;&nbsp;&nbsp; &#039;#title&#039; =&gt; t(&#039;Delivery methods to allow&#039;),<br />&nbsp;&nbsp;&nbsp; &#039;#type&#039; =&gt; &#039;checkboxes&#039;,<br />&nbsp;&nbsp;&nbsp; &#039;#required&#039; =&gt; TRUE,<br />&nbsp;&nbsp;&nbsp; &#039;#options&#039; =&gt; $delivery_methods,<br />&nbsp;&nbsp;&nbsp; &#039;#default_value&#039; =&gt; isset($comstack_message_type-&gt;delivery_methods) ? $comstack_message_type-&gt;delivery_methods : array(),<br />&nbsp;&nbsp;&nbsp; &#039;#tree&#039; =&gt; TRUE,<br />&nbsp; );</code></div>
+<p>It's the <code>#tree</code> bit there that does it. Here's an explanation from the Form API documentation page which is marked as archived but still useful <a href="https://www.drupal.org/node/48643" title="https://www.drupal.org/node/48643">https://www.drupal.org/node/48643</a>.</p>
+<p>When we set fieldset value to TRUE we create the form:</p>
+<div class="codeblock"><code>&lt;?php<br />$form[&#039;colors&#039;] = array(<br />&#039;#type&#039; =&gt; &#039;fieldset&#039;,<br />&#039;#title&#039; =&gt; t(&#039;Choose a color&#039;),<br />&#039;#collapsible&#039; =&gt; FALSE,<br />&#039;#tree&#039; =&gt; TRUE,<br />);<br />$form[&#039;colors&#039;][&#039;green&#039;] = array(<br />&#039;#type&#039; =&gt; &#039;checkbox&#039;,<br />&#039;#title&#039; =&gt; t(&#039;Green&#039;),<br />&#039;#default_value&#039; =&gt; $node-&gt;green,<br />&#039;#required&#039; =&gt; FALSE,<br />);</code></div>
+<p>and this is how they are inserted or updated in a db_query:</p>
+<div class="codeblock"><code>&lt;?php<br />function example_insert($node){<br />&nbsp; db_query(&quot;INSERT INTO {example} (nid, question, green, blue) VALUES (%d,&#039;%s&#039;, %d, %d)&quot;, $node-&gt;nid, $node-&gt;title, $node-&gt;colors[&#039;green&#039;], $node-&gt;colors[&#039;blue&#039;]);<br />}</code></div>
+<p>Any questions? Leave them in the comments :]</p>
+  </body>
+</html>
+

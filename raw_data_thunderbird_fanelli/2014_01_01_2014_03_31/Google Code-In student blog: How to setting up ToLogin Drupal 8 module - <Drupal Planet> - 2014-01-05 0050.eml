@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 04 Jan 2014 23:50:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 04 Jan 2014 23:50:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Google Code-In student blog: How to setting up ToLogin Drupal 8 module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://codein-stdent.at/?q=node/10
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Google Code-In student blog: How to setting up ToLogin Drupal 8 module</title>
+    <base href="http://codein-stdent.at/?q=node/10">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>ToLogin module was released! It is simple and helpful module for auth users by twitter. ToLogin use OAuth for authentication.<br />
+So, go to installation!</p>
+<h2>Create twitter app</h2>
+<p>At start go to <a href="https://dev.twitter.com/apps">https://dev.twitter.com/apps</a>. Click "create new application".</p>
+<p><img src="http://habrastorage.org/storage3/994/1f1/902/9941f1902eec2b56ae66b67770604307.png" /></p>
+<p>You will be redirected to form:</p>
+<p><img src="http://habrastorage.org/storage3/6ab/0cb/582/6ab0cb582e2c0af05deb1c5d09a451b6.png" /></p>
+<p>Invent name for application and enter them at "Name" field. At description write about your site. In website field paste your site url. And "Callback url" need be: YOUR_SITE_ULR/tlogin. Agree rules, fill captha and click "Create your Twitter application".<br />
+And your site application will be created:</p>
+<p><img src="http://habrastorage.org/storage3/824/cc8/ebb/824cc8ebb8d4cc7d0759fe652eb48068.png" /></p>
+<p>Click "Create my access token":<br /><img src="http://habrastorage.org/storage3/696/60c/d9b/69660cd9b0b68d842de86cc82cf44f05.png" /><br /><img src="http://habrastorage.org/storage3/c61/888/e93/c61888e93ece21a801044cd6cebbace8.png" /></p>
+<p>Twitter will generate 2 keys for access token. At all you will have 4 keys: "Consumer key", "Consumer secret", "Access token", "Access token secret" . This keys you will paste in ToLogin module on your site later.</p>
+<p><img src="http://habrastorage.org/storage3/127/655/128/127655128bfb062050346f14a9257bea.png" /></p>
+<h2>Installation module on your site</h2>
+<p>ToLogin installation is simple:</p>
+<p>1. Download latest version of this module. Unarchive it and move folder "ToLogin" to YOUR_WEBSITE_ROOT/modules. </p>
+<p>2. Go to administration panel. Go to "Extend". Find ToLogin module in modules list in package "CUSTOM". Mark by tick it.<br /><img src="http://habrastorage.org/storage3/b99/aa8/c62/b99aa8c62845881322f648f2f665fe4f.png" /><br />
+And click "Save configuration" in page bottom.</p>
+<p>3.Go to "Configuration". Find "WEB SERVICES" and click "Twitter Authentication"<br /><img src="http://habrastorage.org/storage3/696/60c/d9b/69660cd9b0b68d842de86cc82cf44f05.png" /><br />
+You will be goes to ToLogin Settings.<br /><img src="http://habrastorage.org/storage3/11d/86a/25c/11d86a25ca92019c20c1f293444a09a7.png" /><br />
+Fill fields from values from twitter app.<br />
+"Consumer key"=&gt;"Twitter client ID"<br />
+"Consumer secret"=&gt;"Twitter client secret"<br />
+"Access token"=&gt;"Twitter client token"<br />
+"Access token secret"=&gt;"Twitter client token secret"<br />
+I fill them thus:<br /><img src="http://habrastorage.org/storage3/0f5/571/4b9/0f55714b95293125f97592b01be22619.png" /><br />
+Click "Save configuration"</p>
+<p>4.Go to "Structure". Find "ToLogin" block in right menu. Click "Twitter authentication"<br /><img src="http://habrastorage.org/storage3/a95/546/795/a95546795dc48deb84cedebbba58f42d.png" /><br />
+You will see form:<br /><img src="http://habrastorage.org/storage3/acf/3c2/e34/acf3c2e3416d31fa8a8de99f9a6f4ddf.png" /><br />
+You can change or hide title, select region, where module will be displayed.<br />
+Select "Roles" and select only anonymous users.<br /><img src="http://habrastorage.org/storage3/7e5/194/cba/7e5194cba2a285ee49f4cfd568320a8b.png" /><br />
+Its module only for non logined(anonymous) users.<br />
+Click "Save block" and module ready to work!</p>
+<p>Module looks like thus:<br /><img src="http://habrastorage.org/storage3/672/878/07e/67287807e893c9697e139a60e0c10761.png" /></p>
+<p>User need to click on link, wait 2 seconds and he will be logined!</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/?q=taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/?q=taxonomy/term/2" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal-planet</a></li><li class="taxonomy-term-reference-2" rel="dc:subject"><a href="/?q=taxonomy/term/6" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">modules</a></li></ul></div>
+  </body>
+</html>
+

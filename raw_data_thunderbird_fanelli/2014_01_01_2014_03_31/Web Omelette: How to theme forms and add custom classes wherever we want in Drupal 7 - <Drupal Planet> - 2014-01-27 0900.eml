@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 27 Jan 2014 08:00:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 27 Jan 2014 08:00:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: How to theme forms and add custom classes wherever we want in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/theming-drupal-forms-custom-classes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: How to theme forms and add custom classes wherever we want in Drupal 7</title>
+    <base href="http://www.webomelette.com/theming-drupal-forms-custom-classes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In this article we are going to talk about theming forms. What exactly about it? Since theming forms can be a huge topic, I will stick to inserting your own custom classes wherever you can in a given form. </p>
+<p>Have you ever needed a form element to have some special class you could target in your css? Or even yet, have you ever used a css framework like <a href="http://getbootstrap.com/">Bootstrap</a> that tells you: ok, you need the form element to have class X in order to pick up these nice styles? Well, it can be a bit tricky to find exactly where you need to go, hook into what, override what theme function etc.</p>
+<p>So in this tutorial I'm going to show you how to get your classes into 5 different form "places":</p>
+<ul><li>the <code>&lt;form&gt;</code> tag itself</li>
+<li>the submit button</li>
+<li>the element input itself</li>
+<li>the form element wrapper <code>&lt;div&gt;</code> </li>
+<li>the element label</li>
+</ul><p>Before we go further, this tutorial assumes you are already familiar with Drupal hooks and know how to implement one at the basic level. We are going to talk about <code>form_alter</code> hooks a lot which means that you can use more than one for the job: for instance <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_alter/7" target="_blank">hook_form_alter()</a> or <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_FORM_ID_alter/7" target="_blank">hook_form_FORM-ID_alter()</a>, whichever best suits your need. You can read more about hooks in <a href="drupal-hooks">this section</a>. </p>
+<h2>1. The form tag: <code>&lt;form&gt;</code></h2>
+<p>If you want to add your class to a form tag you can do so inside of a form_alter hook. Once you are targeting the form(s) you want, you'll need to add some information to the <code>$form</code> array that gets passed through the hook:</p>
+<div class="codeblock"><code>$form['#attributes']['class'][] = 'your-class';</code></div>
+<p>What happens here? The <code>$form</code> variable is a renderable array that also takes <code>#attributes</code>. There can be many types of attributes, one being <code>class</code>. This is as well an array so we make sure we add another item to the <code>class</code> array. </p>
+<blockquote><p>How do you know all this? When I debug the <code>$form</code> variable with the <a href="https://drupal.org/project/devel">Devel module</a>, I see no <code>#attributes</code> array in there at all...</p></blockquote>
+<p>WeIl, if you look at <a href="https://api.drupal.org/api/drupal/includes%21form.inc/function/theme_form/7" target="_blank">theme_form()</a> itself - which is the Drupal core theme in charge of rendering forms - you'll notice that the <code>#attributes</code> array exists and gets transformed into HTML attributes by the <a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_attributes/7" target="_blank">drupal_attributes()</a> core function. So, whatever you put in there will be transformed into attributes.</p>
+<h2>2. The form submit button</h2>
+<p>Adding a class to the submit button - the input element rather - is similar to adding one to the <code>&lt;form&gt;</code> tag but a bit tricker. </p>
+<p>One thing you can do is override the entire <a href="https://api.drupal.org/api/drupal/includes%21form.inc/function/theme_button/7" target="_blank">theme_button()</a> function in your theme and add your class there. Not really recommended if all you are doing is adding a class because you are copying all that code just to add a couple of more words. For more complex operations, you can do that.</p>
+<p>Instead, you can use the same form_alter hook as before, and insert it there. We'll look at a couple of different forms to notice the difference between how you might approach this.</p>
+<p>First of all, you can have a custom form that you declared yourself in the module. In this case, all you have to do is specify the <code>#attributes</code> when declaring the submit button. Something like this:</p>
+<div class="codeblock"><code>  $form['submit'] = array(<br />    '#type' =&gt; 'submit',<br />    '#value' =&gt; t('Submit'),<br />    '#attributes' =&gt; array(<br />      'class' =&gt; array(<br />        'your-custom-class'  <br />      ),<br />    ),<br />  ); </code></div>
+<p>If the form however is declared by another module and you don't - nor you should - want to hack it, you can use the form_alter hook of your choice. Considering that this is the form submit button declaration (so no classes defined in the <code>#attributes</code> array originally):</p>
+<div class="codeblock"><code>  $form['my_submit'] = array(<br />    '#type' =&gt; 'submit',<br />    '#value' =&gt; t('Next'),<br />  );</code></div>
+<p>In the form alter you can add the following line:</p>
+<div class="codeblock"><code>$form['my_submit']['#attributes']['class'][] = 'my-custom-class';</code></div>
+<p><p>Where <code>my_submit</code> is the machine name of the submit button. This will have the same effect. </p>
+<p>Now let's take the <strong>Search block form</strong> as an example and say you want to add the class to the <em>Search</em> button. In your <code>$form</code> array, you'll notice an <code>actions</code> array. Looking this up in the <a href="https://api.drupal.org/api/drupal/developer%21topics%21forms_api_reference.html/7#actions" target="_blank">Form API reference</a>, you'll see that this is in fact a wrapper around one or multiple form buttons. So going inside that, we can find the submit button. So to add a class to that button, we do something like this:</p>
+<div class="codeblock"><code>$form['actions']['submit']['#attributes']['class'][] = 'your-custom-class';</code></div>
+<p>So it's basically about finding out where the submit button is in the <code>$form</code> array. And since the <code>actions</code> form element is defined as a renderable array as well, you can add a class to that too:</p>
+<div class="codeblock"><code>$form['actions']['#attributes']['class'][] = 'your-custom-class';</code></div>
+<p>So now the class is on the wrapper <code>&lt;div&gt;</code> of one or multiple buttons in the form.</p>
+<h2>3. Form elements</h2>
+<p>Similar to the form buttons, to add classes to form elements (the actual input, select, etc fields), you need to find them in the <code>$form</code> array of your form_alter hook and then add to the <code>#attributes</code> array. So to take the same <strong>Search block form</strong>, we can add our custom class like so:</p>
+<div class="codeblock"><code>$form['search_block_form']['#attributes']['class'][] = 'your-custom-class';</code></div>
+<p>Easy peasy. And same as above, if you are the one declaring the form, you can just add the <code>#attributes</code> array with the class right there.</p>
+<h2>4. Form element wrapper <code>&lt;div&gt;</code></h2>
+<p>When I say <em>form element wrapper <code>&lt;div&gt;</code></em>, I mean the <code>&lt;div&gt;</code> surrounding the form element itself and the label. So how do we add our custom class to this? If you try with the form_alter hook as before, you won't be able because the form elements are rendered using their own custom theme implementation of <a href="https://api.drupal.org/api/drupal/includes%21form.inc/function/theme_form_element/7" target="_blank">theme_form_element()</a>. And I've found that using the preprocess hook for that theme function does not pass the class to the wrapping <code>&lt;div&gt;</code> (as I thought it should).</p>
+<p>So then what we can do is override the theme function itself - in our custom theme of course - and add the class there. Just copy the theme implementation from the API page into your theme <code>template.php</code> file and change its name from <code>theme_form_element()</code> to <code>your_theme_name_form_element()</code>. Then perform inside it any additional checks to make sure you only target the class name addition to the elements you want. The important thing then is to add the class into this array:</p>
+<div class="codeblock"><code>$attributes['class'] = array('form-item');</code></div>
+<p>You can see below it all sorts of checks to add further classes that have some sort of meaning for the form element. You can insert yours in there somewhere.</p>
+<h2>5. Form element label </h2>
+<p>Adding your own class to the label is similar to what we did in the previous point: you have to override the right theme function. In this case it is <a href="https://api.drupal.org/api/drupal/includes%21form.inc/function/theme_form_element_label/7" target="_blank">theme_form_element_label()</a>. </p>
+<p>Here though, you have to be careful. The <code>$attributes['class']</code> array into which we've been putting classes is no longer an array but a simple string. So you need to avoid wiping out any other classes that Drupal might want to add to the label in various circumstances. So right before the function returns the output, add something like this:</p>
+<div class="codeblock"><code>$attributes['class'] .= ' my-custom-class';</code></div>
+<p>This way you are appending to any class string that may come before. For some reason, the <code>$attributes['class']</code> is not an array here. I don't know. Maybe you figured out why and there is a better way of doing this. </p>
+<h2>Conclusion</h2>
+<p>In this article we've seen what we need to do to add our own custom css classes to Drupal 7 forms. It's not a walk in the park but it's not so difficult either. One thing you can be sure of though is that it takes a lot of trial and error until you get everything right. </p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal-hooks">Hooks</a></span> | <span class="field-item odd"><a href="/drupal-theming">Theming</a></span> | <span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/theming-drupal-forms-custom-classes" st_title="How to theme forms and add custom classes wherever we want in Drupal 7" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/theming-drupal-forms-custom-classes" st_title="How to theme forms and add custom classes wherever we want in Drupal 7" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/theming-drupal-forms-custom-classes" st_title="How to theme forms and add custom classes wherever we want in Drupal 7" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

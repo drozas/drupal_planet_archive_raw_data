@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 24 Sep 2014 05:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 24 Sep 2014 05:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Modules Unraveled: 119 The Classy Base Theme for Drupal 8 with Scott Reeves and David Hernandez - Modules Unraveled Podcast
+Content-Transfer-Encoding: 8bit
+Content-Base: http://modulesunraveled.com/podcast/119-classy-base-theme-drupal-8-scott-reeves-and-david-hernandez-modules-unraveled-podcast
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Modules Unraveled: 119 The Classy Base Theme for Drupal 8 with Scott Reeves and David Hernandez - Modules Unraveled Podcast</title>
+    <base href="http://modulesunraveled.com/podcast/119-classy-base-theme-drupal-8-scott-reeves-and-david-hernandez-modules-unraveled-podcast">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--name-field-image field--type-image field--label-hidden"><div class="field__items"><div class="field__item even"><img typeof="foaf:Image" src="http://modulesunraveled.com/sites/default/files/styles/podcast_default/public/podcast/image/Scott%20and%20David.png?itok=-OKiuEjU" width="350" height="176" alt="Photo of Scott Reeves and David Hernandez" /></div></div></div><span class="submitted-by">Published: Wed, 09/24/14</span><div class="field field--name-field-podcast-file field--type-file field--label-hidden"><div class="field__items"><div class="field__item even"><div class="mediaelement-audio"><audio  src="http://traffic.libsyn.com/modulesunraveled/119_The_Classy_Base_Theme_for_Drupal_8_with_Scott_Reeves_and_David_Hernandez_-_Modules_Unraveled_Podcast.mp3" class="mediaelement-formatter-identifier-1411547214-0" controls="controls" ></audio><div class="mediaelement-download-link"><a href="http://traffic.libsyn.com/modulesunraveled/119_The_Classy_Base_Theme_for_Drupal_8_with_Scott_Reeves_and_David_Hernandez_-_Modules_Unraveled_Podcast.mp3">Download this episode</a></div></div></div></div></div><div class="field field--name-body field--type-text-with-summary field--label-hidden"><div class="field__items"><div class="field__item even" property="content:encoded"><h2>Consensus Banana</h2>
+<ul><li>How did this all get started? and where does the “banana” come from.
+<ul><li>From Morten: 2 years ago at BadCamp John Albin was holding a plastic sword from the pirate fest the day before. It was known as the sword of consensus. At DrupalCon Austin Morten had a banana that he was using to point to people and ask “So can we agree on X?”.  That is how it became the banana of consensus. It was basically a pointing stick.</li>
+</ul></li>
+<li>Technically, what is the change.
+<ul><li>Moving classes from core to a base theme called Classy.</li>
+<li>Multi-phased approach.</li>
+<li>Phase 1, move classes out of preprocess functions and into the core templates.</li>
+<li>Create the Classy base theme.</li>
+<li>Phase 2, copy the core template with classes to Classy, remove the classes from core.</li>
+</ul></li>
+<li>Why do themers need this.
+<ul><li>Better options</li>
+<li>Not everyone wants the same markup (themer survey)</li>
+<li>Avoiding php</li>
+<li>No time wasted undoing core.</li>
+</ul></li>
+<li>What work has been done, what is left.
+<ul><li>Preprocess changes (phase 1) far along.</li>
+<li>Classy is RTBC, waiting for Dries to approve.</li>
+<li>Phase 2 to start at or just after Amsterdam (don’t need to wait until phase 1 is 100% complete)</li>
+</ul></li>
+<li>Chance of failure?
+<ul><li>Changes have to be in by RC1.</li>
+</ul></li>
+<li>Who to thank?
+<ul><li>joelpittet, mdrummond, crowdcg, lauriii, alexpott!</li>
+</ul></li>
+<li>Are there any other theme layer changes to look forward to that have come about because of the banana consensus?
+<ul><li>addClass/removeClass is in, what about setAttribute/removeAttribute? Similarities to jQuery make this (hopefully) more approachable for frontend developers.</li>
+</ul></li>
+<li>Any other theming changes not related to banana?
+<ul><li>Improved menu theming - menu.html.twig using a Twig macro</li>
+</ul></li>
+</ul><h2>Use Cases</h2>
+<ul><li>What it means for themers. What it means for developers.
+<ul><li>Preprocess is still there so contrib can add classes if necessary - but is it necessary? Could it be done as a data- attribute?</li>
+</ul></li>
+</ul></div></div></div><div class="field field--name-field-items-mentioned field--type-link-field field--label-above"><div class="field__label">Episode Links:&nbsp;</div><div class="field__items"><div class="field__item even"><a href="http://drupal.org/u/Cottser" rel="nofollow" target="_blank">Scott on drupal.org</a></div><div class="field__item odd"><a href="http://twitter.com/Cottser" rel="nofollow" target="_blank">Scott on Twitter</a></div><div class="field__item even"><a href="https://www.drupal.org/u/davidhernandez" rel="nofollow" target="_blank">David on drupal.org</a></div><div class="field__item odd"><a href="https://twitter.com/davidnarrabilis" rel="nofollow" target="_blank">David on Twitter</a></div><div class="field__item even"><a href="https://www.drupal.org/node/2289511" rel="nofollow" target="_blank">Consensus Banana Issue Queue</a></div><div class="field__item odd"><a href="http://drupaltwig.org" rel="nofollow" target="_blank">Drupal Twig</a></div></div></div><div class="field field--name-field-tags field--type-taxonomy-term-reference field--label-above"><div class="field__label">Tags:&nbsp;</div><div class="field__items"><div class="field__item even"><a href="/tags/drupal-8" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal 8</a></div><div class="field__item odd"><a href="/tags/theming" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Theming</a></div><div class="field__item even"><a href="/tags/twig" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Twig</a></div><div class="field__item odd"><a href="/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet-drupal</a></div></div></div>
+  </body>
+</html>
+

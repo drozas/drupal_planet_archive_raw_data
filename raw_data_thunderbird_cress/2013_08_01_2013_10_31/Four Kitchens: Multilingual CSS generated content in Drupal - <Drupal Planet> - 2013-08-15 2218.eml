@@ -1,0 +1,49 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 15 Aug 2013 21:18:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 15 Aug 2013 21:18:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Four Kitchens: Multilingual CSS generated content in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fourkitchens.com/blog/2013/08/15/multilingual-css-generated-content-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Four Kitchens: Multilingual CSS generated content in Drupal</title>
+    <base href="http://fourkitchens.com/blog/2013/08/15/multilingual-css-generated-content-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-body">
+    <p><span class="caps">CSS</span> generated content is cool. You can make those little triangles everyone seems to love, but its real purpose is to let you add presentational words that would otherwise be a pain to generate in markup for some&nbsp;situations.</p>
+<div class="geshifilter">
+<pre class="text geshifilter-text" style="font-family:monospace;">a:before {
+  content: ‘Download item’;
+}</pre></div>
+<p>It can do other neat things like output the contents of another attribute on your element. This feature was originally created to allow print stylesheets to display URLs inline for printed&nbsp;documents:</p>
+<div class="geshifilter">
+<pre class="text geshifilter-text" style="font-family:monospace;">a:after {
+  content: ‘ (‘ attr(href) ‘)’;
+}</pre></div>
+<p>But what happens when you need to bring multilingual into the mix? We occasionally build multilingual sites, and typically there is translatable content at every level of the stack: Drupal nodes, template files, <span class="caps">CSS</span>, <span class="caps">JS</span>, you name it. When I was originally tasked with solving this it seemed like a big problem, but it turns out to be relatively&nbsp;simple.</p>
+<p>My initial thought was to use the language attribute of <span class="geshifilter"><code class="text geshifilter-text">html</code></span> tag and make individual, static content properties, but that leads to code bloat as you accommodate each new language. Furthermore, in Drupal&#8217;s case, it leaves your strings stranded in <span class="caps">CSS</span> and inaccessible to translators which have an interface built into Drupal&#8217;s admin <span class="caps">UI</span>.</p>
+<h3>Solution: dynamically generate the&nbsp;content</h3>
+<p>We had a client who wanted the links to be big CTAs accompanied by the instructions “Download item.” So instead of hardcoding the English words into my stylesheet, I added a data-attribute into the <span class="caps">DOM</span> via JavaScript (you could also do this in Drupal by creating or modifying the appropriate field.tpl.php, but I did some other things with <span class="caps">JS</span> so it was simpler to keep it all in one&nbsp;file).</p>
+<div class="geshifilter">
+<pre class="text geshifilter-text" style="font-family:monospace;">$(‘.my-field’).attr(‘data-cta-msg’, Drupal.t(‘Download item’));</pre></div>
+<p>Notice <a href="https://drupal.org/node/323109">Drupal.t</a> in there? <code>t</code> is for <em>translate</em>, and it is the standard mechanism for localizing <span class="caps">JS</span>-powered <span class="caps">UI</span> components in Drupal 6, Drupal 7, and Drupal 8. There’s a bit of background magic that happens, but in a nutshell once a page containing your new <code>Drupal.t()</code> string has been loaded, you can access it in the <strong>Translate</strong> interface in the Drupal admin <span class="caps">UI</span>:</p>
+<p><img src="http://fourkitchens.com/sites/default/files/blog/inline-images/drupal-7-translate-ui.png" width="620" height="361" alt="Drupal 7 interface for translating non-content/UI strings" class="pop-out" /></p>
+<p>Now you can grab a translator, add the appropriate text, and your stylesheet will always supply the correct translation in your <span class="caps">CSS</span> generated content! Look at the minor modification to <span class="caps">CSS</span> content property (compare to the very first example in this&nbsp;article)</p>
+<div class="geshifilter">
+<pre class="text geshifilter-text" style="font-family:monospace;">a:before {
+  content: attr(data-cta-msg);
+}</pre></div>
+<p>And here’s the result in English and Arabic&nbsp;respectively:</p>
+<p><img src="http://fourkitchens.com/sites/default/files/blog/inline-images/download-btn-en.png" width="350" height="104" alt="English download button with CSS generated content" /></p>
+<p><img src="http://fourkitchens.com/sites/default/files/blog/inline-images/download-btn-ar.png" width="353" height="101" alt="Arabic download button with CSS generated content" /></p>
+  </div>
+  </body>
+</html>
+

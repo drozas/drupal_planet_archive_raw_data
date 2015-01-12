@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 22 Aug 2013 22:44:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 22 Aug 2013 22:44:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Matt Grasmick: Introducing Views Cache Bully: You're gonna cache your views, and you're gonna like it.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://grasmash.com/article/introducing-views-cache-bully-youre-gonna-cache-your-views-and-youre-gonna-it
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Matt Grasmick: Introducing Views Cache Bully: You&#039;re gonna cache your views, and you&#039;re gonna like it.</title>
+    <base href="http://grasmash.com/article/introducing-views-cache-bully-youre-gonna-cache-your-views-and-youre-gonna-it">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><img style="float: right; margin: 0 0 2em 2em;" src="http://grasmash.com/sites/default/files/styles/medium-large/public/field/image/vcb.jpg?itok=FUZQ4obv" width="253" height="350" alt="views cache bully admin settings"  class="image-medium-large" />Tucked away under the Views UI's "advanced" fieldset is a too-seldom-used option: Views caching. It allows you to cache the query results and/or rendered markup for any given view. This can drastically improve your site's performance.</p>
+<p>Unfortunately, many people don't use this option. Maybe they don't know about it, maybe they've forgotten about it, or maybe they don't like. Well, the <a href="https://drupal.org/project/views_cache_bully">Views Cache Bully</a> module is here to say "Too bad. You're gonna cache your views, and you're gonna like it."</p>
+<p>To quote <a href="https://drupal.org/project/user/329570">Dave Stoline (dstol)</a>:</p>
+<blockquote><p>Views Cache Bully some serious assumptions about caching your views. It forces caching down your throat</p></blockquote>
+<h3>How does it work?</h3>
+<p>This is pretty straightforward module. It works by setting the views_plugin_cache_none plugin to use the views_plugin_cache_time plugin. Once enabled, all of your site's uncached views will be using time-based caching. The settings for bully-enforced caching can be globally administered on a settings page, which requires the "administer views cache bully" permission. This will keep naughty content admins from trying to pull a quick one.</p>
+<p>If you'd rather not use the globally set cache expirations, that's fine. You can still choose customized time-based caching per view&mdash;you just can't get away with no caching. Well, maybe you can.</p>
+<p>Administrators with sufficient permissions may make exemptions for specific views. This is most important for views with exposed filters (which don't always play well with caching). By default, views that use exposed filters are exempt. This is a bully with a heart of gold.</p>
+
+
+6.x, , 7.x, 
+drupal, views, cache, caching
+  </body>
+</html>
+

@@ -1,0 +1,52 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 23 Jun 2014 16:00:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 23 Jun 2014 16:00:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: SitePoint PHP Drupal: Drupal 7: Relationships, Contextual Filters and Field Rewriting in Views 3
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.sitepoint.com/relationships-contextual-filters-field-rewriting-views-3-drupal-7/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>SitePoint PHP Drupal: Drupal 7: Relationships, Contextual Filters and Field Rewriting in Views 3</title>
+    <base href="http://www.sitepoint.com/relationships-contextual-filters-field-rewriting-views-3-drupal-7/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><p>In this article we will continue exploring the powers of Views and focus on how to use relationships, contextual filters and rewrite field outputs. In a previous tutorial I showed you how to create a new View and perform basic customizations for it. We’ve seen how to select a display format, which fields to show and how to filter and sort the results. </p>
+
+<p>In this article we will go a bit further and see what relationships and contextual filters are - the two most important options found under the <em>Advanced</em> fieldset at the right of the View edit page. Additionally, we’ll rewrite the output of our fields and combine their values into one. </p>
+
+<p>To begin with, I have a simple article View that just shows the titles. Very easy to set up if you want to follow along. And there are three things I want to achieve going forward:</p>
+
+<ol>
+<li>Make it so that the View shows also the username of the article author</li>
+<li>Make is so that the View shows only articles authored by the logged in user</li>
+<li>Make it so that the author username shows up in parenthesis after the title</li>
+</ol>
+
+<h2 id="relationships">Relationships</h2>
+
+<p>First, let’s have the View include the author of the articles. If the View is displaying fields (rather than view modes or anything else), all we have to do is find the field with the author username, right? Wrong. The problem is the following: the node table only contains a reference to the user entity that created the node (in the form of a user ID - <code>uid</code>). So that’s pretty much all we will find if we look for user related fields: <code>Content: Author uid</code>. </p>
+
+<p>What we need to do is use a relationship to the user entity found in the <code>user</code> table. Relationships are basically a fancy way of saying that table A (in our case <code>node</code>) will join with table B (in our case <code>user</code>) in order to retrieve data related to it from there (such as the name of the user and many others). And the join will happen in our case on the <code>uid</code> field which will match in both tables.</p>
+
+<p>So let’s go ahead and add a new relationship of the type <code>Content: Author</code>. Under <em>Identifier</em>, we can put a descriptive name for this relationship like <em>Content Author</em>. The rest we can leave as default. </p>
+
+<p>Now if you go and add a new field, you’ll notice many others that relate to the user who authored the content. Go ahead and add the <code>User: Name</code> field. In its settings, you’ll see a <em>Relationship</em> select list at the top where the relationship identifier we just specified is automatically selected. That means this field is being pulled in using that relationship (or table join). Saving the field will now add the username of the author, already visible in the View preview. </p>
+
+<p><img src="http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/05/1399734657views-relationships.png" alt="relationships" title="" /></p>
+
+<p>You can also <em>chain</em> relationships. For instance, if the <code>user</code> entity has a reference to another table using a unique identifier, you can add a second relationship. It will use the first one and bring in fields from that table. So the end result will be that the View will show fields that relate to the node through the user who authored the node but not strictly from the <code>user</code> table but somewhere else connected to the author. And on and on you can join tables like this. </p>
+
+<h2 id="contextual-filters">Contextual filters</h2>
+
+<p>Contextual filters are similar to regular filters in that you can use mainly the same fields to filter the records on. Where contextual filters differ greatly is that you do not set the filtering value when you create the View, but it is taken from context. </p>
+
+<p>There are many different contexts a filter value can come from, but mainly it comes from the URL. However, you can instruct Views to look elsewhere for contexts as well - such as the ID of the logged in user. </p></p><p><em>Continue reading %<a rel="nofollow" href="http://www.sitepoint.com/relationships-contextual-filters-field-rewriting-views-3-drupal-7/">Drupal 7: Relationships, Contextual Filters and Field Rewriting in Views 3</a>%</em></p>
+  </body>
+</html>
+

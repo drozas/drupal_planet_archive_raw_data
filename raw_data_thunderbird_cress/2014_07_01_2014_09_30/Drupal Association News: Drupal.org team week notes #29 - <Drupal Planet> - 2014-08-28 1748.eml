@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 28 Aug 2014 16:48:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 28 Aug 2014 16:48:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Association News: Drupal.org team week notes #29
+Content-Transfer-Encoding: 8bit
+Content-Base: https://assoc.drupal.org/blog/tvn/drupal.org-team-week-notes-29
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Association News: Drupal.org team week notes #29</title>
+    <base href="https://assoc.drupal.org/blog/tvn/drupal.org-team-week-notes-29">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><img class="left" src="https://association.drupal.org/files/do.png" /></p>
+<h2>Better credit for organizations on Drupal.org</h2>
+<p>We <a href="https://drupal.org/news/supporting-organizations-credit-on-profiles">added a feature to projects on Drupal.org to help highlight the contributions made by supporting organizations</a>. Maintainers of distributions, modules, and themes can give credit to organizations that have materially contributed to projects on Drupal.org using the new “Supporting Organizations" field.</p>
+<p>If you are a project maintainer, take a moment to give some credit to the organizations that have helped build the Drupal ecosystem.</p>
+<h2>Drupal Jobs launch</h2>
+<p>We’re proud to announce the launch of <a href="https://jobs.drupal.org/">Drupal Jobs</a>, a career site dedicated completely to Drupal. The Drupal job market is hot and we hope this new tool will help match the right talent with the right positions.</p>
+<p>For job seekers, you can start searching for positions by location, position, skill level and more. You can create a profile with your job preferences and salary requirements, and even choose whether you wish to be contacted by employers and recruiters. All for free.</p>
+<p>For employers and recruiters there are a variety of packages available, giving them the opportunity to highlight their company with a branded page and feature select postings in newsletters and social media. The great thing is that proceeds from postings are invested back into Drupal.org and its subsites (including Drupal Jobs) and community programs.</p>
+<h2>Upcoming deployments</h2>
+<p>We are slowly moving towards implementing the new layout for user profiles on Drupal.org. In the coming weeks we will be migrating profile fields to user fields bit by bit. Profile layout will be changing along the way and might look messy at times during migration.</p>
+<p>Next week we are planning to deploy software and infrastructure changes to support <a href="https://www.drupal.org/news/introducing-drupalorg-tos-and-privacy-policy">the new Drupal.org Terms of Service and Privacy Policy</a>. We are going to implement a checkbox on user profiles, so that users could accept the ToS and Privacy Policy, as well as a few other changes.</p>
+<h2>Previous deployments</h2>
+<p>Some of the deployments, which happened in the previous two weeks, include:</p>
+<ul><li><a href="https://www.drupal.org/node/2098117">Upgrade to fasttoggle 7.x-1.5 - 'Unpublish' quicklinks on all issue comments disappear once clicked on one</a></li>
+<li><a href="https://www.drupal.org/node/2125029">Wrong 'open issues' count on user project page</a></li>
+<li><a href="https://www.drupal.org/node/2228139">Remove table spacing JS</a></li>
+<li><a href="https://www.drupal.org/node/956062">Add distinctive color to css a:visited on D.O</a> was reverted</li>
+<li><a href="https://www.drupal.org/node/1028950">Fix packaging scripts to checkout from sane/stable Git URLs instead of hard-coding the local filesystem</a></li>
+<li><a href="https://www.drupal.org/node/2320141">Comment render caching should include comment status in hash</a></li>
+<li><a href="https://www.drupal.org/node/968994">Multiple Values for listings of current companies and organizations</a></li>
+<li><a href="https://www.drupal.org/node/2322651">Sandbox releases found</a></li>
+<li><a href="https://www.drupal.org/node/2324335">Update the Docs management page</a></li>
+<li><a href="https://www.drupal.org/node/2320925">Update tabs for Documentation section</a></li>
+<li><a href="https://www.drupal.org/node/2207117">Clean up infrastructure issue queue</a></li>
+<li><a href="https://www.drupal.org/node/2322261">Migrate Work-related profile fields</a></li>
+<li><a href="https://www.drupal.org/node/2325219">Bring company logos back on user profiles</a></li>
+<li><a href="https://www.drupal.org/node/2292795">Update organization page sidebar for D7</a></li>
+</ul><p>Thanks to <a href="https://www.drupal.org/u/steven-jones">Steven Jones</a>, <a href="https://www.drupal.org/u/mallezie">mallezie</a>, <a href="https://www.drupal.org/u/lewisnyman">LewisNyman</a>, <a href="https://www.drupal.org/u/fizk">fizk</a> and <a href="https://www.drupal.org/u/jhodgdon">jhodgdon</a> for working with us on the issues listed above and making those deployments possible.</p>
+<h2>Drupal.org infrastructure news</h2>
+<p>The load balancers are being rebuilt with a new operating system and configuration.  These rebuilds bring decreased latency and increased security to our *.drupal.org sites.  Since the beginning of August our average latency has decreased from ~1000ms to ~400ms.</p>
+<p><img src="https://assoc.drupal.org/files/screen.png" /></p>
+<p>More statistics are available from <a href="http://status.devdrupal.org/433372/2014/08">status.devdrupal.org</a>.</p>
+<p>Drupal.org web servers have also been upgraded to a 3.14 kernel with the latest grsecurity patch.</p>
+<p>There has also been a <a href="https://www.drupal.org/node/2228897">review of cache values on drupal.org</a> sites.</p>
+<p>---<br />
+As always, we’d like to say thanks to all volunteers who are working with us and to the Drupal Association <a href="https://drupal.org/supporters">Supporters</a>, who made it possible for us to work on these projects. </p>
+<p>Cross-posting from <a href="https://groups.drupal.org/node/440383">g.d.o/drupalorg</a>.</p>
+<p>Follow us on Twitter for regular updates: <a href="https://twitter.com/drupal_org">@drupal_org</a>, <a href="https://twitter.com/drupal_infra">@drupal_infra</a></p>
+</div></div></div><div class="field field-name-taxonomy-vocabulary-4 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Personal blog tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/taxonomy/term/588">week notes</a></div></div></div>
+  </body>
+</html>
+

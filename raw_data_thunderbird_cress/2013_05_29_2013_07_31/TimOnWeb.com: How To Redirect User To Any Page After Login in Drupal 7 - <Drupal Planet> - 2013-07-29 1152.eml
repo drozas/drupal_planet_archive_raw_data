@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 29 Jul 2013 10:52:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 29 Jul 2013 10:52:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: TimOnWeb.com: How To Redirect User To Any Page After Login in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://timonweb.com/how-to-redirect-user-to-any-page-after-login-in-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>TimOnWeb.com: How To Redirect User To Any Page After Login in Drupal 7</title>
+    <base href="http://timonweb.com/how-to-redirect-user-to-any-page-after-login-in-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><img typeof="foaf:Image" src="http://timonweb.com/sites/default/files/styles/post-images/public/arrow.jpg" width="150" height="115" alt="" /></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><p>There are loads of modules that can do this for you, but why to install one more module if you can do this with one string of code? The best thing is that approach below does a redirection even if you login from user login block.</p>
+<p><br />Just put the following code into your custom module:<br />
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Implements hook_user_login().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> module_name_user_login<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$edit</span><span style="color: #339933;">,</span> <span style="color: #000088;">$account</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #666666; font-style: italic;">// Redirect user to profile page after the login.</span>
+  <span style="color: #000088;">$_GET</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'destination'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'user'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div><br />
+You can find this snippet at dropbucket.org here: <a href="http://dropbucket.org/node/746">http://dropbucket.org/node/746</a></p>
+</div> Read on about <a href="http://timonweb.com/how-to-redirect-user-to-any-page-after-login-in-drupal-7">How To Redirect User To Any Page After Login in Drupal 7</a>
+  </body>
+</html>
+

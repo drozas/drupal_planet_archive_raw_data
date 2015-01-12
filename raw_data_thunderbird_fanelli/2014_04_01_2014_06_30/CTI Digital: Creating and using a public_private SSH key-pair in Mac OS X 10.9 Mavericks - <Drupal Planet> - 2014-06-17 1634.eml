@@ -1,0 +1,185 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 17 Jun 2014 14:34:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 17 Jun 2014 14:34:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CTI Digital: Creating and using a public/private SSH key-pair in Mac OS X 10.9 Mavericks
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.ctidigital.com/blog/creating-and-using-publicprivate-ssh-key-pair-mac-os-x-109-mavericks
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CTI Digital: Creating and using a public/private SSH key-pair in Mac OS X 10.9 Mavericks</title>
+    <base href="http://www.ctidigital.com/blog/creating-and-using-publicprivate-ssh-key-pair-mac-os-x-109-mavericks">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <div><em><strong><span style="line-height: 1.538em;">In the following article, we’re going to run through the process of creating a public/private </span></strong></em><em style="line-height: 1.538em;"><strong>SSH key-pair in OS X 10.9.</strong></em></div>
+<div> </div>
+<div>Once this is done, we’ll conﬁgure our GitHub account to use <span style="line-height: 1.538em;">the public key, create a new repository and ﬁnally pull this repository down onto our </span><span style="line-height: 1.538em;">machine via SSH.</span></div>
+<div> </div>
+<div>Before setting up an SSH key on our system we ﬁrst need to install GIT. If you’ve already <span style="line-height: 1.538em;">installed GIT please proceed to the next section - otherwise lets get started. </span></div>
+<div> </div>
+<h3>Installation and conﬁguration of GIT</h3>
+<div> </div>
+<div>To install GIT on Mac OS X 10.9, please navigate to the following URL (<a href="http://git-scm.com/">http://git-scm.com/</a><span style="line-height: 1.538em;">downloads) and click the “Download for Mac” button.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="219" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_1.png?itok=oV4zEbsN" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 1: Download options available at <a href="http://git-scm.com/downloads">http://git-scm.com/downloads</a>.</strong></div>
+<div> </div>
+<div>Once the *.dmg ﬁle has downloaded, double-click the ﬁle to mount it and in the new ﬁnder window <span style="line-height: 1.538em;">that pops up, double-click on the ﬁle “git-1.9.2-intel-universal-snow-leopard.pkg” </span><em style="line-height: 1.538em;">(the ﬁle will have </em><em style="line-height: 1.538em;">likely changed name somewhat by the time you read this article, but aside from the version </em><em style="line-height: 1.538em;">number, it should still be quite similar</em><span style="line-height: 1.538em;">).</span></div>
+<div> </div>
+<div>If you get the error highlighted in “Fig 2” when trying to open the ﬁle simply right-click on the *.pkg <span style="line-height: 1.538em;">ﬁle and click “Open”. You should then see a new dialogue window similar to the one displayed in </span><span style="line-height: 1.538em;">“Fig 3”, which will allow you to continue on to the installation process.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="336" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_2.png?itok=jMTaxppr" /></div>
+<div><strong>Fig 2: The error an end-user will see when trying to open a non-identiﬁed ﬁle if the “Allow </strong><strong style="line-height: 1.538em;">apps downloaded from” section of “Security &amp; Privacy” is set to “Mac App Store and </strong><strong style="line-height: 1.538em;">identiﬁed developers” within “System Preferences”.</strong></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="339" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_3.png?itok=4PJ3w9rV" /></div>
+<div><strong>Fig 3: When right-clicking the *.pkg ﬁle and clicking “Open” the end-user is given a soft </strong><strong style="line-height: 1.538em;">warning but now, unlike “Fig 2” we're able to bypass this dialogue by clicking “Open”.</strong></div>
+<div> </div>
+<div>The installation process for Git is fairly self explanatory, so I won’t go into too much detail - In a <span style="line-height: 1.538em;">nutshell you will be asked to install Git for all users of the computer </span><em style="line-height: 1.538em;">(I suggest leaving this at it’s </em><em style="line-height: 1.538em;">default value</em><span style="line-height: 1.538em;">) and you’ll be asked if you want to change the location of the installer </span><em style="line-height: 1.538em;">(unless you </em><em style="line-height: 1.538em;">have good reason to change the Git install location this should be left to the default value</em><span style="line-height: 1.538em;">). </span></div>
+<div> </div>
+<div>Finally, as part of the installation process you’ll be prompted to enter your system password to <span style="line-height: 1.538em;">allow the installer to continue as shown in - type your password and click “Install Software”. If all </span><span style="line-height: 1.538em;">goes well at the end of the installation process you should see the message “The installation was </span><span style="line-height: 1.538em;">successful.”. At this stage you can click “Close” to close the installer. </span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="304" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_4.png?itok=rE_A5tfG" /></div>
+<div><strong>Fig 4: Prior to installation, the GIT installer will require you to enter your system password </strong><strong style="line-height: 1.538em;">to allow it to write ﬁles to the speciﬁed locations.</strong></div>
+<div> </div>
+<div>After the Git installation process we need to open a new instance of the Terminal application. This <span style="line-height: 1.538em;">can be accomplished by opening the ﬁnder, clicking the “Applications” shortcut in the sidebar, scrolling to the bottom of the applications listing in the main window, double-clicking “Utilities” and </span><span style="line-height: 1.538em;">ﬁnally double-clicking on “Terminal”.</span></div>
+<div> </div>
+<p><span style="line-height: 1.538em; font-family: 'lucida sans unicode', 'lucida grande', sans-serif;"><em><strong>Pro tip</strong></em>: <em>A much quicker way of accessing the Terminal is by pressing “Cmd+Space” to bring up </em></span><em style="line-height: 1.538em;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;">Spotlight, typing “Terminal” and hitting the enter key. Once you become familiar with Spotlight it </span></em><em style="line-height: 1.538em;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;">becomes indispensable!</span></em></p>
+<div> </div>
+<div>Once the Terminal window is open, type “<span style="font-family:courier new,courier,monospace;">git --version</span>” and hit enter. If you’re running a fresh <span style="line-height: 1.538em;">install of Mac OS X 10.9 at this stage you will likely be shown a message telling you that Developer </span><span style="line-height: 1.538em;">Tools was not found and a popup will appear requesting that you install the tools. Click “Install” on </span><span style="line-height: 1.538em;">the ﬁrst dialogue window and when the next popup is displayed, click “Agree”.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="296" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_5.png?itok=-58bceeq" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 5: The message most users will receive with a fresh install of OS X 10.9 when typing “git </strong><strong style="line-height: 1.538em;">--version” into the terminal.</strong></div>
+<div> </div>
+<div>After the installation of Developer Tools, restart the Terminal application and type the command <span style="line-height: 1.538em;">“</span><span style="line-height: 1.538em; font-family: 'courier new', courier, monospace;">git --version</span><span style="line-height: 1.538em;">” followed by hitting enter. This time you should see the version number of the </span><span style="line-height: 1.538em;">Git application installed.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="116" width="438" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_6.png?itok=z48Uq_ag" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 6: Terminal displaying the version number of the installed Git application.</strong></div>
+<div> </div>
+<div>Finally, for the installation and conﬁguration of Git we’re going to conﬁgure some user-level settings <span style="line-height: 1.538em;">(</span><em style="line-height: 1.538em;">speciﬁcally your name and email address</em><span style="line-height: 1.538em;">). These conﬁguration settings will be stored in your </span><span style="line-height: 1.538em;">home directory in a ﬁle named “.gitconﬁg”. </span></div>
+<div> </div>
+<div>To conﬁgure these settings type the following into the terminal (<em>replacing my name and email </em><em style="line-height: 1.538em;">address with your own obviously!</em><span style="line-height: 1.538em;">).</span></div>
+<div> </div>
+<div><span style="font-family:courier new,courier,monospace;">git config --global user.name “Craig Perks” </span></div>
+<div><span style="font-family:courier new,courier,monospace;">git config --global user.email <u>“<a href="mailto:c.perks@test.com">c.perks@test.com</a>”</u> </span></div>
+<div> </div>
+<div>Once done, type “<span style="font-family:courier new,courier,monospace;">git config --list</span>" and you should see a list of user conﬁguration settings <span style="line-height: 1.538em;">analogous to those shown in “Fig 7”.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="114" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_7.png?itok=V0I2Y8xI" /></div>
+<div> </div>
+<div><strong>Fig 7: A Terminal instance showing the configuration settings for the logged-in user.</strong></div>
+<div> </div>
+<div>Now that we have Git successfully installed, in the next section, let’s create our public/private key-<span style="line-height: 1.538em;">pair and add them to our GitHub account.</span></div>
+<div> </div>
+<h3>Creating an SSH public/private key-pair!</h3>
+<div> </div>
+<div>In the Terminal, let’s ensure we’re in our home directory. We can navigate to it by typing the <span style="line-height: 1.538em;">following command in the Terminal:</span></div>
+<div> </div>
+<div><span style="font-family:courier new,courier,monospace;">cd ~/ </span></div>
+<div> </div>
+<div>From here we want to create a folder to store our SSH keys in. My preference here is to store them <span style="line-height: 1.538em;">in a hidden folder called ‘ssh’. </span></div>
+<div> </div>
+<div><strong>Pro tip</strong>: <em>By preﬁxing a folder or a ﬁle name with a dot the you’re essentially saying to the system </em><em style="line-height: 1.538em;">“Hide this” by default.</em></div>
+<div> </div>
+<div>To create our SSH directory, type the following command into the Terminal window: <span style="font-family:courier new,courier,monospace;">mkdir .ssh </span><span style="line-height: 1.538em;">Next, type the command </span><span style="line-height: 1.538em; font-family: 'courier new', courier, monospace;">“cd .ssh</span><span style="line-height: 1.538em;">“ and hit enter followed by command </span><span style="line-height: 1.538em; font-family: 'courier new', courier, monospace;">“pwd</span><span style="line-height: 1.538em;">”. At this point you </span><span style="line-height: 1.538em;">should see that you’ve now successfully navigated into the “ssh” folder.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="155" width="402" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_8.png?itok=TYkDdIKU" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 8: By typing “pwd” into the Terminal we’re shown a literal path to our present working </strong><strong style="line-height: 1.538em;">directory, which as displayed is /Users/&lt;username&gt;/.ssh.</strong></div>
+<div> </div>
+<div>Now, let’s create our public/private key-pair. Type “<span style="font-family:courier new,courier,monospace;">ssh-keygen</span>” into the Terminal and hit enter. At <span style="line-height: 1.538em;">this point you’ll be asked to enter a name for your public/private key-pair. This name can be </span><span style="line-height: 1.538em;">anything, but for this tutorial, I’ll use my ﬁrst name with a sufﬁx of _rsa.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="88" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_9.png?itok=xoz8IHyt" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 9: Creation of a public/private key-pair with the name “craig_rsa.pub/craig_rsa”.</strong></div>
+<div> </div>
+<div>The creation of a passphrase is an optional step, but a recommended one. Enter a passphrase (<em>a </em><em style="line-height: 1.538em;">short password of your choosing</em><span style="line-height: 1.538em;">), hit enter and enter the same passphrase again. One your public/</span><span style="line-height: 1.538em;">private key-pair has been generated, you’ll see a message similar to the one highlighted in “Fig </span><span style="line-height: 1.538em;">10”.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="331" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_10.png?itok=v31H7Di9" /></div>
+<div><strong>Fig 10: The message shown to an end-user upon successful creation of a public/private </strong><strong style="line-height: 1.538em;">key-pair.</strong></div>
+<div> </div>
+<div>Now we have a public/private key-pair, we want to add our newly created key to the ssh-agent. <span style="line-height: 1.538em;">This can be achieved by typing the following command </span><em style="line-height: 1.538em;">(remembering to amend the private key ﬁle </em><em style="line-height: 1.538em;">name with your own ﬁle</em><span style="line-height: 1.538em;">):</span></div>
+<div> </div>
+<div><span style="font-family:courier new,courier,monospace;">ssh-add -K ~/.ssh/craig_rsa </span></div>
+<div> </div>
+<div>If you created a passphrase in the previous step, you’ll be prompted to enter your passphrase now. <span style="line-height: 1.538em;">If you successfully add your key to the agent you’ll see a message similar to the following </span><span style="font-family: 'courier new', courier, monospace; line-height: 1.538em;">“Identity added: /Users/craigperks/.ssh/craig_rsa (/Users/</span><span style="font-family: 'courier new', courier, monospace; line-height: 1.538em;">craigperks/.ssh/craig_rsa)”.</span></div>
+<div> </div>
+<div>Once your key is added to the ssh-agent, type the command “<span style="font-family:courier new,courier,monospace;">ssh-add -l</span>” into the Terminal and <span style="line-height: 1.538em;">you’ll see it displayed in the list of known keys.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="71" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_11.png?itok=ShiRgUDH" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 11: Our newly created key listed in the ssh-agent</strong>.</div>
+<div> </div>
+<div>Now we have our public/private key-pair successfully created, let’s add our public key to our <span style="line-height: 1.538em;">GitHub account, create a repository and clone the repository.</span></div>
+<div> </div>
+<h3><strong>Creating a repository on GitHub and cloning this onto our machine.</strong></h3>
+<div> </div>
+<div>I’m not going to go through the GitHub registration in this guide. If you haven’t already done so, <span style="line-height: 1.538em;">register an account on </span><a href="https://github.com/" style="line-height: 1.538em;">http://github.com</a><span style="line-height: 1.538em;"> and log-in.</span></div>
+<div> </div>
+<div>Before we do anything on the GitHub website, we want to copy our public key. To do so, type the <span style="line-height: 1.538em;">following command in the Terminal window (</span><em style="line-height: 1.538em;">again substituting “craig_rsa” for whatever name you </em><em style="line-height: 1.538em;">decided to give your key-pair</em><span style="line-height: 1.538em;">”): </span><span style="line-height: 1.538em; font-family: 'courier new', courier, monospace;">pbcopy &lt; ~/.ssh/craig_rsa.pub</span></div>
+<div> </div>
+<div>Once done, navigate over to GitHub and click the “Account Settings” icon in the toolbar as <span style="line-height: 1.538em;">pictured.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="143" width="206" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_12.png?itok=2pp8DrwY" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 12: The “Account Settings” icon as shown to logged-in GitHub users.</strong></div>
+<div> </div>
+<div>On the “Account Settings” page “SSH keys” should be listed in the left-hand sidebar. Click it and on <span style="line-height: 1.538em;">the next page that loads click “Add SSH key”.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="95" width="351" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_13.png?itok=VZ67vu_s" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 13: The “Add SSH key” button, which allows you to add public keys to your GitHub </strong><strong style="line-height: 1.538em;">account.</strong></div>
+<div> </div>
+<div>On the next page, give your key a name and paste the contents of your key <em>(that we previously </em><em style="line-height: 1.538em;">copied with the pbcopy command</em><span style="line-height: 1.538em;">) into the “Key” ﬁeld.</span></div>
+<div> </div>
+<div><strong>Note</strong>: <em>Although I’m showing the contents of a public key here, it’s a dummy key and will be deleted </em><em style="line-height: 1.538em;">upon completion of this guide. You should only share your public key with trusted sources.</em></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="281" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_14.png?itok=kkNoZb_X" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 14: Form displayed to GitHub account holders when adding a new key to the site.</strong></div>
+<div> </div>
+<div>Now we have our public key loaded into Git, let’s create a new repository, by clicking the “+” icon <span style="line-height: 1.538em;">displayed next to our username (</span><em style="line-height: 1.538em;">located in the top-right of the toolbar when logged in</em><span style="line-height: 1.538em;">). From the </span><span style="line-height: 1.538em;">menu that pops-up, click “New repository” and you’ll be directed to <a href="https://github.com/new">https://github.com/new</a>.</span></div>
+<div> </div>
+<div>From here, give the repository a name of “test” and ensure “Initialize this repository with a <span style="line-height: 1.538em;">README” is checked. </span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="420" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_15.png?itok=i1F9tsro" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 15: Page displayed to GitHub account holders when creating a new repository.</strong></div>
+<div> </div>
+<div>Finally click the “Create repository” button.</div>
+<div> </div>
+<div>In the right-hand sidebar that is displayed on your newly created repository, “SSH clone URL” <span style="line-height: 1.538em;">should be visible.</span></div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="89" width="179" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_16.png?itok=1Kf0WWBT" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 16: SSH clone URL link, which allows users to clone the Git repository.</strong></div>
+<div> </div>
+<div>Click the “copy to clipboard” icon under “SSH clone URL” and return to the Terminal application.</div>
+<div> </div>
+<div>Type the command “<span style="font-family:courier new,courier,monospace;">cd ~/Desktop</span>” into the Terminal window and hit enter. Now that we’re in the <span style="line-height: 1.538em;">Desktop folder in the Terminal type the command “</span><span style="line-height: 1.538em; font-family: 'courier new', courier, monospace;">mkdir git</span><span style="line-height: 1.538em;">” and hit enter. If you go to your Mac </span><span style="line-height: 1.538em;">OS X desktop at this point you’ll see that a folder called “git” has been created. </span></div>
+<div> </div>
+<div>Back in the Terminal window type “<span style="font-family:courier new,courier,monospace;">cd git</span>” to move into this directory. Finally type “<span style="font-family:courier new,courier,monospace;">git clone</span>” <span style="line-height: 1.538em;">followed by pasting the code copied from the GitHub repository “SSH clone URL” into the Terminal </span><span style="line-height: 1.538em;">window (</span><em style="line-height: 1.538em;">for me this would be: <span style="font-family:courier new,courier,monospace;">git clone <a href="mailto:git@github.com">git@github.com</a>:craigweb/test.git</span></em><span style="line-height: 1.538em;">). Hit enter </span><span style="line-height: 1.538em;">when you’re ready and the repository will begin to clone.</span></div>
+<div> </div>
+<div>If you’ve never cloned a repository from GitHub before, you may receive the message “<span style="font-family:courier new,courier,monospace;">The </span><span style="line-height: 1.538em; font-family: 'courier new', courier, monospace;">authenticity of the host ‘github.com (192.30.252.129)’ can’t be established</span><span style="line-height: 1.538em;">” to continue type “</span><span style="line-height: 1.538em; font-family: 'courier new', courier, monospace;">yes</span><span style="line-height: 1.538em;">” and hit enter and </span><a href="https://github.com/" style="line-height: 1.538em;">GitHub.com</a><span style="line-height: 1.538em;"> will be added to the list of known hosts. </span></div>
+<div> </div>
+<div>Finally once the cloning is complete, type “<span style="font-family:courier new,courier,monospace;">cd test</span>” to navigate into the newly created repository <span style="line-height: 1.538em;">directory and ﬁnally type “</span><span style="line-height: 1.538em; font-family: 'courier new', courier, monospace;">ls -la</span><span style="line-height: 1.538em;">” to display a listing of the folder (</span><em style="line-height: 1.538em;">including hidden ﬁles</em><span style="line-height: 1.538em;">). </span></div>
+<div> </div>
+<div>If you see README.md listed, you’ve just successfully cloned your Git repository!!</div>
+<div> </div>
+<div style="margin-left: 40px;"><img alt="" class="media-image" height="382" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/styles/large/public/fig_17.png?itok=YOfrQC2O" /></div>
+<div style="margin-left: 40px;"> </div>
+<div><strong>Fig 17: Our successfully cloned Git repository displaying its contents.</strong></div>
+<div>_ _ </div>
+<div>If you spot an error in this tutorial, or have any questions, please feel free to get in touch with me <span style="line-height: 1.538em;">on Twitter at <a href="https://twitter.com/craigperks">@craigperks</a>.</span></div>
+<div> </div>
+ </div></div></div>
+  </body>
+</html>
+

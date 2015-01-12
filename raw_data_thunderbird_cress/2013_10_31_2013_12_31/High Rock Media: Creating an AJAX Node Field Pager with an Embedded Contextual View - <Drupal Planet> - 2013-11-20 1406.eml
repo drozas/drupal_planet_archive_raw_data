@@ -1,0 +1,73 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 20 Nov 2013 14:06:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 20 Nov 2013 14:06:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Creating an AJAX Node Field Pager with an Embedded Contextual View
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/creating-ajax-node-field-pager-embedded-contextual-view
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Creating an AJAX Node Field Pager with an Embedded Contextual View</title>
+    <base href="http://highrockmedia.com/blog/creating-ajax-node-field-pager-embedded-contextual-view">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/img_5271-174-176-872181511.jpg" width="878" height="182" alt="Creating an AJAX node field pager with Drupal Views" title="Creating an AJAX node field pager with Drupal Views" class="image-adaptive inline-adaptive" /></p>
+
+<p>I get great ideas from users of both my Drupal contrib themes, Bamboo and Gratis. Typically a user will write to me and ask, "how do I do x" with your theme? Most of the time these types of requests are out of scope in terms of what the theme can do on its own out of the box and have more do do with an actual use case that relates to Drupal site building or theming. However, I feel compelled to help out in some small way and explore what the user is asking for; it gets me thinking in different and creative ways. It also gives me a chance to use my contrib themes in real world scenarios that in the end can help improve the theme itself.</p>
+
+<h2>Goal</h2>
+
+<p>As the title of this post suggests, we want to attach a pager to a specific field within a node in an AJAX way. In researching this, I found the CCK Pager module but it does not have AJAX capabilities so when it pages a field, it literally reloads the page and appends odd query strings to the url structure that are undesirable. I got to thinking that Views has an ultra elegant way of paging content using AJAX so I figured I could substitute a view for the node field I wanted to page and then add a contextual filter to make it relative to the node you're currently on. I also recently discovered a nice way to embed a view within a node in a programatic way so this will come in handy here.</p>
+
+<h2>Getting Started</h2>
+
+<p>For our example I'll use a content type called <em>Gallery</em> with an imagefield called <em>Gallery Image</em>. The field will hold multiple images that we want to page through one at a time in a node. Create your field as usual and set the field display to be hidden. We hide it because we are going to substitute the view we'll create later. Next generate some content, I like using Drupal Ipsum Devel Generate to get a realistic feel for demo content.</p>
+
+<h2>Create the view</h2>
+
+<p>Once you've generated some content, create a new view, call it <em>Image Pager</em> and add block display in the process. I call my block "Image Pager Block" with a machine name of <em>image_pager_block</em>. Additional settings are as follows:</p>
+
+<ul>
+<li><em>Filter criteria</em> - use the gallery content type we've created.</li>
+<li>Use a field display to show the gallery image and under <em>Multiple field settings</em> for it, uncheck <em>Display all values in the same row.</em> </li>
+<li>If you've generated a bunch of nodes, you'll now see the view display all images from all your nodes. </li>
+<li>Under <em>Advanced > Other</em> be sure to set: <em>Use AJAX:Yes</em>. This will enable the AJAX pager. </li>
+<li>Finally, add the argument; under the advanced tab, add a contextual filter for <em>Content: Nid > When the filter value is NOT available > Provide default value > Content ID from URL.</em> This setting is what filters images only relevant to the node you are on within the View. Your Views preview will now go away but this is normal. However you can preview the view by adding a relevant node ID into the <em>Preview with contextual filters</em> text box.</li>
+<li>Be sure to save your view.</li>
+</ul>
+
+<h2>Add some code</h2>
+
+<p>Now it's time to add a little code so we can embed the view. In your theme's <em>template.php</em> file, we'll add a node preprocess function which will create a variable for the view for later use to embed it in our theme's <em>node.tpl.php</em>. You can also use a custom node template as well.</p>
+
+<div class="geshifilter"><span style="color: #009933; font-style: italic;">/**<br />
+&nbsp;* Override or insert variables into the node template.<br />
+&nbsp;*/</span><br />
+<span style="color: #000000; font-weight: bold;">function</span> MYTHEME_preprocess_node<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #339933;">,</span> <span style="color: #000088;">$hook</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp;<span style="color: #666666; font-style: italic;">// Global node.</span><br />
+&nbsp; <span style="color: #000088;">$node</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$vars</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'node'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span><br />
+&nbsp; <span style="color: #666666; font-style: italic;">// Create a variable to render the view in the node template.</span><br />
+&nbsp; <span style="color: #000088;">$vars</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'image_pager_view'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> views_embed_view<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'image_pager'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'image_pager_block'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">nid</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span></div>
+
+<p>The code above creates a variable for the view we created, <code>image_pager_view</code>, indicates which display to show and adds our <em>nid</em> argument. So now in your theme's <em>node.tpl.php</em>, we can render the variable as:</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php"><span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$image_pager_view</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span></code></span></p>
+
+<p>In my template I render this right under the content variable:</p>
+
+<div class="geshifilter"><span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> render<span style="color: #009900;">&#40;</span><span style="color: #000088;">$content</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span><br />
+<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$image_pager_view</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span></div>
+
+<p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/2013-11-19_18-02-40-1640609368.png" width="832" height="608" alt="The completed embedded AJAX image pager" title="The completed embedded AJAX image pager" class="image-adaptive inline-adaptive" /></p>
+
+<p>That's all there is too it. If all went well, you'll now see your nice imagefield with an AJAX pager and all. In my example, I'm also rendering each image's alt tag as an HTML 5 caption which I've covered in a previous blog post.</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">Drupal</li><li class="field-item even">PHP</li><li class="field-item odd">Architecture</li><li class="field-item even last">Drupal Planet</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="https://drupal.org/project/views" target="_blank" rel="nofollow">Views</a></li><li class="field-item even"><a href="https://drupal.org/project/cck_pager" target="_blank" rel="nofollow">CCK Pager</a></li><li class="field-item odd"><a href="https://drupal.org/project/bamboo" target="_blank" rel="nofollow">Drupal Bamboo Theme</a></li><li class="field-item even"><a href="https://drupal.org/project/gratis" target="_blank" rel="nofollow">Drupal Gratis Theme</a></li><li class="field-item odd"><a href="https://drupal.org/node/1578558" target="_blank" rel="nofollow">Views contextual filters</a></li><li class="field-item even"><a href="https://drupal.org/node/1089656" target="_blank" rel="nofollow">Drupal 7 Template (Theme Hook) Suggestions</a></li><li class="field-item odd"><a href="https://drupal.org/project/drupal_ipsum" target="_blank" rel="nofollow">Drupal Ipsum</a></li><li class="field-item even last"><a href="http://highrockmedia.com//blog/implementing-html5-image-captions-drupal-7" target="_blank" rel="nofollow">Implementing HTML5 Image Captions with Drupal 7</a></li></ul>
+  </body>
+</html>
+

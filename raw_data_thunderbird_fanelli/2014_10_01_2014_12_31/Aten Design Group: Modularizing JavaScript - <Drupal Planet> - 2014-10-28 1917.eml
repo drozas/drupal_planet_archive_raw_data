@@ -1,0 +1,113 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 28 Oct 2014 18:17:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 28 Oct 2014 18:17:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Modularizing JavaScript
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/modularizing-javascript
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Modularizing JavaScript</title>
+    <base href="http://atendesigngroup.com/blog/modularizing-javascript">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/modular-javascript.png" width="1000" height="600" alt="" /><p>I came to Drupal from a JavaScript background and was happy to see a module
+system in place. Have you ever wished you could write your JavaScript modularly
+just like your PHP in order to take advantage of testing, better documentation
+and the <a href="https://en.wikipedia.org/wiki/Unix_philosophy#Doug_McIlroy_on_Unix_programming">Do One Thing Well</a> philosophy? Well I have the
+solution for you: <a href="http://browserify.org/">Browserify</a> and <a href="http://npmjs.org">NPM</a>!</p>
+
+<h2>Getting Started</h2>
+
+<p>In order to take advantage of JavaScript modularity you will need
+<code>node</code> and <code>npm</code> which can be installed together using
+<a href="https://gist.github.com/nmp/867390">one of these methods</a>.</p>
+
+<h2>Creating a JavaScript Module</h2>
+
+<p>JavaScript modules are similar to the PHP include system in that they allow
+the developer to separate their code across multiple files. The key difference
+is that JavaScript uses the syntax <code>require</code> to pull the <em>exported</em>
+part of a JavaScript file into the current file's variable of choice. Let's take a look.</p>
+
+<p>Simply create a JavaScript file, do whatever you’re trying to do and assign
+the resulting value (usually a class or object) to <code>module.exports</code>.</p>
+
+<div class="geshifilter"><pre class="geshifilter-javascript"><span style="color: #009900; font-style: italic;">// src/lib/MyClass.js</span>
+&nbsp;
+module.<span style="color: #006600;">exports</span> = <span style="color: #003366; font-weight: bold;">function</span> MyClass<span style="color: #66cc66;">&#40;</span>opts<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span><span style="color: #66cc66;">&#125;</span>
+&nbsp;
+MyClass.<span style="color: #006600;">prototype</span>.<span style="color: #006600;">magic</span> = <span style="color: #003366; font-weight: bold;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+  console.<span style="color: #006600;">log</span><span style="color: #66cc66;">&#40;</span>‘magic’<span style="color: #66cc66;">&#41;</span>;
+<span style="color: #66cc66;">&#125;</span></pre></div>
+
+<p>You can now use <code>MyClass.js</code> from other JavaScript files like so:</p>
+
+<div class="geshifilter"><pre class="geshifilter-javascript"><span style="color: #009900; font-style: italic;">// src/index.js</span>
+<span style="color: #003366; font-weight: bold;">var</span> MyClass = require<span style="color: #66cc66;">&#40;</span>‘.<span style="color: #0066FF;">/lib/</span>MyClass’<span style="color: #66cc66;">&#41;</span>;
+&nbsp;
+<span style="color: #003366; font-weight: bold;">var</span> classy = <span style="color: #003366; font-weight: bold;">new</span> MyClass<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+&nbsp;
+classy.<span style="color: #006600;">magic</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>; <span style="color: #009900; font-style: italic;">// ‘magic’</span></pre></div>
+
+<h2>NPM</h2>
+
+<p>PHP developers may be familiar with <a href="https://getcomposer.org/">Composer</a>. NPM is the Composer
+of the JavaScript world. Both allow you to manage the dependencies of
+your project.</p>
+
+<p>Before creating a custom module it's a great idea to see if it has already been
+written. <a href="http://npmjs.org">npmjs.org</a> is the place to look. When you find a module you’d
+like to include in your project, retrieve it and add it as a dependency with
+<code>npm</code>. For example, to install lodash:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">npm install lodash --save</pre></div>
+
+<p>The save flag adds this dependency to the <code>package.json</code> file. 
+It might help to think of this as the JavaScript version of <code>composer.json.</code>
+All the dependencies for a project can be installed by running <code>npm install</code> within
+the directory containing <code>package.json</code> or its sub-directories.</p>
+
+<p>Requiring modules from NPM is done just like local modules but you don’t
+have to provide the path, just use the module name. <code>require</code> will look in
+the <code>node_modules</code> folder automatically.</p>
+
+<div class="geshifilter"><pre class="geshifilter-javascript"><span style="color: #003366; font-weight: bold;">var</span> _ = require<span style="color: #66cc66;">&#40;</span>‘lodash’<span style="color: #66cc66;">&#41;</span>;</pre></div>
+
+<p><a href="https://www.npmjs.org/doc/files/package.json.html">Read more about NPM and package.json on the NPM website.</a></p>
+
+<h2>The Browserify command</h2>
+
+<p>Browserify reads your JavaScript files and resolves their <code>module.exports</code>
+and <code>require</code>'s.</p>
+
+<p>Your main JavaScript file should be a compilation of its dependencies
+resulting in a useful piece of functionality for your website. To compile your
+multiple files into one that is browser ready we will use the
+<a href="http://browserify.org/">browserify</a> <abbr title="Command Line Interface">CLI</abbr>.</p>
+
+<p>First install it globally with <code>npm</code>. Globally installed modules can be accessed
+from anywhere on your machine.</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">npm install -g browserify</pre></div>
+
+<p>Then tell Browserify where your main JavaScript file is and redirect the output
+to where you want your compiled, browser-ready JS to be.</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">browserify src/index.js &gt; build/myModule.js</pre></div>
+
+<p><code>build/myModule.js</code> is now browser ready! Now you can add it to your website.</p>
+
+<h2>Come see me at BADCamp</h2>
+
+<p>The above workflow is a great way to maintain custom Drupal modules with a lot of
+JavaScript. For more detailed information about using this workflow with Drupal —
+such as global dependencies, handling jQuery, task automation and testing — come <a href="https://2014.badcamp.net/session/taming-javascript-drupal">check out my session at this year’s BADCamp!</a></p>
+  </body>
+</html>
+

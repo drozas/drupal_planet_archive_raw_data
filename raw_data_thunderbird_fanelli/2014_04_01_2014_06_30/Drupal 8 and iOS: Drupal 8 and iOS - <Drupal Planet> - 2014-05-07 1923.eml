@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 07 May 2014 17:23:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 07 May 2014 17:23:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal 8 and iOS: Drupal 8 and iOS
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tntfoss-vivekvpandya.rhcloud.com/node/11
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal 8 and iOS: Drupal 8 and iOS</title>
+    <base href="http://tntfoss-vivekvpandya.rhcloud.com/node/11">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/11/title/en/rss">Drupal 8 and iOS</span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/11/body/en/rss">
+    <div class="field-items">
+          <div class="field-item" property="schema:text"><p>In the first week of March of 2014, Google announced Google Summer of Code and I started to search for a project that suits my skill and I found one with the title “An Example iOS application that connects to Drupal 8 via REST web services”. </p>
+
+<p>And that day I joined Drupal as a community member. As of now we all are so excited about Drupal 8. I am working on this project and I will try to build an example app that runs on iOS 7.1 and can view, create, update and delete content from an iOS device. If time permits I will try to add more functionalities to the app.</p>
+
+<p>I have got good mentors from the Drupal community Jeff Linwood (jefflinwood) and Jingsheng Wang (skyred) for this project. As a part of this project I have created a simple site with Drupal 8 that has few pages with 3 simple fields and our aim is to manipulate these pages with the iOS app. I have deployed Drupal 8 on OpenStack from RedHat. This is the URL for my site <a href="http://tntfoss-vivekvpandya.rhcloud.com">http://tntfoss-vivekvpandya.rhcloud.com</a>.</p>
+
+<p>REST services for Drupal 8 are new, so I will try and provide good examples that can describes how to use it. </p>
+
+<p>In Drupal 8 alpha 11 some problems with REST are resolved for example no more “entity” word should required to access REST service i.e instead of “entity/node/1” you can now access it with “node/1” (more RESTful way) and I appreciate guys working behind it. </p>
+
+<p>On the iOS side, I am using NSURLSession to connect my app to the site. This set of classes are introduced by Apple in 2013 with iOS 7. REST services on Drupal 8 can serialize data in JSON, XML or HAL_JSON formate and I have used this JSON object to display content from the site. I have upload my code on <a href="http://GitHub.com">GitHub.com</a> so other interested community member can review it and help me to make this more useful. You can find the code at <a href="https://github.com/vivekvpandya/">https://github.com/vivekvpandya/</a> TipsAndTricksCFNetworkingDrupal.</p>
+</div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix" data-quickedit-field-id="node/11/field_tags/en/rss">
+  <h3 class="field-label">Tags: </h3>
+  <ul class="links">
+          <li class="taxonomy-term-reference-0"><a href="/taxonomy/term/3" property="schema:about">Drupal Planet</a></li>
+      </ul>
+</div>
+<div class="field field-node--comment field-name-comment field-type-comment field-label-hidden" data-quickedit-field-id="node/11/comment/en/rss">
+    <div class="field-items">
+          <div class="field-item" rel="schema:comment"><section id="comments" class="comment-wrapper">
+  
+  
+
+  
+</section>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

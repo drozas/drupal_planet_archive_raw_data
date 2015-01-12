@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 12 Jun 2014 02:55:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 12 Jun 2014 02:55:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Code Drop: Continuous Integration with Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://codedrop.com.au/blog/continuous-integration-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Code Drop: Continuous Integration with Drupal</title>
+    <base href="http://codedrop.com.au/blog/continuous-integration-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Continuous integration is a hot topic across the web right now and most conferences have at least a few devops talks that touch on CI and build tools. They usually go something along the lines of, use Phing with Jenkins and touch on the fact that Jenkins used to be called Hudson, has been around for ever and has a plugin for just about everything. I’m not going to mention Jenkins as we explore a few hosted CI solutions.</p>
+<h2>Hosting Your Own CI Server</h2>
+<p>Managing any server is a timely process and a CI server is no different. Those Jenkins plugins don’t configure themselves. Smalls teams like ours don’t have the resources to commit to managing infrastructure and that is pretty scary when you’re talking about such a crucial aspect of the business.</p>
+<p>We’ve recently moved to a hosted continuous integration platform and below I’ve summarised the R&amp;D I did before we made the big move.</p></div></div></div>
+  </body>
+</html>
+

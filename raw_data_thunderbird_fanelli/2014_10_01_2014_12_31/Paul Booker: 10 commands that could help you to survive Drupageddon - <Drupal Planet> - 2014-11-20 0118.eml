@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Nov 2014 00:18:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Nov 2014 00:18:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: 10 commands that could help you to survive Drupageddon
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/code-snippet/10-commands-could-help-you-survive-drupageddon
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: 10 commands that could help you to survive Drupageddon</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/10-commands-could-help-you-survive-drupageddon">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It's been more than a month since Drupageddon so I thought I would post an update of my previous post.<br />
+<br/><br />
+<b>Commands that help with auditing:</b></p>
+<p>Showing files that have changed on the live server:</p>
+<pre class="brush: bash">
+git status 
+</pre><p>
+Looking for code execution attempts via menu_router:</p>
+<pre class="brush: sql">
+select * from menu_router where access_callback = 'file_put_contents'
+</pre><p>
+Another possible code execution attempt via menu_router:</p>
+<pre class="brush: sql">
+select * from menu_router where access_callback = 'assert';
+</pre><p>
+Showing which files are on the live server and not in version control:</p>
+<pre class="brush: bash">
+diff -r docroot repo | grep 'Only in docroot'
+</pre><p>
+Looking for PHP files in the files directory:</p>
+<pre class="brush: bash">
+find . -path "*php"
+</pre><p>
+Looking for additional roles and users:</p>
+<pre class="brush: bash">
+select * from role
+select * from users_roles where rid=123
+</pre><p>
+Checking the amount of time between when a user logged into your site and their most recent page visit:</p>
+<pre class="brush: sql">
+select (s.timestamp - u.login) / 60 / 60 / 24 AS days_since_login, u.uid from sessions s inner join users u on s.uid = u.uid;
+</pre><p>
+<br/><br />
+<b>Commands that can help with recovery:</b></p>
+<p>Apply the patch.  Hotfix:  (SA-CORE-2014-005)</p>
+<pre class="brush: php">
+curl https://www.drupal.org/files/issues/SA-CORE-2014-005-D7.patch | patch -p1
+</pre><p>
+End active sessions, i.e log everyone out.</p>
+<pre class="brush: php">
+TRUNCATE TABLE sessions;
+</pre><p>
+Updating passwords:</p>
+<pre class="brush: php">
+update users set pass = concat('XYZ', sha(concat(pass, md5(rand()))));
+</pre><p>
+If you need help regarding the recent drupal vulnerability feel free to <a href="http://www.paulbooker.co.uk/contact">contact me</a>.</p>
+<p>P.S.</p>
+<p>Latest <a href="https://www.drupal.org/SA-CORE-2014-006">security advisory</a> was today.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/drupageddon" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupageddon</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/security" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">security</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/10-commands-could-help-you-survive-drupageddon"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="10 commands that could help you to survive Drupageddon">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/code-snippet/10-commands-could-help-you-survive-drupageddon&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/10-commands-could-help-you-survive-drupageddon"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/10-commands-could-help-you-survive-drupageddon" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

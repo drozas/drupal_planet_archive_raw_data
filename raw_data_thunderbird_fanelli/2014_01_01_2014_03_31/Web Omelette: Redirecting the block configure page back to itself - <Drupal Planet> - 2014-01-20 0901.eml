@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 20 Jan 2014 08:01:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 20 Jan 2014 08:01:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Redirecting the block configure page back to itself
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/redirecting-block-configure-page-back-itself
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Redirecting the block configure page back to itself</title>
+    <base href="http://www.webomelette.com/redirecting-block-configure-page-back-itself">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>After working with Drupal for a while, you begin to love some of its features to death. But you can also develop some pet-peeves. One of mine is how when you edit a block in the administration and save it, you are redirected onto the block overview page - you know, the one with the big list of blocks. Now think you are on a site with a bunch of regions and blocks and you are fine tuning a particular one while testing how it outputs. Every time you have to go back and search for it to edit it again. </p>
+<p>I decided to write a little custom code to change that default behaviour more to my liking. In this article we will look at how you can redirect the user back to the block edit page after the block has been saved. Basically how to redirect to itself so you can edit again immediately after you saved the block. It's quite easy actually, it only takes 2 functions:</p>
+<div class="codeblock"><code>function module_name_form_block_admin_configure_alter(&amp;$form, &amp;$form_state) {<br />  $form['#submit'][] = 'module_name_form_block_admin_configure_submit';<br />}</code></div>
+<div class="codeblock"><code>function module_name_form_block_admin_configure_submit($form, &amp;$form_state) {<br />  $module = $form['module']['#value'];<br />  $delta = $form['delta']['#value'];<br />  $form_state['redirect'] = 'admin/structure/block/manage/' . $module . '/' . $delta . '/configure';<br />}</code></div>
+<p>Let's see what these do. The first one is an implementation of <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_FORM_ID_alter/7" target="_blank">hook_form_FORM_ID_alter()</a> and we use it to hook into the block edit form and include a custom submit callback to the right array. You can read more about how to do these kind of things <a href="/drupal-custom-form-callback-submit-button" target="_blank">here</a>. The value we included is the name of the second function above that gets called after the default block submit handler. </p>
+<p>What happens in the second function? First off, we gather the name of the module that created the block. For instance the <em>Search form</em> block is created by the <strong>Search</strong> module and the <em>Navigation</em> block by the <strong>System</strong> module (these are default blocks that come with Drupal core in case you were wondering). For custom blocks made in the UI, the name will be <code>block</code>. </p>
+<p><p>Then, we gather the delta value. This is the unique identifier of the block (integer for custom blocks or strings for modules implementing blocks in code). Finally, we create a redirect to the specific URL which includes both these values (i.e., back to the edit form for that block). </p>
+<p>Easy peasy, just remember to replace <code>module_name</code> with the machine name of your block.</p>
+<p>Now when you have to keep editing a particular block, you won't have to search through all those names to find it back again and again. You are right there in the zone making changes. I think it's also good for content editor experience, not just administrators. </p>
+<p>Hope this helps.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/redirecting-block-configure-page-back-itself" st_title="Redirecting the block configure page back to itself" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/redirecting-block-configure-page-back-itself" st_title="Redirecting the block configure page back to itself" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/redirecting-block-configure-page-back-itself" st_title="Redirecting the block configure page back to itself" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

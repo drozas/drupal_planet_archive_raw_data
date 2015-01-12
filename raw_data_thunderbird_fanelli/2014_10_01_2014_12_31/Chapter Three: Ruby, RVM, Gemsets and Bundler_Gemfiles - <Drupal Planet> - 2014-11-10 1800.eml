@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 10 Nov 2014 17:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 10 Nov 2014 17:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Ruby, RVM, Gemsets and Bundler/Gemfiles
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com//blog/ruby-rvm-gemsets-and-bundlergemfiles
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Ruby, RVM, Gemsets and Bundler/Gemfiles</title>
+    <base href="http://chapterthree.com//blog/ruby-rvm-gemsets-and-bundlergemfiles">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As a Drupal themer, we're often tasked with building multiple sites concurrently. One site may be a new build from scratch, and another could be a site built two years ago that is getting a new feature. If they utilize Sass in the theme, then they both have one thing in common:</p><br />
+<br />
+<p><i>They have Ruby gem dependencies.</i></p><br />
+<br />
+<p>What are they chances that both sites use the same versions of the same gems? Slim? None? Ever tried to build a set of Sass files when you don't have the correct gem versions installed? Oh what a pain.</p><br />
+<br />
+<p>Let's take the pain away with a few simple techniques.</p><br />
+<br />
+<h2>Ruby and RVM</h2><br />
+<br />
+<p>OS X comes with Ruby built-in, but I highly recommend installing Ruby with <a href="http://rvm.io">RVM</a>. With RVM, you can specify the version of Ruby you want installed, plus a whole lot more. <a href="http://rvm.io/rvm/install/">Installation instructions</a> are available, but are outside the scope of this blog post.</p>
+  </body>
+</html>
+

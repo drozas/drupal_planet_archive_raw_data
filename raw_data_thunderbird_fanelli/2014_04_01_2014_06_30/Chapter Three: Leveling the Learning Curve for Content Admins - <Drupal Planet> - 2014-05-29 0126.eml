@@ -1,0 +1,78 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Leveling the Learning Curve for Content Admins
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/leveling-learning-curve-content-admins%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Leveling the Learning Curve for Content Admins</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/leveling-learning-curve-content-admins%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>What’s the best way to engage users and direct them to your call to action? By now it has become a mantra: Content is King. A great website offers regularly updated, meaningful content. But behind every good blog post, video or event is a content administrator who formats and posts that content. Asking that content admin to “<a href="http://www.sensible.com/dmmt.html" style="line-height: 1.538em;" target="_blank">think</a>” is annoying at best and debilitating at worst.</p><br />
+<br />
+<p>Some people lean toward <a href="http://www.phase2technology.com/blog/some-under-the-cover-details-behind-our-new-website/" target="_blank">WordPress over Drupal</a> because they know of its easy to use, out-of-the-box content administration interface. It used to be that while Drupal was more robust and flexible, WordPress was more straightforward. Well, Drupal has come a long way since it developed this bad rap. People change, platforms change. Chapter Three regularly churns out Drupal sites that are not only flexible and feature-rich, but also intuitive for adding and editing content.</p><br />
+<br />
+<p><img border="0" height="317" src="http://www.chapterthree.com/sites/default/files/legacy/workbench.png" width="500"></p><br />
+<br />
+<p><a href="https://portland2013.drupal.org/content/secrets-awesomizing%C2%AE-your-editor%E2%80%99s-back-end-drupal-experience" target="_blank">Mike Herchel's presentation at DrupalCon Portland</a>&nbsp;called out the most important configuration options and module implementations for easy content administration:</p><br />
+<br />
+<ul><br />
+	<li>Drupal 7’s core dashboard serves as a landing page for content admins to access everything they need. Customize it with Views or <a href="https://drupal.org/project/views_bulk_operations" target="_blank">VBO</a>&nbsp;for more advanced functionality. Core shortcuts and <a href="https://drupal.org/project/shortcutperrole" target="_blank">Shortcuts per Role</a> also work well for this.</li><br />
+	<li>Using Contextual Filters on Views rows allows content admins to easily edit entities that are displayed within a View.</li><br />
+	<li>Enabling revisions on content types automatically creates a revision for each edit to guard against data loss.</li><br />
+	<li>Reducing permissions ensures that editors don’t see unnecessary options.</li><br />
+	<li>Limiting the number of WYSIWYG buttons prevents confusion.</li><br />
+	<li><a href="https://drupal.org/project/rules" target="_blank">Rules</a> or <a href="https://drupal.org/project/login_redirect" target="_blank">Login redirect</a> sends content editors where they need to be after logging in.</li><br />
+	<li><a href="https://drupal.org/project/workbench" target="_blank">Workbench</a> provides a content moderation interface, among other features.</li><br />
+	<li><a href="https://drupal.org/project/better_formats" target="_blank">Better Formats</a> can set default text formats per role and per field and can remove the input format dropdown.</li><br />
+	<li><a href="https://drupal.org/project/nodeformsettings" target="_blank">Node and Comments Form Settings</a> gets rid of unused node form options like revision log, textarea, path, publishing options and comments.</li><br />
+	<li>The <a href="https://drupal.org/project/field_group" target="_blank">Field Group</a> module provides horizontal tabs or gives the node edit page several “pages” or states.</li><br />
+	<li><a href="https://drupal.org/project/publish_button" target="_blank">Publish button</a> splits up the Save and Publish buttons.</li><br />
+	<li><a href="https://drupal.org/project/views_ui_basic" target="_blank">Views UI: Edit Basic settings</a> allows the content editor to easily edit the header, footer and empty text of a View.</li><br />
+	<li><a href="https://drupal.org/project/views_bulk_operations" target="_blank">View Bulk Operations (VBO)</a> adds more robust filtering and update options to the content list. <a href="https://drupal.org/project/admin_views" target="_blank">Administration Views</a> replaces core listings with VBO-enabled Views.</li><br />
+	<li><a href="https://drupal.org/project/field_validation" target="_blank">Field validation</a> set rules for fields and <a href="https://drupal.org/project/clientside_validation" target="_blank">Clientside Validation</a> notifies users of entry errors before they hit submit.</li><br />
+	<li><a href="https://drupal.org/project/diff" target="_blank">Diff</a> module shows the difference between revisions.</li><br />
+</ul><br />
+<br />
+<p>Here are some other ways to make your Drupal sites easy to manage.&nbsp;</p><br />
+<br />
+<p><strong>Administration Themes</strong></p><br />
+<br />
+<p>Choosing a good administration theme, like <a href="https://drupal.org/project/rubik" target="_blank">Rubik</a>, or customizing Drupal’s default Seven theme sets the stage for a good content admin experience. One of the more useful features of an admin theme is the color-coding and prominenet positioning of the “Save” and “Delete” buttons.</p><br />
+<br />
+<p><strong>Editing Text</strong></p><br />
+<br />
+<p>Drupal WYSIWYG editors are very flexible and can be easily configured to show as many or as few options as needed. <a href="http://drupal.org/project/wysiwyg_ckeditor" target="_blank">CKEditor 4</a> is our current pick and it will be integrated into Drupal 8 core. You can install and customize the <a href="http://drupal.org/project/ckeditor_styles" target="_blank">WYSIWYG Style</a> dropdown to add custom styles for your admin or create templates with the <a href="http://drupal.org/project/wysiwyg_template" target="_blank">WYSIWYG template module</a>.</p><br />
+<br />
+<p><img border="0" height="255" src="http://www.chapterthree.com/sites/default/files/legacy/wysiwyg.png" width="500"></p><br />
+<br />
+<p>The <a href="http://drupal.org/project/ckeditor_link" target="_blank">CKEditor Link module</a>&nbsp;is a nice plug-in that allows users to link to Drupal internal paths through the CKEditor link button. <a href="http://drupal.org/project/linkit" target="_blank">Linkit</a> is an alternative that works on TinyMCE as well. Make sure to include the “Paste from Word” or “Remove Formatting” button and train your admins on how to use it.</p><br />
+<br />
+<p><strong>Managing Media</strong></p><br />
+<br />
+<p>The <a href="https://drupal.org/project/media" target="_blank">Media</a> module is the go-to method for allowing content admins to upload and manage images and videos.</p><br />
+<br />
+<p><img border="0" height="276" src="http://www.chapterthree.com/sites/default/files/legacy/media.png" width="500"></p><br />
+<br />
+<p><strong>Documentation</strong></p><br />
+<br />
+<p>Great documentation is another way to make sure that content admins know how to use their site with ease. Ideally, the UI speaks for itself, but it can only help to have the process documented, even if just to reinforce what is already intuitive.</p><br />
+<br />
+<p>The best way to create documentation is to list each task that a content admin may need to execute. Then, with the website open, start a document that outlines the process for each step. Create annotated screenshots, using software like Skitch, for each step. Be explicit in your written instructions and visual aids. Create a table of contents that lists each section so that your content administrator can easily reference common tasks. Don’t forget to include the login url, username and password at the beginning of the document. The key is to put yourself in the content administrator's shoes.</p><br />
+<br />
+<p><img border="0" height="329" src="http://www.chapterthree.com/sites/default/files/legacy/documentation.png" width="500"></p><br />
+<br />
+<p><strong>Get a Taste</strong></p><br />
+<br />
+<p>The Spark distribution is focused on content administration and editing. You can <a href="http://simplytest.me/project/spark/7.x-1.0-alpha9" target="_blank">try it out</a> in a few clicks, no server required.</p><br />
+  </body>
+</html>
+

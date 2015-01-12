@@ -1,0 +1,52 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 May 2013 15:46:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 May 2013 15:46:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Propeople Blog: Bring Interactivity to Your Drupal Site with Node.js - Part I
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wearepropeople.com/blog/bring-interactivity-to-your-drupal-site-with-nodejs-part-i
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Propeople Blog: Bring Interactivity to Your Drupal Site with Node.js - Part I</title>
+    <base href="http://wearepropeople.com/blog/bring-interactivity-to-your-drupal-site-with-nodejs-part-i">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Node.JS is the hottest new technology that is making the web real-time. The most important thing is that node.js is not a server-side language, it’s a web-server that is incredibly fast and efficient.</p>
+
+<p>Throughout this series of articles <a href="/">Propeople Drupal experts</a> will talk about some basic concepts of node.js and how to write some cool things using node.js and node.js module.</p>
+
+<p>So, first of all let’s understand what is node.js and when we should use it.</p>
+<br /><strong>What is Node.JS</strong>
+
+<p>Node is a JavaScript runtime that works on the server side, based on Chrome's V8 JavaScript runtime. This means that if you know javascript, you can easily write something interesting on node.js and, practically, you can use the same code for the client and server side (ex: some classes, models, etc) with one exception, on the client-side you are working with DOM, where on server-side you may work with databases, file-system, etc.</p>
+
+<p>It’s an Asynchronous programming language, in other words,  while you have to execute some actions ex: db select, you tell the node.js to make a db query and after it’s done return a response, during this time you can do anything in parallel.</p>
+
+<p>It is single process but it’s multi-threaded – compared with php which creates a process for each user in node.js the same single process can execute parallel actions for each user. This is much faster because servers don’t need to spent time and resources for creating a process for each request, get some data from database and other operations. You just need to start the server, load all data  and wait for user requests.</p>
+
+<p>Node.JS is event-driven. It’s similar to events in a browser, while you’ll be waiting for an action from a user (button click or other).</p>
+
+<p>Socket.io (Websockets in browser). Imagine you have a tunnel between a client and the server, through which can send messages in both directions, client-server-client. You can say to the client something like: “hey, you’ve got a new message, or there is a new comment on your article” and you don’t need to refresh the page or to send some ajax request from the client to verify this.</p>
+
+<p>You can write extensions in C++. This is cool because with C++ you can integrate some external devices to your application, or use some libraries written in C++, or something else that node.js can’t do.</p>
+
+<strong>When should we use it?</strong>
+
+<p>In real-time web applications you should transfer a lot of data between a client and the server without refreshing the page. With node.js and websockets you can maintain a persistent connection between the browser and the server. This means you can create a real-time browser-based web app in node.js that practically doesn’t consume system resources to serve a big amount of clients. Any time you want to develop a web app that is communicating with server, node.js is a great option.</p>
+
+<p>In next series of this articles the Propeople developers will talk about how to install and configure node.js/node.js module for drupal and also how to create a <a href="/blog/essential-drupal-modules">drupal module</a> using node.js.</p>
+
+<p>If you are planning to add some fast chat or messaging to your website, don’t hesitate to contact us about building your <a href="/contact">Drupal/Node.js functionality.</a></p>
+ </div></div></div><div class="control-group form-type-item form-item">
+  <label class="control-label">Language </label>
+<div class="controls"> English
+</div></div>
+<div id="comment-wrapper"></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div><div class="field-item even"><a href="/tags/tutorials" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorials</a></div></div></div><div class="field field-name-field-drupal-planet field-type-taxonomy-term-reference field-label-above"><div class="field-label">Check this option to include this post in Planet Drupal aggregator:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

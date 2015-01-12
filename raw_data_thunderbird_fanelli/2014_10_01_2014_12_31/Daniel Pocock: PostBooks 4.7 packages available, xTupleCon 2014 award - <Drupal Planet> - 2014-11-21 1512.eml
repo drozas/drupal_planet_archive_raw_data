@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 21 Nov 2014 14:12:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 21 Nov 2014 14:12:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Daniel Pocock: PostBooks 4.7 packages available, xTupleCon 2014 award
+Content-Transfer-Encoding: 8bit
+Content-Base: http://danielpocock.com/postbooks-4.7-packages-xtuplecon-award
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Daniel Pocock: PostBooks 4.7 packages available, xTupleCon 2014 award</title>
+    <base href="http://danielpocock.com/postbooks-4.7-packages-xtuplecon-award">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I recently updated the PostBooks packages in Debian and Ubuntu to version 4.7.  This is the version that was <a href="https://launchpad.net/ubuntu/+source/postbooks">released in Ubuntu 14.10 (Utopic Unicorn)</a> and is <a href="https://tracker.debian.org/pkg/postbooks">part of the upcoming Debian 8 (jessie) release</a>.</p>
+<h3>Better prospects for Fedora and RHEL/CentOS/EPEL packages</h3>
+<p>As well as getting the packages ready, I've been in contact with <a href="http://www.xtuple.com">xTuple</a> helping them generalize their build system to make packaging easier.  This has eliminated the need to patch the makefiles during the build.  As well as making it easier to support the Debian/Ubuntu packages, this should make it far easier for somebody to create a spec file for RPM packaging too.</p>
+<h3>Debian wins a prize</h3>
+<p>While visiting <a href="http://danielpocock.com/xtuplecon-webrtc-talk-schedule-change">xTupleCon 2014 in Norfolk</a>, I was delighted to receive the <a href="http://www.xtuple.com/press/top-open-source-community-awards-announced-xtuplecon14">Community Member of the Year</a> award which I happily accepted not just for my own efforts but for the Debian Project as a whole.</p>
+<p><img src="http://www.xtuple.com/sites/default/files/images/hackbarth-pocock-community-award-xtuplecon14.jpg" /></p>
+<p><em><a href="https://github.com/shackbarth">Steve Hackbarth</a>, Director of Product Development at xTuple, myself and the impressive</em> Community Member of the Year <em>trophy</em></p>
+<p>This is a great example of the productive relationships that exist between Debian, upstream developers and the wider free software community and it is great to be part of a team that can synthesize the work from so many other developers into ready-to-run solutions on a 100% free software platform.</p>
+<p>Receiving this award really made me think about all the effort that has gone into making it possible to <code>apt-get install postbooks</code> and all the people who have collectively done far more work than myself to make this possible:</p>
+<ul><li>The <a href="https://qa.debian.org/developer.php?login=pkg-postgresql-public@lists.alioth.debian.org">Debian PostgreSQL packaging team</a> making the PostgreSQL server, client libraries and related packages available to install and upgrade easily on Debian and Ubuntu.</li>
+<li>The <a href="https://qa.debian.org/developer.php?login=debian-qt-kde@lists.debian.org">Debian Qt/KDE packaging team</a> providing the Qt libraries.</li>
+<li><a href="http://shadura.me/">Andrew Shadura</a> originally <a href="https://lists.debian.org/debian-devel/2013/03/msg00356.html">started the Postbooks packaging</a> and preparing patches for a clean build on Debian.</li>
+<li><a href="http://julianalouback.com">Juliana Louback</a> who created the <a href="http://jscommunicator.org">JSCommunicator / WebRTC</a> extension for xTuple's new web interface <a href="http://danielpocock.com/positive-results-from-opw-2013">while working in Google Summer of Code</a>.</li>
+<li><a href="http://www.xtuple.com">xTuple themselves</a>, who have an ongoing and enthusiastic commitment to free software and are <a href="https://github.com/xtuple/xtuple">actively developing their new web platform on Github</a>.</li>
+</ul><p>Here is a screenshot of the xTuple web / <a href="http://jscommunicator.org">JSCommunicator</a> integration, it was one of the highlights of xTupleCon:</p>
+<p><img src="http://danielpocock.com/sites/danielpocock.com/files/xtuple-jscommunicator-demo.png" width="540" /></p>
+<p>and gives a preview of the wide range of commercial opportunities that WebRTC is creating for software vendors to displace traditional telecommunications providers.</p>
+<p>xTupleCon also gave me a great opportunity to see new features (like the <a href="http://www.xtuple.com/drupal">xTuple / Drupal web shop integration</a>) and hear about the success of consultants and their clients deploying xTuple/PostBooks in various scenarios.  The product is extremely strong in meeting the needs of manufacturing and distribution and has gained a lot of traction in these industries in the US.  Many of these features are equally applicable in other markets with a strong manufacturing industry such as Germany or the UK.  However, it is also flexible enough to simply disable many of the specialized features and use it as a general purpose accounting solution for consulting and services businesses.  This makes it a good option for many IT freelancers and support providers looking for a way to keep their business accounts in a genuinely open source solution with a strong SQL backend and a native Linux desktop interface.</p>
+</div></div></div>
+  </body>
+</html>
+

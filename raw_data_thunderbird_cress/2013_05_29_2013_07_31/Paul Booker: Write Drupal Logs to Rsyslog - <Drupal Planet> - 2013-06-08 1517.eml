@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 08 Jun 2013 14:17:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 08 Jun 2013 14:17:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Write Drupal Logs to Rsyslog
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-support/command-lines/write-drupal-logs-rsyslog
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Write Drupal Logs to Rsyslog</title>
+    <base href="http://www.paulbooker.co.uk/drupal-support/command-lines/write-drupal-logs-rsyslog">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Install rsyslog on your web server (should already be installed)</p>
+<p>Enable the syslog module in Drupal<br />
+To allow Drupal to log to rsyslog, you have to enable the Drupal syslog module. Syslog is included with Drupal core.</p>
+<p>Configure the Drupal module<br />
+In admin/config/development/logging , you can select one of the following prefixes for your website:</p>
+<p>LOG_LOCAL0<br />
+LOG_LOCAL1<br />
+LOG_LOCAL2<br />
+LOG_LOCAL3<br />
+LOG_LOCAL4<br />
+LOG_LOCAL5<br />
+LOG_LOCAL6<br />
+LOG_LOCAL7</p>
+<p>If you log one site, it really doesn’t matter which one you choose. If however you have multiple sites running on the same machine, and you want each site to log to a different file, the selection does matter. Eg: site A logs to LOG_LOCAL0, site B logs to LOG_LOCAL1, etc.</p>
+<p>Configure rsyslog</p>
+<pre class="brush: bash">
+vim /etc/rsyslog.d/50-default.conf
+</pre><p>
+add the line:</p>
+<pre class="brush: bash">
+local0.* /var/log/drupal.log
+</pre><p>
+This will log all local0 logs to /var/log/drupal.log</p>
+<p>If you have selected local1 in the previous step, you have to replace “local0” by “local1″ in the configuration line, etc. You can name your log file different from “drupal.log”, in fact you can choose any name that hasn’t been taken yet.</p>
+<p>Restart rsyslog</p>
+<pre class="brush: bash">
+service rsyslog restart
+</pre><p>
+You should now cause an error (eg. 404) and see if /var/log/drupal.log has been created and gets filled. If you're having problems check if /var/log/messages gets filled with Drupal log messages. If it does recheck the previous steps and see if you made any mistakes.</p>
+<p>Disable dblog<br />
+At this point, Drupal will log to both the log system and the regular dblog. You can simply disable the module “database logging” in admin/modules .</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal-support/tags/rsyslog" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">rsyslog</a></div><div class="field-item odd"><a href="/drupal-support/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div><div class="field-item even"><a href="/drupal-support/tags/linux" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">linux</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-support/command-lines/write-drupal-logs-rsyslog"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Write Drupal Logs to Rsyslog">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-support/command-lines/write-drupal-logs-rsyslog"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

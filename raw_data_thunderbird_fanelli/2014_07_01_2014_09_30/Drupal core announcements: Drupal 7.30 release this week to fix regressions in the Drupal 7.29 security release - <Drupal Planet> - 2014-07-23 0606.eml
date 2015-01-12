@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 23 Jul 2014 04:06:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 23 Jul 2014 04:06:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal 7.30 release this week to fix regressions in the Drupal 7.29 security release
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/434473
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal 7.30 release this week to fix regressions in the Drupal 7.29 security release</title>
+    <base href="https://groups.drupal.org/node/434473">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-type-datestamp field-field-start7">
+    <div class="field-items">
+            <div class="field-item odd">
+                      <div class="field-label-inline-first">
+              Start:&nbsp;</div>
+                    <span class="date-display-start">2014-07-23 (All day)</span><span class="date-display-separator"> - </span><span class="date-display-end">2014-07-25 (All day) America/New_York</span>        </div>
+        </div>
+</div>
+<div class="field field-type-text field-field-event-type">
+    <div class="field-items">
+            <div class="field-item odd">
+                    Sprint        </div>
+        </div>
+</div>
+<div class="field field-type-userreference field-field-organizers">
+      <div class="field-label">Organizers:&nbsp;</div>
+    <div class="field-items">
+            <div class="field-item odd">
+                    <a href="/user/14705" title="View user profile.">David_Rothstein</a>        </div>
+        </div>
+</div>
+<p>The <a href="https://www.drupal.org/drupal-7.29-release-notes">Drupal 7.29 security release</a> contained a security fix to the File module which caused some regressions in Drupal's file handling, particularly for files or images attached to taxonomy terms.</p>
+<p>I am planning to release Drupal 7.30 this week to fix as many of these regressions as possible and allow more sites to upgrade past Drupal 7.28.  The release could come as early as today (Wednesday July 23).</p>
+<p>However, to do this we need more testing and reviews of the proposed patches to make sure they are solid.  Please see <a href="https://www.drupal.org/node/2305017">#2305017: Regression: Files or images attached to certain core and non-core entities are lost when the entity is edited and saved</a> for more details and for the patches to test, and leave a comment on that issue if you have reviewed or tested them.</p>
+<p>Thank you!</p>
+  </body>
+</html>
+

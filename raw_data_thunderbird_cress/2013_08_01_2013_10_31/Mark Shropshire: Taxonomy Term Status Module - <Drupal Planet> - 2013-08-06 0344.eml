@@ -1,0 +1,53 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 06 Aug 2013 02:44:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 06 Aug 2013 02:44:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mark Shropshire: Taxonomy Term Status Module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mark.shropshires.net/blog/taxonomy-term-status-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mark Shropshire: Taxonomy Term Status Module</title>
+    <base href="http://mark.shropshires.net/blog/taxonomy-term-status-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I work on a Drupal application which utilizes Drupal taxonomy for grouping products on the front page. A view displays an image for each product grouping, allowing users to click through and view products in the selected category.</p>
+
+<p>I thought this setup was great until my project manager requested a way to easily "hide" product categories on the front page. I told her that she could "simply" remove the taxonomy terms assigned to each product in the grouping, but I knew how ridiculous that sounded. Also, she wanted to retain the grouping in case the client requested to reuse the grouping in the future.</p>
+
+<p>I thought about how nice it would be if I could unpublish a taxonomy term just as I do nodes. After a few minutes of searching, I found the <a href="https://drupal.org/project/termstatus">Taxonomy Term Status module</a>. This gem of a module includes number of features which were very helpful to my project:</p>
+
+<ul>
+<li>Presents a status checkbox (publish/unpublish) on each term edit form</li>
+<li>Each vocabulary edit form has a checkbox to set the default publish state of new terms </li>
+<li>Views integration for taxonomy based views (filter on term status)</li>
+<li>Configuration area to enable term status so unpublished terms are hidden. There is also a button to rebuild missing status records.</li>
+</ul>
+
+<p>I was able to fulfill my project manager's request by filtering the front page view on taxonomy term status (Published). When a term is unpublished, the image representing the category disappears from the front page! If you are looking for this kind of functionality, you should give Taxonomy Term Status a look.</p>
+
+<p>Check out the screenshots below for examples of Taxonomy Term Status module usage.</p>
+
+<p><img src="/sites/default/files/Taxonomy_Term_Status-Configuration.png" alt="Taxonomy Term Status configuration page" /><br />
+Taxonomy Term Status configuration page</p>
+
+<p><img src="/sites/default/files/Taxonomy_Term-Pubishing_Options.png" alt="Taxonomy Term Status publishing options" /><br />
+Taxonomy Term Status publishing options</p>
+
+<p><img src="/sites/default/files/Taxonomy_Vocabulary_Default-Pubishing_Options.png" alt="Taxonomy Term Status vocabulary options" /><br />
+Taxonomy Term Status vocabulary options</p>
+
+<p><img src="/sites/default/files/Views-Taxonomy_Term_Published.png" alt="Views-Taxonomy Term Status published filter (filter selection modal)" /><br />
+Views-Taxonomy Term Status published filter (filter selection modal)</p>
+
+<p><img src="/sites/default/files/Views-Taxonomy_Term_Published_1.png" alt="Views-Taxonomy Term Status published filter" /><br />
+Views-Taxonomy Term Status published filter</p>
+</div></div></div><section class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above view-mode-rss"><h2 class="field-label">Blog Category:&nbsp;</h2><ul class="field-items"><li class="field-item even"><a href="/taxonomy/term/13" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li></ul></section>
+  </body>
+</html>
+

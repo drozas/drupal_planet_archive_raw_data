@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 27 Mar 2014 03:23:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 27 Mar 2014 03:23:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Drupal Theming: Adding Font Awesome Icons to Menu Items
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/drupal-theming-adding-font-awesome-icons-menu-items
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Drupal Theming: Adding Font Awesome Icons to Menu Items</title>
+    <base href="http://highrockmedia.com/blog/drupal-theming-adding-font-awesome-icons-menu-items">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/awesome-270269179.png" width="880" height="250" alt="Drupal + Font Awesome" title="Drupal + Font Awesome" class="image-adaptive inline-adaptive" /></p>
+
+<p>I'm currently working on a Drupal build where I'd like users to be able to trivially add icons to menu items through the UI. Enter FontAwesome, the scalable vector icon font that leverages the power of CSS. That in combo with the infamous Menu Attributes module allows users to add custom classes to Drupal menu items via the Menu edit interface on a per menu item basis. This is ideal for what we need to accomplish.</p>
+
+<h2>Install Menu Attributes</h2>
+
+<p>First, grab the Menu Attributes module and enable it either via Drush or download and enable it via the modules admin page. Once you enable Menu Attributes, visit /admin/structure/menu/settings and be sure that the "Classes" attribute is enabled. Now, you'll see this as a text field for any given menu item when editing those.</p>
+
+<h2>Get Font Awesome</h2>
+
+<p>Now, we need to add Font Awesome and for the sake of this tutorial, I'll use the CDN version which we can add to our theme using a preprocess function. As aways, unless you're building a custom module, add the preprocess function to your theme's template.php file or create one if you don't have one already. For my preprocess function, I can use <code>hook_page_build</code> with <code>drupal_add_css</code>.</p>
+
+<p><div class="geshifilter"><span style="color: #000000; font-weight: bold;">function</span> MYTHEME_framework_page_build<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; <span style="color: #666666; font-style: italic;">// Add font awesome cdn.</span><br />
+&nbsp; &nbsp; drupal_add_css<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css'</span><span style="color: #339933;">,</span> <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'external'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span></div></p>
+
+<p>Be sure to replace <em>MYTHEME</em> with the actual <code>machine_name</code> of your theme and clear cache. If all went well, you'll now have Font awesome available to use. Note, you can also download Font Awesome and self-host it as an alternative to the CDN version.</p>
+
+<h2>Add the Icon Classes</h2>
+
+<p>The next step is to add some icon classes to your menu items via the Menu Attributes classes field. To see what icons are available to you, refer to the Font Awesome "Cheat Sheet" on their site. I'll add a "home" icon next to my home link so I simply edit the home link and add this to the classes field typically located at <em>/admin/structure/menu/manage/main-menu</em>:</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php">fa fa<span style="color: #339933;">-</span>home</code></span></p>
+
+<h2>Style away</h2>
+
+<p>Above, the first <code>fa</code> instantiates Font Awesome and <code>fa-home</code> selects your icon. This will need a bit of theming and I found a few caveats as well. Since the class is added to your menu's "a" link, you'll want to define your font for the menu link itself and for the icon which gets added via a CSS "before" class. So if your menu id is <code>primary-nav</code>, you can do this:</p>
+
+<p><div class="geshifilter"><span style="color: #666666; font-style: italic;">#primary-nav a.fa {<br />
+</span> &nbsp;font<span style="color: #339933;">-</span>family<span style="color: #339933;">:</span> arial<span style="color: #339933;">,</span> sans<span style="color: #339933;">-</span>serif<span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span></div></p>
+
+<p><div class="geshifilter"><span style="color: #666666; font-style: italic;">#primary-nav a.fa:before {<br />
+</span> &nbsp;margin<span style="color: #339933;">-</span>right<span style="color: #339933;">:</span> 1em<span style="color: #339933;">;</span><br />
+&nbsp; font<span style="color: #339933;">-</span>family<span style="color: #339933;">:</span> FontAwesome<span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span></div></p>
+
+<p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/menu-683800602.png" width="880" height="82" alt="The finished menu with Font Awesome Icons" title="The finished menu with Font Awesome Icons" class="image-adaptive inline-adaptive" /></p>
+
+<p>One issue I ran in to was that Firefox had trouble rendering the icons from the CDN and it's a documented issue apparently. To solve this, you may need to define Font Awesome in your theme's CSS via the <code>@font-face</code> attribute with an absolute path to the CDN -- that solved it for me. Beyond this, you can style and color as needed all the while using CSS. That's pretty much all you need to do so as you can see it makes it trivial for users to add their own icons to menus.</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">CSS</li><li class="field-item even">Theming</li><li class="field-item odd">Design Patterns</li><li class="field-item even">Drupal</li><li class="field-item odd last">Drupal Planet</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="https://drupal.org/project/menu_attributes" target="_blank" rel="nofollow">Menu attributes</a></li><li class="field-item even"><a href="http://fortawesome.github.io/Font-Awesome/" target="_blank" rel="nofollow">Font Awesome</a></li><li class="field-item odd"><a href="http://fortawesome.github.io/Font-Awesome/cheatsheet/" target="_blank" rel="nofollow">Font Awesome Cheat Sheet</a></li><li class="field-item even last"><a href="http://fontello.com/" target="_blank" rel="nofollow">More icons</a></li></ul>
+  </body>
+</html>
+

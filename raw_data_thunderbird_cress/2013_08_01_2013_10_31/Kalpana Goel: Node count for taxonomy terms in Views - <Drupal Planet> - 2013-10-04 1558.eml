@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 04 Oct 2013 14:58:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 04 Oct 2013 14:58:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Kalpana Goel: Node count for taxonomy terms in Views
+Content-Transfer-Encoding: 8bit
+Content-Base: http://kalpanagoel.com/node/3
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Kalpana Goel: Node count for taxonomy terms in Views</title>
+    <base href="http://kalpanagoel.com/node/3">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>To display number of count for taxonomy terms in views block (Drupal 7), you can do the following -</p>
+<p>1. Create a views block<br />
+2. Under fields,  add taxonomy term: Name<br />
+4. Under relationships, add taxonomy terms: content with term<br />
+5. Under contextual filter, add taxonomy term: name, choose "Display a summary", "Display record count with link". </p>
+<p>You will have views block which will display taxonomy terms with number count for example -</p>
+<p>cows (2)<br />
+dog (3)<br />
+cats (7)</p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/taxonomy/term/2" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">taxonomy terms</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">count</a></li><li class="taxonomy-term-reference-2" rel="dc:subject"><a href="/taxonomy/term/4" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li><li class="taxonomy-term-reference-3" rel="dc:subject"><a href="/taxonomy/term/5" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">views</a></li></ul></div>
+  </body>
+</html>
+

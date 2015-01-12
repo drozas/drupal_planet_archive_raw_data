@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 01 Feb 2014 10:47:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 01 Feb 2014 10:47:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Replacing lengthy URLs in simplenews newsletter email with Bit.ly short URLs
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/sivaji/replacing-lengthy-urls-simplenews-newsletter-email-bitly-short-urls
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Replacing lengthy URLs in simplenews newsletter email with Bit.ly short URLs</title>
+    <base href="http://knackforge.com/blog/sivaji/replacing-lengthy-urls-simplenews-newsletter-email-bitly-short-urls">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="https://drupal.org/project/simplenews">Simplenews</a>, a newsletter module allows you to send customized confirmation emails on subscribe and unsubscribe actions. The default singe email confirmation for subscribe looks as below,</p>
+<p>Subject:</p>
+<blockquote><p>Confirmation for [simplenews-category:name] from [site:name]</p>
+</blockquote>
+<p>Body:</p>
+<blockquote><p>We have received a request to subscribe [simplenews-subscriber:mail] to the [simplenews-category:name] newsletter. To confirm please use the link below.</p>
+<p>[simplenews-subscriber:subscribe-url]</p></blockquote></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,187 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 24 Feb 2014 16:10:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 24 Feb 2014 16:10:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Static Prototyping and Keeping Drupal Simple (KDS)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/static-prototyping-and-keeping-drupal-simple-kds/?utm_source=rss&utm_medium=rss&utm_campaign=static-prototyping-and-keeping-drupal-simple-kds
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Static Prototyping and Keeping Drupal Simple (KDS)</title>
+    <base href="http://www.phase2technology.com/blog/static-prototyping-and-keeping-drupal-simple-kds/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=static-prototyping-and-keeping-drupal-simple-kds">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>If you ask any Drupal developer about their favorite tools, the probability of Views and Panels being in that list are absolute. They are part of the <a href="https://drupal.org/project/usage">top 100</a>, and with good reason. They provide GUI tools for querying and layout customization.</p>
+<h4>They also, however, introduce complexity behind-the-scenes.</h4>
+<p>The technical debt involved with preprocessing views templates or creating custom panel layouts is hard to justify for projects that have small budgets, tight timelines, or hyper-specific design requirements.</p>
+<p>One approach is to have a front-end developer interpret flat designs to DOM output introduced by the implementation. While this is common, it adds technical design debt as you deal with unneeded repeated elements, missing HTML5 tags, and unstructured CSS.</p>
+<p>You also introduce QA headaches as the gap between what is designed in Photoshop and what is implemented lies solely on subjective design eye.</p>
+<p>I believe a better approach is to use static prototypes and manipulate Drupal to the desired DOM using core API functions.</p>
+<p>I call it <strong>Keeping Drupal Simple (KDS)</strong>.</p>
+<p>Let&#8217;s explore the KDS philosophy as well as some implementation techniques.</p>
+<h2>Business Goals</h2>
+<p>Every decision should be tied to a stated business goal. The &#8216;what if&#8217; scenarios of users, both visitors and site administrators, being able to interact with the options Drupal can provide generally push budgets.</p>
+<p>Although being able to think of all scenarios is something developers pride themselves on, most business goals can be solved with specific definitions of success and simpler technical solutions.</p>
+<p>One way to focus this effort is to ask the right questions. Instead of asking &#8216;Do you need to be able to do x?&#8217;, follow <a href="http://en.wikipedia.org/wiki/Agile_software_development">the principles of Agile</a> and ask &#8216;What business goal is solved of being able to do x?&#8217;</p>
+<p>This subtle change allows developers to redistribute their efforts from feature rich technical implementations to high value client experiences. It also forces the client to think about the <em>true </em>value of a feature request as it relates to their audience.</p>
+<p>This results in reevaluating the need for modules, like Views or Panels, because site configuration priorities are lower than the design and content creation priorities.</p>
+<p>Below are four questions I ask when implementing KDS:</p>
+<ol>
+<li>What is the business value of editors being able to change the layout / have a dashboard / administer X type of content?</li>
+<li>How do you define a successful site visitor experience?</li>
+<li>When do you plan for your content creators to create real content and give you feedback?</li>
+<li>What business value is lost if X feature is moved to a Phase 2 or 3?</li>
+</ol>
+<h2>Project Evaluation</h2>
+<p>It goes without saying that this approach does not work for every project. Evaluating the needs of your client, the project constraints, and the abilities of your team through proper discovery is essential. KDS may work for you if:</p>
+<ul>
+<li>The project has a small budget and timeline</li>
+<li>There is a lack strong front-end acuity on the implementation team, either from availability, skill or budget</li>
+<li>The front-end team knows [insert front-end framework], but not Drupal</li>
+<li>Site configuration and layout will remain mostly static after launch</li>
+</ul>
+<p>Not all of the above factors are required. If your project does satisfy a majority of the conditions, I would consider KDS.</p>
+<h2>Static Prototyping</h2>
+<p>One of the driving factors of cost is design interpretation. Based on a given a PSD design or wireframe set, expectations are set with the client about look, feel, and interaction.</p>
+<p>The cost to bridge the gap between what is possible on the web and what is designed can be vast.</p>
+<p>This can be mitigated by designing in browser and starting with HTML prototypes. Providing a simple static homepage and interior page can set the proper expectations of menu interaction, block placement, and feedback in various browsers.</p>
+<p>Thankfully, methods like <a href="http://styletil.es/">style tiles</a> and <a href="http://www.phase2technology.com/blog/your-frontend-methodology-is-all-of-them-atomic-design-patternlab/">atomic design</a> take this even further by providing a common design relationship between elements.</p>
+<p>This accelerates the on-boarding of new project developers because the styleguide contains both design and DOM conclusions.</p>
+<p><strong>The static prototype also becomes the source of truth for all decisions. </strong></p>
+<ul>
+<li>Being able to explain in concrete terms what elements of a page will and will not have user-defined configuration goes a long way to keeping deliverables within budget.</li>
+<li>Work is also done in parallel, decreasing inefficiency.</li>
+<li>Front-end developers communicate ideas via static prototypes to the client while also optimizing their DOM and CSS.</li>
+<li>Backend developers develop functionality that produces the prototype DOM.</li>
+<li>The challenge  becomes bending Drupal towards that markup goal.</li>
+<li>When applying the static prototype within Drupal, the theme becomes the meeting point. Base themes tend to get in the way and add extra markup or classes, so starting from scratch is best.</li>
+<li>The best way to build a theme from a static prototype is to take your interior page and set it as the page.tpl.php. This gives you a starting point to start swapping static components for dynamic Drupal components.</li>
+<li>As you swap, you can compare the output of your theme to the static prototype and provide an iterative QA piece for the team.</li>
+</ul>
+<p>Some best practices include:</p>
+<ol>
+<li>Creating a html.tpl.php and swap out the contents in the &lt;head&gt; tag</li>
+<li>Swapping the area where a menu would be for <a title="Themed Menu Output" href="http://stackoverflow.com/questions/4824093/how-to-print-a-custom-menu-in-drupal-7">themed menu output</a> via menu_navigation_links()</li>
+<li>Combining the static homepage prototype elements and wrap them in a conditional that be set in template.php</li>
+<li>Swapping sidebar areas for regions and hard-code them temporarily in template.php to check output</li>
+</ol>
+<p>Using your prototype in your tpl files provides an added bonus of only needing to swap out areas if something is dynamic. This accelerates your pace to the deliverable as you&#8217;re not bogged down with parts of the DOM that will never change and, thus, do not need rendering from the Drupal ecosystem.</p>
+<h2> API Over Everything</h2>
+<p>The most important technical implementation philosophy developers need to remember when implementing KDS is to always try to use core API. The reason isn&#8217;t because 3rd-party modules are bad.</p>
+<p>The reason is because <strong>3rd-party modules have assumptions</strong> that can lead to technical debt. Many times, budgets are blown because of the work you have to do to undo a default assumption.</p>
+<p>For example, if a static prototype homepage has a listing of content, the delivered DOM may use the <a title="Article HTML5 tag" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article"><em>article</em></a> HTML5 tag to segment out the content from the rest of the site.</p>
+<p>If you build that listing with Views, you&#8217;ll have to:</p>
+<ol>
+<li>Build the view with the right conditions</li>
+<li>Export the view to code</li>
+<li>Preprocess the view or create new tpl files</li>
+<li>Work to ignore or work-around the extra DOM included from Views</li>
+<li>Hope the requirements of the view doesn&#8217;t change</li>
+<li>Hope the client doesn&#8217;t change anything in the Views interface</li>
+</ol>
+<p>Conversely, you can use <a title="EntityFieldQuery: Let Drupal Do the Heavy Lifting" href="http://www.phase2technology.com/blog/entityfieldquery-let-drupal-do-the-heavy-lifting-pt-1/">EntityFieldQuery</a> to grab your listing and theme the results in a custom theme function with the exact DOM desired.</p>
+<p>In template.php:</p><pre class="crayon-plain-tag">/**
+ * Implements hook_preprocess_page().
+ */
+my_theme_preprocess_page(&amp;amp;$vars) {
+  if (drupal_is_front_page()) { 
+    $variables['page']['content'] = my_module_listing(); 
+  }
+}</pre><p>In my_module.module:</p><pre class="crayon-plain-tag">/**
+ * List nodes for homepage.
+ */ 
+function my_module_listing() {
+  $query = new EntityFieldQuery();
+  $query-&gt;pager(10);
+  $result = $query-&gt;execute();
+  $output = array();
+  $nids = array_keys($result['node']);
+  $nodes = node_load_multiple($nids);
+  foreach ($nodes as $node) {
+    $output[] = theme('my_module_listing_single', array('node' =&gt; $node));
+  }
+  $output[] = theme('pager', $query-&gt;pager); 
+  return implode('', $output); 
+}
+
+/**
+ * Theme a single element in a listing.
+ */
+theme_my_module_listing_single($vars) {
+  $output = array();
+  $node = $vars['node'];
+  $output[] = '&lt;article&gt;';
+  $output[] = "&lt;h1&gt;$node-&gt;title&lt;/h1&gt;";
+  $output[] = "&lt;p&gt;$node-&gt;desc&lt;/p&gt;";
+  $output[] = '&lt;/article&gt;';
+  return implode('', $output);
+}</pre><p>You now have eliminated technical debt from the Views ecosystem and eliminated design debt due to new DOM elements.</p>
+<p>While this isn&#8217;t a critique on the <em>exporting UI workflow</em>, do take time to consider the impact of multiple environments, multiple developers, multiple iterations of development, and a tight timeline.</p>
+<p>What happens to your budget when there is a conflict?</p>
+<p>What happens to your scrums when clients want to know what &#8216;that button does&#8217;?</p>
+<p>The goal is to deliver high business value, in a limited scope. This, consequently, reduces the likelihood of scope creep introduced by additional configuration options. This also forces the team to concentrate on the business values communicated at project start.</p>
+<p>Not sure which API functions to start with? I recommend <a title="30 Drupal 7 API Functions" href="http://brightplumbox.com/30Drupal7API/#/">starting with these 30</a>.</p>
+<h2>Why?</h2>
+<p>Some frequently asked questions I receive of &#8216;Why&#8217; or &#8216;How&#8217; when it comes to KDS technical implementation:</p>
+<h3>Q: How do I place blocks, if not by the UI?</h3>
+<ul>
+<li>Create an update hook and place the block delta directly in the table</li>
+<li>Use <a title="Context" href="https://drupal.org/project/context">Context</a> and hook_context_default_contexts().</li>
+</ul>
+<h3>Q: What happens if I need to update a field or setting, if not by Features?</h3>
+<ul>
+<li>Review the Field API and update through an update hook.</li>
+<li>Also, Features are great! I&#8217;m not knocking Features. Maybe consider using it as a way to stub your update hook with the proper configuration array through the Feature export and piping that into your install / update hook.</li>
+</ul>
+<h3>Q: What about initial WYSIWYG configuration, Pathauto configuration, or some other common configuration?</h3>
+<ul>
+<li>See answer above.</li>
+</ul>
+<h3>Q: Seriously, though. Why would I do this when a module does this for me?</h3>
+<ul>
+<li>Code requires commits and commits provide a history. Having a history of what was changed is good. It helps team members and it helps project managers in tight deadlines and budgets. History gives you a breadcrumb trail of work.</li>
+<li>Learning the Drupal API also gives you confidence of how things work under the hood. Troubleshooting is easier if you know the execution processes behind those buttons.</li>
+</ul>
+<h2>Don&#8217;t Forget Content Creators</h2>
+<p>Here are a few 3rd-party modules (and caveats) that align with the easy content authoring objective:</p>
+<ul>
+<li>WYSIWYG &#8211; <a title="CKEditor" href="https://drupal.org/project/ckeditor">CKEditor</a> 1.13</li>
+<li>Asset Management &#8211; <a title="Media" href="https://drupal.org/project/media">Media</a> 1.4
+<ul>
+<li>Include these <a title="Media error message patch" href="ttp://drupal.org/files/issues/media-error-message-when-editing-file-entity-display-options-2171115-1.patch">two</a> <a title="Media browser patch" href="http://drupal.org/files/media-browser-pagination-2104493.patch">patches</a></li>
+<li>Ensure that the jQuery version is &lt;= 1.7 as there is a bug that breaks the media browser in 1.8</li>
+</ul>
+</li>
+<li>Simple Workflow &#8211; <a title="State Machine" href="https://drupal.org/project/state_machine">State Machine</a> 2.2
+<ul>
+<li>Out of the box, every node goes through a simple draft =&gt; published workflow</li>
+<li>Overrides are done via code only</li>
+</ul>
+</li>
+<li>Youtube, Vimeo Integration &#8211; <a title="Video Embed Field" href="https://drupal.org/project/video_embed_field">Video Embed Field</a> 2.0-beta7
+<ul>
+<li>Link to a video that turns into a field</li>
+</ul>
+</li>
+<li>SEO &#8211; <a title="Metatag" href="https://drupal.org/project/metatag">Metatag</a> 1.0-beta9</li>
+<li>Sidebar Elements &#8211; <a title="Bean" href="https://drupal.org/project/bean">Bean</a> 1.7
+<ul>
+<li>Custom types can be added via code only</li>
+<li>Fields can be added to block types via the form API</li>
+</ul>
+</li>
+</ul>
+<p>I haven&#8217;t had a chance to use <a title="Edit" href="https://drupal.org/project/edit">Edit</a> or the other recommendations in the <a title="Spark" href="https://drupal.org/project/spark">Spark</a> distribution. I&#8217;ll try to post an update to KDS once I&#8217;ve had a chance to evaluate it, especially since it&#8217;s in Drupal 8.</p>
+<p>KDS is designed to strip down the implementation plan of a Drupal solution from the discovery process to the technical implementation. It&#8217;s not a one-size-fits-all nor is it a critique on popular modules like Views and Panels. It&#8217;s main goal is to provide a philosophy of simplicity inside the complex world of a Drupal project.</p>
+<p>Please let me know what you think!</p>
+<p>I&#8217;m curious to hear the community&#8217;s feedback and if others have found other ways to keep projects streamlined.</p>
+<p>In the meantime, learn more about everyone&#8217;s favorite module, Views in Chris Johnson&#8217;s blog post &#8220;<a title="Permalink to Customizing Views With Context" href="http://www.phase2technology.com/blog/customizing-views-with-context/" rel="bookmark">Customizing Views With Context</a>!&#8221;</p>
+<p>&nbsp;</p>
+  </body>
+</html>
+

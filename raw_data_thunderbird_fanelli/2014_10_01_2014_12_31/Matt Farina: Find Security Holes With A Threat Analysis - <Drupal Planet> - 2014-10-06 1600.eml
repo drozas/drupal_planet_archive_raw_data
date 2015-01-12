@@ -1,0 +1,179 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 06 Oct 2014 14:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 06 Oct 2014 14:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Matt Farina: Find Security Holes With A Threat Analysis
+Content-Transfer-Encoding: 8bit
+Content-Base: http://engineeredweb.com/blog/2014/threat-analysis/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Matt Farina: Find Security Holes With A Threat Analysis</title>
+    <base href="http://engineeredweb.com/blog/2014/threat-analysis/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>It seems that every week we hear about a new high profile hacking. For example, it just came out that <a href="http://www.itworld.com/data-protection/440174/jpmorgan-chase-attackers-hacked-other-banks-report-says">numerous financial institutions, in addition to JPMorgan Chase, were hacked</a>. We live in an incredibly accessible world where those on the other side of the globe can easily knock on our digital front doors or even try to pick the locks. So, how can we try to figure out where the weak points are in our security? How can we find the <a href="/blog/2014/security-is-feature/">tasks to work on to beef up security</a>? One option is to perform a threat analysis.<!--break--></p>
+
+
+
+
+<p>A <a href="http://www.businessdictionary.com/definition/threat-analysis.html#ixzz3FN07qdv0">threat analysis</a> for computing systems is...</p>
+
+
+
+
+<blockquote><p>Systematic detection, identification, and evaluation of areas or spots of vulnerability of a facility, operation, or system.</p></blockquote>
+
+
+
+
+<p>Let's look at some ways we can dip out toes into a threat analysis. This is not all inclusive and you'll need to go well beyond these ideas but they are a place to get started.</p>
+
+
+
+
+<p><em>You'll notice I suggest documenting many of the aspects discussed. Documenting them helps to communicate the system and details to others who can offer insight and it helps to visualize what's happening.</em></p>
+
+
+
+
+<h2>Diagram Your System Architecture</h2>
+
+
+
+
+<p><img src="http://engineeredweb.com/media/images/Drupal-Site-Arch-Diagram.png" alt="Site Architecture Diagram" /></p>
+
+
+
+
+<p>Above is a simple example of a CMS based website, such as a common Drupal site. In the diagram diagram document all the components, even elements that browsers download from 3rd parties or components that aren't user facing.</p>
+
+
+
+
+<p>Once you have the diagram look at all the interconnects between the different parts. For example, you may serve your pages over <em>https</em> but the connection between the web server and the MySQL isn't over an encrypted connection. That could offer a route to peek in on data.</p>
+
+
+
+
+<p>Also, look at who can access what ports on what servers. If Memcached is accessible to anyone who knows the IP of the server the data in it can be retrieved by anyone. In this picture private networks, cloud security groups, or some other protection should be in place to protect anyone from ever accessing Memcached or MySQL.</p>
+
+
+
+
+<p>Looking at the system can help you identify places to secure communications. It's an easy place to start identifying tasks.</p>
+
+
+
+
+<h2>Data Storage</h2>
+
+
+
+
+<p>Many sites store information about customers. This ranges from mundane settings through <a href="https://en.wikipedia.org/wiki/Personally_identifiable_information">personally identifiable information (PII)</a>. Imagine an e-commerce site where someone gets into the database or can even just monitor the traffic between the web server and the database. They'll know customer names, email address, home address, and more.</p>
+
+
+
+
+<table>
+<thead>
+<tr>
+<th>Type     </th>
+<th> Where </th>
+<th> Encrypted?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Products </td>
+<td> MySQL </td>
+<td> No</td>
+</tr>
+<tr>
+<td>Name     </td>
+<td> MySQL </td>
+<td> No</td>
+</tr>
+<tr>
+<td>Address  </td>
+<td> MySQL </td>
+<td> No</td>
+</tr>
+<tr>
+<td>...      </td>
+<td> ...   </td>
+<td> ...</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+<p>An easy way to get a view of the data you're storing is with an old fashioned table. List out everything from the content that's displayed to the private details (even those sent to web services like a credit card processor).</p>
+
+
+
+
+<p>Once you have this information you can combine it with the accessibility of the system and start to get an idea how open data is for hackers. It's also an easy place to start finding tasks to make the data more secure. For example, can information like addresses be encrypted?</p>
+
+
+
+
+<h2>Security Update Plan</h2>
+
+
+
+
+<p>Software is insecure. The more complicated the software the more likely there are holes in it. The software powering the Internet has regular security updates to fix the problems as they are found. By regular I don't expect a week to go by without needing to update one thing or another.</p>
+
+
+
+
+<p>How do you update software? Is it automated? Is it often? How often? For example, it's great to install updates to a CMS but what about the web server, the database, the operating system they are on, and everything else in the system?</p>
+
+
+
+
+<p>Document how you handle updates and then look for ways to improve on and automate the updates.</p>
+
+
+
+
+<h2>Reviewing Logs</h2>
+
+
+
+
+<p>Hacking attempts happen. Some people will even scan the entire Internet to see what's open. It's not all the hard to scan the entire Internet and you can do it at a slow pace in under a day.</p>
+
+
+
+
+<p>Part of handling threats isn't just handling them but identifying bad situations quickly and reacting. That's where good logging practices can come in. Look at the log review practices and automate as much as possible.</p>
+
+
+
+
+<p>Make sure to log everything (minus information such as passwords) and review those logs. If an IP address keeps trying to access your systems but fails to authenticate you should know about it. If systems are accessed when you don't expect them to be or from locations you don't expect, you should know about it.</p>
+
+
+
+
+<h2>Just the beginning...</h2>
+
+
+
+
+<p>These few things are just the beginning but a good place to start. Initially, this can raise a number of places to improve the system while getting some of the security thinking more in place.</p>
+
+<p><a href="http://engineeredweb.com/blog/2014/threat-analysis/">Continue Reading &raquo;</a></p>
+  </body>
+</html>
+

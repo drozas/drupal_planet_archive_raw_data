@@ -1,0 +1,78 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 04 Dec 2013 18:18:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 04 Dec 2013 18:18:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Ben's SEO Blog: Setting Up Your Drupal Site to Handle Marketing Content
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.volacci.com/blog/setting-your-drupal-site-handle-marketing-content
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Ben's SEO Blog: Setting Up Your Drupal Site to Handle Marketing Content</title>
+    <base href="https://www.volacci.com/blog/setting-your-drupal-site-handle-marketing-content">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="schema:articleBody content:encoded"><!--MEDIA-WRAPPER-END-3--><p dir="ltr"> </p>
+<p dir="ltr"><img alt="" class="media-element file-default" data-file_info="%7B%22fid%22:%22657%22,%22view_mode%22:%22default%22,%22fields%22:%7B%22format%22:%22default%22,%22field_file_image_alt_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22%22,%22field_file_image_title_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22%22%7D,%22type%22:%22media%22%7D" src="https://www.volacci.com/sites/default/files/legos-stacking.jpg" style="line-height: 1.538em; width: 300px; height: 263px; float: right;" typeof="foaf:Image" />Whether you’ve been handed an existing Drupal site by your IT department or you’re starting from scratch, it’s important for a Marketer to fully understand how Drupal is put together. Understanding the different systems and layers will help you make better marketing decisions and build content that takes full advantage of Drupal.</p>
+<p dir="ltr">This blog post may get a little deep, but don’t worry. If you come away with just a few good concepts about Drupal then you’re doing fine and you can always refer back to this post as you need to. (bookmarks are your friend)</p>
+<p dir="ltr">These systems are the key parts that make up a Drupal site:</p>
+<ul dir="ltr"><li>The Theme Layer sits on top of your Drupal site and has final say on how things look to your site visitors.</li>
+<li>The Taxonomy System gives you the ability to categorize and tag your content.</li>
+<li>The Node System determines what a “content” is and how it is structured</li>
+<li>The User System creates separate “accounts” for each logged-in visitor.</li>
+<li>The Path System allows you to create site structure in your URLs</li>
+</ul><h3 dir="ltr">The Theme Layer</h3>
+<p dir="ltr">The best websites separate the look and feel from the content. That is, in theory, what the theme layer in Drupal does. You or your developer can create a Theme that is made up of CSS and a bit of php (don’t worry, it’s easy or mostly done for you in the theme) to create a look for your site. </p>
+<p dir="ltr">For those who prefer a more visual representation, here's a great graphic Drupal.org created to explain theming architecture:</p>
+<p dir="ltr" style="text-align: center;"><img alt="Drupal theming architecture | Source: Drupal.org" class="media-element file-default" data-file_info="%7B%22fid%22:%22662%22,%22view_mode%22:%22default%22,%22fields%22:%7B%22format%22:%22default%22,%22field_file_image_alt_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22Drupal%20theming%20architecture%20%7C%20Source:%20Drupal.org%22,%22field_file_image_title_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22Source:%20Drupal.org%22%7D,%22type%22:%22media%22%7D" src="https://www.volacci.com/sites/default/files/theme%20architecture%20source%20drupalorg.png" title="Source: Drupal.org" typeof="foaf:Image" /></p>
+<p dir="ltr">According to Drupal.org, "All layers can implement a themed representation of the output, but (with a few exceptions) only within the theming layers can overrides occur." <span style="color: rgb(34, 34, 34); font-family: 'Lucida Grande', 'DejaVu Sans', 'Bitstream Vera Sans', Verdana, Arial, sans-serif; font-size: 13px; line-height: 17.984375px;">So, m</span><span style="line-height: 1.538em;">aking a single change to the theme will carry down to every single page of your Drupal site.</span></p>
+<p dir="ltr">If you need a certain landing page to be different, it’s very easy to <a href="https://drupal.org/node/1089656" target="_blank">create a separate theme file for just one page</a>. (see "page" section on that link)</p>
+<p dir="ltr">Prefer that all your blog posts to have a different font size? You can easily <a href="https://drupal.org/node/17565" target="_blank">theme content types separately</a>.</p>
+<p dir="ltr">Want to hide certain blocks on a form page? You can <a href="https://drupal.org/documentation/modules/block" target="_blank">hide certain blocks on a form page</a>.</p>
+<p dir="ltr">Here's a 20 minute video from our friends at Drupalize.me that will help you understand all this a bit more: <a href="http://drupalize.me/videos/introduction-theming-basics-drupal-7" target="_blank">Introduction to Theming Basics.</a></p>
+<p dir="ltr">If you only understand those few things then you're already well on your way!</p>
+<h3 dir="ltr">The Taxonomy System</h3>
+<p dir="ltr">Taxonomies are used to classify and categorize website content. In other words, they allow you to create a tags to <a href="https://drupal.org/documentation/modules/taxonomy" target="_blank">help organize your content</a> within your selected content type. Tags are essential to keeping your content organized and well-structured.</p>
+<p><span style="line-height: 1.538em;">They are helpful internally to the editorial team writing articles so they have a place to nest their content on the site, or to the sales team when they're looking for a past example to help sell a lead on choosing their company's services. Tags also help website visitors find what they're looking for. After all, what's the point in having content if the consumers of that content can't find it?</span></p>
+<p>Overall tag categories are collected in what are called vocabularies. Under vocabularies there are terms or tags followed by sub-terms/sub-tags. An example of this would be a events business with several different service offerings they cover on their blogs. So, there could be a vocabulary called Weddings or another called Birthdays or a third called Corporate Events. Within those vocabularies, tags could include venues, decoration, or catering with sub tags like indoor or outdoor. This <a href="http://buildamodule.com/video/build-your-first-drupal-7-web-site-how-to-fix-broken-views-and-work-with-taxonomy-a-brief-explanation-of-taxonomy" target="_blank">video from BuildAModule</a> has another great example of leveraging taxonomies to create different content categories.</p>
+<h3 dir="ltr">The Node System</h3>
+<p dir="ltr">You’ll hear the words “Content” and “Node” used almost interchangeably in the Drupal world. A node is nothing more than a group of “fields” (or "chunks" if you <a href="https://www.lullabot.com/blog/article/deblobbing-your-chunks-building-flexible-content-model" target="_blank">listen to Jeff Eaton</a>...and I do) that are related to each other.</p>
+<p dir="ltr">In other words, a node is a group of fields that all go together. For example, if you put these fields together:</p>
+<p><img alt="" class="media-element file-default" data-file_info="%7B%22fid%22:%22655%22,%22view_mode%22:%22default%22,%22fields%22:%7B%22format%22:%22default%22,%22field_file_image_alt_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22%22,%22field_file_image_title_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22%22%7D,%22type%22:%22media%22%7D" src="https://www.volacci.com/sites/default/files/media_1376440684887.png" typeof="foaf:Image" /></p>
+<p dir="ltr">Then you’d have a blog post “Content Type”. The Node system has an easy method for defining all the content types you could ever want. You might have different fields that are needed for a Press Release:</p>
+<ul dir="ltr"><li>Headline</li>
+<li>Byline</li>
+<li>Body text</li>
+<li>Image</li>
+<li>Breakout quote</li>
+<li>Date</li>
+<li>Contact first name &amp; last name</li>
+<li>Contact email address</li>
+<li>Contact phone number</li>
+</ul><p dir="ltr">or a company event:</p>
+<ul dir="ltr"><li>Title</li>
+<li>Host</li>
+<li>Location</li>
+<li>Date</li>
+<li>Time</li>
+<li>Description</li>
+<li>RSVP form</li>
+</ul><p><span style="line-height: 1.538em;">See? It’s easy to put together exactly the fields you need for almost any purpose. Drupal provides you with a “Basic Page” and a few other types. The Blog module gives you a “Blog” type. And, you can easily <a href="https://drupal.org/node/21947" target="_blank">create any of the types you want</a>.</span></p>
+<h3 dir="ltr">The User System</h3>
+<p dir="ltr"><img alt="" class="media-element file-default" data-file_info="%7B%22fid%22:%22656%22,%22view_mode%22:%22default%22,%22fields%22:%7B%22format%22:%22default%22,%22field_file_image_alt_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22%22,%22field_file_image_title_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22%22%7D,%22type%22:%22media%22%7D" src="https://www.volacci.com/sites/default/files/Icon-user.png" style="line-height: 1.538em; width: 200px; height: 200px; float: left;" typeof="foaf:Image" />You might be the only person logging into your site, or you may have a whole team that needs access to the site, or perhaps your consumers can log in and create their own accounts. The User system allows you to manage these users so that everyone may log in securely and access what you want them to access. You do this through creating roles such as: <span style="line-height: 1.538em;">Administrator, </span><span style="line-height: 1.538em;">Author, </span><span style="line-height: 1.538em;">Developer or </span><span style="line-height: 1.538em;">Subscriber.</span></p>
+<p dir="ltr">Within each of these <a href="https://drupal.org/node/1803614" target="_blank">user roles</a>, you can set up user access permissions and restrictions to certain content types, admin features such as modules or appearance settings.</p>
+<p dir="ltr">
+<!--MEDIA-WRAPPER-START-3--></p><p><img alt="User role permissions | Source: drupal.org" class="media-element file-default" data-file_info="%7B%22fid%22:%22663%22,%22view_mode%22:%22default%22,%22fields%22:%7B%22format%22:%22default%22,%22field_file_image_alt_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22User%20role%20permissions%20%7C%20Source:%20drupal.org%22,%22field_file_image_title_text%5Bund%5D%5B0%5D%5Bvalue%5D%22:%22User%20role%20permissions%20%7C%20Source:%20drupal.org%22%7D,%22type%22:%22media%22%7D" src="https://www.volacci.com/sites/default/files/author%20admin%20user%20drupalorg.PNG" style="width: 750px; height: 163px;" title="User role permissions | Source: drupal.org" typeof="foaf:Image" /></p>
+<!--MEDIA-WRAPPER-END-3-->
+<h3 dir="ltr">The Path System</h3>
+<p dir="ltr">Drupal, unlike most other CMSs, does not force any kind of organization onto your content. All content is equal to all other content. That’s right, every new content that is created lives on the main node level of a Drupal site. For example, node/123 is just as important as node/1 or node/1000001. There is no built in categorization or layers in a Drupal website, Drupal assigns a number to each piece of content chronologically and you must create your own unique URL paths. While this may seem daunting, it creates deep flexibility in how you’re able to lay out your website structure. Moz has a great guide to <a href="http://moz.com/learn/seo/url">URL structuring</a> that covers best practices that your site structure should follow for SEO and user experience.</p>
+<p dir="ltr">Search engines often look at how a website is structured to determine what silos (groups) of content that exist on a site. The bigger or deeper the silo the more likely that the site is an authority on that particular topic - especially if users find the content useful and spend a lot of time on the site, link to it, and share it on social networks. </p>
+<p><br />While understanding the architecture of your Drupal site might be overwhelming at first, understanding and utilizing these systems will help you create marketing content intelligently that creates a powerful impact. Take a look at your own site, use this post for reference, or bookmarkt it for later. Have questions? Hit us up in the comments, we're always happy to help.</p>
+</div></div></div><div class="field field-name-field-subtitle field-type-text field-label-hidden"><div class="field-items"><div class="field-item even" property="schema:alternativeHeadline">An overview of Drupal's architecture and how Marketer's can use it to full benefit</div></div></div><div class="field field-name-field-terms field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><a href="/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>, <a href="/planet-drupal-teasers" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a>, <a href="/drupal-marketing" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal marketing</a></div></div><span rel="schema:url" resource="/blog/setting-your-drupal-site-handle-marketing-content" class="rdf-meta"></span><span property="schema:name" content="Setting Up Your Drupal Site to Handle Marketing Content" class="rdf-meta"></span>
+  </body>
+</html>
+

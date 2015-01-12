@@ -1,0 +1,108 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 03 Nov 2013 23:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 03 Nov 2013 23:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AF83 Development blog: Having fun with Enumerator
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dev.af83.com/2013/11/04/having-fun-with-enumerator.html
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AF83 Development blog: Having fun with Enumerator</title>
+    <base href="http://dev.af83.com/2013/11/04/having-fun-with-enumerator.html">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Ruby's <a href="http://ruby-doc.org/core-2.0.0/Enumerator.html">Enumerator</a> class is
+one of the most used classes of the whole Ruby ecosystem, and yet, one of the
+less popular. Lots of people use it without even noticing its presence.</p>
+
+<h2 id="toc_0">Enumerator</h2>
+
+<p>First, let's prove Enumerator really exists:</p>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="nb">p</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">each</span>
+<span class="c1"># =&gt; #&lt;Enumerator: [1, 2, 3]:each&gt;</span>
+</code></pre></div>
+<p>By printing the return value of <code>each</code> without giving it a block, we can see
+that <code>each</code> returns an instance of <code>Enumerator</code>.</p>
+
+<p>And like any other instance, we can call methods on it.</p>
+
+<h2 id="toc_1">Mutating an Enumerator</h2>
+
+<p><code>Enumerator</code> provides a few interesting methods. <code>with_index</code> and <code>with_object</code>
+let you mutate the behavior of the current <code>Enumerator</code>.</p>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">].</span><span class="n">each</span><span class="o">.</span><span class="n">with_index</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="p">,</span> <span class="n">index</span><span class="o">|</span>
+  <span class="nb">p</span> <span class="n">item</span>
+  <span class="nb">p</span> <span class="n">index</span>
+<span class="k">end</span>
+<span class="c1"># =&gt; 1</span>
+<span class="c1"># =&gt; 0</span>
+<span class="c1"># =&gt; 2</span>
+<span class="c1"># =&gt; 1</span>
+<span class="c1"># =&gt; 3</span>
+<span class="c1"># =&gt; 2</span>
+</code></pre></div>
+<h3 id="toc_2">each_with_object_and_index</h3>
+
+<p>Have you ever been in the situation where you wished Ruby had a
+<code>each_with_object_and_index</code> method&nbsp;? It happened to me a few weeks ago when I
+wanted to build a hash representing Rails's params with a nested collection for
+a spec purpose.</p>
+
+<p>Something like that:</p>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="p">{</span>
+  <span class="s2">&quot;resource&quot;</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="s2">&quot;kitten_attributes&quot;</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="s2">&quot;0&quot;</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Ohai&quot;</span><span class="p">,</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>Given a collection of <code>kitten</code>, we want to create a <code>Hash</code>, with the key being
+the index, and the value built from the current iteration of kitten.</p>
+<div class="highlight"><pre><code class="ruby language-ruby" data-lang="ruby"><span class="c1"># Placeholder object</span>
+<span class="no">Kitty</span> <span class="o">=</span> <span class="no">Struct</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span><span class="p">)</span>
+
+<span class="c1"># Our precious kitten</span>
+<span class="n">kitten</span> <span class="o">=</span> <span class="o">[</span><span class="no">Kitty</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Ohai&quot;</span><span class="p">),</span> <span class="no">Kitty</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Kitty&quot;</span><span class="p">)</span><span class="o">]</span>
+
+<span class="n">kitten_attributes</span> <span class="o">=</span> <span class="n">kitten</span><span class="o">.</span><span class="n">each</span><span class="o">.</span><span class="n">with_object</span><span class="p">({})</span><span class="o">.</span><span class="n">with_index</span> <span class="k">do</span> <span class="o">|</span><span class="p">(</span><span class="n">kitty</span><span class="p">,</span> <span class="n">attributes</span><span class="p">),</span> <span class="n">index</span><span class="o">|</span>
+  <span class="n">attributes</span><span class="o">[</span><span class="n">index</span><span class="o">.</span><span class="n">to_s</span><span class="o">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span>   <span class="o">=&gt;</span> <span class="n">kitty</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span> <span class="o">=&gt;</span> <span class="n">kitty</span><span class="o">.</span><span class="n">name</span>
+  <span class="p">}</span>
+<span class="k">end</span>
+
+<span class="kp">attr</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;resource&quot;</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="s2">&quot;kitten_attributes&quot;</span> <span class="o">=&gt;</span> <span class="n">kitten_attributes</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nb">p</span> <span class="kp">attr</span>
+<span class="c1"># =&gt; {&quot;resource&quot;=&gt;{&quot;kitten_attributes&quot;=&gt;{&quot;0&quot;=&gt;{&quot;id&quot;=&gt;1, &quot;name&quot;=&gt;&quot;Ohai&quot;},</span>
+<span class="c1"># =&gt; &quot;1&quot;=&gt;{&quot;id&quot;=&gt;2, &quot;name&quot;=&gt;&quot;Kitty&quot;}}}}</span>
+</code></pre></div>
+<p>The first thing to notice is that <code>each_with_object</code> could be used instead of
+<code>each.with_object</code>, it would give the exact same result.</p>
+
+<p>Probably the most puzzling thing is the way arguments are given to the block.
+<code>|(kitty, attributes), index|</code>. The first argument is an Array containing the
+first iteration (our precious kitty) as first element, and the accumulator
+provided by <code>with_object</code> as second element. So it could be <code>|elements, index|</code>
+actually. But a small flavour of Pattern matching would make this code more
+readable.</p>
+
+<p>Ruby does not provide a <code>each_with_object_and_index</code> method, but it provides us
+the tool to easily build one by combining <code>with_object</code> and <code>with_index</code>.</p>
+
+<p>There is much more to say about <code>Enumerator</code>, but let's call it a day.</p>
+  </body>
+</html>
+

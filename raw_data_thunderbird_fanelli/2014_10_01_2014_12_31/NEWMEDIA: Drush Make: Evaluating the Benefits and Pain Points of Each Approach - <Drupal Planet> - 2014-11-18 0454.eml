@@ -1,0 +1,111 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 18 Nov 2014 03:54:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 18 Nov 2014 03:54:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: NEWMEDIA: Drush Make: Evaluating the Benefits and Pain Points of Each Approach
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.newmediadenver.com/blog/drush-make-evaluating-benefits-and-pain-points-each-approach
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>NEWMEDIA: Drush Make: Evaluating the Benefits and Pain Points of Each Approach</title>
+    <base href="http://www.newmediadenver.com/blog/drush-make-evaluating-benefits-and-pain-points-each-approach">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-text field-label-hidden" data-edit-field-id="node/168/title/en/rss">Drush Make: Evaluating the Benefits and Pain Points of Each Approach</span><div class="field field-node--field-intro field-name-field-intro field-type-text-long field-label-hidden" data-edit-field-id="node/168/field_intro/en/rss"><div class="field-items"><div class="field-item">Drush make is a popular solution for Drupal developers wishing to represent an entire application codebase in a single make file (or collection of make files), but does it always make sense to use? And is it a one size fits all solution? This article reviews several advantages and disadvantages of the more common approaches used within the Drupal community.</div></div></div><div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-field-id="node/168/body/en/rss"><div class="field-items"><div class="field-item"><h2>A Brief History of the Makefile</h2>
+
+<p>Technically, my very first computer was a Tandy 1000. In reality, it was a glorified game console used by myself, my mom, and my brother to play Tetris off a 3.5&quot; floppy disk that I had copied from a friend at school. My first <em>real</em> computer came 5 years later&mdash;a Packard Bell Pentium 60Mhz with a CD-ROM drive. I was in heaven. It wasn&#39;t long until I ditched Windows 95 in order to take my first tip toe into geekdom by installing the first Linux distribution I came into contact with: Caldera.</p>
+
+<p>Back in those days, Linux was a labor of love and really took DIY to the extreme. Most of the time packages were not readily available, which meant you had to compile software yourself. Enter the <a href="http://en.wikipedia.org/wiki/Make_(software)">makefile</a>. This single document represented all the dependencies, parameters, and commands necessary to configure, compile, and install an application across a diverse set of Linux distributions. In was a thing of beauty... when it worked. And when it didn&#39;t, it was a time consuming nightmare that resulted in a substantial amount of cursing. Needless to say, I had a love/hate relationship with makefiles.</p>
+
+<h2>Drush Make</h2>
+
+<p>Drush make files, in comparison to compiling software applications, are a much more straightforward solution. In reality they are nothing more than a compiled shopping list of the specific Drupal modules, patches, and 3rd party libraries necessary to describe a fully functional Drupal application. The key difference between the drush make file and the resulting build is that the make file is a single file representation of what ultimately generate the full file and folder structure of the Drupal application.</p>
+
+<p>In comparison to Linux makefiles, drush make files are much simpler and as a result do not suffer from the compilation nightmares that I used to experience. However, there are also some commonalities: a single file representation and the time necessary to generate versus using a predefined package (or binary).</p>
+
+<h2>Comparison to Ruby Gems and Chef</h2>
+
+<p>The makefile mindset is not unique to the Linux OS or Drupal. We see the same pattern in the Ruby language and (by extension) configuration management applications like Chef. Ruby users can leverage gemfiles, which provide a similar shopping list style of gem dependencies. Chef leverages the concept of a Berksfile to specify cookbook dependencies. In each case, we have a list of items that the application then uses to generate a desired state. This single file representation is very efficient because it doesn&#39;t require one to lug a large set of files and folders around. Rather, they are represented and then generated as needed.</p>
+
+<p>The pattern we see again and again is simple. We can either have the full package (binaries, full Drupal application, gems, cookbooks, etc) or a representation of that state in a single file. This leads us to...</p>
+
+<h2>The Key Question</h2>
+
+<p>To make a determination of whether or not Drush makefiles are the appropriate method to use in the full software development life cycle (i.e. development, launch, ongoing support, and then deprecation), we need to ask ourselves which method makes sense from at least 3 perspectives: development, operations, and product owners. The answer is not necessarily black and white because there are multiple considerations, multiple stakeholders, and competing optimizations. To that end, I tried to highlight as many pros and cons for a drush makefile approach and leave it to you to decide what is appropriate for you and your use case.</p>
+
+<h2>Drush Make Advantages</h2>
+
+<h3>Simplest Possible Representation</h3>
+
+<p>A single 1 kilobyte file containing 10 lines could fully represent a very simple drush site install containing a few contrib modules. By comparison, Drupal 7.30 is 3.5 megabytes (zipped) and consists of several hundred folders and several thousand files. If we extend the makefile as a component of an installation profile then the only code that is necessary within the profile is that which is specific and unique to that project. In short, a makefile can allow a repo to contain the simplest possible representation of a Drupal application.</p>
+
+<h3>Easier Code Reviews of Diffs</h3>
+
+<p>Piggybacking off of the previous item, comparing a diff between makefiles is trivial even when dozens of modules have been updated. A module upgrade might simply show views going from version 7.x-3.8 to 7.x-3.9. By contrast, viewing a commit difference between the actual modules would require sifting through a much longer list of changes that don&#39;t really mean much beyond the version change.</p>
+
+<h3>Security and Hacked Code</h3>
+
+<p>With a specific module version against a public repo, there is no question what is being committed. It&#39;s an exact copy of what is contained in the public repo. By contrast, it&#39;s much less obvious when upgrading the module itself whether or not the person committing it added any additional tweaks or modifications to it. The person reviewing the code would have to run an MD5 checksum against the code to ensure it was unmodified (or re-run drush make against the makefile).</p>
+
+<h3>Inheritance and Re-usability</h3>
+
+<p>Drush make file inheritance can be used as way to standardized particular modules, themes, libraries, and patches across many projects. One can then layer on additional and more specific sub-make files to get more granular. This can be particularly powerful in situations where one is managing dozens to hundreds of sites that are derived from a common base installation profile.</p>
+
+<h3>Maintain Patches</h3>
+
+<p>Let&#39;s face it, while Drupal core should never be forked, there are situations where legitimate patches sit within RBTC purgatory for years (I&#39;m looking at you <a href="https://www.drupal.org/project/securepages">Secure Pages</a>). However, managing and tracking those patches while staying up to date with Drupal core and contrib upgrades can be challenging and easy to forget. However, this becomes a trivial secondary step with a drush make file that can apply the patches in conjunction with the appropriate upgrades.</p>
+
+<h2>Drush Make Disadvantages</h2>
+
+<h3>Deployment Overhead</h3>
+
+<p>If we use the simplest possible representation (i.e. a makefile or a makefile within an installation profile) for a deployment, then every deployment will require a complete rebuild of the entire Drupal application even in the case of a single line change. Compare this with a more straightforward strategy of a git pull followed by an rsync, which would dramatically cut down the time to deploy as well as the server resources required. Building Drupal from scratch every time can add up, particularly on a shared server with multiple Drupal instances.</p>
+
+<p>In addition to the build process, there is also the time involved with priming drush&#39;s cached copy of all the modules and libraries specified by the makefile.</p>
+
+<h3>External Dependencies</h3>
+
+<p>Using a makefile as the simplest possible representation also introduces the challenge of external dependencies during a production deployment. For example, an updated makefile may require new modules from drupal.org, new libraries from github, and patches hosted somewhere else. If any one of those dependencies fail, the deployment cannot proceed. Contrast this with the situation where a full clone of the git repo already lives on the server it&#39;s deploying against and there is a much smaller risk of failure.</p>
+
+<p>It&#39;s important to note that this consideration isn&#39;t as much of a concern during the development phase because a short outage doesn&#39;t directly impact a production level service. However, once the application is in production and uptime is a more important factor, these external dependencies may no longer be appropriate.</p>
+
+<h3>Git Bisect, History, and Merges</h3>
+
+<p>Git bisect is a powerful strategy for efficiently stepping through a long commit log to determine when a bug or regression was introduced. If the full codebase is present, then one can quickly jump through the commit log without doing anything else (except perhaps a feature revert, a registry rebuild, and/or a cache clear). With the pure makefile approach, a rebuild is necessary after each change to address changes within the dependencies. While there are certainly work-arounds, this isn&#39;t as clean a process.</p>
+
+<p>Comparing code across a branches is also made more difficult. If one is trying to see if a function changed between versions of a module, one cannot compare against two commits within the git history or compare between two branches.</p>
+
+<h3>Version Control Status</h3>
+
+<p>One quick and easy way to check for changes within a git repository is through the use of commands like &quot;git status&quot;. The use of submodules can make this slightly less effective because it requires one to traverse to each submodule to verify if any changes are present. And a build from a makefile is even more difficult because any components added into the profile will show up as false positives and any components that are above the profile directory will not be tracked in version control at all. This can make it very difficult to verify that there are no changes across the entire code base.</p>
+
+<h3>Hosting Options</h3>
+
+<p>Unfortunately, not all hosting providers will play nice with a drush make representation of a Drupal site. Shared hosting solutions (such as entry level godaddy solutions) will not allow one to install drush on the server. And until very recently, Patheon and Acquia did not provide support for drush make files out of the box.</p>
+
+<h3>Complexity</h3>
+
+<p>One additional consideration is with respect to how the site might be handed off to the client if they decide to manage the site themselves. If they are not sophisticated enough to use a makefile approach, then they might have a difficult time deploying or maintaining it. Worse, if they need to be provided a full zip of the site while receiving additional code changes from a repo using just a make file manifest, then providing code changes might be more difficult than necessary.</p>
+
+<h2>Discussion</h2>
+
+<p>There is no question that drush make files are powerful, but they do introduce some potential limitations for certain use cases, particularly as one enters the launch and post-launch phase of a project. Once the site is live and out of heavy development, it may make more sense to switch from a manifest to a full code repository.</p>
+
+<h2>A Hybrid Solution</h2>
+
+<p>There is an hybrid solution that can retain some of the best features from both endpoints. If a drush make file is included within the root of the Drupal application, then it can still be used to control and enforce all the resulting code that is used to generate a full Drupal codebase (modules, libraries, themes, and patches). This is exactly the approach that Drupal 8 uses with its composer.json file and the resulting components that are stored within core/vendor.</p>
+
+<p>A Drupal 7 example of this approach is the <a href="https://github.com/DrupalLadder/RhymesSite/">RhymesSite project</a>. One can completely rebuild the codebase from the makefile while retaining all the advantages of a complete codebase when ready to deploy to production.</p>
+
+<h2>Closing Remarks</h2>
+
+<p>I hope you found this helpful. If you have specific experiences or insights that could make this analysis better and/or more accurate, we&rsquo;d love to hear from you!</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,394 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 Oct 2014 07:42:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 Oct 2014 07:42:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bluespark Labs: Follow the readiness of the top 100 modules for Drupal 8 with our automatically updated tool
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.bluespark.com/blog/follow-readiness-top-100-modules-drupal-8-our-automatically-updated-tool
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bluespark Labs: Follow the readiness of the top 100 modules for Drupal 8 with our automatically updated tool</title>
+    <base href="http://www.bluespark.com/blog/follow-readiness-top-100-modules-drupal-8-our-automatically-updated-tool">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>With the first Drupal 8 beta having been released at Drupalcon Amsterdam, we thought this would be a good time to take a look at the top 100 projects on drupal.org to see just how far along the line the process of preparing for Drupal 8 is. However, given that there's a lot of progress to be made and I don't feel like manually updating a long list of modules, I decided to make a small <a href="http://www.bluespark.com/status-top-100-contributed-modules-drupal-8">tool</a> to get the status of these modules and keep the data up to date.</p>
+
+<p><a href="http://www.bluespark.com/status-top-100-contributed-modules-drupal-8" title="Automatically updated status of the top 100 contributed Drupal modules for Drupal 8 (by Bluespark)"><img class="centered" src="http://www.bluespark.com/files/resources/top-100-drupal-module-status-screenshot_0.png" /></a></p>
+
+<p>This turned out to be a fun little project, and slightly more involved than I anticipated at first. (Isn't it always the case!) However, at its heart it's a bone-simple Drupal project - one content type for the Drupal projects (and their metadata) we're interested in, and a few views to show them as a table and calculate simple statistics. The work of updating the metadata from drupal.org is handled in 85 lines of code, using <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_cron/7">hook_cron</a> to add each project to a <a href="https://api.drupal.org/api/drupal/modules!system!system.queue.inc/group/queue/7">Queue</a> to be processed. The queue callback borrows code from the <a href="https://api.drupal.org/api/drupal/modules%21update%21update.module/7">update module</a> and simply gets release data, parses it, and updates the metadata on the project nodes. In the end, the most work was doing the research to determine which projects are already in core, and adding notes about where to find D8 upgrade issues and so on.</p>
+
+<p>So, how did it all turn out? Using the current top 100 projects based on the <a href="http://drupal.org/project/usage">usage</a> statistics on drupal.org, our tool tells us that as of today, out of the 100 most popular projects:</p>
+
+<ul><li><div class="view view-projects-in-d8 view-id-projects_in_d8 view-display-id-default view-dom-id-4d961d66ccc322d128c8e2c09b19e5b1">
+            <div class="view-header">
+      20 projects are in core.    </div>
+  
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-2 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-3 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-4 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-5 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-6 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-7 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-8 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-9 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-10 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-11 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-12 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-13 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-14 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-15 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-16 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-17 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-18 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-19 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-20 views-row-even views-row-last">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div></li>
+
+<li><div class="view view-d8-projects-released view-id-d8_projects_released view-display-id-default view-dom-id-89a1eff1813424268aa76a639de54fd7">
+            <div class="view-header">
+      5 projects have an available non-development release.    </div>
+  
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-2 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-3 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-4 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-5 views-row-odd views-row-last">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div></li>
+
+<li><div class="view view-d8-projects-in-dev view-id-d8_projects_in_dev view-display-id-default view-dom-id-c0262f8a52b9911a8287ed596376bbb1">
+            <div class="view-header">
+      28 projects have an available development release.    </div>
+  
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-2 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-3 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-4 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-5 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-6 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-7 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-8 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-9 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-10 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-11 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-12 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-13 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-14 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-15 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-16 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-17 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-18 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-19 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-20 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-21 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-22 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-23 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-24 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-25 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-26 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-27 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-28 views-row-even views-row-last">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div></li>
+
+<li><div class="view view-d8-projects-no-release view-id-d8_projects_no_release view-display-id-default view-dom-id-0aefa73dcb44f09860196e5c790ee2a6">
+            <div class="view-header">
+      47 projects have no available D8 release.    </div>
+  
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-2 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-3 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-4 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-5 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-6 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-7 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-8 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-9 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-10 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-11 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-12 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-13 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-14 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-15 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-16 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-17 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-18 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-19 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-20 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-21 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-22 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-23 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-24 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-25 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-26 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-27 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-28 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-29 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-30 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-31 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-32 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-33 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-34 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-35 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-36 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-37 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-38 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-39 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-40 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-41 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-42 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-43 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-44 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-45 views-row-odd">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-46 views-row-even">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+  <div class="views-row views-row-47 views-row-odd views-row-last">
+      
+  <div class="views-field views-field-title">        <span class="field-content"> </span>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div></li>
+</ul><p>Thanks for reading, and be sure to keep an eye on the <a href="http://www.bluespark.com/status-top-100-contributed-modules-drupal-8">status page</a> to see how the most used contrib modules are coming along!</p>
+</div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/drupal-planet">Drupal Planet</a></div><div class="field-item odd"><a href="/blog/drupal-8">Drupal 8</a></div></div></div><div class="field field-name-field-resources field-type-file field-label-above"><div class="field-label">Resources:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="http://www.bluespark.com/files/resources/top-100-drupal-module-status-screenshot_0.png" type="image/png; length=60741">top-100-drupal-module-status-screenshot.png</a></span></div></div></div>
+  </body>
+</html>
+

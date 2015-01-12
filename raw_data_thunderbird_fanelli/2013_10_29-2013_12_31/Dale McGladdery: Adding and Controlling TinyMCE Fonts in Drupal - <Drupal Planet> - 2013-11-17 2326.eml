@@ -1,0 +1,52 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 17 Nov 2013 22:26:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 17 Nov 2013 22:26:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dale McGladdery: Adding and Controlling TinyMCE Fonts in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.group42.ca/adding_and_controlling_tinymce_fonts_in_drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dale McGladdery: Adding and Controlling TinyMCE Fonts in Drupal</title>
+    <base href="http://www.group42.ca/adding_and_controlling_tinymce_fonts_in_drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Customizing the TinyMCE editor's font selection is straight forward thanks to a hook provided by the <a href="https://drupal.org/project/wysiwyg">Drupal Wysiwyg module</a>. The <a href="http://drupalcontrib.org/api/drupal/contributions!wysiwyg!wysiwyg.api.php/function/hook_wysiwyg_editor_settings_alter/7">hook_wysiwyg_editor_settings_alter() function</a> allows a module to update the settings passed to the editor. The programming is simple. Discovering and understanding the values of the settings can be a challenge.</p>
+
+<p>Font selection is enabled in the <em>Wysiwyg profile</em>. Edit the profile (Administration &gt; Content authoring &gt; Wysiwyg profiles &gt; Edit) and enable the <em>Font Family</em> dropdown selector by checking the <em>Fonts</em> checkbox in the <em>Button and plugins</em> section. This is as far as the user interface takes us.</p>
+
+<p style="text-align: center;"><img src="/files/wysiwyg-profie-enabling-font-selection.png" alt="Enabling the Font Family dropdown selector" /></p>
+
+<p>In the TinyMCE initialization code the font selector drop down is configured by a JavaScript string variable named <em>theme_advanced_fonts</em>. The string is a list of font selections with fall backs, separated by semi-collons:</p>
+
+<p><code>Display name 1=font1,font_fallback1,font_fallback2;Display name 2=font2,fallback_font3, fallback_font4</code></p>
+
+<p>A real example:</p>
+<p><code>Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde</code></p>
+
+<p>If the specified fonts are natively available in the web browser no further work is required. If the font is defined using @font-face the definition needs to be in a style sheet loaded by TinyMCE or it will not be displayed during the editing session. The list of stylesheets loaded by the editor is defined in the JavaScript variable named <em>content_css</em>.</p>
+
+<p>Both the <em>theme_advanced_fonts</em> and <em>content_css</em> variables are available in hook_wysiwyg_editor_settings_alter() in a PHP array. In my testing I found the <em>theme_advanced_fonts</em> variable was not pre-populated with the TinyMCE default fonts, even though <em>content_css</em> and other values were. To work around this I pulled the values for <em>theme_advanced_fonts</em> out of the JavaScript configuration file and redefined them in my code.</p>
+
+<p>For the following example the client has declared, "Friends don't let friend's use comic sans, remove it from the list! And please add this font I found on <a href="http://www.fontsquirrel.com">Font Squirrel</a> named <a href="http://www.fontsquirrel.com/fonts/architects-daughter">Architects Daughter</a>".</p>
+
+<p>In a module for site customizations the hook_wysiwyg_editor_settings_alter() function is defined. This hook fires for all editors so logic is added to specify TinyMCE. The editor fonts are defined in an array to make the list easy to update. In the sample code a line for the Architects Daughter font is added and the line for Comic Sans is commented out. The font list is then assigned to the <em>theme_advanced_fonts</em> variable in the $settings array. The CSS file containing the @font-face definition for Architects Daughter is appended to the <em>content_css</em> variable. This only defineds the font in the editor. The font will also need to be defined for the entire site in the theme CSS.</p>
+
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">/**<br /> * Implements hook_wysiwyg_editor_settings_alter().<br /> */<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">site_customizations_wysiwyg_editor_settings_alter</span><span style="color: #007700">(&amp;</span><span style="color: #0000BB">$settings</span><span style="color: #007700">, </span><span style="color: #0000BB">$context</span><span style="color: #007700">) {<br />  if (</span><span style="color: #0000BB">$context</span><span style="color: #007700">[</span><span style="color: #DD0000">'profile'</span><span style="color: #007700">]-&gt;</span><span style="color: #0000BB">editor </span><span style="color: #007700">== </span><span style="color: #DD0000">'tinymce'</span><span style="color: #007700">) {<br />    </span><span style="color: #0000BB">$font_styles </span><span style="color: #007700">= array(<br />      </span><span style="color: #DD0000">"Andale Mono=andale mono,times"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Architects Daughter=architects_daughterregular"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Arial=arial,helvetica,sans-serif"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Arial Black=arial black,avant garde"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Book Antiqua=book antiqua,palatino"</span><span style="color: #007700">,<br />      </span><span style="color: #FF8000">/* "Comic Sans MS=comic sans ms,sans-serif", */<br />      </span><span style="color: #DD0000">"Courier New=courier new,courier"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Georgia=georgia,palatino"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Helvetica=helvetica"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Impact=impact,chicago"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Symbol=symbol"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Tahoma=tahoma,arial,helvetica,sans-serif"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Terminal=terminal,monaco"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Times New Roman=times new roman,times"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Trebuchet MS=trebuchet ms,geneva"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Verdana=verdana,geneva"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Webdings=webdings"</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">"Wingdings=wingdings,zapf dingbats"</span><span style="color: #007700">,<br />    );<br />    </span><span style="color: #0000BB">$settings</span><span style="color: #007700">[</span><span style="color: #DD0000">'theme_advanced_fonts'</span><span style="color: #007700">] = </span><span style="color: #0000BB">implode</span><span style="color: #007700">(</span><span style="color: #DD0000">';'</span><span style="color: #007700">, </span><span style="color: #0000BB">$font_styles</span><span style="color: #007700">);<br />    </span><span style="color: #0000BB">$settings</span><span style="color: #007700">[</span><span style="color: #DD0000">'content_css'</span><span style="color: #007700">] .= </span><span style="color: #DD0000">',' </span><span style="color: #007700">. </span><span style="color: #0000BB">drupal_get_path</span><span style="color: #007700">(</span><span style="color: #DD0000">'module'</span><span style="color: #007700">, </span><span style="color: #DD0000">'site_customizations'</span><span style="color: #007700">) . </span><span style="color: #DD0000">'/additional_fonts.css'</span><span style="color: #007700">;<br />  }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<p>And the result:</p>
+
+<p style="text-align: center;"><img src="/files/architects-daughter-font.png" alt="Architects Daughter font" /></p>
+
+<p>The Wysiwyg profile has a number of CSS options. This code was tested using with <em>Editor CSS</em> set to <em>Use theme CSS</em>. It may be possible to override the <em>content_css</em> value with different settings.</p>
+
+<p>For demonstration purposed I've created an example module named WYSIWYG Fonts and made it available on Github at <a href="https://github.com/dale42/wysiwyg_fonts">https://github.com/dale42/wysiwyg_fonts</a>. It is completely self-contained. I recommend copying the code to a site customization or helper module rather than using it as-is.</p>
+</div></div></div><div class="taxonomy field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">Tagged: <ul class="links inline"><li class="taxonomy-term-reference-0"><a href="/topics/drupal_7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal 7</a></li><li class="taxonomy-term-reference-1"><a href="/topics/tinymce" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">TinyMCE</a></li><li class="taxonomy-term-reference-2"><a href="/topics/wysiwyg" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">WYSIWYG</a></li><li class="taxonomy-term-reference-3"><a href="/topics/fonts" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Fonts</a></li><li class="taxonomy-term-reference-4"><a href="/topics/drupal_planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></li></ul></div>
+  </body>
+</html>
+

@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 28 Apr 2014 21:01:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 28 Apr 2014 21:01:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Google chrome and testing for mobile
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/google-chrome-and-testing-mobile
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Google chrome and testing for mobile</title>
+    <base href="http://www.aglobalway.com/content/google-chrome-and-testing-mobile">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <div>Google chrome has many versions to download. Now its even easier to debug a mobile device on your laptop or desktop computer. Currently Chrome is on Version 34(Stable) but give the rest a try:  35(Bata), 36(Dev) and 37(Canary) for both Windows and Mac. </div>
+
+<div> </div>
+
+<div>Currently version 34+ supports mobile emulation which can be found in the Dev-Tools  (F12 on Windows) – (cmd+option+I on Mac).</div>
+
+<ol><li>Open the Settings panel within the DevTools.</li><li>Enable "Show 'Emulation' view in console drawer."</li></ol>
+
+<div>* ESC is a shortcut to open the drawer once DevTools is open.</div>
+
+<div> </div>
+
+<div>Emulation is meant to make the development process faster and easier to develop mobile first.  Tackle those pesky little bugs only on mobile by using the inspector to see what the DOM and CSS rules are being processed. Built into the emulator is a number device’s to test from an iPhone 3gs to a Blackberry playbook. This allows you to emulate and debug mobile viewport issues like CSS media query breakpoints. Selecting a device preset automatically enables a number of settings for the specific device such as: <strong>User Agent, Screen Resolution, Device Pixel Ratio, Text Auto sizing</strong> and of course <strong>touch events</strong>.</div>
+
+<ol><li>Open the Emulation panel within the DevTools</li><li>With the Device pane selected, select "iPhone 4".</li><li>Click Emulate.</li></ol>
+
+<div> </div>
+
+<div>Now you can swap dimensions, shrink to fit, see all your media query rules and how they’re breaking.</div>
+
+<div> </div>
+
+<div>To enable support for touch event emulation:</div>
+
+<ol><li>Open the Emulation panel in the DevTools.</li><li>Enable "Emulate touch screen" in the Sensors pane.</li></ol>
+
+<div> </div>
+
+<div>Now your mouse will emulate your finger on the screen. Shift + Drag to emulate a "pinch" to zoom.  Give this canvas finger paint demo a try. Enable a device and refresh the page. <a href="http://www.paulirish.com/demo/multi">http://www.paulirish.com/demo/multi</a></div>
+
+<div> </div>
+
+<div>User Agent spoofing</div>
+
+<ol><li>In the DevTools, open up the User Agent pane within the Emulation panel.</li><li>Check "Spoof user agent" and select "iphone 3gs".</li><li>Refresh the page. And enjoy.</li></ol>
+
+<div> </div>
+
+<div>You can even enable Geolocation Overrides, Device Orientation Overrides and CSS Media Type Emulation.</div>
+
+<div> </div>
+
+<div>If you have an Android device you can Remote Debug Chrome on Android.</div>
+
+<div> </div>
+
+<div>Here are some talks about Chome and the DevTools </div>
+
+<div><a href="https://www.youtube.com/watch?v=z7sTRdSpA04">https://www.youtube.com/watch?v=z7sTRdSpA04</a></div>
+
+<div><a href="https://www.youtube.com/watch?v=gZH1d2Co1X0">https://www.youtube.com/watch?v=gZH1d2Co1X0</a></div>
+
+<div> </div>
+
+<div>Here is where to download the different versions of Chrome.</div>
+
+<div><a href="http://www.chromium.org/getting-involved/dev-channel">http://www.chromium.org/getting-involved/dev-channel</a></div>
+
+<div> </div>
+
+<div>Using this chrome developer tool will speed up your workflow as you develop for mobile first and will assist in seeing what is happening to your CSS/JS/HTML when its displayed on a smaller screen. There are many more features of Chrome just have to dig around and play a little. </div> </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/mobile" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Mobile</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

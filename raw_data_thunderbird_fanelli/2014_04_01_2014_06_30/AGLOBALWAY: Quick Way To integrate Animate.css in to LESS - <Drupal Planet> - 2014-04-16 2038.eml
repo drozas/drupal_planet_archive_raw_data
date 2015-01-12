@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Apr 2014 18:38:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Apr 2014 18:38:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Quick Way To integrate Animate.css in to LESS
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/quick-way-integrate-animatecss-less
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Quick Way To integrate Animate.css in to LESS</title>
+    <base href="http://www.aglobalway.com/content/quick-way-integrate-animatecss-less">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Recently I was working in a project, that required some nice predefined css3 animation on different elements. I was wondering if I could achieve it without using javascript and do it fast. Here how I did it:</p>
+
+<p><em>A quick way to use LESS pre-process and animate.css functionality to make your frontend nice and smoothly animated without any javascript involved.</em></p>
+
+<ol><li>Download <a href="http://daneden.github.io/animate.css/">animate.css</a> in to you project/less folder and change file extension to .less<br /><em>Your structure should look something like this:</em><div class="highlight">
+<pre>
+<code class="bash">
+	project/
+	├── less/
+	│   ├── style.less
+	│   ├── animate.less
+	│   └── overrides.less
+	└── css/
+		└── style.css
+	</code></pre>
+</div></li><li>Import animate.less to your main style file.<div class="highlight">
+<pre>
+<code class="bash">
+	// libraries
+	@import "animate.less";
+
+	// core
+	@import "overrides.less"; 
+	</code></pre>
+</div></li><li>Edit overrides.less to apply animations on your elements.<div class="highlight">
+<pre>
+<code class="bash">
+	<span>&lt;</span>h1 class="spetialHeader"<span>&gt;</span>Hover Me<span>&lt;</span>/h1<span>&gt;</span>
+	</code></pre>
+</div><div class="highlight">
+<pre>
+<code class="bash">
+	h1{
+		&amp;.spetialHeader{
+			.animated();
+			&amp;:hover,&amp;:focus{
+				.fadeInUp(); 
+			}
+		}
+	}
+	</code></pre>
+</div></li><li>Less preprocess will make the magic and create css file</li></ol> </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/animatecss" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Animate.css</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

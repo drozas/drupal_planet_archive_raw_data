@@ -1,0 +1,73 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Dec 2013 17:23:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Dec 2013 17:23:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: Omega vs. Zen - Which Base Theme Should You Choose?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/omega-vs-zen-which-base-theme-should-you-choose
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: Omega vs. Zen - Which Base Theme Should You Choose?</title>
+    <base href="http://friendlymachine.net/posts/omega-vs-zen-which-base-theme-should-you-choose">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If you’ve been reading my posts for a while, you’ll know that I’m a fan of the Omega base theme and have used it in many of my projects. As I’ve gotten more familiar with it, I’ve noticed it bears a striking resemblance to the latest release of <a href="https://drupal.org/project/zen">Zen</a>.</p>
+<p>For those of you not familiar with Drupal base themes, Zen has long been the most popular. I thought I’d take a look at the two of these themes and see how they really match up and which one might be the better choice for a given project.</p>
+<h2>Big Changes to Omega</h2>
+<p>First things first - Omega 4 bears only a passing resemblance to Omega 3. It’s essentially a complete re-write (see my <a href="http://friendlymachine.net/posts/preview-omega-4">overview</a>) and the changes may be jarring for those who’ve become familiar with Omega 3’s UI layout tools.</p>
+<p>Those tools are long gone. As I noted above, what you have with Omega 4 is something strikingly similar to Zen in almost every way. Much of this has to do with both maintainers adhering to emerging best practices in front end development, but it's also due to choice of tools.</p>
+<h2>Feature Comparison</h2>
+<p>Below is a table that shows some of the features of both Zen and Omega.</p>
+<table style="width: 100%;" border="0"><tbody><tr><th><strong>Feature</strong></th>
+<th style="text-align: center;"><strong>Omega</strong></th>
+<th style="text-align: center;"><strong>Zen</strong></th>
+</tr><tr><td> HTML5</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+</tr><tr><td> Sass + Compass</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+</tr><tr><td> Swappable layouts</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+</tr><tr><td> Default grids</td>
+<td style="text-align: center;">Susy</td>
+<td style="text-align: center;">Zen Grids</td>
+</tr><tr><td> Drush support</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+</tr><tr><td> IE conditional classes</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+</tr><tr><td> Mobile first</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+</tr><tr><td> HTML5 shiv, Respond.js</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+</tr></tbody></table><p>Quite a bit of overlap wouldn’t you say? Having worked with both themes, I can tell you it’s pretty easy jumping back and forth between them. Conceptually, they are essentially the same, with only minor differences in implementation.</p>
+<p>One thing that sticks out to me is that both are very flexible. You can create an Omega sub-theme using <a href="http://zengrids.com/">Zen Grids</a>, for example. Likewise you can create a Zen sub-theme using Omega’s default grid system, <a href="http://susy.oddbird.net/">Susy</a>.</p>
+<p>The <a href="http://smacss.com/">SMACSS</a> approach to modular CSS makes it a snap to move some of your boilerplate styles between themes. They’re both put together in a really smart way and offer big improvements over previous approaches to theme development.</p>
+<p>And of course, both use Sass + Compass, which seems to be preferred over LESS among Drupal developers.</p>
+<h2>One Difference Between Zen and Omega</h2>
+<p>We see that the two of these base themes have a lot in common, but in what ways are they different? Well, one difference seems to stem from the choice of default grid system.</p>
+<p>Omega 4 uses Susy, and from what I understand, it has frequent updates that may break backward compatibility. This means you’ll need to keep careful track of your Gem versions, particularly when working in a team, if you want your Sass to compile correctly. The maintainer of Omega has explained how to set things up in this <a href="https://drupal.org/node/2009540#comment-7485186">comment</a>.</p>
+<p>I suppose it could be argued that what he’s describing is a best practice generally, but will most people go through all of that? My experience tells me no. It really seems like a potential trouble spot, but I’m not sure. Perhaps Omega 4 hasn’t been around long enough to hear of missing Gemfiles causing issues - maybe it won’t be a problem at all.</p>
+<p>That said, the “ideal set up” is a point of difference. With Zen you can get started with <a href="https://drupal.org/node/1548946">less hassle</a>. Does this mean Zen is better than Omega? I don’t think so. For some, this will fit right in with the way they are already working.</p>
+<h2>The Big Difference</h2>
+<p>The biggest difference between the two base themes is Omega’s inclusion of layouts. These are predefined, Panels-style layouts that can be used with the <a href="https://drupal.org/project/context_omega">Context Omega</a> module to apply layouts to specific pages, content types or whatever other condition you may require.</p>
+<p>These layouts can also be used with Panels Everywhere. In fact, the Omega layouts will appear in Panels when you have both Omega and Panels installed. Keep in mind, however, you can’t use these with vanilla Panels - only with Panels Everywhere. This is because Omega 4 layouts are variations on page.tpl.php and therefore control the entire layout of the page rather than just the node.</p>
+<p>Sebastian Siemsen, the co-maintainer of Omega, did a long <a href="http://www.youtube.com/watch?v=CmTuvzbPduI&amp;feature=share">screencast</a> on how to use Omega 4, including strategies for use with Panels for those that are interested.</p>
+<h2>So Which Is Better?</h2>
+<p>Of course the answer here is, “it depends”. If you like building sites with Panels Everywhere, then Omega 4 might have the edge. If you don’t like the development set up of Omega 4, then Zen might be a better choice. Another thing in Zen's favor is far superior documentation.</p>
+<p>However, I think the truth is that it hardly matters which of these two you choose. Personally, I use both and I think that’s rather a good thing. It allows me to easily switch between them depending on the requirements of a given project.</p>
+<p>If you have any comments on this post, you may politely leave them below.</p>
+</div></div></div>
+  </body>
+</html>
+

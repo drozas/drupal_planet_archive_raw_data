@@ -1,0 +1,53 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 26 May 2014 19:55:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 26 May 2014 19:55:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Association News: Drupal.org team week notes #26
+Content-Transfer-Encoding: 8bit
+Content-Base: https://assoc.drupal.org/blog/tvn/drupalorg-team-week-notes-26
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Association News: Drupal.org team week notes #26</title>
+    <base href="https://assoc.drupal.org/blog/tvn/drupalorg-team-week-notes-26">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><img class="left" src="https://assoc.drupal.org/files/pics.png" /><br /></p><h2>Upcoming deployments: improvements to comments</h2>
+<p>You may have noticed that Drupal.org user profiles now let you upload your picture. These will be shown with comments. You can see a preview <a href="https://staging.devdrupal.org/">on the staging site</a>, the HTTP user/password is drupal/drupal: in the issue queue (<a href="https://staging.devdrupal.org/node/2224917">example</a>) and forum (<a href="https://staging.devdrupal.org/node/2217905">example</a>). You can log in with your Drupal.org username and password to test more.</p>
+<p>There are more improvements to come in the next few weeks. This is the first round of implementation for a design process led by Mark Carver and Bojhan Somers. Read more about the design changes and future work in the <a href="https://drupal.org/node/936304">issue queue</a>.</p>
+<h2>Drupal.org improvements</h2>
+<p>One small but useful deployment of the last two weeks is path aliases for user pages. When you save your user profile, you now get an aliased path like <a href="https://drupal.org/u/dries">https://drupal.org/u/dries</a>.</p>
+<p>Long usernames display got fixed, they are <a href="https://drupal.org/node/2228887">no longer truncated on issue pages</a> and elsewhere. We also <a href="https://drupal.org/node/2126331">implemented RSS</a> feeds for new projects, separately for full projects and sandboxes.</p>
+<p>Other deployments included bakery improvements for syncing user profiles across Drupal.org sites, bug fixes in versioncontrol* modules, project issue, BUEditor, and Views 3.8 security update.</p>
+<h2>Drupal.org infrastructure news</h2>
+<p>The web nodes all rebuilt and load balancer rebuild started. CDN deployment for www.drupal.org has been delayed until after DrupalCon Austin. The host name change is too big to be rushed before DrupalCon. Ongoing cleanup of dev and staging VMs and improving our use of configuration management is moving forward.</p>
+<h2>Other news</h2>
+<h3>Drupal.org Support</h3>
+<p>We have some good progress on Drupal.org support related metrics. Take a look at the <a href="https://assoc.drupal.org/blog/tvn/improving-drupalorg-support">recent detailed post</a> about our plans to improve support for our users.</p>
+<h3>Drupal Jobs</h3>
+<p>We are getting close to the launch of Drupal Jobs, a website for posting jobs and highlighting job seekers with companies looking to hire. Job seekers will be able to search jobs by city and keyword and view special company profiles pages that highlight the benefits of working for that company.</p>
+<p>A beta version of Drupal Jobs should be ready right around DrupalCon Austin and we hope to launch the full product this summer. </p>
+<h2>DrupaCon Austin</h2>
+<h3>Sprints</h3>
+<p>DrupalCon Austin starts in about a week. Our team is super excited, because we will continue good tradition of DrupalCon Prague and Drupal Developer Days Szeged, and have a big Drupal.org-related sprint. Our team members will be there both for extended sprints pre-Con on Sunday, June 1st, official sprint day - Friday, June 6 and extended sprints post-Con: Saturday, June 7, and Sunday, June 8.</p>
+<p>We will have all kinds of tasks for interested volunteers. Code-writing and infrastructure configuration tasks, site building tasks and general issue queue clean up, front-end / theming tasks and documentation writing.</p>
+<p>If you haven’t signed up yet, you can do so <a href="https://docs.google.com/a/association.drupal.org/spreadsheet/ccc?key=0AlRKD0XsivA1dEYzMVl1cERvYUpXWDNscm8zNlpZeEE&amp;usp=drive_web#gid=0">IN THIS SPREADSHEET</a>. Scroll down till you see ‘Drupal.org sprint’ on the left and add your name and available days.</p>
+<h3>Sessions</h3>
+<p>When we are not sprinting, there will be a few Drupal.org related sessions to attend.</p>
+<p><strong>Tuesday, June 2nd</strong><br /><a href="https://austin2014.drupal.org/future-drupalorg-developer-tools">The future of Drupal.org developer tools</a>. A session by the Drupal.org <a href="https://drupal.org/node/2202557">Developer Tools team</a>.</p>
+<p><a href="https://austin2014.drupal.org/session/people-want-help-they-dont-know-what-do-lets-make-do-issue-picking-easier">People want to help. They don’t know what to do! Let's make d.o issue picking easier</a>.</p>
+<p><strong>Wednesday, June 3rd</strong><br /><a href="https://austin2014.drupal.org/drupalorg-working-groups">Drupal.org Working Groups: Who we are and what we’re up to</a></p>
+<p><strong>Thursday, June 4th</strong><br /><a href="https://austin2014.drupal.org/drupalorg-infrastructure-team-meeting">Open Drupal.org Infrastructure team meeting</a></p>
+<p><a href="https://austin2014.drupal.org/future-drupalorg-community-tools">The future of Drupal.org Community Tools</a>. A session by the Drupal.org <a href="https://drupal.org/node/2262693">Community Tools Team</a>.</p>
+<p>Come and let’s talk about Drupal.org!</p>
+<p>---<br />
+As always, we’d like to say thanks to all volunteers who are working with us and to the Drupal Association <a href="https://drupal.org/supporting-partners">Supporting Partners</a> and <a href="https://drupal.org/technology-supporters">Technology Supporters</a>, who made it possible for us to work on these projects. The <a href="https://association.drupal.org/supporting-partners">Supporting Partner Program</a> crowd sources funds that pay for the development team’s time and Drupal.org hosting costs.</p>
+<p>Cross-posting from <a href="https://groups.drupal.org/node/424543">g.d.o/drupalorg</a></p>
+</div></div></div><div class="field field-name-taxonomy-vocabulary-4 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Personal blog tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/taxonomy/term/588">week notes</a></div></div></div>
+  </body>
+</html>
+

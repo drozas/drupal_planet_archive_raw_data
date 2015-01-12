@@ -1,0 +1,129 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 27 May 2014 17:37:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 27 May 2014 17:37:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Combining Tasks with Grunt
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/combining-tasks-with-grunt/?utm_source=rss&utm_medium=rss&utm_campaign=combining-tasks-with-grunt
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Combining Tasks with Grunt</title>
+    <base href="http://www.phase2technology.com/blog/combining-tasks-with-grunt/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=combining-tasks-with-grunt">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I was recently asked to help out with a few build steps for a Drupal project using <a href="http://gruntjs.com/">Grunt</a> as its build system. The project&#8217;s <code>Gruntfile.js</code> has a <code>drush:make</code> task that utilizes <a href="https://github.com/nickpack/grunt-drush">the grunt-drush package</a> to run Drush make. This task in included in a file under the tasks directory in the main repository.</p>
+<h4 id="tasks-drush-js">tasks/drush.js</h4>
+<p></p><pre class="crayon-plain-tag">module.exports = function(grunt) {
+  /**
+   * Define &quot;drush&quot; tasks.
+   *
+   * grunt drush:make
+   *   Builds the Drush make file to the build/html directory.
+   */
+  grunt.loadNpmTasks('grunt-drush');
+  grunt.config('drush', {
+    make: {
+      args: ['make', '&lt;%= config.srcPaths.make %&gt;'],
+      dest: '&lt;%= config.buildPaths.html %&gt;'
+    }
+  });
+};</pre><p>You can see that the task contains a few instances of <em>variable interpolation</em>, such as <code><%= config.srcPaths.make %></code>. By convention, the values of these variables go in a file called <code>Gruntconfig.json</code> and are set using the <code>grunt.initConfig</code>method. In addition, the configuration for the <strong>default</strong> task lives in a file called <code>Gruntfile.js</code>. I have put trimmed examples of each below.</p>
+<h4 id="gruntfile-js">Gruntfile.js</h4>
+<p></p><pre class="crayon-plain-tag">module.exports = function(grunt) {
+  // Initialize global configuration variables.
+  var config = grunt.file.readJSON('Gruntconfig.json');
+  grunt.initConfig({
+    config: config
+  });
+
+  // Load all included tasks.
+  grunt.loadTasks(__dirname + '/tasks');
+
+  // Define the default task to fully build and configure the project.
+  var tasksDefault = [
+    'clean:default',
+    'mkdir:init',
+    'drush:make'
+  ];
+  grunt.registerTask('default', tasksDefault);
+};</pre><p></p>
+<h4 id="gruntconfig-json">Gruntconfig.json</h4>
+<p></p><pre class="crayon-plain-tag">{
+  &quot;srcPaths&quot;: {
+    &quot;make&quot;: &quot;src/project.make&quot;
+  },
+  &quot;buildPaths&quot;: {
+    &quot;build&quot;: &quot;build&quot;,
+    &quot;html&quot;: &quot;build/html&quot;
+  }
+}</pre><p>As you can see, the project&#8217;s <code>Gruntfile.js</code> also has a <code>clean:default</code> task to remove the built site and a <code>mkdir:init</code>task to make the build/html directory, and the three tasks are combined with <code>grunt.registerTask</code> to make the <strong>default</strong> task which will be run when you invoke <code>grunt</code> with no arguments.</p>
+<h2 id="a-small-change">A small change</h2>
+<p>In Phase2&#8242;s build setup using <a href="http://www.phing.info/">Phing</a> we have a task that will run <a href="http://drush.ws/docs/make.txt">drush make</a> when the Makefile&#8217;s modified time is newer than the built site. This allows a user to invoke the build tool and only spend the time doing a <code>drush make</code> if the Makefile has indeed changed.</p>
+<p>The setup needed to do this in Phing is configured in XML: if an index.php file exists and it is newer than the Makefile, don&#8217;t run <code>drush make</code>. Otherwise, delete the built site and run <code>drush make</code>. The necessary configuration to do this in a Phing build.xml is below.</p>
+<h4 id="build-xml">build.xml</h4>
+<p></p><pre class="crayon-plain-tag">&lt;target name=&quot;-drush-make-uptodate&quot; depends=&quot;init&quot; hidden=&quot;true&quot;&gt;
+  &lt;if&gt;
+    &lt;available file=&quot;${html}/index.php&quot; /&gt;
+    &lt;then&gt;
+      &lt;uptodate property=&quot;drush.makefile.uptodate&quot;
+        targetfile=&quot;${html}/index.php&quot; srcfile=&quot;${drush.makefile}&quot; /&gt;
+    &lt;/then&gt;
+  &lt;/if&gt;
+&lt;/target&gt;
+
+&lt;!-- Use drush make to build (or rebuild) the docroot --&gt;
+&lt;target name=&quot;drush-make&quot; depends=&quot;-drush-make-uptodate, init&quot;
+  hidden=&quot;true&quot; unless=&quot;drush.makefile.uptodate&quot;&gt;
+  &lt;if&gt;
+    &lt;available file=&quot;${html}&quot;/&gt;
+    &lt;then&gt;
+      &lt;echo level=&quot;info&quot; message=&quot;Rebuilding ${html}.&quot;/&gt;
+      &lt;delete dir=&quot;${html}&quot; failonerror=&quot;true&quot;/&gt;
+    &lt;/then&gt;
+  &lt;/if&gt;
+
+  &lt;exec executable=&quot;drush&quot; checkreturn=&quot;true&quot; passthru=&quot;true&quot; level=&quot;info&quot;&gt;
+    &lt;arg value=&quot;make&quot;/&gt;
+    &lt;arg value=&quot;${drush.makefile}&quot;/&gt;
+    &lt;arg value=&quot;${html}&quot;/&gt;
+  &lt;/exec&gt;
+&lt;/target&gt;</pre><p>You&#8217;ll note that Phing also uses variable interpolation. The syntax, <code>${html}</code>, is similar to regular PHP string interpolation. By convention, parameters for a Phing build live in a <code>build.properties</code> file.</p>
+<h2 id="a-newer-grunt">A newer grunt</h2>
+<p><a href="https://github.com/tschaub/grunt-newer">The grunt-newer plugin</a> appears to be the proper way to handle this. It creates a new task prefixed with <code>newer:</code> to any other defined tasks. If your task has a <code>src</code> and <code>dest</code> parameter, it will check that <code>src</code> is newer than <code>dest</code> before running the task.</p>
+<p>In my first quick testing, I added a spurious src parameter to the <code>drush:make</code> task and then invoked the <code>newer:drush:make</code>task.</p><pre class="crayon-plain-tag">grunt.config('drush', {
+  make: {
+    args: ['make', '&lt;%= config.srcPaths.make %&gt;'],
+    src: '&lt;%= config.srcPaths.make %&gt;',
+    dest: '&lt;%= config.buildPaths.html %&gt;'
+  }
+});</pre><p>That modification worked properly in concert with <code>grunt-newer</code> (and the <code>drush</code> task from <code>grunt-drush</code> task didn&#8217;t complain about the extra <code>src</code> parameter,) but I still also needed to conditionally run the <code>clean:default</code> and <code>mkdir:init</code> only if the Makefile was newer than the built site.</p>
+<h2 id="synchronized-grunting">Synchronized grunting</h2>
+<p>The answer turned out to be to create a composite task using <code>grunt.registerTask</code> and <code>grunt.task.run</code> that combined the three tasks existing tasks and then use the <code>grunt-newer</code>version of that task. The solution looked much like the following.</p>
+<h4 id="tasks-drushmake-js">tasks/drushmake.js</h4>
+<p></p><pre class="crayon-plain-tag">module.exports = function(grunt) {
+  /**
+   * Define &quot;drushmake&quot; tasks.
+   *
+   * grunt drushmake
+   *   Remove the existing site directory, make it again, and run Drush make.
+   */
+  grunt.registerTask('drushmake', 'Erase the site and run Drush make.', function() {
+    grunt.task.run('clean:default', 'mkdir:init', 'drush:make');
+  });
+  grunt.config('drushmake', {
+    default : {
+      // Add src and dest attributes for grunt-newer.
+      src: '&lt;%= config.srcPaths.make %&gt;',
+      dest: '&lt;%= config.buildPaths.html %&gt;'
+    }
+  });
+}</pre><p>I could then invoke <code>newer:drushmake:default</code> in my <code>Gruntfile.js</code> and only delete and rebuild the site when there were changes to the Makefile.</p>
+<p>Learn more about build systems in Adam Ross&#8217;s blog post &#8220;<a href="http://www.phase2technology.com/blog/creating-options-in-automated-software-deployment/">Creating Options in Automated Software Deployment</a>.&#8221;</p>
+  </body>
+</html>
+

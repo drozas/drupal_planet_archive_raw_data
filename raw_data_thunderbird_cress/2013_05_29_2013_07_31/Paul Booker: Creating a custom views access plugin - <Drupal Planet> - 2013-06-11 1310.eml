@@ -1,0 +1,179 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 11 Jun 2013 12:10:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 11 Jun 2013 12:10:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Creating a custom views access plugin
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-development-services/article/creating-custom-views-access-plugin
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Creating a custom views access plugin</title>
+    <base href="http://www.paulbooker.co.uk/drupal-development-services/article/creating-custom-views-access-plugin">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If you need to create a custom views access plugin the reason for this will be to allow you to add custom logic to protect the access to your view.</p>
+<p>Let's say you need finer access control to a view than roles and permissions. For example let's suppose you are storing properties on a user object which determine if certain user can see certain views independent of their roles. What we need to do, is to configure our views correctly with a views access plugin.</p>
+<p>Working against the Views API:</p>
+<p>You could load the user in the template file of your view and check for the property but this is not what we want to do. While this would work you would have to repeat this process in every template and you would not be able to configure it. It is also difficult to control and would result in a lot of maintenance. </p>
+<p>Working with the Views API:</p>
+<p>Views has this beautiful architecture in place that allows you to extend its base classes. If you start writing a custom views plugin the best thing to do is to examine another plugin of the same kind. For example check out the permissions access plugin. (tip: a good way to write plugins is to look at examples from views or other module implementing the same system)</p>
+<p>The file:<br />
+/views/plugins/views_plugin_access_perm.inc</p>
+<pre class="brush: php"> 
+/**
+ * @file
+ * Definition of views_plugin_access_perm.
+ */
+ 
+/**
+ * Access plugin that provides permission-based access control.
+ *
+ * @ingroup views_access_plugins
+ */
+class views_plugin_access_perm extends views_plugin_access {
+  function access($account) {
+    return views_check_perm($this-&gt;options['perm'], $account);
+  }
+ 
+  function get_access_callback() {
+    return array('views_check_perm', array($this-&gt;options['perm']));
+  }
+ 
+  function summary_title() {
+    $permissions = module_invoke_all('permission');
+    if (isset($permissions[$this-&gt;options['perm']])) {
+      return $permissions[$this-&gt;options['perm']]['title'];
+    }
+ 
+    return t($this-&gt;options['perm']);
+  }
+ 
+ 
+  function option_definition() {
+    $options = parent::option_definition();
+    $options['perm'] = array('default' =&gt; 'access content');
+ 
+    return $options;
+  }
+ 
+  function options_form(&amp;$form, &amp;$form_state) {
+    parent::options_form($form, $form_state);
+    $perms = array();
+    $module_info = system_get_info('module');
+ 
+    // Get list of permissions
+    foreach (module_implements('permission') as $module) {
+      $permissions = module_invoke($module, 'permission');
+      foreach ($permissions as $name =&gt; $perm) {
+        $perms[$module_info[$module]['name']][$name] = strip_tags($perm['title']);
+      }
+    }
+ 
+    ksort($perms);
+ 
+    $form['perm'] = array(
+      '#type' =&gt; 'select',
+      '#options' =&gt; $perms,
+      '#title' =&gt; t('Permission'),
+      '#default_value' =&gt; $this-&gt;options['perm'],
+      '#description' =&gt; t('Only users with the selected permission flag will be able to access this display. Note that users with "access all views" can see any view, regardless of other permissions.'),
+    );
+  }
+}
+</pre><p>
+This is a clear example that we can use to start with. You can see there are some essential functions to create this plugin. Lets check our example to see which ones.</p>
+<p>Create a file called mymodule_access_plugin.inc in the root of your custom module.</p>
+<pre class="brush: php"> 
+  /**
+   * Access plugin that provides property based access control.
+   */
+  class mymodule_access_plugin extends views_plugin_access {
+ 
+    function summary_title() {
+      return t('Custom access plugin');
+    } // summary_title()
+ 
+  /**
+   * Determine if the current user has access or not.
+   */
+    function access($account) {    
+      return mymodule_access($account);
+    }
+ 
+    function get_access_callback() {
+      return array('mymodule_access', array());
+    }
+ 
+  }
+</pre><p>
+For the custom views plugin you need three functions. The summary_title to return the title. This is what you will see when you go to the views interface and you select your plugin. It will appear next to role based and permission based access options in the views interface.<br />
+Then we have our access method. Finally you must declare to views your custom access callback. You can pass arguments if needed using the array.</p>
+<p>Now that we have our access plugin file, with our class, we need to tell views that we have created a new access plugin.</p>
+<p>Two things need to be done. First in the info file you must declare the new file.</p>
+<pre class="brush: php">
+name = mymodule
+description = Custom code
+core = 7.x
+package = custom
+dependencies[] = views
+files[] = mymodule_access_plugin.inc
+</pre><p>
+Then you need to implement a hook_views_plugins to tell views that there is a new custom access plugin available ..</p>
+<pre class="brush: php">
+  /**
+   * Implements hook_views_plugins()
+   */
+  function mymodule_views_plugins() {
+    $plugins = array(
+      'access' =&gt; array(
+        'test' =&gt; array(
+          'title' =&gt; t('Custom access check'),
+          'help' =&gt; t('This is a custom access plugin'),
+          'handler' =&gt; 'mymodule_access_plugin',
+          'path' =&gt; drupal_get_path('module', 'mymodule'),
+        ),
+      ),
+    );
+    return $plugins;
+  }
+</pre><p>
+.. and finally our access callback  ..</p>
+<pre class="brush: php">
+ function mymodule_access($account = NULL) {
+    global $user;
+    $access = false; 
+    $account = user_load($user-&gt;uid);
+    $optionfield = field_get_items('user', $account, 'field_option');
+ 
+    //In the future more values are possible so this is extendible
+    //For now only +eur exists
+    $allowed_values = array('eur');
+    $options = explode('+', $optionfield[0]['value']);
+    foreach ($allowed_values as $allowed_value) {
+      if (in_array($allowed_value, $options)) {
+        $access = true;
+      }
+    }  
+    return $access;
+  }
+</pre><p>
+Here we are checking on certain values that are stored in a field of a user of certain role. When a user has these properties we want the callback to return true. This will grant access.</p>
+<p>Now that you have this plugin you can start using it in all your views by going to the interface access section and select the plugin.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/drupal-development-services/tags/views" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">views</a></div><div class="field-item odd" rel="dc:subject"><a href="/drupal-development-services/tags/access" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">access</a></div><div class="field-item even" rel="dc:subject"><a href="/drupal-development-services/tags/hookaccessplugin" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_access_plugin</a></div><div class="field-item odd" rel="dc:subject"><a href="/drupal-development-services/tags/hookviewsplugins" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_views_plugins</a></div><div class="field-item even" rel="dc:subject"><a href="/drupal-development-services/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-development-services/article/creating-custom-views-access-plugin"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Creating a custom views access plugin">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-development-services/article/creating-custom-views-access-plugin"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

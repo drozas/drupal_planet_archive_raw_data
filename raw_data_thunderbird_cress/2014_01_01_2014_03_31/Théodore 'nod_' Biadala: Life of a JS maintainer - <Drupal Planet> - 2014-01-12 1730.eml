@@ -1,0 +1,248 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 12 Jan 2014 17:30:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 12 Jan 2014 17:30:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Théodore 'nod_' Biadala: Life of a JS maintainer
+Content-Transfer-Encoding: 8bit
+Content-Base: http://read.theodoreb.net/2014/life-of-js-maintainer.html
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Théodore 'nod_' Biadala: Life of a JS maintainer</title>
+    <base href="http://read.theodoreb.net/2014/life-of-js-maintainer.html">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Back in Drupal 7 dev cycle, there was no single person that took ownership of
+Drupal JS as a whole, which lead to many inconsistencies in the code base or
+straight up syntax errors in point releases. It is not that nobody cared,
+it&#39;s that nobody cared <em>enough</em> to take ownership. We&#39;ve been using JS for
+more than 8 years, there is a lot to do.</p>
+
+<p>Do what exactly? Let&#39;s look at the <a href="https://drupal.org/contribute/core-maintainers#component">list of responsibilities</a> from
+the Drupal core maintainers page. I&#39;ll talk about how that applies to JS and
+what it&#39;s like day-to-day.</p>
+
+<h2>Maintainer tasks</h2>
+
+<h3>Queue monitoring</h3>
+
+<blockquote>
+<p>Monitoring their subsystem&#39;s issue queue (also known as &quot;issue queue farming&quot;).
+When a new issue is submitted, this involves verifying that it&#39;s a valid issue
+and taking appropriate action (tag as &quot;Novice&quot;, change the status if more
+information is needed or if it&#39;s not really a bug, change other issue
+parameters, move it to a different issue queue, etc.).</p>
+</blockquote>
+
+<p>Issues can be assigned to the <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;component%5B%5D=ajax+system&amp;component%5B%5D=javascript"><strong>javascript component</strong></a> and in
+real life, there are very few issues that you can assign to javascript.
+Usually it&#39;s an issue that needs to be assigned to CKEditor or Views UI or
+some other module. Hence there is a <a href="https://drupal.org/project/issues/search/drupal?issue_tags=mobile%2C+jQuery%2C+jQuery+UI%2C+Ajax%2C+JavaScript"><strong>JavaScript</strong></a> tag for tracking
+JS-related issues.</p>
+
+<p>When I started I would often read the core queue and tag whatever issue is
+related. I still do it from time to time though I don&#39;t <em>need</em> to anymore,
+most people working in the core queue know that any patch touching a JS file
+needs to have the JavaScript tag if they want a timely review from the JS
+team. Otherwise there is no way for us to find the issue.</p>
+
+<p>Overall there isn&#39;t much trouble managing the JS issue queue. It&#39;s pretty
+clear when it&#39;s a JS issue since it usually ends up as an error in the
+browser console. The problem is getting people to tag their issues.</p>
+
+<p>If your patch changes a JS file in any way, please tag it <strong>JavaScript</strong>,
+even if the change is trivial.</p>
+
+<h3>Contributor monitoring</h3>
+
+<blockquote>
+<p>Mentoring new contributors who are working on issues related to that subsystem.</p>
+</blockquote>
+
+<p>There aren&#39;t many people so it&#39;s not too overwhelming. I&#39;m really happy with
+the results I got while working with a couple of contributors. I don&#39;t think
+I&#39;m doing a terrific job overall though. My current excuse is that the state
+of JS was so far from acceptable and I just wanted things fixed so I didn&#39;t
+take the time to mentor people. If you need something rationalized,
+let me know, I can be pretty good at it.</p>
+
+<p>The mentoring is often about JS but sometime it&#39;s only about the core process.
+Maintainers exists to get stuff done — I&#39;ll get back to it a bit further.
+There are people who know JS and don&#39;t contribute to core. If you&#39;re in that
+position, reach out to me on IRC or by <a href="https://drupal.org/user/598310/contact" title="Contact form on drupal.org">mail</a>, I&#39;m here to help out.</p>
+
+<p>I&#39;ll start to make more time to take this part more seriously and hopefully
+increase the number of JS contributors. That&#39;s part of the reason why I
+started writing again.</p>
+
+<h3>Point of contact</h3>
+
+<blockquote>
+<p>Being the point of contact for that subsystem&#39;s contributors.</p>
+</blockquote>
+
+<p>I&#39;ll take this one as <em>point of contact […] with outside projects</em> and it
+isn&#39;t always a lot of fun. Between Aloha, CreateJS it looks like Drupal is
+good at both bikeshedding and alienating outside projects.</p>
+
+<p>I&#39;m to blame for most of the friction with the jQuery and jQuery UI team. We
+cleared things up but the fact that it happened a couple of times is on me. I
+haven&#39;t been really good at making outside projects feel welcome in Drupal.
+That needs fixing. On of the challenge is the lack of structured decision
+making in the core process.</p>
+
+<p>It&#39;s stupid to think I can get outside people interested in
+Drupal if I don&#39;t take care of outside projects.</p>
+
+<h3>Review</h3>
+
+<blockquote>
+<p>Reviewing proposed patches to that subsystem.</p>
+</blockquote>
+
+<p>For a long time most of the patches were mine so I had to find other people
+to review. It started to changed a few months ago, Now I have a backlog of
+other&#39;s people patches to review! Can&#39;t tell you how happy — and guilty — that
+made me feel the first time I realized I had several people waiting on me to
+review patches. It&#39;s taking a while for me to adjust since I still have big
+patches I want to work on and that takes time away from review.</p>
+
+<p>Hopefully you guys don&#39;t get discouraged if I&#39;m late in a review. Ping me on
+IRC if that&#39;s the case. Would hate to lose people because of that.</p>
+
+<h3>Acting <em>expert</em></h3>
+
+<blockquote>
+<p>Acting as an expert on the workings of that subsystem (answering questions
+that come up, and being involved in discussions of major overhauls and
+re-architecting).</p>
+</blockquote>
+
+<p>On one hand you just have to show up and/or trigger conversations and
+contribute to the extend of your knowledge. When the knowledge is not enough,
+ learn things or get the relevant people in the conversation.</p>
+
+<p>On the other hand, it&#39;s easy to get passionate and a bit crazy about some
+topics. It&#39;s good to be passionate and Drupal is important. Realistically
+though, chances are nobody is going to die because of a technological
+decision made in core.</p>
+
+<p>You won&#39;t get everything you want, pick your battles.</p>
+
+<h3>Getting things done</h3>
+
+<blockquote>
+<p>Translating strategic thinking about their subsystem into actionable items
+and issues.</p>
+</blockquote>
+
+<p>Early on I took that as &quot;write patches&quot; it works much better as &quot;write
+issue summaries and get people to write patches&quot;. That way you can review and
+RTBC, ensuring you&#39;re addressing the real issue: getting patches in core.</p>
+
+<h2>Day to day</h2>
+
+<p>The end goal of maintainers is to get things done in core. Here is
+how that works for me.</p>
+
+<h3>Day Work</h3>
+
+<p>Fortunately, it has nothing to do with javascript. People in need of a Drupal
+consultant have performance, security, migration, training or process issues,
+not javascript issues. It means that most JS I do is on my free time and
+during downtime (doesn&#39;t happen anymore).</p>
+
+<p>Acquia is very good to me, sponsoring almost all my trips to Drupal events so
+that I can talk to you guys about my hobby.</p>
+
+<h3>Community to maintainer</h3>
+
+<p>Outside events, the main feedback I get from the community are bugs. A good
+amount of features requests and a little bit of patches. I&#39;m stalking those
+two <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;component%5B%5D=ajax+system&amp;component%5B%5D=javascript">JS component</a> and <a href="https://drupal.org/project/issues/search/drupal?issue_tags=mobile%2C+jQuery%2C+jQuery+UI%2C+Ajax%2C+JavaScript">JS related tags</a> issue pages. They
+are always open on my main browser and refresh every 30&nbsp;min (one of many
+awesome features of Opera that was dropped in the blink
+version). #drupal-contribute is opened in a tab next to it (IRC,
+another feature Opera dropped on their blink version). When I&#39;m home I check
+that during the day to see if anything interesting came up.</p>
+
+<p>I get the occasional email saying thank you about a particular issue,
+those are always nice to get.</p>
+
+<h3>Maintainer to community</h3>
+
+<p>I think it&#39;s the part that&#39;s the most fun for me: <a href="http://lanyrd.com/profile/nod_/">Talking about what we&#39;re
+doing in core for devs and users</a>. Since my first talk at
+frontendunited amsterdam in 2012 I&#39;ve been having sessions all over the place
+to talk about JS and Drupal, pretty much one every quarter. It&#39;s a lot of fun.</p>
+
+<p>Now I&#39;m starting this and hopefully get in on the Drupal planet to talk about
+really cool stuff we&#39;re doing in a format more readable than a bunch of 300+
+comments issues. Like the back story of the <a href="https://drupal.org/node/787896">overlayslayer</a>.
+Hopefully getting people outside the core queue interested in core JS issues.</p>
+
+<h3>Maintainer to core committer</h3>
+
+<p>Getting things in core means getting the core committers to agree a change is
+valid and that a specific patch is good. Since none of them are hardcore JS
+dev sometime you have to convince them a change is needed. It&#39;s fairly
+easy since they are great and always ready to hear relevant arguments. I
+haven&#39;t run into any problems on issues that were properly explained.
+And sometimes you get <a href="https://drupal.org/comment/8259425#comment-8259425">the occasional break</a>, one more hint that
+<a href="http://www.youtube.com/watch?v=9IKVj4l5GU4&amp;feature=youtu.be&amp;t=22s">DRUPAL IS PEOPLE</a>!</p>
+
+<p>When I started I was surprised how fast <a href="https://drupal.org/node/1400310">that particular patch</a> was
+committed. It took only 14 days for a massive JS patch changing a lot of
+files to get in (at that point I wasn&#39;t yet maintainer). It still took a
+couple more months to get the trust of all the committers,
+after that things were much easier.</p>
+
+<p>I have to say that sometimes that process gets in the way. On the JS clean-up
+issues the overhead of the core process can be almost unbearable when you&#39;re
+lacking people to review patches.</p>
+
+<h2>At the end of the day</h2>
+
+<p>There are two things I&#39;m really proud of:</p>
+
+<ol>
+<li>The <em>visible</em> existence of a JS community in Drupal core.</li>
+<li>The <a href="https://drupal.org/node/1415788">javascript (spring, summer, autumn, spring) winter clean-up</a>.</li>
+</ol>
+
+<p>Looking back at those two years, a few low points:</p>
+
+<ul>
+<li>Relations with external projects.</li>
+<li>DrupalCon Sydney, there was no javascript talk.</li>
+<li><code>Drupal.ajax</code> (horrible DX)</li>
+<li><code>Drupal.tableDrag</code> (too complicated and monolithic)</li>
+</ul>
+
+<p>Of course, many more wins over those past two years:</p>
+
+<ul>
+<li>The amazingly productive piggy back on the mobile initiative.</li>
+<li>The slow but steady simplification of core JS. I know, but it&#39;s true.</li>
+<li>Relations with external projects.</li>
+<li>Getting people from the outside to care about our JS problems.</li>
+</ul>
+
+<p>I&#39;m missing a lot of highlights but you know what? Nobody is going to die if
+I don&#39;t list them all. Feel free to correct me in the comments if you feel
+it&#39;s very important to mention something and I&#39;ll add it.</p>
+
+<p><strong>If core JS doesn&#39;t get in your way, as far as I&#39;m concerned, I did my job.</strong></p>
+
+<p>I guess I never really thought about it but what is your opinion of my work
+as maintainer? I get many thumbs up at events for the work I&#39;m doing — I love
+it, keep them coming — but that&#39;s about the technical side of things ; I&#39;m
+interested to know what are my shortcomings as a maintainer from your point
+of view.</p>
+  </body>
+</html>
+

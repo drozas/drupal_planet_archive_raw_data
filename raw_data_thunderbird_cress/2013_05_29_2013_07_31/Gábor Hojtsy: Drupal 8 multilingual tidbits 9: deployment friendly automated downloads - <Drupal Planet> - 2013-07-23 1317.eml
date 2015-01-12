@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 23 Jul 2013 12:17:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 23 Jul 2013 12:17:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 9: deployment friendly automated downloads
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-jul-23/drupal-8-multilingual-tidbits-9-deployment-friendly-automated-downloads
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 9: deployment friendly automated downloads</title>
+    <base href="http://hojtsy.hu/blog/2013-jul-23/drupal-8-multilingual-tidbits-9-deployment-friendly-automated-downloads">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>Let's move on to improvements around the interface (shipped software) translation solutions in Drupal 8! The new version separates the responsibilities for the base language layer (Language module) from the software's translation (Interface Translation module), and largely expands on the features of the interface translation capability.</p>
+<h3>Automated translation downloads</h3>
+<p>The biggest pain in setting up Drupal for a foreign language or especially multiple foreign languages is downloading and importing all the translation files. If you have Drupal core and 50 modules and want to have your site in 3 languages, you need to manually identify the version numbers and project shortnames for the 50 projects and download translations for all three languages. 153 files in total (core included). Then all these files sitting on your desktop, you need to upload them through the web interface one by one to get them all imported to the Drupal database.</p>
+<p>Of course this is very painful, so we built <a href="https://drupal.org/project/l10n_update">the Localization update module</a> to automate it. It was a very logical next step to build this into Drupal 8!</p>
+</div></div></div>
+  </body>
+</html>
+

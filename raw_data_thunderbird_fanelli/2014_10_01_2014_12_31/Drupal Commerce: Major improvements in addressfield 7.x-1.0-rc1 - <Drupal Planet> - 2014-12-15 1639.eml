@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 15 Dec 2014 15:39:12 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 15 Dec 2014 15:39:12 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Commerce: Major improvements in addressfield 7.x-1.0-rc1
+Content-Transfer-Encoding: 8bit
+Content-Base: https://drupalcommerce.org/blog/31546/major-improvements-addressfield-7x-10-rc1
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Commerce: Major improvements in addressfield 7.x-1.0-rc1</title>
+    <base href="https://drupalcommerce.org/blog/31546/major-improvements-addressfield-7x-10-rc1">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Many people know that <a href="https://drupal.org/project/addressfield">addressfield</a> hasn’t been the easiest module to maintain. There are over 200 countries in the world, each with its own addressing requirements. Addressfield attempted to provide a sane default for all of them, along with a plugin architecture for handling per-country customizations.  But with so many countries, the list of needed improvements became never-ending, and the customizations themselves started gathering in only one plugin (address.inc), which quickly became impossible to maintain.</p>
+<p>A radical change was needed, so after a lot of research we <a href="https://drupalcommerce.org/blog/16864/commerce-2x-stories-addressing">introduced a new plan</a> for Drupal 8, along with a <a href="https://github.com/commerceguys/addressing">brand new PHP library</a> we can depend on from addressfield 8.x-2.x. The new plan resolves around two powerful ideas:</p>
+<ul><li>The introduction of address formats, which hold information on how a country’s address and its form need to be rendered and validated.</li>
+<li>The use of Google’s addressing dataset, freely available and built for Chrome and Android, with address formats for 200 countries.</li>
+</ul><p>The introduced solutions were obviously superior to anything we had before that, but Drupal 8 is still far from production, and we needed improvements on our Drupal 7 sites today, so we decided to try and backport as many concepts as we could into the 7.x-1.x codebase. The result of that is <a href="https://www.drupal.org/node/2393489">addressfield 7.x-1.0-rc1</a>:</p>
+<p><a href="https://drupalcommerce.org/blog/31546/major-improvements-addressfield-7x-10-rc1">Read more...</a></p>
+</div></div></div>
+  </body>
+</html>
+

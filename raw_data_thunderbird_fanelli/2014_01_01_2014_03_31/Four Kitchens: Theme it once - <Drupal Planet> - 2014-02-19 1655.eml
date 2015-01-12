@@ -1,0 +1,56 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 19 Feb 2014 15:55:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 19 Feb 2014 15:55:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Four Kitchens: Theme it once
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fourkitchens.com/blog/2014/02/19/theme-it-once
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Four Kitchens: Theme it once</title>
+    <base href="http://fourkitchens.com/blog/2014/02/19/theme-it-once">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-body">
+    <p>The popularity of front-end JavaScript frameworks, driven largely by improvements in JavaScript performance, is skyrocketing. One of their strongest features is allowing developers to build extremely rich applications that will work the same way on most modern platforms. So it comes as no surprise that backbone.js found its way into Drupal 8 as a core JavaScript library. If you haven&#8217;t worked with a rich JavaScript application yet, you can be certain you will&nbsp;soon.</p>
+<p>A key component of any rich JavaScript application, be it built on a framework or not, is templating. Each templating engine behaves slightly differntly but there’s one thing that they, and in fact all templating engines, have in common: scaffolding markup has placeholders which are later replaced with variables, like&nbsp;this:</p>
+<script src="https://gist.github.com/elliotttf/9085358.js?file=tio-item.dust.html"></script><p>That should look relatively familiar, in Drupal we’re used to seeing things like&nbsp;this:</p>
+<script src="https://gist.github.com/elliotttf/9085358.js?file=tio-item.tpl.php"></script><p>Front end templating is great – it’s flexible and allows you to offload some of the processing power required to render a page to the client. There are some gotchas though, users without JavaScript support (or minimal JavaScript support) is an obvious one. A less obvious case that front end templating isn’t ideal is when you need to be able to render a page both on the client and server side. Dan Webb (<a href="https://twitter.com/danwrong">@danwrong</a>) from Twitter <a href="https://blog.twitter.com/2012/improving-performance-on-twittercom">wrote extensively</a> about Twitter’s move from an exclusively front-end rendered site to a mix of front-end and back-end rendered pages. In their case, and in many cases, a webpage can be delivered and ready for user interaction much faster when it’s been rendered on the&nbsp;server.</p>
+<p>So, what am I getting at, and how does it relate to Drupal? Using either of the front-end templating gotchas from above, you can see that we’d need to have a template for both the frontend and backend source. That obviously sucks because now we have twice the markup that we need to deal&nbsp;with.</p>
+<p>It doesn’t have to be that way though. By relying on Drupal’s rendering pipeline we can use one set of markup for both our front-end and back-end templates. Consider this <a href="https://gist.github.com/elliotttf/9085358#file-theme_it_once-module">simple module</a>. In the <span class="geshifilter"><code class="text geshifilter-text">theme_it_once()</code></span> function we’re constructing an array of items to theme. Simple enough, but there’s something different about this page&nbsp;callback:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #b1b100;">return</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+   <span style="color: #0000ff;">'items'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+     <span style="color: #0000ff;">'#theme'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'item_list'</span><span style="color: #339933;">,</span>
+     <span style="color: #0000ff;">'#items'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$items</span>
+   <span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+   <span style="color: #0000ff;">'template'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+     <span style="color: #0000ff;">'#theme'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'example_item'</span><span style="color: #339933;">,</span>
+     <span style="color: #0000ff;">'#name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'{name}'</span><span style="color: #339933;">,</span>
+     <span style="color: #0000ff;">'#description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'{description}'</span><span style="color: #339933;">,</span>
+     <span style="color: #0000ff;">'#prefix'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'&lt;script id="example-template" type="text/template"&gt;&lt;li&gt;'</span><span style="color: #339933;">,</span>
+     <span style="color: #0000ff;">'#suffix'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'&lt;/li&gt;&lt;/script&gt;'</span><span style="color: #339933;">,</span>
+   <span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+ <span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div>
+<p>This render array has an additional element – <span class="geshifilter"><code class="text geshifilter-text">template</code></span> – which adds the markup from our <span class="caps">PHP</span> template to the page, wrapped in a script tag so it won’t be displayed. The resulting markup, which should look very familiar, will look like this (with some extra whitespace added for&nbsp;readability):</p>
+<div class="geshifilter">
+<pre class="text geshifilter-text" style="font-family:monospace;">&lt;script id="example-template" type="text/template"&gt;
+  &lt;li&gt;
+   &lt;h4 class="item-name"&gt;{name}&lt;/h4&gt;
+   &lt;p&gt;{description}&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/script&gt;</pre></div>
+<p>Now let’s move to the front end and see how we can take advantage of this. In our example we’re going to use <a href="http://akdubya.github.io/dustjs/">dust.js</a> for the front-end templating engine, but the concept will be the same regardless of what you choose. Consider this&nbsp;script:</p>
+<script src="https://gist.github.com/elliotttf/9085358.js?file=theme_it_once.js"></script><p>Notice that we’re grabbing the <span class="caps">HTML</span> from our template and compiling it into dust. We’re then rendering the template with a name and description variable and appending the result to the list generated by Drupal. Yes, it really is that simple to write your markup once and use it&nbsp;everywhere!</p>
+<h3>Beyond&nbsp;Examples</h3>
+<p>One of the biggest problems with this example for a rich application is the overhead associated with compiling the templates and the access to the <span class="caps">DOM</span> to fetch the template in the first place. In our example we only have one template, so the hit we take isn’t that great, but if we had many templates we’d want to precompile them. This obviously means adding a build task to create the generated templates file as needed. A drush command would be a great way to still keep everything in <span class="caps">PHP</span> templates. Your command would pass the front-end placeholders into your theme function in exactly the same way as I’ve shown here, but would then pass the resulting markup off to a child process – possibly grunt.js – to compile that&nbsp;markup.</p>
+<p>A functional example of this code can be downloaded from the <a href="https://gist.github.com/elliotttf/9085358">gist</a>.</p>
+  </div>
+  </body>
+</html>
+

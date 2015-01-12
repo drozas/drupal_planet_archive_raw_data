@@ -1,0 +1,45 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 15 Feb 2014 17:23:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 15 Feb 2014 17:23:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Creating a multilingual site with Panopoly
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/creating-multilingual-site-panopoly
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Creating a multilingual site with Panopoly</title>
+    <base href="http://deeson-online.co.uk/labs/creating-multilingual-site-panopoly">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p style="text-align: center;">                      <img alt="" src="/sites/default/files/uploads/blog_multilingual.png" style="width: 420px; height: 352px;" /></p>
+<p>Motivated by a Twitter conversation I recently had with @cam8001 and @jakubsuchy I decided to look into how we could make a Panopoly install multilingual - and came up with the following steps.</p>
+<h4>Making a Panopoly install multilingual</h4>
+<ul>
+<li>Download and enable the prerequisite modules: Variable, Internationalisation, Multilingual content, Path translation, Variable translation</li>
+<li>Then navigate to admin/config/regional/language and add a new language</li>
+<li>Next, go to admin/config/regional/language/configure and check the URL detection method, save, and then Configure the method</li>
+<li>Select the Path prefix option</li>
+<li>Navigate to admin/config/search/path/patterns and scroll down to the pattern field for languages</li>
+<li>For your default language only, place the language code in front of the pattern for your URLs. This enables panel pages to be located at their own distinct URLs when we enable internationalisation.</li>
+</ul>
+<div><img alt="" src="/sites/default/files/uploads/multilingual_blog1.png" style="width: 420px; height: 238px;" /></div>
+<div> </div>
+<ul>
+<li>Edit the Content Page content type, and enable multilingual content</li>
+</ul>
+<div><img alt="" src="/sites/default/files/uploads/multilingual_blog2_0.png" style="width: 419px; height: 188px;" /></div>
+<ul>
+<li>After creating content in one language, the Translate tab will become available, which will enable creation of another page, editable with the Panels IPE, and with its own distinct URL</li>
+<li>Finally, enjoy multilingual Panopoly!</li>
+</ul>
+<h4>Translating panes... not quite there, yet!</h4>
+<p>Another way to achieve this would be with multilingual panes, but currently there is no stable way to create them. However, there has been some development at <a href="https://drupal.org/project/mlpanels">https://drupal.org/project/mlpanels</a> to further this goal and am sure in time the 'breakthrough' will come!</p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/creating-multilingual-site-panopoly">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Creating a multilingual site with Panopoly</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/annika-clarke">Annika Clarke</a> | 15th February 2014</div></div></div>
+  </body>
+</html>
+

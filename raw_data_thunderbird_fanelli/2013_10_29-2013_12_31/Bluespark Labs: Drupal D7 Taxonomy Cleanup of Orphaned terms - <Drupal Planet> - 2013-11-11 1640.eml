@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 11 Nov 2013 15:40:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 11 Nov 2013 15:40:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bluespark Labs: Drupal D7 Taxonomy Cleanup of Orphaned terms
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.bluespark.com/blog/drupal-d7-taxonomy-cleanup-orphaned-terms
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bluespark Labs: Drupal D7 Taxonomy Cleanup of Orphaned terms</title>
+    <base href="http://www.bluespark.com/blog/drupal-d7-taxonomy-cleanup-orphaned-terms">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>&nbsp; &nbsp; &nbsp; I recently&nbsp;had a need at work to do some cleanup of a taxonomy vocabulary. The problem stemmed from messy data in a spreadsheet, that would be the source for an ongoing feeds import. This meant that I needed to provide a solution that allowed the clients to:&nbsp;</p>
+
+<ul>
+	<li>Remove orphaned terms on an ongoing basis.</li>
+	<li>Be able to do multiple terms at a time. &nbsp;</li>
+	<li>See the terms they were removing, so the offending data could be fixed in the imported file as well.</li>
+</ul>
+
+<p>&nbsp; &nbsp; &nbsp; My first step is always to look and see if there was an existing module that would meet my needs. My google-fu occasionally fails me, so if there is a module that addresses this problem that I haven't mentioned here, please mention it in a comment! I found two modules:&nbsp;</p>
+
+<p><a href="http://drupal.org/project/taxonomy_delete_all_terms"><span style="line-height: 1.6em;">https://drupal.org/project/taxonomy_delete_all_terms&nbsp;</span></a></p>
+
+<p><a href="http://drupal.org/project/taxonomy_orphanage">https://drupal.org/project/taxonomy_orphanage </a></p>
+
+<p>(I ran across a third module, Taxonomy Manager (<a href="http://drupal.org/project/taxonomy_manager">https://drupal.org/project/taxonomy_manager</a>), but the issue queue indicates that it does not have this functionality, so I didn't consider it.)</p>
+
+<p>&nbsp; &nbsp; &nbsp; I started with Taxonomy Delete all Terms, as it seemed most likely to meet my needs. I grabbed it and enabled it with drush and gave it a whirl in my sandbox. This seems to be a fairly powerful and flexible module, but it is very developer oriented, and I was looking for something that was more user friendly.</p>
+
+<p>&nbsp; &nbsp; &nbsp; Taxonomy Orphanage was next. This is a nice lightweight module, however, the admin interface does not provide any way to see which terms are orphaned, or even how many terms are being deleted, so I moved on.</p>
+
+<p>&nbsp; &nbsp; &nbsp; In my googling, I had run across the thought of using a view + VBO, and there are even existing tutorials for this. I liked the idea of using modules that were already on the site, as my goal is always to keep as site as lightweight as possible. The existing tutorial is here : <a href="http://drupal.org/node/1472912">https://drupal.org/node/1472912</a> It wasn't going to work for me exactly as written, and I had to change some config to suit my needs, so here is the modified version.&nbsp;</p>
+
+<ol>
+	<li>Create a new view. I named mine Taxonomy Term Cleanup.&nbsp;</li>
+	<li>Display: choose taxonomy term. Choose the vocabulary that you wish to cleanup. Add the page title, select create page, give it a path (taxonomy-cleanup) and click create and edit. &nbsp;</li>
+	<li>In the section Relationships choose Taxonomy Term: Content using “name of your vocabulary” from the list of options. The identifier in my case was field_subject, the field referencing my chosen vocabulary.&nbsp;</li>
+	<li>In the Fields section add <strong>Content: nid</strong> and <strong>Bulk Operations: Taxonomy Term</strong>. (There will already be a <strong>Term: name</strong> field, leave it as is.) Label the <strong>Content: nid</strong> field something like "Number of References". For the Bulk Operation field, label it "select" . Ensure that “enable select all items” and “display processing result” are checked . In the selected operation choose the delete operation. Check the delete without confirmation if you want to delete the terms without an intermediate confirmatory dialog page.&nbsp;</li>
+	<li>On the left side in the Other section next to Use aggregation, click on the no enable aggregation.&nbsp;</li>
+	<li>Click on the aggregation settings beside the Node:nid filter and from the aggregation type drop down choose COUNT. What this will do is it will give a count of all nodes that reference a specific term.&nbsp;</li>
+	<li>Now add a filter : <strong>Content: nid</strong>, select Count in the aggregation settings, and choose operator is equal to 0. This will restrict the view to terms that are not referenced by any nodes.&nbsp;</li>
+	<li>My next step format the view as a table, and in the settings, make the term titles sortable.&nbsp;</li>
+	<li>The last, and very important step, was to add an access restriction to the view. You can do it by Role, or by permission, whichever is the most efficient.</li>
+</ol>
+
+<p>&nbsp; &nbsp; &nbsp; Now I have an easily accessible and highly user friendly solution, that meets all of my needs. The client can remove multiple orphaned terms, while still being able to see where the problem is in their original data, so it can be cleaned up at the source as well.</p>
+ </div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/orphaned">orphaned</a></div><div class="field-item odd"><a href="/blog/taxonomy">taxonomy</a></div><div class="field-item even"><a href="/blog/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

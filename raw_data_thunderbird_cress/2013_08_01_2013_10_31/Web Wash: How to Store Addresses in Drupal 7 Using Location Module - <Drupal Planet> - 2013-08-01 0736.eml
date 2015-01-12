@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 01 Aug 2013 06:36:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 01 Aug 2013 06:36:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: How to Store Addresses in Drupal 7 Using Location Module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/how-store-addresses-drupal-7-using-location-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: How to Store Addresses in Drupal 7 Using Location Module</title>
+    <base href="http://webwash.net/tutorials/how-store-addresses-drupal-7-using-location-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>I've <a href="http://webwash.net/node/19">talked</a> about how to store addresses in Drupal before by using a combination of <a href="http://drupal.org/project/addressfield">Address Field</a>, <a href="http://drupal.org/project/geofield">Geofield</a>, <a href="http://drupal.org/project/geophp">geoPHP</a> and <a href="http://drupal.org/project/geocoder">Geocoder</a>.</p>
+
+<p>Today we'll look at the <a href="https://drupal.org/project/location">Location</a> module. Location has been around for as long as I can remember, in Drupal 6 it was one of the only ways to store address and geographical coordinates. In Drupal 7, it is just as powerful.</p>
+
+<p>The module's main purpose is to store addresses, but when you want to display the address in a map, then use the <a href="https://drupal.org/project/gmap">GMap</a> module. Location comes tightly integrated with <a href="https://drupal.org/project/gmap">GMap</a>, and most of the time you would use both modules together.</p>
+
+<p>If you don't want to use Google Maps via GMap, then you'll need to integrate Location with other maps using custom code.</p>
+
+<p>In this tutorial, I'll show you how to store and geocode an address on an article using the Location module.</p>
+</div></div></div>
+  </body>
+</html>
+

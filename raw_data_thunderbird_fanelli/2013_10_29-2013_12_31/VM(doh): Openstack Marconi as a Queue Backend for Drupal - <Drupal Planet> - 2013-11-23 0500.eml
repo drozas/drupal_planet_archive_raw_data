@@ -1,0 +1,53 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 23 Nov 2013 04:00:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 23 Nov 2013 04:00:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: VM(doh): Openstack Marconi as a Queue Backend for Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vmdoh.com//blog/openstack-marconi-queue-backend-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>VM(doh): Openstack Marconi as a Queue Backend for Drupal</title>
+    <base href="http://www.vmdoh.com//blog/openstack-marconi-queue-backend-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>One of the coolest features that made it into Drupal 7 without much (if any) fanfare is the Queue API. Drupal's Queue API is a pluggable system that allows you to queue events for later processing. Many systems, both in core (e.g., <a href="https://api.drupal.org/api/drupal/includes%21batch.queue.inc/class/BatchQueue/7">Batch API</a>) and contrib (e.g., <a href="https://drupal.org/project/feeds">Feeds</a>, <a href="https://drupal.org/project/notifications">Notifications</a>, etc.), leverage the Queue API system. In fact, when you enable a module it gets added to a queue to be checked later for updates.</p>
+<p>By default, Drupal's queueing system uses a database table to store items that need to be run later. While that's just fine and dandy for most Drupal sites, under certain circumstances it can undermine your ability to use queues effectively. For example, what happens if your database crashes and the queue table become corrupt? Those items that had been queued are now no longer there, and typically if you are using a queue you want that item to be persistently available until it has been successfully processed.</p>
+<p>Thankfully, you can use the Queue API without being locked into the default queue backend. It can be as simple as just telling Drupal in settings.php to use a different class to handle a particular queue. (Of course, some backends will need additional settings like credentials.) In fact, on Drupal.org there are currently several additional backends available including <a href="https://drupal.org/project/aws_sqs">Amazon SQS</a>, <a href="https://drupal.org/project/beanstalkd">Beanstalkd</a>, <a href="https://drupal.org/project/redis_queue">Redis</a>, and <a href="https://drupal.org/project/stomp">STOMP</a> (ActiveMQ, RabbitMQ, etc.).</p>
+<p>So what is Marconi? Marconi is <a href="https://wiki.openstack.org/wiki/Marconi">Openstack's queue implementation</a> meant as an alternative to Amazon SQS and Amazon SNS. Currently, at least two Openstack-based cloud providers (<a href="http://www.rackspace.com/cloud/queues/">Rackspace</a> and <a href="http://www.hpcloud.com/products-services/messaging">HP Cloud</a>) offer it as a service.</p>
+<p>With the <a href="https://drupal.org/sandbox/BrianAltenhofel/2107851">Marconi</a> module for Drupal, you can leverage these services as queue backends for your Drupal website. (Full release is currently pending Drupal.org <a href="https://drupal.org/node/2142465">Project Application Review</a>.)</p>
+<p>Openstack Marconi supports both producer-consumer and publisher-subscriber models for message queues. Basically, in a producer-consumer environment, Drupal would be producing messages for workers to consume, such as video encoding or talking to a third party API or something else that can be processed in parallel. One of the primary advantages of processing things this way is that your front end won't be tied up and blocking the user while that time consuming process is taking place. In a publisher-subsciber environment, Drupal is basically broadcasting a message that any subscriber can consume as long as it is available in the queue, such as offloading a data feed.</p>
+<p>Drupal's queue primarily works on the producer-consumer model, and most of the documentation available assumes that is the model that you're going after, though you don't actually have to implement your queue in that manner.</p>
+<p>So what do you need to do if you're wanting to use Marconi as your queue backend?</p>
+<p>It's actually pretty simple. First, you'll need to download and install the Marconi module and it's only dependency (<a href="https://drupal.org/project/composer_manager">Composer Manager</a>). Composer Manager will process the included composer.json file and install the required <a href="https://github.com/rackspace/php-opencloud">php-opencloud</a> library and it's dependencies for you. After that, you'll just need to do some configuration in your settings.php file (assuming Rackspace Cloud Queues):</p>
+
+<pre class="brush: php; auto-links: true; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 2; toolbar: true; codetag"> $conf['marconi_default_queue'] = array(
+    'client_id' =&gt; '12345678-1234-1234-1234-123456789123', // UUID to identify your site
+    'auth_url' =&gt; 'https://identity.api.rackspacecloud.com/v2.0/',
+    'credentials' =&gt; array(
+      'username' =&gt; 'username',
+      'apiKey' =&gt; 'yourapikey',
+    ),
+    'region' =&gt; 'IAD',
+    'service' =&gt; 'cloudQueues',
+    'provider' =&gt; 'Rackspace', // There is an OpenCloud\Rackspace class
+  ); </pre>
+
+<p>The above sets your credentials for connecting to the queue service. The client_id can be whatever you want as long as it is a UUID (at least in Rackspace's case). It is used to ensure that messages aren't echoed back unless explicitly requested. The 'provider' option is only required if there is a specific class for a provider in the php-opencloud library.</p>
+<p>Next, you can either tell Drupal to use Marconi as the default for all queues, or you can override queues by name:</p>
+
+<pre class="brush: php; auto-links: true; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 2; toolbar: true; codetag">   // Globally use Marconi
+  $conf['queue_default_class'] = 'MarconiQueue';
+  // Only use Marconi with my_queue
+  $conf['queue_class_my_queue'] = 'MarconiQueue'; </pre>
+
+<p>And you're good to go. By the way, if you need special credentials or settings for a particular queue, you can easily override them with the $conf['marconi_queue_my_queue'] settings array. Anything that is not defined there will be inherited from the default settings above. I'm happily using Rackspace Cloud Queues for both VM(doh) and <a href="https://www.anrhizan.com">Anrhizan</a> as well as some other sites, even if to just handle Drupal's core queues.</p>
+<p><a href="http://www.slideshare.net/BrianAltenhofel/message-queues-and-drupal">Here are some slides</a> from a presentation I did at the Oklahoma Drupal Users Group on November 21, 2013.</p>
+  </body>
+</html>
+

@@ -1,0 +1,74 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 09 Jan 2014 19:53:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 09 Jan 2014 19:53:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This (three) weeks in Drupal Core - January 10th 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/395218
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This (three) weeks in Drupal Core - January 10th 2013</title>
+    <base href="https://groups.drupal.org/node/395218">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>It's been three weeks since our last 'This week in core' post, but with holidays providing a welcome break for many, core development has continued at its usual rapid pace. Time flies! The <a href="http://szeged2014.drupaldays.org/program/sessions">session submission deadline for Drupal Dev Days Szeged</a> is just around the corner on the 15th of January.</p>
+<h4>Give Drupal a birthday present</h4>
+<p>Next week is Drupal's 13th birthday! Want to give Drupal a birthday present? Why not <a href="https://groups.drupal.org/node/390873">tackle an issue</a>, or help <a href="http://doodle.com/i3kvxqmhcrvf3kz5">mentor someone else</a> to do so. There's also a <a href="http://www.reddit.com/r/drupal/">Reddit AMA appearance by Dries</a> (that's <em>Ask me anything</em> for those who don't use Reddit - I had to look it up) and we're also planning a special "This Year in Drupal Core".</p>
+<h4>New Drupal core commit schedule</h4>
+<p>We're trying out a <a href="https://groups.drupal.org/node/394763">new commit schedule</a> to increase core momentum. For one week starting January 15 up until the release of Drupal 8.0-alpha8 on January 22, core maintainers will commit only critical and major patches.  (Normal and minor patches will be committed again starting January 23.) <a href="https://groups.drupal.org/node/394763">Read more about the new commit schedule</a>.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>Last week, we fixed 11 critical issues and 14 major issues, and opened 9 criticals and 11 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">135 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">482 major issues</a>.</p>
+<p>10 beta-blocking issues were fixed last week. There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">61 of 98 beta blockers</a> that must be resolved and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Needs+change+notification">48 change records</a> that must be written before we can <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">release a Drupal 8 beta</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented.</p>
+<ul>
+<li><a href="https://drupal.org/node/1862202">Objectify the language negotiation system</a> (no that doesn't involve wolf whistles) - this one blocks the final removals of variable_get/set and unblocks more work on cleaning up bootstrap.</li>
+<li><a href="https://drupal.org/node/2047633">Move definition of menu links to hook_default_menu_links(), decouple key name from path, and make 'parent' explicit</a> (removes hook_menu() and will iron out the new routing system; also fixes a performance regression.)</li>
+<li><a href="https://drupal.org/node/2114707">Allow per-bundle overrides of field definitions</a> (allows for node titles to have potentially different labels per node type from the managed fields screen and also fixes a performance regression)</li>
+<li>See <a href="https://groups.drupal.org/node/390693">our last edition</a> for more extra criticals, many of which are still open.
+</li></ul>
+<h3>More ways to help</h3>
+<p>If core's toughest criticals aren't on your to-do list this week, there are lots of other places to jump in and help with conversions and cleanups in core. The <a href="https://drupal.org/node/2148479">Drupal 8 "meta meta"</a>, compiled by vijaycs85, is a great place to start if you want to dig your teeth into a technical problem but aren't sure where to start. Or if coding isn't your thing, there are plenty of <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags_op==&amp;issue_tags=Needs+change+notification">issues tagged as Needs change notification</a>. Writing these is a great way to keep abreast of recent changes - see <a href="https://groups.drupal.org/node/394113">more on change records</a> to get started.</p>
+<p>Additionally:</p>
+<ul>
+<li>The CMI initiative are planning to hold <a href="http://drupal8cmi.org/upcoming-cmi-meetings">biweekly meetings</a> to gain momentum around the remaining critical issues</li>
+<li>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</li>
+</ul>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code>git log --after=2013-12-19 --pretty=oneline</code> (XX commits in total):</p>
+<ul>
+<li>
+<a href="https://drupal.org/node/2005716">#2005716</a> by tim.plunkett, msonnabaum, dawehner, alexpott, effulgentsia: Promote EntityType to a domain object - this moves much of the entity type annotation/info to a first-class object. The existing entity type info/annotation was a large array with seemingly arbitrary keys. Much of the code had isset checks to see if a particular array key exists. This makes entity type an object with methods for retrieving the various information.</li>
+<li><a href="http://drupal.org/node/2098119">#2098119</a> by beejeebus, alexpott, chx: Replace config context system with baked-in locale support and single-event based overrides. As the name suggests this bakes locale support into the config system and removes the config context system. Modules wishing to change config based on other non-locale based circumstances (eg domain module) can subscribe to an event and react accordingly.</li>
+<li>Issue <a href="https://drupal.org/node/2130811">#2130811</a> by by alexpott, Gábor Hojtsy, vijaycs85, sun, Wim Leers: Use config schema in saving and validating configuration form to ensure data is consistent and correct. This ensures that configuration is in the correct format, as defined in the schema, before the config files are written, eg integers are cast from text etc.</li>
+<li>Issue <a href="https://drupal.org/node/2042807">#2042807</a> by tim.plunkett, pwolanin, ianthomas_uk, jhodgdon: Convert search plugins to use a ConfigEntity and a PluginBag. One of the last plugin conversions and an important blocker of other criticals.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li><a href="http://drupalize.me/blog/drupal-8-configuration-management-walk-through">Drupal 8 CMI walkthrough</a> by Drupalize.me</li>
+<li><a href="http://drupalize.me/blog/dive-drupal-8-help-core-contribution-mentors">A piece about core mentoring</a> also by Drupalize.me</li>
+<li><a href="http://janezurevc.name/hhvm-and-drupal-ie-drupal-drinks-some-redbull">HHVM and Drupal</a> - which spawned a <a href="https://drupal.org/node/2165377">HHVM Meta for Drupal 8</a> to track compatability.</li>
+<li><a href="http://modulesunraveled.com/podcast/089-migrate-core-moshe-melissa-mike-and-chx-modules-unraveled-podcast">A podcast about migrate in core</a></li>
+<li>A piece by Last Call Media about <a href="http://lastcallmedia.com/wysiwyg-with-drupal-8">setting up their blog on Drupal 8</a></li>
+<li>Another great Google summer of code project, this time on <a href="http://janezurevc.name/creating-hello-world-module-drupal-8-code-project">Creating a Drupal 8 hello world module</a>.
+</li></ul>
+<h2 id="events">Drupal 8 in "Real Life</h2>
+<ul>
+<li><strong>Jan. 25-26</strong>: Mark your calendars for the next <a href="https://groups.drupal.org/node/332998">Global Sprint Weekend</a>. Join local user groups around the planet for a weekend of Drupal 8 contribution. The sprint weekend will be a great opportunity to engage your local community, and there are lots of resources on the sprint page to help get new people involved. Events are already planned everywhere from Illinois to Budapest to Montréal to Spain. <a href="https://groups.drupal.org/node/332998/edit">Add yours today!</a></li>
+<li><strong>Feb 14-17</strong> <a href="https://drupalsouth2014.drupal.org.nz">DrupalSouth</a>. Join Australian, New-Zealand and international guests for a weekend of Drupal. <a href="https://drupalsouth2014.drupal.org.nz/code-sprint-sign">Signup for the sprint day</a> is now open - come along and sprint on Drupal 8.</li>
+<li><strong>March 24-30 2014</strong>: <a href="https://groups.drupal.org/node/313468">Drupal Developer Days Szeged</a>: DevDays is still a ways off, but it will be the most important Drupal 8 developer event before <a href="https://austin2014.drupal.org/">DrupalCon Austin</a> in June, so consider whether you can attend! See <a href="https://groups.drupal.org/node/390298">Join us for a week of Drupal 8 in March!</a> and <a href="http://hojtsy.hu/blog/2014-jan-03/five-good-reasons-register-drupal-dev-days-szeged-now">Five good reasons to register for Drupal Dev Days Szeged now</a> by Gábor Hojtsy for more details.</li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

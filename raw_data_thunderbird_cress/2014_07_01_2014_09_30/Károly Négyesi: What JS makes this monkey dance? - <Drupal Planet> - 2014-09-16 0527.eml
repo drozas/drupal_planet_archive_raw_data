@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 16 Sep 2014 04:27:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 16 Sep 2014 04:27:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: What JS makes this monkey dance?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/409
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: What JS makes this monkey dance?</title>
+    <base href="http://www.drupal4hu.com/node/409">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Today I found myself in a complex <a href="https://twitter.com/brianwisti/status/503987766032494592">codebase</a> and my ticket was: this JS on this old page <a href="http://programmers.stackexchange.com/a/221658">makes the monkey dance</a>, can you make it dance on the new page? Well, my JS knowledge is... limited but I have a really mean right click. So I right clicked and looked around the source Chrome showed me. There was a div with a class <code>slideshow-node-embed-processed</code>. Now that's important: <code>-processed</code> is added by the jQuery once plugin that Drupal 7 happens to ships with. It's much easier to recognize the handiwork of the plugin than actually use it -- this is true for many similar reverse engineering scenarios. Next step is <code>ag slideshow-node-embed</code> (you have <a href="https://github.com/ggreer/the_silver_searcher">ag</a> installed, don't you?) which comes back with a single JS file called <code>sites/all/themes/foo/js/node-embed.js</code>. Next <code>ag -A2 -B2 node-embed.js</code> -- just searching is pointless but by adding some context to it hopefully we can see some settings or CSS necessary.</p>
+  </body>
+</html>
+

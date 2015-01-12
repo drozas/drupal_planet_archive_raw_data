@@ -1,0 +1,107 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Jun 2013 09:46:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Jun 2013 09:46:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Code Enigma: Getting started with Test Driven Development - Choosing a Test Harness
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.codeenigma.com/blog/getting-started-test-driven-development-choosing-test-harness
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Code Enigma: Getting started with Test Driven Development - Choosing a Test Harness</title>
+    <base href="http://www.codeenigma.com/blog/getting-started-test-driven-development-choosing-test-harness">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Following on from the first blog post in this series, <a href="http://www.codeenigma.com/blog/introduction-test-driven-development">An Introduction to Test Driven Development</a>, Chris introduces the test harness so strap yourself in!</p>
+<p>My first experience of work "in the real world" came through work experience. I was lucky enough to get one of only two placements with IBM at Havant and my assigment was to build to specification the wiring loom used to connect the <a href="http://en.wikipedia.org/wiki/IBM_3745">IBM 3745/3746</a> communications controller to its test harness. These units had to be regularly and thoroughly tested throughout production and so periodically each unit was hooked up to a test harness by means of the aforementioned wiring loom so that a range of tests could be executed against the unit and pass/fail reports and data collated. My time at IBM provided a fabulous insight into engineering/testing and firmly cemented in my mind the concept of a test harness.</p>
+<p>In software development, a test harness provides exactly the same functionality, it provides a means of executing tests against software and giving feedback on whether the software is behaving as expected.</p>
+<p>The specific test harness you choose will likely vary from project to project and is dependant on a number of factors, the coding language of the project and experience of the developers and test engineers involved may have an impact on the decision making process, a Google search for "test harness for language x" will no doubt turn over a number of options for each language and whilst there’s no hard and fast rule that your test suite and project code language must match, the skillset of the team surely will play a part.</p>
+<p>Another major consideration should be around the <em>types</em> of test you want to execute, (unit, integration, system, acceptance etc) as some test harness frameworks lend themselves more towards one or a subset of types. You can of course use more than one test harness if it makes sense for your project with each providing different elements of a test plan strategy: unit tests running on every build and full smoke and functional tests running on release for example.</p>
+<p>Consideration also needs to be given to the development methodology being applied - perhaps PHPUnit is a best choice if a purely Test Driven approach is adopted, on the other hand, Behat is a clear winner for Behaviour Driven Development.</p>
+<p>I'll leave the last key point for consideration till the end! First, let's briefly review 4 popular test frameworks.</p>
+<h5>SimpleTest</h5>
+<p>For those of us working with PHP (and specifically Drupal), there are a number of options. Coupled closely with Drupal is <a href="https://drupal.org/project/simpletest">SimpleTest</a> which was moved to core in Drupal 7. It's modeled on the open source <a href="http://simpletest.sourceforge.net/">SimpleTest</a> unit test framework so those familar with its suite of assertions will be comfortable and will get the extra benefit of helper methods such as <a href="https://api.drupal.org/api/drupal/modules%21simpletest%21drupal_web_test_case.php/function/DrupalWebTestCase%3A%3AdrupalLogin/7">drupalLogin()</a>, <a href="https://api.drupal.org/api/drupal/modules%21simpletest%21drupal_web_test_case.php/function/DrupalWebTestCase%3A%3AdrupalLogout/7">drupalLogout()</a>, <a href="https://api.drupal.org/api/drupal/modules%21simpletest%21drupal_web_test_case.php/function/DrupalWebTestCase%3A%3AdrupalCreateNode/7">drupalCreateNode()</a> and <a href="https://api.drupal.org/api/drupal/modules%21simpletest%21drupal_web_test_case.php/function/DrupalWebTestCase%3A%3AdrupalCreateUser/7">drupalCreateUser()</a> for establishing fixture<sup><a href="#footnote-1">[1]</a></sup>.</p>
+<p>Here's an example of a user login test in SimpleTest taken from the user module and modified slightly for clarity:</p>
+<pre class="brush:php;">
+&lt;?php
+  /**
+   * User login test.
+   */
+  class UserLoginTestCase extends DrupalWebTestCase {
+    public static function getInfo() {
+      return array(
+        'name' =&gt; 'User login',
+        'description' =&gt; 'Ensure that login works as expected.',
+        'group' =&gt; 'User',
+      );
+    }
+    
+    /**
+     * Test that a user can login.
+     */
+    function testUserLogin() {
+      $user = $this-&gt;drupalCreateUser(array());
+      $this-&gt;drupalLogin($user);
+    }
+  }</pre><p>As you can see, tests are expressed in PHP code and SimpleTest provides a number of assertions that can be used.</p>
+<p>I won't go into much detail here about SimpleTest as many good blog posts already exist about <a href="http://webgoodness.co.uk/blog/using-simpletest-drupal-6">its use</a> and <a href="http://www.jacobsingh.name/content/test-driven-development-drupal-possible">limitations</a> (duration of test run being a major issue which <a href="https://drupal.org/project/simpletest_clone">SimpleTest Clone</a> seeks to address, some have had success with <a href="http://tiger-fish.com/blog/speeding-simpletest-drupal-7">switching to MyISAM</a> for tests and others, along with <a href="https://qa.drupal.org/performance-tuning-tips-for-D7">Drupal Quality Assurance</a> have adopted <a href="http://wolfgangziegler.net/ubuntu-11.04-simpletest-performance-upstart-mysql-ramdisk">ramdisk</a> with a <a href="http://stackoverflow.com/questions/3366286/what-steps-should-you-take-to-speed-up-simpletest">mixed outcomes</a> it seems.)</p>
+<p>Code Enigma offers high performance Drupal hosting with built in support for running automated tests, see our <a href="http://hosting.codeenigma.com/faq">http://hosting.codeenigma.com/faq</a> for more information or <a href="http://hosting.codeenigma.com/contact">get in touch</a> if you'd like to talk it through.</p>
+<h5>PHPUnit</h5>
+<p>PHPUnit is a popular open source PHP test framework created and maintained by <a href="https://twitter.com/s_bergmann">Sebastian Bergmann</a> which, from its name, is a good choice for unit testing although you can combine it with other libraries, <a href="http://guzzlephp.org/">Guzzle</a> and <a href="http://docs.seleniumhq.org/">Selenium Server</a> for example enabling browser automation for functional and acceptance testing.</p>
+<p>I personally find <a href="http://phpunit.de/manual/current/en/index.html">PHPUnit</a> invaluable and use it on a daily basic, tests are easy to read, write and are quick to run if you're actually doing true unit testing. Of course, that in itself raises a challenge when working with Drupal where dependencies are commonly requested rather than injected. Drupal 8 is heading in the right direction with <a href="https://drupal.org/user/75278">Mark Sonnabaum</a> leading the introduction of PHPUnit tests in the upcoming release. I recommend watching the <a href="http://www.youtube.com/watch?v=ONyI1dBQTko">video</a> of his recent Drupalcon Portland session on the subject.</p>
+<p>A really basic example PHPUnit unit test:</p>
+<pre class="brush:php;">
+&lt;?php
+  /**
+   * Adds two numbers and returns the result.
+   */
+  function add($a, $b) {
+    return $a + $b;
+  }
+
+  class AddTest extends PHPUnit_Framework_TestCase {
+    public function testadd() {
+      $this-&gt;assertSame(3, add(1, 2));
+    }
+  }</pre><p>Once again, tests are expressed in PHP code with PHPUnit providing perhaps a slightly richer set of assertions than you get with SimpleTest.</p>
+<h5>Behat</h5>
+<p>Created by <a href="https://twitter.com/everzet">Konstantin Kudryashov</a>, <a href="http://behat.org/">Behat</a> is the PHP <a href="http://dannorth.net/introducing-bdd/">Behaviour Driven Development</a> enabler for PHP projects - it enables composition of human readable tests (in <a href="https://github.com/cucumber/cucumber/wiki/Gherkin">Gherkin</a>) that Behat turns into executable acceptance tests. This is the beauty and strength of BDD (and Behat), together they provide a means whereby business owners, developers, project managers and testers can frame requirements in a common language, the language of the business domain and from there derive a suite of acceptance tests that indicate delivered value.</p>
+<p>The <a href="https://drupal.org/project/drupalextension">DrupalExtension module</a> provides additional step definitions for some of the basic operations normally performed on a Drupal site, in addition it provides support for regions defined in the theme layer for more accurate querying of the user interface.</p>
+<p>I recently gave a talk about BDD and Behat at the North West Drupal user group - you may find <a href="http://slid.es/matason/nwdug-behat-drupal-june-2013">my slides</a> and <a href="https://github.com/matason/behat-drupal">code</a> helpful.</p>
+<p>An example feature and scenario:</p>
+<pre class="brush:ruby;">
+Feature: Login
+  As a visitor
+  I want login
+  So that I can manage my account
+
+  Scenario: A user enters their credentials and logs in successfully
+    Given I am on "/"
+    And I fill in "admin" for "name"
+    And I fill in "letmein" for "pass"
+    When I press the "Log in" button
+    Then I should see "My account"</pre><p>Expressed in a structured language called Gherkin, Behat along with the <a href="http://mink.behat.org/">Mink extension</a> can take this feature and turn it into an executable acceptance test without the need to write any PHP code.</p>
+<h5>Codeception</h5>
+<p><a href="http://codeception.com/">Codeception</a> is a PHP framework created and maintained by <a href="http://twitter.com/davert">Michael Bodnarchuk</a>. It enables acceptable, functional and unit testing which are created by expressing context, actions and expected behaviour in simple expressive PHP code.</p>
+<p>At the time of writing, Codeception has switch on module support for a number of PHP projects such as Symfony, Laravel, Yii and ZF but unfortunately no-one has written the equivalent for Drupal yet. Keep an eye on <a href="https://twitter.com/mikebell_">Mike Bell</a> and <a href="https://twitter.com/pfaocle">Paul Byrne</a> who have both written very good blog posts about Codeception, <a href="http://mikebell.io/blog/12-04-2013/testing-codeception-and-drupal-projects">Testing with Codeception and Drupal Projects</a> and <a href="http://paul.leafish.co.uk/articles/code/more_testing_with_codeception_and_drupal_projects">More testing with Codeception and Drupal projects</a></p>
+<p>An example Codeception test:</p>
+<pre class="brush:php;">
+&lt;?php
+  $I = new WebGuy($scenario);
+  $I-&gt;wantTo('ensure that frontpage works');
+  $I-&gt;amOnPage('/'); 
+  $I-&gt;see('Home');</pre><p>Tests are composed in simple expressive PHP code.</p>
+<h5>Conclusion</h5>
+<p>It's perhaps now apparent that whichever test framework you choose, the <strong>end result is much the same</strong>: tests are executed either directly against code (unit testing) or against the site itself (functional/acceptance testing through browser automation) and the failures are reported in some way. The key variant these frameworks offer, and in my book, the most important element for consideration is the <strong>input</strong>. Answering the following pivotal question helps:</p>
+<p><strong><em>How best can tests be expressed for this project and the people involved in its delivery?</em></strong></p>
+<p>Although not explicit, you might want to include the client when you consider the people involved!</p>
+<p><strong>Footnotes</strong> <a id="footnote-1" name="footnote-1"></a></p>
+<p><em>1. A fixture is a known application state which tests will run against, establishing a fixture is the work you do to get to that know state, perhaps the creation of a user for example.</em></p>
+</div></div></div><div class="field field-name-field-blog-service-areas field-type-node-reference field-label-above"><div class="field-label">Related Service Areas:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/development">Development</a></div></div></div><div class="field field-name-field-blog-categories field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/category/comment" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Comment</a></div><div class="field-item odd"><a href="/category/consultancy" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Consultancy</a></div><div class="field-item even"><a href="/category/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div><div class="field-item odd"><a href="/category/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div><div class="field field-name-field-blog-primary-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Primary Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/category/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/test-driven-development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">test driven development</a></div><div class="field-item odd"><a href="/tags/agile" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">agile</a></div><div class="field-item even"><a href="/tags/testing" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">testing</a></div><div class="field-item odd"><a href="/tags/software-quality" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">software quality</a></div><div class="field-item even"><a href="/tags/software-engineering" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">software engineering</a></div></div></div>
+  </body>
+</html>
+

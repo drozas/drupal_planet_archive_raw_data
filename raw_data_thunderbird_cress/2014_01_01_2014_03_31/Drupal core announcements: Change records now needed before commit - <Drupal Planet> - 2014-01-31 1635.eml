@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 31 Jan 2014 16:35:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 31 Jan 2014 16:35:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Change records now needed before commit
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/402688
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Change records now needed before commit</title>
+    <base href="https://groups.drupal.org/node/402688">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Starting February 14, issues that require <a href="https://drupal.org/list-changes/drupal">API change records</a> must have these change records written <strong>before patches are committed</strong>. This is Drupal 8 core's valentine to contributed modules. :)
+</p>
+<h3>What issues are affected?</h3>
+<p>Any Drupal core issues that introduce backwards-compatibility-breaking API changes are required to have change records documenting the change. Up until now, these change records were created <em>after</em> the issues were committed. Going forward, the change records need to be written and reviewed <em>before</em> the issue is marked RTBC.*</p>
+<p><i>* Note that in rare cases, core maintainers may allow certain critical patches to go in before the change record is written, for example, in the case of a critical bug, or a high-impact issue that is blocking other work, but please don't count on that. ;)</i></p>
+<h3>How does the new process work?</h3>
+<ol>
+<li>Follow the normal development process while the patch is being worked on.</li>
+<li>Make sure the <a href="https://drupal.org/project/issues/search/drupal?issue_tags_op=%3D&amp;issue_tags=API+change">API change</a> tag is added to issues that break backwards compatibility. (In general, API changes should be documented in the <a href="https://drupal.org/issue-summaries">issue summary</a>.)</li>
+<li>Once you get the API change <a href="https://drupal.org/node/2045345">approved by a core maintainer</a>, the <a href="https://drupal.org/project/issues/search/drupal?issue_tags_op=%3D&amp;issue_tags=Needs+change+record">Needs change record</a> tag can be added to the issue. (Note that the previous tag "Needs change notification" is no longer used.)</li>
+<li><a href="https://drupal.org/node/add/changenotice">Create a change record</a> with the <strong>Published</strong> checkbox <strong>unchecked</strong> (the default option), and then remove the "Needs change record" tag from the issue. (All draft change records can be found on the <a href="https://drupal.org/list-changes/drafts">draft change record list</a>.) <img src="https://groups.drupal.org/files/published_checkbox.png" alt="The &#039;published&#039; field on Drupal.org change record nodes" />
+</li>
+<li>In order for the issue to be marked RTBC and committed by a core maintainer, a draft change record documenting the approved API changes must be attached.</li>
+<li>Once the patch for the issue is committed, the core maintainer will simply mark the issue fixed (like any regular issue). The "Published" checkbox can then be <strong>checked</strong> to make the change record appear in the main <a href="https://drupal.org/list-changes/drupal">Change record list</a>.</li>
+</ol>
+<h3>Why are we making this change?</h3>
+<p>As we <a href="http://buytaert.net/drupal-8-apis-are-freezing-but-not-frozen">complete Drupal 8 APIs</a> and <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">move toward the first Drupal 8 beta</a>, it's increasingly important that our API documentation is accurate, including our API change records. With the previous process, change records have gone unwritten for months -- <a href="https://drupal.org/project/issues/search/drupal?version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Missing+change+record">24 change records are still outstanding</a>. Furthermore, the previous process (wherein the issue title, status, priority, category, and tags were all changed) was also convoluted and error-prone, and interfered with accurate core metrics.</p>
+<h3>Sounds great! How can I help?</h3>
+<p>We need your help to get both outstanding and upcoming change records written so that core and contrib developers can use this critical documentation. Help us stabilize our APIs by:</p>
+<ul>
+<li>Reviewing patches carefully for API changes.</li>
+<li>Documenting API changes in the issue summary and tagging issues with <a href="https://drupal.org/project/issues/search/drupal?issue_tags_op=%3D&amp;issue_tags=API+change">API change</a>.</li>
+<li>Making sure API changes are <a href="https://drupal.org/node/2045345">approved by a core maintainer</a> and change records are written before marking issues RTBC.</li>
+<li>Drafting change records for issues tagged <a href="https://drupal.org/project/issues/search/drupal?issue_tags_op=%3D&amp;issue_tags=Needs+change+record">Needs change record</a>.</li>
+<li>Double-checking that <a href="https://drupal.org/list-changes/review">change record drafts for fixed issues</a> get reviewed and published appropriately.</li>
+<li>Above all, helping write the <a href="https://drupal.org/project/issues/search/drupal?version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Missing+change+record">dozens of outstanding change records</a> for API changes that are already committed to 8.x core.</li>
+</ul>
+  </body>
+</html>
+

@@ -1,0 +1,127 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 22 Jul 2013 23:23:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 22 Jul 2013 23:23:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Drupal 7 & Backbone JS: Part 1 - Setting up/Installation
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/drupal-7-backbone-js-part-1-setting-upinstallation
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Drupal 7 & Backbone JS: Part 1 - Setting up/Installation</title>
+    <base href="http://www.pixelite.co.nz/article/drupal-7-backbone-js-part-1-setting-upinstallation">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/drupal-7-backbone-js-part-1-setting-upinstallation&amp;count=horizontal&amp;via=&amp;text=Drupal%207%20%26amp%3B%20Backbone%20JS%3A%20Part%201%20-%20Setting%20up/Installation&amp;counturl=http%3A//www.pixelite.co.nz/article/drupal-7-backbone-js-part-1-setting-upinstallation" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/drupal-7-backbone-js-part-1-setting-upinstallation&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/drupal-7-backbone-js-part-1-setting-upinstallation" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/drupal-7-backbone-js-part-1-setting-upinstallation" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-body">
+    <h2>Introduction (who the hell is Adam?)</h2>
+
+<ul>
+<li><a href="http://drupal.org/user/1036766">Drupal</a></li>
+<li><a href="http://twitter.com/theacbramley">Twitter</a></li>
+<li>Senior Drupal Developer for <a href="http://catalyst.net.nz/">Catalyst IT Ltd.</a></li>
+</ul>
+
+<p>I was recently tasked with a small 4 week project for an internal client web application that was required to be built on Drupal 7. The app itself is an incredibly glorified carousel of content with a few other nifty bits and pieces. During analysis I thought this would be a great opportunity to utilise <a href="http://backbonejs.org/">Backbone.js</a> as it's something I'd always wanted to have a crack at but never gotten around to learning. Furthermore, there seemed to be very little information about building content rich web apps using Drupal and Backbone, giving me an even deeper desire to see what could be done.</p>
+
+<p><em>Note: Unfortunately I can not show screenshots of this application as it is a private client app not accessible to the public. However, I'm currently attempting to <a href="https://drupal.org/node/2045387">contribute a more complex example</a> to the backbone module which is similar to the app I developed.</em></p>
+
+<h2>Setting up (from a standard installation)</h2>
+
+<p>This first post is going to be a quick introduction to the <a href="http://drupal.org/project/backbone">Backbone</a> module and how to get it set up. I also assume that you have <a href="https://drupal.org/project/drush">drush</a> set up and know how to use it through the command line :)</p>
+
+<p><strong>Download and enable the Backbone module</strong></p>
+
+<p><em>Currently, there are two modules which provide RESTful access to JSON objects in Drupal: <a href="http://drupal.org/project/services">Services</a> and <a href="http://drupal.org/project/restws">Restful Web Services</a>. This tutorial will entirely use the Services module, a good explaination of the differences can be found in the <a href="http://drupalcode.org/project/backbone.git/blob/refs/heads/7.x-1.x:/README.txt">README</a> of the Backbone module.</em></p>
+
+<p>From the command line you want to download the Backbone module. When you go to enable it, simply enable the backbone&#95;example module and all dependencies (except libraries) that we need for backbone to work will be downloaded and enabled automatically. Ignore the warning about the rest&#95;server module.</p>
+
+<p><img src="http://www.pixelite.co.nz/sites/default/files/article_images/enablebackbone.png" alt="Download and enable backbone" title="Download and enable backbone" /></p>
+
+<p><em>Libraries</em></p>
+
+<p>The Backbone module requires a few libraries to work:</p>
+
+<ul>
+<li><a href="http://backbonejs.org/">Backbone.js</a> (pretty obvious)</li>
+<li><a href="http://documentcloud.github.com/underscore/">Underscore.js</a> - this is what the example modules use for templating and it's what I'll be using throughout my tutorials. The Backbone module also supports <a href="https://github.com/justjohn/twig.js">Twig.js</a> for templating, but I haven't tried it out (yet).</li>
+<li>One thing the <a href="https://drupal.org/node/1939012">Backbone module doesn't specify</a> is the version of jQuery required for the module to even function. You need to visit the jquery update admin page on your Drupal site (should be /admin/config/development/jquery_update) and bump it up to 1.8.</li>
+</ul>
+
+<p>For the backbone and underscore download and install them as specified (taken from the README):</p>
+
+<ul>
+<li>Download the latest version of <a href="http://documentcloud.github.com/underscore/">Underscore.js</a>  into the
+appropriate libraries/underscore directory (usually sites/all/libraries/underscore).</li>
+<li>Enable Clean URLs for your site.</li>
+<li>Download the latest version of <a href="http://backbonejs.org/">Backbone.js</a> into sites/all/libraries/backbone.</li>
+<li>Clear your caches! (drush cc all)</li>
+</ul>
+
+<p><strong>Configure your site</strong></p>
+
+<p>If you now visit the /backbone_example page you will notice it still doesn't work. Never fear, there are just a few things that you now have to configure before Backbone will function properly (maybe this should be added to the README too).</p>
+
+<p><em>Configure Services REST endpoint</em><br />
+<strong>Path:</strong> /admin/structure/services</p>
+
+<p>There is a default backbone_rest endpoint which you can use, but I advise you to clone the default one and make your own as this means you can export it to your own features etc. If you use the default one provided by the backbone module, any changes will not be able to be exported without altering contrib code (and no one wants to do that).</p>
+
+<p>Click the dropdown in the operations column and hit clone.</p>
+
+<p><img src="http://www.pixelite.co.nz/sites/default/files/article_images/configureservices.png" alt="Configure Services" title="Configure Services" /></p>
+
+<p><em>Enable Node and Views resources</em><br />
+<strong>Path:</strong> /admin/structure/services/list/my_rest/resources</p>
+
+<p>After saving the endpoint, you need to configure the resources available at the endpoint. For this tutorial we will only be using the Node Resource (and later Views), so tick both of those. You can also configure other things in Services like Authentication, and what formats and parsing are available from the endpoint (under the Server tab).</p>
+
+<p><img src="http://www.pixelite.co.nz/sites/default/files/article_images/configureresources.png" alt="Configure Resources" title="Configure Resources" /></p>
+
+<p><em>Configure Backbone module settings</em><br />
+<strong>Path:</strong> /admin/config/development/backbone</p>
+
+<p>The Backbone module also has a settings page where you need to specify the REST Backend, the path to the endpoint, which backbone variant to use, and which pages to include backbone on. For the purposes of the tutorial we'll set pages to "*" so all pages get the backbone library included. However, in a real project this should be configured to your backbone app's path(s).</p>
+
+<p><img src="http://www.pixelite.co.nz/sites/default/files/article_images/configurebackbone.png" alt="Configure Backbone" title="Configure Backbone" /></p>
+
+<p><strong>Test it works!</strong><br />
+<strong>Path:</strong> /backbone_example</p>
+
+<p>Going to this page you should see a form. Create a piece of content, then enter it's nid into this form and hit load. If you see your content appear you've got working Backbone and Drupalness!</p>
+
+<p><img src="http://www.pixelite.co.nz/sites/default/files/article_images/testbackbone.png" alt="Test Backbone" title="Test Backbone" /></p>
+
+<h2>Conclusion</h2>
+
+<p>I hope that this guide has proven of use to helping you set up Backbone on your site, essentially I made it to cover all the gotchas that I ran into while setting it up. Next in this small series of tutorials I'll be going over the <a href="https://drupal.org/node/2045387">backbone&#95;example&#95;complex submodule</a> that I wrote and am currently trying to get commited to the module. This utilises external libraries, views, and much more complex backbone js. I had a great time learning Backbone and using it with Drupal, I'm definitely not the greatest backbone coder (let alone javascript) but it was a nice break from PHP :).</p>
+
+<h3>Feedback!</h3>
+
+<p>Please give me feedback! This is my first "blog" post so I'd love to know what you thought! If it inspired you to make a Drupal-bone app (yup I just thought of that), or if you know of any awesome apps that use these wonderful technologies let me know in the comments!</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/backbone" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">backbone</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/js" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">js</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">development</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">tutorial</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

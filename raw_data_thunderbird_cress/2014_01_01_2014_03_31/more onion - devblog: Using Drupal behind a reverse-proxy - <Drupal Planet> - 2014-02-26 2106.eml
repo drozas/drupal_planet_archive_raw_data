@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 26 Feb 2014 21:06:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 26 Feb 2014 21:06:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: more onion - devblog: Using Drupal behind a reverse-proxy
+Content-Transfer-Encoding: 8bit
+Content-Base: http://devblog.more-onion.com/using-drupal-behind-reverse-proxy
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>more onion - devblog: Using Drupal behind a reverse-proxy</title>
+    <base href="http://devblog.more-onion.com/using-drupal-behind-reverse-proxy">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>As the title suggests we have Drupal hosted behind a <a href="http://en.wikipedia.org/wiki/Reverse_proxy">reverse proxy</a>. Usually this doesn't matter a lot, but there are few things like IP-blocking or <a href="http://drupal.org/project/oauth">oauth</a> that need to know some data about original request. Namely that's: The client-IP, whether the request was issued via HTTPS and the server port. Here is how to achieve that.</p></div></div></div><div class="field field-name-field-tag field-type-taxonomy-term-reference field-label-inline clearfix"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0"><a href="/tags/drupal-planet">Drupal Planet</a></li><li class="taxonomy-term-reference-1"><a href="/tags/hosting">hosting</a></li><li class="taxonomy-term-reference-2"><a href="/tags/reverse-proxy">reverse proxy</a></li></ul></div>
+  </body>
+</html>
+

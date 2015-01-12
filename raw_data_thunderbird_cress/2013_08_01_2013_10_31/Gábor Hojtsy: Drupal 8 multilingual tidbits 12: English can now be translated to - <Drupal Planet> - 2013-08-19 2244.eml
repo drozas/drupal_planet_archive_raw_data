@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 19 Aug 2013 21:44:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 19 Aug 2013 21:44:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 12: English can now be translated to
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-aug-20/drupal-8-multilingual-tidbits-12-english-can-now-be-translated
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 12: English can now be translated to</title>
+    <base href="http://hojtsy.hu/blog/2013-aug-20/drupal-8-multilingual-tidbits-12-english-can-now-be-translated">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>There are several improvements around English in Drupal 8. As <a href="http://hojtsy.hu/blog/2013-jun-17/drupal-8-multilingual-tidbits-3-simple-language-setup-optional-english">we have seen in tidbit #3</a>, English is now optional. You don't need to have it configured. If you do have it configured, it used to be a big problem however to handle it as a "translatable language". That is, to do text replacement in English text to satisfy your project requirements. For example where Drupal says "Log in" and "Log out", clients may request to see "Sign in" and "Sign out". </p>
+<p>Using Drupal core alone, this was possible to achieve in Drupal 7 by configuring a "Custom English" language on the site with a language code different from "en", which then allowed you to replace text with your choosing. This quickly gets confusing though because then both the old "en" English language and your new "Custom English" will show up in language selectors, etc. If you disable the "en" English, then your old content saved with that langcode will not display properly. Its a whole can of worms. You may also use <a href="https://drupal.org/project/stringoverrides">String overrides</a>, but if you are using interface translation from core anyway, using one more module for the same task for a specific language is overkill.</p>
+<p>Drupal 8 provides a simple and effective solution for this. By default, if you have English configured, it is not available as a translation target. However, you are only one checkbox away from enabling that feature. </p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8EnglishNotTranslatable.jpg" /></div>
+<p>Go edit English and make it available for translation. This will make English behave as any other language and from then on, you can "translate" to English as well. </p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8EditEnglish.jpg" /></div>
+<p>All strings will still fall back on the built-in English text (eg. if you also have Czech on the site, untranslated strings in Czech will fall back on Drupal built-in English text). However when English is used for display, all your overrides will be effective. (Cross-language fallbacks can be implemented in contributed modules now with Drupal 8's service architecture for string lookups).</p>
+<h3>Issues to work on</h3>
+<p>No known issues around English as translation target. However, this issue for English as a removed language is closely related and needs help:</p>
+<ul><li>Even if you don't have English configured on your site, if you go edit configuration that has a language selector, it should not suddenly switch language. English needs to be present (and selected by default) in these cases. That is not currently the case. See and help with <a href="http://drupal.org/node/1936216">http://drupal.org/node/1936216</a> as you can.</li>
+<li>With good tradition, I also found a (minor UI) bug while writing this tidbit. Submitted that at <a href="https://drupal.org/node/2069271">https://drupal.org/node/2069271</a>, hopefully the proposed fix will quickly land.</li>
+</ul></div></div></div>
+  </body>
+</html>
+

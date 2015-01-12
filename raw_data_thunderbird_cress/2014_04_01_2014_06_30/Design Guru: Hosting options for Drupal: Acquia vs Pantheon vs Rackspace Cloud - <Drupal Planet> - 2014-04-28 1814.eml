@@ -1,0 +1,56 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 28 Apr 2014 17:14:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 28 Apr 2014 17:14:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Design Guru: Hosting options for Drupal: Acquia vs Pantheon vs Rackspace Cloud
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.designguru.org/blog/280414/hosting-options-drupal-acquia-vs-pantheon-vs-rackspace-cloud
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Design Guru: Hosting options for Drupal: Acquia vs Pantheon vs Rackspace Cloud</title>
+    <base href="http://www.designguru.org/blog/280414/hosting-options-drupal-acquia-vs-pantheon-vs-rackspace-cloud">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-type-filefield field-field-article-thumbnail">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <div class="filefield-file"><img class="filefield-icon field-icon-image-jpeg"  alt="image/jpeg icon" src="http://www.designguru.org/sites/all/modules/filefield/icons/image-x-generic.png" /><a href="http://www.designguru.org/files/cloud-computing-datatrend_0.jpg" type="image/jpeg; length=477730">cloud-computing-datatrend.jpg</a></div>        </div>
+        </div>
+</div>
+<p>Considering the best hosting environment for Drupal projects has always involved the following questions:</p>
+<ul>
+	<li>
+		What is your budget for hosting?</li>
+	<li>
+		Who will be responsible for maintaining the hosting environment and what is their technical familiarity with LAMP (Linux Apache MySQL and PHP)?</li>
+	<li>
+		How much physical space does the site actually need?</li>
+	<li>
+		What is your expected site traffic and how can you expect that to grow over time?</li>
+</ul>
+<p>Of course, there are many more things to weigh in when a project entails higher-than-average server loads due to multimedia encoding and streaming, complex database calls for large dynamic lists, custom data visualizations etc... But these typically frame the task of choosing the best hosting vendor and then package for the project, based ultimately on cost, server space and bandwidth.</p>
+<p>In the past few years Cloud hosting infrastructure has emerged to make answering these a little easier - storage space and traffic have become scalable costs that grow with the needs of the project and there is a great range of hosting packages which cater to almost any type of customer; cloud hosting can be used by people who want to hand-off the role of server manager to the vendor or hard-core tweakers who want to manage their own custom environment.</p>
+<p>Currently, it seems to us that there are three main vendors for scalable cloud based hosting solutions which best suit Drupal.</p>
+<p><a href="http://www.acquia.com/"><img alt="" src="http://www.designguru.org/files/uploads/acquia.png" style="width: 600px; height: 546px;" /></a></p>
+<p><a href="http://www.acquia.com/products-services/acquia-cloud">Acquia Cloud</a> makes site versioning quite easy; whereby development, staging and production enviromnents can be individually and files or databases can be moved between by dragging and dropping in their web based admin panel.&nbsp; Their site backup tool is very usefull for rolling back a Drupal site to an earlier captured version - something otherwise needs to be configured per project on other hosting environments using tools like the <a href="https://drupal.org/project/backup_migrate">Backup &amp; Migrate</a> module.&nbsp; The site versioning functionality is available through a web based GUI tool, drush command line and an API - the last two making it an excellent choice for Drupal based app projects which require frequent versioning to facilitate large functional development and testing.</p>
+<p><a href="https://www.getpantheon.com"><img alt="" src="http://www.designguru.org/files/uploads/patheon.png" style="width: 600px; height: 546px;" /></a></p>
+<p><a href="https://www.getpantheon.com/">Pantheon</a> is a cloud hosting infrastructure which has been developed specifically for both Drupal and Wordpress sites.&nbsp; Its very interesting for focusing on scalability and automation - their platform allows automated updates for Drupal modules and more in attempts to let its customers focus less on managing their hosting environment and more on content etc...&nbsp;&nbsp; Their versioning system seems to be comparable in flexibility to Acquia&#39;s but load content a little faster thanks to their load balancing and caching systems which are specific to their platform.&nbsp; Of course, this seems to all be sitting on Amazon&#39;s S3 cloud; so reliability is generally pretty high as well.&nbsp; On the whole it looks like Pantheon is a great solution for teams who want to spin up versions of their pre-existing Drupal projects to create as independant sites which all share the same hosting setup.&nbsp; Particularily useful for Agencies who bear the responsibility of hosting client projects or even single projects entailing site versioning for sign-off from multiple stakeholders, Pantheon seems to fit into Acquia Cloud&#39;s pricerange but offer a more feature-rich user experience for non-techies and great service (especially if you want them to help make your sites faster and scale better.)</p>
+<p><a href="http://www.rackspace.com/cloud/servers/"><img alt="" src="http://www.designguru.org/files/uploads/rackspace_0.png" style="width: 600px; height: 546px;" /></a></p>
+<p><a href="http://www.rackspace.com/cloud/servers/">Rackspace Cloud</a> is the only solution in this comparison which takes a cloud approach to conventional hosting, whilst being somewhat platform and CMS agnostic.&nbsp; Their offering takes conventional hosting setups into the cloud with scalable resources and pricing and they offer managed hosting, which gives you amazing support resources which ultimately saves developer time through doing server optimization and software installations for you.&nbsp; Rackspace&#39;s servers will cost about 1/4 of Patheon and Acquia Cloud if you don&#39;t want managed hosting, and about 1/2 of them if you want it and this makes for a great option if your developer is able to setup your hosting scenario for you, and then is on retainer to manage software upgrades to Drupal post launch.&nbsp; Using Rackspace means that you can customize your server and allocate larger storage and RAM allotments per dollar spent on hosting; though it also means that there is a more technical know-how required in setting up dev/staging/production environments and a backup scheduling system - once all of that is setup though (assuming you need it) we&#39;ve found uptime amazing and their service available by phone or email 24hrs a day.</p>
+<p><strong>In summary</strong>, Rackspace is the best solution to save money on hosting whilst making sure you have the best support in the business - which is important when figuring out how to scale with increased traffic over time etc... However, if your budget is a little larger, both Acquia and Pantheon offer flexible infrastructures that remove the need to ancticipate scaling, and can give you the peace of mind of not needing to worry about hosting infrastructure - that is of course, until you run out of the allotted system resources - at which point for any of these solutions it seems you&#39;ll need to purchase an upgraded hosting package.</p>
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description rdf:about="http://www.designguru.org/blog/280414/hosting-options-drupal-acquia-vs-pantheon-vs-rackspace-cloud" dc:identifier="http://www.designguru.org/blog/280414/hosting-options-drupal-acquia-vs-pantheon-vs-rackspace-cloud" dc:title="Hosting options for Drupal: Acquia vs Pantheon vs Rackspace Cloud" trackback:ping="http://www.designguru.org/trackback/251" />
+</rdf:RDF>
+--><div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/why-drupal?a=nCW-YSUXHsI:w-smtWFDDHU:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/why-drupal?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/why-drupal?a=nCW-YSUXHsI:w-smtWFDDHU:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/why-drupal?d=qj6IDK7rITs" border="0"></img></a>
+</div>
+  </body>
+</html>
+

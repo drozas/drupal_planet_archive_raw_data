@@ -1,0 +1,85 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 27 Feb 2014 17:25:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 27 Feb 2014 17:25:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Get Your FACLs Straight
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/get-your-facls-straight/?utm_source=rss&utm_medium=rss&utm_campaign=get-your-facls-straight
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Get Your FACLs Straight</title>
+    <base href="http://www.phase2technology.com/blog/get-your-facls-straight/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=get-your-facls-straight">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">Fiddling with file permissions is an all-too-common part of setting up a new service or website. Usually a daemon program needs to write files for user uploads, generate image derivatives for alternate sizes, or store other cache data.</p>
+<p dir="ltr">If the daemon is running as a different user than those who deploy or edit CMS application code, file permissions must be carefully configured to allow shared write access. Typically the suggested solution is to change the owner, group, or permissions of the file or directory.</p>
+<p>For example, the Drupal installation guide recommends setting the permissions on a specific settings file to allow all users to write during the installation procedure, and also setting the permissions on the “files” directory to allow all users to write to it.</p>
+<p dir="ltr">Most file permission issues with Drupal are resolved by ensuring your settings file and files directory have permissions like this:</p>
+<p></p><pre class="crayon-plain-tag">default user$ ls -l
+total 96
+-rw-r--r--  1 user     group  23196 Jan 15 13:43 default.settings.php
+drwxrwxrwx  2 user     group     68 Feb 19 18:53 files
+-rw-rw-rw-  1 user     group  23196 Feb 19 18:53 settings.php
+default user$</pre><p></p>
+<p dir="ltr">However, this approach has limitations. It allows for permissions specific to a user, a group, and everyone else. More complex use cases may call for granting permissions to multiple individual users as well as more than one group. For example, a common use case would be to allow write access to a group of developers, a web server user, and a continuous integration system user.</p>
+<p dir="ltr">These challenges could lead one to use “chmod 777,” or to make files readable, writable, and executable to everyone, and <strong>that is poor practice</strong>.</p>
+<h2 dir="ltr">Beyond 777</h2>
+<p dir="ltr">Most modern operating systems support file system access control lists (ACLs), which allow defining specific permissions to read, write, or execute a file or directory to one or more users or groups. By using ACLs, one can define sophisticated permissions schemes that grant rights to many users and groups without allowing overly broad access or adjusting group membership. ACL entries can both expand and reduce the scope of permissions defined by the standard user-group-other permissions.</p>
+<p dir="ltr">The first step in getting familiar with ACLs is identifying whether a file or directory has ACL permissions. Usually the presence of ACL permissions is signified by a + (plus sign) next to the user-group-other permissions in a directory listing in long format. For example:</p>
+<p></p><pre class="crayon-plain-tag">~ user$ ls -l
+total 0
+drwx------+ 12 user     group   408 Feb 13 19:16 Desktop
+drwx------+  6 user     group   204 Feb 13 19:29 Documents
+drwx------+ 37 user     group  1258 Feb 19 13:41 Downloads
+drwx------@ 48 user     group  1632 Feb 13 17:51 Library
+drwx------+  3 user     group   102 Dec 19 16:42 Movies
+drwx------+  3 user     group   102 Dec 19 16:42 Music
+drwx------+  5 user     group   170 Feb 11 19:01 Pictures
+drwxr-xr-x+  6 user     group   204 Jan 20 11:13 Public
+~ user$</pre><p></p>
+<p dir="ltr">This shows some of the default directories in a user’s home directory on Mac OS X. In this case, the ACL permissions are used to prevent normal users from deleting the directories for the Desktop, Documents, Downloads, etc.</p>
+<p dir="ltr">The methods for reading and writing file ACLs vary by operating system. The Linux/Unix world has the getfacl and setfacl commands. In OS X, file ACLs can be included in directory lists using the “ls -le” command. The OS X and Windows both provide configuration for file ACLs in the file management GUIs.</p>
+<p dir="ltr">The following is an example of the output of getfacl for the “files” directory mentioned above:</p>
+<p></p><pre class="crayon-plain-tag">default user$ getfacl files
+# file: files
+# owner: apache
+# group: apache
+user::rwx
+user:apache:rwx
+user:jenkins:rwx
+group::r-x
+group:devel:rwx
+mask::rwx
+other::r-x
+default:user::rwx
+default:user:apache:rwx
+default:user:jenkins:rwx
+default:group::r-x
+default:group:devel:rwx
+default:mask::rwx
+default:other::r-x
+
+default user$</pre><p></p>
+<p dir="ltr">In this example, the Jenkins user (in addition to Apache, the owner) and the devel group (in addition to the file’s assigned group) are granted write access to the directory. Since all users and groups that need write access are granted it through the ACL entries, it’s not necessary to allow other users write access.</p>
+<p dir="ltr">This example illustrates two other features of ACLs: If a file or directory has non-owner users or groups, then a “mask” entry exists to set a ceiling on the permissiveness of ACL permissions. If the ACL mask entry is set to read-only, then ACL entries for specific non-owner users and groups cannot grant write access. Since this resource is a directory, it also has “default” ACL entries, which defines the default ACL entries to add to files created in the directory.</p>
+<p dir="ltr">The setfacl command in Linux/Unix allows adding, changing, or removing an entry in a file’s or directory’s ACL. For example, the following command adds ACL entries to allow the Jenkins user and the devel group read, write, and execute access to the files directory:</p>
+<p dir="ltr">setfacl -m user:jenkins:rwx,group:devel:rwx files</p>
+<p dir="ltr">setfacl also provides an option for removing all ACL entries on a resource, which reverts the effective permissions to the basic owner-group-other permissions. This would remove all ACL entries from settings.php:</p>
+<p dir="ltr">setfacl -b settings.php</p>
+<p dir="ltr">Since granting permissions via ACLs does not require modifying the user or group that owns the file or directory, it’s possible to apply ACLs periodically and in batch to files to ensure that standard access permissions are enforced.</p>
+<h2 dir="ltr">Keep It Simple</h2>
+<p dir="ltr">Filesystem ACLs offer a method for creating powerful permissions schemes, but there are some drawbacks.</p>
+<p dir="ltr">The ACLs associated with a file or directory are not as clearly exposed nor as well known as the basic user-group-other permissions. Therefore, permissions issues may be obscured by the use of ACLs.</p>
+<p dir="ltr">For instance, it’s possible that an ACL entry imposes a permission that contradicts the apparent user-group-other permission. A file can be set to writable for all users, but an ACL entry denies write access to specific users or groups. This may lead to a confusing access problem, as most documentation points only to the user-group-other permissions.</p>
+<p dir="ltr">Another major issue is inconsistent application support. In some cases, applications use file system functions or metadata in a way that considers only the base user-group-other permissions and does not correctly apply ACLs. For example, there are some <a href="https://drupal.org/node/1899126">active</a> <a href="https://drupal.org/node/944582">issues</a> related to ACL permissions for Drupal, where it reports erroneously that a file or directory is not writable even though access is granted by ACLs.</p>
+<p dir="ltr">This limits the effectiveness of ACLs, but does not negate their value. The basic user-group-other scheme can be set to support legacy applications, while compatible programs and users are granted access via ACLs.</p>
+<h2 dir="ltr">Try It Out</h2>
+<p dir="ltr">Take the next challenge with file permissions as an opportunity to give ACLs a try. The best documentation around filesystem ACLs is specific to the operating system, so look for it with the OS’s ACL tools: setfacl for Linux/Unix, chmod for OS X, and icacls for Windows.  In the meantime, check out Fredric Mitchell&#8217;s blogpost about <a href="http://www.phase2technology.com/blog/static-prototyping-and-keeping-drupal-simple-kds/">keeping Drupal Simple (KDS).</a></p>
+  </body>
+</html>
+

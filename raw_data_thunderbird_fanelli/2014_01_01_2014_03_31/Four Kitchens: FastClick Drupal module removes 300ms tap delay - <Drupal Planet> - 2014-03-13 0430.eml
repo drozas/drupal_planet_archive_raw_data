@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 13 Mar 2014 03:30:27 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 13 Mar 2014 03:30:27 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Four Kitchens: FastClick Drupal module removes 300ms tap delay
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fourkitchens.com/blog/2014/03/12/fastclick-drupal-module-removes-300ms-tap-delay
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Four Kitchens: FastClick Drupal module removes 300ms tap delay</title>
+    <base href="http://fourkitchens.com/blog/2014/03/12/fastclick-drupal-module-removes-300ms-tap-delay">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-body">
+    <p>Howdy perfers! This week is just a quick note to let you know about a new release for the <a href="https://drupal.org/project/fastclick">FastClick Drupal module</a> which provides integration for the <a href="http://ftlabs.github.io/fastclick/">FastClick <span class="caps">JS</span> library by <span class="caps">FTL</span>abs</a>. Drop it on your sites and feel the difference on touch&nbsp;phones!</p>
+<h2>300ms tap delay makes for slower&nbsp;browsing</h2>
+<p>Have you ever noticed a delay between when you tap a link or other <span class="caps">UI</span> element and when it finally reacts? This is a solution to remove that delay! It is natively removed in newer versions of Chrome on Android, but for all browsers in iOS this library provides a very noticable&nbsp;improvement.</p>
+<p>You can read about the history, watch a video that demonstrates the effect, and read the rationale for iOS&#8217;s continued use of 300ms delay in this <a href="http://updates.html5rocks.com/2013/12/300ms-tap-delay-gone-away"><span class="caps">HTML</span>5 Rocks article</a>.</p>
+<h2>Drupal module provides&nbsp;integration</h2>
+<p>The Drupal module is slim, but it makes for easy integration by downloading a copy of the library to <strong>sites/all/libraries/fastclick</strong> and adding the script into the footer area instead of up top in the <code>&lt;head&gt;</code>. The maintainer, <a href="https://drupal.org/user/2301194">Pere Orga</a>, is very responsive to issues and open to discussion for&nbsp;improvements.</p>
+<p>Code can be found at <a href="https://drupal.org/project/fastclick">https://drupal.org/project/fastclick</a></p>
+  </div>
+  </body>
+</html>
+

@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 26 May 2014 13:46:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 26 May 2014 13:46:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 16: configuration translation development
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2014-may-26/drupal-8-multilingual-tidbits-16-configuration-translation-development
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 16: configuration translation development</title>
+    <base href="http://hojtsy.hu/blog/2014-may-26/drupal-8-multilingual-tidbits-16-configuration-translation-development">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>We <a href="http://hojtsy.hu/blog/2014-may-19/drupal-8-multilingual-tidbits-15-configuration-translation-basics">learned how configuration translation works</a> on the conceptual level and through the Drupal 8 built-in user interfaces in the previous article of the series. In this article, we'll cover how can developers integrate with configuration translation.</p>
+<h3>Explaining the structure of configuration</h3>
+<p>We used your main site configuration file as an example in the previous article. Let's review that again (system.site.yml):</p>
+<div class="codeblock"><code>uuid: ''<br />name: Drupal<br />mail: ''<br />slogan: ''<br />page:<br />  403: ''<br />  404: ''<br />  front: user<br />admin_compact_mode: false<br />weight_select_max: 100<br />langcode: en</code></div>
+<p>There are clearly some translatable elements here. Which ones? Well, at least the site name and slogan would be. How would Drupal know though? There is nothing in this file to tell Drupal about that. There is also no code in handling this configuration that needs to deal with that. We wanted to introduce language support in the most transparent way. Instead Drupal supports a static description format to describe the structure of configuration, that we call configuration schema.</p>
+</div></div></div>
+  </body>
+</html>
+

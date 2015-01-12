@@ -1,0 +1,68 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 14 Aug 2014 03:50:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 14 Aug 2014 03:50:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Craig Aschbrenner: Email fields missing feature? Email Confirmation!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://foggyperspective.com/article/email-fields-missing-feature-email-confirmation
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Craig Aschbrenner: Email fields missing feature?  Email Confirmation!</title>
+    <base href="http://foggyperspective.com/article/email-fields-missing-feature-email-confirmation">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>On previous Drupal projects I've had the requirement to provide some sort of confirmation email to email addresses entered into an <a href="http://www.drupal.org/project/email">Email (module) field</a>.  These were typically fields like "Work Email" or "Secondary Email".  I had written a few small custom modules to handle these cases but found myself repeating the same thing. I knew that this could be useful as a contrib but never got around to it.</p>
+
+<p>I recently had a requirement to confirm email changes to the user account email (e.g. $user-&gt;mail). I went to my goto module for this situation, the <a href="http://www.drupal.org/project/email_confirm">Email Confirm module</a>. But this time I decided to dive deeper into what Email Confirm was actually doing... and it looked fairly straight forward.  I was hoping that I could possibly extend this module to be used with an Email field, but that ended up not being the case.</p>
+
+<p>So I decided to take the plunge and create the <a href="http://www.drupal.org/project/email_field_confirm">Email Field Confirm module</a>. Boy was I in for a ride...</p>
+<!--break-->
+<p>The Email Confirm module only works with the User entity which happens to have the $user-&gt;data property / db table. The module makes use of this to avoid any schema changes and retains the relationship of the new email address to the user account. I had started out down a similar path but came to realize this wasn't going to work for entities other than the User entity.  Node entities do not have the data property and I couldn't rely on other entity types to have it.  This is the point that I realized this was not going to be a simple module.</p>
+
+<p>Time to really sit down and figure out what this module needed to do.</p>
+
+<p>My goal was to allow for any new email address added to an Email Field to be (optionally) confirmed. A field can be reused on multiple entity types and bundles so I need to allow for configuration at the field instance along with storing any pending email address data down to the specific entity instance (e.g. entity_id). I also noticed that the Email Confirm module would stash the new email address away until it was confirmed so I added that to my list of desired features for Email Field Confirm.</p>
+
+<p>Just tell me what it does already!</p>
+
+<h3>Features</h3>
+
+<p>At a high level, it met the goals I was after. A confirmation email will be sent to any new email addresses that have not already been confirmed by the same user elsewhere (e.g. another Email field) on the site. A field instance can optionally be configured to save the new email address with the entity or keep the original email address until the new one is confirmed.</p>
+
+<p>This works on both single-value and multi-value Email fields, however there are some limitations with the multi-value field.</p>
+
+<p>With multi-value fields it has proven more difficult to accurately identify what the original email value may be have been. I wasn't able to easily identify if the end user was changing an email address vs. just removing and adding another. It is also easy to re-order the values of a multi-value field so relying on the $delta wasn't helpful.</p>
+
+<p>So with single-value fields we have the capability to retain the original email address until the new email address is confirmed. We also have the option to notify the original email address that a change has been made.</p>
+
+<p><img alt="" height="207" src="http://foggyperspective.com/sites/foggyperspective.com/files/styles/medium/public/email_field_confirm.png?itok=GVoawIhg" title="" width="220" />​</p>
+
+<p>Some other notable features include:</p>
+
+<ul><li>Ability to resend a pending non-expired confirmation email.</li>
+	<li>Configure if the acting user (e.g. the user adding the email address) or the entity author/owner is responsible for confirming the email address.</li>
+	<li>Hooks for email confirmation and expiration. This module actually makes use of these to handle updating / revering single value email fields to the new or original value.</li>
+	<li>Rules integration -- with events similar to the aforementioned hooks.</li>
+	<li>Permission to bypass email confirmation. (typically for trusted roles.)</li>
+	<li>Permission to manually confirm any email address. (typically for administrative roles.)</li>
+	<li>Configurable confirmation and notification emails with token replacement.</li>
+</ul><h3>Beta Release</h3>
+
+<p>There is currently a beta release available for download on the <a href="http://www.drupal.org/project/email_field_confirm">Email Field Confirm project page</a>. It has been pretty stable so far. Besides having more sites use the module and report back and defects or feature requests, I hope to get some automated testing (most likely Behat) in place.</p>
+ </div></div></div>
+<ul class="field field-name-field-tags field-type-taxonomy-term-reference field-label-hidden">
+  <i class="icon icon-tags"></i>
+      <li rel="dc:subject">
+      <a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal-planet</a>    </li>
+      <li rel="dc:subject">
+      <a href="/tags/email-field" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">email field</a>    </li>
+  
+</ul>
+  </body>
+</html>
+

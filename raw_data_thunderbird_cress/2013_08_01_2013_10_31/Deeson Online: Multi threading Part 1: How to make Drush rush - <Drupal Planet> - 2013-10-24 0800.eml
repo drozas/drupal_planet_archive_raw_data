@@ -1,0 +1,281 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 24 Oct 2013 07:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 24 Oct 2013 07:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Multi threading Part 1: How to make Drush rush
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/multi-threading-part-1-how-make-drush-rush
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Multi threading Part 1: How to make Drush rush</title>
+    <base href="http://deeson-online.co.uk/labs/multi-threading-part-1-how-make-drush-rush">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>In this first of two posts I'm going to focus on <a href="http://en.wikipedia.org/wiki/Concurrency_(computer_science)">concurrency</a>, also known as multi threading. This is the process of splitting up a program enabling it to be processed in parallel. Drush applications in PHP are single threaded and so are not using the maximum efficiency of the systems they are running on. On short running applications this is hardly noticeable but on long running applications this inefficiency adds up.</p>
+<h3>Migration example</h3>
+<p>A good example is a migration of data from a remote system into Drupal. Migrate will work on the records one at a time, requesting the source data, processing it when it is received and finally saving into Drupal before requesting the next record. When analysing what happens in this single threaded operation we see most of the time the migration program is waiting for something else to respond and is not working on something useful. Wouldn't it be great if whilst it is waiting for record 2 to arrive it could be saving record 1 into Drupal? So how about whilst it is waiting for record 1 to be saved to the Drupal database, it could already be asking for record 3?</p>
+<h3>The solution: Introducing the multi thread handler for Drush</h3>
+<p>So by multi threading we make use of potentially 'empty time'. In addition, concurrent applications take advantage of the multiple cores in modern servers. This means cores that were previously sitting idle are now working on bits of 'the problem'. </p>
+<p>Unlike other programming languages, PHP does not allow multi threading natively. The way multiple threads can be generated is by executing new PHP processes. In basic terms this means we have one Drush command to start the multi threading process with another Drush command which is then run multiple times with different parameters to deal with a part of the total problem.  </p>
+<p>Tying this together is the multi threaded handler, or scheduler, which starts threads and watches them to see if they have completed. Once a thread has completed, the handler looks to see if there is any more work to do and then starts up another thread if there is, passing the necessary parameters into it. You can get the code for this from <a href="https://github.com/johnennewdeeson/drush-multi-threading">github</a>.</p>
+<h3>Tutorial on how to use the multi threaded handler</h3>
+<p>Before we look at speeding up migrate, which has several interesting challenges itself to discuss, let's look how the multi threaded handler for Drush works through two example problems. </p>
+<p>The first is a very basic test application, the second is the archetypal concurrency problem in computer science, <a href="http://en.wikipedia.org/wiki/Dining_philosophers_problem">The Dining Philosophers</a>.</p>
+<h4>Preparation</h4>
+<p>You will need a local install of Drupal 7, a folder at sites/all/drush and the <a href="https://github.com/johnennewdeeson/drush-multi-threading">mt.drush.inc</a> file inside the sites/all/drush folder. Clear the cache to let Drush pickup the new file.</p>
+<h3>Simple multi threaded Drush command</h3>
+<p>The first example simply executes a command which sleeps for a random number of seconds before finishing.  Run <span class="geshifilter"><code class="php geshifilter-php">drush help mt<span style="color: #339933;">-</span>test</code></span> to see the options for this command.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">A test command <span style="color: #b1b100;">for</span> testing multi threading<span style="color: #339933;">.</span>
+&nbsp;
+Arguments<span style="color: #339933;">:</span>
+ limit                                     The total number of jobs
+&nbsp;
+Options<span style="color: #339933;">:</span>
+ <span style="color: #339933;">--</span>threads                                 The number of threads to <span style="color: #000000; font-weight: bold;">use</span></pre></div>
+<p>So if we run <span class="geshifilter"><code class="php geshifilter-php">drush mt<span style="color: #339933;">-</span>test <span style="color: #cc66cc;">6</span> <span style="color: #339933;">--</span>threads<span style="color: #339933;">=</span><span style="color: #cc66cc;">2</span></code></span> we say we want to work on 6 tasks using 2 threads. When run, each thread is an execution of the drush command <span class="geshifilter"><code class="php geshifilter-php">drush mt<span style="color: #339933;">-</span>pause</code></span>. Once a thread has completed this command, the parent drush command (mt-test) sees it has finished and checks to see if there are any more of the 6 original tasks which need doing.  If there are, another thread is created which runs the drush mt-pause command again.</p>
+<p>Lets look at the functions which make this up in more detail. First, we have the hook_drush_command ...</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #009933; font-style: italic;">/**
+   * Implements of hook_drush_command().
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> mt_drush_command<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$items</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #000088;">$items</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'mt-test'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'A test command for testing multi threading.'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'arguments'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'limit'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The total number of jobs'</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'options'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'threads'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The number of threads to use'</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'bootstrap'</span> <span style="color: #339933;">=&gt;</span> DRUSH_BOOTSTRAP_DRUPAL_ROOT<span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #000088;">$items</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'mt-pause'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'A test command for use with drush mt-test. Waits between 1 - 5 seconds before finishing'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'arguments'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The name of this process, this will be the thread id'</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'bootstrap'</span> <span style="color: #339933;">=&gt;</span> DRUSH_BOOTSTRAP_DRUPAL_ROOT<span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$items</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>This should be fairly straight forward for anyone who has written Drush commands before.  We are telling Drush that there are two new commands <span class="geshifilter"><code class="php geshifilter-php">drush mt<span style="color: #339933;">-</span>test</code></span> and <span class="geshifilter"><code class="php geshifilter-php">drush mt<span style="color: #339933;">-</span>pause</code></span>.</p>
+<p>The pause command is what is run by a single thread and looks like this:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"> <span style="color: #009933; font-style: italic;">/**
+   * Pause for between 1 and 5 seconds.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> drush_mt_pause<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$pause_time</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/rand"><span style="color: #990000;">rand</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">5</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    drush_print<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Thread <span style="color: #006699; font-weight: bold;">$name</span> is working for <span style="color: #006699; font-weight: bold;">$pause_time</span> seconds ...&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <a href="http://www.php.net/sleep"><span style="color: #990000;">sleep</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$pause_time</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>The <span class="geshifilter"><code class="php geshifilter-php">drush mt<span style="color: #339933;">-</span>test</code></span> command is the master command which needs to setup the threads. I provide a cut down version below with the error handling noise removed for clarity :-</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"> <span style="color: #009933; font-style: italic;">/**
+   * Multi threaded example.
+   *
+   * This is a very simple example of multi threaded management.
+   * Each thread will be told to run the drush command:
+   * drush mt-pause
+   * This waits between 1 and 5 seconds before finishing.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> drush_mt_test<span style="color: #009900;">&#40;</span><span style="color: #000088;">$limit</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">10</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$threads</span> <span style="color: #339933;">=</span> drush_get_option<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'threads'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    drush_print<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Going to work on <span style="color: #006699; font-weight: bold;">{$limit}</span> jobs with <span style="color: #006699; font-weight: bold;">{$threads}</span> threads...&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    drush_thread_manager<span style="color: #009900;">&#40;</span><span style="color: #000088;">$limit</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #339933;">,</span> <span style="color: #000088;">$threads</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'_mt_test_setup'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>Here we see that there is not a lot going on for the basic test command.  We work out what the total number of threads we want is and tell the drush_thread_manager to start.  Lets look at the function signature of the drush_thread_manager to understand what those arguments to it are:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #009933; font-style: italic;">/**
+   * A multithreading manager for Drush.
+   *
+   * @param int $job_count
+   *   The total number of jobs to process
+   * @param int $job_batch_size
+   *   The number of jobs handed to each thread
+   * @param int $thread_count
+   *   The maximum number of active threads
+   * @param string $setup_function
+   *   The function to generate the thread command. This is written for your
+   *   application its signature is:
+   *   my_setup_function($thread_id, $limit, $offset) : string;
+   *   Where $thread_id is the unique thread identifier, $limit is the total
+   *   number of records to process and offset is the starting point. The
+   *   function should return a string which is a shell command that the thread
+   *   will execute in a separate process.
+   * @param string $teardown_function
+   *   A function which runs when a thread completes. It's signature is:
+   *   my_teardown_function($thread_id);
+   *   Your business logic can then run any cleanup which occurs when the
+   *   thread completes.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> drush_thread_manager<span style="color: #009900;">&#40;</span><span style="color: #000088;">$job_count</span><span style="color: #339933;">,</span> <span style="color: #000088;">$job_batch_size</span><span style="color: #339933;">,</span> <span style="color: #000088;">$thread_count</span><span style="color: #339933;">,</span> <span style="color: #000088;">$setup_function</span><span style="color: #339933;">,</span> <span style="color: #000088;">$teardown_function</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">''</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div>
+<p>So it wants to know:</p>
+<ol>
+<li>$job_count - the total number of things to work on</li>
+<li>$job_batch_size - How many things each thread will work on in one execution, for the example application this is 1.</li>
+<li>$thread_count - The maximum number of threads to use.  It will never spawn more than this value to complete the job queue.</li>
+<li>$setup_function - A function to run to generate the command which the thread executes</li>
+<li>$teardown_function (optional) - A function which is run when a thread finishes</li>
+</ol>
+<p>So the last thing we need to do for the example application is provide the setup function which creates the command which a thread will execute when it starts.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #009933; font-style: italic;">/**
+   * A test multi threaded setup function.
+   *
+   * @param int $thread_id
+   *   An identifier for the thread which will execute this command.
+   * @param int $batch_size
+   *   How many tasks this command should work on.
+   * @param int $offset
+   *   The position in a queue of jobs for the first job this command
+   *   should work on.
+   *
+   * @return string
+   *   A command which can be executed on the command line.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> _mt_test_setup<span style="color: #009900;">&#40;</span><span style="color: #000088;">$thread_id</span><span style="color: #339933;">,</span> <span style="color: #000088;">$batch_size</span><span style="color: #339933;">,</span> <span style="color: #000088;">$offset</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #0000ff;">&quot;drush mt-pause <span style="color: #006699; font-weight: bold;">$thread_id</span>&quot;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>Here we see the function signature for the setup functions.  They all will take the variables $thread_id, which is the identifier for the thread (a number from 0 to the maximum number of threads), $batch_size is the number of jobs the command should work on before finishing, for the example program this is 1.  If we are running batches of jobs per thread then then thread will also need to know where in the list of jobs to start working on which is the $offset. For this example, this is not used.</p>
+<p>Hopefully this gives you a good overview of what is need to build a multi threaded Drush application.  If you survived so far, lets look at something more complex...</p>
+<h3>The Dining Philosophers</h3>
+<p>This is an archetypal problem in computer science often used to teach concurrent techniques and highlight the need for methodologies to deal with multiple threads competing for the same resources. This is the problem of thread 1 and thread 2 trying to change the same thing at the same time.</p>
+<p>In the dining philosophers, imagine a circular dining table with 5 philosophers and 5 forks laid out such that there is one to the left and right of each philosopher. </p>
+<p>The philosophers do two things, <strong>think</strong> and then <strong>eat</strong>. In order to eat, a philosopher needs to pick up two forks, the one on their left and the one on their right. </p>
+<p>Philosophers do not release any fork they pick up until they have eaten. Because there are not enough forks for every philosopher to have two each, they are competing for the same resources. If philosopher 1 picks up the fork to their left, philosopher 2 cannot pick it up and so cannot eat until philosopher 1 has eaten and put down the forks to think. If all the philosophers pick up one fork, no philosopher will ever eat and they will stave to death - this is called a deadlock.</p>
+<p>To solve the problem, each fork is numbered from 1 to 5.  Philosophers must always try and pick up the lowest number fork first. For all but the last philosopher this is the one on their right.  </p>
+<p>For the last philosopher, between forks 5 and 1, this is the fork on their left.  Edsger Dijkstra, the computer scientist who came up with this problem has proved that such a method will prevent deadlock.</p>
+<p>So, let us look at the code and see how we can implement locking using Drupal standard functionality to stop a thread from working when another thread has gained access to a resource.</p>
+<p>First we define two drush functions, as before, one is the master program and the other represents the sub threads (the philosophers in this case).</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #009933; font-style: italic;">/**
+   * Implements of hook_drush_command().
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> mt_drush_command<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$items</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+   <span style="color: #000088;">$items</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'mt-dining-philosophers'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Run an example of the dining philosphers problem'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'arguments'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'number_of_philosophers'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The number of philosophers, must be at least 2'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'total_mouthfulls'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The number of times a philosopher eats before finishing'</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #000088;">$items</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'mt-philosopher'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'A single philosopher. This is used by the drush command mt-dining-philosophers and is not intended to be run on its own'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'arguments'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The name of this process, this will be the thread id'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'number_of_philosophers'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The number of philosophers, must be at least 2'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'total_mouthfulls'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The number of times the philosopher eats before finishing'</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$items</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>As we can see from the command descriptions, to run the program we would type <span class="geshifilter"><code class="php geshifilter-php">drush mt<span style="color: #339933;">-</span>dining<span style="color: #339933;">-</span>philosophers <span style="color: #cc66cc;">5</span> <span style="color: #cc66cc;">5</span></code></span></p>
+<p>The master drush command looks like this (with the error checking clutter removed) ...</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #009933; font-style: italic;">/**
+   * An implementation of the dining philosophers problem.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> drush_mt_dining_philosophers<span style="color: #009900;">&#40;</span><span style="color: #000088;">$number_of_philosophers</span><span style="color: #339933;">,</span> <span style="color: #000088;">$total_mouthfulls</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      <span style="color: #000088;">$GLOBALS</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'number_of_philosophers'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$number_of_philosophers</span><span style="color: #339933;">;</span>
+      <span style="color: #000088;">$GLOBALS</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'total_mouthfulls'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$total_mouthfulls</span><span style="color: #339933;">;</span>
+      drush_thread_manager<span style="color: #009900;">&#40;</span><span style="color: #000088;">$number_of_philosophers</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #339933;">,</span> <span style="color: #000088;">$number_of_philosophers</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'_mt_philosophers_setup'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>The thread setup function which generates the command to be a philosopher then looks like this ..</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #009933; font-style: italic;">/**
+   * Thread setup function for dining philosophers.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> _mt_philosophers_setup<span style="color: #009900;">&#40;</span><span style="color: #000088;">$thread_id</span><span style="color: #339933;">,</span> <span style="color: #000088;">$batch_size</span><span style="color: #339933;">,</span> <span style="color: #000088;">$offset</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$number_of_philosophers</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$GLOBALS</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'number_of_philosophers'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$total_mouthfulls</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$GLOBALS</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'total_mouthfulls'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$cmd</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">&quot;drush mt-philosopher <span style="color: #006699; font-weight: bold;">$thread_id</span> <span style="color: #006699; font-weight: bold;">$number_of_philosophers</span> <span style="color: #006699; font-weight: bold;">$total_mouthfulls</span>&quot;</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$cmd</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>Notice the use of $GLOBALS to pass information from the master command into the setup function. I've kept the implementation of this very procedural in line with the Drupal 7 architecture. A Drupal 8 implementation would ideally pass an object which implemented a threadExecutor interface into the drush_thread_manager and probably make use of the Symfony <a href="http://symfony.com/doc/current/components/process.html">Process</a> component, but that's a discussion for the future.</p>
+<p>The setup of the master function is very simple. The thread concurrency and resource management therefore happens in the threads themselves in this case and so they need to be aware that they are being multi threaded. Lets look at the code for the <span class="geshifilter"><code class="php geshifilter-php">drush mt<span style="color: #339933;">-</span>philosopher</code></span> command.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+   * A single philosopher.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> drush_mt_philosopher<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$number_of_philosophers</span><span style="color: #339933;">,</span> <span style="color: #000088;">$total_mouthfulls</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$last_philosopher</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$name</span> <span style="color: #339933;">==</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$number_of_philosophers</span> <span style="color: #339933;">-</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$low_fork</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$last_philosopher</span> ? <span style="color: #cc66cc;">0</span> <span style="color: #339933;">:</span> <span style="color: #0000ff;">&quot;df_fork_<span style="color: #006699; font-weight: bold;">{$name}</span>&quot;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$high_fork</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$last_philosopher</span> ? <span style="color: #0000ff;">&quot;df_fork_<span style="color: #006699; font-weight: bold;">{$name}</span>&quot;</span> <span style="color: #339933;">:</span> <span style="color: #0000ff;">'df_fork_'</span> <span style="color: #339933;">.</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span> <span style="color: #339933;">+</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$count</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">1</span><span style="color: #339933;">;</span> <span style="color: #000088;">$count</span> <span style="color: #339933;">&lt;=</span> <span style="color: #000088;">$total_mouthfulls</span><span style="color: #339933;">;</span> <span style="color: #000088;">$count</span><span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      _mt_philosopher_think<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$count</span><span style="color: #339933;">,</span> <span style="color: #000088;">$total_mouthfulls</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+      _mt_philosopher_eat<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$low_fork</span><span style="color: #339933;">,</span> <span style="color: #000088;">$high_fork</span><span style="color: #339933;">,</span> <span style="color: #000088;">$count</span><span style="color: #339933;">,</span> <span style="color: #000088;">$total_mouthfulls</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">&#125;</span>
+    drush_print<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Philosopher <span style="color: #006699; font-weight: bold;">$name</span> has eaten enough!&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>Here we see the first three lines decide which is the high or low fork for the philosopher. For most, this is the one with the same value as themselves (philosopher 1 picks up fork 1 first). For the last philosopher, this is the first fork (which has the value 0).</p>
+<p>Then for each mouthfull they need to eat, the philosopher thinks then tries to eat with their two forks. Lets see how these two functions look ...</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #009933; font-style: italic;">/**
+   * A philosopher thinks.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> _mt_philosopher_think<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$count</span><span style="color: #339933;">,</span> <span style="color: #000088;">$total_mouthfulls</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$think_time</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/rand"><span style="color: #990000;">rand</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    drush_print<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Philosopher <span style="color: #006699; font-weight: bold;">$name</span> is thinking... (<span style="color: #006699; font-weight: bold;">$count</span>/<span style="color: #006699; font-weight: bold;">$total_mouthfulls</span>)&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <a href="http://www.php.net/sleep"><span style="color: #990000;">sleep</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$think_time</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+  <span style="color: #009933; font-style: italic;">/**
+   * Philosopher tries to pick up two forks and eat.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> _mt_philosopher_eat<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$low_fork</span><span style="color: #339933;">,</span> <span style="color: #000088;">$high_fork</span><span style="color: #339933;">,</span> <span style="color: #000088;">$count</span><span style="color: #339933;">,</span> <span style="color: #000088;">$total_mouthfulls</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$eat_time</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/rand"><span style="color: #990000;">rand</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    _mt_philosopher_get_fork<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$low_fork</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    _mt_philosopher_get_fork<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$high_fork</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    drush_print<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Philosopher <span style="color: #006699; font-weight: bold;">$name</span> is eating... (<span style="color: #006699; font-weight: bold;">$count</span>/<span style="color: #006699; font-weight: bold;">$total_mouthfulls</span>)&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <a href="http://www.php.net/sleep"><span style="color: #990000;">sleep</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$eat_time</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    lock_release<span style="color: #009900;">&#40;</span><span style="color: #000088;">$low_fork</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    lock_release<span style="color: #009900;">&#40;</span><span style="color: #000088;">$high_fork</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>Thinking is just a random wait.  When eating the philosopher tries to pick up first their low value fork then their high value fork. They then eat (a random wait) and finally release the forks. Here we see the core Drupal 7 function <a href="https://api.drupal.org/api/drupal/includes%21lock.inc/function/lock_release/7">lock_release($lock_name)</a> releasing a lock so other threads might later acquire it. The last thing to see is the way the philosopher acquires the lock on the fork.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #009933; font-style: italic;">/**
+   * A philosopher picks up a fork.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">function</span> _mt_philosopher_get_fork<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$fork_name</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$waiting</span> <span style="color: #339933;">=</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$count</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$waiting</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>lock_acquire<span style="color: #009900;">&#40;</span><span style="color: #000088;">$fork_name</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        <span style="color: #000088;">$waiting</span> <span style="color: #339933;">=</span> <span style="color: #009900; font-weight: bold;">FALSE</span><span style="color: #339933;">;</span>
+      <span style="color: #009900;">&#125;</span>
+      <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span>
+        <span style="color: #000088;">$count</span><span style="color: #339933;">++;</span>
+        <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$count</span> <span style="color: #339933;">&gt;</span> <span style="color: #cc66cc;">30</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+          <span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> Exception<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Philosopher <span style="color: #006699; font-weight: bold;">$name</span> starved to death waiting for fork <span style="color: #006699; font-weight: bold;">$fork_name</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+        <span style="color: #009900;">&#125;</span>
+        <a href="http://www.php.net/sleep"><span style="color: #990000;">sleep</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+      <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+  <span style="color: #009900;">&#125;</span></pre></div>
+<p>The philosopher repeatedly tries to get a lock on the fork using the Drupal 7 core function <a href="https://api.drupal.org/api/drupal/includes!lock.inc/function/lock_acquire/7">lock_acquire($lock_name)</a>. If this returns FALSE, another philosopher is using the fork. The philosopher waits 1 second and tries again. If he tries 30 times, this is a deadlock and the philosopher starves to death.</p>
+<h3>Coming next - Multi threading Part 2: making migrate move!</h3>
+<p>I hope these examples provide a good introduction to both concurrency and our Drush handler to provide it. In our next blog we will look at the promised practical example of multi threading migrate using this technique and the benefits and challenges that presents.</p>
+<p>Picture credit: <strong>Benjamin D. Esham / Wikimedia Commons</strong></p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/multi-threading-part-1-how-make-drush-rush">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Multi threading Part 1: How to make Drush rush </h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/john-ennew">John Ennew</a> | 24th October 2013</div></div></div><div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="/sites/default/files/labs/dining_philosophers_2.png" alt="" /></div></div></div>
+  </body>
+</html>
+

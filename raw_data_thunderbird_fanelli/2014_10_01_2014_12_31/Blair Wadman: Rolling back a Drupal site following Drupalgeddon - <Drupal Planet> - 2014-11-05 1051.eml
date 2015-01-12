@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Nov 2014 09:51:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Nov 2014 09:51:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Blair Wadman: Rolling back a Drupal site following Drupalgeddon
+Content-Transfer-Encoding: 8bit
+Content-Base: http://befused.com/drupal/drupalgeddon
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Blair Wadman: Rolling back a Drupal site following Drupalgeddon</title>
+    <base href="http://befused.com/drupal/drupalgeddon">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>There is a lot of talk in the Drupal community and media about the Drupal security vulnerability that was fixed in the Oct 15th update (7.32). If you have missed the details, here is a summary:</p>
+<p>A highly critical security vulnerability was found in Drupal's database abstraction API. This was fixed with the release of 7.32 on Oct 15th. If you did not upgrade to Drupal 7.32, or apply the patch, by 11pm UTC on Oct 15th, your site may be compromised. Applying the patch after this will not remove any backdoors that may have already been added to your site or server.</p>
+<p>So, if you upgraded or applied the patch immediately, or within 7 hours, you are safe (or as safe as you can be). But if you didn't, it is time to take precautionary measures. The best and most effective measure to take is to roll back everything to a state before Oct 15th 2014. And when I say everything, that includes the server not just the web files and database because backdoors could have been added anywhere.</p>
+<p>I upgraded my clients site within 1 hour of the 7.32 release, so they are safe. But I had a couple of personal sites where I missed the 7 hour window by a few hours. Despite not seeing evidence of any hacking, I performed the rollback as a precautionary measure. What follows are my notes on how I did this.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/drupal/all" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div></div>
+  </body>
+</html>
+

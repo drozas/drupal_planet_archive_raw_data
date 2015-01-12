@@ -1,0 +1,96 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Nov 2014 23:54:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Nov 2014 23:54:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Metal Toad: Drupal 8: First Impressions for the Back-End Developer
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.metaltoad.com/blog/drupal-8-first-impressions-back-end-developer
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Metal Toad: Drupal 8: First Impressions for the Back-End Developer</title>
+    <base href="http://www.metaltoad.com/blog/drupal-8-first-impressions-back-end-developer">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/896/title/en/rss">Drupal 8: First Impressions for the Back-End Developer</span>
+<span class="field field-node--created field-name-created field-type-created field-label-hidden" data-quickedit-field-id="node/896/created/en/rss">Mon, 11/17/2014 - 15:54</span>
+<span class="field field-node--uid field-name-uid field-type-entity-reference field-label-hidden" data-quickedit-field-id="node/896/uid/en/rss"><a title="View user profile." href="/people/keithdechant" lang="" about="/people/keithdechant" typeof="schema:Person" property="schema:name" datatype="" class="username">keithdechant</a></span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/896/body/en/rss">
+    <div class="field-items">
+          <div class="field-item"><p>Drupal 8 is in beta now, and recently I’ve had a chance to start working with it. While much of the admin interface is comparable to Drupal 7, there have been some important changes for site builders and back-end developers. In this post, I will be looking at file system and database structure changes, Drush setup, and the new configuration entity type.</p>
+<p>Disclaimer: Drupal 8 beta 2 is not ready for production yet. If you start working with it, be warned that future beta releases might break backwards compatibility. You might need to write some code to upgrade. If this is not an option for you, you would be best served sticking with Drupal 7 until the Drupal 8 release candidate is available.</p>
+<h3>Content Types</h3>
+<p>One of the most noticeable changes to the Drupal 8 admin UI is the revised Content Type creation pages.</p>
+<p>The “Manage Fields” page no longer contains a “widget” column. There is a new tab, “Form Display,” which allows more flexible configuration of the node add/edit form.</p>
+<p>“Manage Fields” also no longer allows custom sorting of the fields. “Body” is always listed first, followed by the custom fields in alphabetical order. The fields can be reordered  on the “Manage Form Display” and “Manage Display” tabs.</p>
+<h3>Comments</h3>
+<p>In Drupal 8, comments are set up as a field, rather than a setting in the node type. To turn on comments for a content type, add a field of type "Comments" on the "Manage Fields" page. This is a more flexible system than in Drupal 7, allowing more than one type of comments for a single node.</p>
+<p>This change mostly affects the admin UI. Comments are still entities in Drupal 8, and their underlying data structure is similar to Drupal 7.</p>
+<h3>Database structure</h3>
+<p>The notable changes in the database structure relate to the user profiles and the table names for field tables.</p>
+<p>The “users” table (a single table in Drupal 7) has been split into “users” and “users_field_data” which contains the data from the built-in fields like name and password. Several other tables, including "node", "comment", and "taxonomy_term" have undergone similar structure changes. This restructuring allows for easier translations of data in the core fields.</p>
+<p>Drupal 8 field tables now are prefixed with the type of entity they belong to. They have names like “node__field_image” or “user__field_first_name”. The data structure of these tables is similar to the Drupal 7 “field_data_*” tables, with only a few changes (e.g., the "language" column is now named "langcode").</p>
+<h3>Drush</h3>
+<p>Drush 6, commonly used with Drupal 7, is not compatible with Drupal 8. You will need to install Drush 7, which is still in development. Not to worry, it’s easy to install Drush 7 alongside Drush 6. Here is an excellent article about setting up Drush 7 with Drupal 8 using Composer: <a href="https://www.acquia.com/blog/leverage-drush-7-drupal-8">https://www.acquia.com/blog/leverage-drush-7-drupal-8</a></p>
+<h4>Cache and Registry</h4>
+<p>Cache and registry handling in Drupal 8 has undergone some major changes from Drupal 7. Notably, the “cache clear” command has been replaced by “cache rebuild.”</p>
+<p><strong>Drupal 7:</strong><br />
+“drush cache-clear all”<br />
+(a.k.a. “drush cc all”)</p>
+<p><strong>Drupal 8:</strong><br />
+"drush cache-rebuild”<br />
+(a.k.a., “drush cr”).</p>
+<p>Note: In Drupal 8, you don't need to specify "drush cache-rebuild all." The "cache-rebuild" command appears to always clear all the caches, and any additional arguments are ignored.</p>
+<p>Note: “drush cache-clear drush” is still used to update the list of Drush commands.</p>
+<p>As of this writing, the “drush registry-rebuild” command does not appear to be supported for Drupal 8. This may change in the near future.</p>
+<h4>Package Management</h4>
+<p>Drupal 8 does not allow disabling of modules. The "drush pm-disable" command has been removed. To turn off a module, you need to uninstall it with "drush pm-uninstall" or by using the "Uninstall" tab on the "Extend" page in the admin UI.</p>
+<p>As of Drupal 8 beta 2, uninstalling a module does not automatically delete the module's configuration data. However, some modules may have uninstall hooks which delete their configuration when they are uninstalled. Modules like these can no longer be uninstalled without deleting their configuration.<br /></p><h4>Package Manager bugs</h4>
+<p>As of this writing, there is a Drush 7 bug that causes an infinite loop when trying to use “drush pm-enable” (a.k.a., “drush en”) to simultaneously download and install a module:</p>
+<p><a href="https://github.com/drush-ops/drush/issues/5">https://github.com/drush-ops/drush/issues/5</a></p>
+<p>The workaround is to download the module ("drush dl somemodule") and enable it ("drush en somemodule") in two separate steps, or to enable the module through the admin UI. This does not affect modules which you have already downloaded and wish to enable.</p>
+<h3>Compiled CSS, JS, and Twig files</h3>
+<p>In sites/default/files are several new directories:</p>
+<ul><li>sites/default/files/php - Contains compiled Twig templates</li>
+<li>sites/default/files/css - Contains compiled and gzipped CSS files</li>
+<li>sites/default/files/js - Contains compiled JS files</li>
+</ul><p>These files do not need to be added to your Git repository. Drupal will generate them automatically on page load, and they will have different file names on each machine (local dev machine, dev server, production server, etc.). Similarly, you shouldn’t try to edit these files manually because Drupal will automatically overwrite your changes at the next cache rebuild.</p>
+<p>The Drush “cache-rebuild” command will erase these files and rebuild them.</p>
+<h4>Common errors - File permissions</h4>
+<p>Incorrect file permissions can cause PHP errors, or missing CSS or JS. Consider the following error:</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">Fatal error: Class '__TwigTemplate_09ab09ab7c23bd1ffe135ac9872354bdeca182f' not found
+in /path/to/your/site/drupal/core/lib/Drupal/Core/Template/TwigEnvironment.php on line 152</pre></div>
+</div>
+<p>This error occurs when the web server doesn’t have permissions to write to the directory sites/default/files. Change the permissions or ownership on that directory and this error should go away.</p>
+<p>If you encounter pages missing their CSS files, try checking the same file permissions.</p>
+<h3>Configuration Entities</h3>
+<p>Drupal 8 introduces a new type of entity, the “configuration entity.” These are represented as YAML files in the “config/install” subdirectory within a module. When the module is installed, the data from these YAML files is loaded into entries in the “config” table in the database.</p>
+<p>The "config" table contains many of the settings that were formerly in the "system" table in Drupal 7. It also contains definitions for a number of things that were formerly in separate tables. Notable examples are Taxonomy vocabularies and text filter formats.</p>
+<p>Config entities are only updated when the module is installed or uninstalled. Drupal does not rebuild them when you rebuild the cache. During module development, you either need to uninstall and reinstall your module, or use the config_devel contrib module to make managing your config entities easier.</p>
+<p>Config entities are particularly useful when writing content migrations, because the migration definitions are config entities.</p>
+<p>As of Drupal 8 beta 2, configuration entities are no longer removed when a module is uninstalled. If your custom module uses configuration entities, and you don’t want these to persist during a reinstall of the module, it might be a good idea to write an uninstall hook to remove the entities.</p>
+<p>Example uninstall hook to remove configuration entities:</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">/**
+* Implements hook_uninstall().
+*
+* Cleans up config entities installed by this module.
+*/
+function yourmodule_uninstall() {
+  db_query("DELETE FROM {config} WHERE name = 'your.config.entity.name'");
+  drupal_flush_all_caches();
+}</pre></div>
+</div>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

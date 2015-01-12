@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 26 May 2014 09:57:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 26 May 2014 09:57:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Vasily Yaremchuk: Anchors Panels Navigation Module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yaremchuk.ru/blog/anchors-panels-navigation-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Vasily Yaremchuk: Anchors Panels Navigation Module</title>
+    <base href="http://yaremchuk.ru/blog/anchors-panels-navigation-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Several years ago I have a dream to put my own personal site into One Page solution.<br />
+Due to I'm Drupal developer Drupal was selected as platform for my site.<br />
+Thus <a href="https://drupal.org/project/single_page_website" target="_blank">Single Page Website Module</a> was done.</p>
+<p>This module is some kind of out of box solution. One can turned it on, do several settings on the module settings page and have One Page website on Drupal CMS engine. </p>
+<p>But due to architecture of the module it has a lot of significant restrictions that will be difficult to resolve. The main problem is the limited number of themes that people can use with that module. By the fact Bartik theme and it's subthemes only works correct with the module. This issue connected with some automatic actions that module should perform with page template to make it One Page site.</p>
+<p>There are a lot of other issues and limitations that restrict significantly abilities of Single Page Website module. There is no any multilingual support and there is no ability to set two One Page Landings, there is no ability to have link in menu that go to the separate Drupal or external page and so on, and so on...</p>
+<p>The talk about weak and strong points of Single Page Website module is out of scope of this post, I'm ready to provide my thoughts but in the other post that will be created soon I hope :-)</p>
+<p>The topic of this post is Anchors Panels Navigation Module. What made me make a second approach to the One Page site on Drupal? I think that if we can use higher layer of abstraction in the architecture we can avoid any theme dependence. But we should find some kind of wrapper to combine our One page site from different content parts.</p>
+<p>I have used <a href="https://drupal.org/project/panels" target="_blank">Panels module</a>. If you would like to create some Landing Page with anchor navigation inside it, please use <a href="https://drupal.org/project/anchors_panels_navigation" target="_blank">Anchors Panels Navigation module</a>. Please use development version it should works, but some decoration moments I should finished before an official release.</p>
+<p>There are several simple steps that you should do to obtain One Page site on the base of Panels with anchor navigation: </p>
+<ol><li>Turn on <a href="https://drupal.org/project/anchors_panels_navigation" target="_blank">Anchors Panels Navigation</a>  module. Panels, Panel nodes and Ctools are required also.<br /><br /><img src="http://yaremchuk.ru/sites/default/files/apn_1.png" /></li>
+<li>Create several pages with content that you would like to have on One page Panel</li>
+<li>Create Panel an put nodes that you did on previous step into the Panel areas.</li>
+<li>For each region that you would like to have anchor set CSS id in Panels settings.<br /><br /><img src="http://yaremchuk.ru/sites/default/files/apn_2.png" /></li>
+<li>Put several links to created Panels node with anchors equal the IDs into any Drupal menu. You can have some other links in that menu too.<br /><br /><img src="http://yaremchuk.ru/sites/default/files/apn_3.png" /></li>
+<li>Now you have Landing Page with anchors. The module does not provide any CSS altering of the page so to set your menu in fixed  position you should do some CSS changes manually. I found <a href="https://drupal.org/project/css_injector" target="_blank">CSS Injector</a> module is helpful to set some specific CSS rules on the separate Palels page.<br /><br /><img src="http://yaremchuk.ru/sites/default/files/apn_4.png" /></li>
+</ol><p>The results here: <a href="http://apn.yaremchuk.ru" target="_blank">http://apn.yaremchuk.ru</a></p>
+<p>Feel free to ask any questions and send any ideas about that approach. Thanks!</p>
+</div></div></div><!-- google_ad_section_end --><div class="field field-name-taxonomy-wp-blog-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Blog tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog-tags/planet-drupal">Planet Drupal</a></li></ul></div>
+  </body>
+</html>
+

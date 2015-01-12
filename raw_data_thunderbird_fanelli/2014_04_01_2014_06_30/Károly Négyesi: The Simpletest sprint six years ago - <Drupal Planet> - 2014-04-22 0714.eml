@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Apr 2014 05:14:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Apr 2014 05:14:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: The Simpletest sprint six years ago
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/394
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: The Simpletest sprint six years ago</title>
+    <base href="http://www.drupal4hu.com/node/394">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As the Simpletest sprint in Paris was exactly six years ago I feel it's a good time to remind the community how and why Simpletest was chosen especially in the light of the Simpletest hate lately. At that time we had almost no tests (compared to the massive test battery today with over 68 000 asserts) and it was paramount to allow <em>anyone</em> to be able to write and run tests. Drupal in 2008 was not really API driven and so we needed browser based testing. Selenium at this time (Selenium 2 / WebDriver was released in 2011) required a standalone Java program to drive a browser -- we didn't quite feel being a Java-on-your-desktop helpdesk. So Selenium was out. PHPUnit offered a big fat nothing for Drupal -- Rok and I actually printed the source code out and read the whole thing at Boston DrupalCon and found nothing useful in there. Mind you, it was a very young project at that time. Behat? Mink? In 2008? Come on, Cucumber itself didn't appear until 2008 fall. So. In 2014 it is easy to say there are better and/or faster alternatives but those weren't there in 2008. Also, it's the massive refactoring in Drupal 8 that made it possible to use PHPUnit -- but guess what made the refactoring possible.</p>
+  </body>
+</html>
+

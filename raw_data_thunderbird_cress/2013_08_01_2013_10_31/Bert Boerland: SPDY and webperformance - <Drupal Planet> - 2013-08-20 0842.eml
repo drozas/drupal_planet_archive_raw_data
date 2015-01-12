@@ -1,0 +1,77 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 20 Aug 2013 07:42:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 20 Aug 2013 07:42:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bert Boerland: SPDY and webperformance
+Content-Transfer-Encoding: 8bit
+Content-Base: http://willy.boerland.com/myblog/spdy_and_webperformance
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bert Boerland: SPDY and webperformance</title>
+    <base href="http://willy.boerland.com/myblog/spdy_and_webperformance">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="http://www.flickr.com/photos/bertboerland/9401014790/" title="Robert M. White by bertboerland, on Flickr"><img src="http://farm4.staticflickr.com/3820/9401014790_470963e05d_z.jpg" width="640" height="354" alt="Robert M. White"></a><br />
+<strong>TL;RD</strong></p>
+<ol>
+<li>Performance matter for all websites</li>
+<li>Performance is not just (80%) frontend</li>
+<li>SPDY kills 80% of your frontend problems</li>
+</ol>
+<p><strong>What</strong><br />
+In the Drupal and broader web community, there is a lot of attention towards the performance of websites.
+<p>
+While "performance" is a very complex topic on its' own, let us in this posting define it as the speed of the website and the process to optimize the speed of the website (or better broader, <a href="https://drupal.org/node/2001058">the experience of the speed</a> by the user as performance.
+<p>
+<strong>Why</strong><br />
+This attention towards speed is for two good reasons. On one hand we have the site that is getting bigger and hence slower. The databases get bigger with <a href="http://www.strangeloopnetworks.com/resources/infographics/web-performance-and-ecommerce/web-pages-keep-getting-bigger/">more content</a> and the the codebase of the website is added with new modules and features. While on the other hand, more money is being made with websites for business even if you are not selling goods or run ads.
+<p>
+Given that most sites run on the same hardware for years, this results in slower websites, leading to a lower pagerank, less traffic, less pages per visit, lower conversion rates. And in the end, if you a have a business case for your website, <a href="http://www.strangeloopnetworks.com/resources/infographics/web-performance-and-ecommerce/impact-of-1-second-delay/">lower profits.</a> Bottemline: If you make money online, you are <a href="http://www.yottaa.com/blog/bid/279433/The-ROI-of-Website-Performance-A-Resources-Guide">losing</a> this due to a slow website.<br />
+<a href="http://www.flickr.com/photos/bertboerland/9459703040/" title="UFO's by bertboerland, on Flickr"><img src="http://farm8.staticflickr.com/7350/9459703040_b4c86554fd_z.jpg" width="640" height="385" alt="UFO's"></a><br />
+When it comes to speed there are many parameters to take in to account, it is not "just" the average pageloading time. First of all the average is a rather useless metric without taking the standard deviation into account. But apart from that, it comes down to what a "page" is. </p>
+<p>A page can be just the HTML file (can be done in 50ms)<br />
+A page can be the complete webpage with all the elements (for many sites around the 10seconds)<br />
+A page can be the complete webpage with all elements including third party content. Hint: did you know that for displaying the Facebook Like button, more Javascript is downloaded then <a href="https://twitter.com/sufw/status/357826042792144896/photo/1">the entire jQuery/backbone/bootstrap app of this website</a>, non cacheable!<br />
+And a page can be anything "<a href="http://iampaddy.com/lifebelow600/">above the fold"</a>
+<p><br><br />
+<a href="http://www.flickr.com/photos/bertboerland/9459716252/" title="Moon Retro future by bertboerland, on Flickr"><img src="http://farm8.staticflickr.com/7352/9459716252_c26eb2a443_z.jpg" width="525" height="430" alt="Moon Retro future"></a><br />
+And then there are more interesting metrics then these, the <a href="http://en.wikipedia.org/wiki/Time_To_First_Byte">time to first byte</a> from a technologic point of few for example. But not just technical PoV. There is a website one visits every day that <a href="https://developers.google.com/speed/docs/best-practices/payload<br />
+">optimzes</s> its' rendable HTML to fit within <a href="http://en.wikipedia.org/wiki/Maximum_transmission_unit">1500 bytes</a>.<br />
+So ranging from "First byte to glass" to "Round trip time", there are <a href="http://www.w3.org/2012/11/webperf-list.html">many elements</a> to be taken into account when one measures the speed of a website. And that is the main point: webperformance is not just for the frontenders like many think, not just for the backenders like some of them hope, but for all the people who control elements elements in the chain involved in the speed. All the way down to the <a href="http://www.cdnplanet.com/blog/tune-tcp-initcwnd-for-optimum-performance/">networking</a> guys (m/f) in the basement (hint sysadmins: INITCWND has a huge performance impact!) Speed should be in your core of your team, not just in those who enable gzip compression, aggregate the Javascript or make the sprites.<br />
+<a href="http://www.flickr.com/photos/bertboerland/9456952929/" title="Schermafbeelding 2013-08-07 om 17.00.17 by bertboerland, on Flickr"><img src="http://farm8.staticflickr.com/7313/9456952929_59e94c2fde_z.jpg" width="539" height="461"></a><br />
+<a href="http://www.stevesouders.com/">Steve Souders</a> (<i>the</i> webperformance guru) once stated in his golden rule that <a href="http://www.stevesouders.com/blog/2012/02/10/the-performance-golden-rule/">80-90% of the end-user response time is spent on the frontend.</a>
+<p>
+<strong>Speedy to the rescue?</strong><br />
+This 80% might be matter of debate in the case of a logged in user in a CMS. But even if it is true. This 80% can be reduced <i>by</i> 80% with <a href="http://en.wikipedia.org/wiki/SPDY">SPDY</a>.<br />
+SPDY is an open protocol introduced by Google to overcome the problems with HTTP (up to 1.1 including pipeling, defined in 1999!) and the absence of HTTP/2.0. It speeds up HTTP by generating <i>one</i> connection between the client and the server for all the elements in the page served by the server. Orginally only build in chrome, <a href="http://en.wikipedia.org/wiki/SPDY#Browser_support_and_usage">many browsers</a>  now support this protocol that will be the base of HTTP/2.0. Think about it and <a href="https://libosong.appspot.com/spdy/index.html#1">read about it</a>, a complete webpage with all the elements -regardless of minifying and sprites- served in one stream with only once the TCP handshake and one DNS request. Most of the rules of traditional webperf optimalisation (CSS aggregation, preloading, prefetching, offloading elements to different host, cookie free domains), all this wisedom is  gone, even false,  with <a href="https://code.google.com/p/mod-spdy/">one simple install</a>. 80% of the 80% gone with SPDY, now one can focus on the hard part; the database, the codebase. :-)
+<p>
+The downside of SPDY is however that is is hard to troublshoot and not yet avaliable in <a href="http://modern.ie</a>all browsers</a>. It is hard to troubleshoot since most implementations use SSL,  the protocol is multiplexed and zipped by default and not made to be read by humans unlike HTTP/1.0. There are however some tools that make it possible to test <a href="https://groups.google.com/forum/#!topic/spdy-dev/KU6xJJR4Dng">SPDY</a> but most if not all tools you use every day like ab, curl, wget will fail to use SPDY and fallback like defined in the protocol to HTTP/1.0
+<p>
+<strong>Measure</strong><br />
+So can we test to see if SPDY is really faster and how much faster?<br />
+Yes, see <a href="http://web2.sys-con.com/node/2742114">Evaluating the Performance of SPDY-Enabled Web Servers</a> (a Drupal site :-)<br />
+<a href="http://www.flickr.com/photos/bertboerland/9554426978/" title="SPDY performance by bertboerland, on Flickr"><img src="http://farm4.staticflickr.com/3806/9554426978_9d7761bb2f_o.png" width="494" height="403" alt="SPDY performance"></a></p>
+<p>So more users, less errors under load and a lower page load time. What is there not to like about SPDY?</p>
+<p><strong>Drupal</strong><br />
+That is why I would love Drupal.org to run with SPDY, see this issue on <a href="https://drupal.org/node/2046731">d.o/2046731</a>. I really do hope that the infra team will find some time to test this and once accepted, install it on the production server.<br />
+<br><br />
+Performance as a Service</a><br />
+One of the projects I have been active in later is <a href="http://projectpaas.com">ProjectPAAS</a>, bonus point if you find the easteregg on the site :-) . ProjectPAAS is a  startup that will test a Drupal site, measure on 100+ metrics, analyse the data and give the developer an opinionated report on what to change to get a better performance.  If you like these images around the retro future theme, be sure to checkout the <a href="http://pinterest.com/bertboerland/paas/">pinterest</a> for the moodboard of ProjectPAAS.<p>
+Pinterest itself is doing some good work when it comes to performance as well. Not just <a href="http://www.webpagetest.org/result/130807_Q8_T9K/">speed</a> but also the perception of speed. <br><br />
+<a href="http://www.flickr.com/photos/bertboerland/9456869567/" title="Pinterest lazyloading with color by bertboerland, on Flickr"><img src="http://farm6.staticflickr.com/5505/9456869567_1aa0849ca5_z.jpg" width="640" height="354" alt="Pinterest lazyloading with color"></a><br />
+Pinterest does lazyload images but also displays the prominent color as background in a cell before the image is loaded, giving the user a sense of what to come. For a background on this see <a href="http://www.webdistortion.com/2013/04/14/pinterests-amazing-attention-to-detail-and-why-design-should-lead-code/">webdistortion</a><br />
+<br><br />
+<a href="http://www.flickr.com/photos/bertboerland/9456768665/" title="Congratulations you just saved 0,4 seconds by bertboerland, on Flickr"><img src="http://farm3.staticflickr.com/2876/9456768665_192281c0ff_z.jpg" width="550" height="474" alt="Congratulations you just saved 0,4 seconds"></a><br />
+If you are <a href="https://drupal.org/project/lazyloader">lazyloading</a> images to give your user faster results, be sure to checkout this module we made; <a href="https://drupal.org/sandbox/basvanderheijden/2030603">lazypaas</a>, currently a sandbox project awaiting approval. It does extract the dominant (most used) color of an image and displays the box where the image will be placed with this color. And if you use it and did a code review, be sure to help it to get it to a real Drupal module.<br />
+<br><br />
+<strong>From 80% to 100%</strong><br />
+Lazyloading like this leads to better user experience. Because even when 80% of the end-user response time is spent on the frontend, 100% of the time is spend in the client, most ofthen the browser. The only place where performance should be measured and the only page where performance matters. Hence, all elements that deliver this speed should be optimized, including the webserver and the browser. </p>
+<p>Now say this fast after me: SPDY FTW. :-)</p>
+  </body>
+</html>
+

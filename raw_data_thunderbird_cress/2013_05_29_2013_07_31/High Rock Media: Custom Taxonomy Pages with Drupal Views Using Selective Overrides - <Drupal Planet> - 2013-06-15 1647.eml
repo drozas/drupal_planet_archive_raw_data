@@ -1,0 +1,59 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 15 Jun 2013 15:47:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 15 Jun 2013 15:47:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Custom Taxonomy Pages with Drupal Views Using Selective Overrides
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/custom-taxonomy-pages-drupal-views-using-selective-overrides
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Custom Taxonomy Pages with Drupal Views Using Selective Overrides</title>
+    <base href="http://highrockmedia.com/blog/custom-taxonomy-pages-drupal-views-using-selective-overrides">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/img_9613-1490088978.jpg" width="900" height="316" alt="Highly designed custom Taxonomy pages" title="Highly designed custom Taxonomy pages" class="image-adaptive inline-adaptive" /></p>
+
+<p>Drupal 7 has an option to turn on a default View for Taxonomy term pages via the contrib module, Views. This is generally pretty good but if you want highly designed pages with additional custom fields than what the default view renders, you could simply update and customize this view but there's a few drawbacks:</p>
+
+<ul>
+<li>You'll be overriding all Taxonomy Pages so it's not very granular. </li>
+<li>Using the default Taxonomy View won't be too exportable in regard to things like Features. </li>
+</ul>
+
+<h2>Creating Taxonomy Theming Granularity</h2>
+
+<p>Enter the Taxonomy Views Integrator module aka 'TVI'. This is one of those nice little gems that you don't hear about too often but it's pretty powerful and allows for that granularity that we are looking for here. It enables you to <em>customize only specified Taxonomies</em> with a new custom Views override per Vocabulary. The added benefit is that you can keep the original Taxonomy path aliases. Other methods suggest hackish ways to override Taxonomy term pages by creating an alternate term path alias structure for the overrides but this gets pretty messy.</p>
+
+<h2>First Steps</h2>
+
+<p>It's probably a good idea to have a custom Vocabulary set up beforehand but theoretically you could use the default <em>Tags Vocabulary</em> that comes with the Article Content Type. You'll need the core Taxonomy module enabled but that's already by default with a typical Drupal 7 install. You'll also need the contrib module, <em>Views</em> as well. Next, download and enable TVI. TVI does not do much on its own, you need a view from which to reference for a specific Taxonomy to make this all work. I found the best method is to simply clone the default <code>taxonomy_term</code> view located at <em>/admin/structure/views</em> and customize it but you may need to 'enable' it first. When you clone this view, be sure to name the newly cloned view something meaningful, you can also edit the machine name at this point as well. Ideally, you are doing all this work on a dev or local site, not a live one.</p>
+
+<p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/2013-06-14_14-35-59-1505531388.png" width="753" height="129" alt="Cloning the Default Taxonomy Term View" title="Cloning the Default Taxonomy Term View" class="image-adaptive inline-adaptive" /></p>
+
+<h2>Mind Your Path</h2>
+
+<p>Now that you have your new custom Taxonomy Term View, we need to make a few changes to some of the default settings that came with it. For the default 'Page Display', change the <em>Path</em> to something like <code>nopath/%</code>.  It really doesn't matter what you put here as long as it's not the default term path which is <code>taxonomy/term/%</code> or any other real path in your site. The reason we do this is we don't want to intercept the original path of the Taxonomies' Alias.</p>
+
+<h2>Refining Arguments</h2>
+
+<p>The other change we want to do is to alter one the <em>Contextual filters</em> aka <em>Views Arguments</em>. Look under the View's advanced settings for <em>Configure contextual filter: Content: Has taxonomy term ID (with depth)</em>. In my case I'm customizing a Vocabulary called "Image Category", so for the setting, <em>Specify validation criteria</em>, I check the box for that given Vocabulary.</p>
+
+<h2>Adding Additional Fields and Customizing</h2>
+
+<p>You can pretty much go to town with adding additional fields but you may need to add <code>Views Relationships</code> depending on what you are doing, just be aware of that, your milage may vary. Finally save your View. Note that because there's a Contextual Filter in play, you won't see a preview of your View right off the bat so you can use "<em>Preview with contextual filters</em>" and fill in an id. For example, I have a Taxonomy term id of <em>273</em> so I can input that into the text box and see a preview after updating. This comes in handy as otherwise you are a bit in the dark during configuration.</p>
+
+<h2>Connect the Dots</h2>
+
+<p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/2013-06-14_19-48-24-694281958.jpg" width="809" height="492" alt="A finished Taxonomy page using a custom override with TVI" title="A finished Taxonomy page using a custom override with TVI" class="image-adaptive inline-adaptive" />
+All we've done so far is focus in on our custom Taxonomy Term Page View. However there's still a final step to put it all together. It's time to edit the Taxonomy you want to customize. Go to <em>/admin/structure/taxonomy /[YOUR_VOCABLUARY]/edit</em>.  There's a new area called <em>View usage</em>, Check the box called <em>Use view override</em>. You'll see two new select lists appear which are self-evident, <em>Using the view</em> and <em>View display</em>. You can now select the View and display you customized from the cloned view as mentioned above. If all went well, now when you visit your custom Vocabulary term pages, presto, you should see your customized View in effect!  One major note is that for any other Taxonomies you don't want customized, you'll simply need to set each to the default <em>Taxonomy term View</em> on the Vocabulary's edit page if you still want the defaults Views intercept to happen.</p>
+
+<p>The possibilities are endless here and it will give your selectively overridden Taxonomy pages a unique look that can be highly designed, it gets away from boring lists of things that are typical of these type of pages.</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">UX</li><li class="field-item even">Design Patterns</li><li class="field-item odd">Drupal</li><li class="field-item even">Views</li><li class="field-item odd">Tutorial</li><li class="field-item even last">Drupal Planet</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="https://drupal.org/project/views" target="_blank">Views</a></li><li class="field-item even"><a href="https://drupal.org/project/tvi" target="_blank">Taxonomy Views Integrator</a></li><li class="field-item odd last"><a href="https://drupal.org/documentation/modules/taxonomy" target="_blank">Organizing content with taxonomies</a></li></ul>
+  </body>
+</html>
+

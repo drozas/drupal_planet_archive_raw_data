@@ -1,0 +1,118 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 09 Nov 2014 01:06:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 09 Nov 2014 01:06:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal core updates for November 8, 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/448898
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal core updates for November 8, 2014</title>
+    <base href="https://groups.drupal.org/node/448898">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>Co-authored by <a href="https://www.drupal.org/u/alimac">alimac</a>, <a href="https://www.drupal.org/u/xjm">xjm</a>, <a href="https://www.drupal.org/u/mparker17">mparker17</a>, and <a href="https://www.drupal.org/u/effulgentsia">effulgentsia</a>.</em></p>
+<h2>What's new with Drupal 8?</h2>
+<h3>DrupalCon Amsterdam and the Drupal 8 beta!</h3>
+<p>It's been more than a month since the last Drupal Core Update, and so much has happened! Around 2300 people travelled to the historic city of Amsterdam, Netherlands for <a href="https://amsterdam2014.drupal.org/">DrupalCon Amsterdam</a>, where after 5 days of sprinting, <a href="https://www.drupal.org/node/2348025">Drupal 8.0 entered beta</a>! <a href="https://groups.drupal.org/node/448563">Beta 3</a> will be released on Wednesday, November 12.</p>
+<p><a href="https://www.flickr.com/photos/68158920@N08/15458550955/"><img src="https://groups.drupal.org/files/ams_d8_contributors.jpg" alt="Drupal 8 contributors stand at the Amsterdam keynote" /></a><br />
+<em>Photo credit: Paul Johnson</em></p>
+<p>Be sure to review the <a href="https://www.drupal.org/contribute/core/beta-changes">allowed beta changes policy</a> to understand which core issues are still priorities for Drupal 8.0, and which will need to wait for Drupal 8.1 or Drupal 9.</p>
+<h3>Highly critical security fix released for Drupal 7 and 8</h3>
+<p>On October 15th, <a href="https://www.drupal.org/SA-CORE-2014-005">SA-CORE-2014-005, a highly critcial security fix necessary for all Drupal 7 and 8 sites was revealed</a> and <a href="https://www.drupal.org/drupal-7.32-release-notes">Drupal 7.32</a> and <a href="https://www.drupal.org/node/2357303">Drupal 8.0.0-beta2</a> were released to address the issue. A week later, on October 29th, the Drupal security team issued <a href="https://www.drupal.org/PSA-2014-003">a public service announcement</a> warning of automated attacks against Drupal sites that haven't been patched for SA-CORE-2014-005.</p>
+<p>To help website administrators choose the best possible path for dealing with affected Drupal sites, Bevan Rudge has developed <a href="http://drupal.geek.nz/blog/your-drupal-website-has-backdoor">a detailed flowchart</a> of actions to take, specific to different scenarios. One tool that can be useful is <a href="https://www.drupal.org/project/drupalgeddon">Drupalgeddon</a>, a Drush command that can help detect some of the exploits. It is important to understand that some attacks may not leave any trace. If possible, restore your Drupal site from backup made before October 15, 2014.</p>
+<p>In <a href="http://blog.ircmaxell.com/2014/10/a-lesson-in-security.html">A Lesson In Security</a>, Anthony Ferrara deconstructed the vulnerability and its resolution as well as Drupal Security Team's response. For some discussion of <a href="https://www.drupal.org/security-team">Drupal Security Team</a>'s practices and the media response, check out Bryan Ruby's post: <a href="http://bryanruby.com/drupal-security-not-shocking-responsible-1963">Drupal Security: Not Shocking but Responsible</a>.</p>
+<h3>D8 critical office hours with chx</h3>
+<p>Core contributor chx has started a <a href="https://groups.drupal.org/node/446803">weekly critical issue office hours</a> on Fridays at 12:00p PST. If you are interested in really digging into a tough problem and helping resolve a stagnating release blocker, or if you are stuck on a critical currently, join <a href="http://www.drupal.org/irc">#drupal-contribute IRC channel</a> during the office hours. See <a href="http://www.drupal4hu.com/node/411">chx's report of the first critical office hours</a> for an idea of what we've done so far!</p>
+<h2>Where's Drupal 8 at in terms of release?</h2>
+<p>DrupalCon Amsterdam and the beta release have brought lots of new momentum to the critical issue queue, with many issues both identified and resolved. Of the <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;amp;status%5B%5D=13&amp;amp;status%5B%5D=8&amp;amp;status%5B%5D=14&amp;amp;status%5B%5D=4&amp;amp;priorities%5B%5D=400&amp;amp;categories%5B%5D=1&amp;amp;categories%5B%5D=2&amp;amp;version%5B%5D=8.x&amp;amp;issue_tags_op=%3D">130 critical issues currently blocking Drupal 8's release</a>, 1 in 3 are new since the initial beta release, and 58% have activity within the past two weeks!</p>
+<p><a href="https://plot.ly/~xjm/0"><img src="https://groups.drupal.org/files/d8_criticals_nov_8.png" alt="Posted and fixed critical issues per week since August 31, 2014." /></a></p>
+<h2>Where can I help?</h2>
+<h3>Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem-space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>.</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2368349">#2368349: Entity view and form display configuration schemas are too verbose / key ones missing</a> needs review. This issue will resolve bugs in the entity system's configuration schemas. Critical configuration schema issues affect Drupal's multiligual functionality and block a <a href="https://www.drupal.org/node/2341575">beta-to-beta ugprade path</a>.</li>
+<li><a href="https://www.drupal.org/node/2352155">#2352155: Remove HtmlFragment/HtmlPage</a> is the next step to finalize Drupal's page rendering. This detailed issue builds on extensive discussions at DrupalCon Amsterdam and includes an extremely illuminating <a href="https://www.drupal.org/files/issues/d8_render_pipeline_4.png">diagram of Drupal 8's render pipeline</a>. The issue needs review and iteration to incorporate the latest feedback.</li>
+<li><a href="https://www.drupal.org/node/2345225">#2345255: [meta] CMI path to release</a> tracks the progress for completing the Configuration Management Initiative. Follow this issue to get involved with the most critical current blockers for the Configuration system.</li>
+<li>As of this writing, there are <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Performance">20 known critical performance issues</a> in Drupal 8. Help make Drupal 8 fast!</li>
+</ul>
+<h3>More ways to help</h3>
+<ul>
+<li><a href="https://www.drupal.org/node/2348381">#2348381: [META-20 theme functions left] Convert/refactor core theme functions</a> is part of the home stretch for completing Drupal 8's theme layer with Twig. Pick a child issue and help improve themer experience!</li>
+<li><a href="https://www.drupal.org/node/2369781">#2369781: Ensure twig_debug output has needed sanitization</a> is a critical issue to improve the security of a newly-added theme developer debugging tool. Help discuss the best solution for this issue or provide an initial proposal for a patch.</li>
+<li><a href="https://www.drupal.org/node/2066207">#2066207: Contextual filters in view preview UI are not retained on preview navigation</a> is the last bug that needs to be fixed before we can <a href="https://www.drupal.org/node/2237001">remove the _current_path() function</a>, which is part of cleaning up legacy code from before all of the routing system conversions.</li>
+<li>Want to keep an eye on what issues are blocking other issues in general? Keep an eye on the  <a>https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=Open&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D&amp;issue_tags=blocker"&gt;blocker issue tag</a>. You can also add this tag to other issues you encounter that require other work to be postponed; if more people use the tag, then it will increase these issues' visibility.</li>
+</ul>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+<p>You can also help by <a href="https://www.gittip.com/DrupalCoreGittipTeam/">sponsoring independent Drupal core development</a>.
+</p>
+<h2>Notable Commits</h2>
+<p>So much great work has gone into Drupal 8 in the past weeks that it's difficult to pick the best of <code>git log --after=2014-09-18 --pretty=oneline</code> (571 commits in total). The final beta blocker was resolved across several issues, as were many entity API, theme system, dependency management, usability, and accessibility improvements.</p>
+<ul>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2271419</a> by alexpott, larowlan: Fixed Allow field types, widgets, formatters to specify config dependencies.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#1879930</a> by fran seva, Gábor Hojtsy, martin107, markie, Schnitzel, alexpott, Sutharsan, mon_franco, YesCT, spearhead93, herom, Désiré: Fixed Language selectors are not showing localized to the page language.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#1953770</a> by amateescu: Move the field-specific settings form elements at the top of the form.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2224581</a> by alexpott, larowlan, jhodgdon, mgifford: Delete forum data on uninstall.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2332935</a> by plach, alexpott, dawehner: Allow code to respond to entity/field schema changes.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2028053</a> by vegantriathlete, franxo, InternetDevels, thamas, rootwork, LewisNyman: Add typographic styles, components, and utility classes.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2226207</a> by lauriii, mgbellaire, Cottser, m1r1k, Mark Carver, LinL, rachel_norfolk, rteijeiro, skwashd, davidhernandez, euphoric_mv: Make 'template' the default output option for hook_theme().</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2350779</a> by benjy: Update Migrate maintainers in MAINTAINERS.txt.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2292035</a> by DimitriV, mgifford | andrewmacpherson: Fixed CKEditor uses the automatically generated ID attribute for the body field in the ARIA label.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2324791</a> by Michael Hodge Jr, ParisLiakos: Remove watchdog().</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2329501</a> by alexpott, mdrummond, davidhernandez | Cottser: Add classy.info.yml to core, set Classy as base theme for Bartik and Seven.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2278353</a> by cilefen, dawehner, hussainweb, jibran, andyceo: Update to Symfony 2.5.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2304987</a> by Berdir, Wim Leers: Fixed Don't invalidate cache tags of referenced entities, use entity list cache tags correctly, add test coverage for entity list cache tags.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#1869476</a> by rteijeiro, LewisNyman, lauriii, Wim Leers, mdrummond, swentel, hosef, cbiggins, larowlan, sun, EclipseGc, Gábor Hojtsy: Convert global menus (primary links, secondary links) into blocks.</li>
+<li>Issue <a href="https://www.drupal.org/node/2343759">#2343759</a> by pwolanin, larowlan, dawehner, tim.plunkett, effulgentsia, xjm, Wim Leers: Provide an API function to replace url()/l() for external urls.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2002138</a> by yched, Jose Reyero, xjm, andypost, fago, msonnabaum, Berdir, dixon_: Use adapters for supporting typed data.</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2338475</a> by herom: Remove hook_permission().</li>
+<li>Issue <a href="https://www.drupal.org/node/2292035">#2232605</a> by alexpott, dawehner, martin107, Cottser, sun: Fixed Themes cannot be uninstalled.</li>
+</ul>
+<h4>Security fixes</h4>
+<p>Now that Drupal 8 is in beta, we're focusing on resolving disclosed security vulnerabilities in Drupal 8 so that site owners can safely build test sites. Here are the security fixes that have gone in over the past weeks:</p>
+<ul>
+<li>Issue <a href="https://www.drupal.org/node/1948418">#1948418</a> by webflo, martin107, galooph, cilefen, gaurav.goyal, amitgoyal, dawehner, dstol: Fixed Address SA-CONTRIB-2013-035 for views in D8.</li>
+<li>Issue <a href="https://www.drupal.org/node/2357249">#2357249</a> by Stefan Horst, greggles, larowlan, David_Rothstein, klausi: Fixed SA-CORE-2014-005 (SQL injection).</li>
+<li>Issue <a href="https://www.drupal.org/node/2304969">#2304969</a> by pwolanin, cilefen, Berdir, Devin Carlson, klausi: Fixed Port private files access bypass from SA-CORE-2014-003.</li>
+<li>Issue <a href="https://www.drupal.org/node/2242749">#2242749</a> by znerol, torotil, rszrama, larowlan, dawehner, penyaskito, tim.plunkett, sun, Damien Tournoud, David_Rothstein,  effulgentsia: Fixed Port Form API security fix SA-CORE-2014-002 to Drupal 8.</li>
+<li>Issue <a href="https://www.drupal.org/node/2234277">#2234277</a> by cilefen, hussainweb, Xano, netlooker, martin107: Composer update (includes security fixes).</li>
+<li>Issue <a href="https://www.drupal.org/node/2029855">#2029855</a> by klausi, benjy, fgm, hussainweb, Cottser, pfrenssen, kim.pepper | moshe weitzman: Fixed Missing access control for user base fields.</li>
+<li>Issue <a href="https://www.drupal.org/node/2098419">#2098419</a> by larowlan | fago: Fixed Missing default access for all comment fields.</li>
+</ul>
+<h2>Drupal 8 Around the Interwebs</h2>
+<ul>
+<li>Cathy Theys, Tim Erickson and Alina Mackenzie <a href="http://www.blackmesh.com/blog/looking-drupalcon-amsterdam-sprints-upcoming-sprints-you-attend ">looked at DrupalCon Amsterdam Sprints</a> and upcoming sprints for you to attend.</li>
+<li>Wim Leers explains the <a href="http://wimleers.com/talk/drupal-8-render-pipeline">Drupal 8 render pipeline</a> (as mapped out in <a href="https://www.drupal.org/node/2368349">#2368349</a>).</li>
+<li>Chris Doherty gives an update on <a href="http://www.mediacurrent.com/blog/drupal-8-theming-update">theming in Drupal 8</a>, highlighting current progress with the Classy theme.</li>
+<li>For a look at a first time sprinter's experience in contributing to Drupal 8, check out <a href="http://www.adamevertsson.se/en/articles/sprinting-first-time">Sprinting for the first time</a> by Adam Evertsson</li>
+<li>Matt Korostoff <a href="http://www.blinkreaction.com/blog/27-questions-and-answers-from-my-first-drupal-8-site-build">asks (and answers) 27 questions</a> that came up during a Drupal 8 site build. Ever wondered why you can't disable modules in Drupal 8? Matt has the answer.</li>
+<li>In part 5 of <a href="http://www.sitepoint.com/series/how-to-build-a-drupal-8-module/">How to Build a Drupal 8 Module</a> Daniel Sipos tells us about <a href="http://www.sitepoint.com/drupal-8-hooks-symfony-event-dispatcher/">Drupal 8 Hooks and the Symfony Event Dispatcher</a>. </li>
+<li>In a series of short demos, Alex Pott shows us that <a href="http://chapterthree.com//blog/drupal-8-administration-faster-cheaper-and-easier">Drupal 8 Administration is Faster, Cheaper and Easier</a>.</li>
+<li>Are you a front-end developer? Brian Wald wrote up a <a href="https://www.acquia.com/blog/drupal-8-intro-field-guide-front-end-developers-0">field guide about Drupal 8</a> with you in mind.</li>
+<li>Andrea Prescetti slipped us a <a href="http://nuvole.org/blog/2014/oct/01/drupal-7-drupal-8-cheat-sheet">Drupal 7 to Drupal 8 cheat sheet</a>, for a quick reference about the differences in directory structure, APIs and configuration. Interested in just Entities, try Erik Stielstra's <a href="http://wizzlern.nl/drupal/drupal-8-entity-cheat-sheet">Drupal 8 Entity cheat sheet</a> instead.</li>
+<li>martijn gives an update on the the <a href="http://build2be.com/content/state-rest-headless-drupal-8"> state of ReST in Headless Drupal 8</a>.</li>
+<li>Angie Byron answers all your burning questions In the 8th and final installment of <a href="https://www.acquia.com/blog/ultimate-guide-drupal-8-episode-8-answers-your-burning-questions">The Ultimate Guide to Drupal 8</a>. </li>
+<li>Brian Lewis of <a href="https://modulesunraveled.com/podcast/119-classy-base-theme-drupal-8-scott-reeves-and-david-hernandez-modules-unraveled-podcast">Mods Unraveled</a> talks to Scott Reeves and David Hernandez about the origin story of Consensus Banana and what it means for Drupal themers.</li>
+<li>Michael Anello looks at the big picture and <a href="http://drupaleasy.com/blogs/ultimike/2014/09/big-picture-drupal-8-migrate-core">Drupal 8 Migrate in core</a>.</li>
+<li>Jonathan Brown explains how to <a href="http://jonathanpatrick.me/blog/safe-markup">generate safe markup</a> in Drupal 8 and avoid Twig auto-escape woes.</li>
+<li>Is your favorite contributed module ported to Drupal 8 yet? Adrian Rollett shows us how to <a href="http://www.bluespark.com/blog/follow-readiness-top-100-modules-drupal-8-our-automatically-updated-tool">follow the readiness of the top 100 modules for Drupal 8</a>.</li>
+</ul>
+<h2>Drupal 8 in "Real Life"</h2>
+<ul>
+<li><strong>November 8 - Lima</strong>: Learn more about API changes and <a href="https://groups.drupal.org/node/447133">help port Examples for Developers module to Drupal 8</a>.</li>
+<li><strong>November 10 and 11</strong>: Angela Byron, Jeffrey 'jam' McQuire, and Larry Garfield will be keynote speakers at the <a href="https://groups.drupal.org/node/439368">php[world] Conference</a> in in Washington, D.C.</li>
+<li><strong>November 20 - Kitchener:</strong> Join Nik Alexandrov for an <a href="https://groups.drupal.org/node/446653">introduction to object-oriented programming for Drupal 8</a> in Kitchener, Ontario.</li>
+<li><strong>December 10 - 14 - Ghent</strong>: The Drupal Association and Wunderkraut are sponsoring a <a href="https://groups.drupal.org/node/447123">focused sprint in Ghent to help move core critical issues forward.</a></li>
+<li><strong>January 17 and 18</strong>: <a href="https://groups.drupal.org/node/447258">Drupal Global Sprint Weekend</a> returns for the third year to unite small local sprints around the world. Find or add your sprint location or join online.</li>
+<li><strong>February 8 - 13 - Bogotá</strong>: <a href="https://latinamerica2015.drupal.org/">DrupalCon Latin America in Bogotá</a> is the next DrupalCon! Join the sprinters and <a href="https://groups.drupal.org/node/447308">sign up for various sprints</a> including Multilingual and <em>Sign me up for anything</em>.</li>
+</ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.0.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/node/2220285">Read more about how you can volunteer to help with these posts</a>!</p>
+  </body>
+</html>
+

@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 05 Nov 2013 21:16:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 05 Nov 2013 21:16:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mediacurrent: Using "Workflow Tools" to Deploy your Content (and Code)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.mediacurrent.com/blog/using-workflow-tools-deploy-your-content-and-code
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mediacurrent: Using "Workflow Tools" to Deploy your Content (and Code)</title>
+    <base href="http://www.mediacurrent.com/blog/using-workflow-tools-deploy-your-content-and-code">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://www.mediacurrent.com/sites/default/files/imagecache/thumb_blog_spotlight/webinar2.jpg" alt="" title=""  class="imagecache imagecache-thumb_blog_spotlight imagecache-default imagecache-thumb_blog_spotlight_default" width="200" height="150" /> <p>Wouldn't it be nice to deploy database (content/config) changes the same way you <a href="http://www2.mediacurrent.com/l/10072/2013-04-18/ddytr" target="_blank">deploy code</a>? (You should be nodding your head). With WorkFlow Tools, both content creators and developers start their changes by logging into a WF Tools "management instance" to create a new "job." WF Tools then uses Jenkins and other server-side tools to spin up a new site (e.g., job1.example.com) with its own git branch (think: git-flow "feature"). All content changes are tracked so that, when the job is finished, WF Tools can move them to a staging server via the Deploy module, and the git branch is merged into the staging branch. The same process happens when the changes are ready for production.</p>
+  </body>
+</html>
+

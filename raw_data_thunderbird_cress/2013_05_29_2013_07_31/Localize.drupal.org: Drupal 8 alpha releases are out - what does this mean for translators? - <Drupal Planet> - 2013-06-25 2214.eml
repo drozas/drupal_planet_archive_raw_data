@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 25 Jun 2013 21:14:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 25 Jun 2013 21:14:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Localize.drupal.org: Drupal 8 alpha releases are out - what does this mean for translators?
+Content-Transfer-Encoding: 8bit
+Content-Base: https://localize.drupal.org/node/5853
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Localize.drupal.org: Drupal 8 alpha releases are out - what does this mean for translators?</title>
+    <base href="https://localize.drupal.org/node/5853">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://drupal.org/node/2026719">Drupal 8.0 alpha2</a> is the first tagged release of Drupal 8 that comes with a package downloadable from drupal.org. What does this mean for Drupal software translators? Well, it means it is made directly available on localize.drupal.org for translation. We make tagged releases available so that translators don't need to chase a moving target.</p>
+<p>Looking at <a href="https://localize.drupal.org/translate/projects/drupal/releases">Drupal core releases on the translation site</a>, Drupal 7 has 440+ files parsed for translatable strings and about 4600+ strings found there. In comparison, Drupal 8 has 5200+ files parsed (almost 12 times as many files) with 6700+ strings found (almost 1.5 times Drupal 7). So translating Drupal 8 will definitely be a bigger task compared to Drupal 7.</p>
+<p>But! You should not jump into translating Drupal 8 yet if you don't want your changes to go unused in the final version. First of all many things are still in flux, texts may change dramatically, user interface cleanups will happen, and so on. Watch out for an announcement much later on text to be ready for translations.</p>
+<p>What is also pretty important, all these translatables are just from the places where Drupal 8 uses the same API as Drupal 7. Drupal 8 for example removed st() and $t() in favor of using t() at more places, which does not change the situation for localize.drupal.org. But there are also API changes which made translatable strings move around places. Module info files are now info.yml, some hooks got converted to annotations. Default configuration that used to be saved into the database with a t() at install time are now shipped in .yml files in English (and not translated to the site install language in the original file by design). These are all great changes, but the translation server needs to adapt to them.</p>
+<p>So far @ksenzee is the only person who signed up to work on making the backend of localize.drupal.org capable of handling the new APIs properly. There is a whole set of issues to make these happen at <a href="https://drupal.org/project/issues/search/potx?issue_tags=Drupal%208%20compatibility" title="https://drupal.org/project/issues/search/potx?issue_tags=Drupal%208%20compatibility">https://drupal.org/project/issues/search/potx?issue_tags=Drupal%208%20co...</a> and we need more hands to help, test the patches and make this happen. I believe it would be a grand mistake to attempt to release Drupal 8 without these issues resolved, because only if these are resolved can translators ensure that Drupal 8.0 is fully translated in their language for release (even if there are already 1.5x as many strings, there will be even more). And given our enormous push for multilingual improvements in Drupal 8, we should support this with full translations as possible for release.</p>
+<p>Who else is up to make localize.drupal.org ready to support Drupal 8? Comment here or contact me at <a href="http://drupal.org/user/4166/contact" title="http://drupal.org/user/4166/contact">http://drupal.org/user/4166/contact</a> so we can coordinate.</p>
+<p><a href="https://localize.drupal.org/node/5853" target="_blank">read more</a></p>
+  </body>
+</html>
+

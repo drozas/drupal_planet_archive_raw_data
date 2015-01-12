@@ -1,0 +1,177 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Apr 2014 08:22:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Apr 2014 08:22:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: blog.studio.gd: Create automatic URL alias in drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.studio.gd/blog/id/23
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>blog.studio.gd: Create automatic URL alias in drupal</title>
+    <base href="http://blog.studio.gd/blog/id/23">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="header">Every time you create a site with drupal you may add a new contextual tab for a node or for a user. if you have used pathauto to create automatic (multilangual) aliasing of user and node url, so on, you got good urls for SEO ! But your custom module urls must also be optimised for search engines.</p>
+<p>For the example we create a node type called article, and we add a two custom url : Poll and Photos.</p>
+<pre class="brush:php;">
+/**
+ * Implements hook_menu().
+ */
+function module_name_menu() {
+  $items = array();
+  $items['node/%node/poll'] = array(
+    'title' => 'Poll',
+    'page callback' => 'module_name_poll_page_view',
+    'page arguments' => array(1, 2),
+    'access callback' => 'node_access',
+    'access arguments' => array('view', 1),
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['node/%node/photos'] = array(
+    'title' => 'Photos',
+    'page callback' => 'module_name_photos_page_view',
+    'page arguments' => array(1, 2),
+    'access callback' => 'node_access',
+    'access arguments' => array('view', 1),
+    'type' => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+</pre>
+<p>With pathauto enabled, we have a customisable, translatable pattern url for the node page :<br>
+<strong>http://example.com/node/245</strong><br>
+that became<br>
+<strong>http://example.com/content/article-title</strong></p>
+<p>BUT</p>
+<p><strong>http://example.com/node/245/poll and http://example.com/node/245/photos</strong><br>
+stay<br>
+<strong>http://example.com/node/245/poll and http://example.com/node/245/photos</strong><br>
+</p>
+<p>To fix that issue you can implement the pathauto api to create custom URL patterns :</p>
+<pre class="brush:php;">
+/**
+ * Implements hook_pathauto().
+ */
+function module_name_pathauto($op) {
+ switch ($op) {
+ 	case 'settings':
+ 	 $settings = array();
+ 	 $settings['module'] = 'module_name';
+ 	 $settings['token_type'] = 'node';
+ 	 $settings['groupheader'] = t('Module_name node paths');
+ 	 $settings['patterndescr'] = t('Default pattern');
+ 	 $settings['patterndefault'] = '';
+ 	 $settings['batch_update_callback'] = 'module_name_pathauto_bulkupdate';
+
+ 	 $path = array(
+ 	   'module_name_node_poll' => 'Module_name poll path',
+ 	   'module_name_node_photos' => 'Module_name photos path',
+ 	 );
+         
+ 	 $langs = array_keys(language_list());
+ 	 foreach ($path as $k => $p) {
+ 	  foreach ($langs as $lang) {
+ 	   $path[$k . '_' . $lang] = $p . ' for language ' . $lang;
+  	 }
+  	 unset($path[$k]);
+ 	 }
+ 	 $settings['patternitems'] = $path;
+ 	 return (object) $settings;
+ }
+}
+</pre>
+<p>The custom pattern are done. <a href="http://drupalcontrib.org/api/drupal/contributions!pathauto!pathauto.api.php/function/implementations/hook_pathauto/7" target="_blank">More example for the implementation of this hook</a></p>
+<p>When a new node is created, updated or deleted the alias must be updated or deleted, to do that we use the hook provided by drupal :</p>
+<pre class="brush:php;">
+/**
+ * Implements hook_node_insert().
+ */
+function module_name_node_insert($node) {
+    module_name_create_alias($node, 'insert');
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function module_name_node_update($node) {
+    module_name_create_alias($node, 'update');
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function module_name_node_delete($node) {
+  module_load_include('inc', 'pathauto');
+  pathauto_path_delete_all('node/' . $node->nid . '/poll');
+  pathauto_path_delete_all('node/' . $node->nid . '/photos');
+}
+
+/**
+ * Module_name create alias for a node custom urls.
+ */
+function module_name_create_alias($node, $op) {
+ $langs = array_keys(language_list());
+ module_load_include('inc', 'pathauto');
+ foreach ($langs as $lang) {
+   pathauto_create_alias('module_name', $op, 'node/' . $node->nid . '/poll' , array('node' => $node), 'module_name_node_poll_' . $lang, $lang);
+   pathauto_create_alias('module_name', $op, 'node/' . $node->nid . '/photos' , array('node' => $node), 'module_name_node_photos_' . $lang, $lang);
+ }
+}
+</pre>
+<p>To generate/update your urls alias with the bulk update interface or with drush there is callback defined in the hook_pathauto : "batch_update_callback" :</p>
+<pre class="brush:php;">
+/**
+ * Implements hook_pathauto_bulkupdate.
+ */
+function module_name_pathauto_bulkupdate() {
+  if (!isset($context['sandbox']['current'])) {
+    $context['sandbox']['count'] = 0;
+    $context['sandbox']['current'] = 0;
+  }
+
+  $query = db_select('node', 'n');  
+  $query->addField('n', 'nid');
+  $query->leftJoin('url_alias', 'ua', " ua.source LIKE CONCAT('node/', n.nid, '/%')");
+  $query->isNull('ua.source');
+  $query->condition('n.nid', $context['sandbox']['current'], '>');
+  $query->orderBy('n.nid');
+  $query->addTag('pathauto_bulk_update');
+  $query->addMetaData('entity', 'node');
+
+  // Get the total amount of items to process.
+  if (!isset($context['sandbox']['total'])) {
+    $context['sandbox']['total'] = $query->countQuery()->execute()->fetchField();
+
+    // If there are no nodes to update, the stop immediately.
+    if (!$context['sandbox']['total']) {
+      $context['finished'] = 1;
+      return;
+    }
+  }
+
+  $query->range(0, 25);
+  $nids = $query->execute()->fetchCol();
+
+  $nodes = node_load_multiple($nids);
+  foreach ($nodes as $node) {
+    module_name_create_alias($node, 'bulkupdate'); 
+  }
+  $context['sandbox']['count'] += count($nids);
+  $context['sandbox']['current'] = max($nids);
+  $context['message'] = t('Updated alias for node @nid.', array('@nid' => end($nids)));
+
+  if ($context['sandbox']['count'] != $context['sandbox']['total']) {
+    $context['finished'] = $context['sandbox']['count'] / $context['sandbox']['total'];
+  }
+}
+</pre>
+<p>The code is over, you can fill the pattern in your site administration : admin/config/search/path/patterns<br>
+<strong>Let the default pattern blank and fill for each language and tabs the good patterns, example : "content/[node:title]/poll"</strong></p>
+  </body>
+</html>
+

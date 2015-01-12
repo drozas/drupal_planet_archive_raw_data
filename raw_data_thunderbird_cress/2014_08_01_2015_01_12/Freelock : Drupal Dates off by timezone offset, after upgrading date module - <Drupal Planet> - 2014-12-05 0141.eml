@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 05 Dec 2014 01:41:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 05 Dec 2014 01:41:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Freelock : Drupal Dates off by timezone offset, after upgrading date module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.freelock.com/blog/john-locke/2014-12/drupal-dates-timezone-offset-after-upgrading-date-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Freelock : Drupal Dates off by timezone offset, after upgrading date module</title>
+    <base href="http://www.freelock.com/blog/john-locke/2014-12/drupal-dates-timezone-offset-after-upgrading-date-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="g-plusone-wrapper" style="margin: 0 1em 1em 1em;float:right" ><g:plusone href="http://www.freelock.com/blog/john-locke/2014-12/drupal-dates-timezone-offset-after-upgrading-date-module" size="medium" annotation="bubble" width="250" ></g:plusone></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Just a quick note of how we resolved an issue related to an upgrade to Date.</p>
+<p>We recently updated Date in our core distribution to date-7.x-2.9-beta1 and on one site, we had a number of date fields set up as just "Date". After the update, the display of all of these ended up 7 - 8 hours off -- when you edit the node, it shows up with the correct time, and when you display the node, it's off by 8 hours.</p></div></div></div><div class="field field-name-taxonomy-vocabulary-5 field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/tag/drupal">Drupal</a></div><div class="field-item odd"><a href="/tag/drupal-planet">Drupal Planet</a></div><div class="field-item even"><a href="/tag/updates">Updates</a></div><div class="field-item odd"><a href="/tag/date-module">Date Module</a></div><div class="field-item even"><a href="/tag/time-zone">Time zone</a></div></div></div>
+  </body>
+</html>
+

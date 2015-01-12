@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Nov 2014 07:38:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Nov 2014 07:38:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal 7 core release on Thursday, November 6 (or Friday, November 7)
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/448448
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal 7 core release on Thursday, November 6 (or Friday, November 7)</title>
+    <base href="https://groups.drupal.org/node/448448">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-type-datestamp field-field-start7">
+    <div class="field-items">
+            <div class="field-item odd">
+                      <div class="field-label-inline-first">
+              Start:&nbsp;</div>
+                    <span class="date-display-start">2014-11-06 (All day)</span><span class="date-display-separator"> - </span><span class="date-display-end">2014-11-07 (All day) America/New_York</span>        </div>
+        </div>
+</div>
+<div class="field field-type-text field-field-event-type">
+    <div class="field-items">
+            <div class="field-item odd">
+                    Sprint        </div>
+        </div>
+</div>
+<div class="field field-type-userreference field-field-organizers">
+      <div class="field-label">Organizers:&nbsp;</div>
+    <div class="field-items">
+            <div class="field-item odd">
+                    <a href="/user/14705" title="View user profile.">David_Rothstein</a>        </div>
+        </div>
+</div>
+<p>The monthly Drupal core bug fix release window is this week, and since it has been a while since the last one, I plan to release Drupal 7.33 during this window.  Normally, the release would be on a Wednesday, but this time it will be on either Thursday or Friday in order to give people a bit more time to test the latest code.  Per our release policy, this will be a bug fix release only (no security fixes).</p>
+<p>The final patches for 7.33 have been committed and the code is frozen (excluding documentation fixes and fixes for any regressions that may be found in the next couple days).  So, now is a wonderful time to update your development/staging servers to the latest 7.x code and help us catch any regressions in advance.</p>
+<p>There is one relevant change record for Drupal 7.33 which is listed below, as well as a new feature that is particularly worth highlighting. This is not the full list of changes, rather only a list of notable API additions and data structure changes that might affect a number of other modules, so it's a good place to start looking for any problems:</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2369141">Added entity_view_mode_prepare() to allow entity-providing modules to invoke hook_entity_view_mode_alter() correctly</a></li>
+<li>Added an optional sitewide theme debug mode, to provide contextual information in the page's HTML to theme developers. The theme debug mode is based on the one used with Twig in Drupal 8 and can be accessed by setting the "theme_debug" variable to TRUE (see the <a href="https://www.drupal.org/node/2307505">issue</a> for further details).</li>
+</ul>
+<p>You might also be interested in the tentative <a href="http://drupalcode.org/project/drupal.git/blob/refs/heads/7.x:/CHANGELOG.txt#l2">CHANGELOG.txt</a> for Drupal 7.33 and the corresponding list of important issues that will be <a href="http://drupal.org/project/issues/search/drupal?issue_tags=7.33%20release%20notes">highlighted in the Drupal 7.33 release notes</a>.</p>
+<p>If you do find any regressions, please report them in the <a href="http://drupal.org/project/issues/drupal?version=7.x">issue queue</a>.  Thanks!</p>
+<p>Upcoming release windows after this week include:</p>
+<ul>
+<li>Wednesday, November 19 (security release window)</li>
+<li>Wednesday, December 3 (bug fix release window)</li>
+</ul>
+<p>For more information on Drupal core release windows, see the documentation on <a href="http://drupal.org/documentation/version-info#when">release timing</a> and <a href="http://drupal.org/node/1173280">security releases</a>, and the <a href="http://groups.drupal.org/node/260803">discussion</a> that led to this policy being implemented.</p>
+  </body>
+</html>
+

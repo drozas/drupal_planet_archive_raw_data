@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 21 Sep 2014 19:45:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 21 Sep 2014 19:45:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Easy: The Big Picture: Drupal 8 Migrate in Core
+Content-Transfer-Encoding: 8bit
+Content-Base: http://feedproxy.google.com/~r/DrupalEasy/~3/AYcpfjILlEU/big-picture-drupal-8-migrate-core
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Easy: The Big Picture: Drupal 8 Migrate in Core</title>
+    <base href="http://feedproxy.google.com/~r/DrupalEasy/~3/AYcpfjILlEU/big-picture-drupal-8-migrate-core">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><img src="http://drupaleasy.com/sites/drupaleasy.com/files/wildebeest-migration-3165377.jpg" alt="Wildebeest Migration" /></p>
+<p>Migrating from major version to major version of Drupal core has always been a significantly large task for all but the simplest sites. The upgrade path that has traditionally been part of Drupal core has always been limited in what it can do, so most sites were forced to use alternative methods to migrate configuration and content. Sometimes these migrations were manual, sometimes automated, and most often a combination of the two.</p>
+<p>Drupal 8 aims to greatly reduce the friction of migrating sites from Drupal 6 and Drupal 7 by adopting a proven and <strong>extensible</strong> approach to site migrations. The <a href="https://drupal.org/project/migrate">Migrate module</a> has been the go-to tool for migrating a large number of sites to Drupal 7 from earlier versions of Drupal as well as from other content management systems (including custom ones.)</p>
+<p>This blog post aims to provide an overview of how the migration system in Drupal 8 works, our current progress, and how new contributors can get involved. The Migrate in Core initiative began in earnest about a year ago at <a href="https://prague2013.drupal.org">DrupalCon Prague</a>, when it was decided to use some code and concepts from the <a href="https://drupal.org/project/migrate">Migrate</a> and <a href="https://www.drupal.org/project/migrate_d2d">Drupal-to-Drupal Data Migration</a> modules as a starting point for a new and improved upgrade path.</p>
+<p>At the current time, the Drupal 6 to Drupal 8 migration is almost complete, while the Drupal 7 to Drupal 8 migration is just getting started. There are a few blocking issues that we're trying to get past in the next couple of weeks (including files migration and link field migration). We feel that we'll be able to leverage much of the work we've done on the Drupal 6 to Drupal 8 migration for the Drupal 7 to Drupal 8 migration. In fact, we have <a href="https://www.drupal.org/node/2181257">a great issue for a new contributor to help us kick of the Drupal 7 work</a> just waiting for someone to tackle.</p>
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description rdf:about="http://drupaleasy.com/blogs/ultimike/2014/09/big-picture-drupal-8-migrate-core" dc:identifier="http://drupaleasy.com/blogs/ultimike/2014/09/big-picture-drupal-8-migrate-core" dc:title="The Big Picture: Drupal 8 Migrate in Core" trackback:ping="http://drupaleasy.com/trackback/696" />
+</rdf:RDF>
+-->
+<p><a href="http://drupaleasy.com/blogs/ultimike/2014/09/big-picture-drupal-8-migrate-core" target="_blank">read more</a></p><div class="feedflare">
+<a href="http://feeds.feedburner.com/~ff/DrupalEasy?a=AYcpfjILlEU:sVP1nSq9HuE:yIl2AUoC8zA"><img src="http://feeds.feedburner.com/~ff/DrupalEasy?d=yIl2AUoC8zA" border="0"></img></a> <a href="http://feeds.feedburner.com/~ff/DrupalEasy?a=AYcpfjILlEU:sVP1nSq9HuE:qj6IDK7rITs"><img src="http://feeds.feedburner.com/~ff/DrupalEasy?d=qj6IDK7rITs" border="0"></img></a>
+</div><img src="http://feeds.feedburner.com/~r/DrupalEasy/~4/AYcpfjILlEU" height="1" width="1"/>
+  </body>
+</html>
+

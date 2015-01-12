@@ -1,0 +1,203 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 16 Nov 2013 00:02:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 16 Nov 2013 00:02:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Jimmy Berry: Drupal integration module for Google App Engine
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.boombatower.com/drupal-integration-module-google-app-engine
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Jimmy Berry: Drupal integration module for Google App Engine</title>
+    <base href="http://blog.boombatower.com/drupal-integration-module-google-app-engine">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Since posting <a href="/drupal-google-app-engine">Drupal on Google App Engine</a> the App Engine team has been working hard to identify and improve many of the troublesome areas identified in the original post, other external sources, and further internal discussions. In addition, I have developed a <a href="https://drupal.org/project/google_appengine">Drupal integration module for Google App Engine</a>. The combination of the integration module and the work done internally provides a more compelling Drupal experience on App Engine.</p>
+
+<p>For those of you who are not sure <a href="https://developers.google.com/appengine/features">what features App Engine provides</a> or <a href="https://developers.google.com/appengine/whyappengine">why to consider App Engine</a> have a look at the reference material. Getting started is also easier than ever as the whitelist has been removed and the SDK comes bundled with PHP. The rest of this post will focus on what improvements have been made, what the integration provides, and how to make use of it.</p>
+
+<p>To see a functioning Drupal site making use of the App Engine module and the Memcache module see my <a href="https://boombatower-drupal.appspot.com/">demo site</a>. The demo site includes an example of a file field served out of Google Cloud Storage.</p>
+
+<p><em>If you are just interested in making use of the integration visit the <a href="https://drupal.org/project/google_appengine">Google App Engine Drupal project</a>, have a look at the included <a href="http://drupalcode.org/project/google_appengine.git/blob_plain/refs/heads/7.x-1.x:/README.txt">README</a> and/or the Getting started section of this post. The second half covers some technical details on the implementation for those who are interested.</em></p>
+
+<!--break-->
+
+<h1>Getting started</h1>
+
+<p>The preferred method of developing for App Engine is to work locally <a href="https://developers.google.com/appengine/docs/php/gettingstarted/installing">using the SDK</a> and the included development server. Once the site is ready it can be <a href="https://developers.google.com/appengine/docs/php/gettingstarted/uploading">uploaded to App Engine</a>.</p>
+
+<p>You can choose to skip the local development setup and work directly on App Engine, but you will still need the SDK setup for uploading the app.
+Regardless, there are a number of ways to get a hold of Drupal and the integration module.</p>
+
+<ul>
+<li>all-in-one download</li>
+<li>drush make</li>
+<li>manual</li>
+</ul>
+
+<h2>All-in-one download</h2>
+
+<p>Simply download the <a href="https://github.com/boombatower/drupal-appengine/releases/tag/7.x-appengine-full-1.0">full release</a> containing a patched Drupal core, Google App Engine module, and <a href="http://drupal.org/project/memcache">Memcache</a> module.</p>
+
+<p>Extract the files and enjoy.</p>
+
+<h2>Drush make</h2>
+
+<p>The App Engine module includes <a href="https://github.com/drush-ops/drush">Drush</a> make scripts. There are two profiles: minimal using drupal.make; and full (to include more going forward) using drupal-full.make. Only the latter contains the memcache module.</p>
+
+<p>Depending on which profile is desired, invoke the appropriate command.</p>
+
+<div class="geshifilter"><pre class="bash geshifilter-bash" style="font-family:monospace;">$ drush make http://drupalcode.org/project/google_appengine.git/blob_plain/refs/heads/7.x-1.x:/root/drupal-full.make
+$ drush make http://drupalcode.org/project/google_appengine.git/blob_plain/refs/heads/7.x-1.x:/root/drupal.make</pre></div>
+
+<h2>Manual</h2>
+
+<p>Obviously, the components can be downloaded and manually assembled as well.</p>
+
+<h1>Drupal installation</h1>
+
+<p>Follow the <a href="https://drupal.org/documentation/install">normal process for installing Drupal</a>. Keep in mind that the Drupal files will not be writable on App Engine so any changes to settings.php or any other modules configuration will need to be made prior to upload. See the <em>SETTINGS.PHP</em> section of the <a href="http://drupalcode.org/project/google_appengine.git/blob_plain/refs/heads/7.x-1.x:/README.txt">README</a> for details on setting up the settings.php file for development against the local server and production App Engine.</p>
+
+<p>The gist of the comments is to use the following for database credentials, filling in the {} sections.</p>
+
+<div class="codeblock geshifilter"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">if(</span><span style="color: #0000BB">strpos</span><span style="color: #007700">(</span><span style="color: #0000BB">$_SERVER</span><span style="color: #007700">[</span><span style="color: #DD0000">'SERVER_SOFTWARE'</span><span style="color: #007700">],&nbsp;</span><span style="color: #DD0000">'Google&nbsp;App&nbsp;Engine'</span><span style="color: #007700">)&nbsp;!==&nbsp;</span><span style="color: #0000BB">false</span><span style="color: #007700">)&nbsp;{<br />&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Cloud&nbsp;SQL&nbsp;database&nbsp;credentials.<br />&nbsp;&nbsp;</span><span style="color: #0000BB">$databases</span><span style="color: #007700">[</span><span style="color: #DD0000">'default'</span><span style="color: #007700">][</span><span style="color: #DD0000">'default'</span><span style="color: #007700">]&nbsp;=&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'database'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'{DATABASE}'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'username'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'root'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'password'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'unix_socket'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'/cloudsql/{SOME_PROJECT}:{DATABASE}'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'port'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'driver'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'mysql'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'prefix'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">,<br />&nbsp;&nbsp;);<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Local&nbsp;database&nbsp;credentials.<br />&nbsp;&nbsp;</span><span style="color: #0000BB">$databases</span><span style="color: #007700">[</span><span style="color: #DD0000">'default'</span><span style="color: #007700">][</span><span style="color: #DD0000">'default'</span><span style="color: #007700">]&nbsp;=&nbsp;array(<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'database'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'{DATABASE}'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'username'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'{USERNAME}'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'password'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'{PASSWORD}'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'host'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'localhost'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'port'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'driver'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">'mysql'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #DD0000">'prefix'&nbsp;</span><span style="color: #007700">=&gt;&nbsp;</span><span style="color: #DD0000">''</span><span style="color: #007700">,<br />&nbsp;&nbsp;);<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<h2>Memcache module</h2>
+
+<p>If you choose to make use of the Memcache module be sure to follow the <a href="https://drupal.org/node/1131468">setup instructions</a>. For the default setup simply add the following lines to the bottom of settings.php.</p>
+
+<div class="codeblock geshifilter"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$conf</span><span style="color: #007700">[</span><span style="color: #DD0000">'cache_backends'</span><span style="color: #007700">][]&nbsp;=&nbsp;</span><span style="color: #DD0000">'sites/all/modules/memcache/memcache.inc'</span><span style="color: #007700">;<br /></span><span style="color: #FF8000">//&nbsp;The&nbsp;'cache_form'&nbsp;bin&nbsp;must&nbsp;be&nbsp;assigned&nbsp;no&nbsp;non-volatile&nbsp;storage.<br /></span><span style="color: #0000BB">$conf</span><span style="color: #007700">[</span><span style="color: #DD0000">'cache_class_cache_form'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #DD0000">'DrupalDatabaseCache'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$conf</span><span style="color: #007700">[</span><span style="color: #DD0000">'cache_default_class'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #DD0000">'MemCacheDrupal'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$conf</span><span style="color: #007700">[</span><span style="color: #DD0000">'memcache_key_prefix'</span><span style="color: #007700">]&nbsp;=&nbsp;</span><span style="color: #DD0000">'something_unique'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<p>Additionally, a <a href="https://gist.github.com/boombatower/7480017/raw/565456241f5c771d4784a9ef630d79f84c53fc8e/memcache-compressed.patch">patch</a> should be applied to define <span class="geshifilter"><code class="text geshifilter-text">MEMCACHE_COMPRESSED</code></span> which is missing from the App Engine implementation (fix upcoming).</p>
+
+<h2>App Engine module</h2>
+
+<p>To make use of the integration enable the App Engine module. In order to use Google Cloud Storage be sure to configure the default storage bucket by visiting <em>admin/config/media/file-system</em> in your Drupal site.</p>
+
+<p><img src="/sites/blog.boombatower.com/files/gcs-settings.png" alt="GCS settings" /></p>
+
+<p>If you choose to enable CSS/JS aggregation be sure to read through the serving options on <em>admin/config/development/performance</em> and choose the one that best suites your workflow.</p>
+
+<p><img src="/sites/blog.boombatower.com/files/gcs-aggregate.png" alt="GCS settings" /></p>
+
+<h1>Importing</h1>
+
+<p>If you are looking to import an existing site into Google App engine take a look at the following documentation links.</p>
+
+<ul>
+<li><a href="https://developers.google.com/cloud-sql/docs/import-export">Cloud SQL - Importing and Exporting Data</a>: for import existing Drupal database</li>
+<li><a href="https://developers.google.com/storage/docs/gsutil">gsutil</a> <a href="https://developers.google.com/storage/docs/gsutil/commands/cp">copy command</a>: for importing files directory to GCS</li>
+</ul>
+
+<p>Be sure to add and enable the App Engine module to the existing code base.</p>
+
+<h1>Integration details</h1>
+
+<p>The rest of the post will discuss the implementation details behind the integration. The features provided by the <a href="https://drupal.org/node/2131979">1.0 release of the App Engine module</a> are as follows. See <a href="/drupal-google-app-engine">previous blog post</a> for details on what led up to this work.</p>
+
+<ul>
+<li>App Engine mail service</li>
+<li>Cloud Storage</li>
+<li>Drupal core patch</li>
+</ul>
+
+<h2>App Engine mail service</h2>
+
+<p>Implements Drupal <a href="http://api.drupal.org/MailSystemInterface">MailSystemInterface</a> to make use of the App Engine mail service. The system email address will be used as the default from address and must be authorized to send mail. To configure the address, visit admin/config/system/site-information. For details on App Engine mail service, read <a href="https://developers.google.com/appengine/docs/php/mail/">this document</a>.</p>
+
+<p>For further details see the <a href="http://drupalcode.org/project/google_appengine.git/blob/HEAD:/google_appengine.mail.inc">mail integration code</a>.</p>
+
+<h2>Cloud Storage</h2>
+
+<p>The GAE team has provided a PHP <a href="http://php.net/streamwrapper">stream wrapper</a> which allows the use of standard PHP <a href="http://php.net/file">file handling functions</a> for interacting with GCS. The current implementation requires a storage bucket in the file path which means applications must be altered to not only make use of the stream wrapper, but include a bucket in all file paths. Additionally, Drupal requires the implementation of an additional set of methods (<a href="http://api.drupal.org/DrupalStreamWrapperInterface">DrupalStreamWrapperInterface</a>) on top of the default set required for all PHP stream wrappers.</p>
+
+<p>Instead of attempting to provide a format that allows the bucket to be optionally included, the best route forward is to provide a bucketless stream wrapper that always assumes no bucket is included and instead uses a default bucket. The new stream wrapper would sit atop the default stream wrapper and add the default bucket to all paths before handing off to the parent implementation. For lack of anything more descriptive the letter <em>b</em> (for bucketless) was appended to the <em>gs</em> stream wrapper. The examples below demonstrate the usage.</p>
+
+<ul>
+<li>gs://defaultbucket/dir1/dir2/file</li>
+<li>gsb://dir1/dir2/file (assumed defaultbucket and thus equivalent to first example)</li>
+</ul>
+
+<p>The additional stream wrapper solution means that paths can be identical to those used with a local file-system, but applications wishing to utilize more than one bucket can still do so.</p>
+
+<p>An additional implication of removing the bucket is that it allows for staging sites in different environments with the same set of files and corresponding data since a different bucket may be configured for the entire site instead of duplicated in each path and requiring changing. Obviously, those applications that choose to use more than one bucket will need to handle the cases themselves. This also aids in site migration as file paths stored in database do not need to be changed.</p>
+
+<p>In lieu of an upstream GAE PHP runtime user-space setting the Drupal module will provide a typical Drupal setting and make use of it in the bucketless stream wrapper. In the future, it would make sense for the Drupal setting to merely set the upstream user-space setting.</p>
+
+<h3>Implementation</h3>
+
+<p>The following is the class hierarchy used for implementing the bucketless and Drupal specific stream wrappers discussed in details below.</p>
+
+<p><img src="/sites/blog.boombatower.com/files/gcs-hierarchy.png" alt="GCS hierachy" /></p>
+
+<p>In order to facilitate a clean implementation and the possibility for moving upstream, while working within the restriction that the current stream wrapper is a final class, a rough facsimile, that acts as a proxy, of the base implementation is provided in order to allow for extension. The bucketless stream wrapper is built on top of the facsimile. This provides two basic stream wrapper implementations without any Drupal specific additions. The facsimile is implemented as a PHP <a href="http://php.net/trait">Trait</a> in order to allow for multiple inheritance as needed later for the Drupal wrappers.</p>
+
+<p>There are two levels of integration with Drupal that make sense to allow GCS to be used as comprehensively and easily as possible. The first is providing stream wrappers that implement the additional functionality defined by the DrupalStreamWrapperInterface and the second is overriding the default provided local file-system stream wrappers to use GCS. The first is required for the second, but also allows for the use of GCS in a specific manner vs catch-all local file-system.</p>
+
+<p>The three core stream wrappers (private://, public://, temporary://) are overridden via <a href="http://api.drupal.org/hook_stream_wrappers_alter">hook_stream_wrappers_alter()</a> to use the GCS wrappers. The storage bucket must be configured in order for the GCS integration to function properly. The standard mechanisms for controlling the file system setup (admin/config/media/file-system) can be used and file fields can be stored within one of the default stream wrappers.</p>
+
+<p>File MIME types are determined by <a href="http://api.drupal.org/DrupalLocalStreamWrapper::getMimeType">DrupalLocalStreamWrapper::getMimeType()</a> which consults <a href="http://api.drupal.org/file_mimetype_mapping">file_mimetype_mapping()</a> for a mapping of extensions to MIME types. The type is included in the stream context when writing files to GCS and as such the file will be served with the assigned MIME type.</p>
+
+<h2>Drupal core patch</h2>
+
+<p>In order to have Drupal run properly on Google App Engine a few changes need to be made to Drupal core. Those changes can be found in <a href="http://drupalcode.org/project/google_appengine.git/blob_plain/refs/heads/7.x-1.x:/root/core.patch">root/core.patch</a> which is managed in the <a href="https://github.com/boombatower/drupal-appengine">7.x-appengine branch</a> and rebased on top of Drupal core updates. The patch creates three other files within the appengine root directory that need to be placed in the Drupal root.</p>
+
+<ul>
+<li>Alters <a href="http://api.drupal.org/drupal_http_request">drupal_http_request()</a> in common.inc to work without requiring socket support.</li>
+<li>Alters <a href="http://api.drupal.org/drupal_move_uploaded_file">drupal_move_uploaded_file()</a> in includes/file.inc to support newly uploaded files from the $_FILES array being referenced via a stream wrapper. In the case of App Engine all uploaded files are uploaded through the GCS proxy, hosted on GCS, and thus start with gs://. The change should be generally useful and has been rolled as a <a href="https://drupal.org/node/2114885">core patch</a>.</li>
+<li>Alters <a href="http://api.drupal.org/file_upload_max_size">file_upload_max_size()</a> in includes/file.inc to only check PHP ini setting 'upload_max_filesize' instead of also checking 'post_max_size' which is normally relevant, but in the case of App Engine is not since all uploads are sent through GCS proxy and are thus not affected by app instance post limits.</li>
+<li>Alters <a href="http://api.drupal.org/drupal_tempnam">drupal_tempnam()</a> in includes/file.inc to manually simulate <a href="http://php.net/tempnam">tempnam()</a> since it is currently not supported by App Engine.</li>
+<li>Alters <a href="http://api.drupal.org/system_file_system_settings">system_file_system_settings()</a> in modules/system/system.admin.inc to include #wrapper_scheme property to be picked up by <a href="http://api.drupal.org/system_check_directory">system_check_directory()</a> in modules/system/system.module. Given that the current code voids using the stream wrappers this is technically a bug and is a candidate for being fixed in Drupal core as well.</li>
+<li>Alters <a href="http://api.drupal.org/system_requirements">system_requirements()</a> in modules/system/system.install to skip the directory check since the GCS integration will not be loaded until the App Engine module is enabled.</li>
+</ul>
+
+<p>A number of the changes included in the patch are being looked at and will hopefully becoming unnecessary in the future. The following are also included in the patch as a convenience, but they do not alter Drupal core.</p>
+
+<ul>
+<li>Add <a href="http://drupalcode.org/project/google_appengine.git/blob_plain/refs/heads/7.x-1.x:/root/app.yaml">app.yaml</a> to root which provides basic information about the app to Google App Engine so that it can invoke Drupal properly.</li>
+<li>Add <a href="http://drupalcode.org/project/google_appengine.git/blob_plain/refs/heads/7.x-1.x:/root/php.ini">php.ini</a> to root which enables some php functions used by Drupal and turns on output buffering.</li>
+<li>Adds <a href="http://drupalcode.org/project/google_appengine.git/blob_plain/refs/heads/7.x-1.x:/root/wrapper.php">wrapper.php</a> to root which simulates <a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">Apache mod_rewrite</a> like behavior.</li>
+</ul>
+
+<h1>Aggregate CSS/JS</h1>
+
+<p>Since a local writable file-system is not available on Google App Engine for various reasons, the ability for Drupal to aggregate CSS and JS into combined files is restricted. There are three choices.</p>
+
+<ul>
+<li><p>Directly from static files (recommended, but requires proper setup)</p>
+
+<p>Serving from static files requires that the aggregate files be uploaded with the app. There are a couple of ways to achieve this some of which are better than others.</p>
+
+<ul>
+<li>Build site locally using the development server and generate the files locally. During upload the aggregate files will be present and included with app.</li>
+<li><p>Upload app and generate the files while running on App Engine and written to GCS. Download the files locally into the app and re-upload. This method means that your app may serve with out-of-date CSS or JS until you re-upload which can cause all sort of issues.</p>
+
+<p><a href="https://developers.google.com/storage/docs/gsutil">gsutil</a> makes it easy to download the css and js files from GCS.</p>
+
+<p>Run the following with the relevant values filled in.</p></li>
+</ul></li>
+</ul>
+
+<div class="geshifilter"><pre class="bash geshifilter-bash" style="font-family:monospace;">./gsutil cp -R gs://{BUCKET}/sites/default/files/css {~/path/to/drupal}/sites/default/files/
+./gsutil cp -R gs://{BUCKET}/sites/default/files/js {~/path/to/drupal}/sites/default/files/</pre></div>
+
+<ul>
+<li><p>From GCS using Drupal router as proxy (default)</p>
+
+<p>By default, aggregate files are served via a Drupal router which acts as a GCS proxy. The proxy should always work without any additional configuration, but this will consume instance hours for serving static aggregate resources.</p></li>
+<li><p>Directly from GCS</p>
+
+<p>Serving directly from GCS does not require uploading static files with the app, but can cause difficulties since resources referenced from CSS will need to be uploaded to GCS as well (or referenced using an absolute URL). Also note that that the CSS and JS files will be served from a different domain which may cause complications.</p></li>
+</ul>
+
+<h1>Closing</h1>
+
+<p>There are areas that could be improved and I plan to continue working so stay tuned. If you have any ideas or want to pitch in you may do so in the <a href="https://drupal.org/project/issues/google_appengine">Google App Engine issue queue</a>. As always I look forward to your feedback.</p>
+</div></div></div><div class="field field-name-taxonomy-vocabulary-2 field-type-taxonomy-term-reference field-label-inline clearfix"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0"><a href="/taxonomy/term/2">drupal</a></li><li class="taxonomy-term-reference-1"><a href="/tags/google-app-engine">google app engine</a></li></ul></div>
+  </body>
+</html>
+

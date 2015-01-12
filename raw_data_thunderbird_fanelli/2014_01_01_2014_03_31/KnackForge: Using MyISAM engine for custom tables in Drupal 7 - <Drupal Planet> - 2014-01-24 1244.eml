@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 24 Jan 2014 11:44:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 24 Jan 2014 11:44:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Using MyISAM engine for custom tables in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/ganesan/using-myisam-engine-custom-tables-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Using MyISAM engine for custom tables in Drupal 7</title>
+    <base href="http://knackforge.com/blog/ganesan/using-myisam-engine-custom-tables-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Drupal 7 uses <a href="http://en.wikipedia.org/wiki/InnoDB" target="_blank">InnoDB</a> as default MySQL engine for all tables in database. Innodb is a better option for processing large volume of data. It gives good support for <a href="http://en.wikipedia.org/wiki/ACID">ACID</a> property, however there are some cases where the InnoDB falls short of ones expectation. Some common examples includes count queries, memory use of Innodb,etc., see <a href="http://www.mysqlperformanceblog.com/2006/12/01/count-for-innodb-tables/">here</a> to know more.</p></div></div></div>
+  </body>
+</html>
+

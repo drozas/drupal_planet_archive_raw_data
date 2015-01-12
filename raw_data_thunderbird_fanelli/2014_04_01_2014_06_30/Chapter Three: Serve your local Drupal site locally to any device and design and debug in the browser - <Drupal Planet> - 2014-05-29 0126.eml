@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Serve your local Drupal site locally to any device and design and debug in the browser
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/serve-your-local-drupal-site-locally-any-device-and-design-and-debug-browser%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Serve your local Drupal site locally to any device and design and debug in the browser</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/serve-your-local-drupal-site-locally-any-device-and-design-and-debug-browser%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Want to test a website on your local machine and on a variety of other devices before you host it? <a href="https://www.lullabot.com/blog/article/testing-local-drupal-sites-multiple-devices">This post from Lullabot</a> explains how you can serve up a site you’re working on locally with a service called <a href="http://xip.io/">xip.io</a>.</p><br />
+<br />
+<p><!--break--></p><br />
+<br />
+<h3>Using xip.io</h3><br />
+<br />
+<p>In a nutshell, xip.io runs a custom DNS server on the public Internet. When your computer looks up a xip.io domain, the xip.io DNS server extracts the IP address from the domain and sends it back in the response. Anyone on your local network can visit the site on any device with a web browser.</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://chapterthree.com/sites/default/files/imagecache/500px_wide/xio.png"></p><br />
+<br />
+<h3>Debug and design in the browser</h3><br />
+<br />
+<p>Debugging and refining your local site design is then a breeze on devices running the Android OS. Simply connect your Android device to your computer while in USB debugging mode and then go to Menu&gt;Tools&gt;Inspect devices and select your device. Next, load the Chrome browser on your device running Android and navigate to your local site.</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://chapterthree.com/sites/default/files/imagecache/500px_wide/screencast1.png"></p><br />
+<br />
+<p>You will then be able to debug and modify elements on the page with the inspector tool in your desktop browser and see the results update on your mobile device in real time. Here’s an indepth overview of the debugging process: <a href="https://developers.google.com/chrome-developer-tools/docs/remote-debugging">Chrome Developer Tools - Remote Debugging</a></p><br />
+<br />
+<p>The debugging process is limited to the Chrome browser and is only compatible with devices running the Android OS. It’s not a complete debugging solution, but certainly a great tool to get you going in the right direction. What other tools do you like for debugging mobile sites and/or designing in the browser? Are there any similar tools for working with iOS?</p><br />
+  </body>
+</html>
+

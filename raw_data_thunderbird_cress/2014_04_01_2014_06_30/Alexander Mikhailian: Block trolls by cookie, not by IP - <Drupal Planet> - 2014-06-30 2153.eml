@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Jun 2014 20:53:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Jun 2014 20:53:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Alexander Mikhailian: Block trolls by cookie, not by IP
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mikhailian.mova.org/node/248
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Alexander Mikhailian: Block trolls by cookie, not by IP</title>
+    <base href="http://mikhailian.mova.org/node/248">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If you troll has a dynamic IP address, send him a cookie and check for it in all subsequent page requests, something along the following lines:</p>
+<pre class="brush: php">global $user;
+if ($user-&gt;uid == 12345) {
+  setcookie("_utmc_c", "fs442428977", time()+31557600);
+}
+if (!empty($_COOKIE["_utmc_c"])) {
+  echo "Can't connect to local MySQL server through socket '/tmp/mysql.sock";
+  exit();
+}
+</pre></div></div></div>
+  </body>
+</html>
+

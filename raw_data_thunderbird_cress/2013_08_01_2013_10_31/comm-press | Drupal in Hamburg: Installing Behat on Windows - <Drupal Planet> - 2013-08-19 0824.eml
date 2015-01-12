@@ -1,0 +1,103 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 19 Aug 2013 07:24:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 19 Aug 2013 07:24:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: Installing Behat on Windows
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/installing-behat-windows
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: Installing Behat on Windows</title>
+    <base href="http://comm-press.de/en/blog/installing-behat-windows">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Behat for everyone</h2>
+By Frank Ralf
+<p>After reading <a href="http://comm-press.de/en/blog/generic-web-behat-test-setup">"Generic Web Behat Test Setup"</a> and <a href="https://groups.drupal.org/node/310873">"Setting up Behat on Windows"</a> I thought I give it try and install Behat on my Windows machine without resorting to Cygwin. I'm using XAMPP 1.7.7 on Windows 7 (64 bit).</p>
+
+<h3>Install Composer</h3>
+
+<p>The first thing you have to do is installing <a href="http://getcomposer.org/">Composer</a>, a dependency manager for PHP which will take care of installing Behat and all its dependencies. Installing Composer on Windows is quite easy as there is an installer available.</p>
+
+<ol>
+<li>Download the Windows installer from <a href="http://getcomposer.org/download/">http://getcomposer.org/download/</a>.</li>
+<li>Run the installer. Composer will look for a php.exe file and check your PHP version.</li>
+<li>Composer will modify your system path variable so that you can run Composer from any directory.</li>
+</ol>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130813/composer_setup_php_settings.png" rel="lightbox[field_picture][Composer setup]" title="Composer setup"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130813/composer_setup_php_settings.png?itok=tcQohuTI" width="503" height="388" alt="Composer setup" title="Composer setup" /></a></div></div></div></div></p>
+
+<p>You now should be able to run Composer from any directory. This will give you the following output.</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130813/running_composer.png" rel="lightbox[field_picture][Running Composer]" title="Running Composer"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130813/running_composer.png?itok=AgVpMTkV" width="800" height="674" alt="Running Composer" title="Running Composer" /></a></div></div></div></div></p>
+
+<h3>Create a Behat directory</h3>
+
+<p>Behat is an independent PHP command line tool so it need not be installed on your web server. I prefer installing it separately in a directory from which I also run batch scripts and the like, e.g. <em>C:\myprograms</em>. (You better do not install Behat in the usual <em>C:\Program Files</em> folder as Windows is quite strict regarding write access to this folder.)</p>
+
+<h3>Create a composer.json file</h3>
+
+<p>I took just the one recommended at <a href="http://docs.behat.org/cookbook/behat_and_mink.html">http://docs.behat.org/cookbook/behat_and_mink.html</a> and put it in <em>C:\myprograms\behat</em>:</p>
+
+<div class="codeblock"><code>{<br />&nbsp;&nbsp;&nbsp; &quot;require&quot;: {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/behat&quot;: &quot;2.4.*@stable&quot;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/mink&quot;: &quot;1.4.*@stable&quot;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/mink-extension&quot;: &quot;*&quot;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/mink-goutte-driver&quot;: &quot;*&quot;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/mink-selenium2-driver&quot;: &quot;*&quot;<br />&nbsp;&nbsp;&nbsp; },<br />&nbsp;&nbsp;&nbsp; &quot;minimum-stability&quot;: &quot;dev&quot;,<br />&nbsp;&nbsp;&nbsp; &quot;config&quot;: {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;bin-dir&quot;: &quot;bin/&quot;<br />&nbsp;&nbsp;&nbsp; }<br />}</code></div>
+
+<h3>Run Composer to install Behat</h3>
+
+<p>Now you can give it a try and run composer from the Behat directory:
+<code>C:\myprograms\behat&gt;composer install</code></p>
+
+<p>Chances are that you get the following error message:</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130813/composer_git_not_found.png" rel="lightbox[field_picture][Composer - Git not found]" title="Composer - Git not found"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130813/composer_git_not_found.png?itok=1x6NhGYj" width="787" height="231" alt="Composer - Git not found" title="Composer - Git not found" /></a></div></div></div></div></p>
+
+<p>So we now know that Composer fetches files via Git so your shell must be aware of Git. So let's give it another try, this time using a Git shell (in my case the Windows PowerShell).</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130814/php_extension_curl_is_missing.png" rel="lightbox[field_picture][PHP extension Curl is missing]" title="PHP extension Curl is missing"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130814/php_extension_curl_is_missing.png?itok=6WTkorU5" width="800" height="603" alt="PHP extension Curl is missing" title="PHP extension Curl is missing" /></a></div></div></div></div></p>
+
+<p>This time Composer complains about the missing PHP Curl extension. I checked my php.ini file and the line <code>extension=php_curl.dll</code> was commented out. So I uncommented it.</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130814/php_openssl_extension_must_be_enabled.png" rel="lightbox[field_picture][OpenSSL must be enabled]" title="OpenSSL must be enabled"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130814/php_openssl_extension_must_be_enabled.png?itok=9FeZZkNe" width="800" height="660" alt="OpenSSL must be enabled" title="OpenSSL must be enabled" /></a></div></div></div></div></p>
+
+<p>Now we get a bit further but this time it's the missing OpenSSL extension which throws an error. So I also uncomment the line <code>extension=php_openssl.dll</code></p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130814/behat_successfull_install.png" rel="lightbox[field_picture][Behat - successfull installation]" title="Behat - successfull installation"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130814/behat_successfull_install.png?itok=-B2Ixsx1" width="800" height="732" alt="Behat - successfull installation" title="Behat - successfull installation" /></a></div></div></div></div></p>
+
+<h4>Requirements</h4>
+
+<p>The information regarding the requirements for running Behat differ slightly but these are the ones which finally got me going on Windows:</p>
+
+<ul>
+<li>PHP 5.3.1</li>
+<li>Git </li>
+<li>PHP Curl extension</li>
+<li>PHP OpenSSL extension</li>
+</ul>
+
+<p>See also <a href="http://www.dspeak.com/drupalextension/requirements.html">http://www.dspeak.com/drupalextension/requirements.html</a></p>
+
+<h3>Add Behat path to your system path variable</h3>
+
+<p>A last step is required to be able to run Behat from any directory, namely your Behat project directories: <a href="http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx">add the Behat path to your system path variable</a>. The path should point to Behat's bin directory: "C:\myprograms\behat\bin". Now Behat could be run from anywhere. If you give it a try and just run <em>behat</em> you probably will see something like this:</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130815/behat_dry_run.png" rel="lightbox[field_picture][Behat dry run]" title="Behat dry run"><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130815/behat_dry_run.png?itok=ehmAWNmt" width="800" height="255" alt="Behat dry run" title="Behat dry run" /></a></div></div></div></div></p>
+
+<p>That's because you probably haven't run Behat from a Behat project directory. Better try <em>behat --help</em> or <em>behat --version</em> to see that you indeed installed Behat correctly.</p>
+
+<h3>Next steps</h3>
+
+<p>Now that you have set up Behat on your local Windows machine you can run your first Behat test. I would suggest trying the example from <a href="http://comm-press.de/en/blog/generic-web-behat-test-setup">http://comm-press.de/en/blog/generic-web-behat-test-setup</a>.</p>
+
+<h3>Further resources</h3>
+
+<ul>
+<li>Official Behat documentation: <a href="http://docs.behat.org">http://docs.behat.org</a></li>
+<li>Behat Cheat Sheet: <a href="http://blog.lepine.pro/wp-content/uploads/2012/03/behat-cheat-sheet-en.pdf">http://blog.lepine.pro/wp-content/uploads/2012/03/behat-cheat-sheet-en.pdf</a></li>
+</ul>
+  </body>
+</html>
+

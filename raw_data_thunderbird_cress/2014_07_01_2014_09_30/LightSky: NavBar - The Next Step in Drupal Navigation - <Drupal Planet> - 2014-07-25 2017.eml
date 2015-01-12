@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 25 Jul 2014 19:17:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 25 Jul 2014 19:17:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LightSky: NavBar - The Next Step in Drupal Navigation
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.lightsky.com/blog/navbar-next-step-drupal-navigation
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LightSky: NavBar - The Next Step in Drupal Navigation</title>
+    <base href="http://www.lightsky.com/blog/navbar-next-step-drupal-navigation">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>So I am not kidding <a href="https://www.drupal.org/project/navbar" target="_blank">NavBar</a> is literally the next step in Drupal navigation, it is being used in core for Drupal 8.  This is great news because not only does it mean that the Drupal 8 core will contain some much needed improvements to the administration navigation scheme.  Back end user improvements like this are perhaps the thing that makes me most excited about what Drupal 8 is bringing to the table.  Lets look a little bit at NavBar.</p>
+<p><strong>What You Get</strong></p>
+<p><img alt="NavBar" src="http://www.lightsky.com/sites/default/files/create_article_drupal_and_web_design_services.png" style="width: 300px; height: 319px; float: left; margin: 10px;" />Pretty simply put NavBar gets you a responsive administration toolbar for your Drupal users.  It really isn’t going to do anything for what your visitors see, but your content creators, site administrators, and even site builders will see this as a much welcomed change.  NavBar is first and foremost completely responsive, and for those of you who use the traditional Drupal administration toolbar on your mobile phone oh boy are you excited.  The standard Drupal 7 install, not to mention Drupal 6, doesn’t offer the most mobile friendly administrative experience.  NavBar helps resolve this.  NavBar also offers a more flexible navigation option.  You are able to use NavBar at the top of your site above the header, or as a sidebar on the left hand side.  The customization of the tool, really helps set it apart.</p>
+<p>Not only is the mobile experience improved, but there is a much cleaner and professional looking image presented than the Drupal 7 administration menu.  Though this might not seem like much, for those of us who build Drupal sites for clients this is a big deal.  Image is everything, and it is tough to sell Drupal’s out of the box usability against WordPresses out of the box usability.  We have a lot of admin usability improvements in our standard Drupal installation to help combat this, but now NavBar is another one.  Users almost expect clean and friendly design, and now they can get it. </p>
+<p><strong>Installation</strong></p>
+<p>I am not going to lie, NavBar in its current state is a bit of installation work, but most people should be able to figure it out if they have a little understanding for how Drupal is structured. </p>
+<p>The first step for me is downloading and installing the project.  I think that drush is the best tool for installing and enabling projects like this, but particularly for NavBar I suggest installing the project before moving to some of the other steps.  The reason is that once the project is installed and enabled it will put some indicators on your /admin/reports/status page that can really help you troubleshoot in the next steps.<img alt="Admin Reports Page for Nav Bar" src="http://www.lightsky.com/sites/default/files/status_report_curl_troy_0.png" style="width: 500px; height: 90px; float: right; margin: 10px;" /></p>
+<p>Once the NavBar module is enabled, you can visit the site’s status report using the path above and notice that there are a three statuses now associated with NavBar, and this is where the fun comes in.  NavBar requires the installation of three libraries (Modernizr, Backbone, and Underscore), and you may have them already installed, or at least some of them.  Using the status page at this point will help you find out if you have them already installed and ready to run, or whether you need to install them.<br />
+	If you find that you need to install them, the process isn’t all that complicated, there are some helpful guides on the <a href="https://www.drupal.org/project/navbar">project page</a> that will point you in the right direction.  Or <a href="http://www.lightsky.com/simple-contact-form">give us a shout</a> we would be happy to help.  Essentially it is a matter of downloading the libraries, or cloning their respective repositories, and moving them to your libraries folder in the Drupal installation.  The Modernizr library requires you to follow a link and download a specific minimized version of the library but there are specific instructions to follow on the project page to help guide you here, so I won’t reinvent the wheel here.  The instructions are pretty thorough, and relatively simple. </p>
+<p>Once you have the libraries installed you can disable your regular administration toolbar and you are off and running.  If you follow those steps and still aren’t having any luck, the site status report is the best place to look.  Most likely it is an error with the libraries that were installed, and that report will point you to which library is causing trouble, and maybe even what the problem is.</p>
+<p>We have fallen in love with NavBar, and it has started making a huge impact on our clients and how well they like using Drupal.  We highly suggest you use it.</p>
+<h3>
+	For more tips like these, <a href="http://www.lightsky.com/lightsky-social">follow us</a> on social media or subscribe for free to our <a href="http://www.lightsky.com/rss">RSS feed</a> and <a href="http://eepurl.com/dx_lj">newsletter</a>. You can also <a href="http://www.lightsky.com/simple-contact-form">contact us</a> directly or <a href="http://www.lightsky.com/request-consultation">request a consultation</a>. </h3>
+</div></div></div>
+  </body>
+</html>
+

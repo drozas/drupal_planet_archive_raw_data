@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 06 Jul 2014 22:56:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 06 Jul 2014 22:56:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Easier configuration development for Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/400
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Easier configuration development for Drupal 8</title>
+    <base href="http://www.drupal4hu.com/node/400">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>With <a href="https://drupal.org/project/config_devel">config_devel</a>, when you are editing a migration, you can just enter the name of the file being edited at <code>admin/config/config_devel</code> and on every request the module will check for changes and import the file into the active storage. The other direction works as well: say you are working on a contrib module and have a view. Provide the path of the file (this time in the auto export box) and on every change Drupal will automatically export. Once satisfied, just commit. Or perhaps you just want to follow what's in a config file as it's being edited -- provide sites/default/files/some.config.name.yml and it'll be right there on every save. </p>
+<p>Both import and export are doable manually with the config module core provides. But I think the automatism makes life easier and I hope the module will be popular among D8 developers. Finally, let me thank beejeebus for cooking up the module originally and handing it over to me despite he knew I will rewrite it from the ground up.<br />
+<img src="http://i.imgur.com/nnswkw9.png" /></p>
+  </body>
+</html>
+

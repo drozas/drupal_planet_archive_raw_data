@@ -1,0 +1,85 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 21 Jan 2014 06:39:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 21 Jan 2014 06:39:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Using and abusing the Configuration Management module for Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/using-and-abusing-the-configuration-management-module-for-drupal-7/?utm_source=rss&utm_medium=rss&utm_campaign=using-and-abusing-the-configuration-management-module-for-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Using and abusing the Configuration Management module for Drupal 7</title>
+    <base href="http://www.phase2technology.com/blog/using-and-abusing-the-configuration-management-module-for-drupal-7/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=using-and-abusing-the-configuration-management-module-for-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Just about any Drupal developer these days will be happy to do his or her share of moaning and groaning about the agony that is moving configuration between environments and keeping all of that stuff in code. The <a href="http://https://drupal.org/project/features">Features module</a> has helped tremendously with that, and as a result, it&#8217;s a whole new world compared to a few years ago. But this really isn&#8217;t the problem that Features was created to solve (which involves capturing and reusing nice little bundled-up &#8220;features&#8221; from site to site). As a result, some feel that Features may not be the ideal solution to the problem that it ends up getting used for in practice.</p>
+<p>A prime example is the <a href="https://drupal.org/project/configuration">Configuration Management</a> (&#8220;CM&#8221;) module for Drupal 7. Having taken some notes from the Drupal 8 CMI notebook, it&#8217;s specifically built for what many people use Feature for&#8211;exporting general site configuration to code and moving it between environments.</p>
+<h2>The &#8220;Bucket&#8221; List</h2>
+<p>With that in mind, there are a couple major differences between Features and Configuration. The first and most major difference is that Features is built with the assumption that config needs to be split up into separate, cohesive, neat little packaged modules, and CM just throws it all into one big bucket.</p>
+<p>There are a number of pros to the big bucket approach.</p>
+<ul>
+<li>No confusion about what config is where</li>
+<li>No tangled web of feature modules that depend on other feature modules</li>
+<li>No chance of one feature module overwriting the config from another</li>
+</ul>
+<p>But there are also a couple obvious disadvantages:</p>
+<ul>
+<li>Not possible to toggle individual sets of config for a specific use case (&#8220;features&#8221;)</li>
+<li>As such, not well suited for Drupal distributions that need to offer flexibility/modularity</li>
+<li>Putting that much stuff into one directory can feel a bit dirty</li>
+</ul>
+<h2>So why bother?</h2>
+<p>Given that CM is simpler and less confusing but at the cost of modularity and flexibility, it&#8217;s generally more useful for custom site builds than for general purpose Drupal distributions.</p>
+<p>If I&#8217;m a distribution, I need to be useful to as many people as possible (within reason). A big part of this is giving users the option to turn parts of me off if they don&#8217;t want them. If I&#8217;m using Features, that&#8217;s easy&#8211;just disable the module. With CM, it&#8217;s basically not possible outside of manually deleting the config items yourself from the GUI item by item or understanding how to edit the config files.</p>
+<p>However, if I&#8217;m a custom website for a client and I don&#8217;t need any parts of me to be bundle-able or easily toggled (which, if we&#8217;re honest, is accurate for the majority of client sites) and I&#8217;m more concerned with simplifying the development workflow, then I might be best off with CM.</p>
+<h2>Set &#8216;er up</h2>
+<p>There&#8217;s not much to do to get rolling with CM. All you really need to do is tell it where it can find your config directory. By default, this is sites/default/files/config but you can put it wherever you want in CM&#8217;s Settings tab. Once you have that pointing to a directory that&#8217;s writeable by the server you&#8217;re good to do your first export.</p>
+<p>Remember that for obvious reasons, the setting that controls the location of CM&#8217;s config directory is the only variable that cannot be exported by CM itself, because doing so would mean that on new installs, CM would not know where to look to find out where to look. Deep, right?</p>
+<p>So that means that if your goal is to capture all configuration in code, then you&#8217;ll have to store that single variable another way, such as in the &lt;code$conf&lt;/code&gt; array in settings.php or by setting it in a module&#8217;s update hook. That said, once Drupal knows where to look for config, any and all other variables and settings can be managed by it.</p>
+<h2>Let&#8217;s configify some config!</h2>
+<p>Let&#8217;s dive in and see how the CM module works. To start, head on over to <code>/admin/config/system/configuration/notracking</code> to view the list of components you can start keeping track of.</p>
+<p style="text-align: center;"><img class="aligncenter" style="width: 100%;" alt="" src="http://i.imgur.com/chtrVCT.png" /></p>
+<p>This brings up an important distinction in CM: the difference between tracking and exporting. The main thing to remember here is that tracking is what you&#8217;ll be doing almost all of the time. Exporting creates a little tarball of config for you to send over to someone else, but it&#8217;s useful day to day as a part of your workflow. Tracking, on the other hand, is where the magic happens. You&#8217;ll need to check boxes next to things you want to keep track of in config (content types, variables, permissions, etc.). In return, CM will keep an eye on all of those things so that it can easily export them to code on command when they change.</p>
+<p>With that in mind, let&#8217;s walk through the specific steps to make it happen.</p>
+<h3>GUI (non-drush) approach:</h3>
+<ol>
+<li>Go to admin/config/system/configuration/notracking and choose which “thing” you want to start tracking GUI changes to. Note that it automatically selects dependencies.</li>
+<li>Go make your changes in the GUI.</li>
+<li>When you’re ready to export and commit the config, go to admin/config/system/configuration/tracking and click “Write Activestore to Datastore”</li>
+<li>In your config directory, commit the new changes and push them to the remote repo for others to get.</li>
+</ol>
+<h3>Drush approach:</h3>
+<ol>
+<li>Run “drush config-get-non-tracked” to get a list of all non-tracked components, and find which one you want to start tracking.</li>
+<li>Run “drush config-start-tracking ” to start tracking it. It will automatically track dependencies as well.</li>
+<li>Go make your changes in the GUI.</li>
+<li>When you’re ready to export and commit the config, go to admin/config/system/configuration/tracking and click “Write Activestore to Datastore” (this unfortunately can’t be done in drush)</li>
+<li>In your config directory, commit the new changes and push them to the remote repo for others to get.</li>
+</ol>
+<p>Typically, the non-drush approach is a bit quicker and easier, but the drush approach can be handy, especially if scripting.</p>
+<h2>Let&#8217;s import our friends&#8217; configified config!</h2>
+<p>Importing config and updating our active store to match it is super simple.</p>
+<ol>
+<li>Pull in the latest config code from whatever repo you&#8217;re using.</li>
+<li>Run &#8220;drush config-sync&#8221; to sync the data store to the active store, or just run it in the GUI under the Synchronize tab.</li>
+</ol>
+<h2>What else do we have here?</h2>
+<p>All of that describes probably 95% of what you&#8217;ll be spending your time with if you use CM, but it&#8217;s not the whole picture. There are a few other things to be aware of:</p>
+<h3>&#8220;Migrate&#8221; tab</h3>
+<p>For times when you just want to let someone else quickly see a chunk of changes you&#8217;ve made without going to the trouble of syncing to the config directory and pushing the changes, you can click on over to the Migrate tab.</p>
+<p>Here, you can use the Export tool to select bits of config which will dump it all into a tarball. That tarball can in turn be consumed by the Import tool on another site to pull the config into the active store.</p>
+<h3>Spiffy diffs</h3>
+<p>If you install the <a href="https://drupal.org/project/diff">Diff module</a> you&#8217;ll be able to view diffs comparing the active store to the data store so that you can see what you&#8217;ll be exporting when you click the &#8220;Write Activestore To Datastore&#8221; button, or its opposite, the &#8220;Synchronize configurations&#8221; button.</p>
+<p>This is helpful in making sure you&#8217;re not exporting some test field you threw in or accidentally obliterating someone else&#8217;s config (which, if we&#8217;re honest, has happened to the best of us in one Features module or another).</p>
+<h3>Exclude configurations</h3>
+<p>For any environment specific configurations you don&#8217;t want to risk exporting and tracking, you can add it to the &#8220;Exclude configurations&#8221; option under the Settings tab. This is a pretty useful feature that can definitely same some headaches.</p>
+<h2>Let&#8217;s wrap this bad boy up</h2>
+<p>And there we have it&#8211;CM is a pretty nice alternative to Features. It&#8217;s certainly worth a look, wouldn&#8217;t you say?</p>
+<p>Check out this sweet guide to <a href="http://www.phase2technology.com/blog/drupal-gotchas-that-might-burn-a-lot-of-time/">solving 6 Drupal &#8220;gotchas&#8221;</a> by our own Peter cho!</p>
+  </body>
+</html>
+

@@ -1,0 +1,175 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 18 Jan 2014 21:31:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 18 Jan 2014 21:31:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Berliners blog: Dynamically define blocks in Drupal 8 with derivatives
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.dev030.com/posts/dynamically-define-blocks-drupal-8-derivatives
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Berliners blog: Dynamically define blocks in Drupal 8 with derivatives</title>
+    <base href="http://blog.dev030.com/posts/dynamically-define-blocks-drupal-8-derivatives">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>During the Drupal 8 port of my relatively new <a href="http://drupal.org/project/mefibs" rel="nofollow">Mefibs</a> module I realized that block creation in code got somewhat more complex than it used to be in Drupal 7 and earlier. It took me quite a while to figure out how this works, especially because there is not a lot of documentation for Drupal 8 yet. So I had to dig my way through core to see how it's done there and finally I got around it. The following is a comparison between how we used to do this in Drupal 7 and how it's done in Drupal 8.</p>
+<h3>Defining a single block</h3>
+<p>Let start with the ground work. In Drupal 8 blocks are now plugins. Defining a block in code is straight forward. You need to create a class located in <code>lib/Drupal/mymodule/Plugin/Block/MyModuleBlock.php</code> inside your module directory, containing:</p>
+<pre>
+&lt;?php
+
+/**
+ * @file
+ * Contains \Drupal\mymodule\Plugin\Block\MyModuleBlock.
+ */
+
+namespace Drupal\mymodule\Plugin\Block;
+use Drupal\block\BlockBase;
+
+/**
+ * Provides a Custom block.
+ *
+ * @Block(
+ *   id = "mymodule_block",
+ *   admin_label = @Translation("MyModule block"),
+ *   category = @Translation("MyModule")
+ * )
+ */
+class MyModuleBlock extends BlockBase {
+  /**
+   * Build the content for mymodule block.
+   */
+  public function build() {
+    return array(
+      '#markup' =&gt; 'My awesome content',
+    );
+  }
+}
+</pre><p>
+This creates a single block that outputs only the string "My awesome content". As you can see, there is little code. The annotation in the comment, which is a new concept in Drupal 8, informs the plugin system about our custom block:</p>
+<ul><li><strong>id</strong>: This defines the ID of the block which is used to identify the block. This is also used in HTML id attributes and class names.</li>
+<li><strong>admin_label</strong>: This designates the label used on the block configuration page.</li>
+<li><strong>category</strong>: This allows to control in which category on the block configuration page the block appears. You can use one of the existing categories or define a custom new one.</li>
+</ul><p>Your block plugin class will usually extend <a href="https://api.drupal.org/api/drupal/core%21modules%21block%21lib%21Drupal%21block%21BlockBase.php/class/BlockBase/8" rel="nofollow">BlockBase</a>. Inspecting this class will give you an idea of other methods that can be used to achieve specific goals, like access control or custom setting forms for the block. In order to fully define and display a block it is sufficient though to implement the <code>build()</code> method from <a href="https://api.drupal.org/api/drupal/core%21modules%21block%21lib%21Drupal%21block%21BlockPluginInterface.php/function/BlockPluginInterface%3A%3Abuild/8" rel="nofollow">BlockPluginInterface</a>.</p>
+<p>Voilà, there is the block. So this is the equivalent of implementing <code>hook_block_info()</code> and <code>hook_block_view()</code> in Drupal 7.</p>
+<h3>Defining multiple blocks</h3>
+<p>As you may notice though, this only defines a single block. There is only one class with a single <code>build()</code> method and no obvious way of extending this to support multiple instances of the same block type. In Drupal 7 blocks are defined in <code>hook_block_info()</code>, which returns an array of block description arrays. So it would have been sufficient to return multiple blocks in an array, keyed by the block id, like this:</p>
+<pre>
+function mymodule_block_info() {
+  $blocks = array();
+  $myblocks = array(
+    'mymodule_block_first' =&gt; t('MyModule Block: First'),
+    'mymodule_block_second' =&gt; t('MyModule Block: Second'),
+  );
+  foreach ($myblocks as $block_id =&gt; $block_label) {
+    $blocks[$block_id] = array(
+      'info' =&gt; $block_label,
+      'cache' =&gt; DRUPAL_NO_CACHE,
+    );
+  }
+  return $blocks;
+}
+</pre><p>
+In this example the available blocks are defined directly in the hook implementation, but they could also come from a database query or from another source, you name it. The important aspect is, that the logic to define multiple blocks was the same as for defining a single block. You just returned more of them. As they all had their proper block ids, which are passed to <code>hook_block_view()</code> or <code>hook_block_configure()</code> they could all be handled independently, but still be defined using the same logic.</p>
+<p>Now in Drupal 8 this got more complicated. It took me a while, but finally I found a simple example in the core system module that defines menu blocks. A menu block is structurally exactly what I was after: A block definition that adheres to the same logic, though it can be created by a user in the UI so that you never know in advance how many blocks there will be or what their block ids might be.</p>
+<p>That is where <a href="https://drupal.org/node/1653226" rel="nofollow">derivatives</a> appear on the scene. Might be that this is obvious for someone coming from a strong OO background, but I had never heard of them before, so they didn't catch my attention on the first screening of the core block implementations. For those of you who, just like me, do not know what derivatives are, I will cite a phrase from the documentation:<br /><cite><em>"Derivatives provide a simple way to expand a single plugin so that it can represent itself as multiple plugins in the user interface."</em></cite></p>
+<p>Gotcha! Cool, so how are they used? It boils down to this:</p>
+<ul><li>Create a new class called, let's say, <code>MyModuleBlock</code> and save that in <code>lib/Drupal/mymodule/Plugin/Derivative/MyModuleBlock.php</code>. This class must implement <code><a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Component%21Plugin%21Derivative%21DerivativeInterface.php/interface/DerivativeInterface/8" rel="nofollow">DerivativeInterface</a></code> and can extend <a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Component!Plugin!Derivative!DerivativeBase.php/class/DerivativeBase/8" rel="nofollow">DerivativeBase</a> for convenience.</li>
+<li>Implement the interface method <code>getDerivativeDefinitions()</code>. You can also implement <code>getDerivativeDefinition()</code> but it's usually not necessary when the derivative class extends <code>DerivativeBase</code>.</li>
+<li>Reference the derivative class in the annotation of your block plugin class.</li>
+<li>In the block plugin class, use <code>$this-&gt;getDerivativeId()</code> wherever you need the actual id of the block instance that is processed.</li>
+</ul><p>To extend the first example, the block plugin class would look something like this:</p>
+<pre>
+&lt;?php
+
+/**
+ * @file
+ * Contains \Drupal\mymodule\Plugin\Block\MyModuleBlock.
+ */
+
+namespace Drupal\mymodule\Plugin\Block;
+use Drupal\block\BlockBase;
+
+/**
+ * Provides a Custom block.
+ *
+ * @Block(
+ *   id = "mymodule_block",
+ *   admin_label = @Translation("MyModule block"),
+ *   category = @Translation("MyModule"),
+ *   derivative = "Drupal\mymodule\Plugin\Derivative\MyModuleBlock"
+ * )
+ */
+class MyModuleBlock extends BlockBase {
+  /**
+   * Build the content for mymodule block.
+   */
+  public function build() {
+    $block_id = $this-&gt;getDerivativeId();
+    return array(
+      '#markup' =&gt; mymodule_build_block_content($block_id),
+    );
+  }
+}
+</pre><p>
+It didn't change much. We added the derivative class to the annotation and we retrieve the block id to pass it on to a function that retrieves content based on the given argument. That's it.</p>
+<p>Now for the derivative class, we will simply use the logic from the earlier Drupal 7 example:</p>
+<pre>
+&lt;?php
+
+/**
+ * @file
+ * Contains \Drupal\mymodule\Plugin\Derivative\MyModuleBlock.
+ */
+
+namespace Drupal\mymodule\Plugin\Derivative;
+use Drupal\Core\Plugin\Discovery\ContainerDerivativeInterface;
+
+/**
+ * Provides block plugin definitions for mymodule blocks.
+ *
+ * @see \Drupal\mymodule\Plugin\Block\MyModuleBlock
+ */
+class MyModuleBlock extends DerivativeBase implements ContainerDerivativeInterface {
+  /**
+   * {@inheritdoc}
+   */
+  public function getDerivativeDefinitions(array $base_plugin_definition) {
+    $myblocks = array(
+      'mymodule_block_first' =&gt; t('MyModule Block: First'),
+      'mymodule_block_second' =&gt; t('MyModule Block: Second'),
+    );
+    foreach ($myblocks as $block_id =&gt; $block_label) {
+      $this-&gt;derivatives[$block_id] = $base_plugin_definition;
+      $this-&gt;derivatives[$block_id]['admin_label'] = $block_label;
+      $this-&gt;derivatives[$block_id]['cache'] = DRUPAL_NO_CACHE;
+    }
+    return $this-&gt;derivatives;
+  }
+}
+</pre><p>
+As you can see, this is very similar to the way it had been done in Drupal 7 in <code>hook_form_info()</code>. The form changes, but essentially we return an array with all our block definitions, keyed by an internal block ID that allows us to differentiate which block we are processing.</p>
+<p>The given example is very simplistic and you wouldn't use derivatives for this, because obviously you already know what blocks will be needed when you write the code. Instead you would create two block plugins in separate classes. But it should make the basic idea of derivatives clear. The <code>getDerivativeDefinitions()</code> method from the system module for example looks like this:</p>
+<pre>
+/**
+   * {@inheritdoc}
+   */
+  public function getDerivativeDefinitions(array $base_plugin_definition) {
+    foreach ($this-&gt;menuStorage-&gt;loadMultiple() as $menu =&gt; $entity) {
+      $this-&gt;derivatives[$menu] = $base_plugin_definition;
+      $this-&gt;derivatives[$menu]['admin_label'] = $entity-&gt;label();
+      $this-&gt;derivatives[$menu]['cache'] = DRUPAL_NO_CACHE;
+    }
+    return $this-&gt;derivatives;
+  }
+</pre><p>
+In this example it is obvious why the blocks can't simply be defined in different block plugin classes, because they are not known at the time the code is written. So instead it needs to load all available menu entities from the storage controller and create one block for each menu.</p>
+<p>That's it. I hope it helps someone. If you find errors or want to share something, please leave a comment.</p>
+</div></div></div><div class="field field-name-field-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/category/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

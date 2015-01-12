@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 23 Oct 2014 17:10:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 23 Oct 2014 17:10:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Drupal Static Caching
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-3/issue-2/drupal-static-caching
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Drupal Static Caching</title>
+    <base href="http://drupalwatchdog.com/volume-3/issue-2/drupal-static-caching">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Article        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/3.2-static-caching.jpg" class="img-responsive img-thumbnail margin-left" alt="Static-filled Television" width="50%" align="right" /> Drupal at scale is possible, and indeed, even powerful. Ask someone what they think of Drupal, though, and more often than not they'll tell you that they've heard it's slow. I've seen a lot of poorly-performing Drupal sites in my line of work, and caching is by far the most common reason for the gap between possibility and practice. Even the most basic Drupal installation brings an excellent multi-tier caching architecture to the table, but unfortunately it's easy for developers to break it.</p>
+<p>Perhaps the most frustrating caching problem is when developers miss easy opportunities to leverage static caching in their custom modules. By storing computed function results in static PHP variables, further calls to the same method can be made hundreds or thousands of times faster. Taking advantage of this technique requires minimal developer effort: if a result has already been computed, return it; otherwise, store the new result in the cache before returning it.</p>
+<pre>
+function apachesolr_static_response_cache($searcher, $response = NULL) {
+  $_response = &amp;drupal_static(__FUNCTION__, array());
+
+  if (is_object($response)) {
+    $_response[$searcher] = clone $response;
+  }
+  if (!isset($_response[$searcher])) {
+    $_response[$searcher] = NULL;
+  }
+  return $_response[$searcher];
+} 
+</pre><p>
+The Apache Solr module uses static caching in several places, such as ensuring that only one Solr search will be performed per request, even when there are several search-related blocks on the page.</p>
+<p>Like any caching solution, the performance benefits of static caching depend on whether the speed benefit of cache hits outweighs the performance overhead associated with cache misses. The largest performance gains come from caching functions that are time-consuming, repeated often within a single PHP execution, and expected to return the same value more often than not. This is a well-defined set of conditions, and a lot of Drupal code meets them.</p>        </div>
+  </body>
+</html>
+

@@ -1,0 +1,120 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 06 Jun 2014 20:23:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 06 Jun 2014 20:23:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Nuvole: Configuration Management: Drupal 7 to Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://nuvole.org/blog/2014/jun/06/configuration-management-drupal-7-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Nuvole: Configuration Management: Drupal 7 to Drupal 8</title>
+    <base href="http://nuvole.org/blog/2014/jun/06/configuration-management-drupal-7-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-blog-subtitle field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">Features done right? Features done wrong? What changed, what improved, what&#039;s still missing.</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Nuvole gave two talks about the current status of Configuration Management in Drupal 8 at European Drupal events in the last few weeks: <a href="http://milano2014.drupaldays.it/schedule#conferenza_gestione-della-configurazione-drupal-8">Drupal Days Milan 2014</a> and <a href="http://2014.drupalalpeadria.org/session/configuration-management-drupal-8">Drupal Camp Alpe Adria 2014</a>.</p>
+
+<p>Developers attending the events were mostly interested in how the future Drupal 8 Configuration Management capabilities will compare to Drupal 7, with and without the Features module (or, in general, with and without what we call the <a href="http://nuvole.org/blog/code-driven-development">code-driven workflow</a>).</p>
+
+<p>Here is a comparison based on the current status of Drupal 8. Please note that CMI, the Configuration Management Initiative, is still under active development, and for example a couple issues mentioned in the slides have already been resolved, shortly after we gave our presentations. The very basic concepts, though, remain unchanged from our <a href="http://nuvole.org/blog/2013/sep/03/configuration-management-and-features-look-drupal-8">September 2013 post</a>, so you might want to review that one if you have never heard about CMI before.</p>
+
+<h3>Configuration Management: Key differences between Drupal 7 and Drupal 8</h3>
+
+<h4>Configuration is well-defined</h4>
+
+<p>In Drupal 7 it isn't always clear-cut whether something belongs in the "configuration" or "content" realm. Are vocabularies configuration? Are taxonomy terms configuration? And what about a taxonomy term whose ID is used as a contextual filter in a View? Several approaches to this are possible, like <a href="http://nuvole.org/blog/2012/feb/07/hard-and-soft-configuration-drupal-distributions">soft configuration</a>.</p>
+
+<p>In Drupal 8, configuration will be less subjective: Drupal has an "Export Configuration" function that exports <strong>all</strong> the site configuration; if something is not there, it is not considered to be configuration. Concepts like soft configuration still apply, but at least it's clear what is configuration and is not.</p>
+
+<h4>Configuration is stored in files</h4>
+
+<p>Drupal 7, generally, stores configuration in the database, together with content. Only a little subset of configuration is read from PHP files.
+In Drupal 8 configuration will live in text files. Then, for several reasons (performance, safety, security), those files <a href="https://drupal.org/node/2161591">will actually be stored in the database</a> by default (one of the most visible recent changes), but will still be accessed and managed as files.</p>
+
+<h4>Unified format and approach to configuration</h4>
+
+<p>A particularly annoying issue with Drupal 7 is that modules are free to set their own standards for storing configuration, so it is common to find sites where configuration is scattered among variables, database tables, objects exported via CTools, Features, and other places. Modules like Features at times need some "black magic" to guess where and how relevant configuration is stored.</p>
+
+<p>The unified approach in Drupal 8, where all configuration is in the form of text files in the YAML format, is a great step forward. It removes the guesswork needed by Features in Drupal 7 to understand how to find and export components.</p>
+
+<h4>Staging configuration</h4>
+
+<p>In Drupal 7 you can have "staged configuration" through Features and the Features revert operation. Drupal 8 will introduce, out of the box, an "Import Configuration" facility that you can use to import either the whole site configuration or a single configuration file. The approaches are mostly equivalent, but on one side Drupal 7 + Features offers better packaging functionality, on the other side Drupal 8 will allow to import a <strong>complete</strong> site configuration (all variables, permissions...), something that is highly unpractical to do with Drupal 7 and Features.</p>
+
+<h4>Interface to developers</h4>
+
+<p>From a developer's point of view, writing PHP code to access and/or set a component's configuration in Drupal 7 is tricky, since you don't have a global interface, let alone an "entry point" that allows you to explore all the site configuration: you are forced to use a mixed bag of tricks ranging from <code>variable_get()</code> and <code>variable_set()</code> to database queries, to Ctools hooks for making configuration exportable and so on.</p>
+
+<p>Drupal 8 will bring a very welcome improvement by providing a dedicated type for configuration entities and the unified interface <code>Drupal::config($name)</code> for getting and setting all configuration values: as a typical example <code>Drupal::config('system.site')-&gt;get('name')</code> will return the site name, and the same pattern can be used for everything.</p>
+
+<h3>The shootout: Drupal 7 vs Drupal 7 + Features vs Drupal 8</h3>
+
+<p>A quick feature comparison table between Drupal 7 core, Drupal 7 + Features and the current state of Drupal 8. As you see, a developer that is now using Drupal 7 without features will see spectacular advantages in Drupal 8, while experienced users of Drupal 7 and Features will still miss something.</p>
+
+<table class="table table-striped table-bordered"><tr><th>Functionality</th>
+<th>D7 Core</th>
+<th>D7 Core + Features</th>
+<th>D8 Core (current)</th>
+</tr><tr><td>Export full site config (no content)</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Export selected config items</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Track config changes (full site)</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Track config changes (selected items)</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Stage configuration</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+</tr><tr><td>Package configuration</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+</tr><tr><td>Reuse configuration in other projects</td>
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+</tr><tr><td>Collaborate on the same project</td> 
+<td class="text-error text-center"><b>NO</b></td>
+<td class="text-success text-center"><b>YES</b></td>
+<td class="text-error text-center"><b>NO</b></td>
+</tr></table><h4>What is still missing?</h4>
+
+<p>It's important to understand the use case for CMI. The stated aim for CMI is not to replace Features. CMI aims at making it much simpler to transport configuration changes from development to production, and this aim was reached.</p>
+
+<p>All other benefits of Features are out of scope for CMI. These include: packaging configuration, reusing configuration in other projects (and not simply moving it between the development and production version of the same site) and enabling real-time team collaboration (developer A and developer B build two separate features for the same site, like the News and Blog sections, simultaneously). So there is definitely room for a <a href="https://drupal.org/project/features">Drupal 8 version of Features</a>.</p>
+
+<h4>Is CMI “Features Done Right”?</h4>
+
+<p><strong>No.</strong> It is a nice way to replace and improve one use case for Features: making configuration exportable into text files.</p>
+
+<h4>Is CMI “Features Done Wrong”?</h4>
+
+<p><strong>No.</strong> It is a huge step forward to developers and it paves the way for additional modules that could offer the same functionality of Drupal 7 + Features in a much cleaner and more reliable way.</p>
+
+<p><em>See full versions of our Milan and Alpe Adria presentations as a Slideshare embeds or PDF files, below.</em></p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/35575513" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+
+<div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/nuvoleweb/drupal-8cmipreviewen" title="Configuration Management in Drupal 8: A preview (DrupalDays Milano 2014)" target="_blank">Configuration Management in Drupal 8: A preview (DrupalDays Milano 2014)</a> </strong> <br />from <strong><a href="http://www.slideshare.net/nuvoleweb" target="_blank">Nuvole</a></strong> </div>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/35575663" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen=""> </iframe>
+
+<div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/nuvoleweb/cmi-d7tod8dcaa140517" title="Configuration Management in Drupal 8: A preview (DrupalCamp Alpe Adria 2014)" target="_blank">Configuration Management in Drupal 8: A preview (DrupalCamp Alpe Adria 2014)</a> </strong> <br />from <strong><a href="http://www.slideshare.net/nuvoleweb" target="_blank">Nuvole</a></strong> </div>
+</div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even">Drupal Planet, Code Driven Development, Drupal 8</div></div></div><div class="field field-name-field-blog-attachments field-type-file field-label-above"><div class="field-label">Attachments:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="file"><img class="file-icon" alt="" title="application/pdf" src="/modules/file/icons/application-pdf.png" /> <a href="http://nuvole.org/sites/default/files/Milano-2014-drupal-8-cmi-preview-en.pdf" type="application/pdf; length=440813">Milano-2014-drupal-8-cmi-preview-en.pdf</a></span></div><div class="field-item odd"><span class="file"><img class="file-icon" alt="" title="application/pdf" src="/modules/file/icons/application-pdf.png" /> <a href="http://nuvole.org/sites/default/files/AlpeAdria-2014-cmi-d7-to-d8--dcaa-140517.pdf" type="application/pdf; length=792988">AlpeAdria-2014-cmi-d7-to-d8--dcaa-140517.pdf</a></span></div></div></div><div class="field field-name-field-blog-image field-type-image field-label-above"><div class="field-label">Image:&nbsp;</div><div class="field-items"><div class="field-item even"><img src="http://nuvole.org/sites/default/files/default_images/nuvole-square-logo.png" alt="" /></div></div></div>
+  </body>
+</html>
+

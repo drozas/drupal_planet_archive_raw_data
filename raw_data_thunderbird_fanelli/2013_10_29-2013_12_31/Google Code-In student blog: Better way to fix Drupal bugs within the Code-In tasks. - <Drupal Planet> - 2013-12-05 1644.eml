@@ -1,0 +1,76 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 05 Dec 2013 15:44:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 05 Dec 2013 15:44:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Google Code-In student blog: Better way to fix Drupal bugs within the Code-In tasks.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://codein-student.esy.es/?q=node/7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Google Code-In student blog: Better way to fix Drupal bugs within the Code-In tasks.</title>
+    <base href="http://codein-student.esy.es/?q=node/7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><img src="http://www.welovebug.com/wp-content/uploads/2009/09/bug1.jpg" /></p>
+<p>Hello dear reader! I hope you are already take part in Code-In. If not, <a href="?q=node/5">this</a> post can help you.<br />
+I want to tell you how to fix Drupal bugs within the Code-In tasks. </p>
+<!--break--><h5>Example task</h5>
+<p>In the Code-In you can see tasks like this:</p>
+<blockquote><p>
+Fix bug number "somelink to bug"<br />
+...
+</p></blockquote>
+<p>This bug you can find at link, respectively. </p>
+<h5>What do you need</h5>
+<p>For work with Drupal source and Git you need GNU/Linux preferably, but you can use Windows and Mac OS X also.<br />
+Git must be installed too. </p>
+<h5>Getting Started</h5>
+<p>In the beginning you need to copy latest version source code of Drupal to your computer.<br />
+To do this, setting up Git. Then clone the Drupal via command:</p>
+<blockquote><p>
+git clone <a href="http://git.drupal.org/project/drupal.git">http://git.drupal.org/project/drupal.git</a> Drupal<br />
+cd Drupa
+</p></blockquote>
+<p>Completed? Now you can start work on your task. </p>
+<h5>Making a commit</h5>
+<p>When you finished work on source code, you need to create a Git commit.<br />
+To do this execute command:</p>
+<blockquote><p>
+git add "your changed filename and path"
+</p></blockquote>
+<p>Instead of "your changed filename and path"  put relative or absolute path to file, that been changed.<br />
+Do this with each file that you have changed.</p>
+<p>All files have been added? Create commit:</p>
+<blockquote><p>
+git commit -a -m "Your message text"
+</p></blockquote>
+<p>Instead of "Your message text"  put your message.</p>
+<h5>Export a patch file from commit</h5>
+<p>In Git path file using for transfer changes to another computer. We will use its for mentors, bots and other people can check our work.<br />
+For create a patch file use command "git diff". "git diff" command compare commits at active branch. For using git diff we need to know an id, that penultimate commit. Use "git log" command. You will see a list of commits, find commit that been before your commit. Copy its ID. Then make patch via:</p>
+<blockquote><p>
+git diff "penultimate commit ID" HEAD &gt; YourPatchName.patch
+</p></blockquote>
+<p>In Drupal directory you could find YourPatchName.patch file. This file we will use more.</p>
+<p></p><h5>Registration on Drupal Quality Assurance</h5>
+<p>You must send your commit to community review, first you need to register in Drupal Quality Assurance.<br />
+Drupal Quality Assurance is a place for issues to be filed or questions to be asked about the Drupal.org testbots and all the projects related to them. Since there are so many d.o projects involved it seems that most people just need a one-stop shop for issues. They can be moved out from here.</p>
+<p>For registration, go to <a href="https://qa.drupal.org/user/register">Drupal Quality Assurance site</a> and register there. You must provide your name and email. Wait for email notification.<br />
+First message looks like them </p>
+<blockquote><p>"Thank you for registering at Drupal Quality Assurance. Your application for an account is currently pending approval. Once it has been approved, you will receive another e-mail containing information about how to log in, set your password, and other details."</p></blockquote>
+<p>Wait for second message. There you will find a link to confirm your account. After confirming you will be able to publish your commits on Drupal Quality Assurance.</p>
+<h5>commit uploading to the Drupal Quality Assurance</h5>
+<p>Click to add patch file and upload your  Git patch. Then patch file will be tested automatically. You will see result of many test<br /><img src="https://dl.dropboxusercontent.com/s/gt318c0ipnbox9v/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%202013-12-05%2022.45.14.png" /></p>
+<p>if there are no errors, proceed to the next step.</p>
+<h5>Upload link on Code-In</h5>
+<p>Go to your current task on melange. Past link to your commit on Drupal Quality Assurance or on Drupal.org. Click "Submit url".<br />
+Congratulations, you have successfully completed the task!</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/?q=taxonomy/term/2" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal-planet</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/?q=taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li></ul></div>
+  </body>
+</html>
+

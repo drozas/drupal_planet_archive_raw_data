@@ -1,0 +1,83 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 18 May 2014 10:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 18 May 2014 10:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Marzee Labs: Coding as a team: code workflow
+Content-Transfer-Encoding: 8bit
+Content-Base: http://marzeelabs.org/blog/2014/05/18/coding-as-a-team-code-workflow
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Marzee Labs: Coding as a team: code workflow</title>
+    <base href="http://marzeelabs.org/blog/2014/05/18/coding-as-a-team-code-workflow">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class='lead'>Every new project is an opportunity to improve and get challenged. Might it be your skills, your processes, your performance, etc. We <a href='blog/2014/02/20/arte-concert-migration-retrospective'>previously wrote</a> about how important it is to learn from big projects. It is important to understand that you can't find the perfect way of working, but you can definitely reach an optimal workflow, that you will keep on iterating and improve project after project. Allow me to share ours with you.</p>
+<p>Part of the success of a project is to maintain a very good communication setup between all the active parts. I am not saying anything new here: emails, wiki documentation, a conference calls, you name it, have plenty of “good practices” to dictate how we should use them. But there’s a but. Have you ever thought about the passive communication? The one that is hidden in code, in consensuses, in flows. In this final part of our “coding as a team” series, we will tell you some small tricks we use to box passive, micro-communication within a project.</p>
+
+<h3 id="branching_model">Branching model</h3>
+
+<p>Unsurprisingly, we use the <a href="http://nvie.com/posts/a-successful-git-branching-model">git flow model</a>. There isn’t much science behind it, but it is a pretty much standardised practice, so any developer involved in a project will quickly be aligned on the development of features, hotfixes or releases. Everyone will use the same flow and structure, which will make the merges a lot more atomic.</p>
+
+<p>It is also important that, besides having a good flow, we keep good practices in… practice. That is, pull often, commit often, push often. This will reduce drastically the amount of potential conflicts. And please, oh please, don’t create pull requests that bundle code for different functionalities, or integrate solutions for completely different problems. Your co-workers will be grateful.</p>
+
+<h3 id="organising_your_code">Organising your code</h3>
+
+<p>Having a proper folder structure is very important, especially on large code bases. Drupal, specifically makes it easy with a clean folder structure from the start. You should, for example, leverage the profiles approach that enforces a folder structure, besides building every site re-buildable.</p>
+
+<p>Remember, code layout is the omnipresent structural documentation for any new developer that is brought into the project. Having good <code>.info</code> files, a <a href="https://github.com/marzeelabs/mz/tree/master/modules/features/mz_site">rich <code>README.md</code></a> in each feature or module serving as a piece of technical documentation, is very critical. Bear in mind that your team will be looking at these files first, to get a clear overview, before diving into the actual code. The crucial point is that nobody gets lost in the code base, and can understand it more or less autonomously.</p>
+
+<p>Another fundamental point in good code organisation is to streamline semantically and syntactically the nomenclature of your modules, their components such as fields, views, flags, you name it. Scoping your code and exported configuration with consistent names will remove the overhead of jumping left and right to find it.</p>
+
+<p>At Marzee Labs, we progressively built up our way to organise the code. We are now satisfied with the stable solution we came up with, that helps streamline development, even so when including external collaborators. For the sake of exemplifying but a part of it, let’s say you are working in a project called “Train Maps”. In a Drupal context, your features or custom modules, and entity/node types will follow the guidelines below:</p>
+
+<ul>
+<li>Any feature or custom module will be prefixed with <code>tm_</code>.</li>
+
+<li>There should be a base feature where the meta information, platform configuration and continuous integration code should live. We can call it <code>tm_site</code> or <code>tm_base</code>.</li>
+
+<li>Have a feature per content type, and standardise on nomenclature, i.e. if you use <code>tm_train</code>, then you’ll use <code>tm_station</code>. If you prefer use <code>tm_trains</code>, then keep on using the plural for <code>tm_stations</code>.</li>
+</ul>
+
+<p>Fields are as important as the rest, so make sure you prefix them all to reflect the context they are used in. In the case of content type, for example, we’d have <code>field_train_destination</code>, <code>field_station_location</code>, etc. But even the ones that are site-wide and re-usable should be prefixed to avoid any issue, e.g. <code>field_tm_company</code>. In Drupal, we’d have all the field instances exported to the feature they belong to, as well as field bases if they are feature specific. In case they are site-wide, we would put them in the feature <code>tm_field</code> (or <code>tm_fields</code>, to your taste). This way, it’s easy to move them around, and make them reusable if needed.</p>
+
+<h3 id="code_review">Code review</h3>
+
+<p>There are plenty of <a href="http://blog.groupbuddies.com/posts/11-open-your-html-css-to-developers">great write-ups</a> on how code reviews benefits a team. There are no rules about <em>how</em> to do it whatsoever, but it is important to understand <em>why</em> we do it.</p>
+
+<p>My two only guidelines are the following:</p>
+
+<ol>
+<li>Do it. No excuses. If you are by your own, do it anyway.</li>
+
+<li>Make it count. If it becomes a formality of of having someone else just hitting the merge button, then you are missing the point.</li>
+</ol>
+
+<p>Remember, code reviews aren’t meant to point fingers, debate code styles, or test confidence. Code reviewing is ensuring first and above all code quality and, by extension, security. Being human, you’ll make mistakes, no matter how experienced you are. So a second pair of eyes is always better. And even then, bugs can still get merged and even go on production. But then again that’s the whole point: you improve and learn together, next time you’ll be on the lookout.</p>
+
+<p>Having a second person involved, even if passively, in the code you write has many benefits. Not only it will widen the team understanding about the bigger picture of the code, but it will also avoid isolating developers on specific corners of the code. This is of great value, as they might need the same auxiliary methods you just built, and will re-use them in the future, and avoid code duplication, in particular on large code bases.</p>
+
+<p>Not to mention that if tomorrow you go on holidays, or get hit by a bus, someone can take over your work without being lost and starting from ground zero. This is why it’s so important that you carefully pick who reviews your code, might it be to validate it or learn from it.</p>
+
+<p>In practice, we use GitHub’s own workflow and interface to get it done. The fact we can either write both general and in-line comments makes a pull request page an invaluable piece of documentation on who has been through that code - either by writing or reviewing it -, what decisions or tweaks were made, and why.</p>
+
+<h3 id="bonus_pair_programming">Bonus: pair programming</h3>
+
+<p>Pair programming is great. If you haven’t tried it, you should. It has all the benefits of code reviews, but instead of discussing potential drawbacks once a solution is already done, you actually build it together. Start by being the one driving and having someone sitting on your side and unlocking you. Sometimes, borrowing a fresh pair of eyes can unstuck you in less than 5 minutes. Don’t feel guilty. That’s exactly what pair programming is all about. The day will come when you will be the one called up and saying “been there, done that”!</p>
+
+<p>We can extend pair programming to actually prepare what we are about to code in pairs. That is, the developers will talk through their implementation plan. It’s a great exercise, not only because you get instant feedback but also you do a verbalisation of what’s in your head.</p>
+
+<h3 id="coding_as_a_team">Coding as a team</h3>
+
+<p>During this series, we’ve seen how <a href="/blog/2014/03/03/coding-as-a-team-automation-using-phing">automation</a>, <a href="/blog/2014/03/17/coding-as-a-team-content-fixtures">continuous build</a>, and solid flows are crucial to successfully development.</p>
+
+<p>Everything must start before you even type a line of code. The preparation phase is utterly important, and must be repeated prior each sprint. It goes from good architecture layout to efficient tasks splitting.</p>
+
+<p>Optimise what makes sense, but don’t over do it. Always remember to use techniques and tools to <a href="blog/2012/06/30/building-simple-sites-jekyll-to-the-rescue">serve your needs</a>. Don’t get enslaved by them.</p>
+  </body>
+</html>
+

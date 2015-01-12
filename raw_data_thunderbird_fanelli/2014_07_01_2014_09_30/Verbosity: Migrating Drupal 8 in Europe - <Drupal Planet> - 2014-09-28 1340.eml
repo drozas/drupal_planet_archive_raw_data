@@ -1,0 +1,130 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 28 Sep 2014 11:40:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 28 Sep 2014 11:40:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Verbosity: Migrating Drupal 8 in Europe
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.verbosity.ca/migrating-drupal-8-europe
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Verbosity: Migrating Drupal 8 in Europe</title>
+    <base href="http://www.verbosity.ca/migrating-drupal-8-europe">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img src="http://www.verbosity.ca/files/styles/medium/public/IMG_20140928_130007.jpg?itok=9FNkpyqd" width="220" height="165" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>This week we're in Europe for DrupalCon Amsterdam! This is starting to feel suspiciously close to a beta so it is time to dive into Migrate again so you can start working on your new sites with real-world data. Let's begin!</p>
+<h3>What's up with migrate?</h3>
+<p>Migrate in the Drupal context means running a migration from the new Drupal 8 site and pulling data from an existing site. It replaces the old upgrade-in-place system that was used in prior versoins of Drupal. So do a fresh install of Drupal 8 and have an old Drupal 6 site on the same host. After you've logged into Drupal 8 you can connect to your Drupal 6 site.</p>
+<h3>How is Drupal 8 migrate different from Drupal 7 migrate (and migrate_d2d)?</h3>
+<p>In the older versions of Migrate the process invovled defining your field mappings and manually creating the new content types in the D7 system. This is no longer necessary.</p>
+<p>Drupal 8 migrations will automatically create the needed content types and establish the mappings between the old and new fields by default. Therefore much less configuration is needed.</p>
+<p>For times when it is necessary to customizae your migration you can use the included hooks or you can use the configuration schema to use the included plugins with your custom data set. The hooks go further than in D7, allowing you to alter data in the prepareRow stage without having to create a custom migration to deal with the data.</p>
+<h3>Migrate from Drupal 6? What about from Drupal 7?</h3>
+<p>Migrate frees us from the need to update each sequential version. You can leafrog versions! With Drupal 6 being close to end-of-life it is important to have a pathway for these users. For this reason, the D6 to D8 path was built first.</p>
+<p>For Drupal 7: soon. This is now in-progress now that we are finalizing the Drupal 6 code.</p>
+<h3>Requirements</h3>
+<ul><li>Drush! The UI is still in a contrib sandbox, so for now you must use Drush. <a href="https://github.com/drush-ops/drush/">The latest version - from Github</a>.</li>
+<li><a href="https://getcomposer.org/doc/00-intro.md#installation-nix">Composer</a>. It is needed to install Drush. Go into the drush folder and run "composer install". Already installed? "composer update"</li>
+<li>D6 Database. Have it on the same host as the new Drupal 8 install.</li>
+<li>D6 Files. Probably a good idea to be on the same host. Can be file path or http(s) address.</li>
+<li>D8 Database. A new, empty database. Use the old <a href="https://www.drupal.org/documentation/install/create-database">Creating the database</a> howto if new to this.</li>
+<li>D8 Files. Check out the git repo... unless of course a beta becomes available. Then use that.</li>
+</ul><h3>Using Drupal Tools</h3>
+<p>If you do not currently have a Drupal 8 install one route to get there is to use the <a href="http://drupal.org/tools">Drupal Tools</a> for your platform. It includes all the software you need and the correct versions. It is available for Linux, Mac, and Windows.</p>
+<p>If you install the Drupal Tools package it is not necessary to install Git, Drush, or Composer.</p>
+<p>The installation should be current as it includes a version of Drush which must be up-to-date. So if you had installed Tools before, double check the version if you have any trouble.</p>
+<h3>Install Drupal8</h3>
+<p>Using the database credentials you created, install your new Drupal 8 site.</p>
+<p>If you need to rebuild your site remember to delete your ENTIRE files folder and old settings.php. Reinstalling without doing this step will cause problems.</p>
+<h3>Install Composer / Drush</h3>
+<p>Make sure you have run the Composer installer. You should be able to type <span class="geshifilter"><code class="text geshifilter-text">which composer</code></span> and get a result in your terminal.</p>
+<p>Check out the latest Drush. Go into the Drush folder and run <span class="geshifilter"><code class="text geshifilter-text">composer install</code></span>.</p>
+<p>Next time you <span class="geshifilter"><code class="text geshifilter-text">git pull</code></span> (or <span class="geshifilter"><code class="text geshifilter-text">git fetch</code></span>) in the Drush folder, make sure to run <span class="geshifilter"><code class="text geshifilter-text">composer update</code></span>.</p>
+<h3>Find an isuse to test</h3>
+<ul><li>Go to the Drupal project issue queue and <a href="https://www.drupal.org/project/issues/drupal?version=8.x&amp;component=migration+system">filter down by Component: migration system, Version: 8.x</a>.</li>
+<li>Pick an issue that is not already fixed.</li>
+<li>If you are sprinting with lots of people, pick something further down the list so you are not working on the same thing as someone else.</li>
+<li>Read the posts. If it is easy enough you think you can handle it, post a comment to say you are doing some work on it.</li>
+<li>Post the results of your tests.</li>
+</ul><h3>Time to Migrate</h3>
+<p>Put the manifest.yml file with the migrations you wish to run in your D8 site root. Then go there on the command line and run the following command, using your D6 database credentials.</p>
+<p>You can install Drupal 8 at this stage. If you do, be sure to enable all of the necessary modules. For example, if you use the Book module, it is not enabled by default, so you should enable it now or your book nodes will simply become a regular content type.</p>
+<p>When Drupal 8 is no longer in beta the manifest.yml file will not be necessary unless you are doing some custom work. In most cases all that will be necessary is to put in the database credentials and the system will run all the migrations that the system knows about by default.</p>
+<p>You will find a manifest.yml file attached to many Migrate issues that will enable you to begin the migration. Here is a sample of what I am using... I have added together many different issues and I run them all at the same time:</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;"># user<br />
+- d6_user<br />
+- d6_user_profile_field<br />
+- d6_user_profile_field_instance<br />
+- d6_user_profile_entity_display<br />
+- d6_user_profile_entity_form_display<br />
+- d6_profile_values:user<br />
+- d6_filter_format<br />
+- d6_user_role<br />
+- d6_user_picture_entity_display<br />
+- d6_user_picture_entity_form_display<br />
+- d6_user_picture_file<br />
+- d6_user_picture_field<br />
+- d6_user_picture_field_instance<br />
+# taxonomy<br />
+- d6_taxonomy_vocabulary<br />
+- d6_taxonomy_settings<br />
+- d6_taxonomy_term<br />
+# nodes<br />
+- d6_node<br />
+- d6_node_revision<br />
+- d6_node_type<br />
+- d6_view_modes<br />
+- d6_filter_format<br />
+- d6_field_instance_per_form_display<br />
+- d6_field_instance_widget_settings<br />
+- d6_field_formatter_settings<br />
+- d6_field_instance<br />
+- d6_field<br />
+- d6_field_settings<br />
+- d6_node_settings<br />
+- d6_cck_field_values:*<br />
+- d6_cck_field_revision:*<br />
+# taxonomy fields<br />
+- d6_term_node_revision<br />
+- d6_term_node<br />
+- d6_vocabulary_entity_display<br />
+- d6_vocabulary_entity_form_display<br />
+- d6_vocabulary_field_instance<br />
+- d6_vocabulary_field<br />
+# blocks<br />
+- d6_block<br />
+- d6_menu<br />
+# custom blocks<br />
+- d6_custom_block<br />
+- d6_filter_format<br />
+# book<br />
+- d6_book<br />
+- d6_book_settings</div>
+</div>
+<p>Now that you have created a manifest.yml file in the Drupal 8 root directory you can run the migration.</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">drush migrate-manifest --legacy-db-url=mysql://d6user:d6pass@localhost/d6 manifest.yml</code></span></p>
+<p>If you are using Drupal Tools (Acquia Dev Desktop), and if you have <em>also</em> put your D6 site into Dev Desktop, you will need to specify the port number. You can find your database settings by creating an AcquiaDevDesktop terminal and typing drush status to get the exact settings for your D6 site. The result should look something like this:</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">drush migrate-manifest --legacy-db-url=mysql://drupaluser:@127.0.0.1:33067/drupal_6 manifest.yml</code></span></p>
+<p>Note that the database user for D6 is called "drupaluser" and it uses the local IP address and port number rather than the host name. Again, run drush status if you are having trouble connecting to verify these values.</p>
+<h3>Results</h3>
+<p>After you have run the migration check your work. Did things do what you expected? Post the results of your findings to the issue queue you of the item you were working on.</p>
+<p>Was the result successful? If so, post the result.</p>
+<p>Did something fail? Post the result.</p>
+<p>Post your results! Don't be afraid to comment on Drupal.org. If you provide examples of your tests you will help the migration path improve.</p>
+<h3>Rolling back (starting over)</h3>
+<ul><li>It is possible to re-run the migration. This can be helpful if you forgot to run a component, or if you have new items in the source site that you would like to add to the Drpual8 site.</li>
+<li>To completely "roll-back" you really need to reinstall Drupal 8. To do this you must do three things: (1) empty your database, (2) delete settings.php, (3) remove the files folder completely.</li>
+</ul><h3>Going further</h3>
+<ul><li>Join us at IMP meetups. Find out more at <a href="http://groups.drupal.org/imp">groups.drupal.org/imp</a>.</li>
+<li><a href="https://www.drupal.org/node/2127611">Read the Drupal 8 Migrate API documentation</a>.</li>
+<li>Sprint with us if you are in Amsterdam this week!</li>
+<li>Participate in IRC at #drupal-migrate.</li>
+</ul></div></div></div><div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal">Drupal</a></div><div class="field-item odd"><a href="/drupal-8">Drupal 8</a></div><div class="field-item even"><a href="/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

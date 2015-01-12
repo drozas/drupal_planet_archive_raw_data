@@ -1,0 +1,49 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 25 Oct 2013 15:10:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 25 Oct 2013 15:10:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Introducing Work Tracker For Open Atrium 2
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/introducing-work-tracker-for-open-atrium-2/?utm_source=rss&utm_medium=rss&utm_campaign=introducing-work-tracker-for-open-atrium-2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Introducing Work Tracker For Open Atrium 2</title>
+    <base href="http://www.phase2technology.com/blog/introducing-work-tracker-for-open-atrium-2/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=introducing-work-tracker-for-open-atrium-2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">With the upcoming full release of Open Atrium 2, we are excited to show off all the new tools and functionality that comes right out of the box.  We are particularly excited about Work Tracker, a community funded and developed task manager to replace the Open Atrium 1 Case Tracker.  I sat down with the sponsors of Work Tracker, <a href="http://bucketb.com/james">James Carlson</a> and <a href="http://bucketb.com/Jenn">Jenn Turner</a> of the <a href="http://bucketb.com/">Bucket Brigade</a>, and <a href="https://drupal.org/user/266527">David Snopek</a>, developer of Work Tracker, to find out why it was developed and how we can use it.</p>
+<h3 dir="ltr"><strong>Q: Thanks for sitting down with me today folks!  First I am curious to know how the Bucket Brigade uses Open Atrium?</strong></h3>
+<p dir="ltr"><strong>A: Jenn:</strong> The Bucket Brigade uses Open Atrium to help small to mid-sized companies, nonprofits, and teams collaborate more effectively. We teach them to use Atrium for everything from brainstorming business ideas, to creating a culture of accountability, to sharing knowledge more effectively.</p>
+<p dir="ltr">One of the reasons we use Open Atrium is that its basic suite of features provides a flexible platform allowing customization for each of our clients’ needs. While you can install and use Open Atrium out of the box, we find so much potential for maximizing efficiency by developing features that mirror offline business practices. We’ve worked with Open Atrium for so long it’s second nature to us.</p>
+<p>Starting in late 2013, the Bucket Brigade will offer <a href="https://collaborate.bucketb.com/openatrium-2.0-saas">Open Atrium 2.0 as a service</a>. You can learn more about this service <a href="http://bucketb.com/blog/2013/10/23/introducing-open-atrium-20-as-a-service-meet-collaborate">here</a>.</p>
+<h3 dir="ltr"><strong>Q: What does Work Tracker for Open Atrium 2 do?</strong></h3>
+<p dir="ltr"><strong>A: James:</strong> Work Tracker gives users the ability to set up tasks, track assignments of those tasks and work progress against those tasks, get an overview of the status of all tasks, and organize tasks into Projects. Work Tracker provides everyone with a view of the tasks assigned to them, as well as any projects they’re involved with and the overall status of the work. This helps create a culture of accountability: when everyone in an organization knows there is only one place to go to find their to-do list, they can get more done and reduce the amount of communications overhead needed to keep everyone informed.</p>
+<h3><strong>Q: Why did Bucket Brigade originally sponsor Work Tracker development?</strong></h3>
+<p><strong>A: James:</strong> Our use of Open Atrium was born out of facilitation: during a strategic or community-based event, we needed a way to capture and store commitments, so the participants could leave with their follow up to-do list already written. We were already using collaboration tools with discussion and wiki-like functionality, but these don&#8217;t represent accountability very well&#8211;and we want a tool with the staying power to become a part of day-to-day work. Keeping the work in the context of all the discussions and knowledge makes it easier to get that work done, and many cloud-based project management systems are just a bit too simple or just a bit too complex to meet the general day to day needs of teams and organizations.</p>
+<p dir="ltr"><strong>David:</strong> We actually have a Work Tracker for Open Atrium 1.x that we’ve been developing for several years based on the experience that the Bucket Brigade has with its clients. When we heard about Open Atrium 2, we decided that this time around we’d make it publicly available rather than going it alone. There’s already been a good response from the community on Drupal.org and we’re hoping that we can make Work Tracker even more awesome via the power of Open Source.</p>
+<h3 dir="ltr"><strong>Q: David Snopek, as developer of Work Tracker, can you tell us your history with Open Atrium?</strong></h3>
+<p dir="ltr"><strong>A: David:</strong> I began developing for Open Atrium when I started doing freelance development work for the Bucket Brigade in 2011. They had about a dozen client intranet sites built on various beta and alpha version of Open Atrium 1.0.</p>
+<p dir="ltr">Since then I’ve been developing extensions to Open Atrium in order to make it better suit the training and cultural transformations that the Bucket Brigade takes organizations through.</p>
+<p dir="ltr">This includes many, many things (by now, the Bucket Brigade’s version of Open Atrium 1.x is extremely customized), but primarily focusing on the Work Tracker we developed for Open Atrium 1.x.</p>
+<h3 dir="ltr"><strong>Q: How do you and your teams use work tracking in your organization?</strong></h3>
+<p dir="ltr"><strong>A: James:</strong> We use Work Tracker to keep track of our internal development on Open Atrium development, manage the strategic objectives of our company, handle day-to-day operations, human resources, and even the support tickets opened by our customer community. It’s really become a general tool for managing all the work we do.</p>
+<h3 dir="ltr"><strong>Q: How does Work Tracker differ from Case Tracker?</strong></h3>
+<p dir="ltr"><strong>David:</strong> <a href="https://drupal.org/project/casetracker">Case Tracker</a> is the “classic” Drupal tracker. There are a number of differences between Case Tracker and Work Tracker &#8211; both technical and philosophical.</p>
+<p dir="ltr">From a technical perspective: Case Tracker implements all of its functionality in custom code, using custom database tables. It doesn’t use the Field API which is the standard Drupal 7 way of adding new fields. (However, in version 2.x of Case Tracker, which is still in development, they do use the Entity and Field API).</p>
+<p dir="ltr">On the other hand, Work Tracker is built by simply combining core functionality and other contrib modules, with very little custom code. For example, it’s using standard Drupal fields and revisions, <a href="https://drupal.org/project/comment_alter">Comment Alter</a> (for updating Tasks by posting a comment), <a href="https://drupal.org/project/diff">Diff</a> (for the differences displayed in each comment), <a href="https://drupal.org/project/panels">Panels</a> and <a href="https://drupal.org/project/views">Views</a>.</p>
+<p dir="ltr">From a philosophical perspective, Work Tracker is designed to fit seamlessly into the way Open Atrium works and its paradigm for flexibility. For example, Work Tracker has no concept of “projects” &#8211; instead it groups Tasks together using Open Atrium Sections, which allows users to define for themselves what a “project” is in a way that best fits their organization.</p>
+<h3 dir="ltr"><strong>Q: How will Work Tracker help Organizations that use Open Atrium?</strong></h3>
+<p dir="ltr"><strong>A: James:</strong> Making Work Tracker a part of Open Atrium means that users don&#8217;t have to find some other place to keep track of the work that needs doing. Instead, Tasks sit right alongside the Pages and Discussions that a user needs to do their work effectively. Leaders see the global view of work: major initiatives, strategic plans, and performance reviews for their direct reports. Teams see what their peers are collaborating on. Everyone who should know what is being done can know, easily and quickly. This makes organizations more efficient and more adaptable.</p>
+<p dir="ltr">Open Atrium 2&#8242;s new Spaces and Sections give users finer control over visibility and access to Work Tracker. This means it&#8217;s even more powerful to take Open Atrium 2 outside the organization, and use it with customers and partners. We can create a list of tasks for a client, and have an internal discussion about that client right alongside it.</p>
+<h3 dir="ltr"><strong>Q: Any more plans for plugin development?</strong></h3>
+<p dir="ltr"><strong>A: James:</strong> We have a lot of extensions to Work Tracker planned. One of the first will be Task and project templates. We are seeing organizations use  using this functionality to make repeating projects easier to manage&#8211;the annual event, the monthly retreat, the weekly operations check-in, the facility walk-through&#8211;any repeating pattern of work can be resurrected and put back into Work Tracker.</p>
+<p>Thanks so much James, Jenn and David! It was great discussing Work Tracker with you and we look forward to seeing your exciting development extensions to Work Tracker! Learn more about Open Atrium and Work Tracker at <a href="http://openatrium.com/">http://openatrium.com/</a>! <a href="https://dashboard.getpantheon.com/products/openatrium2/spinup"><br />
+</a></p>
+  </body>
+</html>
+

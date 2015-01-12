@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 09 May 2014 11:50:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 09 May 2014 11:50:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Joyride tour in older versions of jQuery
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/selvam/joyride-tour-older-versions-jquery
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Joyride tour in older versions of jQuery</title>
+    <base href="http://knackforge.com/blog/selvam/joyride-tour-older-versions-jquery">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="http://zurb.com/playground/jquery-joyride-feature-tour-plugin">Joyride</a>, the nice guide/tour library based on jQuery, does not work in older version of jQuery (like 1.3 or 1.4). We had a Drupal 6 project, where we wanted it. Our Drupal 6 site used jQuery 1.3 version.  We tweaked the joyride code to make it work in jQuery 1.3. Basically,</p>
+<p>1. We included a function that is not a part of 1.3 version (isEmptyObject) </p></div></div></div>
+  </body>
+</html>
+

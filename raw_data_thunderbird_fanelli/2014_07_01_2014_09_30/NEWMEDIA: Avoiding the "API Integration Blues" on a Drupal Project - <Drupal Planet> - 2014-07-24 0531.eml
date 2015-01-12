@@ -1,0 +1,89 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 24 Jul 2014 03:31:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 24 Jul 2014 03:31:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: NEWMEDIA: Avoiding the "API Integration Blues" on a Drupal Project
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.newmediadenver.com/blog/avoiding-api-integration-blues-drupal-project
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>NEWMEDIA: Avoiding the "API Integration Blues" on a Drupal Project</title>
+    <base href="http://www.newmediadenver.com/blog/avoiding-api-integration-blues-drupal-project">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-text field-label-hidden" data-edit-field-id="node/142/title/en/rss">Avoiding the &quot;API Integration Blues&quot; on a Drupal Project</span><div class="field field-node--field-intro field-name-field-intro field-type-text-long field-label-hidden" data-edit-field-id="node/142/field_intro/en/rss"><div class="field-items"><div class="field-item">As Drupal continues to mature as a platform and gain adoption in the enterprise space, integration with one or more 3rd party systems is becoming common for medium to large scale projects. Unfortunately, it can be easy to underestimate the time and effort required to make these integrations work seamlessly. Here are lessons we&#039;ve learned...</div></div></div><div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-field-id="node/142/body/en/rss"><div class="field-items"><div class="field-item"><p><a href="https://www.drupal.org/project/mailchimp">Mailchimp</a>, <a href="https://www.drupal.org/project/recurly">Recurly</a>, <a href="https://www.drupal.org/project/mailchimp">Mollom</a>, <a href="https://www.drupal.org/project/stripe">Stripe</a>, and on and on&mdash;It&#39;s easy to get spoiled by <a href="https://www.drupal.org/project/project_module">Drupal&#39;s extensive library of contributed modules</a> that allow for quick, easy, and robust integration with 3rd party systems. Furthermore, if a particular integration does not <em>yet</em> exist, the extendability of Drupal is straightforward enough that it <em>could</em> be done given the usual caveats (i.e. an appropriate amount of time, resources, and effort). However, these caveats should not be taken lightly. Our own experiences have unearthed many of the same pain points again and again, which almost always result in waste. By applying this gained wisdom to all subsequent projects involving integrations, we&#39;ve been much more successful in identifying and addressing these issues head on. We hope that in sharing what we&#39;ve learned that you can avoid some of the more common traps.</p>
+
+<h3>API and Integration Gotchas</h3>
+
+<h4>Vaporware</h4>
+
+<p>Shocking as it may seem, there are situations where a client will assume an API exists when there isn&#39;t one to be found. Example: a&nbsp;client may be paying for an expensive enterprise software license that can connect to other programs within the same ecosystem, but there may not be an&nbsp;endpoint that can be accessed by Drupal. They key here is to ensure you have documentation up front along with a working example of a read and/or write operation written in php or through a web services call. Doing this as early as possible within the project will help prevent a nasty surprise when it&#39;s too late to change course or stop the project altogether.</p>
+
+<h4>Hidden Add-on Fees</h4>
+
+<p>An alternative to the scenario above is when an endpoint can be made available for an additional one-time or recurring&nbsp;fee. This can be quite an expensive surprise. It can also result in a difficult conversation with the client, particularly if it wasn&#39;t factored into the budget and now each side must determine who eats the cost. The key to preventing this is to verify (up front) if the API endpoint is included with the client&#39;s current license(s) or if it will be extra.</p>
+
+<h4>Limited Feature Sets</h4>
+
+<p>One can never assume that an entire feature set is available. Example: an enterprise resource planning (ERP) software solution may provide a significant amount of data and reporting to its end users, but it may only expose particular records (e.g. users, products, and inventory) to an API. The result: a Drupal site&#39;s scope document might include functionality that simply cannot be provided. To avoid this issue, you&#39;ll want to get your hands on any and all documentation as soon as possible. You&#39;ll also want to create an inventory of every feature that requires a&nbsp;read/write operation so that you can&nbsp;verify the documentation covers each and every item.</p>
+
+<h4>Documentation</h4>
+
+<p>Transcending the &quot;Drupal learning cliff&quot; was and continues to be a difficult journey for many members of the community despite the abundance of ebooks, videos, and articles on the subject matter. Consider how much more difficult building Drupal sites would be if these resources didn&#39;t exist. Now imagine trying to integrate with a systems you&#39;ve never heard of using a language you&#39;re unfamiliar with and no user guide to point you in the right direction.</p>
+
+<p>Sounds scary, doesn&#39;t it?</p>
+
+<p>Integrating with a 3rd party application without documentation is akin to flying blind. Sure you <em>might</em> eventually get to the appropriate destination, but you will likely spend a significant amount of time using trial and error. Worse yet, you may simply miss certain pieces of functionality altogether.</p>
+
+<p>The key here, as always, is to get documentation as soon as you can. Also, pay attention to&nbsp;certain red flags, such as the client not having the documentation&nbsp;readily available or requiring time for one of their team members to write it up. This is particularly important if the integration is a one-off that is specific to the customer versus an integration with a widely known platform (e.g. Salesforce or PayPal).</p>
+
+<h4>Business Logic</h4>
+
+<p>One of Drupal&#39;s strengths is the ability for other modules to hook in to common events. For example, a module could extend the functionality of a user saving&nbsp;his or her password to email a notification that a password was changed.When integrating with another system, it&#39;s equally important to understand what events may be triggered as a result of reading or writing a record. Otherwise, you may be in for a surprise to find out the external system was firing off emails or trying to charge credit card payments.</p>
+
+<p>Documentation is invaluable to prevent these types of gaffs. However, in our experience it has been important to have access to a support resource that can provide warnings up front.</p>
+
+<h4>Support</h4>
+
+<p>What happens when the documentation is wrong or the software doesn&#39;t work? If support regarding the API is slow or non-existant, the project may grind to halt until this block is removed. For enterprise level solutions, there is usually some level of support that can be accessed via phone, forums, or support tickets. However, there can sometimes be a sizable fee for this service and your particular questions might not be in scope with respect to what their service provides. In those instances, it might be helpful to contract with a 3rd party vendor or contractor that has performed a similar integration in the past. This can be costly up front while saving a tremendous of time over the course of the project.</p>
+
+<h4>Domain Knowledge</h4>
+
+<p>As consultants, one of our primary objectives is to merge our expertise with that of the customer&#39;s domain knowledge in order to best achieve their goals. Therefore, it&#39;s important that we understand <em>why</em> the integration should work the way it does instead of just <em>how</em> we read and write data back and forth. A great example of this involves integrating&nbsp;Drupal Commerce with Quickbooks through the&nbsp;Web Connecter application. It&#39;s imperative to understand how the client&#39;s accounting department configures the Quickbooks application and how it manages the financial records. Otherwise a developer may make an assumption that results in an inefficient or (worse) incorrect functionality.</p>
+
+<p>Similar to having a resource available for support on the API itself, it&#39;s invaluable to have access to team members on the client side that use the software on a daily basis so that nothing is missed.</p>
+
+<h4>Stability</h4>
+
+<p>Medium to large sized companies are becoming increasingly reliant on their websites to sustain and grow their businesses. Therefore, uptime is critical. And if the site depends on the uptime of a 3rd party integration to function properly, it may be useful to consider some form of redundancy or fallback solution. It is also important to make sure that support tickets can be filed with a maximum response time specified in any&nbsp;service licensing agreement (SLA) with the client.</p>
+
+<h4>Communication and Coordination</h4>
+
+<p>The rule of thumb here is simple: more moving parts in a project equals more communication time spent keeping everyone in sync. Additionally, it&#39;s usually wise to develop against an API endpoint specifically populated with test data so that it will not impact the client&#39;s production data. At some point, the test data will need to be cleared out and production data will need to be imported. This transition could be as simple as swapping a URL or it could involve significant amount of QA time testing and retesting full imports before making the final switch.</p>
+
+<p>The best way to address these issues is simply to buffer in more communication time into the budget than a normal Drupal project.</p>
+
+<h4>SDKs</h4>
+
+<p>One gotcha that can be particularly difficult to work around is that an API may require you to use their specific software development kit (SDK) instead of a native PHP library. This may require the server to run a different OS (Windows instead of Linux) and web server (IIs instead of Apache). If you&#39;re not used to developing on these platforms, development time may be slowed down by a significant percentage. For example: a back-end developer may not be able to use the same IDE they are accustomed to (with all of their optimized configurations and memorized shortcuts). This requirement may be unavoidable in some circumstances, so the best way to deal with these situations is a simple percentage on the budgeted hours.</p>
+
+<h4>VMs</h4>
+
+<p>When possible, it is ideal for developers can work on their own machine locally with a fully replicate instance of the API they are interacting with. Example: Quickbooks connecting through their Web Connector application to read and write records from a Drupal Commerce site. To test this connection, it is&nbsp;extremely helpful to have a local virtual machine (VM) with Windows and Quickbooks, which a developer could then use to trigger the process. If a project involves multiple developers, they could each have their own copy to use a sandbox.</p>
+
+<p>Setting up a local VM definitely adds an upfront cost to create. However, for larger projects this investment can generally be recouped many times over with respect to increased development speed and the ability to start from a consistent target.</p>
+
+<h3>Final Advice</h3>
+
+<p>By now, we hope that we&#39;ve made the case that it&#39;s important to do your due diligence when taking on project involving integrations. And while this entire list of potential pain points may seem overkill, we&#39;ve personally experienced the effects of every one of them at some point in our company&#39;s history. Ultimately, both you and the client want to avoid the uncomfortable conversation of a project&#39;s timeline slipping and going over budget. Therefore, it&#39;s critical to have address these issues thoroughly and as early in the project as possible. If uncertainty is especially high, it&#39;s usually beneficial to include a line item within the project statement of work to evaluate this piece separately. Finally, if you&#39;re able to effectively negotiate the terms of a contract, the budget for the integration shouldn&#39;t be set until an evaluation (even a partial one) has been completed.</p>
+
+<p>Thoughts? Story to share? We&#39;d love to get your feedback on how to improve upon this article.</p>
+</div></div></div>
+  </body>
+</html>
+

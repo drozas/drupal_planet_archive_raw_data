@@ -1,0 +1,158 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 16 May 2014 14:30:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 16 May 2014 14:30:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mark Koester: Node.js Rules Chatterbox: Customizable Realtime Messages on a Drupal site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://int3c.com/blog/2014/05/nodejs-rules-chatterbox-customizable-realtime-messages-drupal-site
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mark Koester: Node.js Rules Chatterbox: Customizable Realtime Messages on a Drupal site</title>
+    <base href="http://int3c.com/blog/2014/05/nodejs-rules-chatterbox-customizable-realtime-messages-drupal-site">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://int3c.com/sites/int3c.com/files/styles/large/public/field/image/nodejs-chatterbox-post-image.jpg?itok=w4urpYCE"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/styles/large/public/field/image/nodejs-chatterbox-post-image.jpg?itok=w4urpYCE" width="480" height="171" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>This is a the module I wish I had when I started to integrate node.js with Drupal.</p>
+
+<p>In its essence, <a href="https://drupal.org/project/nodejs_rules_chatterbox">Node.js Rules Chatterbox</a> is a simple way to make your site spit out real-time messages to your site users.</p>
+
+<p>Whether it's a warning message to admin or notification to certain members, it provides a simple way to customize display messages using Rules. For a site builder, it gives you the real-time notifications power of node.js with the ease of creating customized events and reactions via Drupal Rules UI.</p>
+
+<p><a href="https://drupal.org/project/nodejs_rules_chatterbox">Node.js Rules Chatterbox</a> for Drupal provides a general purpose integration between Drupal and a Node.js backend. Essentially you can configure different events to trigger messages that are subsequently displayed to connected users in realtime.</p>
+
+<p>Drupal doesn’t do realtime. Node.js does. Node.js Rules Chatterbox bridges the gap and creates a flexible system for site builders and developers to display messages in blocks. If you can create a Block and configure a Rule, then you can use this module.</p>
+
+<p>In this post, I’ll to briefly explain how Node.js works (compared to Drupal), then explain how to setup and use Node.js Rules Chatterbox and finally provide a few simple examples and practical use cases.</p>
+
+<h1>Node.js and Drupal</h1>
+
+<p>Node.js is built for speed and as such, this technology solves one of the major deficiencies of a PHP-based CMS like Drupal or WordPress: fast realtime connections and messaging.</p>
+
+<p>Drupal is a powerful and flexible system for organizing managing content, media and users. The addition of <a href="https://drupal.org/project/commerce">Drupal Commerce</a> turns a Drupal site into one of the best “non cookie cutter” ecommerce solutions available today. Unfortunately, though Drupal might excel at organizing and displaying various types of content, by default it is not the fastest system out there and it was never intended for real-time functionality. In fact, PHP itself is not designed or intended to handle realtime, asynchronous connections.</p>
+
+<p>Enter <a href="https://drupal.org/project/nodejs">Node.js for Drupal</a>. This Drupal API module provides an integration between a Drupal site and a realtime node.js backend.</p>
+
+<p>While I often here the the comment from non-Drupal folks about how Drupal is a closed system on PHP, in reality Drupal is a system built to interact with other system. Whether it’s your Apache Solr Server or even a 3rd party service, Drupal is huge mashup of technologies when you need it to be.</p>
+
+<h1>Quick Definition: What is Node.js?</h1>
+
+<p>Let’s start with a definition. Node.js as defined by Wikipedia is:</p>
+
+<blockquote>
+  <p>Node.js is a software system designed for writing highly scalable Internet applications, notably web servers. Programs are written in JavaScript, using event-driven, asynchronous I/O to minimize overhead and maximize scalability.</p>
+</blockquote>
+
+<p>Let’s break that down a bit in technical terms (if the technical stuff is over your head, skip to next part)</p>
+
+<ol>
+<li>Node.js is javascript that is meant to run on the server (as opposed to traditional usage of javascript which is used to make web pages do fancy stuff).</li>
+<li>It’s often coupled with websockets protocol in modern web browsers to all very efficient connections between multiple users.</li>
+<li>It’s a thinned down application setup (unlike modern CMS and application setups like Drupal or Ruby on Rails) that focus on the minimal modules according to an applications needs.</li>
+<li>It uses Asynchronous I/O (or non-blocking I/O or input/output) processing that allows other processes to continue even before the transmission has completed.</li>
+</ol>
+
+<p>See more at: <a href="http://int3c.com/blog/2012/08/drupal-case-study-using-nodejs-create-live-instant-stock-notifications"><strong>Drupal Case Study: Using Node.js to Create Live Instant Stock Notifications</strong></a></p>
+
+<p>If this definition and list of features didn’t confuse you, just focus on the fact that node.js adds non-blocking speed and can provide a way to connect to multiple users efficiently and then push messages to those connected users.</p>
+
+<h1>Node.js for Drupal: Installation and Setup</h1>
+
+<p>The actual installation of a Node.js and integrating it with Drupal goes a bit beyond this post. Unfortunately, node.js setup can be a pain depending on your server skills. If you are a linux-based server, then the <a href="https://drupal.org/node/1713530">Drupal.org Documentation on Installation</a> will likely work for you.</p>
+
+<p>In my opinion, the easiest way is to use Heroku for your first node.js instance. Just follow this <a href="www.gizra.com/content/drupal-nodejs-pantheon-and-heroku/">tutorial</a>. Amitai Burstein describes this in detail with code samples in <a href="http://www.gizra.com/content/drupal-nodejs-pantheon-and-heroku/">"Drupal, Node.js, Pantheon, and Heroku.”</a> You can see my own <a href="http://int3c.com/blog/2012/12/drupal-nodejs-chatroom-demo-site-heroku">post about the Chatroom demo site</a>, which uses this same method.</p>
+
+<p>Once node.js is setup and connected to your Drupal site, then it’s relatively easy to use and integrate one of various contrib modules.</p>
+
+<p>In particularly I’ve used Chatroom module a lot. I’ve even contributed back the <a href="https://drupal.org/project/chatroom_sounds">Chatroom Sounds module</a> to provide alert sounds when new messages are received. For example on <a href="http://int3c.com/blog/2012/08/drupal-case-study-using-nodejs-create-live-instant-stock-notifications">Coghlan Capital</a>, we used a customized version of this module to create <a href="http://int3c.com/blog/2012/08/drupal-case-study-using-nodejs-create-live-instant-stock-notifications">a realtime messaging space for financial trades</a> between members and experts. Subscription members receive instant alerts of market changes and recent trades from industry experts.</p>
+
+<p>Arguably the node.js installation is the hardest step and things get easier from here, especially with a module like Node.js Rules Chatterbox.</p>
+
+<h1>Node.js Rules Chatterbox: Installation and Initial Setup</h1>
+
+<p>Once you have a working node.js server, just enable “Node.js Rules Chatterbox” like a normal module. Then go to the initial configuration page at admin/config/nodejs/rules/channels and "Create Notification Channel Block.”</p>
+
+<p><a href="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_create_channel01.png"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_create_channel01.png" alt="" style="width: 100%; height: auto;"></a></p>
+
+<p><a href="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_create_channel02.png"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_create_channel02.png" alt="" style="width: 100%; height: auto;"></a></p>
+
+<p>This is the block that will display messages from configured Rules Reactions to users in real-time. In this configuration, you set the title and channel name as well as the number of messages you wish to display.</p>
+
+<p>Once you've created the channel, you now have a block that you can position and control its visibility like you would any normal block.</p>
+
+<p>If you aren’t familiar with node.js and socket.io, it’s good to take a step back here and explain what’s going on. Essentially, we are creating a special messaging channel that users will connect to when they visit a page. There are number of authentication steps that Drupal’s Node.js API module handles, but once completed the user is part of the channel. In our case, this channel is used to pass messages from Drupal PHP to the node.js backend, then display to the user on their screen.</p>
+
+<p>Once configured make sure the block is visible and accessible on the site according the page or pages you want it displayed.</p>
+
+<h1>Using Rules Events and Reactions to Trigger Messages to Node.js Rules Chatterbox</h1>
+
+<p>Like Views, Rules module is one of the most important site builder tools modules you should master. If you aren't familar with Rules, check out the free video series <a href="http://nodeone.se/en/learn-the-rules-framework"><em>Learn Rules Framework</em></a> from NodeOne. It provides both the fundamentals as well as some useful, lesser known integrations.</p>
+
+<p>For the sake of explanation, let's create a simple Rule to post a message each time a user logins. First, create a Rule with the Event "User has logged in." Then, add a Reaction "Notify to Nodejs Channel." Here are the relevant Rules configurations:</p>
+
+<p><a href="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_create_rule01.png"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_create_rule01.png" alt="" style="width: 100%; height: auto;"></a></p>
+
+<p><a href="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_create_rule02.png"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_create_rule02.png" alt="" style="width: 100%; height: auto;"></a></p>
+
+<p>The only really important thing to note is where or which channel you want the message posted to. In our case, we only have one channel created, so we used that one.</p>
+
+<p>It's that simple: *1. Create a Node.js Channel, 2. Configure Block Display, and then 3. Add a Rule to Trigger Messages to be sent to the Block.</p>
+
+<h2>Quick Technical Note: Using the API to trigger messages</h2>
+
+<p>While this post focused on the site builder, this module also provides a simple API for using code to trigger messages.</p>
+
+<p>First, call nodejs_rules_chatterbox_notify($message,$uid = '') in your module to send a custom notification:</p>
+
+<p><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/nodejs_chatterbox_api.png" alt="" style="width: 100%; height: auto;"></p>
+
+<p>Userid of sender. Default value is logged in user.</p>
+
+<p>Second, implement hook_chatterbox_notify_alter($message) in your module, to modify the notification message before it get published. It's that simple.</p>
+
+<h1>Conclusion:</h1>
+
+<p>Node.js is one of the best technology choices for fast real-time messaging. Drupal remains one of the best CMSs available and continues to improve. Drupal's Node.js API module makes it simple to integrate node.js backend with Drupal. Several modules are already providing some node.js integration with Drupal and many people are building custom code to mashup Drupal and Node.js.</p>
+
+<p><strong>Node.js Rules Chatterbox fills a gap by making it easy for site builders to use Rules to trigger real-time notifications to their site users.</strong></p>
+
+<p>For example, you could create on the dashboard a real-time notification for new users or newly logged in users. You could create a block that provides messages when new posts or comments are add.</p>
+
+<p>These are just a few examples of how it might be used. What ideas do you have? How might this module be used to solve your site builder needs?</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/nodejs" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Node.js</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/rules" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Rules</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/real-time" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Real-time</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div></div><div class="view view-author view-id-author view-display-id-entity_view_1 view-dom-id-2a27b9bfae8f04ba4f23d4c6cca17fb2">
+      
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field views-field-nothing">        <span class="field-content"><div class="author_block">
+  <div class="user_image">
+    <img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/styles/square_thumbnail/public/pictures/picture-2-1395211903.jpg?itok=iqKuC39y" width="180" height="180" alt="" /> 
+  </div>
+ <div class="user_details">
+  <span class="name">Mark  Koester</span>
+  <span class="twitter_handle"><a href="https://twitter.com/markwkoester" target="_blank">@markwkoester</a></span>
+  <span class="job_title">Mark has worked on Drupal since the early days of D6. He is passionate about open source as well as entrepreneurship. When he isn&#039;t building, he enjoys traveling and speaking one of his many foreign languages. </span>
+  <span class="location">Chengdu, China</span>
+ </div>
+</div></span>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div> <ul class="links inline"><li class="sharethis first last"><span class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://int3c.com/blog/2014/05/nodejs-rules-chatterbox-customizable-realtime-messages-drupal-site" st_title="Node.js Rules Chatterbox: Customizable Realtime Messages on a Drupal site" class="st_facebook_large" displaytext="facebook"></span>
+<span st_url="http://int3c.com/blog/2014/05/nodejs-rules-chatterbox-customizable-realtime-messages-drupal-site" st_title="Node.js Rules Chatterbox: Customizable Realtime Messages on a Drupal site" class="st_twitter_large" displaytext="twitter"></span>
+<span st_url="http://int3c.com/blog/2014/05/nodejs-rules-chatterbox-customizable-realtime-messages-drupal-site" st_title="Node.js Rules Chatterbox: Customizable Realtime Messages on a Drupal site" class="st_googleplus_large" displaytext="googleplus"></span>
+<span st_url="http://int3c.com/blog/2014/05/nodejs-rules-chatterbox-customizable-realtime-messages-drupal-site" st_title="Node.js Rules Chatterbox: Customizable Realtime Messages on a Drupal site" class="st_email_large" displaytext="email"></span>
+<span st_url="http://int3c.com/blog/2014/05/nodejs-rules-chatterbox-customizable-realtime-messages-drupal-site" st_title="Node.js Rules Chatterbox: Customizable Realtime Messages on a Drupal site" class="st_sharethis_large" displaytext="sharethis"></span>
+<script type='text/javascript'>var switchTo5x=true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({publisher:'dr-8d62520e-c444-86e2-d911-ab27da97627b'});</script></div></span></li></ul>
+  </body>
+</html>
+

@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 21 Aug 2014 13:40:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 21 Aug 2014 13:40:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Solr for Drupal Developers, Part 2: Solr and Drupal, A History
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/solr-drupal-developers-part-2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Solr for Drupal Developers, Part 2: Solr and Drupal, A History</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/solr-drupal-developers-part-2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Drupal has included basic site search functionality since its first public release. Search administration was added in Drupal 2.0.0 in 2001, and search quality, relevance, and customization was improved dramatically throughout the Drupal 4.x series, especially in Drupal 4.7.0. Drupal's built-in search provides decent database-backed search, but offers a minimal set of features, and slows down dramatically as the size of a Drupal site grows beyond thousands of nodes.</p>
+<p>In the mid-2000s, when most custom search solutions were relatively niche products, and the <a href="http://www.google.com/enterprise/search/products/gsa.html">Google Search Appliance</a> dominated the field of large-scale custom search, Yonik Seeley started working on Solr for CNet Networks. Solr was designed to work with Lucene, and offered fast indexing, extremely fast search, and as time went on, other helpful features like distributed search and geospatial search. Once the project was open-sourced and released under the Apache Software Foundation's umbrella in 2006, the search engine became one of the most popular engines for customized and more performant site search.</p>
+<blockquote><p>As an aside, I am writing this series of blog posts from the perspective of a Drupal developer who has worked with large-scale, highly customized Solr search for Mercy (<a href="http://www.mercy.net/search/doctor/John?address=St.%20Louis%2C%20MO&amp;distance=50&amp;latlon%5Blat%5D=38.6270025&amp;latlon%5Blon%5D=-90.1994042">example</a>), and with a variety of small-to-medium sites who are using <a href="https://hostedapachesolr.com/">Hosted Apache Solr</a>, a service I've been running as part of Midwestern Mac since early 2011.</p>
+</blockquote>
+<h2>
+<a name="user-content-timeline-of-apache-solr-and-drupal-solr-integration" class="anchor" href="#timeline-of-apache-solr-and-drupal-solr-integration" aria-hidden="true" id="user-content-timeline-of-apache-solr-and-drupal-solr-integration"><span class="octicon octicon-link"></span></a>Timeline of Apache Solr and Drupal Solr Integration</h2>
+<iframe src="http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?source=0Aj1MYMiETXzXdGhhOFd5QXdKNGhQa0Nyck9YbGVYb3c&amp;font=DroidSerif-DroidSans&amp;maptype=toner&amp;lang=en&amp;height=400" width="100%" height="400" frameborder="0" style="margin-top: 1em;"></iframe><p><em>If you can't view the timeline, please click through and read this article on Midwestern Mac's website directly.</em></p>
+<h2>
+<a name="user-content-a-brief-history-of-apache-solr-search-and-search-api-solr" class="anchor" href="#a-brief-history-of-apache-solr-search-and-search-api-solr" aria-hidden="true" id="user-content-a-brief-history-of-apache-solr-search-and-search-api-solr"><span class="octicon octicon-link"></span></a>A brief history of Apache Solr Search and Search API Solr</h2>
+<p>Only two years after Apache Solr was released, the first module that integrated Solr with Drupal, <a href="https://www.drupal.org/project/apachesolr">Apache Solr Search</a>, was created. Originally, the module was written for Drupal 5.x, but it has been actively maintained for many years and was ported to Drupal 6 and 7, with some relatively major rewrites and modifications to keep the module up to date, easy to use, and integrated with all of Apache Solr's new features over time. As Solr gained popularity, many Drupal sites started switching from using core search or the Views module to using Apache Solr.</p>
+</div></div></div>
+  </body>
+</html>
+

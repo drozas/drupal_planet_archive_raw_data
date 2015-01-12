@@ -1,0 +1,95 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 30 Apr 2014 22:26:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 30 Apr 2014 22:26:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This week in Drupal Core - April 30th 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/420663
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This week in Drupal Core - April 30th 2014</title>
+    <base href="https://groups.drupal.org/node/420663">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>This week saw the release of Drupal 8 alpha 11 and two major patches - one adding PSR-4 autoloading support and another containing the Drupal 6 to Drupal 8 migration path.<br />
+The PSR-4 patch added PSR-4 support alongside PSR-0 but it is planned to remove PSR-0 support for module classes before the first beta. We will continue to support PSR-0 for external libraries provided by modules. For more information read <a href="https://drupal.org/node/2246699">the change record</a>.<br />
+The Drupal 6 to Drupal 8 migrate path was a huge patch, congratulations to all those involved. For more information keep watching This week in Drupal Core and the <a href="http://groups.drupal.org/core">Core group</a>. You can take it for a spin with the <a class="freelinking external" href="http://github.org/drush-ops/drush">latest version of drush</a> and <code>drush migrate-manifest</code>.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<h3>Just last week!</h3>
+<p>Last week, we fixed 12 critical issues and 16 major issues, and opened 10 criticals and 16 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">118 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">517 major issues</a>.</p>
+<p>7 beta-blocking issues were fixed last week. There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">28 of 165 beta blockers</a> that must be resolved before we can <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">release a Drupal 8 beta</a>.</p>
+<h3>How close are we to Beta 1?</h3>
+<p>It's the end of April, and we are down to just 28 beta-blocking issues. For context, here's how that count has changed over the course of 2014. We started 2014 with 140 known beta blockers and missing change records combined, with 123 of those issues still unresolved. We've identified additional beta-blocking issues along the way, so as we get closer, the picture becomes more complete. In total, we've already fixed 137 beta blockers and completed more than 70 missed change records. The 28 issues that remain are a fraction of more than 200 total.</p>
+<p><img src="https://groups.drupal.org/files/beta_blockers_400.png" alt="A chart showing the number of total known beta-blocking issues since January 1, 2014 and the number of these that were unresolved each week." /></p>
+<p>That said, we <strong>need your help</strong>. Many of the beta blockers that remain include significant changes, and the community's support and focus on these issues now will pay off at <a href="https://docs.google.com/spreadsheet/ccc?key=0AlRKD0XsivA1dEYzMVl1cERvYUpXWDNscm8zNlpZeEE&amp;usp=drive_web#gid=0">DrupalCon Austin sprints</a> and after. Or, help with one of the <a href="https://groups.drupal.org/node/419403">approachable tasks for beta 1</a> we shared last week. (Also see the "Where  can I help?" section below.)</p>
+<h3>...So then when is it released?</h3>
+<p>We release the first Drupal 8 release candidate when there are 0 critical issues remaining. Right now there are 118 (including the 28 top-priority beta blockers). The number of criticals has been dropping steadily since DrupalCon Prague thanks to <strong>900 Drupal 8 patch contributors</strong> during that timeframe alone. (In total, 2035 people have contributed to Drupal 8 patches over the past three years!)</p>
+<p><img src="https://groups.drupal.org/files/critcals_400_0.png" alt="A chart showing the number of unresolved critical issues since March 2011 peaking at 157 in September 2013 and then dropping" /></p>
+<p>That still looks like a lot of remaining criticals -- and it is. However, when we compare it to the total work that's already been done in the cycle, including <strong>more than 700 critical issues already fixed</strong>, it becomes clear we are in the final phase of Drupal 8's development. (Yep... keep scrolling...)</p>
+<p><img src="https://groups.drupal.org/files/criticals_with_total_400_0.jpg" alt="A chart showing the unresolved criticals for Drupal 8 compared to the much higher total of about 850 known criticals since 2011" /></p>
+<p>If you're as eager to build amazing things with Drupal 8 as we are, please devote what resources you can to resolving the remaining release blockers, or <a href="https://www.gittip.com/for/drupal/">support the indefatigable contributors who continue to shape Drupal 8 directly</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>.</p>
+<ul>
+<li><a href="https://drupal.org/node/2116363">#2116363: Unified repository of field definitions (cache + API)</a>. Please help review this essential step to complete the Drupal 8 Entity Field API.</li>
+<li><a href="https://drupal.org/node/2183231">#2183231: Make ContentEntityDatabaseStorage generate static database schemas for content entities</a> is a <strong>big</strong> patch that needs your help and reviews to bring it home.</li>
+<li>If you have performance profiling expertise: <a href="https://drupal.org/node/2222719#comment-8731419 ">Issue 2222719</a> could use your help (see comment #60).</li>
+</ul>
+<h3>More ways to help</h3>
+<ul>
+<li>Help with the <a href="https://groups.drupal.org/node/419403">approachable tasks for beta 1</a>!</li>
+<li>In particular, the <a href="https://drupal.org/node/1857256#comment-8725163">taxonomy/term/% Views conversion (issue #1857256)</a> needs a before-and-after EXPLAIN for the queries generated. </li>
+<li>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</li>
+</ul>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code> git log --since &quot;2014-04-21&quot; --pretty=oneline</code> (90 commits in total):</p>
+<ul>
+<li><a class="freelinking external" href="http://drupal.org/node/1874640">Issue #1874640</a> by xjm, Wim Leers: Rename edit module to quickedit.</li>
+<li><a class="freelinking external" href="http://drupal.org/node/2225955">Issue #2225955</a> by tim.plunkett, Berdir: Improve the DX of writing entity storage classes.</li>
+<li><a class="freelinking external" href="http://drupal.org/node/2231413">Issue #2231413</a> by blueminds, tim.plunkett: Link field does not accept a valid path alias.</li>
+<li><a class="freelinking external" href="http://drupal.org/node/2218039">Issue #2218039</a> by dawehner, sun: Render the maintenance/install page like any other HTML page.<br />
+Removes some of crazy installer-specific logic</li>
+<li>These three issues move us closer to Symfony 2.4's structure and away from custom code:<br />
+<a class="freelinking external" href="http://drupal.org/node/2223615">Issue #2223615</a> by znerol: Use request stack in local task/action manager.<br />
+<a class="freelinking external" href="http://drupal.org/node/2223593">Issue #2223593</a> by znerol: Decouple the router.request_context service from the request service.<br />
+<a class="freelinking external" href="http://drupal.org/node/2236207">Issue #2236207</a> by znerol: Use router request context instead of request service in system breadcrumbbuilder.</li>
+<li><a class="freelinking external" href="http://drupal.org/node/">Issue #2244185</a> by damiankloip: Remove cURL dependent options from HTTP client - Removes dependency on cURL</li>
+<li><a class="freelinking external" href="http://drupal.org/node/1067408">Issue #1067408</a> by alexpott, Jalandhar, jessebeach, Désiré, neetu morwani, dawehner, sun Themes do not have an installation status. Treat themes like modules so we can determine if they're actually used, only enabled themes get loaded / functions get executed, they can manage their data, translations can be imported, etc. One more DrupalWTF removed; DX++</li>
+<li><a class="freelinking external" href="http://drupal.org/node/2198429">Issue #2198429</a> by alexpott: Make deleted fields work with config synch. Makes field data purging compatible with syncing a module uninstallation.</li>
+<li><a href="http://drupal.org/node/2225955">Issue #2225955</a> by tim.plunkett, Berdir: Improve the DX of writing entity storage classes. Removes a lot of boilerplate code related to storing entities. DX++</li>
+<li>The PSR-4 patches - these are the big one.No more super-nested directories (lib/Drupal/your_module/FooClass.php becomes just src/FooClass.php)<br />
+<a class="freelinking external" href="http://drupal.org/node/2083547">Issue #2083547</a> by donquixote: Implement PSR-4 for module-provided class files.<br />
+<a href="http://drupal.org/node/2083547">Issue #2083547</a> by donquixote: Introduce core/scripts/switch-psr4.sh, to move module-proided class files to their new PSR-4 location. </li>
+<li><a class="freelinking external" href="http://drupal.org/node/2245249">Issue #2245249</a> by tim.plunkett: Convert installer forms to FormInterface. Makes the installer less of a special-case; more like other forms</li>
+<li><a class="freelinking external" href="http://drupal.org/node/2228261">Issue #2228261</a> by beejeebus, kim.pepper, alexpott, Wim Leers: Add a local, PhpStorage-based cache backend.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>@Gabor's <a class="freelinking external" href="http://hojtsy.hu/blog/2014-apr-22/drupal-developer-days-2014-organizers-report">2014 Dev Days organiser report</a></li>
+<li><a href="/freelinking/https%3A/%252Fgroups.drupal.org/node/420413" class="freelinking">Summary of user facing a11y improvements</a> in Drupal 8 by @mgifford</li>
+<li><a href="/freelinking/https%3A/%252Fgroups.drupal.org/node/420168" class="freelinking">A post</a> by @ParisLiakos asking for feedback on changing our file extensions</li>
+<li><a href="/freelinking/https%3A/%252Fgroups.drupal.org/node/419838" class="freelinking">A post</a> by @webchick asking for contrib maintainer feedback on extending Drupal 6 support</li>
+<li><a class="freelinking external" href="http://drupalize.me/blog/201404/look-inside-drupal-8s-block-plugin-api">Drupal 8's block plugin API</a> by Drupalize.me</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<p>
+<li><strong>May 2: <a href="http://www.drupaljam.nl/">DrupalJam</a></strong> in the Netherlands has a session on Drupal 8 patterns (plus maybe a streamed Q&amp;A with Dries!)</li>
+<li><strong>May 2-4: <a href="http://2014.drupalcamptoronto.org/">DrupalCamp Toronto</a></strong> doesn't have a set schedule yet, but there are numerous Drupal 8 session proposals.</li>
+<li><strong>May 16-18: <a href="http://2014.drupalcamp.es/">DrupalCamp Spain</a></strong> has several great D8 session proposals and even a <a href="https://docs.google.com/spreadsheet/ccc?key=0AlRKD0XsivA1dDJyVzU3SnN0djgxaXZEdEp0bU4tMXc#gid=0">sprint on several Drupal 8 topics</a>.</li>
+<li><strong>May 31-June 8: <a href="https://austin2014.drupal.org">DrupalCon Austin</a> and extended sprints.</strong> This year's North American DrupalCon will include many Drupal 8 sessions, trainings, and sprints. The conference is June 2-6 with the community sprint on Jun 7, and there are plans extended sprints the weekends before and after the conference. See the <a href="https://docs.google.com/spreadsheet/ccc?key=0AlRKD0XsivA1dEYzMVl1cERvYUpXWDNscm8zNlpZeEE&amp;usp=drive_web#gid=0">signup sheet for Austin's extended sprints</a>. Austin will be critical to make progress toward Drupal 8's release, so please plan to participate in the sprints if you can!</li>
+
+</p>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

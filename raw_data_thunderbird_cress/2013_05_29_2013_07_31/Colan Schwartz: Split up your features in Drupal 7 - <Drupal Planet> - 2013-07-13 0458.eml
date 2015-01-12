@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 13 Jul 2013 03:58:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 13 Jul 2013 03:58:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Colan Schwartz: Split up your features in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://colans.net/blog/split-your-features-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Colan Schwartz: Split up your features in Drupal 7</title>
+    <base href="http://colans.net/blog/split-your-features-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <section class="field field-name-field-blog-topics field-type-taxonomy-term-reference field-label-inline clearfix view-mode-rss clearfix">
+
+      <h2 class="field-label">Topics:&nbsp;</h2>
+  
+  <ul class="field-items">
+
+    
+      <li class="field-item even">
+        <a href="/blog-topics/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a>      </li>
+
+    
+      <li class="field-item odd">
+        <a href="/blog-topics/features" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Features</a>      </li>
+
+    
+      <li class="field-item even">
+        <a href="/blog-topics/devops" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">DevOps</a>      </li>
+
+    
+  </ul>
+
+</section>
+<div class="field field-name-field-body field-type-text-long field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>Through my work as a Technical Architect, I recently did some <a href="https://en.wikipedia.org/wiki/DevOps">DevOps</a> consulting for client whose development process included steps to bundle all possible configuration changes though <a href="http://drupal.org/project/features">Features</a> into a single feature.  This bundling of all configurable data into a single Mega Feature was something they inherited from former consultants, who didn't bother to explain the ramifications of such an approach.  It's a bad idea for several reasons.</p>
+<h2>Why Gigantic Features Are a Bad Idea</h2>
+<ul><li>You're including configuration information that you don't care about, and</li>
+<li>You're making it difficult for developers to view differences between versions.</li>
+</ul><p>Let's briefly discuss each of these.</p>
+<h3>You're including configuration information that you don't care about</h3>
+<p>There are many exportable elements within Drupal 7.  This include true exportables such as Views data and "faux" exportables (that must always be stored in the database and can't exist as code-only features) such as content type data.  Also included are default settings that you don't need to manage and configurables that have changed, but you no longer care about.  Why package all of this when it's not relevant to you?</p>
+<h3>You're making it difficult for developers to view differences between versions</h3>
+<p>When a developer runs <code>drush features-diff</code> (from the command line interface) or inspects changes on the Web interface in the Features administration section before downloading a new version, he or she expects to see only differences that he/she worked on while resolving an issue.  If the set of changes is rather large, it will be too hard for each developer to verify his or her changes (as there will be too many other changes included in the difference).  Also, you're discouraging them from performing the verification as there will be too much data requiring sifting.</p>
+<h2>Make it easier on your developers</h2>
+<p>Your technical architects should keep features small.  Not so small that you'll have hundreds of them, but small enough that each contains only the configuration data for a recognizable site element, such as a blog.  So when a developer makes changes to the blogging aspect of the site, he or she will only be dealing with blogging data upon review, and he/she can verify the exact changes made in altering blogging behaviour.</p>
+<p>It's best to do this in such as way that each feature is one logical element of a site.  If you had another site you were working on, and you wanted the same functionality in one aspect, you would be able to copy that feature over to your other site.</p>
+<p>Make sure that your features, however you split them up, don't overlap at a high level, or you'll run into dependency problems.  Generally, high-level features should be independent such that they don't require others to run.  You may have some low-level features that other features depend on, but these should be kept to a minimum. </p>
+<h2>Split up Your Big Pre-Existing Features</h2>
+<p>So let's say you already have one or more massive, all-encompassing features.  <em>Is it possible to break them up?</em>  Indeed there is!  There isn't a user-friendly single-button solution for this, but it is possible.  The actual issue for this problem in the Features issue queue is <a href="https://drupal.org/node/663136">Provide way to Import views/true exportables back to the database</a>.</p>
+<p>The title is important because it alludes to the fact that non-true exportables aren't actually a problem here.  Their configuration data always remains in the database, co-existing with features code.  So you can simply delete the features, and the configuration data in the DB won't be lost.  Then you can re-featurize components the way you'd like.  But for true exportables, a means by which to convert features code into database data is necessary as features expressed as code doesn't exist in the database at all.  If you delete the features, and re-featurize, your configuration data is gone.  So how does one get the code back into the DB?</p>
+<p>The solution exists over at the <a href="https://drupal.org/node/663136#comment-6997536">fifty-second (52nd) comment by RaF</a>.  Follow those instructions, and you'll be ready to remove your old features and re-featurize!</p>
+<p>Good luck with Features, and be happy that we'll no longer need it in Drupal 8.</p>
+</div></div></div>
+  </body>
+</html>
+

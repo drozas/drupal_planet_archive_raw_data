@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 03 Jul 2014 09:46:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 03 Jul 2014 09:46:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Double theta to compute delta
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/399
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Double theta to compute delta</title>
+    <base href="http://www.drupal4hu.com/node/399">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>We are denormalizing into a field past migration; while usually I freak out writing directly to the field tables in this case it's justified because it's a custom module (never do this in contrib) and also because we are well aware of what does not happen when you do that. With that said, we have a query that roughly looks like this:<br />
+<div class="codeblock"><code>INSERT INTO {field_data_field_denorm_data}<br />(entity_type, bundle, deleted, entity_id, revision_id, language, delta, field_denorm_data_target_id)<br />SELECT &#039;user&#039;, &#039;user&#039;, 0, field1, field1, &#039;und&#039;, ????????????, field2<br />FROM table1<br />.... long complex query where a single field1 has several field2.</code></div></p>
+<p>So yeah. But delta... delta is a problem. MSSQL has <code>ROW_NUMBER()</code>, MySQL does not and the usual replacement (user variables, <code>@x:=@x+1</code>) is documented to be incorrect and not reliable. There's a lesser known trick that can be used, however:<br />
+<div class="codeblock"><code>CREATE TABLE tmp<br />SELECT DISTINCT field1, field2<br />.... long complex query repeated</code></div></p>
+<p>now, <code>ALTER TABLE tmp ADD KEY(field1)</code> in preparation, and then:</p>
+<p><div class="codeblock"><code>INSERT INTO {field_data_field_denorm_data}<br />(entity_type, bundle, deleted, entity_id, revision_id, language, delta, field_denorm_data_target_id)<br />SELECT &#039;user&#039;, &#039;user&#039;, 0, t1.field1, t1.field1, &#039;und&#039;, COUNT(*) - 1, field2<br />FROM tmp t1 <br />INNER JOIN tmp t2 ON t1.field1=t2.field1 AND t1.field2 &gt;= t2.field2<br />GROUP BY t1.field1,t1.field2</code></div></p>
+<p><a href="https://mariadb.com/kb/en/sql-99-complete-really/30-searching-with-joins/joined-tables/theta-joins/">Double theta</a> for the win.</p>
+<p>Explanation (numbers copied from real data):<br />
+<div class="codeblock"><code>+-------------+----------+---------------------------------+<br />| t1.field1&nbsp;&nbsp; |t1.field2 | group_concat(t2.field2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />+-------------+----------+---------------------------------+<br />|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4440 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 427 | 427&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4440 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 428 | 427,428&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4440 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 429 | 427,428,429&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4440 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 433 | 427,428,429,433&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4440 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 435 | 427,428,429,433,435&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4440 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 436 | 427,428,429,433,435,436&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |<br />|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4440 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 438 | 427,428,429,433,435,436,438&nbsp;&nbsp;&nbsp;&nbsp; |<br />|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4440 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 439 | 427,428,429,433,435,436,438,439 |<br />+-------------+----------+---------------------------------+</code></div></p>
+<p>Consider the user 4440. When t1.field2 is 427, when joining with t2, there's only itself when joined, so the count is 1 , delta is 0. When t1.field2 is 428 now we have two, namely 428 and 428, so the count is 2 and the delta is 1. And so on. The unsaid, implicit trick is that MySQL orders on what you group.</p>
+  </body>
+</html>
+

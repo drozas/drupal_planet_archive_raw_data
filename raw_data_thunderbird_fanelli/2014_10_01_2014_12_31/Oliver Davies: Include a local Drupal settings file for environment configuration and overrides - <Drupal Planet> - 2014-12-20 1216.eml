@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 20 Dec 2014 11:16:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 20 Dec 2014 11:16:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Oliver Davies: Include a local Drupal settings file for environment configuration and overrides
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.oliverdavies.co.uk/blog/include-local-drupal-settings-file-environment-configuration-and-overrides
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Oliver Davies: Include a local Drupal settings file for environment configuration and overrides</title>
+    <base href="http://www.oliverdavies.co.uk/blog/include-local-drupal-settings-file-environment-configuration-and-overrides">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>At the bottom of settings.php, add the following code:</p>
+<pre><code class="php">$local_settings = __DIR__ . '/settings.local.php';
+if (file_exists($local_settings)) {
+  include $local_settings;
+}
+</code></pre><p>This allows for you to create a new file called settings.local.php within a sites/* directory (the same place as settings.php), and this will be included as an extension of settings.php. You can see the same technique being used within Drupal 8's <a href="http://cgit.drupalcode.org/drupal/tree/sites/default/default.settings.php#n621">default.settings.php</a> file.</p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog/tags/drupal-planet">Drupal Planet</a></li><li class="taxonomy-term-reference-1"><a href="/blog/tags/drupal">Drupal</a></li><li class="taxonomy-term-reference-2"><a href="/blog/tags/drupal-6">Drupal 6</a></li><li class="taxonomy-term-reference-3"><a href="/blog/tags/drupal-7">Drupal 7</a></li><li class="taxonomy-term-reference-4"><a href="/blog/tags/drupal-8">Drupal 8</a></li><li class="taxonomy-term-reference-5"><a href="/blog/tags/settingsphp">settings.php</a></li></ul></div>
+  </body>
+</html>
+

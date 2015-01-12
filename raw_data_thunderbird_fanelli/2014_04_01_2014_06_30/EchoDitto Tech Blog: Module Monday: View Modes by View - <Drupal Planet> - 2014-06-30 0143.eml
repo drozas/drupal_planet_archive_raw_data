@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 29 Jun 2014 23:43:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 29 Jun 2014 23:43:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: EchoDitto Tech Blog: Module Monday: View Modes by View
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.echoditto.com/blog/module-monday-view-modes-view
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>EchoDitto Tech Blog: Module Monday: View Modes by View</title>
+    <base href="http://www.echoditto.com/blog/module-monday-view-modes-view">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://www.echoditto.com/sites/default/files/styles/medium/public/blog/tps-report.png?itok=AnEzgRLN" width="170" height="220" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Here at EchoDitto, we make extensive use of the <a href="https://drupal.org/project/ds">Display Suite module</a>, which means that we also use a lot of view modes. Today, I've <a href="https://drupal.org/project/view_modes_by_view">released a module</a> to help project managers, developers, and themers manage their view modes by providing a simple tool: a report that shows you which views are using which view modes. If you know what that means and why you'd want such a report, great! Install the module and be on your way. If not, read on.</p>
+
+<p>A view mode is a particular combination of a content type's fields, laid out in a particular way. Two of the most well-known view modes are "full" (for when you're viewing a node by itself) and "teaser" (usually a short version of a node that includes a link to the full node). Drupal 7 ships with several view modes and Display Suite provides a UI for creating custom ones.</p>
+
+<p>Almost every website makes some use of view modes. For instance, if you have a blog on your website, you probably want to feature those posts in at least three different ways:</p>
+
+<ul>
+<li>A short version of the post, that includes the title, the author, and the first few sentences, for use on the list of all posts in your blog. This would be the "teaser" view mode.</li>
+<li>An ever shorter version, that consists of just the title and the date it was published, for a "Posts by this Author" block on a user's profile. We could call this the "list" view mode.</li>
+<li>The post itself (you're looking at one now)! This is the "full" view mode.</li>
+</ul>
+
+<p>In most cases, you would create the lists of posts (the blog itself, and the "Posts by this Author" block) using the Views module.</p>
+
+<p>View modes are extremely useful for a number of reasons. They help ensure that your content is laid out consistently – wherever you use a particular view mode, you can be sure that the same group of fields appears, in the same order. Done right, the use of view modes can also cut down on theming time - style a view mode once, and you can display content using that view mode in many places on your site without needing to re-theme it.</p>
+
+<p>While view modes allow for great flexibility, they also increase complexity. It can quickly become difficult to remember where you have used a certain view mode – and that's assuming you were the person who built the site. If you're coming on to an existing project, you won't have that option. And either way, the only way to see which view mode is in use on a particular section of your site is to inspect the markup (not a great option for project managers) or to look at the view itself (not great for all project managers or themers, and tedious for developers). Regardless of how you find out which view mode is being used, you still can't see all the places the view mode is in use at once.</p>
+
+<p>The module that I released, <a href="https://drupal.org/project/view_modes_by_view">View Modes by View</a>, helps you manage your view modes by providing a report showing which views are using which view modes. It provides that bird's-eye view in a way that all site builders can understand and reference.</p>
+
+<p>Let me know in the comments or in the issue queue how this module works for you.</p>
+</div></div></div>
+  </body>
+</html>
+

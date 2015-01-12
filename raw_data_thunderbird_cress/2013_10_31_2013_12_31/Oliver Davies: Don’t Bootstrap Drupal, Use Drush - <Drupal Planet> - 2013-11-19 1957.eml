@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 19 Nov 2013 19:57:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 19 Nov 2013 19:57:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Oliver Davies: Don’t Bootstrap Drupal, Use Drush
+Content-Transfer-Encoding: 8bit
+Content-Base: http://oliverdavies.co.uk/blog/2013/11/don%E2%80%99t-bootstrap-drupal-use-drush
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Oliver Davies: Don’t Bootstrap Drupal, Use Drush</title>
+    <base href="http://oliverdavies.co.uk/blog/2013/11/don%E2%80%99t-bootstrap-drupal-use-drush">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>There are times when doing Drupal development when you need to run a custom PHP script, maybe moving data from one field to another, that doesn't warrant the time and effort to create a custom module. In this scenario, it would be quicker to write a .php script and bootstrap Drupal to gain access to functions like node_load() and db_query().</p>
+<p>To bootstrap Drupal, you would need to add some additional lines of code to the stop of your script. Something like:</p>
+<pre><code>&lt;?php
+
+// Bootstrap Drupal.
+$drupal_path = $_SERVER['DOCUMENT_ROOT'];
+define('DRUPAL_ROOT', $drupal_path);
+require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
+drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+
+// Do stuff.
+$node = node_load(1);
+</code></pre><p>The script would need be placed in the root of your Drupal directory, and you would then have had to open a browser window and visit http://example.com/foo.php to execute it. This is where the "drush script" (or "drush scr" for short) command is useful, and can be used to execute the script from the command line.</p>
+<pre><code>$ drush scr foo.php
+</code></pre><p>It also means that I no longer need to manually bootstrap Drupal, so my script is much cleaner.</p>
+<pre><code>&lt;?php
+
+// Just do stuff.
+$node = node_load(1);
+</code></pre><p>I prefer to keep these scripts outside of my Drupal directory in a separate "scripts" directory (with Drupal in a "drupal" directory on the same level). This makes it easier to update Drupal as I don't need to worry about accidentally deleting the additional files. From within the drupal directory, I can now run the following command to go up one level, into the scripts directory and then execute the script.</p>
+<pre><code>$ drush scr ../scripts/foo.php
+</code></pre><p>If you commonly use the same scripts for different projects, you could also store these within a separate Git repository and checkout the scripts directory using a <a href="http://git-scm.com/book/en/Git-Tools-Submodules" title="Git Submodules">Git submodule</a>.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog/tags/drupal-0">Drupal</a></li><li class="taxonomy-term-reference-1"><a href="/blog/tags/drush">Drush</a></li><li class="taxonomy-term-reference-2"><a href="/blog/tags/drupal-planet">Drupal Planet</a></li><li class="taxonomy-term-reference-3"><a href="/blog/tags/php">PHP</a></li></ul></div>
+  </body>
+</html>
+

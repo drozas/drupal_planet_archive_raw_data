@@ -1,0 +1,335 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 31 May 2013 14:35:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 31 May 2013 14:35:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wim Leers: Drupal 8: best authoring experience for structured content?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wimleers.com/article/drupal-8-structured-content-authoring-experience
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wim Leers: Drupal 8: best authoring experience for structured content?</title>
+    <base href="http://wimleers.com/article/drupal-8-structured-content-authoring-experience">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Drupal 8 will ship with big authoring experience improvements: <span class="caps">WYSIWYG</span> editing <span class="amp">&amp;</span> in-place editing, thanks to the <a href="http://buytaert.net/announcing-spark-authoring-improvements-for-drupal-7-and-drupal-8">Spark</a> distribution that Acquia — my employer — is&nbsp;sponsoring.</p>
+
+<p>But how well does it fare with the growing importance of structured content? Do Drupal 8’s <span class="caps">WYSIWYG</span> <span class="amp">&amp;</span> in-place editing enable it or prevent&nbsp;it?</p>
+
+<h2>The new web world order: many form&nbsp;factors</h2>
+
+<p>The Big Thing of the last few years: the advent of mobile. Inherent to that: websites that are optimized for mobile devices and act as data providers for&nbsp;apps.</p>
+
+<p>A new form factor — mobile devices — changed web development forever. Before mobile, the life of web developers and authors (content creators) was relatively simple: make sure websites work well on a few typical screen sizes (let&#8217;s deny the existence of Internet Explorer 6 and all the misery it&nbsp;caused).</p>
+
+<p>But … we cannot predict what&#8217;s next. We cannot predict new content consumption form factors. That&#8217;s where <a href="http://en.wikipedia.org/wiki/Content_strategy">content strategy</a> becomes vitally&nbsp;important:</p>
+
+<blockquote>
+  <p>content strategy is to copywriting as information architecture is to&nbsp;design</p>
+</blockquote>
+
+<p>We have to make sure that our content is <em>structured</em> and has enough metadata to successfully reuse the same (structured) content for different content consumption form factors. Without having to edit each piece of content&nbsp;again.</p>
+
+<h2>Structured content: successfully dealing with form&nbsp;factors</h2>
+
+<p><span class="caps">NPR</span>’s <a href="http://blog.programmableweb.com/2009/10/13/cope-create-once-publish-everywhere/">Create Once, Publish Everywhere</a> is the most often cited example of a content strategy that successfully provides content for many form factors. They create content once, then publish it to >10 different platforms. With a small team, they do more than some other companies, because of their excellent content strategy. It took them years to evolve their systems in this direction, and it paid&nbsp;off.</p>
+
+<p>Another example is <span class="caps">TV</span> Guide. They decided back in the 1980s to capture all semantic metadata, to build a <em>database</em> and extracting a magazine from that, rather than just creating a nicely formatted magazine every time. Thanks to that, they&#8217;re still relevant&nbsp;today.</p>
+
+<p>It appears that the reuse of content is something every website should strive towards. There&#8217;s nothing inherently bad about it. However, there <em>are</em>&nbsp;downsides.</p>
+
+<p><span class="caps">TV</span> Guide editors used a mainframe application (and maybe still do?). <span class="caps">NPR</span> editors use this <span class="caps">UI</span>:</p>
+
+<p><a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/4DWXKe4IHb5_Xx87PLzLsWMg64dt8vgWnuZovCDRwxc/mtime:1370008784/sites/wimleers.com/files/npr_ui.jpg" rel="original-image"><img src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/F9A5dIn8nL7uu1xlOR6EVbR4A3_Jz7tspkbbUPBV8fw/mtime:1369856304/sites/wimleers.com/files/resize/npr_ui-420x286.jpg" width="420" height="286" alt="" /></a></p>
+
+<p><span class="caps">NPR</span> editors are encouraged to only think about <em>content</em>, not <em>presentation</em> — hence a very basic data entry <span class="caps">UI</span> is all they get <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. This <span class="caps">UI</span> looks more like a web front-end to a database than a <span class="caps">CMS</span> (anybody else who&#8217;s reminded of <a href="http://www.phpmyadmin.net/"><span class="caps">PHPM</span>yAdmin</a>?)…</p>
+
+<p>So, while this may be&nbsp;true:</p>
+
+<blockquote><p>The goal of any <span class="caps">CMS</span> should be to gather enough information to present the content on any platform, in any presentation, at any&nbsp;time.</p></blockquote>
+
+<p>No <span class="caps">CMS</span> really aims to have a poor authoring experience, of&nbsp;course.</p>
+
+<h2>Drupal <span class="amp">&amp;</span> structured&nbsp;content</h2>
+
+<p>Drupal is already well prepared for structured&nbsp;content.</p>
+
+<p>All of the principles that are being used when reviewing code that is being proposed for Drupal core inclusion, are a <em>superset</em> of the principles applied to structured content. Drupal demands full separation of concerns at every level. Everything must be overridable/alterable. <a href="https://drupal.org/node/1887922">Separation of concerns for <span class="caps">CSS</span> files</a>, to ensure clean overriding of styling without having to duplicate all <span class="caps">CSS</span>. Content may never contain <span class="caps">CSS</span> nor depend on <span class="caps">CSS</span>. And so&nbsp;on.</p>
+
+<p>Five features in particular stand out with regards to structured content and content&nbsp;reuse:</p>
+
+<ol>
+<li><em>Structured content</em>: <a href="https://drupal.org/node/443536">Field <span class="caps">API</span></a>.<br />
+It allows content to be modeled as granularly as&nbsp;desired.</li>
+<li><em>Clean content</em>: <a href="https://api.drupal.org/api/drupal/core%21modules%21filter%21filter.module/8">Filter</a> system.<br />
+Ensures fancy mark-up is only added on output, and the stored content is as clean as possible. e.g. the fancy typographic features in this very piece of text is automatically added by <a href="http://drupal.org/project/typogrify">Typogrify</a>.</li>
+<li><em>Different presentations of the same content</em>: <a href="https://drupal.org/node/1577752">view modes</a>.<br />
+A view mode defines the order of the fields and the field formatter <span class="amp">&amp;</span> label of each field. <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></li>
+<li><em>Internal reuse of content (within the website)</em>:  <a href="http://drupal.org/project/views">Views</a> module.<br />
+To create lists, grids, tables, galleries etc. of content, while showing related content. A listing can be configured to use a specific view&nbsp;mode.</li>
+<li><em>External reuse of content (outside the website)</em>: <a href="http://drupal.org/node/1975444"><span class="caps">REST</span></a> module.<br />
+To provide <span class="caps">JSON</span>, <span class="caps">XML</span>, <span class="caps">HAL</span>, <span class="caps">JSON</span>-<span class="caps">LD</span>, YourCustomMarkupLanguage&nbsp;output.</li>
+</ol>
+
+<h2>Drupal authoring&nbsp;experience</h2>
+
+<p>Drupal&#8217;s authoring experience used to be remarkably similar to that of <span class="caps">NPR</span>’s <span class="caps">COPE</span>. We&#8217;ve gone through a lot of effort in Drupal 6, 7 and 8 to improve usability in general. In Drupal 8, the Spark distribution on which I work has specifically targeted the improving of the authoring&nbsp;experience.</p>
+
+<p>Some of the authoring experience improvements in Drupal 8 (in part) thanks to&nbsp;Spark:</p>
+
+<ol>
+<li><a href="https://groups.drupal.org/node/217434">two-column backend content editing</a> (with publishing options/meta configuration in a&nbsp;sidebar)</li>
+<li><a href="https://drupal.org/node/1872284">in-place editing for&nbsp;fields</a></li>
+<li><a href="https://drupal.org/node/1911646"><span class="caps">CKE</span>ditor-powered <span class="caps">WYSIWYG</span>&nbsp;editing</a></li>
+</ol>
+
+<p>The first is noncontroversial when looking at it from a structured content perspective. It&#8217;s the second and third that appear to be counter to the premise of structured content — to quote <a href="http://alistapart.com/column/wysiwtf">Karen McGrane</a> about <span class="caps">WYSIWYG</span>&nbsp;editing:</p>
+
+<blockquote>
+  <p>[…] we allow content creators to embed layout and styling information directly into their content. Unfortunately, the code added by content creators can be at odds with the style sheet, and it’s difficult for developers to parse what’s style and what’s substance. When it comes time to put that content on other platforms, we wind up with a muddled&nbsp;mess.</p>
+</blockquote>
+
+<p>or <a href="https://www.lullabot.com/blog/articles/inline-editing-and-cost-leaky-abstractions">Jeff Eaton</a> about in-place&nbsp;editing:</p>
+
+<blockquote>
+  <p>The editing interfaces we offer to users send them important messages, whether we intend it or not. They are affordances, like knobs on doors and buttons on telephones. If the primary editing interface we present is also the visual design seen by site visitors, we are saying: “This page is what you manage! The things you see on it are the true form of your&nbsp;content.”</p>
+</blockquote>
+
+<p>First, let me state that I in fact do not disagree with either of them. We&#8217;ve actually taken that into account while adding <span class="caps">WYSIWYG</span> editing and in-place editing to Drupal core. Let me explain&nbsp;how.</p>
+
+<h2><span class="caps">WYSIWYG</span> in Drupal 8: enforces clean&nbsp;markup</h2>
+
+<p>By default (in the Standard install profile), Drupal 8 will not ship with formatting/layout tools enabled in its <span class="caps">WYSIWYG</span> editor (<a href="http://ckeditor.com"><span class="caps">CKE</span>ditor</a>).</p>
+
+<p>We make sure in Drupal 8 to prevent crappy markup and format/layout markup (<code>style</code>, <code>font</code> attributes). It&#8217;s not only impossible to set these kinds of “bad attributes” in the WYSIWYG editor using the toolbar, it&#8217;s also impossible to paste them in and to use the “source mode” (where you can type HTML directly) to insert them — you can type them in the latter case, but they will be stripped upon going back to WYSIWYG mode from source mode, or upon save if you try to save it without going back to WYSIWYG mode.<br />
+This is powered by <a href="http://ckeditor.com/blog/CKEditor-4.1-Released">the new “Advanced Content Filter” feature in <span class="caps">CKE</span>ditor 4.1</a>, which was added specifically on our request to make this&nbsp;possible.</p>
+
+<p>Furthermore, we made it very easy to configure <span class="caps">CKE</span>ditor in Drupal 8, yet at the same time very hard to break the above strictness. Only <span class="caps">HTML</span> tags and attributes allowed by a specific <span class="caps">CKE</span>ditor toolbar button will be allowed, even if you add more buttons. So the above “guaranteed clean <span class="caps">HTML</span>” will not only be true for the default <span class="caps">WYSIWYG</span> configuration, but for <em>any</em> configuration. Drupal 8 will even automatically sync <span class="caps">WYSIWYG</span> configuration with filter system configuration:
+<video src="/sites/wimleers.com/files/unidirectional_text_editor_configuration_to_text_format_filter_settings_syncing.mp4" width="420"height="515" controls preload="none" autobuffer /></p>
+
+<p>In the past, configuring <span class="caps">WYSIWYG</span> editors was a pain, and in part because of that, the configuration of the <span class="caps">WYSIWYG</span> editor and corresponding filter system settings were too&nbsp;permissive.</p>
+
+<p>Finally, we&#8217;re currently working on making sure that when you insert an image into a piece of text (with or without a <span class="caps">WYSIWYG</span> editor), that won&#8217;t result in the <em>final</em> <span class="caps">HTML</span> like <code>&lt;img src="/files/styles/thumbnail/llama.jpg" width="100" height="100" alt="Awesome llama!" /&gt;</code>, but instead in a <em>placeholder</em> that the filter system will transform into the final <span class="caps">HTML</span> upon output: <code>&lt;img data-file-uuid="aa657593-0da9-42c0-9a05-5d63d27ad27d" data-image-style="thumbnail" /&gt;</code>.<br />
+In other words: the text should <em>only</em> contain text and programmatic references to other content; the filter system should then handle “upcasting” these into their final form. This will make it much, much easier to upgrade existing content to new <a href="https://drupal.org/documentation/modules/image#styles">image styles</a>, to modify referenced media, to migrate to a new <span class="caps">CDN</span>, and&nbsp;whatnot.</p>
+
+<h2><span class="caps">WYSIWYG</span> in Drupal 8: from brochureware to&nbsp;newspapers</h2>
+
+<p>Drupal needs to cater to both the extreme of very structured content for maximal reuse <em>and</em> to the extreme of unstructured content (where pretty much all data is in a single “blob” called the “body” field, besides maybe a “title” and a “tags” field). It also needs to deal with everything in&nbsp;between.</p>
+
+<p>Drupal may be used for news sites, but also for brochureware sites. By having the <span class="caps">WYSIWYG</span> editor be configurable, and hence letting the site builder choose whether formatting/layout tools are available or not, we empower the user to&nbsp;choose.</p>
+
+<h2><span class="caps">WYSIWYG</span> in Drupal 8: previews are evil? <span class="caps">WYSIWYM</span> to the&nbsp;rescue?</h2>
+
+<p>A <span class="caps">WYSIWYG</span> editor by definition provides <em>a</em> preview — a <em>best effort</em> preview, that is not guaranteed to be accurate. Providing a preview is not a problem in and of itself, as long as the author knows and understands that the content will be used in multiple contexts, where it will look&nbsp;different.</p>
+
+<p>Of course, reality is that not every author will be sufficiently educated, so we have to take potential abuse into account. Drupal&#8217;s filter system and very strict <span class="caps">WYSIWYG</span> editing in Drupal 8 do precisely that.<br />
+What might be even better though, is if we were to make it <em>explicitly visually obvious</em> that the <span class="caps">WYSIWYG</span> editor is indeed providing a <em>best-effort</em> preview: visualize the building blocks of the content that the author is using, to make him very aware of the structure of the content that he&#8217;s&nbsp;creating.</p>
+
+<p>This is what is some people have called <span class="caps">WYSIWYM</span>: “What You See Is What You Mean”. <sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>  <a href="http://en.wikipedia.org/wiki/WYSIWYM">Wikipedia defines</a> it as&nbsp;follows:</p>
+
+<blockquote>
+  <p><span class="caps">WYSIWYM</span> (an acronym for “what you see is what you mean”) is a paradigm for editing a structured document. It is an adjunct to the better-known <span class="caps">WYSIWYG</span> (what you see is what you get) paradigm, which displays a formatted document on screen as it will appear in only one mode of&nbsp;presentation.</p>
+  
+  <p>The main advantage of this system is the total separation of presentation and content: users can structure and write the document once, rather than repeatedly altering it for each mode of presentation, which is left to the export&nbsp;system.</p>
+</blockquote>
+
+<p>A <span class="caps">HTML</span> text editor specifically built for to be a <span class="caps">WYSIWYM</span> <span class="caps">HTML</span> editor exists: <a href="http://www.wymeditor.org/"><span class="caps">WYM</span>editor</a>.</p>
+
+<blockquote>
+  <p><span class="caps">WYM</span>editor&#8217;s main concept is to leave details of the document&#8217;s visual layout, and to concentrate on its structure and meaning, while trying to give the user as much comfort as possible (at least as <span class="caps">WYSIWYG</span>&nbsp;editors).</p>
+  
+  <ul>
+  <li>You may have tried a full-featured <span class="caps">WYSIWYG</span> editor, but you apprehend that your clients use it inappropriately, with the risk it degenerates visually and on the code&nbsp;quality.</li>
+  <li>You may also have tried the <span class="caps">BB</span>code syntax, Markdown or the wiki-style syntax, but you don&#8217;t want to force your clients to solutions that are too technical/complex for them, even if it tends to generate good quality&nbsp;code.</li>
+  </ul>
+</blockquote>
+
+<p><a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/DOPedMz_8OFb63KzwIL_J9-5eSCGXukOZ867C6ikFxo/mtime:1369912745/sites/wimleers.com/files/wymeditor.png" rel="original-image"><img src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/X7z4tRjAXs8kdmOGBsxlFVi8CdT--4Qn4PsNfGAjCYM/mtime:1369913107/sites/wimleers.com/files/resize/wymeditor-420x236.png" width="420" height="236" alt="" /></a></p>
+
+<p>The downside of <span class="caps">WYM</span>editor (besides its utilitarian <span class="caps">UI</span> and absence of keyboard accessibility) is that it doesn&#8217;t support the whole range of websites that Drupal needs to support: some people <em>want</em> to do everything in a <span class="caps">WYSIWYG</span> editor, and for the simplest websites, that&#8217;s acceptable. Drupal tries to impose as few choices as&nbsp;possible.</p>
+
+<p>So, ideally, we&#8217;d use <span class="caps">CKE</span>ditor, with a way to turn on a “<span class="caps">WYSIWYM</span> mode”. The great news: this already exists to a certain extent in the form of its “Show Blocks” plugin! (Which we&#8217;re already shipping with Drupal core specifically to accomodate&nbsp;this.)</p>
+
+<p><a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/w4p6usz8t2Mx2Zut4ckpjXkt4UmLN842ndWnBn_97Ds/mtime:1369913037/sites/wimleers.com/files/ckeditor_show_blocks.png" rel="original-image"><img src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/Kn4dVRQP8PKSat7HmPcsIHzBa9-2tojhO1y_TiEIZGs/mtime:1369913107/sites/wimleers.com/files/resize/ckeditor_show_blocks-420x319.png" width="420" height="319" alt="" /></a></p>
+
+<p>If we find this an acceptable solution, then all we need to do is improve <span class="caps">CKE</span>ditor&#8217;s “Show Blocks”&nbsp;plugin!</p>
+
+<p>Of course, this line of reasoning might come across as a superficial solution that isn&#8217;t a real solution. But let me demonstrate that the core a this pattern has been used for almost 20 years: in the LaTeX&nbsp;world.</p>
+
+<h2><span class="caps">WYSIWYM</span> <span class="amp">&amp;</span> LaTeX:&nbsp;LyX</h2>
+
+<p>I&#8217;m sure many of you know <a href="http://en.wikipedia.org/wiki/LaTeX">LaTeX</a>. It&#8217;s a “document markup language and document preparation system”. It&#8217;s typically used for writing papers, but also books. <sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
+
+<blockquote>
+  <p>LaTeX is based on the philosophy that authors should be able to focus on the content of what they are writing without being distracted by its visual presentation. In preparing a LaTeX document, the author specifies the logical structure using familiar concepts such as chapter, section, table, figure, etc., and lets the LaTeX system worry about the presentation of these structures. It therefore encourages the separation of layout from content while still allowing manual typesetting adjustments where&nbsp;needed.</p>
+</blockquote>
+
+<p>That really captures the gist of it: authors focus on content, don&#8217;t think about visual presentation. That&#8217;s up to “the system” to figure out.
+Now, here too, it is the domain markup, and complete knowledge of it, that is problematic: the plethora of LaTex&nbsp;commands.</p>
+
+<p>That&#8217;s why tools like <a href="http://www.lyx.org/">LyX</a> exist. LyX is essentially an easier to use interface to <em>generate</em> LaTeX. It shields the user (mostly) from the rather complex LaTeX markup. It provides a preview of sorts, but one that <em>clearly</em> looks completely different from the end result that LaTeX&#8217;s typesetting will generate: LyX encourages writing based on structure (<span class="caps">WYSIWYM</span>) rather than appearance (<span class="caps">WYSIWYG</span>).</p>
+
+<p>If all of the above sounded rather abstract, let&#8217;s look at an&nbsp;example:</p>
+
+<ul>
+<li><em>Writing LaTeX</em>: here&#8217;s a tiny subset of the LaTeX code — see the <a href="/sites/wimleers.com/files/example_operators_with_limits.tex">attached file for more</a>:<br />
+<pre><code> In inline formulas it looks like this:
+\begin_inset Formula $\lim_{x\rightarrow\infty}f(x)$
+\end_inset
+</code></pre></li>
+<li><em>Writing LaTeX in Lyx</em>:<br /><a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/3jYEaHUsFnWDN0HQuusqPE7h0vWGB9O4oecRoI2LfUI/mtime:1369917262/sites/wimleers.com/files/lyx_input.png" rel="original-image"><img src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/Znu5llpy0TjouDr5xUnzUe-MVt0wrqYd9Fro5IA3qSc/mtime:1369917420/sites/wimleers.com/files/resize/lyx_input-420x342.png" width="420" height="342" alt="Writing LaTex in LyX" /></a></li>
+<li><em>The output for both</em>:<br /><a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/lnQuXdL41sNqYXQzq8b2jPragz7HevQAMZD-Oi3JXWw/mtime:1369917398/sites/wimleers.com/files/lyx_latex_output.png" rel="original-image"><img src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/hdLEBgyIfggFEm2l8J20nETpt6pyGlye25tYutcZyG0/mtime:1369919308/sites/wimleers.com/files/resize/lyx_latex_output-420x291.png" width="420" height="291" alt="" /></a></li>
+</ul>
+
+<p>LyX’ initial release was in 1995. It&#8217;s still actively being used. Many, many papers have been written it as well as <a href="http://wiki.lyx.org/LyX/ProducedPublications">many books</a>.</p>
+
+<h2>But … <span class="caps">WYSIWYG</span> editors&nbsp;suck!</h2>
+
+<p>Sure, <a href="http://www.rachelandrew.co.uk/archives/2011/07/27/your-wysiwyg-editor-sucks/"><span class="caps">WYSIWYG</span> editors sucked</a>… because they allowed for formatting <span class="amp">&amp;</span> layout, which Drupal 8’s <span class="caps">WYSIWYG</span> editing doesn&#8217;t&nbsp;allow.</p>
+
+<p>We still have work to do to stress the importance of content structure over content presentation — see the <span class="caps">WYSIWYM</span> section above. But that can be bolted on top of the solid foundations that we already&nbsp;have.</p>
+
+<p>So, these wonderfully colorful quotes used to be painfully true, but they&#8217;re not applicable to Drupal 8’s <span class="caps">WYSIWYG</span>:</p>
+
+<blockquote>
+  <p><span class="caps">WYSIWYG</span> Editors suck because they promote thinking about style rather than content. While content editors are busy changing headings to Comic Sans, pondering the use of a grimacing smiley on their about us page or getting creative with colour, they are not considering the actual copy they are adding to the&nbsp;site.</p>
+  
+  <p><span class="caps">WYSIWYG</span> Editors suck because as a designer you lose control over big chunks of the design. Anywhere that allows people to enter <span class="caps">HTML</span> via an editor allows them to get as creative as they like, using any mark-up that they like. Unless you carefully go through and remove all the creativity that stuff is going to stay there. For developers, even if you switch off most of the buttons, just allowing the administrator to enter simple formatting and links, you still have a situation where a user is entering <span class="caps">HTML</span> which you then display on the website. This can enable all kinds of stuff to get into your content, which is then very hard to remove and fundamentally tied to the current design of the&nbsp;site.</p>
+</blockquote>
+
+<h2>In-place&nbsp;editing</h2>
+
+<p>In-place editing <em>does not inherently conflict with structured content</em>. In fact, for most things, Drupal&#8217;s implementation of in-place editing stresses the fact that the content is structured: most structured data is impossible to edit in the same way as it is presented. Only for textual fields, we offer the überfancy “true <span class="caps">WYSIWYG</span> in-place editing” capability, where Jeff Eaton&#8217;s quote from above is most relevant. Even there though, abuse is prevented by the very restrictively configured <span class="caps">WYSIWYG</span> editor. For other fields, like taxonomy terms, image fields, boolean fields and so on, we still offer a form-based editing <span class="caps">UI</span> while editing in-place, and the danger of letting content presentation prevail is extremely&nbsp;limited.</p>
+
+<p>To a degree, in-place editing can even be useful in increasing awareness of the need for structured content. If the content isn&#8217;t structured (i.e. one blob of data, for example a “body” field containing all content besides the title), then that becomes immediately and painfully obvious: no specialized, optimized in-place editors appear to edit the particular piece of content; instead you&#8217;d have to find your way to the particular thing you want to edit in the body field.<br />
+In-place editing in the way we&#8217;ve implemented it <em>encourages</em> structured&nbsp;content.</p>
+
+<p>In our initial implementation of in-place editing, there was more potential for misunderstanding and abuse. But we&#8217;ve made two important&nbsp;changes:</p>
+
+<ol>
+<li>in-place editing is no longer triggered on the page level, but at the entity level: the user must declare his intent to edit <em>a specific entity</em> in-place. So the user can no longer get the impression he&#8217;s “editing the page”: he&#8217;s explicitly made aware of the type of content (entity type) he&#8217;s editing (node, taxonomy term, custom block …) <em>and</em> of the field within that piece of content (entity) that he&#8217;s currently editing (Title, Author, Body, Tag, Image …).<br />
+<video src="/sites/wimleers.com/files/in-place%20editing%20ALL%20THE%20THINGS.mov" width="420"height="256" controls preload="none" autobuffer  /></li>
+<li>in-place editing is no longer saving each field individually, instead the modified fields for a specific entity are queued up and saved at once, this strengthens the communication to the user that he&#8217;s editing a singular piece of content that just happens to be rendered on this particular page. (<a href="https://drupal.org/node/1678002">In progress.</a>)</li>
+</ol>
+
+<p>Finally, in-place editing is only designed to be used for quick edits (hence it being triggered by a “Quick edit” action in the contextual links of entities). It&#8217;s intended to bring a level of “delightful interaction” to editing, instead of being forced to go back to the overwhelming back-end form every single time, even if you don&#8217;t need to modify&nbsp;metadata.</p>
+
+<h1>Education, understanding, awareness of content&nbsp;reuse</h1>
+
+<p>It is absolutely <em>essential</em> that authors (content creators) understand the <em>entire flow of the content</em>: from creating it first, using each field for its proper purpose, to the different ways that content might end up in&nbsp;output.</p>
+
+<p>Because in-place editing happens on the output, and output can happen in many ways, in-place editing <em>never</em> allows <em>all the content</em> to be edited: at the very least it is going to be impossible to edit metadata. From that last perspective, it&#8217;s definitely possible for an author to abuse in-place&nbsp;editing.</p>
+
+<p>We need to provide omnipresent, explicit awareness whenever an author is creating or editing content. Both when editing on the back-end and on the front-end. Low-fidelity, simultaneous previews of the different view modes and preferably on multiple form factors would be the ideal&nbsp;here.</p>
+
+<p>Embedding this explicit awareness is something we still have to achieve for Drupal.<sup id="fnref:6"><a href="#fn:6" rel="footnote">5</a></sup></p>
+
+<h2>Data storage in <span class="caps">NPR</span>’s <span class="caps">COPE</span></h2>
+
+<p>We saw <span class="caps">NPR</span>’s <span class="caps">UI</span> earlier in this article. What we didn&#8217;t see yet, are two fundamentally different ways of storing the data within what is presented as a single field to the end&nbsp;user:</p>
+
+<ol>
+<li><em>Each paragraph of a single text field is stored as a distinct database record.</em> This also implies that the position of the paragraph needs to be stored. (See the <a href="/sites/wimleers.com/files/NPR_entity_diagram_full_view.pdf">full diagram</a> for&nbsp;details.)</li>
+<li><em>When saving a paragraph, all <span class="caps">HTML</span> markup it contains is stored independently:</em> it stores just the text in one database record, and then there is one database record <em>per</em> <span class="caps">HTML</span> tag used within that paragraph, which stores the type of tag, the start and end position of that tag within the text, and the attributes for that tag. They call this <em>Markup Addressing</em>:<br />
+<a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/uwd1uKSQJJJZ3iT4kz3GVvK_nQPAtYNjHFKccnSHk8Q/mtime:1370008308/sites/wimleers.com/files/NPR_flow_of_content_through_markup_addressing_full.jpg" rel="original-image"><img src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/R1kTem9eQR9YGndRlMdZRNFEdUDXzJQ8lDArbd3vc3U/mtime:1369866111/sites/wimleers.com/files/resize/NPR_flow_of_content_through_markup_addressing_full-420x503.jpg" width="420" height="503" alt="" /></a>.</li>
+</ol>
+
+<p>In essence: <em>extreme</em> <a href="https://en.wikipedia.org/wiki/Database_normalization">database normalization</a>!</p>
+
+<p>Drupal does not yet support this out of the box. The question is whether this is actually <em>necessary</em>? There&#8217;s a lot of additional overhead to going so far in normalizing data. What is the use case for storing individual paragraphs in separate database records, when many paragraphs are meaningless without the surrounding&nbsp;paragraphs?</p>
+
+<p>The use case for storing the markup separately from the text it was applied to is more clear: to easily facilitate those platforms that don&#8217;t use <span class="caps">HTML</span> markup, and to support changes in markup more easily (e.g. <code>&lt;b&gt;</code> → <code>&lt;strong&gt;</code>). NPR decided against the alternative: storing the markup in the database and filter (strip/transform) it on the way out.<br />
+The <a href="http://blog.programmableweb.com/2009/11/11/content-portability-building-an-api-is-not-enough/">main gripe Daniel Jacobson had</a> with “filter on output” is based on how he&#8217;d seen that implemented before: hard-to-maintain scripts and most systems allowed <em>all</em> markup to be used. However, Drupal already has a mature system to deal with that: its filter&nbsp;system.</p>
+
+<p>Both architectures have downsides. Neither is clearly superior<sup id="fnref:5"><a href="#fn:5" rel="footnote">6</a></sup>. Time will tell whether Drupal&#8217;s data storage approach needs to&nbsp;evolve.</p>
+
+<h2>Conclusion</h2>
+
+<p><span class="caps">WYSIWYG</span> and in-place editing can clearly be highly problematic when it&#8217;s implemented like it has been for many websites for about a decade now. For many websites, they have been (ab)used to the extreme point of entire <span class="caps">HTML</span> pages being built by a <span class="caps">WYSIWYG</span> editor, which has caused consistent inconsistency and utter lack of reuse. Liked by authors at first, until things went bad — or until the next&nbsp;redesign.</p>
+
+<p>The other extreme is a system like <span class="caps">NPR</span>’s <span class="caps">COPE</span>, where it is guaranteed that content is consistent and reusable. At the cost of the authoring&nbsp;experience.</p>
+
+<p>However, I believe that using <span class="caps">WYSIWYG</span> editing in a very disciplinary manner combined with a well-defined system for filtering on output and a data model similar to <span class="caps">NPR</span>’s <span class="caps">COPE</span>, can yield equally successful results as <span class="caps">NPR</span>’s <span class="caps">COPE</span>, but with a significantly better authoring&nbsp;experience.</p>
+
+<h2>Sources <span class="amp">&amp;</span> related&nbsp;reading</h2>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Content_strategy">http://en.wikipedia.org/wiki/Content_strategy</a></li>
+<li><a href="http://blog.programmableweb.com/2009/10/13/cope-create-once-publish-everywhere/">http://blog.programmableweb.com/2009/10/13/cope-create-once-publish-everywhere/</a></li>
+<li><a href="http://blog.programmableweb.com/2009/10/21/content-modularity-more-than-just-data-normalization/">http://blog.programmableweb.com/2009/10/21/content-modularity-more-than-just-data-normalization/</a></li>
+<li><a href="http://blog.programmableweb.com/2009/11/11/content-portability-building-an-api-is-not-enough/">http://blog.programmableweb.com/2009/11/11/content-portability-building-an-api-is-not-enough/</a></li>
+<li><a href="http://karenmcgrane.com/2013/05/23/drupalcon-keynote-video-and-talk-notes/">http://karenmcgrane.com/2013/05/23/drupalcon-keynote-video-and-talk-notes/</a></li>
+<li><a href="https://www.lullabot.com/blog/articles/inline-editing-and-cost-leaky-abstractions">https://www.lullabot.com/blog/articles/inline-editing-and-cost-leaky-abstractions</a></li>
+<li><a href="http://alistapart.com/column/wysiwtf">http://alistapart.com/column/wysiwtf</a></li>
+<li><a href="http://www.rachelandrew.co.uk/archives/2011/07/27/your-wysiwyg-editor-sucks/">http://www.rachelandrew.co.uk/archives/2011/07/27/your-wysiwyg-editor-sucks/</a></li>
+</ul>
+
+<div class="footnotes">
+<hr />
+<ol>
+
+<li id="fn:1">
+<p>Both examples are <em>content</em> businesses. The efficient managing and reusing of that content is the whole reason they exist and survive. Hence it is acceptable for them to have a very poor authoring experience. Also: the data model has to be right from the beginning; if something was missing or wrong, it may be impossible to transform old content to the updated data model. Hence there is also an intentional lack of flexibility.&#160;<a href="#fnref:1" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn:2">
+<p>Use the <a href="http://www.lullabot.com/blog/articles/module-monday-entity-view-modes">Entity View Modes</a> module to create new view modes.&#160;<a href="#fnref:2" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn:3">
+<p>Not in the sense that it was discussed at the <a href="http://groups.drupal.org/node/299188"><span class="caps">WYSIWYM</span> BoF at DrupalCon Portland</a>, where it was really about <em>semantic annotation</em>.&#160;<a href="#fnref:3" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn:4">
+<p>The whole reason it exists is because somebody got fed up with messing with <span class="caps">WYSIWYG</span> editors to get everything just right: the typography, the whitespace, the layout, and so on. Instead, that person wanted to just write the content and have software automatically calculate optimal whitespace, optimal typesetting.&#160;<a href="#fnref:4" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn:6">
+<p>The Spark team has already been working on this to a certain extend: the <a href="https://drupal.org/node/1741498">responsive previews</a> patch. However, it is not tightly integrated with editing; neither on back-end nor front-end.&#160;<a href="#fnref:6" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn:5">
+<p>Ideally, there would a domain-specific markup (as in, a markup with annotations for the specific knowledge domain of your site) that has more expressive semantics and would then be transformed to <span class="caps">HTML</span> when the content gets rendered for web purposes, and to something else than <span class="caps">HTML</span> for other purposes. We should explore this.<br />
+But at the same time, the threshold would become rather high: which sites, besides those whose primary business is the longevity of their content, the long-term relevance and reusability of their  content, will want to invest to build their domain-specific language?<br />
+It requires a lot of discipline and research, to come up with a sufficiently expressive domain-specific markup. Precisely because once you&#8217;ve begun expressing content using your domain-specific markup, there is no way back. You cannot automatically enrich existing content with newly added domain-specific markup. The domain-specific markup must be <em>complete</em> before you begin using it.<br />
+Not to mention that either the author will need a complete understanding of the complete domain-specific markup as well, because otherwise it will all have been a measure for nothing. Once you enter this realm, it&#8217;s also very realistic (and human) for authors to forget about a few elements of the domain-specific markup. So then something like a <span class="caps">WYSIWYG</span> editor, but with buttons that generate the domain-specific markup could be a great help. This is once again <span class="caps">WYSIWYM</span>.&#160;<a href="#fnref:5" rev="footnote">&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+<ul class="tags">
+    <li><a href="/tags/spark" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Spark</a></li>
+    <li><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li>
+    <li><a href="/tags/wysiwyg" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">WYSIWYG</a></li>
+    <li><a href="/tags/usability" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">usability</a></li>
+    <li><a href="/taxonomy/term/11510" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">structured content</a></li>
+    <li><a href="/tags/acquia" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Acquia</a></li>
+    <li><a href="/tags/latex" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">LaTeX</a></li>
+    <li><a href="/tags/lyx" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">LyX</a></li>
+</ul>
+
+<ul class="files">
+    <li><table class="sticky-enabled">
+ <thead><tr><th>Attachment</th><th>Size</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><span class="file"><img class="file-icon" alt="" title="image/jpeg" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/LBXGNUEf8I2Lofr05_70hVO7cOGXCVuSU5bd1JU4L2A/drupal:7.22/modules/file/icons/image-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/4DWXKe4IHb5_Xx87PLzLsWMg64dt8vgWnuZovCDRwxc/mtime:1370008784/sites/wimleers.com/files/npr_ui.jpg" type="image/jpeg; length=130540" title="npr_ui.jpg">NPR&#039;s COPE UI</a></span></td><td>127.48 KB</td> </tr>
+ <tr class="even"><td><span class="file"><img class="file-icon" alt="" title="video/mp4" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/AX6wF-h86N6UndTR1tSb7okkg9a11i-Fl0JewSA5LnI/drupal:7.22/modules/file/icons/video-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/7Uxn9VVz86l3wRd-s4G5EOlO_lJQbKFCnGIyb61uw3o/perpetual:forever/sites/wimleers.com/files/unidirectional_text_editor_configuration_to_text_format_filter_settings_syncing.mp4" type="video/mp4; length=4524928" title="unidirectional_text_editor_configuration_to_text_format_filter_settings_syncing.mp4">Unidirectional text editor configuration to text format filter settings syncing</a></span></td><td>4.32 MB</td> </tr>
+ <tr class="odd"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/LBXGNUEf8I2Lofr05_70hVO7cOGXCVuSU5bd1JU4L2A/drupal:7.22/modules/file/icons/image-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/DOPedMz_8OFb63KzwIL_J9-5eSCGXukOZ867C6ikFxo/mtime:1369912745/sites/wimleers.com/files/wymeditor.png" type="image/png; length=34341" title="wymeditor.png">WYMeditor example</a></span></td><td>33.54 KB</td> </tr>
+ <tr class="even"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/LBXGNUEf8I2Lofr05_70hVO7cOGXCVuSU5bd1JU4L2A/drupal:7.22/modules/file/icons/image-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/w4p6usz8t2Mx2Zut4ckpjXkt4UmLN842ndWnBn_97Ds/mtime:1369913037/sites/wimleers.com/files/ckeditor_show_blocks.png" type="image/png; length=31848" title="ckeditor_show_blocks.png">CKEditor&#039;s &quot;Show Blocks&quot; plugin</a></span></td><td>31.1 KB</td> </tr>
+ <tr class="odd"><td><span class="file"><img class="file-icon" alt="" title="text/x-tex" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/sv6HCUhc0NzZ8h3aLFtb6ux3sYy7CP4nY0CugxP5uyY/drupal:7.22/modules/file/icons/text-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/NC5GO2T5Ez3AHT79L5XGu_LSUyc9MOF841Pbp72w-1g/mtime:1369918263/sites/wimleers.com/files/example_operators_with_limits.tex" type="text/x-tex; length=2638" title="example_operators_with_limits.tex">&quot;Operators with Limits&quot; LaTeX example that matches the screenshots</a></span></td><td>2.58 KB</td> </tr>
+ <tr class="even"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/LBXGNUEf8I2Lofr05_70hVO7cOGXCVuSU5bd1JU4L2A/drupal:7.22/modules/file/icons/image-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/3jYEaHUsFnWDN0HQuusqPE7h0vWGB9O4oecRoI2LfUI/mtime:1369917262/sites/wimleers.com/files/lyx_input.png" type="image/png; length=134435" title="lyx_input.png">Writing LaTex in LyX</a></span></td><td>131.28 KB</td> </tr>
+ <tr class="odd"><td><span class="file"><img class="file-icon" alt="" title="image/png" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/LBXGNUEf8I2Lofr05_70hVO7cOGXCVuSU5bd1JU4L2A/drupal:7.22/modules/file/icons/image-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/lnQuXdL41sNqYXQzq8b2jPragz7HevQAMZD-Oi3JXWw/mtime:1369917398/sites/wimleers.com/files/lyx_latex_output.png" type="image/png; length=18203" title="lyx_latex_output.png">LyX/LaTeX output</a></span></td><td>17.78 KB</td> </tr>
+ <tr class="even"><td><span class="file"><img class="file-icon" alt="" title="video/quicktime" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/AX6wF-h86N6UndTR1tSb7okkg9a11i-Fl0JewSA5LnI/drupal:7.22/modules/file/icons/video-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/VIhdWW0GCRyQvrufcLdTGRgY-4nCXdsyl4Eoz6oZOpc/perpetual:forever/sites/wimleers.com/files/in-place%20editing%20ALL%20THE%20THINGS.mov" type="video/quicktime; length=1385717" title="in-place editing ALL THE THINGS.mov">In-place editing of various entities on the page.</a></span></td><td>1.32 MB</td> </tr>
+ <tr class="odd"><td><span class="file"><img class="file-icon" alt="" title="application/pdf" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/Aid1SLiclCcvownOs__mlM4SoFD4mlvEKtPx6sRTkd8/drupal:7.22/modules/file/icons/application-pdf.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/vqcCp4RWjuq6YQOJELuWSw48rotUHJ2AQH8ZI6xWl9M/mtime:1369865287/sites/wimleers.com/files/NPR_entity_diagram_full_view.pdf" type="application/pdf; length=44200" title="NPR_entity_diagram_full_view.pdf">NPR entity diagram</a></span></td><td>43.16 KB</td> </tr>
+ <tr class="even"><td><span class="file"><img class="file-icon" alt="" title="image/jpeg" src="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/LBXGNUEf8I2Lofr05_70hVO7cOGXCVuSU5bd1JU4L2A/drupal:7.22/modules/file/icons/image-x-generic.png" /> <a href="http://d67mgwbrvk714.cloudfront.net/cdn/farfuture/uwd1uKSQJJJZ3iT4kz3GVvK_nQPAtYNjHFKccnSHk8Q/mtime:1370008308/sites/wimleers.com/files/NPR_flow_of_content_through_markup_addressing_full.jpg" type="image/jpeg; length=657983" title="NPR_flow_of_content_through_markup_addressing_full.jpg">NPR Markup Addressing</a></span></td><td>642.56 KB</td> </tr>
+</tbody>
+</table>
+ <span class="filesize">( bytes)</span></li>
+</ul>
+  </body>
+</html>
+

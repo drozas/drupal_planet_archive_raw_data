@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 18 Jan 2014 05:38:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 18 Jan 2014 05:38:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #25
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/390
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #25</title>
+    <base href="http://www.drupal4hu.com/node/390">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Migrate in core works. Yesterday, after our <a href="https://plus.google.com/events/cco3e183l5rglo3qjks7k5leur0">weekly call</a> (I am so thankful for eliza411 for organizing these calls, they are absolutely invaluable) a clear roadmap have emerged and I have written a rudimentary but functional drush command to run our migrations. Then I pointed it to a Drupal 6 database... and it worked. Just like that. Today penyaskito has finished the aggregator feed migration that eliza411 and mpgeek started and also written the aggregator item migration. These also work. We are basically done with the configuration migration and these are the first two content entities to work. <a href="https://groups.drupal.org/node/398588">Test instructions</a> are posted for the curious. Despite every migration is integration tested and most sources (and some destinations too) are unit tested there is a limit to what we can test: for example, we check that the contents of the variable we believe in D6 contained the site slogan ends up where we think it should end up in Drupal 8 but there's no real way to check that the slogan that appeared in D6 really appears in D8 short of someone running the d6_system_site migration and checking this fact.</p>
+  </body>
+</html>
+

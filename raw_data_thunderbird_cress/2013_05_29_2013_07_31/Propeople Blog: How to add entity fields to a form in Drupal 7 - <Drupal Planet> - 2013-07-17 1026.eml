@@ -1,0 +1,170 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 17 Jul 2013 09:26:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 17 Jul 2013 09:26:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Propeople Blog: How to add entity fields to a form in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wearepropeople.com/blog/how-to-add-entity-fields-to-a-form-in-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Propeople Blog: How to add entity fields to a form in Drupal 7</title>
+    <base href="http://wearepropeople.com/blog/how-to-add-entity-fields-to-a-form-in-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>While working at a <a href="/clients">Drupal Project</a>, I have encountered various situations when I had to create custom forms and attach entity fields (user, node, comments, commerce_product, etc.) to them.</p><p>Creating the forms manually can be headaching activity as it can turn out a buggy result. Since, I assume, Drupal developers work with form entity fields quite often and are in constant search of useful approaches I decided to provide two examples that, I hope, will make your task easier.</p><p>The form elements for the entity's fields are added by reference as direct children in the $form parameter. This parameter can be a full form structure (most common case for entity edit forms), or a sub-element of a larger form.</p><p>By default, submitted field values appear at the top-level of $form_state['values']. A different location within $form_state['values'] can be specified by setting the '#parents' property on the incoming $form parameter. Because of name clashes, two instances of the same field cannot appear within the same $form element, or within the same '#parents' space.</p><p>For each call to <a href="https://api.drupal.org/api/drupal/modules%21field%21field.attach.inc/function/field_attach_form/7" rel="nofollow" target="_blank">field_attach_form()</a>, field values are processed by calling <a href="https://api.drupal.org/api/drupal/modules%21field%21field.attach.inc/function/field_attach_form_validate/7" rel="nofollow" target="_blank">field_attach_form_validate()</a> and <a href="https://api.drupal.org/api/drupal/modules%21field%21field.attach.inc/function/field_attach_submit/7" rel="nofollow" target="_blank">field_attach_submit()</a> on the same $form element.</p><p> </p><h2>Example 1</h2><p>Add user entity fields to the form.</p><p><code>
+&lt;?php
+
+function my_user_profile_form($form, &amp;$form_state) {
+  // Get current user from globals.
+  global $user;
+
+  // Load user entity.
+  $account = user_load($user-&gt;uid);
+
+  // Attache entity user fields to the form.
+  field_attach_form('user', $account, $form, $form_state);
+}
+?&gt;
+
+</code></p><br /><p>From array after attach.</p><p><img alt="" class="media-image" height="578" width="538" typeof="foaf:Image" src="http://wearepropeople.com/sites/default/files/entity_fields1.jpg" /></p><p><code>
+&lt;?php
+
+function my_user_profile_form($form, &amp;$form_state) {
+  // Get current user from globals.
+  global $user;
+
+  // Load user entity.
+  $account = entity_load_single('user', $user-&gt;uid);
+
+  // Attache entity user fields to the form.
+  field_attach_form('user', $account, $form, $form_state);
+
+  $form['submit'] = array(
+    '#type' =&gt; 'submit',
+    '#value' =&gt; t('Save changes'),
+    '#submit' =&gt; array('my_user_profile_form_submit'),
+  );
+  return $form;
+}
+
+/**
+ * Validation from callback.
+ */
+function my_user_profile_form_validate($form, &amp;$form_state) {
+  // Get entity from the form.
+  $account = $form['#entity'];
+
+  // Validate entity.
+  field_attach_form_validate('user', $account, $form, $form_state);
+
+  // Custom validate...
+}
+
+/**
+ * Submit form callback.
+ */
+function my_user_profile_form_submit($form, &amp;$form_state) {
+// Get entity from the form.
+  $entity = $form['#entity'];
+
+  // Submit entity with default callbacks. 
+  field_attach_submit('user', $entity, $form, $form_state);
+
+  // Save entity.
+  entity_save($entity);
+}
+
+?&gt;
+</code></p><p> </p><h2>Example 2</h2><p>Attach billing and shipping fields to the form.</p><p>Shipping and Billing are commerce_customer_profile entity type with 2 bundles: billing and shipping.</p><p><img alt="" class="media-image" height="305" width="700" typeof="foaf:Image" src="http://wearepropeople.com/sites/default/files/entity_fields2.jpg" /></p><p>By applying this example we will achieve the following:</p><ul><li>Add 2 entity in form.</li><li>Create separate containers for each entity.</li><li>Validate and save each entity.</li></ul><p> </p><p><code>
+&lt;?php
+function my_user_address_form($form, &amp;$form_state) {
+  // Get current user from globals.
+  global $user;
+
+  // Create new profile.
+  $profile = commerce_customer_profile_new('shipping', $user-&gt;uid);
+  $form['new_shipping'] = array(
+    '#type' =&gt; 'container',
+    '#attributes' =&gt; array(
+      'class' =&gt; array(
+        'field-type-new-shipping',
+        'field-name-field-shipping',
+        'field-widget-commerce-customer-profile',
+      ),
+    ),
+    // Save values in tree.
+    '#tree' =&gt; TRUE,
+    // Set parrents.
+    '#parents' =&gt; array('new_shipping'),
+  );
+
+  $form['new_shipping']['customer_profile'] = array(
+    '#type' =&gt; 'value',
+    '#value' =&gt; $profile,
+  );
+
+  // Add the field widgets for the profile.
+  field_attach_form('commerce_customer_profile', $profile, $form['new_shipping'], $form_state);
+
+// Create new profile.
+  $profile = commerce_customer_profile_new('billing', $user-&gt;uid);
+  $form['new_billing'] = array(
+    '#type' =&gt; 'container',
+    '#attributes' =&gt; array(
+      'class' =&gt; array(
+        'field-type-new-billing',
+        'field-name-field-billing',
+        'field-widget-commerce-customer-profile',
+      ),
+    ),
+    // Save values in tree.
+    '#tree' =&gt; TRUE,
+    // Set parrents.
+    '#parents' =&gt; array('new_billing'),
+  );
+
+  $form['new_billing']['customer_profile'] = array(
+    '#type' =&gt; 'value',
+    '#value' =&gt; $profile,
+  );
+
+  // Add the field widgets for the profile.
+  field_attach_form('commerce_customer_profile', $profile, $form['new_billing'], $form_state);
+
+  $form['submit'] = array(
+    '#type' =&gt; 'submit',
+    '#value' =&gt; t('Save changes'),
+    '#submit' =&gt; array('my_user_address_form_submit'),
+  );
+  
+  return $form;
+}
+
+function my_user_address_form_submit($form, &amp;$form_state) {
+  // Get entities form form.
+  $billing = $form_state['values']['new_billing']['customer_profile'];
+  $shipping = $form_state['values']['new_shipping']['customer_profile'];
+
+  // Notify field widgets.
+  field_attach_submit('commerce_customer_profile', $billing, $form['new_billing'], $form_state);
+  field_attach_submit('commerce_customer_profile', $shipping, $form['new_shipping'], $form_state);
+
+  // Custom code...
+  // Save new profilies.
+  commerce_customer_profile_save($billing);
+  commerce_customer_profile_save($shipping);
+}
+?&gt;
+</code></p><p><img alt="" class="media-image" height="250" width="511" typeof="foaf:Image" src="http://wearepropeople.com/sites/default/files/entity_fields3.jpg" /></p><p>By attaching the entities in form_state we preserve the parent elements together with the entities and fields we are yet to attach. If we have an address field that works with AJAX, the form’s elements will work correctly and the form integrity will remain intact.</p><p>It's also worth reading the Propeople article called "<a href="/blog/how-to-build-a-popup-in-drupal-for-login-or-register-form">How to build a Popup in Drupal for Login or Register form</a>".</p><p>That's all for now, thanks for reading this. Share with others on <a href="http://facebook.com/propeople" target="_blank">Facebook</a> or <a href="http://twitter.com/propeople" target="_blank">Twitter</a>!</p> </div></div></div><div class="control-group form-type-item form-item">
+  <label class="control-label">Language </label>
+<div class="controls"> English
+</div></div>
+<div id="comment-wrapper"></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div><div class="field-item even"><a href="/tags/tutorials" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorials</a></div></div></div><div class="field field-name-field-drupal-planet field-type-taxonomy-term-reference field-label-above"><div class="field-label">Check this option to include this post in Planet Drupal aggregator:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

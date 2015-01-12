@@ -1,0 +1,97 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 05 Aug 2013 13:26:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 05 Aug 2013 13:26:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Your Guide To Extending RSS Feeds in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/your-guide-to-extending-rss-feeds-in-drupal/?utm_source=rss&utm_medium=rss&utm_campaign=your-guide-to-extending-rss-feeds-in-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Your Guide To Extending RSS Feeds in Drupal</title>
+    <base href="http://www.phase2technology.com/blog/your-guide-to-extending-rss-feeds-in-drupal/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=your-guide-to-extending-rss-feeds-in-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>If you need to provide updated information from your site to external consumers, RSS is generally the go-to standard you use. It provides a well-defined and well-supported definition. Generator and consumer RSS solutions are widely available in pretty much any programming language or web framework out there. Drupal is no exception with support built directly into Drupal core, and <a href="https://drupal.org/project/views">Views</a> has its own display plugin for more selective RSS feed generation. However, what do you do if you need finer-grained control over your feed generation, and possibly even custom extensions that comply with the RSS standard?</p>
+<h2>Views RSS</h2>
+<p>One great solution is the <a href="https://drupal.org/project/views_rss">Views RSS module</a>. Out of the box it adds customizable support for a core RSS channel, item level elements, and adds <a href="http://dublincore.org/">Dublin Core</a> support as well. By itself, it provides a much more flexible solution built on top of field-based Views than the one that comes with Views. In order to use it, download and install the views_rss module and the views_rss_core (and optionally views_rss_dc) module. Now when you create a View RSS Feed, you have a new format type to pick called RSS Feed – Fields:</p>
+<p><a href="http://www.phase2technology.com/wp-content/uploads/2013/08/views_rss_01-e1375458413650.jpg"><img class="alignnone size-full wp-image-4905" alt="A view off RSS screenshot" src="http://www.phase2technology.com/wp-content/uploads/2013/08/views_rss_01-e1375458413650.jpg" width="912" height="243" /></a></p>
+<p>This enables the Views RSS display format plugin, where you can begin to customize all aspects of a standard RSS feed (note the views_rss_dc module was enabled on this site):</p>
+<p><a href="http://www.phase2technology.com/wp-content/uploads/2013/08/views_rss_02.jpg"><img alt="screenshot of views style options" src="http://www.phase2technology.com/wp-content/uploads/2013/08/views_rss_02.jpg" width="913" height="387" /></a></p>
+<p>&nbsp;</p>
+<p>For those not familiar with RSS internals, the channel elements occur at the top level of the RSS feed, and typically consist of identifying information for the feed, update times, descriptions, etc.</p>
+<p><a href="http://www.phase2technology.com/wp-content/uploads/2013/08/views_rss_03.jpg"><img alt="screenshot of description input in Views Feed style options" src="http://www.phase2technology.com/wp-content/uploads/2013/08/views_rss_03.jpg" width="911" height="676" /></a></p>
+<p>Item elements are attached to each individual item that is returned in an RSS feed; Views items are analogous to rows and in which you map result fields.</p>
+<p><a href="http://www.phase2technology.com/wp-content/uploads/2013/08/views_rss_04.jpg"><img class="alignnone size-full wp-image-4908" alt="screenshot of Views Feed style options" src="http://www.phase2technology.com/wp-content/uploads/2013/08/views_rss_04.jpg" width="910" height="674" /></a></p>
+<p>Other feed settings provide options that govern how Views RSS generates the feed.</p>
+<p>Create your View by adding the fields you want to make available to the RSS feed and then go into the Views RSS display settings above and map fields to item elements to customize your feed output. Save the View, and when you browse to the path that you defined for the RSS feed, you should see your customizations come across in the RSS data.</p>
+<h2>Going One Step Further…</h2>
+<p>OK, great – now you have mapped all your fields into an RSS feed, but the consumer for the feed announces that they want to also have additional information that is not provided by the RSS core elements (channel or item).</p>
+<h3>What now?</h3>
+<p>Well, it just so happens that Views RSS provides a plugin mechanism for creating custom namespaces and elements for both the channel and item levels. Currently there are several contributed plugins that extend Views RSS with the most common elements, which are listed on the <a href="https://drupal.org/project/views_rss">Views RSS project page</a>. If you can’t find what you’re looking for there, then building your own is pretty simple. Documentation is available on the Views RSS project page, but the short and sweet version is simply this: the module exposes everything needed to do so via the Drupal hook system (list pulled from the <a title="Views RSS" href="https://drupal.org/node/1344136" target="_blank">Views RSS documentation</a>):</p>
+<p>Hooks for defining new namespaces, &lt;channel&gt; and &lt;item&gt; elements, and date sources:</p>
+<ul>
+<li>hook_views_rss_namespaces()</li>
+<li>hook_views_rss_channel_elements()</li>
+<li>hook_views_rss_item_elements()</li>
+<li>hook_views_rss_date_sources()</li>
+</ul>
+<p>Hooks for altering definitions provided by other modules:</p>
+<ul>
+<li>hook_views_rss_namespaces_alter(&amp;$namespaces)</li>
+<li>hook_views_rss_channel_elements_alter(&amp;$elements)</li>
+<li>hook_views_rss_item_elements_alter(&amp;$elements)</li>
+<li>hook_views_rss_date_sources_alter(&amp;$date_sources)</li>
+</ul>
+<p>Hooks for processing admin configuration form:</p>
+<ul>
+<li>hook_views_rss_options_form_validate($form, &amp;$form_state);</li>
+<li>hook_views_rss_options_form_submit($form, &amp;$form_state);</li>
+</ul>
+<p>Implementing these hooks is very straightforward. I’ll provide examples for a basic hypothetical module, views_rss_example, that adds a namespace, single channel element, and single item element.</p>
+<p>First, you add the new namespace to the Views RSS framework:</p><pre class="crayon-plain-tag">&lt;?php
+/**
+ * Implements hook_views_rss_namespaces().
+ */
+function views_rss_example_views_rss_namespaces() {
+  $namespaces['example'] = array(
+    'prefix' =&gt; 'xmlns',
+    'uri' =&gt; 'http://www.phase2.com/rss/1.0/example/',
+  );
+
+  return $namespaces;
+}
+?&gt;</pre><p>Next, you add channel elements (if your namespace calls for them):</p><pre class="crayon-plain-tag">&lt;?php
+/**
+ * Implements hook_views_rss_channel_elements().
+ */
+function views_rss_example_views_rss_channel_elements() {
+  $elements['example:publisher_id'] = array(
+    'title' =&gt; t(‘Publisher ID for this vendor’),
+    'description' =&gt; t(‘Provides the publisher ID for the vendor for some reason’),
+  );
+  return $elements;
+}
+?&gt;</pre><p>Then, you can add item elements (again if your namespace calls for them):</p><pre class="crayon-plain-tag">&lt;?php
+/**
+ * Implements hook_views_rss_item_elements().
+ */
+function views_rss_example_views_rss_item_elements() {
+  $elements['example:geotag'] = array(
+    'title' =&gt; t(‘Geolocation for this item’),
+    'description' =&gt; t(‘Provides the lat/lon GPS coords to pin this item to’),
+  );
+  return $elements;
+}
+?&gt;</pre><p>Presto! You now have a new namespace added to your RSS output, a channel element that you can provide the value for, and an item element that can have a Views field mapped to it.</p>
+<p>The use of hook_views_rss_date_sources() is limited to supporting non-core Views data sources, so if you’re querying standard node, user, comment, and file tables in your view, you don’t need to mess with it. Similarly, unless you are trying to extend the Views RSS configuration beyond simply adding elements and namespaces, there is rarely a need to implement the  hook_views_rss_options_form_X () hooks. The alter hooks are standard fare – they are invoked after all construction hooks have been called and allow a module to alter the provided items.</p>
+<h2>Conclusion</h2>
+<p>The <a href="https://drupal.org/project/views_rss">Views RSS contrib module</a> provides great scaffolding for quickly extending the standard <a href="https://drupal.org/project/views">Views</a> feed mechanism. Several extension modules already exist for common extensions for various vendors or services, so often you don’t need to roll out your own. But if you do, the framework is there to do so.</p>
+<p>To see more detailed examples, including alternative data mapping methods and preprocessing of element values, check out the <a href="https://drupal.org/node/83597">Views RSS documentation</a> and poke through the code that ships with Views RSS, specifically views_rss_core and views_rss_dc.</p>
+  </body>
+</html>
+

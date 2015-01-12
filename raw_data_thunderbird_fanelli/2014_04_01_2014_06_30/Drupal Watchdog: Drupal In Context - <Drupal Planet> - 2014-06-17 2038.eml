@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 17 Jun 2014 18:38:01 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 17 Jun 2014 18:38:01 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Drupal In Context
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/3/2/drupal-in-context
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Drupal In Context</title>
+    <base href="http://drupalwatchdog.com/3/2/drupal-in-context">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p>For non-programmers like me, Drupal's biggest flaws show up when a site is <em>almost</em> right, but needs “just a few lines of code” to really make it work. Some people learn programming easily; others can't, or don't want to invest the time. Fortunately, there are Drupal tricks to get many of the benefits of programming without having to actually deal with PHP, CSS, or JavaScript. Here are some that'll get you most of the way there.</p>
+<h3>Refactor Your Problem</h3>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/iStock_000010395414Small-cyan.jpg" class="img-responsive right-border img-thumbnail" alt="Do It Yourself" title="Do It Yourself" /><br />
+Whenever you run into a brick wall, stop, step back, and ask yourself: Does my site really need to have this feature? Could it be done in a different way?</p>
+<p>Many times when I do this, I realize that I've had a specific idea in my head as to how something should work, rather than the end goal I'm trying to achieve. Stepping back to look at the site from a visitor's point of view often shows me a simpler way to produce what's needed — even if it doesn't work anything like my original idea.</p>
+<h3>Use the Megamodules</h3>
+<p>Most modules perform a specific task; "megamodules" give you ways to manipulate Drupal's inner workings through a simplified visual interface. The best-known is <em>Views</em>, which helps site builders deliver the results of a database query: in essence, it translates your point-and-click directives into SQL. (Views will be part of Drupal 8’s core package.)</p>
+<p>But Views isn't the only megamodule out there.</p>
+<ul><li><strong>Rules</strong> lets you create logic that reacts to actions by users;
+</li><li><strong>Panels</strong> replaces tricky PHP theme templating in some cases;
+</li><li><strong>Features</strong> packages site elements into a custom module;
+</li><li><strong>Sweaver</strong> writes CSS for your theme, reflecting changes you make in a visual interface.
+</li></ul><h3>Learn What Programmers Do</h3>
+<p>Even if you don't plan to actually write code, getting to know the tools that programmers use will help you in two ways. First, you'll be able to implement code written by others; second, you'll be able to frame the problem better when you interact with programmers.</p>        </div>
+  </body>
+</html>
+

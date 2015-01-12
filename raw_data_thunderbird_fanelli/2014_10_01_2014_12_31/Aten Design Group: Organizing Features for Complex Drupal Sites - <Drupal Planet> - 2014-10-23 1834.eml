@@ -1,0 +1,95 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 23 Oct 2014 16:34:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 23 Oct 2014 16:34:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Organizing Features for Complex Drupal Sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/organizing-features-complex-drupal-sites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Organizing Features for Complex Drupal Sites</title>
+    <base href="http://atendesigngroup.com/blog/organizing-features-complex-drupal-sites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/drupal-features-organization.png" width="1000" height="600" alt="" /><p>We build Drupal sites with a combination of site code and the settings that Drupal stores in the database. Settings are easy for someone with no coding experience to change; but we can't track setting changes in the database as easily as we can track changes in code.</p>
+
+<p>Drupal’s <a href="https://www.drupal.org/project/features">Features module</a> is the most widely adopted solution in Drupal 7 for storing settings as version-controlled configuration in code. Like with most things Drupal, there isn’t just one approach to configuration in code: a few Aten folks have been working on another approach called <a href="https://www.drupal.org/project/cinc">CINC</a>.</p>
+
+<p>If you do decide to use the Features module, you’ll quickly learn there isn’t a single way of creating features. <a href="https://www.drupal.org/project/kit">Drupal Kit</a> provides some guidelines, but structuring and organizing Features-created modules is largely left up to the developer. Things can quickly get unwieldy on a complex site with multiple developers and many Features. In cases where Features is a project requirement, we’ve created a process that has worked well for us.</p>
+
+<h2>Be consistent with Features naming conventions</h2>
+
+<p>Our Feature names follow this convention: [projectshortname]<em>[summary]</em>[package_name]_feature</p>
+
+<ul>
+<li><strong>[projectshortname]</strong> This three-character code is decided at the beginning of a project and keeps the custom module and feature names unique to the project.</li>
+<li><strong>[summary]</strong> This is a super-short summary of the specifics of the feature.</li>
+<li><strong>[package_name]</strong> This should closely follow the package naming convention set for the project. Keep reading to learn more about package names.</li>
+<li><strong>feature</strong> This lets others know that this module was created by Features and also helps keep the module name unique.</li>
+</ul>
+
+<h3>Examples in practice</h3>
+
+<ul>
+<li>Page content type - abc_page_entity_feature</li>
+<li>Image style definitions - abc_image_styles_config_feature</li>
+<li>Blog View - abc_blog_views_feature</li>
+</ul>
+
+<h2>Categorize Features by providing a package name</h2>
+
+<p>When creating a new Feature, you can specify a package name. This is the same as defining “package = [something]” in a custom module .info file. The Package name groups your feature on the Features list page and the overall modules page. Being consistent with package names makes it easier for other developers and clients to find available features. We suggest nailing down package names at the beginning of a project. Our package names typically look something like this:</p>
+
+<ul>
+<li>[projectshortname] Configuration (image styles, text formats, search settings, various module settings)</li>
+<li>[projectshortname] Entity (content types, fields, field collections, taxonomies, etc.)</li>
+<li>[projectshortname] Views (views defined by views module)</li>
+<li>[projectshortname] Page (page manager &amp; panels)</li>
+</ul>
+
+<h2>Create a directory structure for modules created by Features</h2>
+
+<p>Our typical modules directory (sites/all/modules) is structured like this:</p>
+
+<ul>
+<li>contrib (modules downloaded from Drupal.org)</li>
+<li>custom (modules that aren’t contrib and specific to the project)</li>
+<li>features (modules created by Features)</li>
+<li>patched (patched contrib modules)</li>
+</ul>
+
+<p>The Features directory (sites/all/modules/features) is then broken down a bit further to make it easier to find what you need. We try to make this mirror package names as much as possible.</p>
+
+<ul>
+<li>features
+
+<ul>
+<li>configuration</li>
+<li>entity
+
+<ul>
+<li>content_type</li>
+<li>field_collection</li>
+<li>shared</li>
+<li>taxonomy</li>
+</ul></li>
+<li>page</li>
+<li>views</li>
+</ul></li>
+</ul>
+
+<h2>Limit cross-Feature dependencies</h2>
+
+<p>It is normal for a Feature to be dependent on other Drupal modules. For example, a content type Feature will be dependent on the Field Group module if using field groups. When creating content type Features, fields used by the content type are tightly coupled with each feature. The quickest way to a cross-Feature dependency is by creating two content type Features that have several shared fields (e.g. body, tags). Content Type One may contain the field base for the body field. Content Type Two also uses the body and now has a dependency on Content Type One.</p>
+
+<p>Cross-Feature dependencies make it hard to have Features that are truly independent and reusable across projects. Our way around this is being very intentional about when we use shared fields and adding them in a completely different Feature. We call this Feature “Shared Field Base”. This shared Feature allows Content Type One and Content Type Two to be completely independent of one another.</p>
+
+<p>At the end of the day, the important thing is to pick an approach and stick with it throughout the project. We’ve created a process that works well for us, but there are other approaches. How does your approach differ from ours? What other tips do you have for creating features and keeping them organized? Are you excited about Drupal 8’s <a href="https://www.drupal.org/documentation/administer/config">plans</a> for configuration in code?</p>
+  </body>
+</html>
+

@@ -1,0 +1,59 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 10 Oct 2013 17:51:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 10 Oct 2013 17:51:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Liran Tal's enginx: Drupal 8 module development #4 - creating a settings file
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.enginx.com/content/drupal-8-module-development-4-creating-settings-file
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Liran Tal's enginx: Drupal 8 module development #4 - creating a settings file</title>
+    <base href="http://www.enginx.com/content/drupal-8-module-development-4-creating-settings-file">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><em><strong>This is the 4th of several on-going blog post series which aim to educate on the process of porting modules to Drupal 8 with real life examples by porting a popular Drupal 7 module to Drupal 8.</strong></em></p>
+<p><img alt="" src="http://icons.iconarchive.com/icons/harwen/pleasant/256/Settings-icon.png" style="float:left; height:125px; width:125px" /></p>
+<p>In <a href="http://enginx.com/content/drupal-8-module-development-3-adding-settings-page">previous</a> articles we have started with Drupal 8 initial module porting and worked our way about adding a route and implementing the settings form controller so that we can present an administrative UI for managing the various configuration options which the module exposes.</p>
+<p>Next up will be to create and define those configurations options. In Drupal 7 we used the variable system to save and load configuration options, thus calling variable_set() and variable_get() in our modules, and all of this configuration data was saved in the database just like the rest of Drupal's data storage. This brought clutter and quite some mess, where pure data is mixed with configuration information and such. Out of the necessity to deal with this in Drupal 7 we've turned into modules like Features, Strongarm and others, although none of these is an ideal solution. For this reason, Drupal 8 defined the configuration initiative which aim is to attack this problem and make this simpler. </p>
+<h2>Defining settings</h2>
+<p>For a module to declare settings, it needs to create a <em><strong>config/</strong></em> directory in the module's root directory and create a configuration file &lt;modulename&gt;.settings.yml. For example the globalredirect module has the following settings declared in <em><strong>config/globalredirect.settings.yml</strong></em> with their default options too:</p>
+<pre>
+deslash: '1'
+nonclean_to_clean: '1'
+trailing_zero: '0'
+menu_check: '0'
+case_sensitive_urls: '1'
+language_redirect: '0'
+canonical: '0'
+content_location_header: '0'
+term_path_handler: '1'
+frontpage_redirect: '1'
+ignore_admin_path: '1'
+</pre><p>While it's not a requirement, it is advised to also create the schema settings file which extends the exported settings with more metadata and allows for localization amongst other things. To make this happen, we will create the directory <em><strong>config/schema/</strong></em> and inside it include the file <em><strong>globalredirect.schema.yml</strong></em> with the following content which shows a couple of configuration settings only to not spam you with code:</p>
+<pre>
+globalredirect.settings:
+  type: mapping
+  label: 'Global Redirect Settings'
+  mapping:
+    deslash:
+      type: boolean
+      label: 'Deslash'
+    nonclean_to_clean:
+      type: boolean
+      label: 'Non-clean to Clean'
+</pre><h2> </h2>
+<h2>Using module configuration</h2>
+<p>We've seen previously how to make use of a module's declared settings but we'll revisit it shortly now.</p>
+<p>To interact with the exposed settings of the module, we can make use of the configFactory and it's setters and getters. For example, to read the module's settings we can do:</p>
+<pre class="brush: php">
+$config = $this-&gt;config('globalredirect.settings');
+$deslash = $config-&gt;get('deslash');
+</pre></div></div></div><!-- google_ad_section_end --><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal-planet</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/drupal8" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal8</a></div></div></div>
+  </body>
+</html>
+

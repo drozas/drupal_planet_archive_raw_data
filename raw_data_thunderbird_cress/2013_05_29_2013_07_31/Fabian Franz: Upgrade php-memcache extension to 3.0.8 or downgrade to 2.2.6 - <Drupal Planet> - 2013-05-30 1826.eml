@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 May 2013 17:26:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 May 2013 17:26:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Fabian Franz: Upgrade php-memcache extension to 3.0.8 or downgrade to 2.2.6
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fabianx.drupalgardens.com/blog/upgrade-php-memcache-extension-308-or-downgrade-226
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Fabian Franz: Upgrade php-memcache extension to 3.0.8 or downgrade to 2.2.6</title>
+    <base href="http://fabianx.drupalgardens.com/blog/upgrade-php-memcache-extension-308-or-downgrade-226">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><strong>TL;DR: Update php-memcache extension to at least 3.0.8 or downgrade to 2.2.6. This can haunt Drupal sites using features especially and is quite hard to track down and leads to very instable system behavior.</strong></p>
+<p>Several Drupal sites of a friend of mine have been plagued by a vague bug, which led to very "interesting" site behavior.</p>
+<p>The least concern was that exported indexes suddenly disappeared, but on another site the whole exported rules did suddenly not work anymore and such the whole business logic of the site failed, which was obviously a major problem for my friend. Problematic was also that the problem disappeared then after an apache restart, but happened again months later.</p>
+<p>Just clearing the cache solved the problem in both cases, so cache corruption was the most likely.</p>
+<p>This bug is described in the PHP bug tracker in the following bug reports:</p>
+<ul><li><a href="https://bugs.php.net/bug.php?id=63142">https://bugs.php.net/bug.php?id=63142</a></li>
+<li><a href="https://bugs.php.net/bug.php?id=59844">https://bugs.php.net/bug.php?id=59844</a></li>
+</ul><p>The former has a good description of the bug report, but the second one uses valgrind to "see" the bug.</p>
+<p>Both instances ran php-memcache 3.0.6, but this bug is just fixed in 3.0.8.</p>
+<p>So on ubuntu I added the corruption.php to a file:</p>
+<div class="code">
+<pre>
+&lt;?php
+$obj = new StdClass();
+$obj-&gt;obj = $obj;
+$memcache = new Memcache;
+$memcache-&gt;connect('127.0.0.1', 11211);
+$memcache-&gt;set('x', $obj, false, 300);
+$x = $memcache-&gt;get('x');
+$x = $memcache-&gt;get('x');
+</pre></div>
+<p>installed and ran valgrind</p>
+<div class="code">
+<pre>
+apt-get install valgrind
+$ valgrind --tool=memcheck php corruption.php
+</pre></div>
+<p>and got several errors. I updated to 3.0.8 manually and got no more errors.</p>
+<p>Drupal is affected by this bug in several ways and I found corruption in search API search indexes and rules at least. There might be more.</p>
+<p>Unfortunately for Ubuntu no new packages for 3.0.8 do exist, so I upgraded manually by compiling the source to 3.0.8. Hopefully new packages come out soon.</p>
+<p>It is fixed for RHEL and CentOS though.</p>
+<p>I am blogging about this, because cache corruption can have very problematic side effects for Drupal sites. From failing features (suddenly a feature is overridden), missing functionality (certain rules no longer triggered) or whole pages disappearing, different things can happen. And this bug can be very hard to track down.</p>
+<p>So upgrade or downgrade your packages and enjoy stable production systems.</p>
+<p>Thanks,</p>
+<p>Fabian</p>
+ </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/memcache" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">memcache</a></div><div class="field-item odd"><a href="/tags/infrastructure" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">infrastructure</a></div><div class="field-item even"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div><div class="field-item odd"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div></div></div>
+  </body>
+</html>
+

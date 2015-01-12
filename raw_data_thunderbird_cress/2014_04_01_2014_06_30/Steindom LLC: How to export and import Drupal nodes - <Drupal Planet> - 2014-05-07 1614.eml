@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 07 May 2014 15:14:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 07 May 2014 15:14:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Steindom LLC: How to export and import Drupal nodes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://steindom.com/articles/how-export-and-import-drupal-nodes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Steindom LLC: How to export and import Drupal nodes</title>
+    <base href="http://steindom.com/articles/how-export-and-import-drupal-nodes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>There are lots of ways to export configuration from one Drupal site and import into another; however, there are few ways to do the same with content. Here's a quick tip which has worked well for me.</p>
+<!--break--><p>
+I've tried several contrib modules to export content from one site and import into another, with varying levels of success, such as <a href="https://drupal.org/project/node_export">Node export</a> and <a href="https://drupal.org/project/uuid_features">UUID Features</a>. However, in my use cases, these solutions created more problems than they solve.</p>
+<p>For example, on one project I have to create Webform nodes in a development environment, and then export these into code so they can be deployed upstream. After wrestling with the modules above, I wrote a simple script you can execute at /devel/php:</p>
+<p></p><div class="geshifilter"><div class="php geshifilter-php"><span class="co1">// Enter node NID to export.</span><br /><span class="re0">$nid</span> <span class="sy0">=</span> <span class="nu0">55</span><span class="sy0">;</span><br /><br /><span class="co1">// Use Drupal's export utility to convert the object to code.</span><br /><span class="kw1">include_once</span> DRUPAL_ROOT <span class="sy0">.</span> <span class="st_h">'/includes/utility.inc'</span><span class="sy0">;</span><br /><span class="re0">$export</span> <span class="sy0">=</span> drupal_var_export<span class="br0">(</span>node_load<span class="br0">(</span><span class="re0">$nid</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span><br /><br /><span class="co1">// Strip node NIDs and VIDs, so it imports cleanly.</span><br /><span class="re0">$export</span> <span class="sy0">=</span> <a href="http://www.php.net/preg_replace"><span class="kw3">preg_replace</span></a><span class="br0">(</span><span class="st0">"/'(n|v)id' =&gt; '?\d+'?,/"</span><span class="sy0">,</span> <span class="st0">"'<span class="es4">$1id</span>' =&gt; NULL,"</span><span class="sy0">,</span> <span class="re0">$export</span><span class="br0">)</span><span class="sy0">;</span><br /><br /><span class="co1">// Print code needed to import node.</span><br />
+dpm<span class="br0">(</span><span class="st_h">'$node = '</span> <span class="sy0">.</span> <span class="re0">$export</span> <span class="sy0">.</span> <span class="st_h">';'</span> <span class="sy0">.</span> <span class="st0">"<span class="es1">\n</span>"</span> <span class="sy0">.</span> <span class="st_h">'node_save($node);'</span><span class="br0">)</span><span class="sy0">;</span></div></div>
+<p>You can then include the displayed code in your .install file. It will create the node, and let Drupal auto-populate the NID and VID.</p>
+</div></div></div><div class="field field-name-submitted-by field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">Submitted by <span class="username">Joel Stein</span> on May 7, 2014.</div></div></div><div class="field field-name-field-article-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal-planet">Drupal Planet</a>, <a href="/tags/drupal">Drupal</a>, <a href="/tags/drupal-7">Drupal 7</a></div></div></div>
+  </body>
+</html>
+

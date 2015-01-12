@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 08 Feb 2014 08:58:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 08 Feb 2014 08:58:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Frederic Marand: Tip of the day: Standalone DBTNG outside Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.riff.org/2014_02_08_tip_of_the_day_standalone_dbtng_outside_drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Frederic Marand: Tip of the day: Standalone DBTNG outside Drupal</title>
+    <base href="http://blog.riff.org/2014_02_08_tip_of_the_day_standalone_dbtng_outside_drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>A few days ago, while I was writing a bit of Silex code and grumbling at Doctrine DBAL's <a href="http://www.doctrine-project.org/jira/browse/DBAL-182">lack of</a> support for a <a href="https://drupal.org/node/310085">SQL Merge</a> operation, I wondered if it wouldn't be possible to use DBTNG without the rest of Drupal.</p>
+
+<p>Obviously, although DBTNG is described as having been <a href="https://github.com/Crell/DBTNG/blob/master/README.txt">designed for standalone use</a>: <q cite="https://github.com/Crell/DBTNG/blob/master/README.txt">DBTNG should be a stand-alone library with no external dependences other than PHP 5.2 and the PDO database library</q>, in actual use, the Github DBTNG repo has seen no commit in the last 3 years, and the D8 version is still not a Drupal 8 "Component" (i.e. decoupled code), but still a plain library with Drupal dependencies. How would it fare on its own ? Let's give it a try...</p>
+<p><a href="http://blog.riff.org/2014_02_08_tip_of_the_day_standalone_dbtng_outside_drupal" target="_blank">read more</a></p>
+  </body>
+</html>
+

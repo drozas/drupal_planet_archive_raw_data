@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 04 Jul 2014 04:46:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 04 Jul 2014 04:46:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: flink: Drupal Views Accelerator
+Content-Transfer-Encoding: 8bit
+Content-Base: http://flink.com.au/tips-tricks/drupal-views-accelerator
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>flink: Drupal Views Accelerator</title>
+    <base href="http://flink.com.au/tips-tricks/drupal-views-accelerator">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://flink.com.au/sites/default/files/styles/large/public/field/image/Bloodhound.jpg?itok=wOptqdr8"><img typeof="foaf:Image" src="http://flink.com.au/sites/default/files/styles/large/public/field/image/Bloodhound.jpg?itok=wOptqdr8" width="480" height="317" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><em><strong>When caching is not an option, Drupal sites employing the <a href="http://drupal.org/project/views">Views</a> module may find their performances bound by it. Getting to the bottom of this issue on a number of sites we discovered that performance benefits are to be gained in unlikely corners of Views. We published a first version of the <a href="http://drupal.org/project/views_accelerator">Views Accelerator</a> module  for everyone to reap those benefits. You’re invited to give it a burl.  A couple of clicks on the UI could be all it takes to put a smile on the performance dial.</strong></em></p>
+<!--break--><h3>From simple to more complex analysis tools</h3>
+<p>Did you ever pay attention to that spinning circle while your browser is fetching your page? While that wheel spins anti-clockwise your browser is waiting for a reply from the server to your mouse click. Then as the server response streams in, the wheel reverses direction and the browser builds up your page. Details of each and every file processed during that phase and how long it took can be found under the Network tab of your browser console.<br />
+But when it comes to improving that left-churning part, no amount of browser analytics can help you. This is when you bring out the big guns. Like <a href="/tips-tricks/speedy-install-to-pinpointing-slow-performance">XHProf</a>, or for D8, the Symfony-based <a href="http://drupalize.me/blog/201406/web-profiler-drupal-8">WebProfilerBundle</a>.<br />
+And you get ready to get your hands dirty, as you may have to dig deep.</p>
+<h3>When caching doesn’t cut it</h3>
+<p>But why take the trouble to analyse all this? Why not tell your customer to throw a pile of caching technologies at the under-performing site?<br />
+Because depending on the nature of your site, caching can be ineffective and even lead to functional errors.</p>
+<p>The reason is personalisation/customisation. </p>
+<p>Increasingly websites recall specific details about us to give us an enhanced browsing experience tailored to our preferences. Sites remember stuff we chose before. Brands, price ranges, travel destinations. Taking advantage of GPS/WiFi technology sites know where we are when we visit them. A map may place our current location at its centre and only show nearby points of interest — rather than the whole world.</p>
+<p>Websites are moving from off-the-rack, one-size-fits-all to <em>bespoke</em>.</p>
+<p>To cache is to assemble time-consuming pages once, to then dish out copies to everyone who ordered that same page. Caching does not cater for every guest bringing their own dietary requirements to the table.<br />
+Bespoke is indigestible to caching.</p>
+<p>That’s when you have to take caching off the menu and look for alternative ways to speed up a site. So we cooked up <strong>Views Accelerator</strong>.</p>
+<h3>Identifying server-side slow spots</h3>
+<p>Tasked with making a customer site perform quicker we booted up XHProf. The culprit of slow performance was soon identified as a map featuring hundreds to thousands of nearby points of interest, centred on the visitor’s current location. </p>
+<p>But it wasn’t any of the map engines or their APIs (Google, Openlayers, Leaflet) that were soaking up the seconds. Neither was it the database. It was Views. A little-known corner of Views.</p>
+<p>Those familiar with the Views UI cockpit may know the tick box <em>Show performance statistics</em> on the <em>admin/structure/views/settings</em> page. With that checked, a preview prints out <strong>Query build time</strong>, <strong>Query execute time</strong> and <strong>View render time</strong>. </p>
+<p>It’s like the developers of the Views module themselves felt those three numbers sum up all there is to Views performance. </p>
+<p>But there is a fourth component…  and it can slow your site down more than the other three together. XHProf proved it.</p>
+<h3>The performance opportunity</h3>
+<p>Between the query-execute and view-render phases, the code passes through a <em>post-execute stage</em>. This is where the raw results from the database are groomed for final rendering and theming. All results go through post-execute, even when this may not be necessary....</p>
+<p>And with that we cue to the <a href="http://drupal.org/project/views_accelerator">Views Accelerator project</a> page. Featured there is a summary of a case study, proving how flicking on the module can boost Views speeds by 60%. </p>
+<p>Views Accelerator is unconventional in its approach and is still in its infancy. Time will tell how the module matures in the community.  We welcome feedback to help us improve the module.</p>
+<p>Enable Views Accelerator on a test site. In <em>Analysis</em> mode it tells you how every view on every page you visit performs. Then in <em>Accelerator</em> mode it shows you those figures again. Hopefully the second time round those figures are a little leaner, making the user experience a little richer. If not, then your views may already be close to optimum. That’s reassuring too, isn’t it?</p>
+<p>No gain, no pain. There is no reason not to give <a href="http://drupal.org/project/views_accelerator">Views Accelerator</a> a go.</p>
+<div style="font-size:smaller">Image taken from <a href="http://content.time.com/time/photogallery/0,29307,1853267_1785184,00.html">Time Magazine</a>:<br />
+The $19 million Bloodhound SSC that is designed to shatter the world record on land with speeds over 1000 mph.</div>
+<p><br /></p>
+</div></div></div><div class="field field-name-field-file-under field-type-taxonomy-term-reference field-label-above"><div class="field-label">File under:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/file-under/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div></div>
+  </body>
+</html>
+

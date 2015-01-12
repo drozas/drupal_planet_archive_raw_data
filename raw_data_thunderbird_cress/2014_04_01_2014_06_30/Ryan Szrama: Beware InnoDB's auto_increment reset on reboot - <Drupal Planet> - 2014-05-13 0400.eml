@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 13 May 2014 03:00:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 13 May 2014 03:00:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Ryan Szrama: Beware InnoDB's auto_increment reset on reboot
+Content-Transfer-Encoding: 8bit
+Content-Base: http://ryanszrama.com/blog/05-12-2014/beware-innodbs-autoincrement-reset-reboot
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Ryan Szrama: Beware InnoDB's auto_increment reset on reboot</title>
+    <base href="http://ryanszrama.com/blog/05-12-2014/beware-innodbs-autoincrement-reset-reboot">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Earlier this year I helped my friend Samuel bring his <a href="http://wikiwoo.com/" title="Wikiwoo.com, a used cell phone reseller.">used cell phone resell</a> business online using Drupal Commerce. The site is still in maintenance mode while we finish the self-service features, but his staff currently uses it logged in from their various locations as their point of sale system. Knowing the ins and outs of Commerce, I didn't have any problems tailor making an eCommerce application for his business, but I did have one hiccup during deployment that I'd never seen before.</p>
+<p>We built Wikiwoo.com on <a href="http://getpantheon.com">Pantheon</a>, a Drupal Platform as a Service, using a free developer site until it was ready for use in stores. Pantheon really helped us collaborate on the site build, with me doing the coding and configuring while he filled the product catalog. We did everything on the site's dev environment, including letting his partners take a look around to find things worth fixing, until we were ready to go live.</p>
+<p>One of the last things I did to prepare for the launch was update the auto_increment value of the commerce_order table to account for the number of orders they processed in the previous year and a half. However, we weren't really migrating old eCommerce data, so I just expected the first order on the new site to start where we wanted and we'd watch them grow from there. A quick test showed it working as expected, so I deleted the dummy orders and sent him a link to upgrade the account to a paid plan to take it live.</p>
+<p>Unfortunately, when I went back to the site the next day, I saw that orders were being created with IDs starting back at 1. I knew there was nothing in Commerce that would effect such a change, so I hit up Pantheon support and got a quick confirmation that nothing they do would intentionally reset auto_increment values either.</p>
+<p>Sidebar: I really should emphasize <em>quick</em>. Any time I've ever contacted Pantheon support, they've responded right away. "Groovy," said Josh Koenig in this particular instance when we nailed down what was happening. "Groovy," I say to Pantheon's customer service. <img src="http://ryanszrama.com/sites/all/modules/smiley/packs/example/cool.png" alt="Cool" /></p>
+<p>It turns out what I experienced was a result of <a href="http://dev.mysql.com/doc/refman/5.7/en/innodb-auto-increment-handling.html">InnoDB's treatment of auto_increment values</a>. The auto_increment counter is only stored in memory, not on disk, and it is recalculated on server startup. InnoDB simply looks for the highest used ID and sets the counter to the next value, explaining why my order IDs shrunk back down to 1 after I cleared out all of our dummy orders.</p>
+<p>In our case, it was the upgrade from a free account to a paid account that restarted the database server, triggering the reset of the counter. However, with cloud based Platforms as a Service, I imagine there are other scenarios where an expected alteration to an auto_increment value is apparently "lost" on migration between environments or builds. This is probably mostly an eCommerce issue with respect to Drupal sites, as merchants often want or need order IDs to account for historical sales, but perhaps the tip can save someone else a bit of head scratching.</p>
+<p>To get around my issue, I simply reset the auto_increment to where I wanted it to be, created a cart order for myself, and waited for a real order to be created before deleting my dummy order.</p>
+<p>Problem solved, it's been fun to watch the order count grow from there.</p>
+<p><span class="caption">Photo credit: <a href="https://www.flickr.com/photos/maximilianbarners/">Max Barnes</a></span></p>
+</div></div></div>
+  </body>
+</html>
+

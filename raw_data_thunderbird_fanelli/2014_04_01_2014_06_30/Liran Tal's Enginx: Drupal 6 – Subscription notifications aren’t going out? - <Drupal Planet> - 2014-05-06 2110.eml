@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 06 May 2014 19:10:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 06 May 2014 19:10:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Liran Tal's Enginx: Drupal 6 – Subscription notifications aren’t going out?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://enginx.com/blog/drupal-6-subscription-notifications-arent-going-out-2/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Liran Tal's Enginx: Drupal 6 – Subscription notifications aren’t going out?</title>
+    <base href="http://enginx.com/blog/drupal-6-subscription-notifications-arent-going-out-2/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- Easy AdSense V7.20 -->
+<!-- [leadin: 2 urCount: 1 urMax: 0] -->
+<div class="ezAdsense adsense adsense-leadin" style="float:right;margin:12px;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- enginx-blog-wide-post -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-9677997565991773"
+     data-ad-slot="6746030703"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<!-- Easy AdSense V7.20 -->
+<p>We recently had an issue with a <a href="https://drupal.org/">Drupal</a> 6 site, where-as <a href="https://drupal.org/project/notifications">notifications</a> didn&#8217;t seem to reach their destination on user&#8217;s email, even though we verified that all users were subscribed correctly to the relevant content items. An initial investigation began with the mail server to figure out if it&#8217;s getting any traffic from Drupal, whether it&#8217;s just misconfigured, down or has any other reasonable issue that can be reverted. The mail server logs proved very quickly that the mail server isn&#8217;t getting any SMTP traffic at all, so this shifts focus into Drupal. While this can happen in a myriad of places in Drupal and due to a handful of reasons that could have caused this, there&#8217;s another quick way of figuring out if notification events are even being created at all, and that&#8217;s by going into the subscription management administrative area and just reviewing if new notifications are being created and waiting on the queue or not.</p>
+<p><a href="http://enginx.com/wp-content/uploads/2014/05/Drupal-6-Manage-subscriptions.png"><img class="alignleft size-medium wp-image-253" src="http://enginx.com/wp-content/uploads/2014/05/Drupal-6-Manage-subscriptions-300x77.png" alt="Drupal 6 - Manage subscriptions" width="300" height="77" /></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Further investigation lead to figuring out that there&#8217;s a notifications module variable which controls whether or not the <a href="https://drupal.org/project/notifications">notifications module</a> will create events for content that is being created, updated, etc. In our case, due to wrong handling it was set to disregard node creation events. Deleting the variable quickly resolved the issue.</p>
+  </body>
+</html>
+

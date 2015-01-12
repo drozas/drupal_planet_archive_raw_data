@@ -1,0 +1,75 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 27 Jul 2014 20:48:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 27 Jul 2014 20:48:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: orkjerns blogg: Now running Drupal 8, in the most hipster way imagined.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://orkjern.com/running-on-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>orkjerns blogg: Now running Drupal 8, in the most hipster way imagined.</title>
+    <base href="http://orkjern.com/running-on-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/40/title/en/full">Now running Drupal 8, in the most hipster way imagined.</span>
+<ul class="links inline"><li class="comment-forbidden"><a href="/user/login?destination=node%2F40%23comment-form">Log in</a> or <a href="/user/register?destination=node%2F40%23comment-form">register</a> to post comments</li></ul><div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/40/body/en/full">
+    <div class="field-items">
+          <div class="field-item" property="schema:text"><p>It has been a weekend in the spirit of <a href="https://groups.drupal.org/headless-drupal">headless Drupal</a>, front-end optimizations and server side hacks. The result is I updated my blog to Drupal 8. Since you are reading this, it must mean it is live.</p>
+<p>First let's start with the cold facts (almost chronologically ordered by request lifetime):</p>
+<ul><li><a href="https://www.varnish-cache.org">Varnish</a></li>
+<li><a href="http://nginx.org/">Nginx</a></li>
+<li><a href="http://hhvm.com/">HHVM</a></li>
+<li>Drupal 8</li>
+<li><a href="http://lhorie.github.io/mithril/">Mihtril.js</a></li>
+<li>Core REST module for all resources</li>
+</ul><p>Other front-end technologies used that does not directly relate to the request itself:</p>
+<ul><li><a href="http://gulpjs.com/">Gulp.js</a></li>
+<li><a href="http://browserify.org/">Browserify</a></li>
+</ul><h2>So, HHVM, huh?</h2>
+<p>Yeah, that's mostly just a novelty act. There is no real gain there. Quite the opposite, I have added some hacks to get around some limitations. </p>
+<p>HHVM does not work very well with logged in users right now, but works alright for serving anonymous content.</p>
+<h2>When I reload and look at the source code, there is no css loading. WAT?</h2>
+<p>Yeah, I am just assuming you remember the styles from last page load. Also, I have made it an image to have a 1 HTTP request CMS, right?</p>
+<h2>No, really. How does that work?</h2>
+<p>The real magic is happening by checking if you as a user already have downloaded my page earlier. If you have, I don't need to serve you css, as far as I am concerned. You should have saved that last time, so I just take care of that.</p>
+<h2>OK, so you use a cookie and save css in localstorage. Does that not screw with the varnish cache</h2>
+<p>Good question. I have some logic to internally rewrite the cached pages with a key to the same varnish hash. This way, all users trying to look at a css-less page with the css stored in localstorage will be served the same page, and php will not get touched.</p>
+<h2>What a great idea!</h2>
+<p>Really? Are you really sure you have thought of all the limitations? Because they are many. But seeing as this is my personal tech blog, and I like to experiment, it went live anyway. </p>
+<h2>Give us the code!</h2>
+<p>Sure. <a href="https://github.com/eiriksm/orkjern_theme">The theme is at github</a>. The <a href="https://github.com/eiriksm/orkjern_theme_cache">stupid cache module is at github</a>. Please be aware that it is a very bad idea to use it if you have not read the code and understand what it does.</p>
+<p>And since I am feeling pretty bad ass right now, let's end with Clint Eastwood as an animated gif.</p>
+</div>
+      </div>
+</div>
+<div class="field field-node--field-image field-name-field-image field-type-image field-label-hidden" data-quickedit-field-id="node/40/field_image/en/full">
+    <div class="field-items">
+          <div class="field-item">  <img property="schema:image" src="http://orkjern.com/sites/default/files/field/image/clint-eastwood-o.gif" width="320" height="214" alt="" typeof="foaf:Image" />
+
+</div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix" data-quickedit-field-id="node/40/field_tags/en/full">
+      <h3>Tags: </h3>
+    <ul class="links field-items ">
+          <li class="taxonomy-term-reference-0"><a href="/taxonomy/term/6" property="schema:about">planet drupal</a></li>
+          <li class="taxonomy-term-reference-1"><a href="/taxonomy/term/49" property="schema:about">drupal 8</a></li>
+          <li class="taxonomy-term-reference-2"><a href="/taxonomy/term/51" property="schema:about">varnish</a></li>
+          <li class="taxonomy-term-reference-3"><a href="/taxonomy/term/44" property="schema:about">front-end performace</a></li>
+          <li class="taxonomy-term-reference-4"><a href="/taxonomy/term/12" property="schema:about">javascript</a></li>
+      </ul>
+</div>
+<section class="field field-node--comment field-name-comment field-type-comment field-label-above comment-wrapper" rel="schema:comment" data-quickedit-field-id="node/40/comment/en/full">
+  
+  
+
+  
+</section>
+  </body>
+</html>
+

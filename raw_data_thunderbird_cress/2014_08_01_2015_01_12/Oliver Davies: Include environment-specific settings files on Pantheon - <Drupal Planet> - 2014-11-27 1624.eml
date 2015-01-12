@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 27 Nov 2014 16:24:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 27 Nov 2014 16:24:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Oliver Davies: Include environment-specific settings files on Pantheon
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.oliverdavies.co.uk/blog/pantheon-settings-files
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Oliver Davies: Include environment-specific settings files on Pantheon</title>
+    <base href="http://www.oliverdavies.co.uk/blog/pantheon-settings-files">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>I was recently doing some work on a site hosted on <a href="http://getpantheon.com">Pantheon</a> and came across an issue, for which part of the suggested fix was to ensure that the <code>$base_url</code> variable was explicitly defined within settings.php (this is also best practice on all Drupal sites).</p>
+<p>The way that was recommended was by using a <code>switch()</code> function based on Pantheon's environment variable. For example:</p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog/tags/drupal-planet">Drupal Planet</a></li><li class="taxonomy-term-reference-1"><a href="/blog/tags/pantheon">Pantheon</a></li><li class="taxonomy-term-reference-2"><a href="/blog/tags/settingsphp">settings.php</a></li><li class="taxonomy-term-reference-3"><a href="/blog/tags/drupal">Drupal</a></li></ul></div>
+  </body>
+</html>
+

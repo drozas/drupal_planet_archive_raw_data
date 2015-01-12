@@ -1,0 +1,203 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Nov 2014 17:02:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Nov 2014 17:02:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: How to set up your own Git server.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/command-lines/how-set-your-own-git-server
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: How to set up your own Git server.</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/command-lines/how-set-your-own-git-server">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>From your local machine ..</p>
+<p>1. Create your keys </p>
+<pre class="brush: bash">
+ssh-keygen -t rsa
+</pre><p>
+2. Upload to your server</p>
+<pre class="brush: bash">
+scp ~/.ssh/paulbooker.pub root@92.243.12.252:/tmp/paulbooker.pub
+</pre><p>
+>From your server ..</p>
+<p>1. Install Gitolite.</p>
+<pre class="brush: bash">
+apt-get install gitolite
+</pre><p>
+2. Create a user for Gitolite.</p>
+<pre class="brush: bash">
+adduser \
+  --system \
+  --shell /bin/bash \
+  --gecos 'git version control' \
+  --group \
+  --disabled-password \
+  --home /home/gitolite \
+  gitolite
+
+Adding system user `gitolite' (UID 103) ...
+Adding new group `gitolite' (GID 105) ...
+Adding new user `gitolite' (UID 103) with group `gitolite' ...
+Creating home directory `/home/gitolite' ...
+</pre><p>
+3. Setup Gitolite</p>
+<pre class="brush: bash">
+su - gitolite
+gl-setup /tmp/paulbooker.pub
+
+The default settings in the rc file (/home/gitolite/.gitolite.rc) are fine for most
+people but if you wish to make any changes, you can do so now.
+
+hit enter...
+
+/usr/bin/select-editor: 1: /usr/bin/select-editor: gettext: not found
+ 'select-editor'.
+/usr/bin/select-editor: 1: /usr/bin/select-editor: gettext: not found
+  1. /bin/nano        <---- 
+  2. /usr/bin/emacs23
+  3. /usr/bin/vim.tiny
+
+/usr/bin/select-editor: 1: /usr/bin/select-editor: gettext: not found
+ 1-3 [1]: 1
+creating gitolite-admin...
+Initialized empty Git repository in /home/gitolite/repositories/gitolite-admin.git/
+creating testing...
+Initialized empty Git repository in /home/gitolite/repositories/testing.git/
+[master (root-commit) 7e358c3] start
+ 2 files changed, 6 insertions(+)
+ create mode 100644 conf/gitolite.conf
+ create mode 100644 keydir/paulbooker.pub
+</pre><p>
+4. Add the Gitolite user to your SSH configuration file.</p>
+<pre class="brush: bash">
+nano /etc/ssh/sshd_config
+</pre><pre class="brush: bash">
+  PermitRootLogin  yes #without-password
+  PasswordAuthentication no
+  AllowUsers root gitolite #no commas
+</pre><pre class="brush: bash">
+ service ssh reload   # /etc/init.d/ssh reload ..  Rather than invoking init scripts through /etc/init.d, use the service(8)
+utility, e.g. service ssh reload
+</pre><p>
+On your local machine.</p>
+<pre class="brush: bash">
+nano ~/.ssh/config
+</pre><pre class="brush: bash">
+Host Git 
+     user git
+     hostname 92.243.12.252
+     port 22
+     identityfile ~/.ssh/git
+
+Host *       
+     user paul       
+     hostname *       
+     port 22
+     identityfile ~/.ssh/paulbooker
+</pre><p>
+1. Clone your gitolite repository</p>
+<p>$ git clone gitolite@92.243.12.252:gitolite-admin</p>
+<pre class="brush: bash">
+Cloning into 'gitolite-admin'...
+remote: Counting objects: 6, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 6 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (6/6), done.
+</pre><p>
+2. Add a test repository</p>
+<pre class="brush: bash">
+cd gitolite-admin
+vi conf/gitolite.conf
+
+git commit -a -m "Add a test repository"
+[master ee674e9] Add a test repository
+ 1 file changed, 3 insertions(+)
+
+git push
+
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 399 bytes, done.
+Total 4 (delta 0), reused 0 (delta 0)
+remote: creating test...
+remote: Initialized empty Git repository in /home/gitolite/repositories/test.git/
+</pre><p>
+To gitolite@92.243.12.252:gitolite-admin<br />
+   7e358c3..ee674e9  master -> master</p>
+<p>3. Clone the test repository.</p>
+<pre class="brush: bash">
+git clone gitolite@92.243.12.252:test       
+Cloning into 'test'...
+warning: You appear to have cloned an empty repository.
+
+cd test
+echo "test" > README
+git add .
+git commit -m "Initial commit"
+
+[master (root-commit) 21e352e] Initial commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README
+
+git push origin master
+
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 224 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To gitolite@92.243.12.252:test
+ * [new branch]      master -> master
+</pre><p>
+4. Add committer to the repository.</p>
+<p>Add public key to the gitolite-admin key directory and edit the gitolite configuration file gitolite.conf </p>
+<pre class="brush: bash">
+repo    gitolite-admin
+        RW+     =   git
+
+repo    testing
+        RW+     =   @all
+
+repo 	repo1
+        RW+     =   git = paulbooker
+</pre><pre class="brush: bash">
+paul$ git add -A 
+Paul-Bookers-Mac-mini:Git paul$ git commit -m "Updated configuration"
+[master 511d9af] Updated configuration
+ 2 files changed, 5 insertions(+)
+ create mode 100644 keydir/paulbooker.pub
+Paul-Bookers-Mac-mini:Git paul$ git push
+Counting objects: 10, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (6/6), 1012 bytes, done.
+Total 6 (delta 0), reused 0 (delta 0)
+remote: creating repo1...
+remote: Initialized empty Git repository in /home/git/repositories/repo1.git/
+To git@92.243.12.252:gitolite-admin
+   05c16f3..511d9af  master -> master
+</pre><pre class="brush: bash">
+5. Commit and push changes to the server.
+git commit -m "Initial commit to repo1"
+git remote add origin git@92.243.12.252:repo1.git
+git push origin master
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/git" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">git</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/gitolite" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">gitolite</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/command-lines/how-set-your-own-git-server"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="How to set up your own Git server.">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/command-lines/how-set-your-own-git-server&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/command-lines/how-set-your-own-git-server"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/command-lines/how-set-your-own-git-server" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 19 Jul 2013 11:16:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 19 Jul 2013 11:16:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: bojanz's blog: Entity Bundle Plugin
+Content-Transfer-Encoding: 8bit
+Content-Base: http://bojanz.wordpress.com/2013/07/19/entity-bundle-plugin/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>bojanz's blog: Entity Bundle Plugin</title>
+    <base href="http://bojanz.wordpress.com/2013/07/19/entity-bundle-plugin/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>
+After weeks of work <a title="Commerce License" href="https://drupal.org/project/commerce_license">Commerce License</a> is finally up, as well as <a title="Commerce File" href="https://drupal.org/project/commerce_file">Commerce File 7.x-2.x</a> to go along with it.
+</p>
+
+<p>
+Commerce License provides a framework for selling access to local or remote resources.
+</p>
+<p>
+In practice, this means that there's a license entity, usually created during order checkout, that holds information about accessing the purchased resource, and it has a status and an optional expiration date.
+This allows selling access to anything from files to node types, or perhaps ZenDesk tickets and accounts on remote sites, all using a common API, while always having a record of the purchased access.
+</p>
+<p>
+At the heart of that API is the <a title="Entity Bundle Plugin" href="http://drupal.org/project/entity_bundle_plugin">entity bundle plugin</a>, which allows different license types to have different logic.
+What is entity bundle plugin? The project page says only this:
+<blockquote>This API module allow developers to build an entity type which is attached to strong behaviors.</blockquote>
+That doesn't help much, so let's dive in. Let's start by looking at how entities are built on D7.
+</p>
+<br /><a class="moretag" href="http://bojanz.wordpress.com/2013/07/19/entity-bundle-plugin"> Read more...</a><img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=bojanz.wordpress.com&#038;blog=13038938&#038;post=52&#038;subd=bojanz&#038;ref=&#038;feed=1" width="1" height="1" />
+  </body>
+</html>
+

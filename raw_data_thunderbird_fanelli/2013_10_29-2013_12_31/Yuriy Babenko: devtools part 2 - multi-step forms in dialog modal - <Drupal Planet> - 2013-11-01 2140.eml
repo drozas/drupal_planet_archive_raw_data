@@ -1,0 +1,292 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 01 Nov 2013 20:40:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 01 Nov 2013 20:40:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Yuriy Babenko: devtools part 2 - multi-step forms in dialog modal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yuriybabenko.com/blog/dialog-part-2-multi-step-forms-dialog-modal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Yuriy Babenko: devtools part 2 - multi-step forms in dialog modal</title>
+    <base href="http://yuriybabenko.com/blog/dialog-part-2-multi-step-forms-dialog-modal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I recently <a href="http://yuriybabenko.com/blog/introducting-dev-tools" title="DevTools module">introduced the DevTools</a> module, and today I'm going to show you one of my favourite components, dialog, which builds upon the <a href="https://drupal.org/project/dialog" title="Dialog module">Dialog module</a> (fear not the 7.x-dev version, it's perfectly stable) and allows you to present single- or multi-state forms in a modal.</p>
+
+<p>First and foremost, a small disclaimer: the dialog component was built for use with custom forms, and may not have expected results with forms from core modules.</p>
+
+<h3>The plan</h3>
+
+<p>In the example module we're about to write, we're going to create a page with a link that will open a custom form in a dialog, proceed through three form states, and upon successful submission of the last state, update the original link with new text.</p>
+
+<h3>Getting started</h3>
+
+<p>The first thing we're going to do is download & enable the DevTools and Dialog modules, then (in a custom module) load DevTools, and create a menu callback for the page which will contain a link that'll trigger the modal:</p>
+
+<code>// example.module
+
+if (module_exists('devtools')) {
+  devtools_load();
+}
+
+/**
+ * Implements hook_menu().
+ */
+function example_menu() {
+  $base = array(
+    'file' => 'example.pages.inc',
+    'file path' => drupal_get_path('module', 'example'),
+  );
+
+  $items['dialog-example'] = array(
+    'title' => 'Dialog Example',
+    'page callback' => 'dialog_example_page',
+    'access callback' => TRUE,
+  ) + $base;
+
+  return $items;
+}
+</code>
+
+<p>As you can see, we're creating a page at the <code>/dialog-example</code> URI, specifying the <code>dialog_example_page()</code> function (in example.pages.inc) as the callback, and granting it unrestricted access.</p>
+
+<p>The page callback will look as follows:</p>
+
+<code>// example.pages.inc
+
+/**
+ * Menu callback for /dialog-example
+ */
+function dialog_example_page() {
+  $output = '';
+
+  drupal_add_library('dialog', 'dialog');
+
+  $trigger_id = 'example-dialog-trigger';
+
+  $output .= l(t('Open dialog'), 'dialog-example/form/start/' . $trigger_id, array(
+    'attributes' => array(
+      'class' => array(
+        'use-ajax',
+        'use-dialog',
+      ),
+      'id' => $trigger_id,
+    ),
+  ));
+
+  return $output;
+}</code>
+
+<p>In the callback we're loading the Dialog library, and then creating a unique (per page) ID for the link that'll trigger the modal to open (this is necessary so that we can easily target the link for HTML replacement on final form submission) and to make the form aware of this ID, we pass it as the last part of the URI.</p>
+
+<p>The <code>/dialog-example/form</code> URI will be created in our <code>hook_menu()</code>, and the <code>start</code> part of the URI specifies the initial form state that should be loaded (more on this later). You could add additional arguments to reference the content you're dealing with, user, or anything else that may be useful to your form. The only remaining tidbits is the assignment of <code>use-ajax</code> and <code>use-dialog</code> classes on the link, both of which are required.</p>
+
+<p>On to the <code>hook_menu()</code> for the addition of our new <code>/dialog-example/form</code> URI:</p>
+
+<code>// example.module
+
+if (module_exists('devtools')) {
+  devtools_load();
+}
+
+/**
+ * Implements hook_menu().
+ */
+function example_menu() {
+  $base = array(
+    'file' => 'example.pages.inc',
+    'file path' => drupal_get_path('module', 'example'),
+  );
+
+  $items['dialog-example'] = array(
+    'title' => 'Dialog Example',
+    'page callback' => 'dialog_example_page',
+    'access callback' => TRUE,
+  ) + $base;
+
+  $items['dialog-example/form'] = array(
+    'title' => 'Dialog Form',
+    'page callback' => 'dialog_example_form_ajax_delivery',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  ) + $base;
+
+  return $items;
+}</code>
+
+<p>The <code>dialog_example_form_ajax_delivery()</code> function will handle the delivery of the AJAX response, while passing through arguments <code>2</code> (form state) and <code>3</code> (trigger id) to the form.</p>
+
+<p><code>dialog_example_form_ajax_delivery()</code> is defined as follows:</p>
+
+<code>/**
+ * AJAX menu callback for /dialog-example/form
+ * @param  [type] $state      Requested form state.
+ * @param  [type] $trigger_id DOM id of AJAX-triggering element.
+ * @return [type]             [description]
+ */
+function dialog_example_form_ajax_delivery($state, $trigger_id) {
+  $commands = dialog_show_form('dialog_example_form', $state, $trigger_id);
+
+  ajax_deliver(array('#type' => 'ajax', '#commands' => $commands));
+}</code>
+
+<p><code>dialog_show_form()</code> is, in simplified terms, a wrapper for Drupal's <code>drupal_build_form()</code> function, and will pass on all arguments following the form id (in our case, <code>dialog_example_form</code>) to the form builder.</p>
+
+<h3>The form</h3>
+
+<p>Our <code>$form</code> will be structured as three top-level state containers (beginning with the <code>state_</code> prefix), and a series of child elements for each state.  The <code>$form_state</code> will be updated to contain various settings, and finally, <code>$form</code> and <code>$form_state</code> will be processed by <code>dialog_form_prepare()</code>.</p>
+
+<code>/**
+ * The example form itself.
+ * @return [type] [description]
+ */
+function dialog_example_form($form, &$form_state, $state, $trigger_id) {
+  $form = array();
+
+  // start state
+    $form['state_start']['name'] = array(
+      '#title' => t('Name'),
+      '#type' => 'textfield',
+      '#required' => TRUE,
+    );
+
+    $form['state_start']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Continue'),
+    );
+
+  // second state
+    $form['state_title']['title'] = array(
+      '#title' => t('Title'),
+      '#type' => 'textfield',
+    );
+
+    $form['state_title']['submit_checkbox'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Continue'),
+    );
+
+  // third state
+    $form['state_final']['title'] = array(
+      '#title' => t('What step is this?'),
+      '#type' => 'radios',
+      '#options' => array(
+        '1' => t('First'),
+        '2' => t('Second'),
+        '3' => t('Third'),
+      ),
+    );
+
+    $form['state_final']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Final submit'),
+    );
+
+  // dialog configuration
+    $dialog_common_options = array(
+      'width' => '700px',
+      'position' => 'center',
+    );
+
+  // state configuration
+    $state_common_options = array(
+      'close_link' => TRUE,
+      'close_link_text' => t('Cancel'),
+      'close_link_class' => array(
+        'class-one',
+        'class-two',
+      ),
+    );
+
+    $form_state['dialog_settings'] = array(
+      'current_state' => $state,
+      'trigger_id' => $trigger_id,
+      'states' => array(
+
+        'start' => array(
+          'dialog' => array('title' => t('First state')) + $dialog_common_options,
+          'submit' => array(
+            'submit' => array(
+              'element' => &$form['state_start']['submit'],
+              'next_state' => 'title',
+            )
+          ),
+        ) + $state_common_options,
+
+        'title' => array(
+          'dialog' => array('title' => t('Second state')) + $dialog_common_options,
+          'close_link_text' => t('Different Cancel Text'),
+          'submit' => array(
+            'submit_checkbox' => array(
+              'element' => &$form['state_title']['submit_checkbox'],
+              'next_state' => 'final',
+            )
+          ),
+        ) + $state_common_options,
+
+        'final' => array(
+          'dialog' => array('title' => t('Third state')) + $dialog_common_options,
+          'close_link' => FALSE,
+          'submit' => array(
+            'submit' => array(
+              'element' => &$form['state_final']['submit'],
+            ),
+          ),
+          'submit_autoclose' => TRUE,
+        ) + $state_common_options,
+
+      ),
+    );
+
+  dialog_form_prepare($form, $form_state);
+
+  return $form;
+}</code>
+
+<p>The form declares the three top-level state containers and their children as regular FAPI elements. Each state has a child element that will be used to submit that particular state (for example's sake, the second state uses a checkbox).</p>
+
+<p>Finally, we're going to add validation & submit handlers with <code>drupal_set_message()</code> statements to see how our form submissions are processing:</p>
+
+<code>/**
+ * Validation handler for dialog_example_form().
+ */
+function dialog_example_form_validate($form, &$form_state) {
+  $state = $form_state['dialog_settings']['current_state'];
+
+  drupal_set_message(t('Validate for state: !state', array('!state' => $state)));
+}
+
+/**
+ * Submit handler for dialog_example_form().
+ */
+function dialog_example_form_submit($form, &$form_state) {
+  $state = $form_state['dialog_settings']['current_state'];
+
+  drupal_set_message(t('Submit for state: !state', array('!state' => $state)));
+}</code>
+
+<p>The dialog settings configured in <code>$form_state</code> specify each state, its title and an array of options passed to the actual <a href="http://jqueryui.com/dialog/" title="jQuery Dialog">jQuery Dialog plugin</a>. Furthermore, the <code>submit</code> key specifies an array of elements which trigger the state's form submission. The <code>element</code> key should contain a reference to the element within <code>$form</code>, while the optional <code>next_state</code> key specifies the next form state to load (this could be used to jump to any state); since this key is optional, a single form can be used for multiple "stand-alone" form states.</code>
+
+<p>By default, a 'Cancel' link is appended to each form state, but this can be disabled with the <code>close_link</code> key, and its text can be changed by using <code>close_link_text</code>.</p>
+
+<p>Some additional options include: <code>submit_autoclose</code>, <code>submit_redirect</code> (should be an absolute URL), and <code>submit_js_callback</code>, which takes an array with <code>behavior</code> and <code>method</code> keys that specify the JS method to call upon successful form submission. For example, the values</p>
+
+<code>'submit_js_callback' => array(
+  'behavior' => 'example',
+  'method' => 'form_submit_js_callback',
+),</code>
+
+<p>will result in <code>Drupal.behaviors.example.form_submit_js_callback()</code> being called.</p>
+
+<p>If you're interested in seeing the internal details of how DevTools' Dialog component works, have a look at <code>devtools/components/dialog/dialong.inc</code>.</p>
+
+<p>This wraps up the process of creating multi-step forms in modals with quite a bit of additional functionality. If you have any questions, hit the comments below!</p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags</div><div class="field-items"><div class="field-item even"><a href="http://yuriybabenko.com/blog/tag/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div><div class="field-item odd"><a href="http://yuriybabenko.com/blog/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item even"><a href="http://yuriybabenko.com/taxonomy/term/73" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">modal</a></div><div class="field-item odd"><a href="http://yuriybabenko.com/blog/tag/form" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">form</a></div></div></div><div class="field field-name-field-file field-type-file field-label-above"><div class="field-label">Files</div><div class="field-items"><div class="field-item even"><span class="file"><img class="file-icon" alt="" title="application/zip" src="/core/modules/file/icons/package-x-generic.png" /> <a href="http://yuriybabenko.com/sites/default/files/blog/devtools_dialog_example.zip" type="application/zip; length=2186" title="devtools_dialog_example.zip">DevTools&#039; Dialog Example Module</a></span></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 02 Aug 2013 19:52:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 02 Aug 2013 19:52:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Winston Dodger: Block UI Overhaul
+Content-Transfer-Encoding: 8bit
+Content-Base: http://winstondodger.com/posts/block-ui-overhaul
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Winston Dodger: Block UI Overhaul</title>
+    <base href="http://winstondodger.com/posts/block-ui-overhaul">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div  class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix clearfix"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0"><a href="/taxonomy/term/1">Drupal</a></li><li class="taxonomy-term-reference-1"><a href="/taxonomy/term/4">Drupal 8</a></li><li class="taxonomy-term-reference-2"><a href="/taxonomy/term/3">Drupal Planet</a></li></ul></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Blocks have always been a major site building tool in Drupal, but not one without limitations. Notably, a block could only be configured one way, and placed into one region on each theme. Now in Drupal 8, a block can have many different configurations, and can be placed into as many regions as needed in any theme. This was a major effort and was a big accomplishment for the <a href="https://drupal.org/community-initiatives/drupal-core#layouts">Blocks and Layouts (SCOTCH) initiative</a>.</p>
+
+<p>However, along with this new functionality, the Block UI has become more complex. It forced a new workflow for placing blocks using a new set of extra paths under the block listing. It also buried the block creation workflow underneath this block placement workflow.</p>
+
+<p>Much time has been spent in issues debating how to improve the usability regressions in these interfaces and forms. Initially these were coupled to and blocked by a new Layout UI, which was not completed in time for Drupal 8. The scope has been reduced to direct improvement of the UI and workflows we have in core already, while greatly improving the Block UI user experience.</p>
+
+<p>By combining block placement with the block listing screen, the block placement UX flow and the block creation UX flow can be separated.</p>
+
+<p align="center"><a href="https://drupal.org/files/blocks_2.png"><img alt="New block UI with block browser oriented to the side" src="https://drupal.org/files/blocks_2.png" width="75%" /></a><br /><em>Mockup of new block UI jointly developed by Kevin O'Leary, Bojhan Somers, and the SCOTCH team.</em></p>
+
+<p>Having helped rewrite the Block API, I'm well aware of the current UI pitfalls. I will be working on this for the next several weeks thanks to a sponsorship from <a href="http://www.acquia.com/">Acquia</a>. The work covers any needed API-level changes as well as the obvious visual changes. <a href="https://drupal.org/node/1875252">#1875252</a> is the meta issue which has the details and discussion, while <a href="https://drupal.org/node/2055853">#2055853</a> is the actionable issue. I'm very excited to help implement these new designs, and will be posting regular patches. Please help me by giving these patches technical review. Together we can make the Block UI more intuitive and help users discover the new power of Drupal 8 blocks.</p>
+</div></div></div>
+  </body>
+</html>
+

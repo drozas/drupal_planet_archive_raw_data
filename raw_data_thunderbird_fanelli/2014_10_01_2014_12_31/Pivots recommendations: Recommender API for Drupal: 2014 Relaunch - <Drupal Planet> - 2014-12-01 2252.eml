@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 01 Dec 2014 21:52:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 01 Dec 2014 21:52:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pivots recommendations: Recommender API for Drupal: 2014 Relaunch
+Content-Transfer-Encoding: 8bit
+Content-Base: http://michiza.com/blog/recommender-api-drupal-2014-relaunch
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pivots recommendations: Recommender API for Drupal: 2014 Relaunch</title>
+    <base href="http://michiza.com/blog/recommender-api-drupal-2014-relaunch">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>I am pleased to announce the release of <a href="https://www.drupal.org/project/recommender" rel="nofollow">Recommender API 7.x-6.x for Drupal</a>, whose goal is to enable content recommendations on any Drupal site in order to boost site engagement and increase revenue. The new release is relatively stable and many of its helper modules have already supported it (see the <a href="https://www.drupal.org/node/2377503" rel="nofollow">full list here</a>).</p>
+<p>According to my survey last year, most sites that were using or planned to use Recommender API were small- to medium-sized. Their priorities were: 1) ease-of-use, 2) security, and 3) good recommendations. The new release is the answer to the calls. A few features to emphasize here:</p>
+<ol><li>RecAPI <strong>runs out-of-the-box</strong> if you use its PHP recommendation engine for small site. As your site grows, you can choose to use the more powerful and more complex Java recommendation engine.</li>
+<li>RecAPI fully integrates with <strong>Views and EntityAPI</strong> so you can customize easily.</li>
+<li>RecAPI now has <strong>better documentation</strong> and an example module to teach you how to write helper modules for your particular needs.</li>
+</ol><p>For the rest of this article, I'll show you how to set up and use the <a href="https://www.drupal.org/project/history_rec" rel="nofollow">Browsing History Recommender module</a>, which uses RecAPI to provides two types of content recommendations based on users' browsing history: "users who viewed this also viewed..." and "personalized recommendations". </p>
+<p><img src="/sites/default/files/uploads/history_rec_1.png" width="50%" height="50%" alt="history_rec_1.png" /></p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/blog/recommender-api-drupal-2014-relaunch">Read more</a></div></div></div>
+  </body>
+</html>
+

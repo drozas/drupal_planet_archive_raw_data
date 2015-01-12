@@ -1,0 +1,154 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Feb 2014 15:11:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Feb 2014 15:11:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hall on Drupal 8: Thoughts on controllers for Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://running-on-drupal8.co.uk/blog/thoughts-on-controllers-drupal8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hall on Drupal 8: Thoughts on controllers for Drupal 8</title>
+    <base href="http://running-on-drupal8.co.uk/blog/thoughts-on-controllers-drupal8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/13/body/und/rss"><div class="field-items"><div class="field-item even"><h3>Introduction</h3>
+
+<p>Recently I hit a roadblock on the long road to eventual mastery (hopefully) of Drupal 8, most of the things in tutorials and 'Hello World' type module examples are pretty straightforward. but now I have arrived at the bit where I have to map out an architecture for potentially fairly complex modules I have had to take a step back and spend more time thinking, investigating and learning about Symfony 2 etc..</p>
+
+<p>I started this post a while ago and drastic changes were occurring as I did so, I think things are settling down a bit now and I am feeling ready to "grasp the nettle" again. Apologies the style of the post also changes over the two month intervening period.</p>
+
+<p>Unfortunately Core and the current Drupal documentation <strong>don't really help to explain best practices for different Controller use cases</strong>. Guidelines that are there for Controllers are focused on Core Drupal at moment and not Contrib (imho).</p>
+
+<p>This post is about  Controller classes in Drupal 8, particularly those that either service <strong>_content</strong> or <strong>_controller</strong> defaults in Routes. It also touches on Routes and Services and these three are probably the most important elements of the 'new' Drupal.</p>
+
+<p>This post is a bit more technical than some of the previous ones, but the intention is <strong>not</strong> to present full technical solutions, or full examples of code, I am still feeling my way around these topics. in future I will try to post more specific information in an article based format when appropriate. The post is also pretty long by modern standards (apologies)  so it may just serve as a marshalling ground for my current thoughts. There are links though so it  could serve as a useful springboard. Any feedback including violent disagreement will be most useful and welcome.</p>
+
+<p>After reviewing the post code examples are more related to things not to do, oh well eventually will have enough mileage to wrtie some technical articles and right now am itching to get coding again in D8.</p>
+
+<p>I am going to present a few thoughts and ideas and invite comment.</p>
+
+<h3>Background </h3>
+
+<p>This post is mainly about <strong>Controllers </strong>in Drupal 8 and in particular Controller classes and Thin Controllers but also involves <strong>Containers</strong>, <strong>Services</strong>, <strong>Routing </strong>and <strong>Dependency Injection. </strong>These concepts all work together so there is considerable overlap in some of the resources linked to below. There are a lot of resources around, especially relating to Symfony, what is most useful to you will probably depend on your background, I have included a little background in case you have not had the chance to investigate Drupal 8 or any framework that uses these concepts.</p>
+
+<h4>Controller</h4>
+
+<p><a href="http://symfony.com/doc/2.2/book/controller.html" target="_blank">The Symfony documentation</a> is a good place to start learning about controllers, there are some important differences however. For example the responsibility of a Symfony controller is to return a Response, in Drupal, routing can also define that the controller will return a render array (to be rendered as main page content) or a form amongst other things. Symfony terminology can be a little confusing at times also because technically a controller/action can simply be a function that returns a Response, however controller classes (which may encapsulate a number of these) are also commonly just referred to as Controllers.</p>
+
+<h4>Container, Services and Dependency Injection</h4>
+
+<p>The Symfony 2<a href="http://symfony.com/doc/2.2/book/service_container.html" target="_blank"> introduction to service containers</a> is worth reading as an introduction. There is some developing <a href="https://drupal.org/node/2133171" target="_blank">Drupal documentation on Services and Dependency Injection in Drupal 8</a> also.</p>
+
+<p>A particularly good (although slightly dated now) <a href="http://www.youtube.com/watch?v=kocJ6pn9kEc" target="_blank">presentation on Dependency Injection by Kat Bailey</a> at Portland Drupalcon is a good place to start, if you need to.</p>
+
+<p>Services cover a very wide area, the Container will know about services for all kinds of purposes, as the <a href="http://symfony.com/doc/2.2/book/service_container.html" target="_blank">Symfony Book</a> describes a service as <em>any PHP object that performs some sort of "global" task</em> that is quite a generic definition. We can be sure that many Controllers will want to use a variety of services. The <a href="http://symfony.com/doc/2.2/book/service_container.html" target="_blank">Symfony Book page</a> linked to above is a good place to start learning about Services and the Container.</p>
+
+<p>Much of the interesting custom functionality that you may be wrting is going t be found in services.</p>
+
+<p>This post: <a href="http://cipix.nl/understanding-drupal-8-part-2-service-container" target="_blank">Understanding Drupal 8, part 2</a>: The Service Container is one of few that just focust on the container.</p>
+
+<h4>Routing</h4>
+
+<p>The Controller features heavily in Routing, this presentation <a href="http://www.youtube.com/watch?v=RVLkwPN6cxo" target="_blank">Drupal 8 routing: The method in the madness</a> by Tim Plunkett is a good intro. and touches on all areas.</p>
+
+<h4>Thin Controllers</h4>
+
+<p>Controllers are not meant to be the place for complex business logic, <a href="http://problematic.io/2012/03/01/demystifying-symfony2-controllers/" target="_blank">this Symfony related post</a> helps to explain more, Thin Controllers are consistently touted as usual best practice for Symfony and Drupal. Heavy lifting should mostly be in services. In Drupal the <a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Controller!ControllerBase.php/class/ControllerBase/8" target="_blank">ControllerBase</a> abstract class is provided as a class that can be extended by a thin controller, this class is similar in purpose to the <a href="http://symfony.com/doc/current/book/controller.html#the-base-controller-class" target="_blank">Controller class</a> provided by the Symfony framework.</p>
+
+<p>A Thin Controller doesn't require explicit testing, if business logic is in the Services the Controller is mainly acting as a target for the Route and then handing off the bulk of the work to a Service. A Thin Controller should be simple enough that any fundamental problems will quickly show up in integration testing. In mechanical terms it is like the linkage between a button and a complex clockwork mechanism. </p>
+
+<p>I think though that especially in Contrib land many controllers will end up overweight initially as if this kind of architecture is new to you then it will take time to sink in and get familiar with what code to put where.</p>
+
+<h3>Controllers need Services</h3>
+
+<p>Generally Controllers need Services to do anything useful. Services themselves can be nicely independent, they may need other Services to do their work but these can be configured to be passed to their constructors, so long as they get something that looks and behaves as they expect they are happy, subsequent code can reconfigure what they actually get and/or mock services can be provided for testing. </p>
+
+<p>Controllers sit in a slightly awkward place (hence occaisional 'holy wars' and differing ways to use them in many frameworks).  Services reside in and can be retrieved from the Container but to get at them the Controller needs access to and knowledge of the Container (which can make make people feel uncomfortable particularly when making ad hoc and not immediately apparent access to the container). By default Controller configuration occurs in routing and there is no way at that point to select services to inject into it (in fact the router should <strong>NOT</strong> need to know what the Controller requires to fulfill it's obligations).</p>
+
+<p>One way to get a service into a Controller is through the <a href="https://api.drupal.org/api/drupal/core!lib!Drupal.php/class/Drupal/8" target="_blank">static Drupal class</a> (DO NOT DO THIS THOUGH) that has been provided for <strong>procedural style code</strong> to get access to the Service Container and/or useful services etc., this class contains some specific methods to get particular services for example:</p>
+
+<pre class="php">
+<code><span class="php-function-or-constant"><a class="local" href="https://api.drupal.org/api/drupal/core%21lib%21Drupal.php/class/Drupal/8" title="Static Service Container wrapper.">\Drupal</a></span>::<span class="php-function-or-constant"><a class="local" href="https://api.drupal.org/api/drupal/core%21lib%21Drupal.php/function/Drupal%3A%3Acache/8" title="Returns the requested cache bin.">cache</a></span>()-&gt;<span class="php-function-or-constant"><a class="local" href="https://api.drupal.org/api/drupal/8/search/delete" title="Multiple implementations exist.">delete</a></span>(<span class="php-string">'comment_entity_info'</span>);</code></pre>
+
+<p>There is also a more generic method to allow retrieval of any service, for example:</p>
+
+<pre class="php">
+<code><span class="php-comment">// Get BookManager service
+</span><span class="php-variable">$book_manager</span> = <span class="php-function-or-constant"><a class="local" href="/api/drupal/core%21lib%21Drupal.php/class/Drupal/8" title="Static Service Container wrapper.">\Drupal</a></span>::<span class="php-function-or-constant"><a class="local" href="/api/drupal/core%21lib%21Drupal.php/function/Drupal%3A%3Aservice/8" title="Retrieves a service from the container.">service</a></span>(<span class="php-string">'book.manager'</span>);
+</code>
+</pre>
+
+<p>Alternatively you can access the container directly, for example:</p>
+
+<p>There are a few other bits of deprecated code lying around for static access to the Service Container, you may see reference to drupal_get_container() for example and the getContainer method on the Drupal class.</p>
+
+<p>But however you should <strong>NOT </strong>be using any of these in your Controllers, if you are coding a Controller you are doing things the new way, so get with the program ;).</p>
+
+<h3>Modifying other peoples code</h3>
+
+<p>In Drupal 7 you had a number of ways in which you could surgically target and modify functionality in core and contrib code (because hacking it directly would be wrong of course). You could use menu alter hooks to swap in a new page callback, hook_module_implements_alter to change a hook implementation etc. etc.</p>
+
+<p>In Drupal 8 you will have to start thinking a little differently, you can alter routing (to change what happens for a specific Route), you can replace Services in the Container with a new version but in most cases you have no easy way to swap out an entire Controller (I do finish with a suggestion).</p>
+
+<h3>Controllers in core</h3>
+
+<p>I have a question: <em>is the best practice for controllers in core always best practice for controller in contrib modules? </em>For many the assumption would be yes, I am not entirely.comfortable with that. Bear in mind that Controllers in core are in a state of flux and 'planned progression' in many cases, which leaves a bit of a vacum as most developers would like some clear examples they can follow, many Core controllers are unfinished.</p>
+
+<h4>Extending ControllerBase</h4>
+
+<p><a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Controller!ControllerBase.php/class/ControllerBase/8" target="_blank">ControllerBase</a> class is similar in purpose to the Symfony <a href="http://api.symfony.com/2.4/Symfony/Bundle/FrameworkBundle/Controller/Controller.html" target="_blank">Controller class</a> providing a number of utility methods and Container access to reduce boilerplate code, in essence it provides bunch of useful core services. Initially it irritated me, but has changed recently so not quite so irritating (details to follow, essentially though I am glad to see that <a href="https://drupal.org/node/2110501" target="_blank">this issue</a> has been committed).</p>
+
+<p>In Symfony you may see people arguing against using the Controller class, the arguements are weaker when considering Drupal. Symfony is very componentised and in theory  somebody may want to use your code without using the FrameworkBundle (which they can't because you are coupled to it) instead you can use <a href="http://api.symfony.com/2.4/Symfony/Component/DependencyInjection/ContainerAware.html" target="_blank">ContainerAware</a> from the Dependency injection component.. This type of arguement is</p>
+
+<p>I suspect ControllerBase will be the default starting point for most budding Controller authors it can even now be built up as it already implements the ContainerInjectionInterface (prior to this some core Controller were both extenting ControllerBase and implementing ContainerInjection interface which seemed rather clumsy.</p>
+
+<p>Controller base does currently have a reference to the Container hidden away in there that you may be tempted to use directly (<strong>DON'T</strong>) this could vanish or change. If you need more Services than look to the ContainerInjection interface and get them handed to the constructor of your Controller.</p>
+
+<p>Think about testing however. The documentation for Controller base does warn against it's use if the Controller class requires unit testing. Although as already mentioned above it is quite likely that you can make a good case for not testing your controller if you can keep it thin.</p>
+
+<h3>Implementing ContainerInjectionInterface</h3>
+
+<p>Possibly a more 'grownup' method of setting up your Controller is with the <a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Core!DependencyInjection!ContainerInjectionInterface.php/interface/ContainerInjectionInterface/8" target="_blank">ContainerInjectionInterface</a> this requires you to implement a static create method where you can define the Services that should  be passed to the constructor of your Controller (that trips off the tongue). </p>
+
+<p>The waters are somewhat clearer/muddier now that ControllerBase also implements ContainerInjectionInterface.</p>
+
+<p>The best way to see what is happening is to follow the link and look at some of the Controllers that are implementing. A good controller to keep track of in all respects is the <a href="https://api.drupal.org/api/drupal/core!modules!book!lib!Drupal!book!Controller!BookController.php/class/BookController/8" target="_blank">BookController</a>  I have included it's current create method below and we can see that the Controller wishes the book.manager and book.export services to be passed to it's constructor.</p>
+
+<pre class="php" style="box-sizing: border-box; margin-top: 0px; margin-bottom: 0px; padding: 1px; border: 0px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Lucida Console', monospace; line-height: 17.9999942779541px; font-size: 0.923em; vertical-align: baseline; background-color: rgb(246, 246, 242); white-space: pre-wrap; overflow: auto; color: rgb(34, 34, 34);">
+<code style="box-sizing: border-box; margin: 0px; padding: 1px; border: 0px; font-family: 'Bitstream Vera Sans Mono', Monaco, 'Lucida Console', monospace; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 0.923em; vertical-align: baseline;"> <span class="php-comment" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(102, 102, 102);">/**
+   * {@inheritdoc}
+   */</span>
+  public <span class="php-function-or-constant" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 0, 170);">static</span> <span class="php-keyword" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 102, 0);">function</span> <span class="php-function-or-constant" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 0, 170);">create</span>(<span class="php-function-or-constant" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 0, 170);"><a class="local" href="https://api.drupal.org/api/drupal/core%21vendor%21symfony%21dependency-injection%21Symfony%21Component%21DependencyInjection%21ContainerInterface.php/interface/ContainerInterface/8" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; line-height: inherit; vertical-align: baseline; color: rgb(0, 0, 170); text-decoration: none;" title="ContainerInterface is the interface implemented by service container classes.">ContainerInterface</a></span> <span class="php-variable" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(51, 51, 0);">$container</span>) {
+    <span class="php-keyword" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 102, 0);">return</span> <span class="php-keyword" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 102, 0);">new</span> <span class="php-function-or-constant" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 0, 170);">static</span>(<span class="php-variable" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(51, 51, 0);">$container</span>-&gt;<span class="php-function-or-constant" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 0, 170);"><a class="local" href="https://api.drupal.org/api/drupal/8/search/get" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; line-height: inherit; vertical-align: baseline; color: rgb(0, 0, 170); text-decoration: none;" title="Multiple implementations exist.">get</a></span>(<span class="php-function-or-constant" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 0, 170);">'<a class="local" href="https://api.drupal.org/api/drupal/core%21modules%21book%21book.services.yml/8" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; line-height: inherit; vertical-align: baseline; color: rgb(0, 0, 170); text-decoration: none;" title="core/modules/book/book.services.yml">book.manager</a>'</span>), <span class="php-variable" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(51, 51, 0);">$container</span>-&gt;<span class="php-function-or-constant" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 0, 170);"><a class="local" href="https://api.drupal.org/api/drupal/8/search/get" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; line-height: inherit; vertical-align: baseline; color: rgb(0, 0, 170); text-decoration: none;" title="Multiple implementations exist.">get</a></span>(<span class="php-function-or-constant" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; line-height: inherit; font-size: 11px; vertical-align: baseline; color: rgb(0, 0, 170);">'<a class="local" href="https://api.drupal.org/api/drupal/8/search/book.export" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; line-height: inherit; vertical-align: baseline; color: rgb(0, 0, 170); text-decoration: none;" title="Multiple implementations exist.">book.export</a>'</span>));
+  }</code></pre>
+
+<h3>Implementing ContainerAwareInterface</h3>
+
+<p>The Symfony <a href="https://api.drupal.org/api/drupal/core%21vendor%21symfony%21dependency-injection%21Symfony%21Component%21DependencyInjection%21ContainerAwareInterface.php/interface/ContainerAwareInterface/8" target="_blank">ContainerAwareInterface</a> is also available to use in Drupal and this allows you to recieve the Container in your Controller constructor a number of Core Controllers are doing this but I don't beleive it would be recommended or needed unlesss doing some pretty edgy, I have not had a chance to review them yet and work out eactly why they need to do this.</p>
+
+<h3>Controllers as Services</h3>
+
+<p>You can define your Controller as a Service, define your dependancies as you would for any Service, providing the added advantage that your entire Controller could easily be swapped out.</p>
+
+<p>This would be my preferred way but has already kicked off the odd holy war in Symfony and does not appear to be advocated by any Drupalers. It does work though and can be done <a href="http://symfony.com/doc/current/cookbook/controller/service.html" target="_blank">in a similar manner as with Symfony</a>.   </p>
+
+<h3>Conclusion</h3>
+
+<p>Although getting better I don't think things are clear yet, I will try to forumlate a solid defense of my gut preference of defining my custom controllers of services but fear it is too late for that, often times best practice is common practice anyway as at least everyone knows what to expect.</p>
+
+<p>The documentation around ControllerBase and ContainerInjectionInterface is a bit confusion and possilby contradictory now that ControllerBase implements ContainerInjectionInterface. </p>
+
+<p>Many of the litlte tutorials I see either ignore the whole Container and Services issue entirely and just write a bare class (which is fine for hello world) or they blindly extend ControllerBase without using any of it or stating why. </p>
+
+<p>For me the encouraging thing to glean from all of this is that whilst pondering the whichness of the way over Drupal internals and best practice I can finally start drawing on previous experiences and other frameworks for inspiration and help, and THAT is REFRESHING. </p>
+
+<p> </p>
+</div></div></div><div  class="field field-node--field-blog-tags field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix clearfix" data-edit-id="node/13/field_blog_tags/und/rss"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0">controller</li><li class="taxonomy-term-reference-1">planet</li></ul></div>
+  </body>
+</html>
+

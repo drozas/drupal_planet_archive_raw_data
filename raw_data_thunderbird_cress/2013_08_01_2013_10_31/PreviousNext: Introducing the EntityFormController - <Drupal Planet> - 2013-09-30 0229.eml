@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Sep 2013 01:29:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Sep 2013 01:29:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: PreviousNext: Introducing the EntityFormController
+Content-Transfer-Encoding: 8bit
+Content-Base: http://previousnext.com.au/blog/introducing-entityformcontroller
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>PreviousNext: Introducing the EntityFormController</title>
+    <base href="http://previousnext.com.au/blog/introducing-entityformcontroller">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"> <p>Drupal 8 comes with many new concepts. A lot of work has gone into expanding on Entities and forms. One such concept is the EntityFormController. The EntityFormController is a controller class for the management of forms for entities. Say for example your module Foo defines an entity Bar. Say you want to provide a form for this entity so that users can set some properties or field values. In the past you would have created a hook_menu item to a drupal_get_form callback. In Drupal 8 we do it a better way. We define a class which implements the EntityFormController. The base class provides some pre-built entity goodness, and we can extend the class to add whatever we need.</p>
+ </div></div></div><span property="dc:title" content="Introducing the EntityFormController" class="rdf-meta"></span>
+  </body>
+</html>
+

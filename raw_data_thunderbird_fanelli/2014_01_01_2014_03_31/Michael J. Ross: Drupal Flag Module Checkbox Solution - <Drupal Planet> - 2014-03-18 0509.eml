@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 18 Mar 2014 04:09:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 18 Mar 2014 04:09:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Michael J. Ross: Drupal Flag Module Checkbox Solution
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.ross.ws/content/drupal-flag-module-checkbox-solution
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Michael J. Ross: Drupal Flag Module Checkbox Solution</title>
+    <base href="http://www.ross.ws/content/drupal-flag-module-checkbox-solution">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>By <a href="http://www.ross.ws/about" rel="author"><strong>Michael Ross</strong></a></p>
+<p>Web users are accustomed to clicking on checkboxes, buttons, and icons to flag and unflag items of all sorts, such as favorite blog posts. The <a href="https://drupal.org/project/flag">Flag module</a> is a popular project for implementing flag capabilities on Drupal websites. Thus, it is a shame that it does not support checkboxes or any other intuitive interface elements on entity displays, but instead uses only links (as of this writing).</p>
+<p>Fortunately, there is at least one workaround, which would be implemented on the flag admin page for the given entity type, such as nodes (admin/structure/flags/manage/node_flag): You can use characters that look like unchecked and checked checkboxes (☐ and ☑), instead of or as part of the "Flag link text" and "Unflag link text" values, respectively. These special characters are the Unicode characters U+2610 ("ballot box") and U+2611 ("ballot box with check"), and can be displayed on web pages using the HTML decimal entities "&amp;#9744;" (hex "&amp;#x2610;") and "&amp;amp#9745;" (hex "&amp;#x2611;").</p>
+<p>Beware that, if these characters are used alone, with no accompanying explanatory text and no helpful title attribute in each anchor's open tag, then this approach produces HTML that may not be accessible by assistive browsing technologies. But for now, it may have to do.</p>
+<p class="article_copyright">Copyright © 2014 <span class="proper_name">Michael J. Ross</span>. All rights reserved.</p>
+
+</div></div></div>
+  </body>
+</html>
+

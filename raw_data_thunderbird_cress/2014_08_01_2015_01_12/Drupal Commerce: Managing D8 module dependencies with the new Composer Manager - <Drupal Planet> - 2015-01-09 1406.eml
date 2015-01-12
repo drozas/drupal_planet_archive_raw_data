@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 09 Jan 2015 14:06:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 09 Jan 2015 14:06:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Commerce: Managing D8 module dependencies with the new Composer Manager
+Content-Transfer-Encoding: 8bit
+Content-Base: https://drupalcommerce.org/blog/31782/managing-d8-module-dependencies-new-composer-manager
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Commerce: Managing D8 module dependencies with the new Composer Manager</title>
+    <base href="https://drupalcommerce.org/blog/31782/managing-d8-module-dependencies-new-composer-manager">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It's not uncommon for a Drupal module to need an external library in order to function.<br />
+Historically, modules such as <a href="https://drupal.org/project/oauth2_server">oauth2_server</a> have done this by asking the end-user to download the library manually and extract it into sites/all/libraries. A hook_requirements() implementation would nag the end-user until the library is found.<br />
+Nowadays, all libraries are registered on <a href="https://packagist.org">Packagist</a> and expect to be installed via <a href="https://getcomposer.org">Composer</a>, which also resolves and downloads their dependencies. Thanks to Composer and modern PHP, the number and usage of libraries has skyrocketed, with Packagist recently counting its 500 millionth package install. Because of this thriving ecosystem, it is now more desirable than ever for modules to depend on libraries instead of reinventing the wheel. Furthermore, it is desirable for modules to release their core logic as libraries, bringing in additional users and contributors from the wider ecosystem.</p>
+<p>So, how does Composer work, and why do we need <a href="https://drupal.org/project/composer_manager">Composer Manager</a>?</p>
+<p><a href="https://drupalcommerce.org/blog/31782/managing-d8-module-dependencies-new-composer-manager">Read on for more details...</a></p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 03 Jun 2014 09:47:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 03 Jun 2014 09:47:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Daniel Pocock: Click to dial for mobile users of your web sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://danielpocock.com/click-to-dial-for-mobile-users-of-your-web-sites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Daniel Pocock: Click to dial for mobile users of your web sites</title>
+    <base href="http://danielpocock.com/click-to-dial-for-mobile-users-of-your-web-sites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If there was a trivial way to let mobile phone users call you from your web site, just by adding a single HTML element to the page, would you do it?</p>
+<p>In fact, there is.  It doesn't even require <a href="http://danielpocock.com/webrtc-calling-firefox-android-chromium-linux">a mobile WebRTC browser</a>.  It works for virtually any smartphone and a growing number of desktops too.</p>
+<h3>Introducing the tel: URI</h3>
+<p>The <em>tel:</em> URI is defined in <a href="http://tools.ietf.org/html/rfc3966">RFC 3966</a>.</p>
+<p>For most mobile phone users, if they click a link to a <em>tel:</em> URI, their browser will copy the link into their dialer for convenience.</p>
+<p>To protect users against calls to 0900 premium rate numbers, the user still has to make one more click to confirm they want to dial.</p>
+<h3>Examples</h3>
+<p>Here is a <em>tel:</em> URI:</p>
+<blockquote><p>tel:+44-20-7135-7070</p></blockquote>
+<p>Here is how to create a link with it:</p>
+<p><code>&lt;a href="tel:+44-20-7135-7070"&gt;020 7135 7070 (from abroad: +44 20 7135 7070)&lt;/a&gt;</code></p>
+<p>and here is how it looks on the page:</p>
+<blockquote><p>Call me on <a href="tel:+44-20-7135-7070">020 7135 7070 (from abroad: +44 20 7135 7070)</a></p></blockquote>
+<p>and here is what appears on the mobile device after a user clicks the <em>tel:</em> URI link:</p>
+<p><img src="http://danielpocock.com/sites/danielpocock.com/files/dialer.png" /></p>
+<h3>For desktop users too</h3>
+<p>Many desktop users can also benefit from <em>tel:</em> URIs.  If they have a modern telephone system in their office, the system administrator may have already added a <em>tel:</em> URI handler to their desktop.</p>
+<p>Anyone with a software PBX or a SIP account can also potentially use the <a href="https://addons.mozilla.org/en-us/thunderbird/addon/tbdialout/">TBDialOut extension for Firefox</a> to help convert <em>tel:</em> URIs into <em>sip:</em> URIs or URLs for some bespoke dialer.</p>
+<p>For those who want extra convenience, the <a href="https://addons.mozilla.org/en-us/thunderbird/addon/telify/">Telify extension for Firefox</a> will look for phone numbers in any HTML page and display them as <em>tel:</em> URIs so you can click them even if the web developer overlooked this.</p>
+</div></div></div>
+  </body>
+</html>
+

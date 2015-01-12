@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 04 Aug 2014 20:21:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 04 Aug 2014 20:21:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: Headless Drupal? It Just Might Be a Bigger Deal than Twig
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/headless-drupal-it-just-might-be-bigger-deal-twig
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: Headless Drupal? It Just Might Be a Bigger Deal than Twig</title>
+    <base href="http://friendlymachine.net/posts/headless-drupal-it-just-might-be-bigger-deal-twig">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If you're a frontend developer or designer that has grumbled about the challenges of Drupal theming, you no doubt applauded the announcement that the <a href="https://www.ostraining.com/blog/drupal/twig/">Twig</a> template framework was being added to Drupal 8.</p>
+<p>It's a big upgrade, no question. If you're like me, however, you may prefer a completely custom frontend crafted out of HTML, CSS and JavaScript. You may have looked at the cool stuff AngularJS or Backbone is capable of and wondered how you could bridge the gap with Drupal to enjoy that sort of freedom.</p>
+<p>Fortunately, there are some folks that are already doing exactly that and sharing the results of their work. It's something called <a href="https://groups.drupal.org/headless-drupal">"headless Drupal"</a> and it's an approach that uses Drupal as a backend content repository and REST server.</p>
+<!--break-->
+<p>A REST server makes it possible for other applications to read and update data. The typical case is that Drupal is used to store and manage content and it then provides that data to your app built with Angular, Backbone, Ember, or whatever.  If that's not entirely clear, don't worry. The links below will help sort it out.</p>
+<h2>Headless Drupal Resources</h2>
+<p><strong><a href="https://github.com/davidhwang/horseman">Headless Drupal Manifesto</a></strong> - This is great place to start. It succinctly answers the question of why anyone would want to do this sort of thing.</p>
+<p><strong><a href="https://groups.drupal.org/headless-drupal">Headless Drupal Group</a></strong> - A group on Drupal.org devoted to sharing ideas, discussion and experiments around the topic of headless Drupal.</p>
+<p><strong><a href="https://austin2014.drupal.org/session/build-drupal-free-theme-8s-rest-api-and-javascript">Build a Drupal-free theme with 8's REST API and JavaScript</a></strong> - A presentation from DrupalCon Austin on building an AngularJS site that uses Drupal for the backend.</p>
+<p><strong><a href="http://www.gizra.com/content/restful-angular-forms/">Headless Drupal, One form at a time</a></strong> - This is a great post from Amitai Burstein that demonstrates some of what this approach has to offer for the creation of frontend user interfaces.</p>
+<p><strong><a href="http://www.gizra.com/content/headless-drupal-inline-edit/">Headless Drupal - Inline edit</a></strong> - Another good one from Amitai.</p>
+<p><strong><a href="https://austin2014.drupal.org/session/here%E2%80%99s-drupal-tonight-tonight-show-jimmy-fallon">Here’s Drupal - Tonight on the Tonight Show with Jimmy Fallon</a></strong> - A case study of headless Drupal in action on a very high profile site.</p>
+<p>If you know of some other resources, please share them in the comments below. I'd love to check them out.</p>
+</div></div></div>
+  </body>
+</html>
+

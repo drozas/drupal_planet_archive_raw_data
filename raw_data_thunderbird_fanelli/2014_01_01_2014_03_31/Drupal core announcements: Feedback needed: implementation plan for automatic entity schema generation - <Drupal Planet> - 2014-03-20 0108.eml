@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Mar 2014 00:08:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Mar 2014 00:08:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Feedback needed: implementation plan for automatic entity schema generation
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/415093
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Feedback needed: implementation plan for automatic entity schema generation</title>
+    <base href="https://groups.drupal.org/node/415093">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>We have an open <a href="https://drupal.org/comment/8552811">critical beta blocker issue</a> that aims to make the entity storage controller able to automatically generate the entity schema for all defined fields.</p>
+<p>An initial implementation plan was laid out in <a href="https://docs.google.com/document/d/1A5BLd-KmrLnJW88SdLX5HG3Xm7AyinxwXNAGvQY9C0Y/edit?pli=1#">Prague</a> (see section Unify Field storage). I am going to work on it the next week at <a href="http://szeged2014.drupaldays.org/">DDD Szeged</a> and I sketched a more detailed plan of attack at:</p>
+<p><a href="https://drupal.org/comment/8552811#comment-8552811" title="https://drupal.org/comment/8552811#comment-8552811">https://drupal.org/comment/8552811#comment-8552811</a></p>
+<p>Feedback is badly needed so that I don't waste a full week of sprint time working on something that might not be good enough (or at all).</p>
+<p>Feeback especially welcome from @chx since there are some aspects that might be controversial, if I recall correctly his position. Moreover I need help figuring out how the proposed solution would play with Mongo.
+</p>
+  </body>
+</html>
+

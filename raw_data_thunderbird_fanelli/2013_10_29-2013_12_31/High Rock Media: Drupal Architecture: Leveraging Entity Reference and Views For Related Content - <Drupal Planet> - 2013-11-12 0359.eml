@@ -1,0 +1,68 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 12 Nov 2013 02:59:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 12 Nov 2013 02:59:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Drupal Architecture: Leveraging Entity Reference and Views For Related Content
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/drupal-architecture-leveraging-entity-reference-and-views-related-content
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Drupal Architecture: Leveraging Entity Reference and Views For Related Content</title>
+    <base href="http://highrockmedia.com/blog/drupal-architecture-leveraging-entity-reference-and-views-related-content">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/img_4871-167-168-1033390982.jpg" width="870" height="279" alt="Architecting related content using Entity Reference" title="Architecting related content using Entity Reference" class="image-adaptive inline-adaptive" /></p>
+
+<p>Drupal 7's contrib module, Entity Reference, is a staple tool for Drupal Architects and Themers. It allows for powerful add-ons to nodes where you can reference other entities such as content types, vocabularies, users and more. It gives your content creators powerful editing capabilities without having to know any code or learn complex workflows.</p>
+
+<h2>Use Case</h2>
+
+<p>A typical use case for Entity Reference and one that I'll use as an example is if you have news stories on your site and you want your editors to be able to pick a specific related blog post and show it on a news story node. Traditionally you could do this with with Taxonomy and simply use a Views Contextual Filter (aka Views Arguments) to do this in an automated manner. However, sometimes you want more control, i.e. you'd like the editor to pick any related post they want and show that specific one independent of any vocabularies or other factors.</p>
+
+<p>Out of the box, Entity Reference comes with some default display options such as showing the full rendered entity, label, link or id. These are generally ok but for more fine grained control over the design and what fields from the referenced entity you'd like to show, it's better to employ a View and substitute that. The way this works at a basic level is that you would hide the standard field display for the Entity Reference and then render a block for the View that contains the customized entity. The downside of this is that you may not have great control over placement in relation to the content but some of this depends on what theme you are using. To compensate, ideally you'd override your node display, for example with the Panelizer or Insert View modules.</p>
+
+<h2>Getting Started</h2>
+
+<p>For this project, you'll want a basic Drupal 7 install along with Views and Entity Reference. I have two existing content types, News and Blog. In my News Content type, I create a new Entity Reference Field called <em>Further Reading</em>. This will reference blog posts of the editor's choosing from the Blog content type. For the field's settings under <em>Entity selection</em>, you'll choose your "Target bundles" and in our case "Blog." I like to set the widget type to <em>Autocomplete</em> but you can experiment with whatever style and quantity you like. Note for the <em>Display</em> setting of this field, simply hide it as we'll create a View that displays instead.</p>
+
+<p>Next you can create some content for both types, for my examples, I use Devel Generate in combo with Drupal Ipsum. Devel Generate will also fill in your new Entity Reference fields as well. Now, create a basic View with a block display and filter it for "Blog". This view will be your <em>Further Reading</em> block on your news pages that references blog posts. Add whatever fields from blog as you see fit, this hinges on your design. I use a title and an image for my example and I've added and edit link to make it easy for content editors to edit in place without having to search for the referenced node.</p>
+
+<h2>The Relationship</h2>
+
+<p>The next two steps are the crux of this entire post, we'll add a Views Relationship and a Views Contextual Filter, both under the "Advanced" tab in the Views UI. The Views Relationship tells views to query the Entity Reference from our news type and creates a bridge to it so it's aware of its data. Note, there's two types of Reference Relationships and a subtle difference:</p>
+
+<ol>
+<li><p>Entity Reference: Referenced Entity</p>
+
+<blockquote>
+  <p>A bridge to the Content entity that is referenced via field_further_reading</p>
+</blockquote></li>
+<li><p>Entity Reference: Referencing entity</p>
+
+<blockquote>
+  <p>A bridge to the Content entity that is referencing Content via field_further_reading</p>
+</blockquote></li>
+</ol>
+
+<p>Suffice it to say, in our context, we want the latter because we are referencing from <em>News</em> to <em>Blog</em> and our View is filtered by <em>Blog</em>. You can create a user friendly name for the relationship's <em>Identifier</em> and I simply use the title, <em>Entity Reference: Referencing entity</em>. This will come in handy later when we select that in the Filter in the next step.</p>
+
+<h2>The Contextual Filter</h2>
+
+<p>Now that we've added a Relationship, let's add the Contextual Filter. Views Contextual Filters at least for me has been difficult to understand so it takes a lot of trial and error to really get it right but its powerful in that you only need to create one View that will look unique on dozens of different pages because it's "Contextual."  For your filter, add "<em>Content: Nid</em>" and then choose the relationship we just created above. Under "<em>When the filter value is NOT available</em>", provide a default value for this context and you'll see different types, choose "<em>Content ID from URL.</em>" This is probably one of the most common filters you'll use with a Views Contextual Filter. That's pretty much all you need but you can get fancy with additional settings for the filter.</p>
+
+<p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/viewsui-1272597211.png" width="830" height="526" alt="Views UI advanced settings" title="Views UI advanced settings" class="image-adaptive inline-adaptive" /></p>
+
+<h2>Add the block and theme away</h2>
+
+<p>Finally, add your newly created view as a block to your News Story content type and you are good to go. Beyond that, you can experiment with the display which becomes a theming task. You can get pretty fancy with your display and one of my favorite ways to do this is with the Panelizer module which gives you ultimate control of mixing all kinds of entities on one page in a very logical and concise manner. In addition, Panelizer is highly exportable so this would work well in deployment flows.</p>
+
+<p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/page-2116294771.png" width="922" height="578" alt="The Finished Page" title="The Finished Page" class="image-adaptive inline-adaptive" /></p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">Drupal</li><li class="field-item even">Design Patterns</li><li class="field-item odd">Views</li><li class="field-item even">Entity Reference</li><li class="field-item odd last">Drupal Planet</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="https://drupal.org/project/entityreference" target="_blank" rel="nofollow">Entity Reference</a></li><li class="field-item even"><a href="https://drupal.org/project/insert_view" target="_blank" rel="nofollow">Insert View</a></li><li class="field-item odd"><a href="https://drupal.org/project/panelizer" target="_blank" rel="nofollow">Panelizer</a></li><li class="field-item even"><a href="https://drupal.org/project/views" target="_blank" rel="nofollow">Views</a></li><li class="field-item odd"><a href="https://drupal.org/project/devel" target="_blank" rel="nofollow">Devel</a></li><li class="field-item even last"><a href="https://drupal.org/project/drupal_ipsum" target="_blank" rel="nofollow">Drupal Ipsum</a></li></ul>
+  </body>
+</html>
+

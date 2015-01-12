@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Jun 2013 15:00:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Jun 2013 15:00:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Leow Kah Thong: Reindex Drupal's Search API module indexes programmatically
+Content-Transfer-Encoding: 8bit
+Content-Base: http://kahthong.com/2013/06/reindex-drupals-search-api-module-indexes-programmatically
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Leow Kah Thong: Reindex Drupal's Search API module indexes programmatically</title>
+    <base href="http://kahthong.com/2013/06/reindex-drupals-search-api-module-indexes-programmatically">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/157/body/und/rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I had recently found the need to manually reindex the <a href="http://drupal.org/project/search_api">Search API</a> indexes programmatically after performing some other operation.  The code snippet below will do just that for you :)</p>
+<div class="codeblock"><code>// Load Search API Index.<br />$search_api_index = search_api_index_load('SEARCH_API_INDEX_NAME');<br />// Clear the index.<br />$search_api_index-&gt;clear();<br />// Re-index and schedule for next index.<br />$search_api_index-&gt;reindex();<br />// Run!<br />search_api_index_items($search_api_index, -1);</code></div>
+<p>Refer to Search API documentation here:<br /><a href="http://drupalcontrib.org/api/drupal/contributions!search_api!search_api.module/function/search_api_index_items/7">http://drupalcontrib.org/api/drupal/contributions!search_api!search_api....</a></p>
+<p>By the way, this was tested working with Search API 7.x-1.6.</p>
+<p>Hope this helps somebody out there!</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above" data-edit-id="node/157/field_tags/und/rss"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/search" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">search</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/searchapi" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">search_api</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/reindex" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">reindex</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/api" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">api</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/programmatically" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">programmatically</a></div></div></div>
+  </body>
+</html>
+

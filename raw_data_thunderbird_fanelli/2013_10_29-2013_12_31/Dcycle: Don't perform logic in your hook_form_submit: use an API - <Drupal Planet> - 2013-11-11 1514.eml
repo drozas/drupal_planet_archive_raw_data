@@ -1,0 +1,81 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 11 Nov 2013 14:14:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 11 Nov 2013 14:14:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dcycle: Don't perform logic in your hook_form_submit: use an API
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dcycleproject.org/blog/27/dont-perform-logic-your-hookformsubmit-use-api
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dcycle: Don't perform logic in your hook_form_submit: use an API</title>
+    <base href="http://dcycleproject.org/blog/27/dont-perform-logic-your-hookformsubmit-use-api">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Examples like these are rampant throughout Drupal 7, in <a href="https://api.drupal.org/api/drupal/modules%21block%21block.admin.inc/function/block_admin_display_form_submit/6">block_admin_display_form_submit()</a>, for example:</p>
+
+<pre><code>/**
+ * Form submission handler for block_admin_display_form().
+ *
+ * @see block_admin_display_form()
+ */
+function block_admin_display_form_submit($form, &amp;$form_state) {
+  $transaction = db_transaction();
+  try {
+    foreach ($form_state['values']['blocks'] as $block) {
+      $block['status'] = (int) ($block['region'] != BLOCK_REGION_NONE);
+      $block['region'] = $block['status'] ? $block['region'] : '';
+      db_update('block')
+        -&gt;fields(array(
+          'status' =&gt; $block['status'],
+          'weight' =&gt; $block['weight'],
+          'region' =&gt; $block['region'],
+        ))
+        -&gt;condition('module', $block['module'])
+        -&gt;condition('delta', $block['delta'])
+        -&gt;condition('theme', $block['theme'])
+        -&gt;execute();
+    }
+  }
+  catch (Exception $e) {
+    $transaction-&gt;rollback();
+    watchdog_exception('block', $e);
+    throw $e;
+  }
+  drupal_set_message(t('The block settings have been updated.'));
+  cache_clear_all();
+}
+</code></pre>
+
+<p>What's wrong with this is that the <em>logic</em> for performing the desired action (moving a block to a different region) is tied to the use of a form, in the GUI. Let's say you want a third-party module to move the navigation and powered-by block out of the theme xyz, one would expect there to exist, in the API, a function resembling <code>block_move($blocks, $region, $theme)</code>, but there is no such function.</p>
+
+<p>On a recent project where I needed to do exactly that, I installed and enabled <a href="https://drupal.org/project/devel">devel</a>, and put <code>dpm($form); dpm($form_state);</code> at the top of the block_admin_display_form_submit() function then went through the actions in the GUI, <em>to figure out what Drupal is doing</em>, finally coming up with this code.</p>
+
+<pre><code>foreach (array('navigation', 'powered-by') as $block) {
+  $num_updated = db_update('block') // Table name no longer needs {}
+    -&gt;fields(array(
+      'region' =&gt; '-1',
+    ))
+    -&gt;condition('delta', $block, '=')
+    -&gt;condition('theme', 'xyz', '=')
+    -&gt;execute();
+}
+</code></pre>
+
+<p>That's <a href="http://en.wikipedia.org/wiki/Reverse_engineering">reverse engineering</a>, and it's time-consuming, error-prone, and developer-unfriendly.</p>
+
+<p>Recently in one of my own modules I realized I had <a href="https://drupal.org/node/2100531">made the same mistake</a>.</p>
+
+<p>The correct approach is to define an api (for example a function like <code>block_move()</code> in the above example, and call that API function from your form- and GUI-related functions like <code>block_admin_display_form_submit()</code>).</p>
+
+<p>The result will be that developers will have as easy a time interacting with your module as human users. This will open the door to third-party interaction, adding value to your module.</p>
+
+<p>Also, it will allow you to run more automated tests without actually loading pages, which is faster.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/blog" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">blog</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

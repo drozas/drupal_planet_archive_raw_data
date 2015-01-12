@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 13 Nov 2013 06:27:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 13 Nov 2013 06:27:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: groups.drupal.org frontpage posts: Qa.drupal.org Testing Metrics & Report
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/372153
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>groups.drupal.org frontpage posts: Qa.drupal.org Testing Metrics & Report</title>
+    <base href="https://groups.drupal.org/node/372153">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Recently, I was asked to pull together some metrics which would help illustrate the current health of the automated testing infrastructure, and provide a baseline by which we could monitor it over time ... and I thought I'd share some of those findings here.</p>
+<p>The first graph shows how testbot utilization has grown over time, from a steady-state count of around 1000 tests per month in the first half of 2011, doubling to 2000 tests per month in January 2012, and reaching a peak of over 6400 requests in June of 2013.</p>
+<p><img src="https://groups.drupal.org/files/total_requests.png" /></p>
+<p>The second graph shows the average duration of D7 and D8 patch testing runs.  Note that the average D8 test run duration peaks around 80 minutes per test, nearly four times as long as the 22 minute average in mid-2012.  Combine this with the increased number of requests over the same period, and we have increased the capacity demands on the system by between 500% and 800% over the last 24 months.<br />
+<img src="https://groups.drupal.org/files/core_patch_test_duration.png" /></p>
+<p>The third graph demonstrates something I'm sure most folks already know, in that patches had to endure some excessively long wait times in the testing queue at various points in the last 18 months ... with the largest spikes corresponding with the various Drupalcon sprint days.<br />
+<img src="https://groups.drupal.org/files/core_patch_total_wait.png" /></p>
+<p>The one thing thing I would like to point out on this graph, however, is that since July, the average total wait time for D8 core patches is about equal to the test run time. After hitting an all-time high this summer, the average waiting time for patches in the queue has dropped nearly to zero, as confirmed in the next chart:<br />
+<img src="https://groups.drupal.org/files/core_patch_queue_wait_times.png" /></p>
+<p>The test duration times above only include tests which are able to complete the test run, as tests with environmental failures would wrongly skew the results towards shorter durations.  The following chart gives the number of tests which failed due to an environmental issue within the testing infrastructure itself:<br />
+<img src="https://groups.drupal.org/files/testing_failures_stage.png" /></p>
+<p>Given that requeuing a failed test wipes out the data used to generate these metrics, the absolute values here may be severely underestimated ... but the key point to take away from this chart is that, while the nature of the failures has changed, the volume of environmental failures experienced on the system has not risen in proportion with the increased test request demands being placed on the system (with the obvious exception of May/June, which corresponds with the post-security incident rebuild of the underlying infrastructure and supporting systems.</p>
+<p>And finally, just for interest's sake, the last chart illustrates the ratio of test passes, failures, syntax check failures, and 'failed to apply patch' results reported by month across the testing infrastructure.  The 'failed to apply' stat may seem high, but consider that this also includes re-test attempts of old patches, which fail to apply and result in a new patch file (and thus brand new test instance).<br />
+<img src="https://groups.drupal.org/files/testing_result_codes.png" /></p>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Attachment</th><th>Size</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="https://groups.drupal.org/files/total_requests.png">total_requests.png</a></td><td>20.22 KB</td> </tr>
+ <tr class="even"><td><a href="https://groups.drupal.org/files/core_patch_test_duration.png">core_patch_test_duration.png</a></td><td>19.1 KB</td> </tr>
+ <tr class="odd"><td><a href="https://groups.drupal.org/files/core_patch_total_wait.png">core_patch_total_wait.png</a></td><td>24.07 KB</td> </tr>
+ <tr class="even"><td><a href="https://groups.drupal.org/files/core_patch_queue_wait_times.png">core_patch_queue_wait_times.png</a></td><td>24.88 KB</td> </tr>
+ <tr class="odd"><td><a href="https://groups.drupal.org/files/testing_failures_stage.png">testing_failures_stage.png</a></td><td>14.62 KB</td> </tr>
+ <tr class="even"><td><a href="https://groups.drupal.org/files/testing_result_codes.png">testing_result_codes.png</a></td><td>12.71 KB</td> </tr>
+</tbody>
+</table>
+  </body>
+</html>
+

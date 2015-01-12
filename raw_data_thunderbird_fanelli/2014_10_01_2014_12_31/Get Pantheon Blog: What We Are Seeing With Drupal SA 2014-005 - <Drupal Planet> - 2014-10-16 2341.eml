@@ -1,0 +1,58 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 16 Oct 2014 21:41:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 16 Oct 2014 21:41:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Get Pantheon Blog: What We Are Seeing With Drupal SA 2014-005
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.getpantheon.com/blog/what-we-are-seeing-drupal-sa-2014-005
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Get Pantheon Blog: What We Are Seeing With Drupal SA 2014-005</title>
+    <base href="https://www.getpantheon.com/blog/what-we-are-seeing-drupal-sa-2014-005">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>It's been 24 hours since <a href="https://www.drupal.org/SA-CORE-2014-005">Drupal SA-CORE-2014-005</a> was announced, and we are already beginning to see attacks in the wild. As a platform with 10s of 1000s of Drupal sites, we have a unique perspective on the problem.</p>
+<p>This is not a drill: black-hat scripters from sketchy domains are working through lists of known Drupal websites probing for exploits. If you have not patched all your sites, stop reading and do it right now.</p>
+<p>...</p>
+<p>Ok, now that your websites are safe, here's what we're seeing.</p>
+<!--break--><h4>Profiling and Logging Suspected Exploits</h4>
+<p>We learned of the vulnerability through our participation with the Drupal Security team, so we had a few days to prepare prior to the announcement. At that point, we were under obligation not to share details as part of responsible disclosure, but we did tweet and email customers to "be ready" for the update on Wednesday.</p>
+<p>Beyond that, the first step was fashioning our own exploit to have something to build a defense against. I "owned" my personal blog several times getting this right.</p>
+<p>With a sense of a potential attack signature, we developed platform-wide request filtering, WAF style. At our scale, we couldn't try to tweak every individual site: a platform solution was the only answer.</p>
+<p>We got that deployed on Monday, giving us two days to see the results of real production traffic. We were able to eliminate false-positives while still detecting our PoC attacks, which gave us confidence that our filter would not impact legitimate traffic. That was an important moment, because it meant we could start locking things down.</p>
+<h4>Log and Block</h4>
+<p>With the SA announcement on Wednesday we switched the filter from "log" to "log and block". The first detected (and blocked) attack came in at 22:42 UTC (3:42 PM PT), about seven hours after the security announcement. It attempted to set up a fake user with id 9999 and a suspicious temp email address from <a href="http://trbvm.com">trbvm.com</a>.</p>
+<p>Over the rest of the day we saw a handfull (20-ish) more attacks that looked like proof of concepts or penetration tests. We saw attempts to re-use a proof of concept posted in a Reddit thread, an attempt to create a user named "morpheus" with a pre-set password, and a few attempts to make accounts with the email address <code>test@test.com</code> and then elevate them to an admin role.</p>
+<h4>It Gets Real</h4>
+<p><a href="https://gist.github.com/joshkoenig/f5485f3db8efdd98f184"><img src="https://www.getpantheon.com/sites/default/files/informant-attacks.png" alt="Attacks start" title="Attacks start" width="462" height="220" /></a></p>
+<p>Early this morning at 08:23 UTC (1:23 AM PT) we started seeing an attack that attempts to insert <a href="https://gist.github.com/joshkoenig/f5485f3db8efdd98f184">a new item into the <code>menu_router</code> table</a>. This attack is originating from IPs from a VPS provider in the .ru domain space, and it appears to be working through a list of domain names alphabetically.</p>
+<p>The attack seems to be the initial part of a multi-step process. The menu_callback it is attempting to create will try to use <code>file_put_contents()</code> to drop a file somewhere in the codebase. That file will pick up a subsequent http request with more of an attack payload in the $_COOKIE superglobal. This sophistication plus the alphabetical attack sequence suggests a professional exploit.</p>
+<p>Note that this attack has a 0% chance of success on Pantheon. We block it, but even if we didn't live sites can't write files into the codebase, and a sophisticated <code>$_COOKIE</code> attack would also be stripped. Still, it's concerning.</p>
+<h4>This Is Not A Drill</h4>
+<p>It's barely 24 hours after the SA, and we have logged and blocked over 500 attempted attacks on sites on the Pantheon platform. We expect this rate to increase as exploit code is more widely shared and attacks become more automated.</p>
+<p>The fact that we are blocking suspect traffic does not mean you delay updating. We're happy to be defending sites on our Platform, but the filter, like <a href="https://blog.cloudflare.com/drupal-7-sa-core-2014-005-sql-injection-protection/">CloudFlare's WAF firewall rule</a> is not a guarantee to secure your site. You need to get the update deployed and patch the vulnerability at the source.</p>
+<p>If you need help, let us know. If you have friends who need help, lend a hand.</p>
+<h4>Credits</h4>
+<p>Credit to the Drupal Security team for organizing a responsible and orderly release. There was likely temptation to rush something out once the severity was realized, but they showed great professionalism by taking a more deliberate route. As soon as the fix was disclosed, black-hats would start working to weaponize the exploit, which we are already seeing.</p>
+<p>I'd also like to thank <a href="http://about.me/leonardo.finetti">Leonardo Finetti</a> for chiming in based on some tweets with additional information about the <code>menu_router</code> attack. He has <a href="http://leonardofinetti.blogspot.it/2014/10/grave-vulnerabilita-drupal-drupageddon.html">his own post up (in Italian) here</a>.</p>
+<p>Finally, I'd like to give credit to <a href="https://www.drupal.org/u/greggles">Greg "greggles" Knaddison</a> for planting the idea in my head of using the reach of our platform as a way to monitor exploit attempts against sites running on Pantheon. Hopefully the data we're able to gather will help everyone defend better and build more secure software and platforms.</p>
+</div></div></div><div class="field field-name-field-blog-categories field-type-taxonomy-term-reference field-label-above"><div class="field-label">Blog Categories:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/engineering">Engineering</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="https://www.getpantheon.com/blog/what-we-are-seeing-drupal-sa-2014-005"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="What We Are Seeing With Drupal SA 2014-005 ">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=https%3A//www.getpantheon.com/blog/what-we-are-seeing-drupal-sa-2014-005&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="https://www.getpantheon.com/blog/what-we-are-seeing-drupal-sa-2014-005"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="https://www.getpantheon.com/blog/what-we-are-seeing-drupal-sa-2014-005" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

@@ -1,0 +1,49 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 29 May 2014 06:27:12 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 29 May 2014 06:27:12 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Shushu's blog: Organic groups API == nicely built architecture
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.mobile4social.com/content/organic-groups-api-nicely-built-architecture
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Shushu's blog: Organic groups API == nicely built architecture</title>
+    <base href="http://blog.mobile4social.com/content/organic-groups-api-nicely-built-architecture">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I started to work in Gizra more than 6 months ago. While I did have lots of Drupal experience, I didn't have a lot of <a href="https://drupal.org/project/og" target="_blank">Organic groups</a> experience, especially not in Drupal 7 version.<br />
+As a developer, I am more interested in the way things are built and less in the way they look. I mean, I know my way around front-end and user interface, but a good looking UI won't make me as exceited as a well developed piece of code.<br />
+This is why I enjoy working with OG - since it is well-structured, lots of things works flawlessly, and easy to enhance.</p>
+<p>In this post I want to focus on one particular task, and how it was easily done once you know OG API.</p>
+<p>Our client decided they want to have a description for each taxonomy term, and to show the description when showing the taxonomy term page. This is easy, considering by default there is a description field. Then they decided they don't want to show the field in all pages, and they want it to be configurable.</p>
+<p>The solution seems simple - adding a new boolean field for each taxonomy term, which will define whether the description will be seen or not, and then to use the <code>taxonomy-term.tpl.php</code> to show or hide the description according to this field.<br /></p>
+<p>The problem is that since we are working in OG (specifically in <a href="http://openscholar.gizra.com/" target="_blank">OpenSchoalr</a> project), we can't and should not add the field manually, and considering each of the authorized site users can create their own vocabulary, we need to add the field automatically when the vocabulary is being created.</p>
+<p>Gladly, OG API is built for those kind of tasks, and with several steps we can achieve what we want.</p>
+<p>First, we need to define the field that we need. Once it is defined, it can be exported and then used in code. While it might be possible to define the field manually, I believe it is always better to avoid guessing Drupal multi-dimentional-unvalidatible arrays, and to leave this task for the machine.</p>
+<ul><li>Create a taxonomy vocabulary via <a href="http://example.com/admin/structure/taxonomy/add">http://example.com/admin/structure/taxonomy/add</a> and then add the field you need via <a href="http://example.com/admin/structure/taxonomy/your-vocabulary/fields">http://example.com/admin/structure/taxonomy/your-vocabulary/fields</a>.<br /><a href="http://blog.mobile4social.com/sites/default/files/styles/larger/public/s1.png?itok=G7TtKRW9" class="colorbox colorbox-insert-image" rel="gallery-all"><img src="/sites/default/files/styles/larger/public/s1.png?itok=G7TtKRW9" width="1599" height="705" alt="" class="image-larger" /></a>
+</li>
+<li>Use the features UI in order to create a new feature that includes the new field you just created. We won't use the feature as is, this is just a simple way to export the field configuration (I guess there are other ways as well).<br /><a href="http://blog.mobile4social.com/sites/default/files/styles/larger/public/s2.png?itok=DHwNnyr8" class="colorbox colorbox-insert-image" rel="gallery-all"><img src="/sites/default/files/styles/larger/public/s2.png?itok=DHwNnyr8" width="1597" height="959" alt="" class="image-larger" /></a>
+</li>
+<li>Once you download the features file, look for the code inside the <code>hook_field_default_field_bases()</code> and <code>hook_field_default_field_instances()</code> implementations. This is the code we will use later on.</li>
+</ul><p>Second, we need to tell OG we have a new field, and to define how OG should use it. This is done using <a href="http://drupalcontrib.org/api/drupal/contributions!og!og.api.php/function/hook_og_fields_info/7" target="_blank">hook_og_fields_info()</a>. What you need to do is to create a new module (or use one of your own modules), and create an implementation of this hook, in which you will add the code exported from the last step (with minor changes). One important issue is the name of the field - it needs to be correct in all places, and it is what you will use later on.<br />
+Please look carefully into the comments inside the code in order to see what needs to be changed manually.</p>
+<script src="https://gist.github.com/shushu/5f94e0cfae8a3104837f.js"></script><p>
+Note that the best way to verify your configuration is correct is by using the OG UI in order to manually add this field to your structure via <a href="http://example.com/admin/config/group/fields">http://example.com/admin/config/group/fields</a>. If your configuration is correct (don't forget to clear cache...) you will see the new field in the fields list.<br /><a href="http://blog.mobile4social.com/sites/default/files/styles/larger/public/s3.png?itok=OXCBCqte" class="colorbox colorbox-insert-image" rel="gallery-all"><img src="/sites/default/files/styles/larger/public/s3.png?itok=OXCBCqte" width="1434" height="827" alt="" class="image-larger" /></a></p>
+<p>To be certain, just add it manually to a vocabulary and see whether it is being added properly.<br /><a href="http://blog.mobile4social.com/sites/default/files/styles/larger/public/s4.png?itok=rHGwmfGS" class="colorbox colorbox-insert-image" rel="gallery-all"><img src="/sites/default/files/styles/larger/public/s4.png?itok=rHGwmfGS" width="1205" height="780" alt="" class="image-larger" /></a><br />
+Third, we want to add an action saying "whenever new taxonomy vocabulary is created, add our cool field to it". To do so we need to hook into Drupal core bundle creation (thankfully, vocabulary is an entity, and each new vocabulary is a bundle...), and this is done via <a href="https://api.drupal.org/api/drupal/modules!field!field.api.php/function/hook_field_attach_create_bundle/7" target="_blank">hook_field_attach_create_bundle</a>. What you need to do is to create an implmenetation for this hook in your module, and there to use the nicely-structured OG API `og_create_field` with the name of the field you defined in the last step.</p>
+<script src="https://gist.github.com/shushu/e6fbbb99de7e155c6a3b.js"></script><p>
+Yep, "this is it" ! <br /><br />
+Is it ?<br /><br />
+It is, as long as you build new site. Considering you might handle an existing OG site, that might already have a bunch of taxonomy vocabularies, you must handle all of them as well, and the best way to do it is automatically via the installation or upgrade process.<br /><br />
+On how to use the `hook_install`, `hook_update_n`, and when and how to use the Batch API - in another post.<br /><br />
+Hope this post helps anyone,<br /><br />
+Shushu</p>
+</div></div></div><div class="field field-name-field-ralates-to field-type-taxonomy-term-reference field-label-above"><div class="field-label">Ralates to:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item even"><a href="/tags/organic-groups" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Organic groups</a></div><div class="field-item odd"><a href="/tags/openscholar" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">OpenScholar</a></div><div class="field-item even"><a href="/tags/hookogfieldsinfo" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_og_fields_info</a></div><div class="field-item odd"><a href="/tags/hookfieldattachcreatebundle" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_field_attach_create_bundle</a></div></div></div>
+  </body>
+</html>
+

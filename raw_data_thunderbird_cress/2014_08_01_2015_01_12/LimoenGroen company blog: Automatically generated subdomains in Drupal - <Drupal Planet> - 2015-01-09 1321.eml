@@ -1,0 +1,54 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 09 Jan 2015 13:21:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 09 Jan 2015 13:21:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LimoenGroen company blog: Automatically generated subdomains in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.limoengroen.nl/en/blog/automatically-generated-subdomains-in-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LimoenGroen company blog: Automatically generated subdomains in Drupal</title>
+    <base href="https://www.limoengroen.nl/en/blog/automatically-generated-subdomains-in-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>A few weeks ago the new version of <a href="https://www.mijnstadmijndorp.nl/" rel="nofollow">MijnStadMijnDorp.nl</a> was launched to the public. Built by LimoenGroen, it offers a rich media platform where historical societies based in the Dutch province of Overijssel showcase their collections.</p>
+<p>One of the project challenges was to emphasize the personalized look and feel of each society within the global site structure; every society has its own homepage with an introduction and a collage of curated content. Subdomains (e.g. <code>subdomain.example.com</code>) helped us achieve this. In this article we discuss what we encountered.</p>
+<p><img height="115" width="784" src="https://www.limoengroen.nl/files/styles/fullwidth/public/media/projecten/msmd_subdomain.png?itok=1d1cae2T" alt="MijnStadMijnDorp Subdomains" title="" /></p>
+<h2>The Subdomain module</h2>
+<p>The core functionality was established using the contrib module <a href="https://www.drupal.org/project/subdomain" rel="nofollow">Subdomain</a>. In a nutshell, the Subdomain module can be setup to use a unique subdomain for page callbacks related to a specific user, taxonomy term, organic group or content type.</p>
+<p>In the case of MijnStadMijnDorp.nl, we used the organic group mode, as each society is an organic group and needed a subdomain. All content of a society lives within its group and has the subdomain applied to it. By default, the name of the subdomain is either based on the name of the organic group or on end user input. We modified this behavior so the subdomain is set to the name of the organic group (society) by default, but can be manually overridden by users with administrative privileges. This comes in handy for societies with long names where an abbreviated subdomain is more suitable.</p>
+
+<div class="geshifilter-title">Automatically set subdomain after node creation:</div><div class="geshifilter"><div class="php geshifilter-php" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #009933; font-style: italic;">/**
+ * Implements hook_node_insert().
+ *
+ * Automatically set subdomain after node creation.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> my_module_node_insert<span style="color: #009900;">(</span><span style="color: #000088;">$node</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+  <span style="color: #b1b100;">switch</span> <span style="color: #009900;">(</span><span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">type</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #b1b100;">case</span> <span style="color: #0000ff;">'society'</span><span style="color: #339933;">:</span>
+      <span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">subdomain</span> <span style="color: #339933;">=</span> subdomain<span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">clean</span><span style="color: #009900;">(</span><span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">title</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+      subdomain_url_outbound_cache_clear<span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+      <span style="color: #666666; font-style: italic;">// Create unique subdomain.</span>
+      subdomain<span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">save_record</span><span style="color: #009900;">(</span><span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">nid</span><span style="color: #339933;">,</span> <span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">title</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+      <span style="color: #b1b100;">break</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+<span style="color: #009900;">}</span></pre></div></div>
+
+<h2>Dnsmasq</h2>
+<p>During local development, testing dynamically generated subdomains can be cumbersome when using a local hosts file, because wildcards cannot be used. Dnsmasq to the rescue! It is a DNS resolver running as a daemon on a local development machine. Dnsmasq was configured to resolve the DNS zone used for local development (e.g. <code>mijnstadmijndorp.dev</code>) to <code>127.0.0.1</code>. This also resolves any child zones (subdomains) to localhost. Since we use Apache locally, we had <code>ServerAlias *.mijnstadmijndorp.dev</code> added in the virtual host configuration.</p>
+<h2>Preparations for deployment</h2>
+<p>Using dynamically generated subdomains in a production environment typically involves configuring the webserver and the DNS zone for the root domain of the website.</p>
+<p>For Apache, adding <code>ServerAlias *.mijnstadmijndorp.nl</code> to the virtual host configuration was sufficient. Similar directives were setup for the other servers in our DTAP-environment, with applicable hostnames.</p>
+<p>When using HTTPS (which is <a href="https://www.youtube.com/watch?v=cBhZ6S0PFCY" rel="nofollow">always a good idea</a>), serving content from dynamically generated subdomains means you need a wildcard certificate. In our case, a public key certificate with <code>*.mijnstadmijndorp.nl</code> as subject name was used.</p>
+<p>For DNS, a wildcard (<code>*.mijnstadmijndorp.nl</code>) A-record was created.</p>
+<h2>Caveats and considerations</h2>
+<p>The Subdomain module schema has a textfield for the subdomain value, with a maximum length of 255. <a href="http://www.ietf.org/rfc/rfc1035.txt" rel="nofollow">RFC 1035</a> states that the maximum length of a DNS label is 63 characters, and the accumulated length of all labels within a <abbr title="Fully Qualified Domain Name">FQDN</abbr> should not exceed 255 characters. The Subdomain module currently does not check the length of the subdomain DNS label or the accumulated length of the FQDN. This can result in URI’s that do not resolve. We submitted <a href="https://www.drupal.org/node/2402523" rel="nofollow">a patch</a> for review that fixes this issue.</p>
+<p>In terms of SEO, using subdomains should not negatively affect the ranking of a website as a whole. Google has stated they do not treat subdirectories different from subdomains (<a href="https://www.youtube.com/watch?v=_MswMYk05tk" rel="nofollow">source</a>), and as such there should be no penalties or split page rank amongst the subdomains. However, discussions on SEO forums indicate ranking was improved for some users when switching from separated subdomains to one shared hostname with subdirectories (<a href="http://moz.com/community/q/moz-s-official-stance-on-subdomain-vs-subfolder-does-it-need-updating" rel="nofollow">source</a>).</p>
+  </body>
+</html>
+

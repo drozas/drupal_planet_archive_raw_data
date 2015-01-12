@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 02 Aug 2013 12:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 02 Aug 2013 12:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Keeping your Drupal Features in sync
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/keeping-your-drupal-features-sync
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Keeping your Drupal Features in sync</title>
+    <base href="http://deeson-online.co.uk/labs/keeping-your-drupal-features-sync">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>This covers some best practice tips for automating your development processes using Features, updatedb and cloud hooks.</p>
+<p>We use <a href="http://drupal.org/project/features">Features</a> for putting db components into code in Drupal 7.  Best practice will see any of your Features get updated as soon as the relevant component is modified on a development site.  This ensures the codebase always has the latest version of the Feature within it so that it can be committed to the version control system (VCS) and tracked.</p>
+<p>Sometimes you'll have a number of Features with modifications queued up ready for release to live. If some time has elapsed since they were modified or if several developers have made changes then you'll need some way of recording what Features have changed via release notes to TODO tasks so you know what to revert after the code has been pushed to live.  Also, you'll need to share modifications between other developers so that when they get the latest codebase they need to know to revert a Feature which has changed.</p>
+<p>Ideally, this would just happen without the need to remember to do it.  One solution is to record that Feature reversions are required using update hooks. So, for example, you make a modification to the Feature mysite_news, you'll add an update hook to one of your custom modules install files.  Many sites run a master or system module for this purpose to keep these hooks neatly together in one place (although they could easily sit in mysite_news.install)</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Revert all features in mysite_news.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> mysite_system_update_7001<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  features_revert_module<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'mysite_news'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+<p>Now when the update process is run (e.g. via drush updatedb), mysite_views will be reverted. And because you added it when you made the change, you don't have to remember that it needs doing when you release because you always run updatedb after updating your code base (don't you? You should, it's liberating).</p>
+<p>But, features_revert_module function doesn't actually exist in Features, you'll need this patch (and let the module maintainers know if you like it) ...<br />
+<a href="https://drupal.org/node/1871986#comment-7712147">https://drupal.org/node/1871986#comment-7712147</a></p>
+<h3>Automating updatedb with cloud hooks</h3>
+<p>In an ideal world, updatebd will just happen on code deployment. Acquia hosting (and others) provide cloud hooks for this purpose.  On Acquia hosting, add the following code to a file called /hooks/common/post-code-deploy/update-db.sh to the hooks directory (same level as docroot)…</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #666666; font-style: italic;">#!/bin/sh
+</span><span style="color: #666666; font-style: italic;"># Cloud Hook: update-db
+</span>site<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;<span style="color: #006699; font-weight: bold;">$1</span>&quot;</span>
+target_env<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;<span style="color: #006699; font-weight: bold;">$2</span>&quot;</span>
+drush <span style="color: #339933;">@</span><span style="color: #000088;">$site</span><span style="color: #339933;">.</span><span style="color: #000088;">$target_env</span> updatedb <span style="color: #339933;">--</span>yes</pre></div>
+<p>Now when code is released to any Acquia environment, drush updatedb is executed after deployment and Features that need an update are updated.</p>
+<p>For more information on cloud hooks, check out these links:<br />
+<a href="https://www.acquia.com/blog/how-cloud-api-and-cloud-hooks">https://www.acquia.com/blog/how-cloud-api-and-cloud-hooks</a><br />
+<a href="https://github.com/acquia/cloud-hooks">https://github.com/acquia/cloud-hooks</a></p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/keeping-your-drupal-features-sync">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Keeping your Drupal Features in sync</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/john-ennew">John Ennew</a> | 2nd August 2013</div></div></div>
+  </body>
+</html>
+

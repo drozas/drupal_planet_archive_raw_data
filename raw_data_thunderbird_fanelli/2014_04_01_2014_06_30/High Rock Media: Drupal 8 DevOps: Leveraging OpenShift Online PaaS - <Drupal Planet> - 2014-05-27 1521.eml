@@ -1,0 +1,137 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 27 May 2014 13:21:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 27 May 2014 13:21:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Drupal 8 DevOps: Leveraging OpenShift Online PaaS
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/drupal-8-devops-leveraging-openshift-online-paas
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Drupal 8 DevOps: Leveraging OpenShift Online PaaS</title>
+    <base href="http://highrockmedia.com/blog/drupal-8-devops-leveraging-openshift-online-paas">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/hrm-blog-banner-1066869556.png" width="880" height="250" alt="Getting Dialed in to OpenShift" title="Getting Dialed in to OpenShift" class="image-adaptive inline-adaptive" /></p>
+
+<p>In my free time recently, I've been designing and developing a little Drupal 8 site that I'd like to bring online. From the start, I knew I'd need a decent web host with all the fixins' Drush, Git and most of all, PHP 5.4 as that's the minimum required for Drupal 8.</p>
+
+<p>The first place I thought of was Get Pantheon but as it turns out, as of this writing, they only have PHP 5.3. I also took a look at Linode but admittedly I'm not a huge fan as it requires a fair amount of server setup and management.</p>
+
+<p>Enter, OpenShift Online, Red Hat's scalable <em>PaaS</em> or <em>Platform as a Service</em> in the cloud. OpenShift is an all in one development, hosting and deployment platform which supports PHP, Java, Node.js, Python and more. The idea behind this is to let the developer / designer focus on what matters, code and apps rather than tedious server administration and management. For me, this is a huge win and best of all, Red Hat has a basic plan that gets you everything you need for free.</p>
+
+<h2>Apps, Gears, and Cartridges</h2>
+
+<p>OpenShift's terminology takes a little getting used to but I'll break it down and try to define what's what. Think of an <em>Application</em> as just an instance of a website. <em>Gears</em> are an allocated amount of server resources ranging in size from small to large for scalability. Think of a Cartridge as an <em>a la carte</em> style add on for your app. Need Jenkins, phpMyAdmin or cron? No problem, just browse the list of available cartridges or add one from a URL and OpenShift does all the installation work for you.</p>
+
+<h2>Build Your App</h2>
+
+<p>My workflow involves developing a website locally and then bringing it into dev / production via Git. With OpenShift, this is no different, however with a few caveats. Normally you'd use .gitignore for persistent non-tracked data files, i.e. Drupal's <em>files</em> directory and then these untracked items can just sit on your server happy to go about their business.  However, with OpenShift, anything not in Git gets deleted on the next push regardless of .gitignore. OpenShift handles the untracked files via their data directory - <code>${OPENSHIFT_DATA_DIR}</code> - and symbolic links. So while .gitignore is fine for your local, you'll need to do a little wrangling on the OpenShift end and I'll show you how.</p>
+
+<p>We can automate file handling by designing a custom deploy script. This can have any command you'd normally execute directly on the server but with added logic to test for certain conditions, e.g whether a file or folder already exists.  I wrote a full scale <a href="https://gist.github.com/highrockmedia/be26c716d225870ad41f">deploy script</a> (Gist) from scratch which turned out to be extremely challenging and a lot of fun. The script executes on each git push.</p>
+
+<h2>Getting Started</h2>
+
+<p>First, create an account at <a href="https://www.openshift.com/products/online">OpenShift Online</a>, login and create your first app. The best way is to simply click the "Add Application" button in your app console and then search for PHP. I added PHP 5.4 since I was going to use Drupal 8. You'll be asked to name your app and can follow the simple steps there. This creates your base app which is now up and running with the flavor of PHP you chose.</p>
+
+<p>Here's the other OpenShift cartridges I use in my Drupal 8 app.</p>
+
+<ul>
+<li><a href="https://openshift.redhat.com/app/console/application/53795b904382ec799c0002b8-figtree/cartridge_type/mysql-5.5">MySQL 5.5</a></li>
+<li><a href="https://cartreflect-claytondev.rhcloud.com/reflect?github=phase2/openshift-community-drush-master">Drush</a></li>
+</ul>
+
+<p>There's also an option to install PHPmyAdmin as well. Note for Drush, enter the URL in the Cartridge UI page, i.e. "<em>Install your own cartridge</em>" You can also use Red Hat's RHC language to setup Cartridges from your local, it does require Ruby. I'm sure I'll get in to that next, I just have not had time to work on it yet but it looks pretty cool.</p>
+
+<p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/2014-05-27_05-38-44-1257584155.png" width="960" height="396" alt="OpenShift Cartridges" title="OpenShift Cartridges" class="image-adaptive inline-adaptive" /></p>
+
+<h2>Local Setup</h2>
+
+<p>Once you've got all your cartridges installed, you can now pull from Git and get your local dev environment setup, ready to push your code up. Here's a general outline of what I do in Terminal that woks well.</p>
+
+<p><div class="geshifilter">&nbsp;<span style="color: #666666; font-style: italic;"># Within your project directory:<br />
+</span>$ git clone <span style="color: #009900;">&#91;</span>git_url<span style="color: #009900;">&#93;</span> <span style="color: #009900;">&#91;</span>project_site<span style="color: #009900;">&#93;</span><br />
+$ cd <span style="color: #009900;">&#91;</span>project_site<span style="color: #009900;">&#93;</span><br />
+&nbsp;<span style="color: #666666; font-style: italic;"># Remove OpenShift's default index file:<br />
+</span>$ rm index<span style="color: #339933;">.</span>php<br />
+&nbsp;<span style="color: #666666; font-style: italic;"># Now download drupal (latest 8.x Alpha)<br />
+</span>$ drush <span style="color: #990000;">dl</span> drupal<span style="color: #339933;">-</span><span style="color:#800080;">8.0</span><span style="color: #339933;">-</span>alpha11<br />
+&nbsp;<span style="color: #666666; font-style: italic;"># Rename the drupal folder to &quot;php&quot;<br />
+</span>$ mv drupal<span style="color: #339933;">-</span><span style="color:#800080;">8.0</span><span style="color: #339933;">-</span>alpha11 php</div></p>
+
+<p>With the above setup, you'll note that we rename the Drupal directory to php. That's because OpenShift best serves web files if you have a sub directory named php. They also automatically alias this for you so you don't see php in the URL. Here's how my local directory structure looks once I'm done.</p>
+
+<p><div class="geshifilter"><span style="color: #339933;">|</span>____project_directory<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____project_site<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____<span style="color: #339933;">.</span>git<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____<span style="color: #339933;">.</span>openshift<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____action_hooks<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____build<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____deploy<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____README<span style="color: #339933;">.</span>md<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____php<br />
+<span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span> <span style="color: #339933;">|</span>____<span style="color: #009900;">&#91;</span>drupal<span style="color: #339933;">-</span>files<span style="color: #339933;">-</span>here<span style="color: #009900;">&#93;</span></div></p>
+
+<h2>Push and Deploy</h2>
+
+<p>To get around the persistent non-tracked files / folders issue, we can implement the deploy script I mentioned above in our local OpenShift repo that runs on each git push. Essentially this creates a <em>sites/default/files</em> directory in your Openshift data directory or <code>${OPENSHIFT_DATA_DIR}</code> and then symlinks it to your repo or <code>${OPENSHIFT_REPO_DIR}</code> In addition, it copies <em>default.settings.php</em> as <em>settings.php</em> to the data directory and proceeds to symlink that as well. The deploy script should be located at:</p>
+
+<p><div class="geshifilter"><span style="color: #339933;">.</span>openshift<span style="color: #339933;">/</span>action_hooks<span style="color: #339933;">/</span>deploy</div></p>
+
+<p>My deploy script has conditional statements to insure that already existing files and folders in the <code>${OPENSHIFT_DATA_DIR}</code> don't get overwritten. For your deploy script to be recognized, be sure to give it appropriate permissions. Once you set with all this, it's time to commit and push for the first time.</p>
+
+<p><div class="geshifilter">&nbsp;<span style="color: #666666; font-style: italic;"># Commit your changes and push to OpenShift<br />
+</span>$ git commit <span style="color: #339933;">-</span>a <span style="color: #339933;">-</span>m <span style="color: #0000ff;">'Initial commit'</span><br />
+$ git push</div></p>
+
+<p>On first push, I noticed that my deploy script did not run and that was a real mystery. In the end, it turned out to be a permissions issue on the file. It was set to 644 so a <em>chmod</em> to 777 took care of it. Once git has been pushed and the deploy script runs, here is what my OpenShift <code>/repo/php/sites/all/files</code> directory looks like:</p>
+
+<p><div class="geshifilter"><span style="color: #b1b100;">default</span><span style="color: #339933;">.</span>settings<span style="color: #339933;">.</span>php<br />
+files <span style="color: #339933;">-&gt;</span> <span style="color: #339933;">/</span><span style="color: #000000; font-weight: bold;">var</span><span style="color: #339933;">/</span>lib<span style="color: #339933;">/</span>openshift<span style="color: #339933;">/</span><span style="color: #009900;">&#91;</span>app_id<span style="color: #009900;">&#93;</span><span style="color: #339933;">/</span>app<span style="color: #339933;">-</span>root<span style="color: #339933;">/</span>data<span style="color: #339933;">/</span>sites<span style="color: #339933;">/</span><span style="color: #b1b100;">default</span><span style="color: #339933;">/</span>files<br />
+settings<span style="color: #339933;">.</span>php <span style="color: #339933;">-&gt;</span> <span style="color: #339933;">/</span><span style="color: #000000; font-weight: bold;">var</span><span style="color: #339933;">/</span>lib<span style="color: #339933;">/</span>openshift<span style="color: #339933;">/</span><span style="color: #009900;">&#91;</span>app_id<span style="color: #009900;">&#93;</span><span style="color: #339933;">/</span>app<span style="color: #339933;">-</span>root<span style="color: #339933;">/</span>data<span style="color: #339933;">/</span>sites<span style="color: #339933;">/</span><span style="color: #b1b100;">default</span><span style="color: #339933;">/</span>settings<span style="color: #339933;">.</span>php</div>
+Once you either import your database or install Drupal, you'll want to reset the permissions on settings.php in the data directory to not be writable.</p>
+
+<h2>A note about settings.php</h2>
+
+<p>I could not find much documentation with regard to Drupal's settings.php and OpenShift. Suffice it to say, I found this snippet.  (See further below with regard to QuickStarts.)</p>
+
+<p><div class="geshifilter"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #990000;">array_key_exists</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'OPENSHIFT_APP_NAME'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$_SERVER</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; <span style="color: #000088;">$src</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$_SERVER</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; <span style="color: #000088;">$src</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$_ENV</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span><br />
+<span style="color: #000088;">$databases</span> <span style="color: #339933;">=</span> <span style="color: #990000;">array</span> <span style="color: #009900;">&#40;</span><br />
+&nbsp; <span style="color: #0000ff;">'default'</span> <span style="color: #339933;">=&gt;</span> <br />
+&nbsp; <span style="color: #990000;">array</span> <span style="color: #009900;">&#40;</span><br />
+&nbsp; &nbsp; <span style="color: #0000ff;">'default'</span> <span style="color: #339933;">=&gt;</span> <br />
+&nbsp; &nbsp; <span style="color: #990000;">array</span> <span style="color: #009900;">&#40;</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'database'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$src</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'OPENSHIFT_APP_NAME'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'username'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$src</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'OPENSHIFT_MYSQL_DB_USERNAME'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'password'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$src</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'OPENSHIFT_MYSQL_DB_PASSWORD'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'host'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$src</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'OPENSHIFT_MYSQL_DB_HOST'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'port'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$src</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'OPENSHIFT_MYSQL_DB_PORT'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'driver'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'mysql'</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'prefix'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">''</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span><br />
+&nbsp; <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span><br />
+<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></p>
+
+<p>The code above use OpenShift <em>Environment Variables</em> to connect to your database, this is the preferred method, especially if you build a scaleable app. If you want to print out all the variables, you can SSH in and simply do <code>env</code> in terminal or you can add a build file in your action_hooks directory with the line of code <code>export</code>. The next time you <code>git push</code>, you'll see all these vars print out. Pretty cool!</p>
+
+<h2>QuickStarts Alternative</h2>
+
+<p>As an alternative to the process I've outlined above and to get up and running super fast on OpenShift, you can choose from a variety of <a href="https://www.openshift.com/quickstarts">Quickstarts</a> that are offered, these are one click app installs pre-configured with the cartridges you need. An eclectic list is offered appealing to any designer or developer including Ghost, WordPress, Ruby, JBoss and of course Drupal. In the Drupal category sits a Drupal 8 app ready to deploy.</p>
+
+<p>With this method, you'll want to create symlinks from your repo to the themes and modules directory of Drupal. From what I can tell, this method is not meant for a ton of customization and is probably more akin to something like simplytest.me. <a href="https://twitter.com/Srdjan_Popovic">@Srdjan_Popovic</a> blogged about this method for a Drupal 7 QuickStart and you check out his <a href="http://bortolete-popovic.com/blog/using-git-to-add-custom-code-to-drupal-7-instant-app-on-openshift">post</a>). What he outlines could be adapted for the Drupal 8 QuickStart as well. I tested Popovic's method out and it worked well.</p>
+
+<h2>Is PaaS the Future?</h2>
+
+<p>In the end, OpenShift seems to have a lot of promise, especially with a Drupal 8 beta, RC and final release not too far around the corner. Compared to a cPanel hosting paradigm, OpenShift feels modern, fresh and the way forward. It seems like they've adapted to the needs of and the way in which developers are now working.</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">Drupal</li><li class="field-item even">PaaS</li><li class="field-item odd">OpenShift</li><li class="field-item even">Drupal Planet</li><li class="field-item odd last">DevOps</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="https://www.openshift.com/promotions/ebook" target="_blank" rel="nofollow">"Getting Started With Openshift", a free ebook written by Steve Pousty &amp; Katie J. Miller</a></li><li class="field-item even"><a href="https://www.openshift.com/documentation" target="_blank" rel="nofollow">OpenShift General Documentation</a></li><li class="field-item odd"><a href="https://www.openshift.com/developers/technologies" target="_blank" rel="nofollow">OpenShift Technology Cartridges</a></li><li class="field-item even"><a href="https://www.openshift.com/developers/openshift-environment-variables" target="_blank" rel="nofollow">OpenShift Environment Variables</a></li><li class="field-item odd"><a href="https://www.openshift.com/developers/rhc-client-tools-install" target="_blank" rel="nofollow">Installing OpenShift RHC Client Tools</a></li><li class="field-item even"><a href="https://www.openshift.com/quickstarts/drupal-8" target="_blank" rel="nofollow">Drupal 8 Quickstart</a></li><li class="field-item odd"><a href="http://bortolete-popovic.com/blog/using-git-to-add-custom-code-to-drupal-7-instant-app-on-openshift" target="_blank" rel="nofollow">Using Git to add custom code to Drupal 7 Instant App on OpenShift</a></li><li class="field-item even last"><a href="https://github.com/phase2/drupal-quickstart" target="_blank" rel="nofollow">Drupal 8 beta on OpenShift </a></li></ul>
+  </body>
+</html>
+

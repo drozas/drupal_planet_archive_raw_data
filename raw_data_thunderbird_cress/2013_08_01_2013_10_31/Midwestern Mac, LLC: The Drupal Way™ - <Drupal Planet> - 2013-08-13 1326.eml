@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 13 Aug 2013 12:26:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 13 Aug 2013 12:26:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: The Drupal Way™
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/the-drupal-way
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: The Drupal Way™</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/the-drupal-way">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p style="text-align: center;"><img src="http://www.midwesternmac.com/sites/midwesternmac.com/files/the-drupal-way.png" width="500" height="84" alt="The Drupal Way" /></p>
+<p>I've worked with a wide variety of developers, designers, content managers, and the other Drupal users in the past few years, and I'm pretty sure I have a handle on most of the reasons people think Drupal is a horrible platform. But before I get to that, I have to set up the rest of this post with the following quote:</p>
+<blockquote><p>There are not a hundred people in America who hate the Catholic Church. There are millions of people who hate what they wrongly believe to be the Catholic Church — which is, of course, quite a different thing.</p></blockquote>
+<p>Forgive me for diverging slightly into my faith, but this quote is from the late Fulton J. Sheen, and is in reference to the fact that so many people pour hatred on the Catholic Church not because of what the Church <em>actually</em> teaches, but because of what they <em>think</em> the Catholic Church teaches. Once someone comes to understand the actual teaching, they are free to agree or disagree with it—but there are comparatively few people who disagree with teachings they actually <em>understand</em>.</p>
+<p>Similarly, the problems most people have with Drupal—and with systems like it—are problems not with <em>Drupal</em>, but with their <em>perception</em> of Drupal.</p>
+<h2 id="java-jane-flexible-design">Java Jane: One-off vs. Flexible Design</h2>
+<p>A Java developer (let's call her Jane) is used to creating a bunch of base object classes and a schema for a database by hand, then deploying an application and managing the database through her own wrapper code. Jane is assigned to a Drupal project, takes one look at the database, and decides that no sane person would ever design a schema with hundreds of tables named <code>field_data_*</code> and <code>field_revision_*</code> for <em>every single data point in the application</em>!</p>
+<p style="text-align: center;"><img src="http://www.midwesternmac.com/sites/midwesternmac.com/files/y-so-many-database-tables-resized.jpg" width="450" height="234" alt="Why does Drupal have So Many Database Tables?" /></p>
+<p>In reality, Drupal is doing this because <em>The Drupal Way</em> dictates that things like field data should be: flexible (able to be used by different kinds of entities (content)), able to be translated, able to be revised with a trackable history, and able to be stored in different storage backends (e.g. MySQL, MariaDB, MongoDB, SQLite, etc.). If the fields were all stored in a per-entity table as separate columns, these different traits would be much more difficult to implement.</p>
+<p>Thus, <em>The Drupal Way</em> is actually quite beneficial—<em>if you want a flexible content management system</em>.</p>
+<p>I think a lot of developers hate Drupal because they know they could build a more efficient web application that only has the minimal required features they need by simply writing everything from scratch (or using a barebones framework). But what about the next 72 times you have to build the exact same thing, except slightly different each time, with a feature that's different here, translation abilities there, integration with Active Directory for user login here, integration with a dozen APIs there, etc.?</p>
+<p>There's a maxim that goes something like: Every seasoned web developer started with plain HTML and CSS, or some hosted platform, then discovered a dynamic scripting language and built his own CMS-like system. Then, after building the CMS into a small system like many others but hopelessly insecure and unmaintainable, the developer realized that thousands of other people went through the same progression and ultimately worked together on systems like Drupal. Then said developer starts using Drupal, and the rest is history.</p>
+<p>I know you could build a small system that beats the pants off Drupal performance-wise, and handles the three features you need done <em>now</em>. But why spend hours on a login form (that probably has security holes), session handling (ditto), password storage (ditto) forms in general (ditto), content CRUD interfaces, a translation system, a theme layer, etc., when you can have that out of the box, and just spend a little time making it look and behave like you want it? The shoulders of giants and all that...</p>
+<h2 id="dot-net-neil-bespoke-code">.Net Neil: Letting Contrib/Bespoke Code Let You Down</h2>
+<p>A .Net developer (lets call him Neil) joins a Drupal project team after having worked on a small custom .Net application for a few years. Not only does he not know PHP (so he's learning by seeing the code already in use), he is also used to a tightly-controlled application code structure, which he knows and owns end-to-end.</p>
+</div></div></div>
+  </body>
+</html>
+

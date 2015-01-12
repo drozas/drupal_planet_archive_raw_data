@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 25 Nov 2014 00:15:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 25 Nov 2014 00:15:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: Easier creation of email newsletters - Content Tokens!
+Content-Transfer-Encoding: 8bit
+Content-Base: https://civicrm.org/blogs/pogstonesarahgladstone/easier-creation-email-newsletters-content-tokens
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: Easier creation of email newsletters - Content Tokens!</title>
+    <base href="https://civicrm.org/blogs/pogstonesarahgladstone/easier-creation-email-newsletters-content-tokens">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><p>When preparing an email newsletter, one part of it that is time consuming is gathering together all the content that is needed. In my experience, virtually all the content already exists elsewhere, such as in the local CMS, in CiviCRM, or on a blog, or some other online source.    So I was thinking how can I make this process easier.  What I did: I created mail merge tokens for CiviCRM that autofill a list of recent blog posts, stories, or any other type of CMS content.  So the end-user sees a list of tokens, one for each content type and for each date range. Such as "Content of type 'blog' changed in the last 7 days" .  What is particulary powerful about this approach, is that if you are also using a CMS aggregator (such as the aggregator module in Drupal core) then virually any external RSS feed is turned into CMS content, which is now available as a CiviCRM token. </p>
+<p>Some examples of how this new extension may help your organization:</p>
+<p>   - Your staff posts new content of type "story" each week.Your monthly newsletter editor can use the new token for "Content of type 'story' changed in the last 1 month" to save time preparing the newsletter.</p>
+<p>  - A national organization you are affiliated with has a number of blogs that they host. Your local organization would like to include recent blog posts from the national organization in the local member newsletter.  Your local webmaster previously configured the aggregator module to pull in those external blogs into your CMS. Your monthly newsletter editor can use the new token for "Content of type 'feed item' changed in the last 1 month" to save time preparing the newsletter.</p>
+<p>- Any other situation where there is existing content that you want to include in your email or PDF. </p>
+<p>This new extension "Content Tokens" is published in the<a href="https://civicrm.org/extensions/content-tokens"> CiviCRM extensions area</a> <strong><a href="https://civicrm.org/extensions/content-tokens">https://civicrm.org/extensions/content-tokens </a></strong></p>
+<p>This new extension is designed in the same style as the "<a href="https://civicrm.org/extensions/fancy-tokens">Fancy Token</a>" extension that provides tokens for upcoming events, contribution pages, profiles, and WebForms. </p>
+<p> </p>
+<p> </p>
+<p> </p>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/civicrm" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviCRM</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/extensions" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Extensions</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/wordpress" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">WordPress</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

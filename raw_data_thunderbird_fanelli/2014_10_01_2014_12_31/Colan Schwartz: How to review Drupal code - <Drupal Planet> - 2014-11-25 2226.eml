@@ -1,0 +1,61 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 25 Nov 2014 21:26:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 25 Nov 2014 21:26:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Colan Schwartz: How to review Drupal code
+Content-Transfer-Encoding: 8bit
+Content-Base: http://colans.net/blog/how-review-drupal-code
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Colan Schwartz: How to review Drupal code</title>
+    <base href="http://colans.net/blog/how-review-drupal-code">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <section class="field field-name-field-blog-topics field-type-taxonomy-term-reference field-label-inline clearfix view-mode-rss clearfix">
+
+      <h2 class="field-label">Topics:&nbsp;</h2>
+  
+  <ul class="field-items">
+
+    
+      <li class="field-item even" rel="schema:keywords">
+        <a href="/blog-topics/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a>      </li>
+
+    
+      <li class="field-item odd" rel="schema:keywords">
+        <a href="/blog-topics/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal 7</a>      </li>
+
+    
+      <li class="field-item even" rel="schema:keywords">
+        <a href="/blog-topics/quality-assurance" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Quality Assurance</a>      </li>
+
+    
+  </ul>
+
+</section>
+<div class="field field-name-field-body field-type-text-long field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="schema:articleBody"><p>If you're interested in code quality and providing a means by which to bring <a href="https://www.drupal.org/">Drupal</a> beginners up-to-speed on the coding standards, I recommend reviewing code from all developers.  I say "all" developers because everyone needs an editor.</p>
+<p>The best way to force code reviews is to bake it into your development process.  Use a tool like <a href="https://about.gitlab.com/">Gitlab</a> (<a href="https://gitlab.com">free hosted version</a>) to prevent developers from committing code to authoritative branches.  Instead, have them fork the project repository, and submit merge requests.  Someone else can then review them.  The reviewer can add in-line comments, wait for the developer to make changes, and then accept the request.</p>
+<p>Here are some things to look for when reviewing Drupal code submissions.  For some of these, we're assuming <a href="https://en.wikipedia.org/wiki/Git_(software)">Git</a> is being used for version control.</p>
+<ol><li>Read, understand and follow the <a href="https://www.drupal.org/coding-standards">Coding standards</a>.</li>
+<li>Install, enable, and use the <a href="https://www.drupal.org/project/coder">Coder</a> module on your development sites.</li>
+<li>For the purists out there, use the <a href="https://www.drupal.org/project/coder_tough_love">Coder Tough Love</a> module as well.</li>
+<li>If you're running a <a href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration (CI)</a> system like <a href="https://en.wikipedia.org/wiki/Jenkins_(software)">Jenkins</a>, check the logs for new errors or warnings on new commits.  Either way, make sure your development sandboxes have errors being reported to the screen so that developers can see any new errors that they generate.  You'll find a lot of errors in your Drupal log if you're not doing this.  (Make them refresh their DBs from your Dev site which already has this enabled.)</li>
+<li>Speaking of CI, add one or more code quality inspection tools to the mix such as <a href="https://en.wikipedia.org/wiki/SonarQube">SonarQube</a>.  There's actually a pre-configured <a href="https://en.wikipedia.org/wiki/Vagrant_(software)">Vagrant</a> profile to build a <a href="https://en.wikipedia.org/wiki/Virtual_machine">VM</a> with everything already set up.  See <a href="http://www.midwesternmac.com/blogs/jeff-geerling/ci-deployments-code-analysis-drupal-php">CI: Deployments and Static Code Analysis with Drupal/PHP</a> for details.</li>
+<li>Look for unrelated code reversions in merge requests.  That is, if you see code changes that aren't related to what the developer is trying to do, there's something wrong.  In most cases, this means the developer's branch is out-of-date with the main development branch.  He or she should fetch and merge that branch from from the origin repository, fix any conflicts, and then add it to the merge request.</li>
+<li>Look for debugging code that wasn't removed such as <a href="https://api.drupal.org/api/devel/devel.module/function/dd/7">dd()</a>, <a href="https://api.drupal.org/api/devel/devel.module/function/drupal_debug/7">drupal_debug()</a> and other output functions.</li>
+<li>Look for Git conflict symbols such as "&lt;&lt;&lt;", "&gt;&gt;&gt;" and "===".  These usually indicate a botched conflict resolution.</li>
+<li>Notice any lack of comments.  Stanzas (small blocks of code that do little things) should be separated by blank lines, each with a comment explaining what it does.  It may be clear to the original developer, but that doesn't help anybody else.</li>
+<li>Make sure that modules are installed in the right place.  This is usually sites/all/modules/contrib (for upstream modules coming from drupal.org) or sites/all/modules/custom (for modules written specifically for the project).</li>
+<li>In theme files, usually somewhere under sites/all/themes, look for any functionality that is not theme-specific.  Functionality should always be in modules, not themes, so that if the theme is changed, the site still works as expected.  This is an extremely common error for beginners.  For example, JavaScript files related to modules shouldn't be in the theme directory, but the module itself.</li>
+<li>Ensure consistency in module package names.  For custom modules, it's advisable to give the package name the name of the project so that it's clear that these are site-specific.  For contributed modules, use what others are using; don't arbitrarily make one up.  This helps keep your list of modules organized.</li>
+</ol><p>These are the most common issues I've discovered while reviewing code.  If you have any others, feel free to add them as comments.  I can add them to the list here.</p>
+<p>Happy reviewing!</p>
+</div></div></div><span rel="schema:url" resource="/blog/how-review-drupal-code" class="rdf-meta element-hidden"></span><span property="schema:name" content="How to review Drupal code" class="rdf-meta element-hidden"></span>
+  </body>
+</html>
+

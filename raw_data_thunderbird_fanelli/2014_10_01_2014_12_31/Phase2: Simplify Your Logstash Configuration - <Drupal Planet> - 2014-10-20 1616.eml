@@ -1,0 +1,90 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 20 Oct 2014 14:16:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 20 Oct 2014 14:16:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Simplify Your Logstash Configuration
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/simplify-your-logstash-configuration/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Simplify Your Logstash Configuration</title>
+    <base href="http://www.phase2technology.com/blog/simplify-your-logstash-configuration/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div id="mmeditor">
+<div id="preview_div">
+<p>As I mentioned in my <a href="http://phase2technology.com/blog/drupalcon-amsterdam-roundup/">recent post</a>, I got a chance to upgrade the drupal.org ELK stack last week. In doing so, I got to take a look at a Logstash configuration that I created over a year ago, and in the course of doing so, clean up some less-than-optimal configurations based on a year worth of experience and simplify the configuration file a great deal.</p>
+<h2 id="the-drupalorg-logging-setup">The Drupal.org Logging Setup</h2>
+<p>Drupal.org is served by a large (and growing) number of servers. They all ship their logs to a central logging server for archival, and around a month&#8217;s worth are kept in the ELK stack for analysis.</p>
+<p>Logs for Varnish, Apache, and syslog are forwarded to a centralized log server for analysis by Logstash. Drupal messages are output to syslog using Drupal core&#8217;s syslog module so that logging does not add writes to Drupal.org&#8217;s busy database servers. (@TODO: Check if these paths can be published.) Apache logs end up in<code>/var/log/apache_logs/$MACHINE/$VHOST/transfer/$DATE.log</code>, Varnish logs end up in<code>/var/log/varnish_logs/$MACHINE/varnishncsa-$DATE.log</code> and syslog logs end up in <code>/var/log/HOSTS/$MACHINE/$DATE.log</code>. All types of logs get gzipped 1 day after they are closed to save disk space.</p>
+<h2 id="pulling-contextual-smarts-from-logs">Pulling Contextual Smarts From Logs</h2>
+<p>The Varnish and Apache logs do not contain any content in the logfiles to identify which machine they are from, but the <a href="http://markable.in/editor/">file input</a> sets a <code>path</code> field that can be matched with grok to pull out the machine name from the path and put it into the <code>logsource</code> field, which Grok&#8217;s <a href="http://markable.in/editor/">SYSLOGLINE</a> pattern will set when analyzing syslog logs.</p>
+<p>Filtering on the <code>logsource</code> field can be quite helpful in the Kibana web UI if a single machine is suspected of behaving weirdly.</p>
+<h2 id="using-grok-overwrite">Using Grok Overwrite</h2>
+<p>Consider this snippet from the original version of the Varnish configuration. As I mentioned in my presentation, Varnish logs are nice in that they inclue the HTTP Host header so that you can see exactly which hostname or IP was requested. This makes sense for a daemon like Varnish which does not necessarily have a native concept of virtual hosts (vhosts,) whereas nginx and Apache default to logging by vhost.</p>
+<p>Each Logstash configuration snippet shown below assumes that Apache and Varnish logs have already been processed using the<a href="http://markable.in/editor/">COMBINEDAPACHELOG</a> <code>grok</code> pattern, like so.</p><pre class="crayon-plain-tag">filter {
+  if [type] == &quot;varnish&quot; or [type] == &quot;apache&quot; {
+    grok {
+      match =&amp;gt; [ &quot;message&quot;, &quot;%{COMBINEDAPACHELOG}&quot; ]
+    }
+  }
+}</pre><p>The following snippet was used to normalize Varnish&#8217;s request headers to not include https?:// and the Host header so that the<code>request</code> field in Apache and Varnish logs will be exactly the same and any filtering of web logs can be performed with the <code>vhost</code> and<code>logsource</code> fields.</p><pre class="crayon-plain-tag">filter {
+  if [type] == &quot;varnish&quot; {
+    grok {
+      # Overwrite host for Varnish messages so that it's not always &quot;loghost&quot;.
+      match =&amp;gt; [ &quot;path&quot;, &quot;/var/log/varnish_logs/%{HOST:logsource}&quot; ]
+    }
+    # Grab the vhost and a &quot;request&quot; that matches Apache from the &quot;request&quot; variable for now.
+    mutate {
+      add_field =&amp;gt; [ &quot;full_request&quot;, &quot;%{request}&quot; ]
+    }
+    mutate {
+      remove_field =&amp;gt; &quot;request&quot;
+    }
+    grok {
+      match =&amp;gt; [ &quot;full_request&quot;, &quot;https?://%{IPORHOST:vhost}%{GREEDYDATA:request}&quot; ]
+    }
+    mutate {
+      remove_field =&amp;gt; &quot;full_request&quot;
+    }
+  }
+}</pre><p>As written, this snippet copies the <code>request</code> field into a new field called <code>full_request</code> and then unsets the original <code>request</code> field and then uses a <code>grok</code> filter to parse both the <code>vhost</code> and <code>request</code> fields out of that synthesized <code>full_request</code> field. Finally, it deletes<code>full_request</code>.</p>
+<p>The original approach works, but it takes a number of step and mutations to work. The <code>grok</code> filter has a parameter called<code>overwrite</code> that allows this configuration stanza to be considerably simlified. The <code>overwrite</code> paramter accepts an array of values that<code>grok</code> should overwrite if it finds matches. By using <code>overwrite</code>, I was able to remove all of the <code>mutate</code> filters from my configuration, and the enture thing now looks like the following.</p><pre class="crayon-plain-tag">filter {
+  if [type] == &quot;varnish&quot; {
+    grok {
+      # Overwrite host for Varnish messages so that it's not always &quot;loghost&quot;.
+      # Grab the vhost and a &quot;request&quot; that matches Apache from the &quot;request&quot; variable for now.
+      match =&amp;gt; {
+        &quot;path&quot; =&amp;gt; &quot;/var/log/varnish_logs/%{HOST:logsource}&quot;
+        &quot;request&quot; =&amp;gt; &quot;https?://%{IPORHOST:vhost}%{GREEDYDATA:request}&quot;
+      }
+      overwrite =&amp;gt; [ &quot;request&quot; ]
+    }
+  }
+}</pre><p>Much simpler, isn&#8217;t it? 2 <code>grok</code> filters and 3 <code>mutate</code> filters have been combined into a single <code>grok</code> filter with two matching patterns and a single field that it can overwrite. Also note that this version of the configuration passes a hash into the <code>grok</code> filter. Every example I&#8217;ve seen just passes an array to <code>grok</code>, but <a href="http://markable.in/editor/">the documentation for the grok filter</a> states that it takes a hash, and this works fine.</p>
+<h2 id="ensuring-field-types">Ensuring Field Types</h2>
+<p>Recent versions of Kibana have also gotten the useful ability to do statistics calculations on the current working dataset. So for example, you can have Kibana display the mean number of bytes sent or the standard deviation of backend response times (if you are capturing them &#8211; see <a href="http://markable.in/editor/">my DrupalCon Amsterdam slides for more information on how to do this and how to normalize it between Apache, nginx, and Varnish</a>.) Then, if you filter down to all requests for a single vhost or a set of paths, the statistics will update.</p>
+<p>Kibana will only show this option for numerical fields, however, and by default any data that has been parsed with a <code>grok</code> filter will be a string. Converting string fields to other types is a much better use of the <code>mutate</code> filter. Here is an example of converting the bytes and the response code to integers using a mutate filer.</p>
+<p>@TODO: Test that hash syntax works here!</p><pre class="crayon-plain-tag">filter {
+  if [type] == &quot;varnish&quot; or [type] == &quot;apache&quot; {
+    mutate {
+      convert =&amp;gt; {
+        [ &quot;bytes&quot;, &quot;response&quot; ] =&amp;gt; &quot;integer&quot;,
+      }
+    }
+  }
+}</pre><p></p>
+<h2 id="lessons-learned">Lessons Learned</h2>
+<p>Logstash is a very powerful tool, and small things like the <code>grok</code><code>overwrite</code> parameter and the <code>mutate</code> <code>convert</code> parameter can help make your log processing configuration simpler and result in more usefulness out of your ELK cluster. Check out Chris Johnson&#8217;s post about adding <a title="Permalink to Adding MySQL Slow Query Logs to Logstash" href="http://www.phase2technology.com/blog/adding-mysql-slow-query-logs-to-logstash/" rel="bookmark">MySQL Slow Query Logs to Logstash</a>!</p>
+<p>If you have any other useful Logstash tips and tricks, leave them in the comments!</p>
+<p>&nbsp;</p>
+</div>
+</div>
+  </body>
+</html>
+

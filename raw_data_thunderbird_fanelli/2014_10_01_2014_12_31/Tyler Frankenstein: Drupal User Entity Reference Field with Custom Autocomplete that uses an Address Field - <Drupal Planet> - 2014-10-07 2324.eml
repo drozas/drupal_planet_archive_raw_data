@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 07 Oct 2014 21:24:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 07 Oct 2014 21:24:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Tyler Frankenstein: Drupal User Entity Reference Field with Custom Autocomplete that uses an Address Field
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tylerfrankenstein.com/code/drupal-user-reference-field-custom-autocomplete-using-address-field
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Tyler Frankenstein: Drupal User Entity Reference Field with Custom Autocomplete that uses an Address Field</title>
+    <base href="http://tylerfrankenstein.com/code/drupal-user-reference-field-custom-autocomplete-using-address-field">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>User reference fields (aka entity reference fields) are great. As you may have guessed, we can use these fields to reference users on other entities (e.g. nodes).</p><p>Say we had a user reference field on the Article content type... by default, when selecting a user to reference, we could configure the field widget to be an autocomplete. This allows us to begin typing the user's login name as a way to reference them. This works well in most cases.</p><p>What if we had an address field on our user entities, and collected the user's first and last names? It may be more usable for site administrators to be able to search across the user's actual name instead of their user name for logging in.</p><p>We can use <strong>hook_menu()</strong>, <strong>hook_form_alter()</strong>, and a <strong>custom callback function</strong> to provide a custom autocomplete widget that searches across our address field's values instead...</div></div></div>
+  </body>
+</html>
+

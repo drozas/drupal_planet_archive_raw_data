@@ -1,0 +1,112 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Theme development with Grunt: LiveReload, lint, uglify, oh my!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/theme-development-grunt-livereload-lint-uglify-oh-my%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Theme development with Grunt: LiveReload, lint, uglify, oh my!</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/theme-development-grunt-livereload-lint-uglify-oh-my%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="http://gruntjs.com/">Grunt</a> calls itself "The JavaScript Task Runner." Huh? What's a JavaScript task runner?</p><br />
+<br />
+<p>The JavaScript part comes from its dependency on using <a href="http://nodejs.org/">Node.js</a>. The task runner is another way of saying automation. So what we have is an automation tool built on top of Node.js.</p><br />
+<br />
+<h2>What can it do, and why do I need it?</h2><br />
+<br />
+<p>As a Drupal themer/developer, I'm all about being lazy. Lazy in that I don't like doing the same thing over and over again. It compiles &amp; watches for SASS changes. It LiveReloads. It lints, minifies &amp; combines JavaScript and/or CSS files. It copies library assets. It can minify &amp; combine images. Plus <a href="http://gruntjs.com/plugins">tons more</a>. Pretty much any repetitive task can accomplished with Grunt.</p><br />
+<br />
+<h2>Install Node.js/npm &amp; Grunt</h2><br />
+<br />
+<p>First things first. You gotta install Grunt. It is installed from npm (Node.js package manager). Node.js&nbsp;<a href="http://nodejs.org/download/">install instructions</a>.</p><br />
+<br />
+<p>Once Node.js &amp; npm are installed, in a terminal, run (might need to use sudo):</p><br />
+<br />
+<pre class="brush: bash; auto-links: true; collapse: false; html-script: false; smart-tabs: true; tab-size: 2; toolbar: true; codetag">$ npm install -g grunt-cli</pre><br />
+<br />
+<h2>Grunt's files</h2><br />
+<br />
+<p>A Grunt project consists of two files: package.json &amp; Gruntfile.js. package.json is used by npm to install the Grunt plugins. The Gruntfile.js (or Gruntfile.coffee if you prefer) is the config file where we setup our tasks. Both of these files should be placed at the root of your theme.</p><br />
+<br />
+<h4>package.json</h4><br />
+<br />
+<p>Start with a simple <a href="http://gruntjs.com/getting-started#package.json">package.json</a> file, and you can customize it to your specific project:</p><br />
+<br />
+<pre class="brush: jscript; auto-links: true; collapse: false; html-script: false; smart-tabs: true; tab-size: 2; toolbar: true; codetag">{ "name": "my-project-name", "version": "0.1.0", "devDependencies": { } }</pre><br />
+<br />
+<p>Once this initial stub is in place, you need to add plugins. The easiest way is to run the following:</p><br />
+<br />
+<p><code>$ npm install [plugin] --save-dev </code></p><br />
+<br />
+<p>where [plugin] is the name of the plugin you want installed. The --save-dev argument tells npm to not only install the plugin locally, but also adds it to the devDependencies section of the pavkage.json file. At the bare minimum, you'll need to install grunt itself as a plugin:</p><br />
+<br />
+<p><code>$ npm install grunt --save-dev </code></p><br />
+<br />
+<p>The Grunt website has a rather extensive set of <a href="http://gruntjs.com/plugins">plugins</a> you can use. Here's an example of a package.json file I used recently:</p><br />
+<br />
+<p><code>{ "name": "my-awesome-theme", "version": "1.0.0", "devDependencies": { "grunt": "~0.4.1", "grunt-contrib-compass": "~0.5.0", "grunt-contrib-jshint": "~0.6.2", "grunt-contrib-uglify": "~0.2.2", "grunt-contrib-watch": "~0.5.1", "grunt-contrib-copy": "~0.4.1" }, } </code></p><br />
+<br />
+<h4>Gruntfile.js</h4><br />
+<br />
+<p>Like I said above, the Gruntfile.js is the config file where you setup all your tasks. Here is a Gruntfile.js stub that you can use as a starter:</p><br />
+<br />
+<p><code>'use strict'; module.exports = function (grunt) { grunt.initConfig({ pkg: grunt.file.readJSON('package.json'), }); }; </code></p><br />
+<br />
+<p>Next, you'll add and configure tasks. For this example, I'm using <a href="https://npmjs.org/package/grunt-contrib-jshint">JSHint</a> which validates (lints) JavaScript files.</p><br />
+<br />
+<p>Here's a Gruntfile.js file with JSHint configured:</p><br />
+<br />
+<p><code>'use strict'; module.exports = function (grunt) { grunt.initConfig({ pkg: grunt.file.readJSON('package.json'), jshint: { options: { jshintrc: '.jshintrc' }, all: [ 'js/src/*.js', '!js/src/*.min.js' ] } }); grunt.loadNpmTasks('grunt-contrib-jshint'); grunt.registerTask('default', ['jshint']); }; </code></p><br />
+<br />
+<p>There are three things that were added to the file.</p><br />
+<br />
+<p>First is the jshint block of code. Within this block is an "options" section that allows you to specify "global" options that will be used anytime the jshint task is invoked. In this case, the jshintrc: '.jshintrc' allows you to specify where the jshint config file is located.</p><br />
+<br />
+<p>Also in this code block is a "dev" section and a "build" section. The section identifier is simply a way to reference which set of files (or options) to use.</p><br />
+<br />
+<p>As you'll see below, you can use these set (or target) identifiers like so:</p><br />
+<br />
+<p><code>$ grunt jshint:dev </code></p><br />
+<br />
+<p>or</p><br />
+<br />
+<p><code>$ grunt jshint:build </code></p><br />
+<br />
+<p>The next part that was added is the <code>loadNpmTasks()</code> function. This loads the plugin into Grunt. You'll need to specify each plugin that you use in the Gruntfile.</p><br />
+<br />
+<p>Finally, the <code>registerTask()</code> function is used to create chainable tasks. This allows you to create a task that does multiple things at once. For example, with one command, you can lint your JavaScript files, combine them into a single file, then minimize the single file, all the while putting the rendered file in a location completely different from your source files.</p><br />
+<br />
+<p>Here's a much longer and extensive Gruntfile:</p><br />
+<br />
+<p><code>'use strict'; module.exports = function (grunt) { grunt.initConfig({ pkg: grunt.file.readJSON('package.json'), // Watch for changes and trigger compass, jshint, uglify and livereload watch: { compass: { files: ['sass/{,**/}*.scss'], tasks: ['compass:dev'] }, js: { files: '&lt;%= jshint.all %&gt;', tasks: ['jshint', 'uglify:dev'] }, livereload: { options: { livereload: true }, files: [ 'css/style.css', 'js/*.js', 'images/{,**/}*.{png,jpg,jpeg,gif,webp,svg}' ] } }, // Compass and scss compass: { options: { bundleExec: true, httpPath: '/sites/all/themes/my-theme', cssDir: 'css', sassDir: 'sass', imagesDir: 'images', javascriptsDir: 'js', fontsDir: 'css/fonts', assetCacheBuster: 'none', require: [ 'sass-globbing' ] }, dev: { options: { environment: 'development', outputStyle: 'expanded', relativeAssets: true, raw: 'line_numbers = :true\n' } }, dist: { options: { environment: 'production', outputStyle: 'compact', force: true } } }, // Javascript linting with jshint jshint: { options: { jshintrc: '.jshintrc' }, all: [ 'js/src/*.js', '!js/src/*.min.js' ] }, // Concat &amp; minify uglify: { dev: { options: { mangle: false, compress: false, preserveComments: 'all', beautify: true }, files: { 'js/vendor.js': [ 'components/eventEmitter/EventEmitter.js', 'components/eventie/eventie.js', 'components/imagesloaded/imagesloaded.js', 'components/formalize/assets/js/jquery.formalize.js' ], 'js/script.js': [ 'js/src/*.js', '!js/src/*.min.js' ] } }, dist: { options: { mangle: true, compress: true }, files: { 'js/vendor.js': [ 'components/eventEmitter/EventEmitter.js', 'components/eventie/eventie.js', 'components/imagesloaded/imagesloaded.js', 'components/formalize/assets/js/jquery.formalize.js' ], 'js/script.js': [ 'js/src/*.js', '!js/src/*.min.js' ] } } }, // Copy files copy: { main: { files: [ { expand: true, cwd: 'components/formalize/assets/css/', src: '_formalize.scss', dest: 'sass/partials/vendor/', filter: 'isFile', flatten: true }, { expand: true, cwd: 'components/formalize/assets/images/', src: '**', dest: 'images/', filter: 'isFile', flatten: true } ] } } }); grunt.loadNpmTasks('grunt-contrib-watch'); grunt.loadNpmTasks('grunt-contrib-compass'); grunt.loadNpmTasks('grunt-contrib-jshint'); grunt.loadNpmTasks('grunt-contrib-uglify'); grunt.loadNpmTasks('grunt-contrib-copy'); grunt.registerTask('build', [ 'copy', 'jshint', 'uglify:dist', 'compass:dist' ]); grunt.registerTask('default', [ 'copy', 'jshint', 'uglify:dev', 'compass:dev', 'watch' ]); }; </code></p><br />
+<br />
+<p>There are two tasks that I've created. The "default" task is what I leave running all the time. Since it is the default, you can start it by simply running:</p><br />
+<br />
+<p><code>$ grunt </code></p><br />
+<br />
+<p>No arguments are required if you create a default task. First, it copies files from third party libraries that I've specified. Next, it checks my JavaScript files for any issues. Then is uses the "dev" section of uglify to combine JavaScript files into a single file. Next it uses the compass plugin to compile all the .scss files. Finally, it starts the watch plugin, which doesn't terminate (until you manually stop it with a Ctrl+C). Any time the "watch" plugin detects a change in one of my .scss files, it runs the compass plugin to recompile .scss partials into .css. It also JSHints whenever a change is saved. And finally (and certainly not least) it <a href="http://livereload.com/">LiveReloads</a> the browser.</p><br />
+<br />
+<p>Whew! That was a lot of things to do. But Grunt handled it marvelously. Pretty cool, eh?</p><br />
+<br />
+<p>I've also setup a "build" task that can be used when development is completed and you want your files optimized. Run it by also specifying the task like so:</p><br />
+<br />
+<p><code>$ grunt build </code></p><br />
+<br />
+<h2>More info</h2><br />
+<br />
+<p>For more information, please see the <a href="http://gruntjs.com/getting-started">getting started</a> page as well as these <a href="http://gruntjs.com/getting-started#further-reading">additional resources</a>.</p><br />
+<br />
+<p>I've also setup a <a href="https://github.com/robdecker/grunt-starter">starter repo</a> over at GitHub that you can use when creating new themes so you can get started quicker.</p><br />
+<br />
+<p>Have fun!</p><br />
+  </body>
+</html>
+

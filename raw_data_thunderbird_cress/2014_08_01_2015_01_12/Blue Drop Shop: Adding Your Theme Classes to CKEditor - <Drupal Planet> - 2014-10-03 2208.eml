@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 03 Oct 2014 21:08:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 03 Oct 2014 21:08:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Blue Drop Shop: Adding Your Theme Classes to CKEditor
+Content-Transfer-Encoding: 8bit
+Content-Base: http://bluedropshop.com/blog/adding-your-theme-classes-ckeditor
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Blue Drop Shop: Adding Your Theme Classes to CKEditor</title>
+    <base href="http://bluedropshop.com/blog/adding-your-theme-classes-ckeditor">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>WYSIWYG editors are the bane of my existence, yet they are a necessary evil if you have clients that want to edit their site content.</p>
+<p>But somewhere between all the inline styles they create to editing source code, there simply had to be a solution that would let me open up my theme css to content creators. </p>
+<p>After much searching and testing, I have found that unicorn. </p>
+<p>CKEditor populates the style drop down menu with a js file, and it lets you override it. Problem is, as stated in the docs, it doesn't work. And there were a few various options posted in the CKEditor module issue queue. </p>
+<p>First off, you create a new js file to name a function that will build the drop down select items and the parameters for each. Contrary to what has been suggested in various posts, I put this in my theme's js folder. That way it won't get overridden by a module or library update, and it just makes sense since it's tied to my theme. Only CKEditor will be looking for this file, so there's no need to call it in your template files nor add it to your .info file. </p>
+<p>For example, I created a file named ckeditor_styles.js like so:<br />
+ </p>
+<p>( function() {<br />
+    CKEDITOR.stylesSet.add( 'my_styles', [ // this is the styles set name you will call later<br />
+        { name: 'Teal Heading 2', element: 'h2', attributes: { 'class': 'teal' } }, <br />
+        { name: 'Teal Text', element: 'span', attributes: { 'class': 'teal' } },<br />
+        { name: 'Unbold Heading', element: 'span', attributes: { 'class': 'unbold' } }<br />
+    ]);<br />
+} )();</p>
+<p>It's pretty straightforward. The name parameter is what you will actually select in the drop down. The element is where you specify where to inject the class. If it's a block-level element (h1, h2, div, p, etc.), the class will added. If it's a span, then the selected text will be wrapped in a classed span. As for attributes, that's where you specify you are calling a class, and also provide the name of the class you want to inject. The resulting drop down will be split into block styles and inline styles.</p>
+<p>The second step is to let CKEditor know where to find this file, via the advanced options section in the configuration. Navigate to admin/config/content/ckeditor and edit the profile you wish to add this to, most likely Full HTML. Docs will say you only need to set config.stylesSet, but as gleaned from the issue queues (and tested personally), you need to also set config.stylesCombo_styleSet.</p>
+<p>Expand the Advanced Options field set and add the following to the Custom JavaScript Configuration with your styles set name and the path to your js file:</p>
+<p>config.stylesCombo_stylesSet = 'my_styles:/sites/all/themes/mytheme/js/ckeditor_styles.js';<br />
+config.stylesSet = 'my_styles:/sites/all/themes/mytheme/js/ckeditor_styles.js';</p>
+<p>Clear your caches and you should now be able to pick styles from your drop downs that will add either standard elements or spans with the desired classes. </p>
+<p>Sources:<br /><a href="http://docs.ckeditor.com/#!/guide/dev_howtos_styles">http://docs.ckeditor.com/#!/guide/dev_howtos_styles</a><br /><a href="https://www.drupal.org/node/1287432">https://www.drupal.org/node/1287432</a></p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/tags/theming" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">theming</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/tags/configuration" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">configuration</a></li><li class="taxonomy-term-reference-2" rel="dc:subject"><a href="/tags/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></li><li class="taxonomy-term-reference-3" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></li><li class="taxonomy-term-reference-4" rel="dc:subject"><a href="/tags/site-building" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">site building</a></li></ul></div>
+  </body>
+</html>
+

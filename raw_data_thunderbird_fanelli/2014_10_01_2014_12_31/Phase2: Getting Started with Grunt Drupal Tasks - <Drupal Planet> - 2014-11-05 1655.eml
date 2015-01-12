@@ -1,0 +1,66 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Nov 2014 15:55:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Nov 2014 15:55:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Getting Started with Grunt Drupal Tasks
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/getting-started-with-grunt-drupal-tasks/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Getting Started with Grunt Drupal Tasks</title>
+    <base href="http://www.phase2technology.com/blog/getting-started-with-grunt-drupal-tasks/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">In September, Phase2 released a Grunt-based tool for building and testing Drupal sites. We have been working on the tool since January, and after adopting it as part of our standard approach for new Drupal sites, we wanted to contribute it back to the community. We are happy invite you to get started with <a href="https://github.com/phase2/grunt-drupal-tasks">Grunt Drupal Tasks</a>.</p>
+<p dir="ltr"><a href="http://gruntjs.com/">Grunt</a> is a popular JavaScript-based task runner, meaning it’s a framework for automating tasks. It’s gained traction for automating common development tasks, like compiling CSS from Sass, minifying JavaScript, generating sprites, checking code standards, and more. There are thousands of <a href="http://gruntjs.com/plugins">plugins</a> available that can be implemented out-of-the-box to do these common tasks or integrate with other supporting tools. (I mentioned that this is all free and open source software, right?)</p>
+<p dir="ltr">Grunt Drupal Tasks is a Grunt plugin that defines processes that we have identified as best practices for building and testing Drupal sites.</p>
+<h3 dir="ltr">Building Drupal</h3>
+<p dir="ltr">The cornerstone of Grunt Drupal Tasks is the “build” process, which assembles a runnable Drupal site docroot from a Drush make file and custom code and configuration.</p>
+<p dir="ltr">The make file defines the version of Drupal core to use, the contrib modules, themes, and libraries to download, and even patches to apply to any of these components. The make file can include components released on Drupal.org or stored in public or private repositories. For patches, our best practice is to reference patches hosted on Drupal.org and associated with an issue. With these options, the entire set of components for a Drupal site can be declared in a make file and consistently retrieved using Drush.</p>
+<p dir="ltr">After the Drush make process assembles all external dependencies for the project, the Grunt Drupal Tasks build process adds custom code and configuration. This includes custom installation profiles, modules, and themes, as well as “sites” directory files, like sites.php and settings.php for one or many subsites, and other “static” files to override, like .htaccess and robots.txt. These custom components are added to the built docroot by symlink, so it is not necessary to rebuild for every update to custom source code.</p>
+<p dir="ltr">These steps results in a Drupal docroot assembled from custom source in the following structure:</p>
+<p></p><pre class="crayon-plain-tag">src/
+  modules/
+    &lt;custom modules&gt;
+  profiles/
+    &lt;custom installation profiles&gt;
+  sites/
+    default/
+      settings.php
+    &lt;optionally, other subsites or sites.php&gt;
+  static/
+    &lt;optionally, overrides for .htaccess or other files&gt;
+  themes/
+    &lt;custom themes&gt;
+  project.make</pre><p></p>
+<p dir="ltr">Grunt Drupal Tasks includes other optional build steps, which can be enabled as needed for projects. One such task is the “compile theme” step will compile Sass files into CSS.</p>
+<p dir="ltr">This build process gives us a reliable way for assembling Drupal core and contrib components, for adding our custom code, and integrating development tools like Sass. By using Grunt to automate this procedure, it becomes a portable script that can be shared among the project’s developers and used in deployment environments.</p>
+<h3 dir="ltr">Testing Drupal</h3>
+<p dir="ltr">In order to help make best practices the default, Grunt Drupal Tasks includes support for a number of code quality and testing tools.</p>
+<p dir="ltr">A “validate” task is provided that includes checking basic PHP syntax and Drupal coding standards using PHPLint and PHP Code Sniffer. We highly recommended that developers use this command while coding, and have included it as part of the default build process.</p>
+<p dir="ltr">An “analyze” task is also provided, which adds support for the PHP Mess Detector. This task may be longer-running, so it is better suited to run as part of a continuous integration system, like Jenkins.</p>
+<p dir="ltr">Finally, a “behat” task is provided for running test scenarios with Behat and the Drupal Extension. This encourages writing Behat tests for the project and committing them with the project code and build tools, so the tests can be run by other developers and in the integration environment by a continuous integration system.</p>
+<h3 dir="ltr">Scaffolding for Drupal Projects</h3>
+<p dir="ltr">The old starting point for Drupal projects was a vanilla copy of Drupal core. Grunt Drupal Tasks offers scaffolding for Drupal projects that starts with Drush make, integrates custom code and overrides, and provides consistent support for a variety of developer tools.</p>
+<p dir="ltr">This scaffolding is provided through the <a href="https://github.com/phase2/grunt-drupal-tasks/tree/master/example">example</a> included with Grunt Drupal Tasks, which is the recommended starting point for new projects. The scaffold structure adds a layer above the aforementioned “src” directory; this layer includes code and configuration related to Grunt Drupal Tasks (Gruntconfig.json and Gruntfile.js), dependencies for the supporting tools (composer.json), and other resources for the tools (features/, behat.yml, and phpmd.xml).</p>
+<p dir="ltr">The example includes the following:</p>
+<p></p><pre class="crayon-plain-tag">features/
+src/
+.gitignore
+Gruntconfig.json
+Gruntfile.js
+behat.yml
+composer.json
+package.json
+phpmd.xml</pre><p></p>
+<p dir="ltr">For full documentation on starting a new project with Grunt Drupal Tasks, see <a href="https://github.com/phase2/grunt-drupal-tasks/blob/master/CONFIG.md">CONFIG.md</a>.</p>
+<h3 dir="ltr">Learning More</h3>
+<p dir="ltr">Watch the Phase2 blog for more information about Grunt Drupal Tasks. If you are attending the <a href="http://badcamp.net">Bay Area Drupal Camp</a> this week, please check out my session on <a href="https://2014.badcamp.net/session/using-grunt-manage-drupal-build-and-testing-tools">Using Grunt to Manage Drupal Build and Testing Tools</a>.</p>
+  </body>
+</html>
+

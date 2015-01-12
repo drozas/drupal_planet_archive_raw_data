@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 24 May 2014 16:43:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 24 May 2014 16:43:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Jeff Beeman: Light-weight solution to provide custom view modes and suggest related templates in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://jeffbeeman.com/node/326
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Jeff Beeman: Light-weight solution to provide custom view modes and suggest related templates in Drupal 7</title>
+    <base href="http://jeffbeeman.com/node/326">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>When it comes to providing custom view modes for entities in Drupal, most developers turn immediately to <a href="https://drupal.org/project/ds">Display Suite</a> or <a href="https://drupal.org/project/entity_view_mode">Entity View Modes</a>. Display Suite is very powerful, but I've found it to be far too "heavy" for most of my use cases. In this case, by "heavy" I mean that the module days <em>way</em> more than I need it to. It does a lot of things I simply don't want on my site. Entity view modes is a lighter-weight approach to supplying additional view modes, but I found that even it was cumbersome when it came to managing my view mode configuration in an easily-deployable way.</p>
+
+<p>I wanted a simpler solution, and I knew it couldn't be that hard to provide this functionality in a custom, streamlined module.</p>
+
+<p>The code snippets below do the following:</p>
+
+<ul><li>Define new display modes. As you'll see, this is super easy to do in code.</li>
+<li>Suggest node templates based on the view mode of the given node. e.g. a teaser template vs. a full display template.</li>
+<li>Suggest page templates based on the node type being viewed. e.g. alter the page markup for Article nodes.</li>
+</ul></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 23 Apr 2014 05:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 23 Apr 2014 05:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Modules Unraveled: 105 Using Membership Entity to Set Up a Drupal Based Membership Site with Caleb Thorne, Bryan Jones and David Csonka - Modules Unraveled Podcast
+Content-Transfer-Encoding: 8bit
+Content-Base: http://modulesunraveled.com/podcast/105-using-membership-entity-set-drupal-based-membership-site-caleb-thorne-bryan-jones-and
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Modules Unraveled: 105 Using Membership Entity to Set Up a Drupal Based Membership Site with Caleb Thorne, Bryan Jones and David Csonka - Modules Unraveled Podcast</title>
+    <base href="http://modulesunraveled.com/podcast/105-using-membership-entity-set-drupal-based-membership-site-caleb-thorne-bryan-jones-and">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden view-mode-rss"><div class="field-items"><figure class="clearfix field-item even"><img typeof="foaf:Image" class="image-style-podcast-default" src="http://modulesunraveled.com/sites/default/files/styles/podcast_default/public/podcast/image/Caleb%20Bryan%20David.png?itok=sVccYRyN" width="300" height="141" alt="Photo of Caleb Thorne, Bryan Jones and David Csonka" /></figure></div></div><span class="submitted-by">Published: Wed, 04/23/14</span><div class="field field-name-field-podcast-file field-type-file field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><div class="mediaelement-audio"><audio  src="http://traffic.libsyn.com/modulesunraveled/105_Using_Membership_Entity_to_Set_Up_a_Drupal_Based_Membership_Site_with_Caleb_Thorne_Bryan_Jones_and_David_Csonka_-_Modules_Unraveled_Podcast.mp3" class="mediaelement-formatter-identifier-1398239845-0" controls="controls" ></audio><div class="mediaelement-download-link"><a href="http://traffic.libsyn.com/modulesunraveled/105_Using_Membership_Entity_to_Set_Up_a_Drupal_Based_Membership_Site_with_Caleb_Thorne_Bryan_Jones_and_David_Csonka_-_Modules_Unraveled_Podcast.mp3">Download this episode</a></div></div></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>Project</h2>
+<ul><li>
+<p>What is the Membership Entity module?<br />
+Project background<br />
+First membership site developed was Mercedes-Benz Club of America (http://www.mbca.org).<br />
+Involved a bunch of custom code.<br />
+Development<br />
+Entity API<br />
+Key features<br />
+Multiple users per membership (primary and secondary)<br />
+Join/Renew online<br />
+Role management<br />
+Membership terms and modifiers<br />
+E-Commerce solutions (coming soon)<br />
+Commerce integration (Caleb)<br />
+Ubercart integration (Bryan)<br />
+product class<br />
+Using product attributes to store membership data.<br />
+Investigating better ways to store data before official release.</p>
+</li>
+<li>
+<p>Do you handle pro-rated renewals?</p>
+</li>
+<li>Trials?</li>
+<li>How are you guys dealing with role based permissions, and time limited access?</li>
+<li>Are there different levels of membership?</li>
+<li>Do you deal with CC details?</li>
+<li>What other solutions did you guys look at before creating this one?
+<ul><li>Why not just use profile2/rules/civiCRM or other existing modules?</li>
+</ul></li>
+</ul><p>The big problem with Profile2 is that it only allows one user per profile. Some fields should be shared for all users that belong to a single membership.<br />
+Membership Entity includes rules integration.<br />
+Membership Entity is 100% Drupal. No third party integration required.</p>
+<!-- Last chance to send in questions using the hashtag: #MUP105 --><h2>Use Cases</h2>
+<ul><li>Do you guys have any sites currently running the Membership Entity module?<br />
+(David) - Joined the team after much of the development of the module was already done, so had the perspective of a developer on the outside, learning what the module provides and how to extend it. Being built around the Entity API made creating Views-based reports very simple, as most of the membership data that I needed to display was already exposed. For any that wasn’t, the extensible nature of the module (via things like all of the provided custom hooks) made the process of developing additional custom entities derived from membership meta-data rather straightforward.<br />
+(Bryan) - Drop in solution for simple membership sites (CEMA).<br />
+No custom code required.<br />
+Membership process working in less than an hour.<br />
+Integrated with Ubercart (Module coming soon).</li>
+</ul></div></div></div><section class="field field-name-field-items-mentioned field-type-link-field field-label-above view-mode-rss"><h2 class="field-label">Episode Links:&nbsp;</h2><div class="field-items"><div class="field-item even"><a href="http://drupal.org/user/689392" target="_blank" rel="nofollow">draenen (Caleb Thorne)</a></div><div class="field-item odd"><a href="https://drupal.org/user/699770" target="_blank" rel="nofollow">Bryan</a></div><div class="field-item even"><a href="https://drupal.org/user/1761862" target="_blank" rel="nofollow">David Csonka</a></div><div class="field-item odd"><a href="https://twitter.com/monarchd" target="_blank" rel="nofollow">Monarch Digital</a></div><div class="field-item even"><a href="https://drupal.org/project/membership_entity" target="_blank" rel="nofollow">Membership Entity</a></div><div class="field-item odd"><a href="https://drupal.org/sandbox/draenen/2211367" target="_blank" rel="nofollow">Commerce integration (sandbox)</a></div><div class="field-item even"><a href="https://drupal.org/sandbox/Bartuc/1819954" target="_blank" rel="nofollow">Ubercart integration (sandbox)</a></div><div class="field-item odd"><a href="http://www.monarchdigital.com/blog/2014-03-17/announcing-membership-entity-contributed-module-drupal" target="_blank" rel="nofollow">Module release blog post</a></div><div class="field-item even"><a href="https://austin2014.drupal.org/" target="_blank" rel="nofollow">We will be having a BoF at DrupalCon Austin. Watch for it at</a></div></div></section><section class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above view-mode-rss"><h2 class="field-label">Tags:&nbsp;</h2><ul class="field-items"><li class="field-item even"><a href="/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet-drupal</a></li></ul></section>
+  </body>
+</html>
+

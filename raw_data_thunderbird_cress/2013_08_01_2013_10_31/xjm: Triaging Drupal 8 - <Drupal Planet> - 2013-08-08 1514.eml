@@ -1,0 +1,79 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 Aug 2013 14:14:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 Aug 2013 14:14:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: xjm: Triaging Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://xjm.drupalgardens.com/blog/triaging-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>xjm: Triaging Drupal 8</title>
+    <base href="http://xjm.drupalgardens.com/blog/triaging-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><em>This is the second in a <a href="http://xjm.drupalgardens.com/tags/technical-debt" title="Technical debt in Drupal 8">series of posts</a> on Drupal 8's progress toward release. Read on for <a href="#need-help">how you can help</a>.</em></p>
+<p>A month ago, I wrote about the <a href="/blog/technical-debt-drupal-8-or-when-will-it-be-ready">growing technical debt</a> in Drupal 8 core, and the impact this would have on Drupal 8's release date. Since that post, <strong>88 of Drupal 8's major and critical issues have been fixed</strong>. The week of <a href="https://drupal.org/core/release-cycle#api-freeze">API freeze</a>, we reached an all-time record of 35 of these top-priority issues fixed in a single week, among 84 total core commits that week. Given the dozens of volunteer hours that might go into every single issue, this is a truly phenomenal effort by the Drupal community. We're making great progress, and there's lots of work still to be done, so we need your help on these important issues.</p>
+<p><div class="media-thumbnail-frame"><img alt="Majors and criticals posted and fixed each week since DrupalCon Portland." class="media-image" height="577" style="width: 871px; height: 577px;" width="871" typeof="foaf:Image" src="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201308/portland_through_api_freeze.jpg" /></div></p>
+<p><em>Technical debt discovered and fixed each week. Eventually, the blue line should remain negative.</em></p>
+<p>You might notice that the first month of this graph looks a little different from the one in the last post. The reason for this is that the community continues to reassess the status and priority of issues. (So, an issue that was discovered back in April, but only prioritized recently, won't appear as a new issue here.) We call this reassesment <strong><em><a href="https://drupal.org/contributor-tasks/triage">triage</a></em></strong>, and it's an important part of finishing essential work on Drupal 8.</p>
+<p>So how are we doing? Let's take a look at the data from <a href="http://drupalreleasedate.com/">drupalreleasedate.com</a>, which tracks snapshots of the major and critical counts in real time:</p>
+<p><div class="media-thumbnail-frame"><img alt="Data from drupalreleasedate.com showing the number of criticals (currently nearly 150, up from about 75 two months ago) and majors (nearly 350, up from 280)" class="media-image" height="482" style="width: 766px; height: 482px;" width="766" typeof="foaf:Image" src="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201308/drupalreleasedate_data.jpg" /></div></p>
+<p>Yikes!, you might think. What's going on? Why did our critical account shoot up right before API freeze, and why does the number of majors continue to increase?</p>
+<p>Once again, it mostly comes down to <strong>issue triage</strong> -- and it's actually a good thing. During <a href="http://dublin2013.drupaldays.org/">Drupal DevDays Dublin</a>, we took the time to re-evaluate many issues. In particular, we looked for issues that <em>must</em> be resolved before we can release Drupal 8, and made sure these were filed as criticals. We also increased the priorities of sub-tasks for "meta" issues. Where previously one critical issue might have been a "wrapper" for five issues, now, those five issues have been promoted to (say) three criticals and two majors. So, it's not that there are many new problems, but rather that we're doing a better job of identifying the serious problems that already exist.</p>
+<p>Another thing worth pointing out is that many of our "new" critical issues in the graph above actually reflect work that's already done! When we make API changes, we add critical tasks to <a href="https://drupal.org/list-changes/drupal">document the API changes</a>, to ensure that core developers and contributed module authors have the information they need on converting code to Drupal 8. Once this documentation is written, those issues are removed from the list.</p>
+<p>Still, the high issue counts are worrisome, and the problem is even bigger than we previously thought. Not only is there a lot of work to do, it's hard to know what's most important when there are so many issues.</p>
+<h3 id="need-help">We need your help to clean up the major and critical queue<span style="font-size: 12px;"> </span></h3>
+<p>There are six important ways you can <strong>help triage issues</strong> in the major and critical queue to help Drupal 8's velocity.</p>
+<ol><li>
+<h4 id="change-notifications">Write change notifications</h4>
+<p>Currently <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;version%5B%5D=8.x&amp;issue_tags=Needs+change+notification">29 issues</a> are in need of <a href="https://drupal.org/change-records">API change notifications</a>. As I described above, these are critical documentation tasks that are added when we change public APIs. Help trim down the critical count by drafting this important documentation and having the patch authors review it.</p>
+</li>
+<li>
+<h4 id="update-issue-summaries">Update issue summaries</h4>
+<p><a href="https://drupal.org/issue-summaries">Issue summaries</a> are a key tool to help contributors and core maintainers understand the goals and status of an issue. Update issue summaries to include:</p>
+<ul><li>A <strong>concise, scannable</strong> explanation of the issue's <strong>goal</strong> and why it matters.</li>
+<li><strong>Why</strong> it is major or critical. (<a href="https://drupal.org/node/2056513#summary-problem-motivation" title="An example of documenting why an issue is major.">Example</a>.)</li>
+<li>A concise explanation of the <strong>proposed resolution</strong>.</li>
+<li>The <strong>remaining tasks</strong> or next steps.</li>
+<li>A <strong>complete</strong> list of even minor <strong>API changes</strong>. (See below.)</li>
+</ul><p>Any time you encounter an issue that you cannot understand from reading the summary, tag it with <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags=Needs+issue+summary+update">Needs issue summary update</a>. (Also see my earlier post on <a href="https://groups.drupal.org/node/294403">issue summaries for Drupal 8 issues</a>.)</p>
+</li>
+<li>
+<h4 id="identify-api-changes">Identify API changes</h4>
+<p>Following <a href="https://drupal.org/core/release-cycle#api-freeze">API freeze</a>, backwards-compatibility-breaking API changes are only allowed with <strong>explicit core maintainer approval </strong>to resolve <strong>serious issues</strong>. (See this <a href="https://drupal.org/core/release-cycle/api-freeze" title="When is an API change needed after API freeze?">flowchart</a> for details.)</p>
+<ul><li><strong>Read patches closely</strong> for even minor API changes.</li>
+<li><strong>Document</strong> every specific API change in the <strong>issue summary</strong>. (<a href="https://drupal.org/node/2056513#summary-api-changes" title="An example of documenting API changes.">Example</a>.)</li>
+<li>Tag any issue that introduces a change with <strong><a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags=API+change">API change</a></strong>.</li>
+<li><strong>Ask a core maintainer</strong> about proposed API changes as soon as possible, when or before posting the patch that contains the API change.</li>
+</ul><p>The Drupal community <strong>needs</strong> to know what post-freeze API changes are <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags=Approved+API+change">approved by maintainers</a>. If you think an API change is necessary, speak up as soon as possible so that a core maintainer can provide direction.</p>
+</li>
+<li>
+<h4 id="de-prioritize">De-prioritize less important issues</h4>
+<p>Just as we've increased the <a href="http://drupal.org/node/45111">priority</a> of some issues, we need to <strong>decrease</strong> the priority of others. It might be set incorrectly, and it might also have changed over time. Help <strong>focus attention</strong> on more important issues by <strong>demoting less important ones</strong>. If you suspect an issue should have its priority reduced, but aren't entirely sure, <a href="https://drupal.org/dcoc#ask-for-help">ask for help</a> to decide. You can ask a <a href="https://drupal.org/contribute/core-maintainers#branch" title="core maintainers">core</a> or <a href="http://drupal.org/contribute/core-maintainers#component" title="component maintainers">component</a> maintainer, or ask in the <a href="irc://irc.freenode.net/drupal-contribute">#drupal-contribute</a> IRC channel.</p>
+</li>
+<li>
+<h4 id="no-longer-relevant">Move or close issues that are no longer relevant</h4>
+<p>Some issues might no longer be relevant, especially older issues that have been obsoleted by more recent changes:</p>
+<ul><li>If the issue is a problem that <strong>exists in Drupal 7</strong>, but not in Drupal 8, move it back to the <strong>7.x branch.</strong></li>
+<li>If you think a task or feature request is <strong>too broad a change</strong> to be accepted after API freeze, consult others to confirm whether the issue should be moved to the <strong>9.x branch</strong>.</li>
+<li>If the issue does not exist in Drupal 7, is no longer relevant in Drupal 8, and would not be relevant in Drupal 9, locate and reference the issue that <strong>made it obsolete</strong>, and either mark it <strong><em>Closed (won't fix)</em> </strong>or <strong><em>Closed (duplicate)</em></strong>. (See the <a href="http://drupal.org/node/156119">issue status documentation</a> for more information.)</li>
+</ul></li>
+<li>
+<h4>Focus on what matters</h4>
+<p>Finally, <strong>focus on what is most important</strong>. The Drupal community's time is valuable, so we need to spend that time wisely. Every Drupal core commit needs to move Drupal 8 closer to a releaseable state.</p>
+</li>
+</ol><p>Please help out however you can, and be sure to thank the <a href="http://ericduran.github.io/drupalcores/">over 1500 contributors</a> who have worked on Drupal 8 so far, especially those who tackle major and critical issues every week.</p>
+<h3>Raw query results</h3>
+<p><em>Core metrics queries are documented in the <a href="https://drupal.org/node/2020471" title="Threshold issue fix rate">Drupal.org handbook</a>.</em></p>
+<ul><li><a href="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201308/aug-4-posted-threshold-issues.csv">Major and critical issue posted dates</a></li>
+<li><a href="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201308/aug-4-fixed-threshold-issues.csv">Major and critical issue fix dates (non-backports)</a></li>
+<li><a href="http://xjm.drupalgardens.com/sites/xjm.drupalgardens.com/files/201308/aug-4-backport-threshold-issues.csv">Major and critical issue fix dates (backports)</a></li>
+</ul> </div></div></div>
+  </body>
+</html>
+

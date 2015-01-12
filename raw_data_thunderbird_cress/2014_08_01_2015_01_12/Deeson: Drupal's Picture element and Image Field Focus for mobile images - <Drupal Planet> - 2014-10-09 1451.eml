@@ -1,0 +1,179 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 09 Oct 2014 13:51:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 09 Oct 2014 13:51:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson: Drupal's Picture element and Image Field Focus for mobile images
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.deeson.co.uk/labs/drupals-picture-element-and-image-field-focus-mobile-images
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson: Drupal's Picture element and Image Field Focus for mobile images</title>
+    <base href="https://www.deeson.co.uk/labs/drupals-picture-element-and-image-field-focus-mobile-images">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>We know people get really frustrated when images viewed on desktop look great but are hard to see on a mobile device.</p>
+<p>In this blog, I’ll show you how to use the Picture and Image Field Focus modules to crop images for display on desktop, tablet and mobile and make the lives of content creators easier.</p>
+<p>It means goodbye to preparing several images for optimum display across all devices and hello to just one image upload and smart image crop control.</p>
+        
+    
+  
+
+
+
+  
+    
+      <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/secondary_images/images/picture-element.jpg?itok=5mmk6ib6" width="400" height="195" alt="Picture element example" />    
+  
+
+
+
+  
+    
+        
+          <h4>The new Drupal Picture element</h4>
+<p>Picture is a new(ish) <a href="http://www.w3.org/html/wg/drafts/html/master/embedded-content.html#embedded-content">HTML5 element</a> which allows different images to be displayed for different devices and also for retina displays. Handy.</p>
+<p>This means mobile users no longer have to download images optimised for desktop display when the image is displayed on a much smaller screen. </p>
+        
+    
+  
+
+
+
+  
+    
+        
+          <h4>How Picture works</h4>
+<p dir="ltr">Picture considers the way images are served and the needs of content creators, including:</p>
+<ul><li><strong>Size</strong>: Images are often served optimised for desktop and then mobile devices reduce them to size. This means that mobiles are often downloading more data than they need to.</li>
+<li><strong>Art direction</strong>: For some images it would be better if the image was cropped for mobile display. This is called the <strong>‘art direction’</strong> use case, and I recommend reading this article over <a href="http://blog.cloudfour.com/a-framework-for-discussing-responsive-images-solutions/">here</a>. </li>
+<li><strong>Image quality</strong>: Using &lt;picture&gt; images can be served at a higher pixel density, which means higher quality images can be served for retina devices.</li>
+</ul>        
+    
+  
+
+
+
+  
+    
+        
+          <h4>Picture's HTML and browser support</h4>
+<p>The picture element at its most basic looks like this:</p>
+<p dir="ltr"><strong>&lt;picture&gt;
+ &lt;source media="(max-width: 480px)" srcset="mobile.jpg"&gt;</strong><strong> &lt;source media="(max-width: 768px)" srcset="tablet.jpg"&gt;
+ &lt;img src="fallback.jpg" alt=""&gt;
+&lt;/picture&gt;</strong></p>
+<p dir="ltr">You can see it's been spec'd out by the responsive images community group <a href="http://responsiveimages.org/">http://responsiveimages.org/</a>.  It's supported in <strong>Chrome 38, </strong>implemented in <strong>Firefox 33</strong>, and can be tested by tweaking FireFox’s settings.  <strong>Microsoft</strong> is considering supporting it, and <strong>Safari</strong> hasn’t confirmed their status yet.</p>
+<p>If a browser doesn’t support the Picture element, the HTML degrades gracefully and the fallback &lt;img&gt; is displayed. There is also a well-supported, and tested, polyfill - <a href="https://github.com/scottjehl/picturefill">picture fill</a> - on GitHub.</p>
+<p dir="ltr"></p>
+        
+    
+  
+
+
+
+  
+    
+        
+          <h4>The Picture module</h4>
+<p>The good news is that Drupal already has a Picture module which includes the picture fill js library. It has a dependency on the breakpoints module.</p>
+        
+    
+  
+
+
+
+  
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/screen_shot_2014-10-08_at_11.14.56.png?itok=N20xOqyE" width="220" height="127" alt="Setup your breakpoints" />        
+        
+          <p></p>
+<p dir="ltr">To set up Picture, you need to setup your breakpoints first (/admin/config/media/breakpoints).  Each breakpoint needs a name and a media query. I've set up my breakpoints to match the Bootstrap breakpoints. For example, I've got a Mobile breakpoint with a media query '(max-width: 480px)' - see image to the left.</p>
+
+        
+      
+      
+
+
+  
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/screen_shot_2014-10-08_at_11.27.01.png?itok=tISDwpAC" width="214" height="220" alt="Set up picture display" />        
+        
+          <p>Once that's all sorted, you need to setup images styles for each breakpoint.</p>
+<p>To setup Picture, install the module and go to /admin/config/media/picture/list. This page lists all the picture displays you have setup. Click 'Add', select the breakpoints you want this picture display to use, and select an image style for each breakpoint - see left.</p>
+        
+      
+      
+
+
+  
+    
+        
+          <p>Once you have a picture display set up, you'll be able to select picture as a display field formatter for an image field. You can then display different images for mobile, tablet and desktop!</p>
+        
+    
+  
+
+
+
+  
+    
+        
+          <h4>Image Field Focus</h4>
+<p>Some people worry that the art direction use case places a large administrative burden on content editors, as it means preparing several images instead of just one.</p>
+<p>You can avoid this if you use Image Field Focus - content admins select a focus area and a crop area for each image and image field focus does the rest, which is a lot less hassle all round.</p>
+        
+    
+  
+
+
+
+  
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/screen_shot_2014-09-27_at_23.02.05.png?itok=sAzqoOFi" width="220" height="166" alt="Image field focus in action" />        
+        
+          <p>In the example I've cropped out the person stood on the right, which is represented in the outer selected area. The inner selected area has become the focus area. </p>
+<p>Essentially, any image created will be from within the crop area and will always contain the focus area. The focus area will be, where possible, in the middle of the picture.</p>
+<p>In our example, the paragliders in the air might be to small to see if the full image was scaled down to be displayed on mobile. I’ve added a focus area around one of the paragliders so when a mobile optimised image is created it will be a close up image of this area.</p>
+<p></p>
+<p dir="ltr">To setup image field focus you'll need to enable it for each field you want to use it on.</p>
+        
+      
+      
+
+
+  
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/screen_shot_2014-10-08_at_11.10.24.png?itok=HbiO9ykz" width="220" height="218" alt="Setup your image styles" />        
+        
+          <h4>Defining images styles</h4>
+<p>When you define your images styles, you need to add the <strong>Focus Scale And Crop</strong> style - see left. I've set up three distinct image styles, one for each breakpoint, see image below. If you want to more detail on setting up images styles, <a href="http://www.drupalgardens.com/documentation/working-image-styles">read this</a>.</p>
+        
+      
+      
+
+
+  
+    
+      <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/secondary_images/images/picture-element_0.jpg?itok=Vx8jfe5-" width="400" height="195" alt="Picture element example" />    
+  
+
+
+
+  
+    
+        
+          <h4>What do you think?</h4>
+<p>Hopefully you can see that the Picture and Image Field Focus modules work together as a great combination!  </p>
+<p>We asked our marketing and content team what they thought and they said, “This is literally the best thing since sliced bread.” </p>
+  </body>
+</html>
+

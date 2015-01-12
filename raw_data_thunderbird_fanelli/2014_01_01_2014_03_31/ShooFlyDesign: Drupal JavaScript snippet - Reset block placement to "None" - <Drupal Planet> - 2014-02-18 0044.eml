@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Feb 2014 23:44:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Feb 2014 23:44:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ShooFlyDesign: Drupal JavaScript snippet - Reset block placement to "None"
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.shooflydesign.org/buzz/drupal-javascript-snippet-reset-block-placement-to-none
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ShooFlyDesign: Drupal JavaScript snippet - Reset block placement to "None"</title>
+    <base href="http://www.shooflydesign.org/buzz/drupal-javascript-snippet-reset-block-placement-to-none">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>When you change themes on a Drupal 7 site, you often need to reset the placement of your blocks. If you're using the core block module to place them, you may end up with a bunch of blocks in unexpected places on your new theme.  If you want to reset everything and start from scratch, you could edit the {blocks} table in your database, but you can also do it with JavaScript.  While viewing the blocks admin page (admin/structure/blocks), paste this line into your JavaScript console:</p>
+
+<p><code lang="js" xml:lang="js">
+jQuery('#blocks').find('select').val(-1);
+</code></p></div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/buzz/drupal-javascript-snippet-reset-block-placement-to-none">Read more</a></div></div></div>
+  </body>
+</html>
+

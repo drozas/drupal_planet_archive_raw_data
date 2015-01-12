@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 May 2013 02:40:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 May 2013 02:40:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: 4Sitestudios.com Drupal Blog: DrupalCon Portland Wrap-Up
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.4sitestudios.com/blog/may-29-2013/drupalcon-portland-wrap
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>4Sitestudios.com Drupal Blog: DrupalCon Portland Wrap-Up</title>
+    <base href="http://www.4sitestudios.com/blog/may-29-2013/drupalcon-portland-wrap">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://www.4sitestudios.com/sites/default/files/styles/blog_featured_image/public/drupalcon.jpg?itok=OuKxO4Pn" width="600" height="175" alt="Photo of the Friday code sprint at DrupalCon Portland." title="Photo of the Friday code sprint at DrupalCon Portland." /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Last week, Alexis Findiesen and I traveled to Portland, Oregon for DrupalCon. Portland, cleverly noting that Drupal's logo is a water drop, welcomed over 3,300 Drupalistas from all over the world with four days of nearly non-stop rain! Now that Alexis and I are back on the east coast and mostly dried out, here's a quick summary of a few of my favorite sessions, keynotes and DrupalCon moments.</p>
+<h3>Drupal 8 is Coming!</h3>
+<p>Now that Drupal 8 "Code Freeze" is only about a month away, we're starting to get a really good idea of which features are going to make it into the final release, coming this winter. Project lead Dries Buytaert's <a href="https://portland2013.drupal.org/keynote/dries-buytaert" target="_blank"><em>The Current State of Drupal 8</em></a> keynote on Tuesday gave a good overview of where things stand now. Or rather, where they stood last Tuesday, but I'm getting ahead of myself. Drupal 8 development has been focused on several major core initiatives, and the leads of most of those initiatives offered updates in breakout sessions. Here's a sampling:</p>
+<ul>
+<li><a href="https://portland2013.drupal.org/node/1058"  target="_blank">Views</a>, long one of the most popular contributed modules for Drupal, is moving to Drupal 8 core. While the user interface is mostly unchanged from Drupal 7, under the hood it's been completely rewritten, and it should make site building much easier.</li>
+<li>Drupal 8 has a new templating engine called <a href="https://portland2013.drupal.org/node/878" target="_blank">Twig</a>. It's going to remove a lot of the complexity from Drupal theming, while at the same time giving themers even more flexibility to make Drupal sites look awesome.</li>
+<li>The <a href="https://portland2013.drupal.org/node/3448" target="_blank">Mobile</a> initiative is going to make it much easier for Drupal to handle all kinds of browsers, whether it's a site visitor viewing your site on a giant 27" monitor, or your site's managing editor making an emergency update from her iPhone.</li>
+<li>Last, but certainly not least, the <a href="https://portland2013.drupal.org/node/743" target="_blank">Configuration Management Initiative</a> promises to eliminate one of the biggest causes of headaches for Drupal developers and site owners—synchronizing configuration settings from development to staging to production servers without blowing away content.</li>
+</ul>
+<p>These and other sessions gave us some great information to help us continue to plan our own Drupal 8 migration (Have you started working on <a href="http://4sitestudios.com/blog/may-17-2013/drupal-8-coming-whats-mean-site-owners">your migration strategy</a> yet? We can help!), and upgrading the modules we've contributed to the Drupal project to version 8. There were also some great sessions on designing and prototyping for Drupal, creating interactive maps, and using Drupal as a backend to power data-driven mobile apps.</p>
+<h3>"Responsive Design Won't Fix Your Content Problem"</h3>
+<p>Drupal 8 does a great job of presenting content to a wide variety of devices in the post-desktop era, with responsive design out of the box. But Wednesday's <a href="https://portland2013.drupal.org/keynote/karen-mcgrane" target="_blank">keynote speaker</a>, user experience guru Karen McGrane, says what the web really needs to be future-friendly is responsive <em>content</em>, with true separation of content from form, and an end to letting content creators treat the web like print.</p>
+<h3>Social Events and the Hallway Track</h3>
+<p>While the sessions were great, the real draw of DrupalCon is the opportunity to meet and hang out with other Drupalers, from down the street or the other side of the globe. Hallway conversations, informal "Birds of a Feather" sessions, lunches, dinners, a wet midnight trek to <a href="http://www.voodoodoughnut.com/" target="_blank">Voodoo Doughnuts</a>, and even a "pinball pub crawl" gave us lots of chances to share Drupal war stories, talk about favorite modules and techniques, and explore chances for collaboration.</p>
+<h3>Help4OK</h3>
+<p>On Tuesday night, a group of volunteers gathered in DrupalCon's 24-hour Coder Lounge to build a website to help organize resources for victims of Monday's tornado in Moore, Oklahoma. The next day, FEMA director Craig Fugate officially announced the launch of <a href="http://www.help4ok.org/" target="_blank">help4OK.org</a> in a <a href="https://twitter.com/CraigatFEMA/status/337681515418877954" target="_blank">tweet</a>.</p>
+<h3>Core Sprints</h3>
+<p>Whenever you get several Drupalers together in the same place at the same time, great things tend to happen. When you get over 600 Drupalers together in the same place at the same time, truly magical things can happen. Every Drupal 8 session I attended included a plea from the presenter that went something like this: "Do you like what you see here? Do you want to make sure it makes it into the final D8 release? We need your help! Come to the sprint on Friday!" And people did. In droves.</p>
+<p>Alexis and I decided to help out with the new Twig templating engine. Earlier in the week, there was a lot of concern that Twig wouldn't make it into Drupal 8. While Twig itself had been added sometime back, most of the rest of Drupal hadn't yet been converted to <em>use</em> Twig. Unless every single template in Drupal core got converted to Twig, well before the July 1 code freeze, Twig would be pulled out in favor of the old PHPEngine. A couple dozen of us settled around a few big round tables in one of the convention center's meeting rooms and started finding things to work on in the issue queue. Before long, there was an announcement that Twig had just been committed to core! Not too long after that came the news that the "mega-patch" (that would convert all of Drupal core's templates to Twig) was nearly ready. We helped out with checking to make sure the new templates were outputting the exact same markup as the old ones, profiling to make sure the new templates weren't any slower than the old ones, and a couple of other Twig-related tasks.</p>
+<p>Elsewhere in the convention center, other teams were working on other Drupal 8 initiatives, several contributed modules, and Drupal documentation. It was an exciting day!</p>
+<p>Sadly, the next North American DrupalCon isn't for another year, in Austin. But <a href="http://www.capitalcamp.org/">CapitalCamp</a>, D.C.'s annual Drupal Camp, is barely two months away!</p>
+</div></div></div>
+  </body>
+</html>
+

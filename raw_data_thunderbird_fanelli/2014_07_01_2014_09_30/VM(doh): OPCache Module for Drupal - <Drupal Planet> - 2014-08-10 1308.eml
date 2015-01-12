@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 10 Aug 2014 11:08:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 10 Aug 2014 11:08:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: VM(doh): OPCache Module for Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vmdoh.com//blog/opcache-module-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>VM(doh): OPCache Module for Drupal</title>
+    <base href="http://www.vmdoh.com//blog/opcache-module-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Last Friday, we published the start to our <a href="https://www.drupal.org/sandbox/brianaltenhofel/2316589">OPCache module for Drupal</a>. While it's still lacking a few features to be ready for a tagged release, we thought it'd be a good idea to get some working code out there.</p><p>The goal for this module is to allow Drupal site administrators to clear their opcode cache if they are using the <a href="http://php.net/manual/en/book.opcache.php">PHP OPcache extension</a> (also known as Zend OPcache or Zend Optimizer+) as well as provide an interface similar to the Memcache Admin module.</p><p>As of right now, the only implemented feature is cache flushing. We understand that you might be running on multiple webservers (we build a lot of sites that run on multiple webservers), so we included the ability to flush caches on all of your webservers at once.</p><p>Go try the module and feel free to submit patches!</p>
+  </body>
+</html>
+

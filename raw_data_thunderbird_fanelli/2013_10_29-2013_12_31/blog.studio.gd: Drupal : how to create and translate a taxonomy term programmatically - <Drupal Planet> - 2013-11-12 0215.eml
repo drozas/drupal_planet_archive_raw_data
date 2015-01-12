@@ -1,0 +1,119 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 12 Nov 2013 01:15:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 12 Nov 2013 01:15:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: blog.studio.gd: Drupal : how to create and translate a taxonomy term programmatically
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.studio.gd/blog/id/17
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>blog.studio.gd: Drupal : how to create and translate a taxonomy term programmatically</title>
+    <base href="http://blog.studio.gd/blog/id/17">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="header">Here's a way to create and translate taxonomy terms in a module or profile install.</p>
+<img src="/img/_/drupal/i18n_taxonomy.png?3" style="margin-left: -10px"/>
+<p><strong>You first need a function to initialize the taxonomy term object :</strong></p>
+<pre class="brush:php;">
+/**
+ * Initialize a default term object.
+ *
+ * @param $vocabulary.
+ *   The vocabulary object.
+ * @return stdClass
+ *   The taxonomy term object.
+ */
+function _yourmodule_create_term_default($vocabulary) {
+ $term = new stdClass();
+ $term->name = '';
+ $term->description = '';
+ $term->format = 'plain_text';
+ $term->vid = $vocabulary->vid;
+ $term->vocabulary_machine_name = $vocabulary->machine_name;
+ $term->tid = NULL;
+ $term->weight = 0;
+  // if you use source strings, the term must be created with the language none langcode.
+ $term->language = LANGUAGE_NONE;
+
+ return $term;
+}
+</pre>
+<p><strong>Call it like this in your custom module or profile install:</strong></p>
+<pre class="brush:php;">
+// You need the vocabulary object:
+$vocabulary = taxonomy_vocabulary_machine_name_load('theme');
+$tids = array();
+
+$term = _yourmodule_profile_create_term_default($vocabulary);
+
+// Apply your custom term name, and field if you have
+$term->name = "Lifestyle";
+ //$term->field_theme_color = array(LANGUAGE_NONE => array(array('value' => 'red')));
+taxonomy_term_save($term);
+// You can store your terms tids in a custom variables for a later use.
+// $tids['lifestyle']['tid'] = $term->tid;
+</pre>
+<p><strong>To translate your term name, you will need an helper function too, that use the api of i18n module :</strong></p>
+<pre class="brush:php;">
+/**
+ * Create or update a translation string for a taxonomy term.
+ *
+ * @param $term
+ *   The term object with the tid set.
+ * @param $langcode
+ *   The langcode for the translation.
+ * @param $translation
+ *   The translation string.
+ */
+function _yourmodule_profile_create_term_translation($term, $langcode, $translation, $property = 'name') {
+  $context = array(
+  	'term',
+    $term->tid,
+    $property,
+  );
+  $textgroup = 'taxonomy';
+  i18n_string_textgroup($textgroup)->update_translation($context, $langcode, $translation);
+}
+</pre>
+<p><strong>Call it like this in your custom module or profile install:</strong></p>
+<pre class="brush:php;">
+// You need the vocabulary object:
+$vocabulary = taxonomy_vocabulary_machine_name_load('theme');
+//$tids = array();
+
+$term = _yourmodule_profile_create_term_default($vocabulary);
+
+// Apply your custom term name, and field if you have
+$term->name = "Lifestyle";
+//$term->field_theme_color = array(LANGUAGE_NONE => array(array('value' => 'red')));
+taxonomy_term_save($term);
+// You can store your terms tids in a custom variables for a later use.
+// $tids['lifestyle']['tid'] = $term->tid;
+_yourmodule_profile_create_term_translation($term, 'fr', 'Art de vivre');
+</pre>
+<p><strong>This code is designed to works with taxonomy vocabulary, that have i18n option enabled on : "Localize. Terms are common for all languages, but their name and description may be localized. "</strong></p>
+<p><strong>For the i18n option : "Translate. Different terms will be allowed for each language and they can be translated.": </strong><br>
+you don't need the translate helper function. You must create a term for each lang code, like that :</p>
+<pre class="brush:php;">
+$vocabulary = taxonomy_vocabulary_machine_name_load('theme');
+
+// English
+$term = _yourmodule_profile_create_term_default($vocabulary);
+$term->name = "Lifestyle";
+$term->language= 'en-gb';
+taxonomy_term_save($term);
+
+// French
+$term = _yourmodule_profile_create_term_default($vocabulary);
+$term->name = "Art de vivre";
+$term->language= 'fr';
+taxonomy_term_save($term);
+</pre>
+  </body>
+</html>
+

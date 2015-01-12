@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 28 Sep 2013 16:25:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 28 Sep 2013 16:25:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hertzog: Hello World from Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chertzog.com/post/hello-world-from-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hertzog: Hello World from Drupal 8</title>
+    <base href="http://chertzog.com/post/hello-world-from-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>So according to <a href="http://bryanbraun.com">Bryan Braun</a>, I should start <a href="http://bryanbraun.com/2013/09/21/please-stop-stewing-and-start-blogging-about-drupal">writing about Drupal</a>. </p>
+<p>Its not that I don’t like to write, or cant write; its just that I never thought of myself as a ‘teacher’. I regularly copy and paste error/debug messages into google to figure out what has broken. Stack Overflow is my friend, and <a href="https://api.drupal.org">api.drupal.org</a> is my bible. I envy more seasoned developers that can quote api functions from memory.</p>
+<p>So when I read Bryan’s post requesting writing about Drupal, no matter what skill level, it struck a cord with me.  I remember slamming my head against the desk when trying to figure out what to do with <code class="prettyprint">hook_form_alter</code> or <code class="prettyprint">template_preprocess_page</code>. </p>
+<p>When researching how to do accomplish a desired functionality, I would end up in a support forum or issue queue that ends with a suggestion along the lines of “just implement hook_form_alter.” That’s nice. What the hell is hook_form_alter? Where do I put it? template.php? A custom module? How do I do that? Only serious coders write custom modules.</p>
+<p>I started with Drupal 6 with an “OK” knowledge of html/css – I’m ashamed to say that I at that time 1 still thought using tables for layout was common practice. PHP was just 3 letters – nothing more.  While messing around on a cheap shared server, I noticed that the control panel offered 1 click installs of several CMS platforms. So I setup a subdomain using the control panel (virtual host what? Apache who?), and installed Drupal 6 with a click. Wow! That was easy.</p>
+<p>My idea of developing locally was that I had dreamweaver installed on my PC (linux? um...yeah. Sure. I know that is.) where I could edit the template files. I thought it was awesome that I could edit the files locally on my computer, and when ever I saved them, they would automatically upload to the server via FTP (I’m such an awesome developer – look at the automation!). </p>
+<p>After cutting my teeth on “Drupal PHP”,  I eventually taught myself  how to write functions, custom modules, themes, and use template.php overrides. I even have a number of modules published on <a href="https://drupal.org/user/806366">drupal.org</a>, and have a number of websites out in the wild. </p>
+<h4>Enter Drupal 8</h4>
+<p>I was involved in a development project for approximately 16 months, which kept me away from following Drupal 8. When I resurfaced, and looked at core, it looked like a completely different language. Classes, namespaces, methods, oh my! What are these things? That’s not PHP. It looks nothing like Drupal 6 or Drupal 7. PHP is a language of functions not these “objects.”</p>
+<p>“Growing up” on Drupal’s “PHP” sheltered me from a large part of the PHP language that is now needed for building sites with Drupal. I’ve read many of the recent blog posts about Drupal 8 on both sides of the argument. It seems to me that I have 2 choices 1) Learn object oriented php or 2) Don’t. </p>
+<p>I can choose to learn the “new language”, stay on Drupal 7, or leave Drupal. Something I have always known to be true is that “the only thing that stays the same is change.” No matter what the subject is, change is inevitable.  We are not the same people we were yesterday, nor will we be the same people we will be tomorrow.</p>
+<p>Look at how design patterns have changed over the last 5 years. Think back to just 3 years ago. Responsive design what? Now you cant even talk web stuff without mentioning it. </p>
+<p>Sure, Drupal 8 is a major jump. It’s called disruptive innovation.  Apple turned the cell phone market upside down in 2007 when they released the iPhone. USB drives replaced floppy disks and CDs, and now even those are on their way out with cloud storage services like Dropbox and Google Drive.</p>
+<p>This blog will document my relationship with Drupal 8. Through the good times and the bad. The fights and headaches along with the “oh yeah, who’s the man!” moments. Its going to be a bumpy ride.</p>
+</div></div></div><div class="field field-node--field-category field-name-field-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories</div><div class="field-items"><div class="field-item even"><a href="/category/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

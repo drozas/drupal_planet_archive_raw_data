@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 17 Oct 2014 16:39:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 17 Oct 2014 16:39:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ERPAL: IMPORTANT! Safety first - The Drupal 7.32 Update
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.erpal.info/de/blog/important-safety-first-the-drupal-732-update
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ERPAL: IMPORTANT! Safety first - The Drupal 7.32 Update</title>
+    <base href="http://www.erpal.info/de/blog/important-safety-first-the-drupal-732-update">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Yesterday, when the Drupal 7.31 <a href="https://www.sektioneins.de/en/advisories/advisory-012014-drupal-pre-auth-sql-injection-vulnerability.html">SQL injection vulnerability</a> came up, I think this was one of the most crititcal updates I ever saw in the Drupal world. First of all - thanks a lot to everybody that helped to find and fix this issue. With the discovering of this security issue and the fix, the Drupal security and the community behind has shown once more how important this combination is. <strong>All Drupal sites should and MUST be updated to this version 7.32</strong> to keep their applications secure. An new <a href="http://drupal.org/project/erpal">ERPAL release 2.1</a> is already available. And it is very important that you use this update for your ERPAL installation.</p>
+<p><img alt="ERPAL security update" src="http://www.erpal.info/sites/default/files/erpal_savety_first.jpg" title="ERPAL security update" width="508" height="508" /></p>
+<h2>Why this hurry?</h2>
+<p>As I already mentioned above, this update is critical to all sites as the vulnerability can be executed by anonymous users. It is possible to get admin access (user 1) with the correct attack sequence. Some of you may ask if Drupal is still secure at all? The answer is still - YES! It is one of the most secure CMF / CMS out there. And with a dedicated security team on Drupal.org many security issues are discovered. Security issues are worst if they are not discovered by the admin / support or security team but only by hackers. And it becomes even worse if people don't update their sites.</p>
+<h2>So what to do?</h2>
+<p>Don't panic! You just need to update your site to the latest <a href="https://www.drupal.org/project/drupal">Drupal 7.32 version</a>. If you are using a distribution, that may have patches included in their installation profile to support all features, check for updates on their project page and get your update there. Easy - Thats it.</p>
+<h2>How to avoid future problems</h2>
+<p>Please follow the <a href="https://www.drupal.org/security">Drupal security advisories</a> and keep you site's modules up to date. That's one of the most important rules for Drupal users.</p>
+<p>While creating business applications with Drupal means for us taking responsibility for all our users to keep their data save and their ERPAL system running. With this blog post I want to ask every Drupal dev, maintainer, client or site builder to update the site immediately.</p>
+</div></div></div>
+  </body>
+</html>
+

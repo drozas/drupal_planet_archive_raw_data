@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 08 Feb 2014 15:30:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 08 Feb 2014 15:30:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LookAlive: Announcing the At.js module, fantastic autocompletes from within textareas for Drupal!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://lookalive.co.uk/blog/announcing-atjs-module-fantastic-autocompletes-within-textareas-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LookAlive: Announcing the At.js module, fantastic autocompletes from within textareas for Drupal!</title>
+    <base href="http://lookalive.co.uk/blog/announcing-atjs-module-fantastic-autocompletes-within-textareas-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><center><a href="http://drupal.org/project/atjs"><img alt="At.js in action" src="http://lookalive.co.uk/sites/lookalive.co.uk/files/atjs.png" style="width: 514px; height: 238px;" /></a></center></p>
+<p>A dev release is out for <a href="http://drupal.org/project/atjs">At.js</a>, a module implementing the <a href="https://github.com/ichord/At.js">work of iChord</a> which allows for autocompletes within textareas. This type of autocomplete can be seen on Github and Twitter, and now Long text fields within Drupal can have this too.</p>
+<p>The module works by creating At.js Listeners (which are Features exportable), editing the Long text field(s) and selecting which listeners should be active on it and finally enabling the listeners on input formats (this last part isn't necessary but recommended).</p>
+<p>Aside from neat autocompletes what else is this good for? Well the module is capable of keep a record of mentions so it's able to tell when new mentions are added via At.js and also when existing one's are removed.</p>
+<p>As an example here's what will feature in <a href="http://getharmony.io">Harmony Forum</a> (the reason why we've created a Drupal implementation of At.js). Harmony will have notifications for various things, what's possible with At.js is that when a user @mentions another user within a post, the mentioned user will get a notification like 'User A has mentioned you in their post "post title"'. Pretty cool!</p>
+<p>Any entity type can be referenced, searching off of a selected property (e.g. name for the User entity) and properties and field data as able to be used in the autocomplete result template (e.g. user avatars within the autocomplete).</p>
+<p>The module provides hooks that let you respond to mentions and removal of mentions and chances to alter the query used to find autocomplete results, alter the results and a chance to change how the link to the entity is displayed via a theming function.</p>
+<p>As with anything of this nature bugs are to be expected, we'll be watching the issue queue and submitting bugs to the At.js library, any testing that could be done we'd be very grateful for!</p>
+  </body>
+</html>
+

@@ -1,0 +1,93 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 24 Oct 2014 17:07:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 24 Oct 2014 17:07:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Zero to Drupal: Headless Drupal & AngularJS Hackathon (Recap)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://zerotodrupal.com/content/headless-drupal-angularjs-hackathon-recap
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Zero to Drupal: Headless Drupal & AngularJS Hackathon (Recap)</title>
+    <base href="http://zerotodrupal.com/content/headless-drupal-angularjs-hackathon-recap">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Last night I had the privilege of walking us through our first interactive <a href="http://drupal.org">Drupal</a> meetup here in St. Louis.  I'll be honest, I didn't have time to fully plan the night out like I had hoped but everything actually turned out great and it was one of the most fun I've had at a meetup in a while.</p>
+
+<h3>Security Release</h3>
+
+<p>First up, we discussed the recent <a href="https://www.drupal.org/SA-CORE-2014-005">security release</a> for <a href="http://drupal.org/project/drupal">Drupal 7</a>.  Thankfully, everyone in the room was aware of the release and had taken action to patch their sites.  <a href="http://drupal.geek.nz/page/about-bevan">Beaven Rudge</a> wrote a great <a href="http://drupal.geek.nz/blog/your-drupal-websites-backdoor">article</a> discussing how important it is to take action against any public Drupal 7 site you've got up. I <em>highly</em> recommend reading through the info-graphic that he posted.</p>
+
+<h3>Digging in - The Fun Part</h3>
+
+<p>Our goal for the evening was to build two applications for our faux pizza company "Dangulo's" (special credit goes to <a href="http://jeffgeerling.com/">Jeff Geerling</a> for the name). The first would use Drupal as a backend admin and data api.  It would also be used to manage ingredient inventory and process orders.  The second would be a separate <a href="http://angularjs.org">AngularJS</a> application that would serve a fairly dynamic form that customers would use to order our world-famous pie.</p>
+
+<p>Before we dove in, we had to give an impromptu (and hopefully coherent) walkthrough of how AngularJS works and why we would chose to use it in this case. It's important to note that nearly any front-end framework could have been used for the customer-facing app. However, lately a good portion of my time has been spent with AngularJS so that's the route we chose for this project.</p>
+
+<p>Once we had a good understanding of our architecture and how everything needed to be structured, we moved to the Drupal side.  For this project, we decided to go with the <a href="https://www.drupal.org/node/2357303">beta2</a> version of Drupal 8.  Thankfully, most in the room didn't have much trouble getting D8 up and running.</p>
+
+<h4>Drupal Configuration</h4>
+
+<p>Within our Drupal app, we needed to:</p>
+
+<ul>
+<li>Create a <em>Toppings</em> vocabulary with:
+
+<ul>
+<li>Title - the name of the topping</li>
+<li>In Stock (boolean) - Whether the topping was in stock</li>
+</ul></li>
+<li>Create an <em>Orders</em> content type with the following fields:
+
+<ul>
+<li>Name (text) - The name of the customer</li>
+<li>Quantity (number) - The number of pizzas being ordered</li>
+<li>Toppings (taxonomy term reference) - Referencing <em>Toppings</em></li>
+</ul></li>
+<li>Create a view that ouput a json-formatted list of toppings with:
+
+<ul>
+<li>Title</li>
+<li>In stock</li>
+</ul></li>
+</ul>
+
+<p>After creating the taxonomy, content type, and views, we created some sample ingredients and ended up with a pretty cool api endpoint for our ingredients.</p>
+
+<h4>Hello AngularJS</h4>
+
+<p>Next, we moved onto the AngularJS side.  For this project, I created a starter app (which can be cloned/downloaded at <a href="https://github.com/ericthelast/dangulos-pizza">github</a>) that everyone downloaded so that they wouldn't have to start from zero. I actually used <a href="http://yeoman.io">Yeoman</a> to generate this app but decided to just push up a build of the app since no one had had <a href="http://nodejs.org">node</a> and/or <a href="http://gruntjs.com">grunt</a> installed.  This led to a small issue that all of the files were minified &amp; uglified but given that we only had two hours to get things going, we forged ahead.  If you're interested in working with the full app, it can be found <a href="https://github.com/ericthelast/dangular-client">here</a>.</p>
+
+<p>After configuring our controller to use <a href="https://docs.angularjs.org/api/ng/service/$http">$http</a> to query our Drupal endpoint, and adding some markup to our orders view, we ended up with a list of ingredients from Drupal.  Woot!</p>
+
+<p>I'll admit, the app isn't that exciting at this point but the fact that we were able to manage content in Drupal, have it output in a standard format, and then use a completely decoupled application to view that data was very rewarding.  Sadly, we ran out of time before we could go any further but in the end, I think we covered a lot of ground.</p>
+
+<h3>Next up?</h3>
+
+<p>Obviously, our apps are lacking a lot of functionality before they could be considered "production-ready".  Things that we weren't able to get to include:</p>
+
+<ul>
+<li>Nesting ingredients into categories (ie meats, cheeses, veggies, etc)</li>
+<li>Building the actual form in AngularJS that has dynamic components (ie showing/hiding toppings selection, order total, etc)</li>
+<li>Creating order nodes in Drupal from the AngularJS app</li>
+</ul>
+
+<p>Given that we've got so much work to do, we've decided to extend our interactive session into a second meetup.  So mark your calendars as we will meet again in <a href="http://www.meetup.com/drupalstl/events/qtkhmjyspbbc/">November</a> for our last meetup of the year.  Our goal will be to finish out our app and head into the holidays with a better understanding of this brave new world.</p>
+
+<h3>Special Thanks</h3>
+
+<p>Lastly, I'd like to send a special thanks to <a href="http://relaytechnology.com">Relay Technology</a> for hosting our meetup.  Josh Paydon stopped by and gave us some great insight into their company, as well as how the tech scene is evolving in St. Louis.  If you're a developer looking for work in the St. Louis area, I <strong>highly</strong> recommend getting in touch with them as they're a great company with some great opportunities available.</p>
+ </div></div></div><h3>Tags</h3><ul class="inline"><li class="first"><a href="/tags/drupal-planet">drupal-planet</a></li>
+<li><a href="/tags/drupal">drupal</a></li>
+<li><a href="/tags/angularjs">angularjs</a></li>
+<li><a href="/tags/grunt">grunt</a></li>
+<li><a href="/tags/yeoman">yeoman</a></li>
+<li class="last"><a href="/tags/nodejs">node.js</a></li>
+</ul>
+  </body>
+</html>
+

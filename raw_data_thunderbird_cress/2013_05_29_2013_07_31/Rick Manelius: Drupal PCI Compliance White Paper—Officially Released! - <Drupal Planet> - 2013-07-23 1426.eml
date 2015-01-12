@@ -1,0 +1,87 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 23 Jul 2013 13:26:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 23 Jul 2013 13:26:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Rick Manelius: Drupal PCI Compliance White Paper—Officially Released!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://soundpostmedia.com/article/drupal-pci-compliance-white-paper%E2%80%94officially-released
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Rick Manelius: Drupal PCI Compliance White Paper—Officially Released!</title>
+    <base href="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper%E2%80%94officially-released">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h3>
+	Quick links:</h3>
+<ul><li>
+		<a href="http://drupalpcicompliance.org/files/DrupalPCICompliance.pdf">Download the white paper</a>.</li>
+<li>
+		Visit the <a href="http://drupalpcicompliance.org/">Drupal PCI compliance white paper website</a>.</li>
+<li>
+		View the <a href="http://www.prweb.com/releases/2013/7/prweb10929591.htm">press release</a>.</li>
+</ul><p>Seven months ago I posted <a href="http://soundpostmedia.com/article/lets-talk-about-pci-compliance-ubercart-and-drupal-commerce">a lengthy article</a> regarding PCI Compliance for Drupal. It was an MVP of sorts (Minimum Viable Post). The goal was to test the waters to see if I could gain enough interest and support to justify spending the time to create a white paper to help bring clarity to a complex and misunderstood topic. 2000+ page views and 20+ comments later, I knew that I struck a chord with enough people to take the leap, and so here we are today with a delivered contribution back to the community.</p>
+<h2 id="why-should-you-care">
+	Why should you care?</h2>
+<p>Every eCommerce website that accepts credit or debit card transactions has a contractual obligation to become and remain PCI compliant (with fines and penalties if you're not compliant if a security breach occurs). And while Drupal makes it trivial to spin up a basic eCommerce website, anecdotal evidence suggested that only a subset of the community was even aware of this requirement. A smaller subset of that recognized that it was a problem. And finally, an even smaller subset knew what to do in order to become compliant. Therefore, I believed we were facing three problems:</p>
+<ol><li>
+		A lack of awareness (of the requirements themselves).</li>
+<li>
+		A lack of acknowledgement (of the importance of compliance).</li>
+<li>
+		A lack of guidance (specific to Drupal community on how to meet the requirements).</li>
+</ol><p>In fact, I personally experienced all three stages. I had operated a Drupal eCommerce website for almost 2 years without knowing even the most basic fundamentals regarding PCI compliance. When the reality finally hit me, I was stressed to the max trying to figure this all out on my own because there were very few resources within the community. My hope is that this white paper is the very thing would have prevented me from getting into that mess into the first place!</p>
+<h2 id="solving-the-problems">
+	Solving the Problems</h2>
+<p>Addressing the three problems was no easy task. If the paper was too technical, it would only be understood by developers and website owners would remain in the dark. However, making it too long and all encompassing would create a high barrier to entry with respect to people reading and understanding it. So we had to start off with some basic objectives:</p>
+<ul><li>
+		<strong><em>Readable:</em></strong> It should be easily understood by Drupal developers, shops, and evaluators.</li>
+<li>
+		<strong><em>Multiple Formats:</em></strong> It should be available in a printable pdf as well as markdown for easy inclusion into Drupal modules.</li>
+<li>
+		<strong><em>Free:</em></strong> In order to get it into as many hands as possible, there should be no barrier to obtain it.</li>
+<li>
+		<strong><em>Short:</em></strong> A person should be able to read the entire paper is less than an hour (preferably less than 30 minutes).</li>
+<li>
+		<strong><em>Credible:</em></strong> The paper should be as accurate as possible in the information presented.</li>
+</ul><p>We believe we've hit all of these goals. We sent the paper out to numerous reviewers (technical and otherwise) to make sure the information was not overly difficult to read. We created the document in markdown and provided instructions on conversion to markdown and pdf. We hosted the document on a public github repo and public facing website where anyone can download the report for free. We almost kept the document to 15 pages (20 pages isn't too bad!)</p>
+<p>With respect to credibility, I was fortunate enough to enlist the help of two amazing co-authors: <a href="http://www.knaddison.com/">Greg Knaddison</a> and <a href="http://www.appliedtrust.com/company/bios/ned-mcclain">Ned McClain</a>. Greg is the Drupal Security team lead and author of <a href="http://crackingdrupal.com/"><em>Cracking Drupal</em></a>. Ned is the co-owner and co-founder of <a href="http://www.appliedtrust.com/">AppliedTrust</a>, a company that has extensive knowledge in both Drupal and security standards, such as PCI and HIPAA compliance. Both brought a tremendous amount of experience and domain knowledge that was critical in improving the accuracy or the report.</p>
+<p>Given all that, I believe we achieved the goals we set out for and that this white paper will be a valuable resource to the Drupal eCommerce community.</p>
+<h2 id="sponsors">
+	Sponsors</h2>
+<p>This project easily took over a hundred hours (probably closer to two hundred) to put together on top of the time it took to learn all the nuances of <a href="https://www.pcisecuritystandards.org/">PCI compliance</a> in the first place. Therefore, in order to allot the time and still keep this information free, I reached out to several companies for sponsorship. I wanted to publically thank them one more time for supporting this project.</p>
+<ul><li>
+		<a href="https://www.card.com/">CARD.com</a></li>
+<li>
+		<a href="http://www.appliedtrust.com/">AppliedTrust</a></li>
+<li>
+		<a href="http://crossfunctional.net/">CrossFunctional</a></li>
+<li>
+		<a href="http://commerceguys.com/">Commerce Guys</a></li>
+<li>
+		<a href="http://www.newmediadenver.com/">NEWMEDIA</a></li>
+<li>
+		<a href="http://www.hostedpci.com/">HostedPCI</a></li>
+<li>
+		<a href="http://www.copperly.com/">Copperly</a></li>
+</ul><h2 id="the-joy-of-contributing">
+	On Contributing</h2>
+<p>I started becoming active in the Drupal Community after being inspired by a DrupalCamp Colorado presentation by webchick in 2011 about the importance of giving back to the community. After that point, I definitely tried as best I could: I was active in the issue queues, I was attending meetups, and I was helping mentor new members of the community. However, I never felt like I was able to contribute something back of significance that compared to the Dave Reid's of the community (I mean the guy maintains over 50 modules!)</p>
+<p>This project was very different. It was the first time where I felt I could contribute something back to the community that was unique. And while it has been a long, hard road, it has been both personally and professionally rewarding to see the impact it's already had on those that have read it. Needless to say, I'm excited to find the next Drupal project to continue contributing back to the community!</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/pci-compliance" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">PCI compliance</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div></div></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper—officially-released" st_title="Drupal PCI Compliance White Paper—Officially Released!" class="st_googleplus_large" displaytext="googleplus"></span>
+<span st_url="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper—officially-released" st_title="Drupal PCI Compliance White Paper—Officially Released!" class="st_instapaper_large" displaytext="instapaper"></span>
+<span st_url="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper—officially-released" st_title="Drupal PCI Compliance White Paper—Officially Released!" class="st_twitter_large" displaytext="twitter"></span>
+<span st_url="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper—officially-released" st_title="Drupal PCI Compliance White Paper—Officially Released!" class="st_stumbleupon_large" displaytext="stumbleupon"></span>
+<span st_url="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper—officially-released" st_title="Drupal PCI Compliance White Paper—Officially Released!" class="st_facebook_large" displaytext="facebook"></span>
+<span st_url="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper—officially-released" st_title="Drupal PCI Compliance White Paper—Officially Released!" class="st_sharethis_large" displaytext="sharethis"></span>
+<span st_url="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper—officially-released" st_title="Drupal PCI Compliance White Paper—Officially Released!" class="st_plusone_large" displaytext="plusone"></span>
+<span st_url="http://soundpostmedia.com/article/drupal-pci-compliance-white-paper—officially-released" st_title="Drupal PCI Compliance White Paper—Officially Released!" class="st_fblike_large" displaytext="fblike"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8050e384-1b1-b22e-b17-7e272ca1dc8f"});</script></div></div>
+<div id="disqus_thread"><noscript><p><a href="http://soundpostmedia.disqus.com/?url=http%3A%2F%2Fsoundpostmedia.com%2Farticle%2Fdrupal-pci-compliance-white-paper%25E2%2580%2594officially-released">View the discussion thread.</a></p></noscript></div>
+  </body>
+</html>
+

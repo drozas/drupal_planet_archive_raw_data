@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 29 Aug 2013 14:00:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 29 Aug 2013 14:00:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupalpress, Drupal in the Health Sciences Library at UVA: panel permissions for content editors
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.hsl.virginia.edu/drupalpress/panel-permissions-for-content-editors/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupalpress, Drupal in the Health Sciences Library at UVA: panel permissions for content editors</title>
+    <base href="http://blog.hsl.virginia.edu/drupalpress/panel-permissions-for-content-editors/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Over the past few months our <a title="claude moore health sciences library" href="https://www.hsl.virginia.edu" target="_blank">site</a> has undergone a total re-design // upgrade from Drupal 6 =&gt; 7.   The priority was to rebuild functionality and migrate content quickly and cleanly &#8211; permissions schemes and editing privileges for our content contributors took a backseat. Now that the site has been launched and stabilized, we&#8217;ve begun to look at some of the tools we used to try to figure out how and if we can train our librarians to use them.</p>
+<p>On our old site, we made pretty heavy use of blocks (particularly for sidebar items) &#8211; since we had to rebuild these pieces of content anyways, we tried to put them in more flexible containers.  We started looking at panels &#8211; we found <a href="https://drupal.org/project/panopoly" target="_blank">Panopoly</a>.  This tool worked really well for us.  We could (and did) use panel pages, custom panel layouts, views as panel panes, mini panels as blocks, blocks as mini panels, etc.  But when we started to turn over content editing responsibilities to our librarians, we discovered that the default settings were way too powerful for what they needed to do.  The interface was overwhelming and privileges were set too high &#8211; our content editors had too many options.  We had to scale back.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/toomuch.png"><img class="size-medium wp-image-770 alignnone" alt="toomuch" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/toomuch-300x149.png" width="300" height="149" /></a></p>
+<p>The first step was to lock down Panelizer privileges on the home page &#8211; we were clued into this one when one of the librarians told us that she was seeing a &#8220;Change Layout&#8221; button on the site&#8217;s front page.  That meant she (or any other content editor) could have changed the layout of the home page with two button clicks.  Not good.</p>
+<p>We probably could have done this a few different ways &#8211; we chose to change the renderer of the home page (built as a panel page) from &#8220;In-Place Editor&#8221; to &#8220;Standard&#8221;. Of course this means that we (admins) can&#8217;t use the groovy Panelizer interface when we want to edit content on the home page &#8211; but that&#8217;s cool since we know that those content regions are mini-panels and can be edited elsewhere.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/homepagerenderer.png"><img class="alignnone size-medium wp-image-788" alt="homepagerenderer" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/homepagerenderer-300x179.png" width="300" height="179" /></a></p>
+<p>That took care of the home page, but the librarians were still seeing too many options on the other pages (see first screenshot) &#8211; we could get rid of the In-Place Editor on all pages, but we&#8217;d have to make those configurations on each panel page (or page that had been panelized) and we would lose the slick, drag-and-drop editing interface. So we hit the permissions table.</p>
+<p>We found that the permissions were set way too high. In the screenshots that follow, you&#8217;ll see what we left on &#8211; note that we have 11 roles in the table. The 3rd column from the left is admin, the 4th is editor (librarians) and the last one on the right is portal manager, which we made for development purposes. When we apply these changes to the production site, we&#8217;ll set editor privileges to the same as the portal manager on development. So just pay attention to the one on the far right &#8211; these are the only permissions we need for our use case: giving librarians permission to to edit layout and add panel content to basic web pages.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/permissionstable2.png"><img class="alignnone size-medium wp-image-785" alt="permissionstable2" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/permissionstable2-300x84.png" width="300" height="84" /></a></p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/permissionstable3.png"><img class="alignnone size-medium wp-image-784" style="font-size: 12px" alt="permissionstable3" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/permissionstable3-300x124.png" width="300" height="124" /></a></p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/permissionstable1.png"><img class="alignnone size-medium wp-image-787" style="font-size: 12px;background-color: #f7f7f7" alt="permissionstable1" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/permissionstable1-300x157.png" width="300" height="157" /></a></p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/permissionstable7.png"><img class="alignnone size-medium wp-image-786" style="font-size: 12px" alt="permissionstable7" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/permissionstable7-300x161.png" width="300" height="161" /></a></p>
+<p>All other panel, panel pane, panelizer, etc. privileges in the table need to be locked down. Note that some of the permissions we turned on were specific to a content type (our &#8220;Web Page&#8221; content) and that this will vary depending on your needs.</p>
+<p>Restricting these permissions reduces access to the editing interface.  Our librarians will no longer see &#8220;gear&#8221; buttons &#8211; they&#8217;ll only see &#8220;Customize This Page&#8221; and &#8220;Change Layout&#8221; .</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/buttons.png"><img class="alignnone size-medium wp-image-780" alt="buttons" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/buttons-300x132.png" width="300" height="132" /></a></p>
+<p>But when they click &#8220;Customize This Page&#8221; and try to change panel content, they still get bombarded with too many editing options (see the first screenshot) &#8211; we can fix that. The Panelizer configuration allows you to adjust settings for allowed content per content authoring method.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent1.png"><img class="alignnone size-medium wp-image-783" alt="allowedcontent1" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent1-300x136.png" width="300" height="136" /></a></p>
+<p>Since we&#8217;re locking down Panelizer settings for the &#8220;Web Page&#8221; content type, that&#8217;s where we&#8217;re headed in the configuration table.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent2.png"><img class="alignnone size-medium wp-image-782" alt="allowedcontent2" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent2-300x101.png" width="300" height="101" /></a></p>
+<p>This is where we want to be &#8211; lots of boxes to uncheck, lots of buttons to push.</p>
+<p>That&#8217;s cool &#8211; all our librarians need to do is add lists of links, images and text, and (ideally) to be able to reuse the content they create elsewhere.</p>
+<p>Here are the settings we used:</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent3.png"><img class="alignnone size-medium wp-image-781" alt="allowedcontent3" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent3-300x141.png" width="300" height="141" /></a></p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent4.png"><img class="alignnone size-medium wp-image-779" alt="allowedcontent4" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent4-300x134.png" width="300" height="134" /></a></p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent5.png"><img class="alignnone size-medium wp-image-778" alt="allowedcontent5" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/allowedcontent5-300x139.png" width="300" height="139" /></a></p>
+<p>The result?  Content editors can now&#8230;</p>
+<p>&#8230;choose layout:</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/editing1.png"><img class="alignnone size-medium wp-image-776" alt="editing1" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/editing1-300x153.png" width="300" height="153" /></a></p>
+<p>&#8230;add, edit, move, delete content to the regions within this layout:</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/editing2.png"><img class="alignnone size-medium wp-image-777" alt="editing2" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/editing2-300x153.png" width="300" height="153" /></a></p>
+<p>&#8230;add links, images, text or reusable content:</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/editing3.png"><img class="alignnone size-medium wp-image-775" alt="editing3" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/editing3-300x147.png" width="300" height="147" /></a></p>
+<p>Note that if they do want to reuse content, they have to specify that in the editor:</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/editing4.png"><img class="alignnone size-medium wp-image-774" alt="editing4" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/08/editing4-300x147.png" width="300" height="147" /></a></p>
+  </body>
+</html>
+

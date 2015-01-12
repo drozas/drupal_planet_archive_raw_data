@@ -1,0 +1,71 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 09 Jan 2015 05:29:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 09 Jan 2015 05:29:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Akshay Kalose: Drupal 8: RDF UI (Schema.org Mappings)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.kalose.net/oss/drupal-8-rdf-ui-schema-org-mappings/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Akshay Kalose: Drupal 8: RDF UI (Schema.org Mappings)</title>
+    <base href="http://www.kalose.net/oss/drupal-8-rdf-ui-schema-org-mappings/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><span class='embed-youtube' style='text-align:center; display: block;'><iframe class='youtube-player' type='text/html' width='474' height='297' src='http://www.youtube.com/embed/HJA0lhaex0Y?version=3&#038;rel=1&#038;fs=1&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' frameborder='0' allowfullscreen='true'></iframe></span></p>
+<p><a title="RDF UI" href="https://www.drupal.org/project/rdfui" target="_blank">RDF UI</a> is a module for Drupal 8 created by <a title="Sachini Aparna Herath" href="https://www.drupal.org/u/sachini" target="_blank">Sachini Aparna Herath</a> for her <a title="GSoC 2014 RDF UI" href="http://www.google-melange.com/gsoc/project/details/google/gsoc2014/sachini94/5724160613416960" target="_blank">Google Summer of Code 2014 project</a>. RDF stands for Resource Description Framework; it provides a standardized model for data interchange. This module enables you to easily create mappings of <a title="Schema.org Things" href="http://schema.org/docs/full.html" target="_blank">Schema.org Things</a> to Drupal Content Types and Fields. RDF UI will embed these specified mappings in the HTML as RDFa once your content is published. This blog post was made for Google Code-In 2014 to test and review RDF UI.</p>
+<h3>Installation</h3>
+<p>RDF UI can be easily installed using the Drush command line tool for Drupal. You may want to select installing the development version, as that will be the closest to running with the latest Drupal 8 development version:</p><pre class="crayon-plain-tag">drush dl rdfui --select</pre><p>
+<h3>Upgrading</h3>
+<p>This section is about my experience upgrading RDF UI to the latest Drupal 8. This module was created over the summer, when GSoC takes place. As a result, it wasn&#8217;t compatible with the latest Drupal 8 development release, Beta 4.</p>
+<p>I started upgrading from the stable version, and by the time I realized there was a development version, I had already done much of the upgrading, so I integrated the changes from that branch into my upgrade while still keeping most of mine similar to how it was before.</p>
+<p>Some of the things I had to upgrade were: moving the attached CSS to a library, re-factoring the Form State from an array to an object, and accounting for the fact that <code>Drupal\views_ui\OverviewBase</code> was merged into <code>Drupal\views_ui\DisplayOverviewBase</code>. I also have included minor improvements here and there in the code.</p>
+<p>One problem I encountered while using the sub module was that the default Schema.org/Text Data Type was text. However in the latest Drupal 8, this is the formatted text, and the plain text was needed, so this was fixed by changing the default from &#8220;<code>text</code>&#8221; to &#8220;<code>string</code>&#8220;:</p><pre class="crayon-plain-tag">diff --git a/rdf_builder/src/Form/ContentBuilderForm.php b/rdf_builder/src/Form/ContentBuilderForm.php
+index 6d2001a..c3cc50c 100644
+--- a/rdf_builder/src/Form/ContentBuilderForm.php
++++ b/rdf_builder/src/Form/ContentBuilderForm.php
+@@ -64,8 +64,8 @@ class ContentBuilderForm extends FormBase {
+   public function __construct() {
+     $this-&gt;converter = new SchemaOrgConverter();
+     $this-&gt;datatype_field_mappings = array(
+-      'http://schema.org/Text' =&gt; 'text',
+-      'http://schema.org/PostalAddress' =&gt; 'text_long',
++      'http://schema.org/Text' =&gt; 'string',
++      'http://schema.org/PostalAddress' =&gt; 'string_long',
+       'http://schema.org/Number' =&gt; 'integer',
+       'http://schema.org/MediaObject' =&gt; 'file',
+       'http://schema.org/AudioObject' =&gt; 'file',
+@@ -470,6 +468,6 @@ class ContentBuilderForm extends FormBase {
+         return $this-&gt;datatype_field_mappings[$datatype];
+       }
+     }
+-    return 'text';
++    return 'string';
+   }
+ }</pre><p>
+The full upgrade patch can be viewed at this <a title="Upgrade RDF UI to Latest Drupal 8 Development Version" href="https://www.drupal.org/node/2404481" target="_blank">Issue</a> on RDF UI.</p>
+<h3>Usage</h3>
+<p>As said on the project page, integration of Schema.org mappings in Content Types is seamless. In the &#8220;Add Content Type&#8221; form you can choose which Schema.org Type this Content Type will be:<a href="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-add-content-type.png"><img class="alignnone size-full wp-image-187" src="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-add-content-type.png" alt="RDF UI Add Content Type" width="752" height="276" /></a></p>
+<p>Once you fill this out and reach the &#8220;Manage Fields&#8221; page, you need to create you new fields. You can then click the &#8220;RDF Mappings&#8221; tab to assign these fields their Schema.org property:</p>
+<p><a href="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-manage-fields.png"><img class="alignnone size-full wp-image-188" src="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-manage-fields.png" alt="RDF UI Manage Fields" width="560" height="340" /></a></p>
+<p>Now you are ready to go ahead and create your content. Once created and published, the node should show the fields and the html should contain the Schema.org Type in the <code>article</code> tag and Schema.org Properties in the <code>field-items</code> divisions:</p>
+<p><a href="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-awesome-event.png"><img class="alignnone size-full wp-image-189" src="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-awesome-event.png" alt="RDF UI Awesome Event" width="1000" height="512" /></a></p>
+<h4>RDF UI Builder!</h4>
+<p>RDF UI also comes with a very helpful sub module named: RDF UI Builder. Want to shorten up all the steps above in creating Schema.org mapped Content Types? This sub module comes in handy for that very purpose.</p>
+<p>Once this module is enabled, you can find the new &#8220;+ Add Schema.org Content Type&#8221; button next to the original &#8220;+ Add content type&#8221; button:</p>
+<p><a href="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-add-schema-org-content-type.png"><img class="alignnone size-full wp-image-190" src="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-add-schema-org-content-type.png" alt="RDF UI Add Schema.org Content Type" width="422" height="136" /></a></p>
+<p>After selecting which Schema.org Type you want to use, you are redirected to the next page where the only thing you need to do is select which fields you want, and they will automatically be created and mapped for you!</p>
+<p><a href="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-choose-fields.png"><img class="alignnone size-full wp-image-191" src="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-choose-fields.png" alt="RDF UI Choose Fields" width="820" height="538" /></a> <a href="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-content-type-event-created.png"><img class="alignnone size-full wp-image-192" src="http://www.kalose.net/wp-content/uploads/2015/01/rdfui-content-type-event-created.png" alt="RDF UI Content Type Event Created" width="970" height="424" /></a></p>
+<p>That&#8217;s it, now you can go off and create content for that type.</p>
+<h3>Conclusion</h3>
+<p>Sachini Aparna Herath, with the help of her mentors <a title="Stéphane Corlosquet" href="https://www.drupal.org/u/scor" target="_blank">Stéphane Corlosquet</a> and <a title="Kevin Oleary" href="https://www.drupal.org/u/tkoleary" target="_blank">Kevin Oleary</a>, has created a great module for Drupal 8. RDF UI fits in with the rest of Drupal, and can be used to quickly create content types or fields and assign them Schema.org Types and Properties. This can help any site owner to provide &#8220;semantic rich data&#8221; on their web pages.</p>
+<p>One improvement I can suggest is that the <code>http://schema.org/Date</code> Type should default as <code>date</code> only in Drupal. As of right now both <code>http://schema.org/DateTime</code> and <code>http://schema.org/Date</code> convert into Drupal <code>datetime</code>. This may be because Drupal does not have <code>Date</code> and <code>DateTime</code> options in the drop down. If this is the case, this improvement would be for Drupal Core to move selecting DateTime or only Date to the main select menu before selecting Date and then choosing for a new field.</p>
+<p>From a Google Code-In perspective, this task had many obstacles which I had to go through to upgrade the module to be working with the latest Drupal 8 version, Beta 4, and I am glad as I keep learning more with the more problems I face. It is also the first time I have created a <a title="Change Record" href="https://www.drupal.org/node/2404475" target="_blank">change record</a>, because one of the errors received had not been included in the <a title="Change Records" href="https://www.drupal.org/list-changes" target="_blank">list of changes</a>.</p>
+<p>The post <a rel="nofollow" href="http://www.kalose.net/oss/drupal-8-rdf-ui-schema-org-mappings/">Drupal 8: RDF UI (Schema.org Mappings)</a> appeared first on <a rel="nofollow" href="http://www.kalose.net">Akshay Kalose</a>.</p>
+  </body>
+</html>
+

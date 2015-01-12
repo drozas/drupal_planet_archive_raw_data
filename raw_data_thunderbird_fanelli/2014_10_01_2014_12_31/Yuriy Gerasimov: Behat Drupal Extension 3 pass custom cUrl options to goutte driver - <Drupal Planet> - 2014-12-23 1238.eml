@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 23 Dec 2014 11:38:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 23 Dec 2014 11:38:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Yuriy Gerasimov: Behat Drupal Extension 3 pass custom cUrl options to goutte driver
+Content-Transfer-Encoding: 8bit
+Content-Base: http://ygerasimov.com/drupal-behat-extension-custom-curl-options
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Yuriy Gerasimov: Behat Drupal Extension 3 pass custom cUrl options to goutte driver</title>
+    <base href="http://ygerasimov.com/drupal-behat-extension-custom-curl-options">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Behat is great testing tool that there are already has a lot of documentation.</p>
+<p>In drupal we have <a href="https://github.com/jhedstrom/drupalextension">extension</a> that helps us to build tests. Behat tests are configurable in yaml file (like url of your website and other options). Lately I needed to set custom cUrl options (goutte driver) and because Drupal extension 3 uses Guzzle 4 library it was not that obvious how to do that.</p>
+<p>Trick is to check how Guzzle expects options <a href="http://guzzle.readthedocs.org/en/latest/faq.html#how-can-i-add-custom-curl-options">http://guzzle.readthedocs.org/en/latest/faq.html#how-can-i-add-custom-cu...</a> and then place in behat.yml file in the following way:</p>
+<script src="https://gist.github.com/ygerasimov/6fd45fab43671b8054d3.js"></script><p>Technically options being added at <a href="https://github.com/guzzle/guzzle/blob/4.2.3/src/Adapter/Curl/CurlFactory.php#L338">https://github.com/guzzle/guzzle/blob/4.2.3/src/Adapter/Curl/CurlFactory...</a> so if you need to make sure your options were passed, debug that function.</p>
+<p>Hope this will save you some time.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/taxonomy/term/20" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">behat</a></div><div class="field-item odd" rel="dc:subject"><a href="/taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

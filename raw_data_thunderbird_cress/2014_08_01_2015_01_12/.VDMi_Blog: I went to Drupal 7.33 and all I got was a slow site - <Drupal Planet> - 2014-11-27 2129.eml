@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 27 Nov 2014 21:29:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 27 Nov 2014 21:29:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: .VDMi/Blog: I went to Drupal 7.33 and all I got was a slow site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vdmi.nl/blog/i-went-drupal-733-and-all-i-got-was-slow-site
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>.VDMi/Blog: I went to Drupal 7.33 and all I got was a slow site</title>
+    <base href="http://www.vdmi.nl/blog/i-went-drupal-733-and-all-i-got-was-slow-site">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-afbeelding field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/blog/i-went-drupal-733-and-all-i-got-was-slow-site"><img style="max-width: 40%; height: auto; float: left; margin-right: 1em;" align="left" hspace="10" src="http://www.vdmi.nl/sites/vdmisite.s1.aegirhost.nl/files/styles/200_max_width/public/sad_drupal_icon_0.jpg?itok=i-FMq2_0" width="110" height="110" alt="I went to Drupal 7.33 and all I got was a slow site" /></a></div></div></div><div class="field field-name-field-samenvatting1 field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">So, you just upgraded your site(s) to Drupal &gt;= 7.33, everything seemed fine in your tests. You deployed the new release and after a while you notice that your site isn&#039;t as fast as before. It&#039;s actually slowing down everything on your server. You started Googling and ended up on this blogpost.
+Sounds like your story? Read on!</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>I spent the last 2 hours figuring this out, I decided it would be best to write it up right away while it's fresh in my memory. TLDR; at the bottom of this post.</p>
+<p>We did an upgrade to Drupal 7.34 recently, we thought everything was fine. Release went over 3 different environments before deploying to live and no actual issues were found.</p>
+<p>After deployment to live, we got some reports that the site was responding slow. We didn't directly link it to the upgrade to 7.34, I actually did a diff between 7.32 and 7.34 to see what changed after these reports and did not see anything suspicious that could cause this.</p>
+<p>We had to investigate after a while as there was no sign of improvement, the CPU of the server was hitting 100% 24/7. New Relic monitoring told us about many calls to the "file_scan_directory" function of Drupal. When I actually logged the calls with the following snippet:</p>
+<p></p><pre><code>static $count;<br />
+if (!isset($count)) {<br />
+  $count = 0;<br />
+}<br />
+$count++;<br />
+drupal_debug($count . PHP_EOL);</code></pre>
+<p>The count actually went up to 700 for every request (It's quite a large project, plus the file_scan_directory is recursive).<br />When I printed the "debug_backtrace", I saw that this call was coming from "drupal_get_filename".<br />Looking at the function arguments, Drupal was looking for a imagecache_actions file, why?! And why on every request? Doesn't it cache these records in the registry?!</p>
+<p>Yes it does! It appeared the imagecache_actions module had a typo in it (patch <a href="https://www.drupal.org/node/2166715">here</a>):<br /></p>
+<pre><code>module_load_include('inc', 'imagcache_actions', 'image_overlay.inc');</code></pre>
+<p>This should be:<br /></p>
+<pre><code>module_load_include('inc', 'imagecache_actions', 'image_overlay.inc');</code></pre>
+<p>This would not have been an issue previously, 7.33 introduced a <a href="https://www.drupal.org/node/2228825">change</a> though.<br />Pre 7.33:<br /></p>
+<pre><code>$file = db_query("SELECT filename FROM {system} WHERE name = :name AND type = :type", array(':name' =&gt; $name, ':type' =&gt; $type))-&gt;fetchField();<br />
+if (file_exists(DRUPAL_ROOT . '/' . $file)) {<br />
+  $files[$type][$name] = $file;<br />
+}</code></pre>
+<p>7.33 or higher:<br /></p>
+<pre><code>$file = db_query("SELECT filename FROM {system} WHERE name = :name AND type = :type", array(':name' =&gt; $name, ':type' =&gt; $type))-&gt;fetchField();<br />
+if ($file !== FALSE &amp;&amp; file_exists(DRUPAL_ROOT . '/' . $file)) {<br />
+  $files[$type][$name] = $file;<br />
+}</code></pre>
+<p>Before 7.33, Drupal would try to find the record in the system table, it wouldn't find it and the $file would be NULL. The resulting string would be "DRUPAL_ROOT . '/' . $file", as $file is NULL, you can also see it as "DRUPAL_ROOT . '/'". Obviously the DRUPAL_ROOT exists, so it returns TRUE. It would put the record in the $files array and continue with what it was doing.</p>
+<p>Because 7.33 and higher does a NULL-check on $file, it will not add any record to the $files array. This causes it to go into the file discovery routine:<br /></p>
+<pre><code>if (!isset($files[$type][$name])) {<br />
+  // ... Some code<br />
+  $matches = drupal_system_listing("/^" . DRUPAL_PHP_FUNCTION_PATTERN . "\.$extension$/", $dir, 'name', 0);<br />
+  foreach ($matches as $matched_name =&gt; $file) {<br />
+    $files[$type][$matched_name] = $file-&gt;uri;<br />
+  }<br />
+}</code></pre>
+<p>This code will try to scan your Drupal installation for the given file. It will not find the file and continue eventually, but it will execute the file search in EVERY request that you execute the module_load_include.</p>
+<p>While our issue was in the imagecache_actions module, your issue might be in any module (even custom) which does a wrong module_load_include.<br />It's very hard to find this out yourself. You can edit includes/bootstrap.inc on line 866 to write some info away to /tmp/drupal_debug.txt:<br />Add the following code after line 866:<br /></p>
+<pre><code>else {<br />
+  drupal_debug('Missing file ' . $type . ' ' . $name . ' ' . DRUPAL_ROOT . '/' . $file . PHP_EOL);<br />
+}</code></pre>
+<p>TLDR; an issue in imagecache_actions combined with an upgrade to Drupal &gt;= 7.33 killed the performance of our site. Patch for imagecache_actions <a href="https://www.drupal.org/node/2166715">here</a>. Causing issue/patch <a href="https://www.drupal.org/node/2228825">here</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

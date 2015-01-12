@@ -1,0 +1,133 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 28 Nov 2013 06:46:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 28 Nov 2013 06:46:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: High performance AJAX callbacks with Drupal 7 and the JS module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/high-performance-ajax-callbacks-drupal-7-and-js-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: High performance AJAX callbacks with Drupal 7 and the JS module</title>
+    <base href="http://www.pixelite.co.nz/article/high-performance-ajax-callbacks-drupal-7-and-js-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/high-performance-ajax-callbacks-drupal-7-and-js-module&amp;count=horizontal&amp;via=&amp;text=High%20performance%20AJAX%20callbacks%20with%20Drupal%207%20and%20the%20JS%20module&amp;counturl=http%3A//www.pixelite.co.nz/article/high-performance-ajax-callbacks-drupal-7-and-js-module" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/high-performance-ajax-callbacks-drupal-7-and-js-module&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/high-performance-ajax-callbacks-drupal-7-and-js-module" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/high-performance-ajax-callbacks-drupal-7-and-js-module" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-hero-image">
+    <img typeof="foaf:Image" src="http://www.pixelite.co.nz/sites/default/files/styles/hero_image_article/public/bootstrap-header.png?itok=uLsO28oU" alt="" />  </div>
+
+  <div class="field-body">
+    <p>As your site grows with the number of modules, the amount of memory and SQL queries required to perform a full bootstrap grows. Even though your AJAX callback might only need to perform a single SQL SELECT query, sometimes Drupal spends a lot of time loading and executing code that will never be used.</p>
+
+<h2>Introducing the JS module</h2>
+
+<p>The <a href="https://drupal.org/project/js">JS module</a> aims to solve this problem by providing an alternative way to bootstrap to <em>only</em> the required level needed to perform the task at hand. This has a major advantage of including only the necessary files needed to serve the request.</p>
+
+<p>From the module's description:</p>
+
+<blockquote>
+JavaScript callback handler is an interim solution for high-performance server requests including (but not limited to) AHAH, AJAX, JSON, XML, etc.
+
+This project targets module developers and provides a "bare bone" callback handler which is intended to be addressed by modules wanting to improve response times for specialized tasks.
+</blockquote>
+
+<h2>Drupal and bootstrap levels</h2>
+
+<p>By default a vanilla hook_menu() in Drupal will bootstrap to DRUPAL_BOOTSTRAP_FULL, which means it will load in all .module files, and execute hook_boot() and hook_init() for all enabled modules. With the JS module however you can select the bootstrap level you wish to go to (the less levels you load, the faster your code can effectively be), the only trade-off is in the functionality you might not have available.</p>
+
+<p>Here is a list of the <a href="https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_bootstrap/7">bootstrap levels defined in Drupal core</a> (highest are the most lightweight, with each layer adding code and complexity):</p>
+
+<pre><code>static $phases = array(
+  DRUPAL_BOOTSTRAP_CONFIGURATION,
+  DRUPAL_BOOTSTRAP_PAGE_CACHE,
+  DRUPAL_BOOTSTRAP_DATABASE,
+  DRUPAL_BOOTSTRAP_VARIABLES,
+  DRUPAL_BOOTSTRAP_SESSION,
+  DRUPAL_BOOTSTRAP_PAGE_HEADER,
+  DRUPAL_BOOTSTRAP_LANGUAGE,
+  DRUPAL_BOOTSTRAP_FULL,
+);
+</code></pre>
+
+<p>For example if you wished to use the function variable_get() in your AJAX callback, you would need to ensure you had bootstrapped to at least the DRUPAL_BOOTSTRAP_VARIABLES level, and if you required access to the current $user object you would need DRUPAL_BOOTSTRAP_SESSION etc.</p>
+
+<h2>Real world site performance of the JS module</h2>
+
+<p>In order to demonstrate the difference in performance, I decided to create a really simple module that highlights the difference between a traditional full Drupal bootstrap and the lightweight approach of the JS module. This simple module can be <a href="https://drupal.org/sandbox/wiifm/2145789">cloned from my sandbox on Drupal.org</a>.</p>
+
+<p>On a large site with more than 185 modules enabled (including memcache + entitycache), I ran a series of tests to see what impact that had</p>
+
+<h3>Full bootstrap (default Drupal hook_menu())</h3>
+
+<p><strong>After a drush cc all</strong> (206 database queries):</p>
+
+<pre><code>seanh@wiifm /var/www/example git:master » time curl http://example.co.nz/js_example/results/35513
+{"title":"Example node title","success":true}
+real    0m5.085s
+</code></pre>
+
+<p><strong>Primed cache</strong> (17 database queries):</p>
+
+<pre><code>seanh@wiifm /var/www/example git:master » time curl http://example.co.nz/js_example/results/35513
+{"title":"Example node title","success":true}
+real    0m0.514s
+</code></pre>
+
+<h3>Lightweight bootstrap (with JS module bootstrapping to DRUPAL_BOOTSTRAP_DATABASE)</h3>
+
+<p><strong>After a drush cc all</strong> (9 database queries):</p>
+
+<pre><code>seanh@wiifm /var/www/example git:master » time curl http://example.co.nz/js/js_example/results/35513
+{"title":"Example node title","success":true}
+real    0m0.300s
+</code></pre>
+
+<p><strong>Primed cache</strong> (6 database queries):</p>
+
+<pre><code>seanh@wiifm /var/www/example git:master » time curl http://example.co.nz/js/js_example/results/35513
+{"title":"Example node title","success":true}
+real    0m0.078s
+</code></pre>
+
+<p>The saving in terms of speed (more than 6 times faster with a primed cache) an less system resources (around one third of the database queries with a primed cache) are remarkable.</p>
+
+<h2>Limitations</h2>
+
+<p>Access control can be trickier when on the lightweight bootstrap, so be careful and if anything be overly paranoid about any data you receive. You may also want to read up about <a href="http://www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks">SQL injection and Drupal 7 - top 1 of 10 OWASP security risks</a></p>
+
+<p>Performing theming can get tricky as well with a lightweight bootstrap, so if you need to harness the power of view modes, templating and node rendering, you might be better off to use a full bootstrap.</p>
+
+<h2>Comments</h2>
+
+<p>Let me know if you have used the JS module in your Drupal site (and a link if it is public), and I would also be interested to see what benchmarks you get by running my sandbox module on your latest Drupal site.</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/performance" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">performance</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/ajax" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">ajax</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/module" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">module</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="https://drupal.org/project/js">High-performance JavaScript callback handler</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

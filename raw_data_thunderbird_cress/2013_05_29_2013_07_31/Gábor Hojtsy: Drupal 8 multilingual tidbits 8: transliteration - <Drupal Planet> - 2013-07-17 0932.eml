@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 17 Jul 2013 08:32:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 17 Jul 2013 08:32:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 8: transliteration
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-jul-17/drupal-8-multilingual-tidbits-8-transliteration
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 8: transliteration</title>
+    <base href="http://hojtsy.hu/blog/2013-jul-17/drupal-8-multilingual-tidbits-8-transliteration">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>We went through most of the <a href="http://hojtsy.hu/multilingual-drupal8">great new base language features</a> in Drupal 8, but one thing that was not yet covered is built-in transliteration support. Yes, you read that right. Drupal 8 includes a powerful backend system for transliteration and it even uses it for machine name generation on the frontend.</p>
+<p>Here are a few examples on how Drupal prefills the machine name for a content type for a Hungarian, Czech and Russian type respectively:</p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8TransliterationHungarian.png" width="821" /></div>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8TransliterationCzech.png" width="821" /></div>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8TransliterationRussian.png" width="821" /></div>
+<p>You don't even need to have language module enabled to use the transliteration services. However language specific transliteration patterns are supported, and the overrides are alterable. See <a href="https://drupal.org/node/1842748">https://drupal.org/node/1842748</a> for documentation on how to tap into this new API.</p>
+<p>While this concludes the list of new base language features, that is only one of the language related modules in core. The tidbits are far from over! Excited about Drupal 8 yet?</p>
+<h3>Issues to work on</h3>
+<ul><li>Transliteration is only applied to machine names in core. Files would be a natural next candidate. See existing discussions in <a href="https://drupal.org/node/1842718">https://drupal.org/node/1842718</a> (includes an early patch that includes file support) and <a href="https://drupal.org/node/567832">https://drupal.org/node/567832</a>. Contributed modules can implement transliteration for anything.</li>
+</ul></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 10 Aug 2013 03:15:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 10 Aug 2013 03:15:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Link Digital: Thinking about improving your Drupal site’s performance? Here are seven options to consider.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.linkdigital.com.au/news/2013/08/thinking-about-improving-your-drupal-sites-performance-here-are-seven-options-to-consider/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Link Digital: Thinking about improving your Drupal site’s performance? Here are seven options to consider.</title>
+    <base href="http://www.linkdigital.com.au/news/2013/08/thinking-about-improving-your-drupal-sites-performance-here-are-seven-options-to-consider/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>The following provides a range of areas where performance can be improved by using various caching options or server architecture improvements. We assume here that your SQL queries and the web application code are already optimised for performance. There are a number of options outlined below that will assist with supporting load surges. Our usual recommendation is to mix a variety of caching approaches with load balanced web application servers and a persistent DB and file system server.</p>
+<h2>Option 1: Manage your Drupal cache</h2>
+<p>Drupal stores all caches in the database (which will is ideally stored via memcached, see below).</p>
+<p>The caching strategy can differ from site to site, but these are the likely configurations you would enable:</p>
+<ul>
+<li>Cache pages for anonymous users (cache_page)</li>
+<li>Cache blocks (cache_blocks)</li>
+<li>Cache (cache)</li>
+<li>User sessions (sessions)</li>
+<li>Compress pages</li>
+<li>Aggregate and compress CSS files</li>
+<li>Aggregate JavaScript files</li>
+</ul>
+<p>The minimum cache lifetime and the expiration of the cached pages should be set according to the needs of the site (eg 30 min).</p>
+<p>Some modules offer additional caches to reduce the execution time of pages, these are essential to set.<strong><br />
+<strong> </strong><br />
+<strong>For Example: </strong></strong><strong></strong></p>
+<p><strong>Module views</strong><strong><br />
+</strong>- Caching query results<br />
+- Caching the display rendering<br />
+- Caching views blocks</p>
+<p><strong>Module panels</strong><strong><br />
+</strong>- Caching panels on pages</p>
+<h2>Option 2: Install and use Varnish caching</h2>
+<p>Install Varnish, which is an HTTP accelerator designed for content-heavy dynamic web sites (ref: <a href="http://www.varnish-cache.org" target="_blank">www.varnish-cache.org</a>).</p>
+<h2>Option 3: Install and use Memcached</h2>
+<p>Using Memcached is recommended to deport the Drupal cache from Drupal MySQL database, which is usually already highly stressed, to dedicated infrastructure (ref: <a href="http://memcached.org/" target="_blank">http://memcached.org/</a>)</p>
+<h2>Option 4: Install and configure as required, additional Drupal cache modules</h2>
+<p>Memcache &#8211; <a href="http://drupal.org/project/memcache" target="_blank">http://drupal.org/project/memcache</a><br />
+Recommended: useful for the administration and implementation of the Drupal cache storage in memcached.</p>
+<p>Cache Actions &#8211; <a href="http://drupal.org/project/cache_actions" target="_blank">http://drupal.org/project/cache_actions</a><br />
+Recommended: Allows smart cache invalidation and management</p>
+<p>Varnish &#8211; <a href="http://drupal.org/project/varnish" target="_blank">http://drupal.org/project/varnish</a></p>
+<p>Auth cache &#8211; <a href="http://drupal.org/project/authcache" target="_blank">http://drupal.org/project/authcache</a><br />
+Recommended: offers page caching for both anonymous users and logged-in authenticated users</p>
+<p>Performance hacks &#8211; <a href="http://drupal.org/project/performance_hacks" target="_blank">http://drupal.org/project/performance_hacks</a><br />
+Helpful but not necessary: provides specific improvements in performance.</p>
+<p>Entity Cache &#8211; <a href="http://drupal.org/project/entitycache">http://drupal.org/project/entitycache</a><br />
+Highly recommended: activate cache for Drupal entities.</p>
+<p>Path Cache &#8211; <a href="http://drupal.org/project/pathcache" target="_blank">http://drupal.org/project/pathcache</a><br />
+Highly recommended: activate cache for paths</p>
+<p>ESI API &#8211; <a href="http://drupal.org/project/esi_api" target="_blank">http://drupal.org/project/esi_api</a><br />
+Not recommended because of few users and community activity. However, it uses the menu router &#8216;theme callback&#8217; and &#8216;delivery callback&#8217; for integrating to core, which makes the approach efficient and comprehensible (no exit() in AJAX/ESI callbacks).</p>
+<h2>Option 5: Use MongoDB instead of MySQL</h2>
+<p>Using MongoDB can be considered as alternative storage backend for MySQL.  This option is effective but it is not suitable for every project if you don’t have time to configure everything correctly.</p>
+<p>MongoDB is a relatively young product and the possible impacts on development processes can be very high. Retaining skill sets for support and maintenance periods also needs to be considered.</p>
+<h2>Option 6: Configure architecture to use multiple load balanced web application servers</h2>
+<p>Link is an <a href="http://www.linkdigital.com.au/Australian_Amazon_Web_Services_Advanced_Consulting_Partner.php" target="_blank">advanced consulting partner for Amazon Web Services</a> and has established a number of hosting environments for Drupal sites. Our best practice approach is to have a dedicated DB server with a volume mounted as an NFS (this instance can also be used for SMTP). The NFS contains all code and user uploaded files such as images and PDF documents.  A web application server is then created as a template and configured to scale horizontally within an auto scale group (ASG).</p>
+<p>Using a dedicated NFS also helps with the deployment of new code as production web application servers do not need to be updated outside of regular OS or application patching.</p>
+<h2>Option 7: Vertically scale server infrastructure</h2>
+<p>Link built, hosted and supported <a href="http://hackerspace.govhack.org" target="_blank">hackerspace.govhack.org</a> using a minimally customised <a href="https://drupal.org/project/commons" target="_blank">Drupal Commons 3</a> distribution. The Hackerspace site was highly active for a three day period but received additional traffic in the last hour of the competition deadline. To meet the additional load we scaled up the AWS instance from a single medium server to an extra large when we reached a 75% utilisation rate. Unfortunately, the method required a three minute outage during a high load period to scale up the single server. Such a solution would be suitable if a planned outage for a few minutes could be undertaken prior to an event which is expected to generate high load.</p>
+  </body>
+</html>
+

@@ -1,0 +1,85 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 03 Dec 2014 00:04:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 03 Dec 2014 00:04:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: David Norman: Node access rebuilds have a hard time limit
+Content-Transfer-Encoding: 8bit
+Content-Base: https://deekayen.net/node_access_rebuild_time_limit
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>David Norman: Node access rebuilds have a hard time limit</title>
+    <base href="https://deekayen.net/node_access_rebuild_time_limit">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+  
+  
+                <p>I thought I'd call attention to a bit of little-known Drupal trivia. The <code>node_access_rebuild()</code> function has a <a href="https://www.drupal.org/node/249075#comment-6042182">hard-coded 240-second time limit</a>. That means that attempting to rebuild the <code>node_access</code> table with a tool like <code>drush</code> probably won't work on a large site. Having a time limit helps keep the site from hitting memory limits and crashing.</p>
+
+<p>In case you think you can out-smart the problem with time limit removal trickery, I think you'll find that the limit is deeply embedded in Drupal's core code. These <code>drush</code> attempts will fail:</p>
+
+<pre><code>drush php-eval 'set_time_limit(0); node_access_rebuild();'
+drush php-eval 'ini_set("max_execution_time", 0); node_access_rebuild();'
+</code></pre>
+
+<p>The <code>node_access_rebuild()</code> function also allows an argument to toggle batch mode, the intended design to bypass the 240 second limit. Trying that with <code>drush</code> probably won't get the results you're hoping for, either.</p>
+
+<pre><code>drush php-eval 'node_access_rebuld(TRUE);'
+</code></pre>
+
+<p>Don't expect <code>htop</code> to show a bunch of busy threads after running that. A web browser trumps <code>drush</code> when it comes to performing successive HTTP requests for batch mode here.</p>
+
+<p>Instead try telling Drupal that node access controls need a rebuild.</p>
+
+<pre><code>drush php-eval 'node_access_needs_rebuild(TRUE);'
+</code></pre>
+
+<p>or</p>
+
+<pre><code>drush vset node_access_needs_rebuild 1
+</code></pre>
+
+<p>After the rebuild status is set, any of the administration pages will show a link with an error message to prompt administrators to rebuild node permissions.</p>
+
+<p><img src="https://deekayen.net/sites/deekayen.net/files/reports_rebuild_permissions.jpg" width="917" alt="Reports page rebuild permissions prompt" /></p>
+
+<p>The link in the prompt goes to <code>admin/reports/status/rebuild</code>, which will prompt with a confirmation form before actually rebuilding permissions.</p>
+
+<p><img src="https://deekayen.net/sites/deekayen.net/files/rebuild_permissions_confirmation.jpg" width="917" height="170" alt="Rebuild node access permissions confirmation form" /></p>
+
+<p>Your next option is a bit fancier, using a <a href="https://gist.github.com/shrop/67720ffece47c18575ef">PHP script by shrop</a>.</p>
+
+<script src="https://gist.github.com/shrop/67720ffece47c18575ef.js"></script>
+
+<p>Run it like this:</p>
+
+<pre><code>time drush php-script rebuild-perms.php
+</code></pre>
+
+<p>If all that doesn't satisfy your needs, as it should, then hack core.</p>
+
+<p><img src="https://deekayen.net/sites/deekayen.net/files/dont_hack_core.jpg" alt="Don't hack core. PLZ PPL!" title="Portland DUG button" /></p>
+
+<p>Hacking core is usually the wrong answer to any question. Nonetheless, <a href="https://gist.github.com/deekayen/af6a5d13f5c889404d73">here's a patch against Drupal 7.34</a>.</p>
+
+<script src="https://gist.github.com/deekayen/af6a5d13f5c889404d73.js"></script>
+
+<p>Don't let the irony escape you - the comment before the <code>drupal_set_time_limit()</code> actually says the limit attempts to "allocate enough time."</p>
+        </div>
+
+<!-- field.tpl -->
+
+<div class="field field-name-taxonomyextra field-type-taxonomy-term-reference field-label-above">
+  
+      <label>Post categories</label>
+  
+                <div class="field-item"><i class="fa fa-tag"></i> <a href="/taxonomy/term/27">Drupal</a></div>
+        </div>
+  </body>
+</html>
+

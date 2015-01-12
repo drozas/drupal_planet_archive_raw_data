@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 24 Jan 2014 20:56:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 24 Jan 2014 20:56:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This (two) weeks in Drupal Core
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/400728
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This (two) weeks in Drupal Core</title>
+    <base href="https://groups.drupal.org/node/400728">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>Last week, in lieue of a This week in Drupal Core, xjm and wechick compiled a phenomenal <a href="https://groups.drupal.org/node/397733">This YEAR in Drupal Core</a>, so here's a catch up of the last two weeks.</p>
+<h4>Happy 13th birthday, Drupal!</h4>
+<p>Drupal 1.0.0 was released on January 15th, 2001. Many software projects from that era are long forgotten by now. That we have stayed relevant and gotten stronger through 13 years of fast and chaotic evolution of the internet is, in my opinion, very impressive. Here's some highlights from the birthday:</p>
+<ul>
+<li><a href="http://www.blinkreaction.com/blog/drupal-s-13th-birthday-party-in-nyc">New York celebrated with pizza, beer, and cake</a> (same as what I had for my 13th birthday, minus the beer).</li>
+<li>Dries posted <a href="http://buytaert.net/from-content-management-to-digital-experience-management">his thoughts on how the internet is evolving</a>, and therefore, what he believes to be important for Drupal. And he spent much of the day providing thoughtful answers to all sorts of interesting questions on <a href="http://www.reddit.com/r/AMA/comments/1v9upe/im_dries_buytaert_project_lead_of_drupal_ask_me/">his first-ever Reddit AMA</a>, which can also be conveniently read in <a href="http://www.reddit.com/r/tabled/comments/1vailb/">tabular form</a>.</li>
+<li>For those of you like me who can't resist anthropomorphizing, Josh Koenig shared <a href="https://www.getpantheon.com/blog/drupal-13-all-grown">his take on Drupal growing up</a> and will dive deeper into that and other insights in his keynote session at <a href="http://sandcamp.org/">SANDCamp</a> this Saturday.</li>
+<li><a href="http://cheppers.com/blog/drupalworkparty-preliminary-stats-and-thank-yous">~100 people gave Drupal core the birthday gift of their development time.</a> Thank you!</li>
+<li>Ray Saltini came up with a creative gift idea: <a href="http://www.blinkreaction.com/blog/my-birthday-gift-to-drupal">a Drupal manifesto</a>!</li>
+<li>When a birthday falls so close to the new year, and therefore, a new quarter, that can create double or triple the reflecting, predicting, and planning. So check out the <a href="https://drupal.org/node/2173123">community predictions for 2014</a> and the <a href="https://groups.drupal.org/node/398033">Drupal Association's Tech Team plan for the quarter</a>.</li>
+</ul>
+<h4>Drupal 8 Alpha 8</h4>
+<p>For module developers who've already begun porting their modules to Drupal 8, there's a shiny new <a href="https://drupal.org/node/2178947">alpha8</a> for you to play with as of yesterday. These alphas are provided to give you something more stable to work off of than having to chase HEAD every day. If you do choose to chase HEAD though, be prepared for more volatility. For example, <a href="https://drupal.org/node/2047633">Move definition of menu links to hook_menu_link_defaults(), decouple key name from path, and make 'parent' explicit</a> was a very important patch committed immediately following the alpha8 release, but requires extensive follow up changes that we are trying to resolve between now and the next alpha.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>Last week, we fixed 7 critical issues and 11 major issues, and opened 6 criticals and 20 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">136 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">497 major issues</a>.</p>
+<p>3 beta-blocking issues were fixed last week. There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">60 of 107 beta blockers</a> that must be resolved and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Needs+change+notification">38 change records</a> that must be written before we can <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">release a Drupal 8 beta</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented.</p>
+<ul>
+<li><a href="https://drupal.org/node/2139769">Block 8.0.0 and possibly minor versions on critical security issues</a> - this is an important policy discussion for making Drupal security maintenance sustainable.</li>
+<li><a href="https://drupal.org/node/2178723">Finalize module-facing API of declaring menu links</a> - this is one of the follow up issues alluded to earlier in the section about alpha8. Declaring menu links is something that nearly every contrib module does, so let's get the DX of this right.</li>
+</ul>
+<h3>More ways to help</h3>
+<p>The <a href="https://drupal.org/node/2148479">Drupal 8 "meta meta"</a>, compiled by vijaycs85, is a great place to start if you want to dig your teeth into a technical problem but aren't sure where to start. Or if coding isn't your thing, there are plenty of <a href="https://drupal.org/project/issues/search/drupal?status[]=Open&amp;version[]=8.x&amp;issue_tags_op==&amp;issue_tags=Needs+change+notification">issues tagged as Needs change notification</a>. Writing these is a great way to keep abreast of recent changes - see <a href="https://groups.drupal.org/node/394113">more on change records</a> to get started.</p>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.
+</p>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code>git log --after=2014-01-09 --pretty=oneline</code> (and before alpha8) (65 commits in total):</p>
+<ul>
+<li><a href="https://drupal.org/node/2144919">#2144919</a> by yched, fago, effulgentsia, amateescu, tstoeckler, chx, larowlan, swentel: Allow widgets and formatters for base fields to be configured in Field UI.</li>
+<li><a href="https://drupal.org/node/2020393">#2020393</a> by dawehner, bdone, pcambra, oadaeh: Convert "Recent content" block to a View.</li>
+<li><a href="https://drupal.org/node/1649780">#1649780</a> by effulgentsia, jibran, Wim Leers, nod_, hefox, joelpittet, kaare, BarisW, sun, rbayliss, Cottser, fubhy: Remove first/last/odd/even classes in favor of CSS3 pseudo selectors.</li>
+<li><a href="https://drupal.org/node/1862202">#1862202</a> by plach, Berdir, katbailey, ParisLiakos, alexpott, chx, sun, larowlan, Gábor Hojtsy, cosmicdreams, vijaycs85, YesCT, penyaskito, andypost, Albert Volkman, joelpitett: Objectify the language system.</li>
+<li><a href="https://drupal.org/node/2173719">#2173719</a> by dawehner, tim.plunkett: Remove the fork of doctrine/common.</li>
+<li><a href="https://drupal.org/node/2168333">#2168333</a> by tim.plunkett, EclipseGc, yched, fago: Ensure custom EntityType controllers can be provided by modules.</li>
+<li><a href="https://drupal.org/node/1892320">#1892320</a> by damiankloip, linclark: Add deserialize for JSON/AJAX - now you can interact with all of Drupal's REST API via plain JSON as well as via HAL.</li>
+<li><a href="https://drupal.org/node/2160735">#2160735</a> by Cottser, aspilicious: Add hook_theme_suggestions_alter() - that completes item #1 from the API changes list of <a href="https://drupal.org/node/2004872">[meta] Theme system architecture changes</a>.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li><a href="http://lin-clark.com/blog/2014/01/22/setting-up-rest-drupal-8/">Setting up REST Services in Drupal 8 by Lin Clark</a>.</li>
+<li>A <a href="http://read.theodoreb.net/">new blog</a> by Théodore Biadala, with articles about <a href="http://read.theodoreb.net/2014/life-of-js-maintainer.html">what it's like being a Drupal component maintainer</a>, <a href="http://read.theodoreb.net/2014/fixing-contrib-javascript.html">how to be an evil mastermind</a>, and <a href="http://read.theodoreb.net/2014/using-es5-with-drupal8.html">ES5</a>.</li>
+<li><a href="http://blog.dev030.com/posts/dynamically-define-blocks-drupal-8-derivatives">Dynamically define blocks in Drupal 8 with derivatives</a> by berliner.</li>
+<li><a href="https://www.acquia.com/resources/podcasts/acquia-podcast-121-drupal-8-avoid-dead-hook-blues-part-2">Drupal 8 Wins: Avoiding the Dead Hook Blues, Part 2</a> by jam, Larry Garfield, and Kris Vanderwater.</li>
+<li><a href="http://www.palantir.net/blog/diving-sculpin-designers-holiday-fueled-adventure">Diving In With Sculpin</a> by Ashley Cyborski. This one isn't about Drupal 8 directly, but one of the goals of switching Drupal 8's templating language to Twig was to make it more accessible to designers, and in this post, a designer with no prior templating experience shares her success story about picking up Twig.</li>
+<li>Speaking of making Drupal friendly to non-developers, Emma Jane Westby explains how <a href="http://drupalize.me/blog/201401/everyone-can-try-out-drupal-8-today">Everyone Can Try Out Drupal 8 Today</a>.</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<ul>
+<li><strong>Jan 23 - 25</strong>: <a href="http://sandcamp.org/">SANDCamp</a>.</li>
+<li><strong>Jan 25 - 26</strong>: <a href="https://groups.drupal.org/node/332998">Global Sprint Weekend</a>. 37 locations so far.</li>
+<li><strong>Feb 14 - 17</strong>: <a href="https://drupalsouth2014.drupal.org.nz/">Drupal South</a>.</li>
+<li><strong>Mar 24 - 30</strong>: <a href="http://szeged2014.drupaldays.org/">Drupal Developer Days Szeged</a>.</li>
+</ul>
+<p>Also, although DrupalCon Prague is well behind us, if you're feeling nostalgiac or if you weren't there but want to know what the vibe was like, you can watch the <a href="http://www.blinkreaction.com/blog/drupalcon-face-to-face-in-prague-2013">Drupalcon Face to Face</a> video posted by John Desalvo.</p>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

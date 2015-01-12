@@ -1,0 +1,84 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 16 Feb 2014 20:19:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 16 Feb 2014 20:19:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: Drupal 8 is just around the next (53) corners*
+Content-Transfer-Encoding: 8bit
+Content-Base: https://civicrm.org/blogs/eileen/drupal-8-just-around-next-53-corners
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: Drupal 8 is just around the next (53) corners*</title>
+    <base href="https://civicrm.org/blogs/eileen/drupal-8-just-around-next-53-corners">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><div>
+	This weekend has seen <a href="https://drupalsouth2014.drupal.org.nz/">2014 Drupal South conference</a> in Wellington with an influx of a couple of hundred of mostly Kiwis and Aussies - but a few others - to talk Drupal. Coming away from the conference I'm excited about Drupal 8 developments and even more excited about convergence between CiviCRM and Drupal. With both Drupal and CiviCRM moving towards Symfony and Drupal having selected a bunch of other 'best of breed frameworks' that we in CiviCRM are also looking at (including Backbone), one of the big wins is transferability of developer skills. This is a win in both directions - it will be easier to get people to develop for CiviCRM and Drupal as we adapt to frameworks that are becoming industry standards. Conversely developers will be better able to apply their skills elsewhere.</div>
+<div>
+	 </div>
+<div>
+	One 'best of breed' framework Drupal adopted some time ago was jQuery and jQuery has pretty much become the industry standard since then. One of the speakers pointed out that at the time Drupal adopted jQuery there were several competing frameworks (CiviCRM was then using Dojo) and by a combination of good selection and community leadership, Drupal selected the 'winning horse' in that race. Thinking about that gave the Civi-developers at the conference reason to feel pretty good about taking strong leadership in frameworks from Drupal.</div>
+<div>
+	 </div>
+<div>
+	At the <a href="https://drupalsouth2014.drupal.org.nz/sessions/frontend/can-i-twig-it-yes-you-can">Twig presentation</a> (a templating engine) many of the advantages <a href="https://drupal.org/user/65676">Morten</a> was excited about in Twig seemed to also to apply to our much maligned Smarty - being able to wrap chunks of text in 'translate', being able to pipe output from a variable into a 'replace' or 'formatter' function and not having to put in php around text outputs.  However, I came away with a couple of thoughts there too. Twig would be a fairly easy replacement for Smarty as it didn't feel that different and we can expect it to be maintained well into the future. However, simply replacing Smarty with Twig won't remove people's annoyances with Smarty, because most of the annoyances are about the implementation - the amount of logic in the form &amp; templates layer and the difficulty in over-riding them in a maintainable way. So, when one of the speakers pushed the importance of 'loose coupling' I realised that was the jargon for our calls to 'get the logic out of the form layer'.</div>
+<div>
+	 </div>
+<div>
+	Loose coupling provides opportunities. We were shown a phone app that rendered a Drupal 'form' - without passing html back and forth to the website. Drupal now sees HTML as merely one of many possible outputs for a form. I think that would be a great challenge for CiviCRM  -  to reach the point where we could render and submit Contribution / Membership forms with all their clever logic in another application, without the expectation of HTML being part of the exchange. But, that required a rethink of how we use Smarty and whether we can move the 'doing' part of the form into its own function which can be accessed in multiple ways.</div>
+<div>
+	 </div>
+<div>
+	The real lightbulb moment, for me, however was in the talk about Drupal's <a href="https://drupalsouth2014.drupal.org.nz/sessions/coding-development/migrate-core">Migrate in Core</a> by (chx) (slides are <a href="https://docs.google.com/presentation/d/1ZqvUBIo114bPKU4A0Wu4awadf1HIG0YlHJ_AWt6DrKU/pub?start=false&amp;loop=false&amp;delayms=3000#slide=id.g2b9338ef9_233">here</a>). As you may be aware I have written a CiviCRM extension to make CiviCRM a destination for migrations. The speaker advised we shouldn't need to do that in Drupal 8 "if you need to write a destination plugin you are doing something wrong". If your destination is an entity then Drupal provides Migrate destinations as part of the entity interface. In fact over the last year Fuzion has been investigating declare CiviCRM entities as Drupal entities as a solution to multiple problems - in particular we have looked at Rules and Views Bulk Operations. It has long been my feeling that eventually declaring CiviCRM entities should replace most of our views code (as you get Views 'for free' when you declare entities) but I now think we should do that INSTEAD of migrating our drupal 7 views code to Drupal 8.</div>
+<div>
+	 </div>
+<div>
+	Looking at the list of drupal 7 modules we have</div>
+<div>
+	 </div>
+<ul><li>
+		CiviCRM Contact Reference - we already use Drupal EntityReference fields instead of that, and I think we can avoid migrating it to drupal 8</li>
+<li>
+		CiviCRM engage - we should turn that into an extension and not migrate it to drupal 8</li>
+<li>
+		CiviCRM group roles - this can ship as a set of Rules</li>
+<li>
+		CiviCRM Member Sync - this can ship as Rules</li>
+<li>
+		CiviCRM OG Sync - this can ship as Rules</li>
+<li>
+		CiviCRM Rules - this is Rules - but would need to be reviewed against the entity approach to Rules</li>
+<li>
+		CiviCRM Theme - this would probably get migrated</li>
+<li>
+		CiviCRM Views - hopefully we can replace this with entity code.</li>
+</ul><div>
+	One question would be whether we need any form of upgrade path for any of the above modules. I would note that in Drupal 8 there is no upgrade path - you create a new database and use Migrate module to put your data in there.</div>
+<div>
+	 </div>
+<div>
+	Another message from Lullabot keynote speaker Emma Jane was 'Start on Odd, Stay on Odd'. In other words, if you are currently on Drupal 7 you should wait for Drupal 9. The implications of this are of course that they are not expecting people to move off Drupal 7 'anytime soon'. When Drupal 7 was first integrated with CiviCRM it was expected that CiviCRM 6 would be removed more or less straight away. However, a few people, including myself, were concerned about Drupal 6 users and 2 years later we still have an important but decreasing set of sites using Drupal 6. The good news and bad news about the D6 experience - good: after the initial restructure keeping Drupal 6 integration has not required much work, bad: people have been confused about whether Drupal 6 was still supported. We've had several Drupal 6 organisations tell us that they would like to use CiviCRM but they are on D6 and we have had to explain to them that there is a Drupal 6 release. Having been the 'lead supporter of Drupal 6' for the past 2 years I have probably spent more time explaining that D6 is supported than supporting it. I think going into D8 we should be anticipating that Drupal 7 will need to be supported for some time and be consistent on that message.</div>
+<div>
+	 </div>
+<div>
+	I know other people are far more 'up' on D8 than I am but I think we should plan to migrate to it without copying and pasting our d7 code &amp; trying to make it work. I've started a bit of tinkering and will push it somewhere to Github soon. Who wants to get involved in Drupal 8?</div>
+<div>
+	 </div>
+<div>
+	*53 is the number of critical bugs left</div>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

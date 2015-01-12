@@ -1,0 +1,94 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 02 Jan 2014 04:46:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 02 Jan 2014 04:46:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Edison Wong: Announcing TWBS jQuery: Simple jQuery Update for Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://edin.no-ip.com/blog/hswong3i/announcing-twbs-jquery-simple-jquery-update-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Edison Wong: Announcing TWBS jQuery: Simple jQuery Update for Drupal 7</title>
+    <base href="http://edin.no-ip.com/blog/hswong3i/announcing-twbs-jquery-simple-jquery-update-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-body">
+    <p>During <a href="https://drupal.org/project/twbs">TWBS</a> development upgrade Drupal 7 core jQuery libraries into its latest version for <a href="http://getbootstrap.com/">Bootstrap</a> is a must. BTW <a href="https://drupal.org/project/jquery_update">jQuery Update</a> seems not my cup of tea because it give me too much trobule within previous site building experience: too complicated, bundle everything within its own archive (which I love to manage 3rd party libraries with <a href="http://raw.github.com/drush-ops/drush/master/docs/make.txt">drush make</a> and <a href="http://drupal.org/project/libraries">Libraries API</a>), and it is really too much for my use case. So why not just work out a simplified version?</p>
+
+<p>After some research and development during Christmas holiday, I would like to introduce my helper module named "<a href="https://drupal.org/project/twbs_jquery">TWBS jQuery</a>". The goal of <a href="https://drupal.org/project/twbs_jquery">TWBS jQuery</a> is to provide a handy support for jQuery upgrade and act as the helper module for on going Drupal-Bootstrap-Remix development.</p>
+
+<p>All replacement will be handled automatically. No additional configuration is required.</p>
+
+<h3>Key Features</h3>
+
+<ul><li>Provide <a href="https://raw.github.com/drush-ops/drush/master/docs/make.txt">drush make</a> file for library download</li>
+	<li>Confirm library successfully initialized with <a href="https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_requirements/7">hook_requirements()</a></li>
+	<li>Upgrade jQuery related libraries as below version:
+		<ul><li><a href="http://jquery.com/">jQuery</a>: 1.10.2</li>
+			<li><a href="http://jqueryui.com/">jQuery UI</a>: 1.10.3</li>
+			<li><a href="http://plugins.jquery.com/cookie">jQuery Cookie</a>: 1.4.0</li>
+			<li><a href="http://jquery.malsup.com/form">jQuery Form</a>: 3.46.0</li>
+			<li><a href="http://plugins.jquery.com/once">jQuery Once</a>: 1.2.6</li>
+			<li><a href="http://benalman.com/projects/jquery-bbq-plugin">jQuery BBQ</a>: 1.3pre
+				<ul><li>Additional patch for <a href="https://drupal.org/node/2138761">jQuery &gt;= 1.9</a></li>
+				</ul></li>
+		</ul></li>
+	<li>Port from <a href="https://drupal.org/project/jquery_update">jQuery Update</a>, upgrade conflicted .js implementation:
+		<ul><li><a href="http://drupalcode.org/project/twbs_jquery.git/blob/refs/heads/7.x-3.x:/alter/misc/states.js">misc/states.js</a></li>
+			<li><a href="http://drupalcode.org/project/twbs_jquery.git/blob/refs/heads/7.x-3.x:/alter/modules/overlay/overlay-parent.js">modules/overlay/overlay-parent.js</a></li>
+		</ul></li>
+</ul><h3>Getting Started</h3>
+
+<p>Download and install with <a href="https://github.com/drush-ops/drush">drush</a> manually:</p>
+
+<pre>
+drush -y dl --dev twbs_jquery
+drush -y make --no-core sites/all/modules/twbs_jquery/twbs_jquery.make</pre>
+
+<p>Package into your own drush .make file (e.g. <a href="http://drupalcode.org/project/drustack_core.git/blob/refs/heads/7.x-24.x:/drustack_core.make">drustack_core.make</a>):</p>
+
+<pre>
+api = 2
+core = 7.x
+projects[twbs_jquery][download][branch] = 7.x-3.x
+projects[twbs_jquery][download][type] = git
+projects[twbs_jquery][download][url] = http://git.drupal.org/project/twbs_jquery.git
+projects[twbs_jquery][subdir] = contrib</pre>
+
+<h3>Live Demo</h3>
+
+<p><a href="https://drupal.org/project/twbs_jquery">TWBS jQuery</a> is now integrated into <a href="https://drupal.org/project/drustack">DruStack</a> distribution, so you can try it in a live sandbox with <a href="http://simplytest.me/project/drustack/7.x-24.x">simplytest.me</a>.</p>
+
+<h3>Why Another jQuery Module?</h3>
+
+<p>For general and generic jQuery update functionality, you should always consider another <a href="http://drupal.org/project/jquery_update">jQuery Update</a> module which started since 2007-04-26.</p>
+
+<p>On the other hand you should consider about using this module because of:</p>
+
+<ul><li>Purely design for assist <a href="https://drupal.org/project/twbs">TWBS</a>, which means you will have the best compatibility when using both together</li>
+	<li>Fetch libraries directly from original repository and handle initialization with <a href="https://drupal.org/project/libraries">Libraries API</a>; <a href="http://drupal.org/project/jquery_update">jQuery Update</a> bundle all libraries into it's own code repository and initialize manually</li>
+	<li>Only support latest official version of libraries which result as no additional configuration required; <a href="http://drupal.org/project/jquery_update">jQuery Update</a> support multiple version of jQuery</li>
+	<li>Much simple implementation which handle all upgrade and replacement automatically; <a href="http://drupal.org/project/jquery_update">jQuery Update</a> provide more customization options</li>
+</ul><h3>Author</h3>
+
+<ul><li>Developed by <a href="http://drupal.org/user/33940">Edison Wong</a>.</li>
+	<li>Sponsored by <a href="http://drupal.org/node/1741828">PantaRei Design</a>.</li>
+</ul><p>Please feel free to test it out and comment with your idea. Let's enjoy simplified jQuery update experience ;-)</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a>  </div>
+  <div class="field-tags">
+    <a href="/tags/jquery" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">jQuery</a>  </div>
+<span property="dc:title" content=" Announcing TWBS jQuery: Simple jQuery Update for Drupal 7" class="rdf-meta"></span>
+  </body>
+</html>
+

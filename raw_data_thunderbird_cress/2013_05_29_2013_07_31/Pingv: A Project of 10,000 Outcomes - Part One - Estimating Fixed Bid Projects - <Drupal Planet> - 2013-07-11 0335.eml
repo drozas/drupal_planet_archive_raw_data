@@ -1,0 +1,139 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 11 Jul 2013 02:35:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 11 Jul 2013 02:35:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pingv: A Project of 10,000 Outcomes - Part One - Estimating Fixed Bid Projects
+Content-Transfer-Encoding: 8bit
+Content-Base: http://pingv.com/blog/project-of-10000-outcomes-part-one-estimating-fixed-bid-projects
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pingv: A Project of 10,000 Outcomes - Part One - Estimating Fixed Bid Projects</title>
+    <base href="http://pingv.com/blog/project-of-10000-outcomes-part-one-estimating-fixed-bid-projects">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-name-body even" property="schema:articleBody content:encoded"><blockquote><p> …we frankly couldn't afford to outbid Le Chiffre… accountants seem to be running MI-6… not that I have anything against accountants. Many of them are lovely people…</p>
+<p>It's amazing what you can do with Photoshop these days, isn't it? I think your odds are improving, Mr. Bond. </p>
+<p> - Rene Mathis, "Casino Royale"</p></blockquote>
+<div class="blogimagewrap blogimagewrap-scale-884"><img src="http://pingv.com/f/styles/scale-884/public/blogimgs/bondlechiffre.jpg?itok=wr85y7_M" alt="http://www.emuleday.com/download/2327-casino-royalea1080bdrip.html" title="Betting is a Form of Estimation, isn't it Mr. Bond?" class="image-scale-884" /><br /><span class="caption">Betting is a Form of Estimation, isn't it Mr. Bond?</span></div>
+<h4>The Fixed Bid Estimate</h4>
+<p>Fixed bids are here to stay.</p>
+<p>Some clients, such as government agencies, are required <em>by statute</em> to solicit fixed bids from vendors. Other organizations require fixed bids as a matter of internal policy. If we want to effectively compete for these projects, we need to adopt a methodology for estimating under uncertainty.</p>
+<p>The key question is: how much do we bid?</p>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/vesper_-_poker_face.jpg?itok=_CtAKFiL" alt="http://teachmix.com/cinemalit/sites/default/files/Vesper%20-%20poker%20face.jpg" title=" So you're telling me it's a matter of probability and odds. I was worried there was some chance involved." class="image-scale-638-blog" /><br /><span class="caption">Vesper: So you're telling me it's a matter of probability and odds. I was worried there was some chance involved.</span></div>
+<h4>The Fixed Bid Constraints</h4>
+<p>It is pretty clear why some clients like fixed bids: cost is fixed. </p>
+<p>Looking at it from the client side, as one wag put it, "so long as it's what I want and I get it on time for a fixed price, I don't care what it costs them to build it."</p>
+<p>This of course works both ways.</p>
+<p>Looking at it from the developer's side: If the vendor can do it for a song, but charge an arm-and-a-leg, the vendor makes a huge profit and the clients say that they don't care. Or do they?</p>
+<p>Yes they do. Most client's would be livid if they paid an arm-and-a-leg for a "song." They want their money's worth, and to get the biggest bang for the buck, they mistakenly think that their best bet is the fixed bid route. The client will send out literally scores of solicitations for bids from vendors — sometimes known as a "cattle call."</p>
+<p>All things being equal, the lowest bid will be awarded the work.</p>
+<h4>The Price is Right?</h4>
+<p>In the game show, The Price is Right, the object of the game is to guess the actual retail price of an item. The winner is the one who comes closest without going over the retail price.</p>
+<p>In fixed-bid proposals, the object is to come in with the lowest price.</p>
+<p>Sometimes the best bid is "no bid," because the lowest price does not favor the bidder. </p>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/priceisright20130706d.png?itok=xe42Eg9H" alt="The Price is Right." title="In the game show, The Price is Right, the object is to guess the highest price without going over. In a fixed bid, the game is set to come up with the lowest price. Unlike the game show where the losers go home with &quot;lovely parting gifts,&quot; in the world of price estimation, everyone including the winner, could lose his shirt." class="image-scale-638-blog" /><br /><span class="caption"> Unlike the game show where the losers go home with "lovely parting gifts," in the world of price estimation, everyone including the winner, could lose his shirt.</span></div>
+<h4>What Are My Chances, Mother?</h4>
+<div class="blogimagewrap blogimagewrap-scale-204"><img src="http://pingv.com/f/styles/scale-204/public/blogimgs/nevertellmetheodds.jpg?itok=3VR8cosP" alt="http://25.media.tumblr.com/tumblr_m6r579zq821rnjhuro1_500.jpg" title="While Han Solo may tell CP3O he does not wish to know the odds before flying flat-out into an asteroid field, a development shop will be very wise to calculate the odds." class="image-scale-204" /><br /><span class="caption"> </span></div>
+<p> We start with a persona/role I will call the <em>Estimator.</em> This can be one individual, a small group of individuals, or the whole team. The process goes something like this: Given what we understand the client wants, and drawing from our own experience with projects of similar size and type, how long did it take to deliver a similar or analogous feature or functionality?</p>
+<p>The Estimator, whether an individual or a team, will make an informed estimate of the most likely outcomes.</p>
+<p>In our experience, the <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method" title="Risk analysis via Monte Carlo methodology.">Monte Carlo risk assessment</a> has proven itself as a valuable tool in project time estimation. <a href="http://en.wikipedia.org/wiki/Comparison_of_risk_analysis_Microsoft_Excel_add-ins" title="Different firms offer alternative software.">Several firms offer software packages</a> to run Monte Carlo analyses. We have adopted the <a href="http://www.palisade.com/risk/" title="@RISK is software available from Palisades Corporation.">@RISK</a> Decision Tools <a href="http://www.palisade.com/decisiontools_suite/" title="The @RISK Decision Tools Suite does more than Monte Carlo Analysis.">Suite</a> at our firm, along with <a href="http://en.wikipedia.org/wiki/LiquidPlanner" title="Liquid Planner is a SaaS time tracking system.">Liquid Planner.</a> We will draw on these tools by way of example in this blog post series.</p>
+<p>In a throw of a pair of fair dice, the most likely outcome is "7." Throw the dice 100 times, or 1000 times or more, 7 comes up more than any other value. In fact, we can figure out the odds in rolling dice.</p>
+<h6>FIG 1. Histogram of outcomes of rolling a pair of fair dice.</h6>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/512px-dice_distribution_bar.svg_.png?itok=LGHg73E6" alt="FIG 1. Distribution of possible statistical outcomes from repeated throws of a fair pair of dice" title="FIG 1. The 50/50 point, also called the &quot;indifference point,&quot; is &quot;7&quot; for a pair of fair dice" class="image-scale-638-blog" /><br /><span class="caption">FIG 1. The 50/50 point, also called the "indifference point," is "7" for a pair of fair dice</span></div>
+<div class="blogimagewrap blogimagewrap-scale-204"><img src="http://pingv.com/f/styles/scale-204/public/blogimgs/whenengineersargue.png?itok=8LyO6wDg" alt="https://www.facebook.com/enggpoint" title="Engineers, designers, developers, and specialists describe the project, assessing the parts and time it takes to achieve a solution. Individuals work out their differences quantitatively. " class="image-scale-204" /><br /><span class="caption">Engineers, designers, developers, and specialists describe the project, assessing the parts and time it takes to achieve a solution. Individuals work out their differences quantitatively. </span></div>
+<h4>A Hypothetical Project</h4>
+<p>We start off with a modest-sized hypothetical project. In this simplified example, Project 01, there are only four parts, which our Estimator has broken out. In an actual project there would likely be more parts and each would probably broken out down to the ticket level.</p>
+<p>In this case, the Estimator filled out a grid (below) that has three categories,</p>
+<ol><li>Least - one chance in 20</li>
+<li>50/50 chance</li>
+<li>Most - 19 chances out of 20</li>
+</ol><h6>TABLE 1. Project 01 — a hypothetical project with four parts, each broken into estimates, low/most likely/high, to complete the work. </h6>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/simpleproject20130704.png?itok=m1HfZgjv" alt="TABLE 1. Project 01 estimates." title=" TABLE 1. Drawing from previous projects, the person estimating the project will come up with a range of possibilities." class="image-scale-638-blog" /><br /><span class="caption">TABLE 1. Drawing from previous projects, the person estimating the project will come up with a range of possibilities.</span></div>
+<p>Putting these cases into English. There is a one in 20 chance (least) that the part for Architecture can be done in 80 hours; a 50/50 chance it can be done in 100 hours, and a 19 out of 20 chance (Most) it can be done in 120 hours.</p>
+<p>In the case at hand, we assume a <a href="https://en.wikipedia.org/wiki/Normal_distribution" title="Assuming a normal distribution.">normal distribution</a>. Other distributions might serve as well, but other distributions, too, will be addressed in a later discussion.</p>
+<p>If the Estimator adds all the 50/50 points, the total estimate comes to 450 hours. Most clients are looking for that single value to establish the hours, and hence the cost.</p>
+<p>But as an experience Estimator knows, it is statistically unlikely the estimates will hit the 50/50 cases on the nose <em>each and every time</em> any more than a fair dice comes out "7" on each and every toss. For the sake of this example, we will assume that each section of the project is fairly independent of the others in term of the estimated time.</p>
+<p>The Estimator's curve for Architecture appears as FIG 2., below.</p>
+<h6>FIG 2. Probability estimate of Architecture phase for Project 01.</h6>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/architectureestimate20130704.png?itok=cKCnZB14" alt="FIG 2. Drawn from @RISK software." title="FIG 2. Probability curve of Architecture Hours. The small text-table to the right of the curve is a listing of specific metrics for this curve." class="image-scale-638-blog" /><br /><span class="caption">FIG 2.Probability curve of Architecture Hours. The small text-table to the right of the curve is a listing of specific metrics for this curve.</span></div>
+<h6>FIG 3. Probability estimate of Front End Development phase for Project 01.</h6>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/frontenddevestimate20130704.png?itok=gl3Z90Ad" alt="FIG 3. Drawn from @RISK software" title=" FIG 3. Probability curve of Front End Dev Hours. The small text-table to the right of the curve is a listing of specific metrics for this curve." class="image-scale-638-blog" /><br /><span class="caption">FIG 3. Probability curve of Front End Dev Hours. The small text-table to the right of the curve is a listing of specific metrics for this curve.</span></div>
+<p>Likewise for Front End Development, FIG 3., above. In this case the estimate is greater than for Architecture, 120 hours, and in this case the uncertainty is also greater, ±40 hours, than for Architecture. Therefore Front End development estimate variances will play a greater role than Architecture variances.</p>
+<p>Site coding, FIG 4., below, in this example, is the largest component, and also represents the greatest amount of absolute hours of uncertainty, ±60 hours among the fours phases.</p>
+<h6>FIG 4. Probability estimate of Site Coding for phase for Project 01.</h6>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/sitecodeestimate20130704.png?itok=tCR-X_fL" alt="FIG 4. Drawn from @RISK software." title="FIG 4. Probability curve of Site Coding Hours. The small text-table to the right of the curve is a listing of specific metrics for this curve." class="image-scale-638-blog" /><br /><span class="caption">FIG 4. Probability curve of Site Coding Hours. The small text-table to the right of the curve is a listing of specific metrics for this curve.</span></div>
+<p>Finally, the launch related hours, Fig 5., below, are smaller in total than the other categories, and the uncertainty in hours is ±20 hours.</p>
+<h6>FIG 5. Probability estimate of Launch phase for Project 01.</h6>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/launchestimate20130704.png?itok=Il0ZVgnM" alt="Drawn from @RISK software" title=" FIG 5.  Probability curve of Launch Hours. The small text-table to the right of the curve is a listing of specific metrics for this curve." class="image-scale-638-blog" /><br /><span class="caption"> FIG 5. Probability curve of Launch Hours. The small text-table to the right of the curve is a listing of specific metrics for this curve.</span></div>
+<h4>Blended Probabilities</h4>
+<p>Simply adding of best and worst case estimates rarely produces the true high and low of the entire project. Adding the high and low values of each separate curve will over-emphasizes the actual range of the project.</p>
+<p>Jumping ahead, the entire project is 450 hours, ±75 hours. If we added the least and most cases values, it would come out ±140 hours.  </p>
+<h6>FIG 6. Probability estimate of all four phases combined for Project 01.</h6>
+<div class="blogimagewrap blogimagewrap-scale-884"><img src="http://pingv.com/f/styles/scale-884/public/blogimgs/totalproject2estimate20130704.png?itok=nxRMlPh2" alt=" FIG 6. Drawn from @RISK software" title=" FIG 6. Monte Carlo probability estimate for all curves combined. The small text-table to the right of the curve is a listing of specific metrics for this curve." class="image-scale-884" /><br /><span class="caption"> FIG 6. Monte Carlo probability estimate for all curves combined. The small text-table to the right of the curve is a listing of specific metrics for this curve.</span></div>
+<p>The representation below shows the four individual uncertainties to the left, and the combined uncertainties (black) to the right. Intuitively, we see why simple addition of the four shapes on the left does not yield an accurate result.</p>
+<p>So how does it work?</p>
+<h6>FIG 7. Probability estimate of all four phases separately and combined for Project 01.</h6>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/overlays2estimate20130704.png?itok=WZzpqCZV" alt=" FIG 7. Drawn from @RISK software." title="Component curves and resultant curve overlaid - Total project estimate" class="image-scale-638-blog" /><br /><span class="caption"> FIG 7. Component curves and resultant curve overlaid - Total project estimate. The orange, blue red, and green curves to the left are the probabilities for Launch, Architecture, Front End Development, and Site Coding, respectively, while the black curve to the right is the combined probability for all phases. The probability of the five curves is displayed by the software TO SCALE. The small text-table to the right of the curve is a truncated listing of specific metrics for the five curves.</span></div>
+<p>Note that the green curve to the left, which is the same curve as Site Coding, FIG 4., is also the largest of the four component curves in Fig. 7. The green curve is also somewhat squat due in part to the fact that overall the Site Coding curve is less certain than the other three curves. Now note that the combined estimate's curve shape, black curve in Fig 7., is more like that of Site Coding Fig 4., and less like the other three phase curves.</p>
+<p>Put another way, although FIGS 2. thru 5. seem to have identical shapes, they do not have identical values, and when they are superimposed on a grid that takes the actual values into account, the curves reveal their actual shapes. The more area under the curve of any component, the more it influences the melded outcome, FIG 7.</p>
+<h4>Bidding Implications and Risk Aversion</h4>
+<p>Estimating the hours (hence cost) of the project solves half of the equation. The second question is: What is the acceptable level risk our firm is willing to take?  The converse is: at what point is this project <em>too</em> risky? </p>
+<h5>Will you take this bet?</h5>
+<p>We toss a fair coin and you call it. </p>
+<ul><li>If you win, you get $10M tax free. </li>
+<li>If you lose, you forfeit your life. </li>
+</ul><p>Will you take the bet? If no, then what if we increase the amount?</p>
+<p>What if we make it $100M? $1B? $10B?</p>
+<p>At what point, if ever, will you take this bet?</p>
+<p>Though this is an extreme example, there are more common bets with huge payoffs that we will not make.</p>
+<p>How might this effect the our actual bid?</p>
+<h4>Fixed Bid Odds-setting</h4>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/fixedbidoption95_05b_0.jpg?itok=085Kos5_" alt="FIG 8. Drawn from @RISK software." title="FIG 8 . The probability outcome of Project 01 is ± 2 sigma." class="image-scale-638-blog" /><br /><span class="caption">FIG 8. The probability outcome of Project 01 is ± 2 sigma.</span></div>
+<p>FIG 8. is a graph of the expected outcome of Project 01 under a normal distribution. The question for the bidder is: what should we bid?</p>
+<p>An answer that immediately comes to mind is 450 hours, and that's because the number is in the middle; at the 50/50 indifference point as well as the most likely outcome.</p>
+<p>Let's go back to our coin toss: We toss a fair coin and you call it. Call it right and you win a dollar. Call it wrong, and you lose a dollar. No big deal if you lose.</p>
+<p>Now, if you were to play this game over and over,  you'd be no better off than when you started. The net is zero.</p>
+<p>If you a business were operated at that level (50/50-style) over time the net would be zero, unless you have a string of bad tosses, in which case you may end up having to close shop permanently.</p>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/fixedbidoption50-95b_0.jpg?itok=x63oyuUE" alt="FIG 9. Drawn from @RISK software." title=" FIG 9. The probability outcome of Project 01 where the odds are in the 50/50 to 95% bracket." class="image-scale-638-blog" /><br /><span class="caption">FIG 9. The probability outcome of Project 01 where the odds are in the 50/50 to 95% bracket.</span></div>
+<p>FIG 9. looks at odds that are in the 50/50 to 95% bracket, which are shown in dark green.</p>
+<p>A growth company ought to consider where in the green the bid might should be. In this example, the bid might be 450 to 525 hours.</p>
+<p>The closer to 450 in the green curve, the closer the firm is to a net zero outcome.</p>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/fixedbidoption75-95b.jpg?itok=3pT9Izzs" alt="FIG 10. Drawn from @RISK software." title="FIG 10. The probability outcome of Project 01 is in the 75% to 95% bracket." class="image-scale-638-blog" /><br /><span class="caption">FIG 10. The probability outcome of Project 01 is in the 75% to 95% bracket.</span></div>
+<p>FIG 10. looks at odds that are in the 75% to 95% bracket, which are shown in orange. At 75% the odds are 3 out of 4 that the hours are sufficient. At 95% the odds are 19 out of 20 that the hours are sufficient.</p>
+<p>The entrepreneur who operates in this zone would be pondering a bid of 482 to 527 hours. </p>
+<h4>Summarizing the Bidding Brackets.</h4>
+<div class="blogimagewrap blogimagewrap-scale-638-blog"><img src="http://pingv.com/f/styles/scale-638-blog/public/blogimgs/3layers10000outcomes20130706b.png?itok=1sBMfax1" alt="FIG 11. Drawn from @RISK software." title="FIG 11. Setting the acceptable risk from ±2 sigma to one in for or better." class="image-scale-638-blog" /><br /><span class="caption">FIG 11. Setting the acceptable risk from ±2 sigma to one in for or better.</span></div>
+<p>In this short blog post, we have looked how a Monte Carlo analysis helps quantify risk. We see that generating a curve does not take us all the way there. It is the power of the analysis that informs us when we take a risk by making a fixed bid.</p>
+<h4>Summary and Final Thoughts When Using Monte Carlo Methodology in Making a Fixed Bid.</h4>
+<ol><li>Monte Carlo risk analysis is one way to quantify, meld, and graphically represent multiple uncertainties.</li>
+<li>Integrated software packages exist to run Monte Carlo analysis, and you don't have to be a math or business major to implement the methodology.</li>
+<li>The curves should be generated from what is believed to be the most accurate representation; no sandbagging; no Pollyanna; no Chicken Little.</li>
+<li>Combining multiple probability distributions through simple addition does not reflect the uncertainty of the project. A Monte Carlo simulation will meld the curves.</li>
+<li>The narrower and more pointed a probability curve is, the more it tends toward a discreet value; the broader and flatter a probability curve is, the greater the uncertainty.</li>
+<li>In a fixed bid, the bidder must has the burden of shouldering the risk, not the client.</li>
+<li>Estimating probabilities of sub-steps will sharpen the overall probability of the estimate, while at the same time incurring a cost for the additional estimation work.</li>
+<li>Before going taking the time and incurring the cost of an estimate, the bidder should ask:
+<ul><li>Has the client provided enough information for the shop to make an informed estimate? If not, consider the amount of time it will take to gather that information and act on it.</li>
+<li>Is the project one that plays to the shop's strengths? Interests? Profit margins? If not, is there another project that is more in align with these? </li>
+<li>Will the cost of drawing up a proposal be outweighed by the expected value, adjusted for the probability of getting the project? If not, consider a "no bid."</li>
+<li>Will the time is takes to do an estimate be better spent with a client who is more forthcoming? If a potential client's willingness to engage the shop and answer questions ahead of time is a fairly good indication of how the project will go once the work is started.</li>
+</ul></li>
+</ol><h4>Preview of part two</h4>
+<p>In part two of this blog, we will look more closely at real-world project estimate curves.</p>
+<div class="blogimagewrap blogimagewrap-scale-884"><img src="http://pingv.com/f/styles/scale-884/public/blogimgs/3layercurevesnel.png?itok=7tRCeYG4" alt="Drawn from @RISK." title="FIG 12. Three Probability Distribution Curves That Are Useful for Estimating." class="image-scale-884" /><br /><span class="caption">FIG 12. Three Probability Distribution Curves That Are Useful for Estimating.</span></div>
+<p>In part one of this series on estimating projects, we have exclusively used a normal distribution, and indeed some of the time it is the preferred distribution. In part two, we will examine how using other distributions will help further refine the estimate.</p>
+<p>The three curves are known as:</p>
+<ol><li>Normal</li>
+<li>Exponential</li>
+<li>Erlang</li>
+</ol><p>How these are applied in more detailed cases will be addressed in the next part in this blog series.</p>
+</div>
+    <span rel="schema:url" resource="/blog/project-of-10000-outcomes-part-one-estimating-fixed-bid-projects" class="rdf-meta"></span><span property="schema:name" content="A Project of 10,000 Outcomes - Part One - Estimating Fixed Bid Projects" class="rdf-meta"></span>
+  </body>
+</html>
+

@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 19 Aug 2014 14:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 19 Aug 2014 14:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupalize.Me: Upgrading Drush to work with Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalize.me/blog/201408/upgrading-drush-work-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupalize.Me: Upgrading Drush to work with Drupal 8</title>
+    <base href="http://drupalize.me/blog/201408/upgrading-drush-work-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden text-content text-secondary"><div class="field-items"><div class="field-item even"><p>When I first started learning Drupal, I remember the process of enabling and disabling modules on the Modules page and it took for-ev-er. My laptop was in serious danger of getting hurled across the room, due to my frustration. Then I discovered drush, and downloading and enabling modules was now performed with ease instead of pain and suffering. Of course there's a lot more you can do with drush than just download and enable modules, this is just one example.</p>
+
+<p>I've been using Drush 6.x on my local machine for quite some time now. Poking around Drupal 8's UI and seeing what's new, I haven't missed drush too much...until it was time to test drive a new contrib module for Drupal 8. When I typed into my Terminal window <code>drush dl page_manager</code>, I got quite the error message:</p>
+
+<img src="http://drupalize.me/sites/default/files/blog_post_images/drush-error-d8.png" width="889" height="275" alt="Drush 6.1.0 does not support Drupal 8." /><p>Drush 6.x only works with Drupal 6 or 7. If I wanted to use Drush on my Drupal 8 site, I would need to upgrade to Drush 7.x.</p></div></div></div><div id="comment-wrapper-nid-1748"></div>
+  </body>
+</html>
+

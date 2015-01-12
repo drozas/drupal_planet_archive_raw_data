@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 27 Apr 2014 06:55:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 27 Apr 2014 06:55:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Klaus Harris: Block Google from Drupal 7 node types on the cheap
+Content-Transfer-Encoding: 8bit
+Content-Base: http://klausharris.de/blog/block-google-drupal-7-node-types-cheap.html
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Klaus Harris: Block Google from Drupal 7 node types on the cheap</title>
+    <base href="http://klausharris.de/blog/block-google-drupal-7-node-types-cheap.html">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In these post Google panda/penguin days it is important that you get your website's crawl profile right and make best uses of your crawl budget. It probably doesn't matter on small sites, certainly not this one but on large ones with millions of pages it does. If Google is crawling useless pages, it could be missing important ones and at the same time this will weaken your site's overall ranking and visibility in Google.</p>
+<p>On this site, I have a 'link' node type like <a href="/link/324">this one</a>. How do I stop google crawling those types of pages without installing a module? It's easy.</p>
+<p>1. I use <a href="https://drupal.org/project/pathauto">Pathauto</a> already and just changed the path alias for my link node type to add a directory name like this:</p>
+<p><img src="/sites/default/files/sites/default/files/link_patterns.png" width="543" height="260" alt="link_patterns.png" /></p>
+<p>2. Through the interface, I deleted my aliases and then regenerated them. Use caution here, I don't know how well Drupal handles very large numbers of aliases, perhaps doing it directly in the DB might be safer.</p>
+<p>3. Add an entry in your robots.txt to block that directory:</p>
+<p><span class="geshifilter"><code class="php geshifilter-php">Disallow<span style="color: #339933;">:</span> <span style="color: #339933;">/</span><a href="http://www.php.net/link"><span style="color: #990000;">link</span></a><span style="color: #339933;">/</span></code></span></p>
+<p>This will now remove those nodes from Google and stop them being crawled. </p>
+<p>My words of warning then. Update url aliases with great caution, especially on commercial or heavily indexed sites unless you know exactly what you doing. If you're setting up a new site, this is a harmless  strategy. If you are changing urls and care about search engines, have a redirection strategy in place.</p>
+</div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Blog tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog-tags/drupal-planet">Drupal planet</a></li></ul></div><div class="field field-name-field-link-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Link tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/link-tags/drupal-planet">Drupal Planet</a></li></ul></div>
+  </body>
+</html>
+

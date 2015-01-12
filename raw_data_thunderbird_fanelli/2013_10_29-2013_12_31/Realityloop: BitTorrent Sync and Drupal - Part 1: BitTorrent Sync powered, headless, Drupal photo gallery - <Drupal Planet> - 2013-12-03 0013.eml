@@ -1,0 +1,103 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 02 Dec 2013 23:13:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 02 Dec 2013 23:13:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Realityloop: BitTorrent Sync and Drupal - Part 1: BitTorrent Sync powered, headless, Drupal photo gallery
+Content-Transfer-Encoding: 8bit
+Content-Base: http://realityloop.com/blog/2013/12/03/bittorrent-sync-and-drupal-part-1-bittorrent-sync-powered-headless-drupal-photo
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Realityloop: BitTorrent Sync and Drupal - Part 1: BitTorrent Sync powered, headless, Drupal photo gallery</title>
+    <base href="http://realityloop.com/blog/2013/12/03/bittorrent-sync-and-drupal-part-1-bittorrent-sync-powered-headless-drupal-photo">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://realityloop.com/sites/realityloop.com/files/field/image/BTSync_0.png"><img typeof="foaf:Image" src="http://realityloop.com/sites/realityloop.com/files/field/image/BTSync_0.png" width="128" height="128" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Not even 24 hours after the release of the BitTorrent Sync (BTSync) API, an API that I was eagerly awaiting, we were happy to be able to release arguably the first implementation of said API in the form of the BTSync API Drupal module, and only a few weeks later I personally released a Beta release of the BTSync Field module.</p>
+<p>Since then I've been planing on putting together both a text and a video tutorial/demonstration on exactly how one would use the modules, and maybe to touch on future plans I have working with the BTSync API. I was also approached by BitTorrent's Kathie Pham with interest in showcasing the work I have done with the API at Realityloop and in my own time, so even more motivation to get something put together.</p>
+<p>I've decided that all the things I would like to demonstrate would be too much for a single post, so instead I will be doing multiple posts over a period of a few weeks (hopefully).</p>
+<p> </p>
+<h2>The Tutorial: BitTorrent Sync powered, headless, Drupal photo gallery</h2>
+<p>There are so many things that the API could be used for, I personally have many plans for future modules, more ideas than time, but the one thing that appealed to me the most, and the idea that the tutorial/demonstration is going to focus on, is photo galleries.</p>
+<p>My father is a hobbyist photographer, and like many other web developers out there I have at one time in my past tackled the job of building a website for a family member, both pre and during my time working with Drupal; pre-Drupal with a manual process of image resizing, and using ImageCache/Image styles to automate the process with Drupal.</p>
+<p>What I found is that no matter how easy you make a system, and there are so many things you can do to improve the usability in Drupal, it can always be made simpler.</p>
+<p>The appeal of BTSync for a photo gallery site, to me at least, is the ability to manage the content in a completely headless state; no need for your users to log into the site at all, just drop their photos in a folder and they're done. This is exactly what I will be demonstrating below.</p>
+<p> </p>
+<p><strong>This tutorial will cover:</strong></p>
+<ul><li>How to setup the BTSync API module</li>
+	<li>How to setup the BTSync Fields module</li>
+	<li>Setting up a basic BTSync powered photo gallery</li>
+</ul><p> </p>
+<p><strong>This tutorial assumes:</strong></p>
+<ul><li>An API enabled BTSync sever; see 'Enabling the API' in the <a href="http://www.bittorrent.com/sync/developers/api">Developer documentation</a></li>
+	<li>A fresh '<strong>Standard</strong>' install of Drupal 7</li>
+	<li>A basic understanding of Drupal site building</li>
+</ul><p> </p>
+Part 1 - Installing/enabling the modules.
+<p>For this tutorial I used the following modules:</p>
+<ul><li>BitTorrent Sync API 7.x-1.0: <a href="http://ftp.drupal.org/files/projects/btsync-7.x-1.0.zip">http://ftp.drupal.org/files/projects/btsync-7.x-1.0.zip</a></li>
+	<li>BitTorrent Sync Fields 7.x-1.0-beta1: <a href="http://ftp.drupal.org/files/projects/btsync_fields-7.x-1.0-beta1.zip">http://ftp.drupal.org/files/projects/btsync_fields-7.x-1.0-beta1.zip</a></li>
+</ul><p>There are various methods of installing Drupal modules, with my personal preference being Drush or Drush make, but I will demonstrate installation via Drupals built in module installer:</p>
+<ol><li>Navigate to your sites '<strong>Install new module</strong>' interface: admin/modules/install</li>
+	<li>Copy and paste one of the modules URLs, as provided above, into the '<strong>Install from a URL</strong>' field.</li>
+	<li>Click the '<strong>Install</strong>' button.<br /><img alt="Part 1, steps 2-3" src="http://realityloop.com/sites/realityloop.com/files/uploads/p1_2-3.png" /></li>
+	<li>Repeat steps 2-3 until all modules are successfully installed.</li>
+	<li>Click the '<strong>Enable newly added modules</strong>' link or navigate to your sites '<strong>Modules</strong>' interface: admin/modules</li>
+	<li>Enable the newly added modules; Check the boxes next to the modules and click the '<strong>Save configuration</strong>' button.<br /><img alt="Part 1, step 6" src="http://realityloop.com/sites/realityloop.com/files/uploads/p1_6_0.png" /></li>
+</ol><p> </p>
+Part 2 - Configuring the BTSync API module.
+<p>Assuming you have already setup your BTSync server and it is API enabled, this step should be relatively painless.</p>
+<ol><li>Navigate to the '<strong>BitTorrent Sync API</strong>' configuration interface: admin/config/services/btsync<br /><p><strong>Note:</strong> If you are still on the '<strong>Modules</strong>' interface, you can simply click the '<strong>Configure</strong>' link next to the BTSync API module.</p>
+	</li>
+	<li>Enter the following details:
+		<ul><li><strong>URL:</strong> The URL of your BTSync API server, likely the same as default.</li>
+			<li><strong>Username:</strong> The '<strong>login</strong>' value as per the configuration of your BTSync API server.</li>
+			<li><strong>Password:</strong> The '<strong>password</strong>' value as per the configuration of your BTSync API server.</li>
+		</ul></li>
+	<li>Click the '<strong>Save configuration</strong>' button.<br /><img alt="Part 2, steps 2-3" src="http://realityloop.com/sites/realityloop.com/files/uploads/p2_2-3.png" /></li>
+</ol><p> </p>
+Part 3 - Setting up a content type / Configuring the BTSync Fields module.
+<p>The BTSync Fields module provides Field types and widgets for Drupals Field system. As of writing this, the 7.x-1.0-beta1 release only contains a single field widget; <strong>BitTorrent Sync (basic)</strong>. This widget allows us to assign or generate a BTSync secret to a File or Image field and when Cron is run it will ensure all eligible files in the sync are associated with the Field. This is the basis of our headless photo gallery.</p>
+<p>In this step we are going to setup a new content type and attach a Image field using the BTSync fields widget.</p>
+<ol><li>Navigate to the '<strong>Content types</strong>' interface: admin/structure/types</li>
+	<li>Click the '<strong>Add content type</strong>' link.</li>
+	<li>Enter a human readable name for your content type (e.g., <strong>Gallery</strong>) and click the '<strong>Save and add fields</strong>' button.</li>
+	<li>Under the '<strong>Add existing field</strong>' row, select the '<strong>Image: field_image (Image)</strong>' item and update the '<strong>Widget</strong>' to '<strong>BitTorrent Sync (basic)</strong>'.</li>
+	<li>Click the '<strong>Save</strong>' button.<br /><img alt="Part 3, steps 4-5" src="http://realityloop.com/sites/realityloop.com/files/uploads/p3_4-5.png" /></li>
+	<li>On the next page, make the following changes:
+		<ul><li><strong>Required field:</strong> Ticked</li>
+			<li><strong>Allowed file extensions:</strong> jpg, jpeg</li>
+			<li><strong>Number of values:</strong> Unlimited</li>
+		</ul><p><strong>Note:</strong> These are just recommended settings for the sake of this tutorial.</p>
+	</li>
+	<li>Click the '<strong>Save settings</strong>' button.</li>
+</ol><p> </p>
+Part 4 - Time to test it all out.
+<p>Now that (most of) the hard stuff is out of the way, we can actually test it out and see it working in action. To do so, we will be generating a BTSync secret during the creation of a Node of our previously created Content type, and then using that secret to sync our photos.</p>
+<ol><li>Navigate to the '<strong>Add content</strong>' interface (node/add) and click on your newly created Content type (e.g., <strong>Gallery</strong>).</li>
+	<li>Give the content a '<strong>Title</strong>' (e.g., <strong>BTSync Gallery</strong>).</li>
+	<li>In the '<strong>Image</strong>' field, click the '<strong>Generate secret</strong>' button and copy the generated secret.
+		<p><strong>Note:</strong> If nothing happens, it's likely due to mis-configuration of the BTSync API module or that the BTSync API server you defined is currently offline.</p>
+		<img alt="Part 4, steps 2-3" src="http://realityloop.com/sites/realityloop.com/files/uploads/p4_2-3.png" /></li>
+	<li>Click the '<strong>Save</strong>' button.</li>
+	<li>Setup a Sync folder with the generated secret in a desktop BTSync client (or at least an alternate BTSync instance).<br /><img alt="Part 4, step 5" src="http://realityloop.com/sites/realityloop.com/files/uploads/p4_5.png" /></li>
+	<li>Add some Photos to the folder and wait for them to finish syncing.</li>
+</ol><p>When Cron is next run all eligible synced files will be attached to the field and they will display on our newly created gallery.</p>
+<p>For the sake of this tutorial, you can force Cron to be run via the '<strong>Status report</strong>' interface (admin/reports/status) by clicking the '<strong>run cron manually</strong>' link.</p>
+<p><img alt="Part 4 result" src="http://realityloop.com/sites/realityloop.com/files/uploads/p4_result.png" /></p>
+<p> </p>
+Part 5 - Make it pretty(ier).
+<p>This approach in itself doesn't make a photo gallery, instead it makes a piece of content with a bunch of images attached. There are many different ways you can work over the display, each with their pros and cons. My preference is generally a Views based solution, but for the sake of keeping things simple I will be using a Field formatter based approach with the Gallery formatter module.</p>
+<ol><li>As per <strong>Part 1</strong>, install and enable Gallery formatter module, version 7.x-1.3 (<a href="http://ftp.drupal.org/files/projects/galleryformatter-7.x-1.3.zip">http://ftp.drupal.org/files/projects/galleryformatter-7.x-1.3.zip</a>).</li>
+	<li>Navigate to your Content types '<strong>Manage display</strong>' interface: admin/structure/types/manage/<strong>[content_type]</strong>/display</li>
+	<li>Choose '<strong>jQuery Gallery</strong>' on the '<strong>Format</strong>' dropdown on the '<strong>Image</strong>' field.</li>
+	<li>Click the '<strong>Save</strong>' button.<br /><img alt="Part 5, steps 3-4" src="http://realityloop.com/sites/realityloop.com/files/uploads/p5_3-4.png" /></li>
+</ol><p><img alt="Part 5 result" src="http://realityloop.com/sites/realityloop.com/files/uploads/p5_result.png" /> There you have it, a simple BTSync powered, headless, Drupal photo gallery.</p>
+<p> </p>
+<p>In the next post I will be covering over how to integrate with the BitTorrent Sync API module directly and with the Rules module, keep your eyes peeled.</p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/btsync" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">btsync</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">tutorial</a></div></div></div>
+  </body>
+</html>
+

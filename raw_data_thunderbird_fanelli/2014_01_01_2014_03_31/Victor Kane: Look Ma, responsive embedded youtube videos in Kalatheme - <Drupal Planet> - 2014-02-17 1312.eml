@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Feb 2014 12:12:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Feb 2014 12:12:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Victor Kane: Look Ma, responsive embedded youtube videos in Kalatheme
+Content-Transfer-Encoding: 8bit
+Content-Base: http://awebfactory.com.ar/node/523
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Victor Kane: Look Ma, responsive embedded youtube videos in Kalatheme</title>
+    <base href="http://awebfactory.com.ar/node/523">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><p>So <a href="https://drupal.org/project/kalatheme" target="_blank">Kalatheme</a> "ships with many responsive layouts, templates and tools right out of the box" and is built right on top of <a href="https://drupal.org/project/panopoly" target="_blank">Panopoly</a> (think responsive panels, panelizer...). But I used the built in Media capabilities to stick a video field into a news article application, and it was stuck in big. So I got a quick fix from <a href="http://avexdesigns.com/responsive-youtube-embed/" target="_blank">this article</a> by&nbsp;John Surdakowski, and applied it in just a few lines of CSS in my Kalatheme based sub-theme's css/main.css file:</p>
+<pre>/* Responsive you-tube video */
+.media-youtube-video {
+	position:relative;
+	padding-bottom:56.25%;
+	padding-top:30px;
+	height:0;
+	overflow:hidden;
+}
+.media-youtube-video iframe {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}</pre><p>This is a bare-bones approach, but works splendidly in Kalatheme, and should work with other module sets and themes also, after having identified the iframe container div classes, and the appropriate iframe classes.</p>
+<!-- google_ad_section_end --><div class="og_rss_groups"></div>
+  </body>
+</html>
+

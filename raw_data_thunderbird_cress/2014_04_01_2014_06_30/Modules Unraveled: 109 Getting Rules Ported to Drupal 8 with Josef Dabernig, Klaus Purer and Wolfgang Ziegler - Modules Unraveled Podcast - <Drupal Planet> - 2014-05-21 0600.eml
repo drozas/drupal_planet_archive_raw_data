@@ -1,0 +1,88 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys: $label4                                                                        
+Date: Wed, 21 May 2014 05:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 21 May 2014 05:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Modules Unraveled: 109 Getting Rules Ported to Drupal 8 with Josef Dabernig, Klaus Purer and Wolfgang Ziegler - Modules Unraveled Podcast
+Content-Transfer-Encoding: 8bit
+Content-Base: http://modulesunraveled.com/podcast/109-getting-rules-ported-drupal-8-josef-dabernig-klaus-purer-and-wolfgang-ziegler-modules
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Modules Unraveled: 109 Getting Rules Ported to Drupal 8 with Josef Dabernig, Klaus Purer and Wolfgang Ziegler - Modules Unraveled Podcast</title>
+    <base href="http://modulesunraveled.com/podcast/109-getting-rules-ported-drupal-8-josef-dabernig-klaus-purer-and-wolfgang-ziegler-modules">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden view-mode-rss"><div class="field-items"><figure class="clearfix field-item even"><img typeof="foaf:Image" class="image-style-podcast-default" src="http://modulesunraveled.com/sites/default/files/styles/podcast_default/public/podcast/image/Dasjo%2C%20Klausi%2C%20Fago.png?itok=PuujalLX" width="350" height="118" alt="Photo of Josef Dabernig, Klaus Purer and Wolfgang Ziegler" /></figure></div></div><span class="submitted-by">Published: Wed, 05/21/14</span><div class="field field-name-field-podcast-file field-type-file field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><div class="mediaelement-audio"><audio  src="http://traffic.libsyn.com/modulesunraveled/109_Getting_Rules_Ported_to_Drupal_8_with_Josef_Dabernig_Klaus_Purer_and_Wolfgang_Ziegler_-_Modules_Unraveled_Podcast.mp3" class="mediaelement-formatter-identifier-1400651691-0" controls="controls" ></audio><div class="mediaelement-download-link"><a href="http://traffic.libsyn.com/modulesunraveled/109_Getting_Rules_Ported_to_Drupal_8_with_Josef_Dabernig_Klaus_Purer_and_Wolfgang_Ziegler_-_Modules_Unraveled_Podcast.mp3">Download this episode</a></div></div></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>Rules</h2>
+<ul><li>
+<p>For those new to Drupal, what is the Rules module?</p>
+<ul><li>Intro Rules: events, conditions, actions</li>
+<li>Programming for site builders</li>
+<li>Giving workflows into the hands of the site builders, workflow building blocks like Lego</li>
+</ul><p>The Rules module allows site administrators to define conditionally executed actions based on occurring events (known as reactive or ECA rules).</p>
+</li>
+</ul><p>Example use cases<br />
+Build flexible content publishing workflows changes<br />
+Send customized mails to notify your users about important updates<br />
+Create custom redirections, system messages, breadcrumbs, ...<br />
+Build an e-commerce store using Drupal Commerce<br />
+And many more…</p>
+<p>Rules has fantastic integration with Drupal Core APIs and all structured data exposed using the Entity and Fields systems, over 350 other contributed modules specifically integrate with the Rules API by to provide their own custom events, conditions, actions or exposing custom data in a reusable way.</p>
+<p>Use case: Automating processes<br />
+Rules serves the need for automating processes like comment moderation, customizable e-mail notifications or event-based calculations on social platforms. These are built by using generic tools like Flag, Organic groups and message module. More specific solutions like Privatemsg, Feeds, Activity, User point or Voting rules also tightly integrate into the system.</p>
+<p>What is the Rules module, explain some use cases &amp; tell us about the rules success story<br />
+http://d8rules.org/content/rules-success-story</p>
+<h2>Drupal 8</h2>
+<ul><li>In the last episode, Crell mentioned that because of the advances in D8, there may not be a need for the Rules module. So, I told him that I would ask you guys for a response to that.</li>
+<li>What Drupal 8 Stuff are you building upon?</li>
+</ul><p>Entity API<br />
+Out-of-the-box typed data support for all fields, i.e. including custom content entity types</p>
+<p>Typed Data API</p>
+<p>The Typed Data API was created to provide developers with a consistent way of interacting with data in different ways. Not only does the API allow you to interact with the actual data, it also provides means of fetching more information, or metadata, about the actual data.<br />
+The Typed Data API is a low level, generic and reusable object oriented API. One API that implements it is the Entity API - Drupal’s primary data model.</p>
+<p>-&gt; Unification of metadata systems of Drupal 7.</p>
+<p>Conditions &amp; Actions</p>
+<p>We've got an Actions and Conditions API in core already, so one might think another huge part has been taken care off. Unfortunately, no - those APIs have been created/ported with other use cases in mind, so they do not cater for all the more advanced features Rules users are used to.</p>
+<p>While I tried to make sure they fit Rules needs as far as possible when they were introduced/updated, they do not fit our needs yet and it might be impossible to make them fit without breaking those APIs. For Rules 8.x we plan to work on improving those APIs (from contrib) as needed first, so we can ensure they fit Rules' requirements.</p>
+<p>Once we are sure everything works out we'll know what we have to adapt and whether improvements can be contributed to core.<br />
+Depending on how that works out, we'll see whether we can build up on the core Action and Conditions API or there will be Rules' variants of those APIs (again :(). For more details please see the related issues:</p>
+<p>Rules 8.x Architecture<br />
+Rules 8.x Roadmap</p>
+<p>Motivation behind Rules in Drupal 8</p>
+<p>Features<br />
+http://d8rules.org/content/overview-rules-8x-features</p>
+<p>Porting Rules to Drupal 8 will require a major refactoring of the framework. The Rules Core APIs &amp; functionality will evolve and Drupal 8 rewrite opportunities will be taken into account.</p>
+<p>Site building based on Drupal 8 core integration wins<br />
+Admin UI usability improvements<br />
+Simple Views Bulk operations in core</p>
+<p>Reusable components<br />
+Plug-in based architecture &amp; fully object-oriented code<br />
+Rules data selector for tokens, contexts and other use cases<br />
+Typed data widgets &amp; formatters<br />
+Embeddable Rules UI components to integrate actions &amp; conditions</p>
+<p>Evolved developer experience<br />
+Unified DX based on Drupal 8 plug-in system<br />
+Symfony 2 event system integration<br />
+Deployable config via CMI</p>
+<p>Funding, milestones, Corporate &amp; crowdfunding  - how will that work out?<br />
+http://test-d8rules.gotpantheon.com/content/funding-goal-project-milestones<br />
+- sponsorship by company<br />
+- crowd funding<br />
+- What happens if the funding does not succeed?</p>
+<p>How &amp; who<br />
+http://test-d8rules.gotpantheon.com/team<br />
+- fago, klausi, dasjo, nico</p>
+<p>crowd funding is live now - drupalfund.us!!!</p>
+<p>Who supports you already?<br />
+see http://d8rules.org/supporters</p>
+<p>Why should we help now?</p>
+<h2>Questions from Twitter</h2>
+<ul><li><a href="http://twitter.com/rteijeiro">Ruben Teijeiro</a><br />
+When Rules in #Drupal Core? #MUP109 <a href="http://twitter.com/d8rules">d8rules</a></li>
+</ul></div></div></div><section class="field field-name-field-items-mentioned field-type-link-field field-label-above view-mode-rss"><h2 class="field-label">Episode Links:&nbsp;</h2><div class="field-items"><div class="field-item even"><a href="http://drupal.org/user/16747" target="_blank" rel="nofollow">fago on drupal.org</a></div><div class="field-item odd"><a href="https://twitter.com/the_real_fago" target="_blank" rel="nofollow">fago on Twitter</a></div><div class="field-item even"><a href="https://drupal.org/user/262198" target="_blank" rel="nofollow">klausi on drupal.org</a></div><div class="field-item odd"><a href="http://twitter.com/_klausi_" target="_blank" rel="nofollow">klausi on Twitter</a></div><div class="field-item even"><a href="https://drupal.org/user/228295" target="_blank" rel="nofollow">Dasjo on drupal.org</a></div><div class="field-item odd"><a href="http://twitter.com/dasjo" target="_blank" rel="nofollow">Dasjo on Twitter</a></div><div class="field-item even"><a href="http://d8rules.org" target="_blank" rel="nofollow">d8rules.org</a></div><div class="field-item odd"><a href="https://www.drupalfund.us/project/d8rules-support-rules-module-drupal-8" target="_blank" rel="nofollow">DrupalFund.us Crowdfunding Campaign</a></div><div class="field-item even"><a href="http://klau.si" target="_blank" rel="nofollow">Klausi’s Blog</a></div><div class="field-item odd"><a href="http://drunomics.com/en/blog/d8rules-supporting-rules-modules-drupal-8" target="_blank" rel="nofollow">Blog post about Supporting Rules in D8</a></div><div class="field-item even"><a href="http://d8rules.org/team" target="_blank" rel="nofollow">d8rules Team</a></div></div></section><section class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above view-mode-rss"><h2 class="field-label">Tags:&nbsp;</h2><ul class="field-items"><li class="field-item even"><a href="/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet-drupal</a></li></ul></section>
+  </body>
+</html>
+

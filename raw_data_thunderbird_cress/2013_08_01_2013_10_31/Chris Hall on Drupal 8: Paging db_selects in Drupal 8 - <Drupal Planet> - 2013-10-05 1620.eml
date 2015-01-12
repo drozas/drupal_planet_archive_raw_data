@@ -1,0 +1,91 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 05 Oct 2013 15:20:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 05 Oct 2013 15:20:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hall on Drupal 8: Paging db_selects in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://running-on-drupal8.co.uk/blog/paging-dbselects-drupal8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hall on Drupal 8: Paging db_selects in Drupal 8</title>
+    <base href="http://running-on-drupal8.co.uk/blog/paging-dbselects-drupal8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/8/body/und/rss"><div class="field-items"><div class="field-item even"><h3>Introduction</h3>
+
+<p>The first problem I had to sort out for the <a href="https://drupal.org/project/blog" target="_blank">Blog module</a> for Drupal 8 was a number of errors being thrown in the <a href="https://api.drupal.org/api/drupal/core%21includes%21database.inc/function/db_select/8" target="_blank">db_selects</a> responsible for the two listing views and the RSS feeds. Although I got the pages working again the Select object couldn't have a pager attached in the Drupal 7 manner and had a number of other differences (no limit for example).</p>
+
+<p>Although initially I got the Blog module working again, I had no paging (I limited the query with a range so that there wouldn't be crazy long listing pages).</p>
+
+<h3>Views or not?</h3>
+
+<p>Views being in core for Drupal 8 is big news, for the varioius listing pages that appear in core Drupal the plan <a href="https://drupal.org/node/2084727" target="0">as desctibed here</a> <del>appears to be to use Views but to have a fallback in case Views module has been disabled</del> (<strong>Edit:</strong> Thanks to the comment by Eelke Blok I know realise this recommendation is just for admin views). I am not sure where this leaves best practice for modules in contrib. however.</p>
+
+<p>My initial thought was to go with the views (making Blog module dependent on Views module) and then provide a fallback later. I had trouble with the Views I needed though. Simple listings were easy, in brief you can create a view in the UI  grab the yaml configuration for it, place the configuration in the the config directory of your module and hey presto the View gets installed with your module. Making the combination of RSS feeds and contextual filters I needed for Blog module alongside overridden titles was beyond me though unfortunately, a similar view for Taxonomy that gets installed in disabled state, suffered similar issues when I enabled it.</p>
+
+<p>I had to conclude that Views weren't quite ready for my needs yet, I suspect I need a new or better plugin for user related views.</p>
+
+<h3>Paging the db_select</h3>
+
+<p>A little research and I found out how to extend db_select to enable paging, there wasn't really any documentation that I could find easily so I dug around in core. It turns out that the <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Database%21Query%21Select.php/class/Select/8" target="_blank">Select object </a>returned by db_select in Drupal 8 has an<a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Database%21Query%21Select.php/function/Select%3A%3Aextend/8" target="_blank"> extend function</a>. Extending the Select object with a P<a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Database!Query!PagerSelectExtender.php/class/PagerSelectExtender/8" target="_blank">agerSelectExtender</a> wraps it with all the functionality required for paging.</p>
+
+<p>All the above is a little convoluted, one of the listing views for the Blog module is displayed below, it should be clearer how the paging is added if you look for where the query is extended. In Drupal 7 even where objects were used in core it was quite possible to gloss over them, in Drupal 8 is seems a lot more important to dig in and understand how those objects are working. </p>
+
+<pre>
+function blog_page_last() {
+
+  $build = array();
+
+  $query = db_select('node_field_data', 'n');
+  $query-&gt;addTag('node_access');
+  $query-&gt;condition('type','blog');
+  $query-&gt;condition('status',1);
+
+  $count_query = clone $query;
+  $count_query-&gt;addExpression('Count(n.nid)');
+  
+  $paged_query = $query-&gt;extend('Drupal\Core\Database\Query\PagerSelectExtender');
+  $paged_query-&gt;limit(Drupal::config('node.settings')-&gt;get('items_per_page'));
+  $paged_query-&gt;setCountQuery($count_query);
+
+  $nids = $paged_query
+    -&gt;fields('n', array('nid', 'sticky', 'created'))
+    -&gt;orderBy('sticky', 'DESC')
+    -&gt;orderBy('created', 'DESC')
+    -&gt;execute()
+    -&gt;fetchCol();
+
+  if (!empty($nids)) {
+    $nodes = node_load_multiple($nids);
+    $build['nodes'] = node_view_multiple($nodes);
+    $build['pager'] = array(
+      '#theme' =&gt; 'pager',
+      '#weight' =&gt; 5,
+    );
+  }
+  else {
+    drupal_set_message(t('No blog entries have been created.'));
+  }
+  drupal_add_feed('blog/feed', t('RSS - blogs'));
+
+  return $build;
+}</pre>
+
+<h3>Best practice and EntityQuery?</h3>
+
+<p>I am more interested in finding out what it takes to get a working module that will work with the first release of Drupal8 than best practice right now, especially as it is not always quite clear what best practice is for Drupal 8 yet. </p>
+
+<p>Unlike the example I found in core, I changed the name of $query to $paged_query to make it clear that the object has changed and that is why I can now call limit() on it, I am sure that once everything is Drupal 8 compliant there will be quite a lot to make better.</p>
+
+<p>Finally it was easier to learn about db_select changes as the original implementation worked this way, but I suspect that the more abstract <a href="https://api.drupal.org/api/drupal/core!lib!Drupal.php/function/Drupal%3A%3AentityQuery/8" target="_blank">EntityQuery</a> would be more appropriate for this kind of listing. The ancestor of EntityQuery, EntityFieldQuery was woefully underused in core D7 (imho), I would suspect for example that using that I would not have to 'just know' that the meat of the node data I wanted was in the node_field_data table (perhaps I do though that is a story for another day). </p>
+
+<p> </p>
+</div></div></div><div  class="field field-node--field-blog-tags field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix clearfix" data-edit-id="node/8/field_blog_tags/und/rss"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0">planet</li><li class="taxonomy-term-reference-1">blog</li></ul></div>
+  </body>
+</html>
+

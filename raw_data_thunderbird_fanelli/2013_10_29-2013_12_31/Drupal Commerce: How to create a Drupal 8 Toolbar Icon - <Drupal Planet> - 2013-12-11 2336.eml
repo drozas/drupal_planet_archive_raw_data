@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 11 Dec 2013 22:36:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 11 Dec 2013 22:36:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Commerce: How to create a Drupal 8 Toolbar Icon
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupalcommerce.org/blog/10943/how-create-drupal-8-toolbar-icon
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Commerce: How to create a Drupal 8 Toolbar Icon</title>
+    <base href="http://www.drupalcommerce.org/blog/10943/how-create-drupal-8-toolbar-icon">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><img src="http://www.drupalcommerce.org/sites/default/files/cart-icon-problems.png" alt="Drupal Commerce Cart icon translation" /></p>
+<p>Have you <a href="https://drupal.org/node/3060/release">installed Drupal 8 yet</a>? That toolbar is an incredible piece of art. It's functional, beautiful, and really slick. The icons are resolution independent, so that means your average mobile phone and some of the higher end laptops can show off a lot more icon detail. It's so pretty, it's just begging to be extended and filled with all the awesome-sauce that is Drupal Commerce.</p>
+<p>Below is a journey through making a toolbar icon happen on Drupal 8-alpha6. Note that things can definitely change between now and a stable Drupal 8.</p>
+<h2>D8 Toolbar Status</h2>
+<p>So, unless you were in the issue queues helping <a href="https://drupal.org/node/2032773">make decisions</a> and <a href="https://github.com/ry5n/libricons">solve problems</a>, you've likely not taken much time to follow the evolution of the toolbar. In Drupal 7, this is the toolbar you get:</p>
+<p><img src="http://www.drupalcommerce.org/sites/default/files/d7toolbar.png" alt="Drupal 7 Toolbar" /></p>
+<p>And in Drupal 8, you get so much more:</p>
+<p><img src="http://www.drupalcommerce.org/sites/default/files/d8toolbar.png" alt="Drupal 8 Toolbar" /></p>
+<ul><li><strong>Toolbar Bar</strong> - This is the black bar across the top. Yes it's called the "Toolbar Bar" (note the double "bar"). In a particularly brilliant stroke, we have four very simple actions. The clutter is gone. And the best part? The links collapse into icons on smaller screens.</li>
+<li><strong>Toolbar Tray</strong> - This is the white bar just below the black bar that can go "horizontal" using a toggle switch. Unlike Drupal 7, the top bar items tie directly to the second bar. I, for one, am very impressed with how comfortable this tray feels. Finally, Drupal has a world-class toolbar.</li>
+<li><strong>Toolbar Tray expansion</strong> - When in a horizontal</li>
+<li><strong>Icons</strong> - Notice all those icons? They're a new feature and that's the focus of the rest of this article. Lots to talk about.</li>
+</ul><p><a href="http://www.drupalcommerce.org/blog/10943/how-create-drupal-8-toolbar-icon">Read the entire tutorial</a></p>
+</div></div></div>
+  </body>
+</html>
+

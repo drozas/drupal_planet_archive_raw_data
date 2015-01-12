@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 18 Feb 2014 21:01:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 18 Feb 2014 21:01:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Multisite Apache Solr Search with Domain Access
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/multisite-apache-solr-search
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Multisite Apache Solr Search with Domain Access</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/multisite-apache-solr-search">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Using one Apache Solr search core with more than one Drupal website isn't too difficult; you simply use a module like <a href="https://drupal.org/project/apachesolr_multisitesearch">Apache Solr Multisite Search</a>, or a technique like the one mentioned in Nick Veenhof's post, <a href="http://nickveenhof.be/blog/lets-talk-apache-solr-multisite">Let's talk Apache Solr Multisite</a>. This kind of technique can save you time (and even money!) so you can use one <a href="http://hostedapachesolr.com/">Hosted Apache Solr</a> subscription with multiple sites. The only caveat: any site using the solr core could see any other site's content (which shouldn't be a problem if you control all the sites and don't expose private data through solr).</p>
+<p>There are two ways to make Apache Solr Search Integration work with Domain Access, and which method you use depends on how your site's content is structured.</p></div></div></div>
+  </body>
+</html>
+

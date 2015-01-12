@@ -1,0 +1,90 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 25 Nov 2014 18:44:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 25 Nov 2014 18:44:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal core updates for November 25, 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/450528
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal core updates for November 25, 2014</title>
+    <base href="https://groups.drupal.org/node/450528">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>What's new with Drupal 8?</h2>
+<p><a href="https://www.drupal.org/node/2373889">Drupal 8.0.0 beta3 was released</a> since the last core update, with over 200 fixes after the prior release. There are still over 100 known critical issues, which means more beta releases to come.</p>
+<p>We take special care to resolve security and performance issues. Both types of issues may require API changes. There is now <a href="https://www.drupal.org/node/1744302#critical-perf-issues">defined criteria for performance issues</a> as to what kind of improvements qualify as critical issues (and therefore blocking the Drupal 8.0.0 release).</p>
+<p>After 2.5 years of work in part sponsored by MongoDB Inc, led by Károly Négyesi (chx), Drupal 8 can now completely install with MongoDB. This is the first time Drupal in its entirety has been successfully installed in a NoSQL database.<br />
+<a href="https://www.youtube.com/watch?v=DAawlTH7AuE"><br />
+<img src="https://groups.drupal.org/files/mongo_video_screenshot.png" alt="" /><br />
+Check out the demo video</a>.</p>
+<p>In almost three weeks, the Drupal Association and Wunderkraut are sponsoring a <a href="https://groups.drupal.org/node/447123">focused sprint in Ghent</a> to help move core critical issues forward. However, you can help make things move faster anytime from anywhere, so read on!</p>
+<h2>Where's Drupal 8 at in terms of release?</h2>
+<p>Since November 8,  we've fixed 29 critical issues and 26 major issues, and opened 19 criticals and 40 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">117 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">717 major issues</a>.</p>
+<h3>How long does it take to fix a critical?</h3>
+<p>So how long will it take us to fix those critical issues and get to a Drupal 8 release candidate? The average time it takes to fix a critical issue varies enormously depending on the scope of the problem and the resources our contributors can devote to fixing each. Over the course of the Drupal 8 development cycle:</p>
+<ul>
+<li>30% of critical issues were fixed within one week of being filed,</li>
+<li>50% of criticals were fixed within one month of being filed,</li>
+<li>80% of criticals were fixed within six months,</li>
+<li>and then 20% took more than six months.</li>
+</ul>
+<p>This means that one great way to help get Drupal 8 to a release faster is to accelerate some of those long-running issues. Look for the <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;status[2]=8&amp;status[3]=14&amp;status[4]=15&amp;status[5]=4&amp;priorities[0]=400&amp;categories[0]=1&amp;categories[1]=2&amp;version[0]=8.x&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;order=created&amp;sort=asc">oldest critical issues</a>, or the critical issues that have <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;status[2]=8&amp;status[3]=14&amp;status[4]=15&amp;status[5]=4&amp;priorities[0]=400&amp;categories[0]=1&amp;categories[1]=2&amp;version[0]=8.x&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;issue_tags=&amp;&amp;order=last_comment_timestamp&amp;sort=asc">gone awhile with no updates</a>, and help assess them. Is each still relevant? Is something blocking it? What's the next step that's needed? Is the issue summary up to date? As we both focus on our next milestone and bring these longer-running issues to a successful resolution, we'll be able to narrow our focus to incoming issues and get Drupal 8 done. :)</p>
+<h2>Current focus</h2>
+<p>The current top priority in Drupal 8 is to resolve issues that block a beta-to-beta upgrade path (<a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D&amp;issue_tags=D8+upgrade+path">critical issues tagged 'D8 upgrade path'</a>). Supporting an upgrade path between betas is an important step for early adopters to begin building with Drupal 8 (and lending their resources to getting other critical issues done).</p>
+<p>We also need core contributors to continue <a href="https://www.drupal.org/contributor-tasks/update-allowed-beta">evaluating issues for the beta phase</a> based on the <a href="https://www.drupal.org/core/beta-changes">beta changes policy</a>. Note that <a href="https://dreditor.org/">Dreditor</a> now includes a handy button for inserting a beta evaluation template in issue summaries! Thanks Cottser and Mark Carver for adding this feature so quickly.</p>
+<p><img src="https://groups.drupal.org/files/beta_evaluation_button.png" alt="The new Dreditor button to &#039;Insert beta evaluation&#039;" /></p>
+<p>Finally, keep an eye out for critical issues that are blocking other work. Add the <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D&amp;issue_tags=blocker">blocker</a> issue tag that other issues are postponed.</p>
+<p>(Note that we're changing this section of the Drupal Core Updates to highlight ongoing goals rather than specific issues, because calls to action in these posts haven't resulted in additional momentum in highlighted issues. Instead, we'll be making brief, separate posts every week or two highlighting top-priority issues in critical areas. If you're a core subsystem maintainer or initiative lead and want to highlight a specific issue, we encourage you to <a href="https://groups.drupal.org/node/add/story?gids[]=167169">submit your own brief announcement to g.d.o/core (requires access)</a>. Anyone in <a href="http://cgit.drupalcode.org/drupal/tree/core/MAINTAINERS.txt">MAINTAINERS.txt</a> is authorized to post to this group!)</p>
+<h2>How to get involved</h2>
+<p>If you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+<p>If you'd like to contribute to a particular Drupal 8 initiative or working group, see the regularly scheduled meetings on the Drupal 8 core calendar:</p>
+<p><strong>Google Calendar ID:</strong><br />
+<code>happypunch.com_eq0e09s0kvcs7v5scdi8f8cm70@group.calendar.google.com</code><br />
+<strong>XML:</strong><br />
+<code>https://www.google.com/calendar/feeds/happypunch.com_eq0e09s0kvcs7v5scdi8f8cm70%40group.calendar.google.com/public/basic</code><br />
+<strong>iCal:</strong><br />
+<code>https://www.google.com/calendar/ical/happypunch.com_eq0e09s0kvcs7v5scdi8f8cm70%40group.calendar.google.com/public/basic.ics</code></p>
+<p>Note that ultimike is now running a virtual Migrate sprint, Wednesdays 19:00-21:00 EST. See the <a href="https://groups.drupal.org/imp">Migrate in core</a> group page for information and updates.</p>
+<p>If you are interested in really digging into a tough problem and helping resolve a stagnating release blocker, or if you are stuck on a critical currently, join the <a href="http://www.drupal.org/irc">#drupal-contribute IRC channel</a> during <a href="https://groups.drupal.org/node/446803">weekly critical issue office hours</a> on Fridays at 12:00p PST. See <a href="http://drupal4hu.com/taxonomy/term/8">chx's office hours reports</a> for an idea of what we've done so far!</p>
+<p>You can also help by <a href="https://www.gittip.com/DrupalCoreGittipTeam/">sponsoring independent Drupal core development</a>.
+</p>
+<h2>Notable Commits</h2>
+<ul>
+<li><a href="http://drupal.org/node/2236855">Issue 2236855</a> by rachel_norfolk, stefank, ngocketit, lauriii, LewisNyman, alexpott, yuki77, rteijeiro | mortendk: Use CSS for file icons in file fields.</li>
+<li><a href="http://drupal.org/node/2364647">Issue 2364647</a> by chx, alexpott: Fixed [sechole] Remove blacklist mode from Filter:XSS.</li>
+<li><a href="http://drupal.org/node/2322509">Issue 2322509</a> by prics, cilefen, gaurav.goyal, harijari, Temoor: Replace all instances of node_load(), node_load_multiple(), entity_load('node') and entity_load_multiple('node') with static method calls.</li>
+<li><a href="http://drupal.org/node/287292">Issue 287292</a> by almaudoh, mr.baileys, drewish, Berdir, znerol, boombatower, dawehner, jpetso, floretan: Add functionality to impersonate a user</li>
+<li><a href="https://www.drupal.org/node/2267453">Issue 2267453</a> by alexpott, dawehner, damiankloip: Views plugins do not store additional dependencies</li>
+<li><a href="https://www.drupal.org/node/2352155">Issue 2352155</a> by Wim Leers: Remove HtmlFragment/HtmlPage</li>
+<li><a href="https://www.drupal.org/node/2375225">Issue 2375225</a> by LewisNyman, davidhernandez: Add emma.maria as Bartik maintainer</li>
+<li><a href="https://www.drupal.org/node/2362987">Issue #2362987</a> by Wim Leers, Codenator, Pinolo: Remove hook_page_build() and hook_page_alter()</li>
+<li><a href="https://www.drupal.org/node/2339151">Issue #2339151</a> by EclipseGc, tim.plunkett, Gábor Hojtsy, effulgentsia: Conditions / context system does not allow for multiple configurable contexts, eg. language types</li>
+<li><a href="https://www.drupal.org/node/2376791">Issue #2376791</a> by dawehner, Wim Leers: Move all _content routing definitions to _controller</li>
+<li><a href="https://www.drupal.org/node/2378789">Issue #2378789</a> by Wim Leers: Views output cache is broken</li>
+<li><a href="https://www.drupal.org/node/2324055">Issue #2324055</a> by dawehner, cilefen, znerol: Split up the module manager into runtime information and extension information</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2>Drupal 8 Around the Interwebs</h2>
+<ul>
+<li>YesCT, xjm, KatteKrab, and Schnitzel created <a href="http://www.blackmesh.com/blog/strategies-businesses-investing-drupal-8-through-giving-their-employees-drupal-contribution">a proposal outlining business strategies for contributing to Drupal Core</a>. If you act in a decision-making capacity for your organization, this is an absolute must-read!</li>
+<li>MKorostoff explains <a href="http://mattkorostoff.com/article/programmatically-creating-a-block-in-drupal-8">how to programatically create a block in Drupal 8</a>.</li>
+<li>Joe Shindelar clarifies some of the <a href="https://drupalize.me/blog/201411/twig-filters-modifying-variables-drupal-8-template-files">differences between templates in D7 and Twig in D8</a> from a developer perspective. Courtney Koppenhaver also <a href="http://www.phase2technology.com/blog/transitioning-to-drupal-8-templates-with-twig/">provided some detail</a> on this topic!</li>
+<li>Andrew Cohen details <a href="http://forumone.com/insights/the-drupal-8-decision/">the decisions that need to be made when considering an upgrade to Drupal 8</a>.</li>
+</ul>
+<h2>Drupal 8 in "Real Life"</h2>
+<ul>
+<li><strong>December 10 - 14 - Ghent</strong>: The Drupal Association and Wunderkraut are sponsoring a <a href="https://groups.drupal.org/node/447123">focused sprint in Ghent to help move core critical issues forward.</a></li>
+<li><strong>January 17 and 18</strong>: <a href="https://groups.drupal.org/node/447258">Drupal Global Sprint Weekend</a> returns for the third year to unite small local sprints around the world. Find or add your sprint location or join online.</li>
+<li><strong>February 8 - 13 - Bogotá</strong>: <a href="https://latinamerica2015.drupal.org/">DrupalCon Latin America in Bogotá</a> is the next DrupalCon! Join the sprinters and <a href="https://groups.drupal.org/node/447308">sign up for various sprints</a>.</li>
+</ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.0.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/node/2220285">Read more about how you can volunteer to help with these posts</a>!</p>
+  </body>
+</html>
+

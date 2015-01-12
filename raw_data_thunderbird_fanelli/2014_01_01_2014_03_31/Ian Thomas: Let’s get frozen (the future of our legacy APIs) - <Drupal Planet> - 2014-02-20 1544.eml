@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Feb 2014 14:44:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Feb 2014 14:44:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Ian Thomas: Let’s get frozen (the future of our legacy APIs)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://ithomas.name/2014/lets-get-frozen/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Ian Thomas: Let’s get frozen (the future of our legacy APIs)</title>
+    <base href="http://ithomas.name/2014/lets-get-frozen/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div id="attachment_22" style="width: 310px" class="wp-caption alignright"><a href="http://ianthomas.name/wp-content/uploads/2014/01/thermo.jpg"><img class="size-medium wp-image-22 " title="We're getting closer to being frozen" alt="Cold thermometer" src="http://ianthomas.name/wp-content/uploads/2014/01/thermo-300x268.jpg" width="300" height="268" /></a><p class="wp-caption-text">Image by http://www.flickr.com/photos/kuyman/</p></div>
+<p>Back in July last year, <a title="Post from Dries on the date of the API freeze" href="http://buytaert.net/drupal-8-api-freeze" target="_blank">the Drupal 8 API froze</a>. Except it didn&#8217;t. It couldn&#8217;t &#8211; Drupal 8 wasn&#8217;t anywhere near ready enough. We still had thousands of lines of code that needed bringing up to the new standards and parts of the new API that still needed to be completed. To me, what the code freeze really meant was: stop breaking things, stop adding new features, and start concentrating on getting Drupal 8 ready to ship.</p>
+<p>As we approach the first beta, core&#8217;s need for this backwards-compatibility code is reducing, as seen by the<a href="https://drupal.org/node/2183531" target="_blank"> recent removal of variable_get() and friends</a>. But we&#8217;re also moving closer to the point where the API needs to be properly frozen, so that contrib modules don&#8217;t get caught out by functions suddenly disappearing. Some functions were marked @deprecated, but there was confusion about whether these functions would be shipped with Drupal 8.</p>
+<h2>What are we&#8217;re doing now?</h2>
+<p><a href="https://drupal.org/node/2187735">Issue #2187735</a> has recently been committed, which should clear up much of the confusion about @deprecated: the documentation for these functions will now typically say &#8220;@deprecated in Drupal 8.x-dev, will be removed before Drupal 8.0.&#8221;</p>
+<p>If you&#8217;re using any of these functions in your Drupal 8 code, then now is the time to update them. Ideally your code will be object-orientated and most of these function calls can be replaced with method calls on the relevant services, see <a href="https://drupal.org/node/2133171">Services and dependency injection in Drupal 8</a>. If that&#8217;s too much work, then there&#8217;s often a method on the <a href="https://api.drupal.org/api/drupal/core!lib!Drupal.php/class/Drupal/8">global \Drupal class</a> that you can use as a drop-in replacement (but without the benefits of OO).</p>
+<h2>How can I help?</h2>
+<p>Anyone developing with Drupal 8 should keep an eye out for procedural functions being called when reviewing patches &#8211; most of these functions now have OO replacements, often via the \Drupal class. If you&#8217;re using an IDE it may highlight deprecated functions, for example by striking a line through the function name.</p>
+<p>If you&#8217;re already a core developer, please have a look over the APIs that are documented as @deprecated. Are any missing? Please file new issues using the issue tag @deprecated, or we may be forced into shipping with them. Have we marked any APIs &#8220;will be removed before Drupal 8.0&#8243; that we actually want to ship with? Please open an issue and explain why.</p>
+<p>If you&#8217;re interested in getting into core development, there are lots of issues to update core from the old APIs to the new, some of which are great first issues. These will usually have the @deprecated issue tag, and the issue title will often start &#8220;Remove&#8221; or &#8220;Replace&#8221;. Come along to a <a href="https://drupal.org/core-office-hours" target="_blank">core mentoring session on irc</a> or see if there&#8217;s <a href="http://www.drupical.com/" target="_blank">a meet up happening near you</a> soon.</p>
+<p>If you&#8217;re happier developing in contrib, there&#8217;ll be a lot of work needed to upgrade contrib modules to use the new APIs. If you use any modules that already have a Drupal 8 version, check to see if they are using any of the deprecated API. If they are, open an issue and/or submit a patch, ideally before the API gets removed.</p>
+  </body>
+</html>
+

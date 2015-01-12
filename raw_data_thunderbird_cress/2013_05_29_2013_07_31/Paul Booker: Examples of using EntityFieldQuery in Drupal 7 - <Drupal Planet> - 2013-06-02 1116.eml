@@ -1,0 +1,47 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 02 Jun 2013 10:16:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 02 Jun 2013 10:16:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Examples of using EntityFieldQuery in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/code-snippet/examples-using-entityfieldquery-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Examples of using EntityFieldQuery in Drupal 7</title>
+    <base href="http://www.paulbooker.co.uk/code-snippet/examples-using-entityfieldquery-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php">
+function artwork_page_listing_recent() {
+  content = array();
+ 
+  $query = new EntityFieldQuery();
+  $query
+    ->entityCondition('entity_type', 'artwork')
+    ->propertyOrderBy('created', 'DESC')
+    ->range(0,5);
+  $result = $query->execute();
+ 
+  $artworks = artwork_load_multiple(array_keys($result['artwork']));
+  foreach ($artworks as $artwork) {
+    $content[] = artwork_page_view($artwork, 'teaser');
+  }
+}
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/entity" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">entity</a></div><div class="field-item odd"><a href="/tags/entityfieldquery" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">EntityFieldQuery</a></div><div class="field-item even"><a href="/tags/query" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">query</a></div><div class="field-item odd"><a href="/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix vertical easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/code-snippet/examples-using-entityfieldquery-drupal-7"
+data-count="vertical"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Examples of using EntityFieldQuery in Drupal 7">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="tall" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/code-snippet/examples-using-entityfieldquery-drupal-7"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

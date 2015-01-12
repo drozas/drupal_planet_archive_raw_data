@@ -1,0 +1,75 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 10 Mar 2014 08:10:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 10 Mar 2014 08:10:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Cool Module: Menu Token
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-7-menu-toekn
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Cool Module: Menu Token</title>
+    <base href="http://www.webomelette.com/drupal-7-menu-toekn">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In the <a href="adding-menu-items-wildcards-drupal-7-menus">previous article</a> I showed you how you can add menu items with wildcards to your menus in custom modules. Since then, however, I've been shown a cool module that allows to do similar things through the UI: <a href="http://drupal.org/project/menu_token" target="_blank">Menu token</a>.</p>
+
+<p><strong>Menu token</strong> allows you to define menu items that include tokens (provided by the <a href="http://drupal.org/project/token" target="_blank">Token</a> module). These tokens get replaced on page load depending on the context or whatever rule you set when you created the menu. So let's take a look at how it works.</p>
+
+<p>To install it, go through the normal module installation procedure. With Drush, this is simple:</p>
+
+<pre><code>drush dl menu_token token &amp;&amp; drush en menu_token token
+</code></pre>
+
+<p>You'll notice that we also install the <strong>Token</strong> module as it is needed.</p>
+
+<p>Before anything, navigate to <code>admin/config/menu_token</code> and check/uncheck the relevant boxes. These are basically the available entity types exposed by <strong>Menu Token</strong>.</p>
+
+<p>Next, go to your menu and add a new link. You'll notice a new checkbox saying <code>Use tokens in title and in path.</code> Check that box and you'll get all the options for the token in that menu link.</p>
+
+<h2>Example #1: Current User ID</h2>
+
+<p>Let's see how we can create a menu link that goes to the user page of the currently logged in user.</p>
+
+<ol>
+<li>Under <code>Method for users</code>, select <code>User from context</code>.</li>
+<li>Best to also check the box <code>Remove token if replacement is not present</code> to avoid problems if the token is not available on a given page</li>
+<li>Browse the available tokens and look for this one: <code>[current-user:uid]</code>. This is the token for the currently logged in user account ID.</li>
+<li>Add your menu title and for the path specify: <code>user/[current-user:uid]</code>.</li>
+<li>Save</li>
+</ol>
+
+<p><p>Now if you go somewhere your menu is visible, you'll notice a new link that leads to your user account page. Neat. We have't done anything that isn't already available in Drupal core, but still neat. The reason I'm saying this is that you can create a menu link with the path <code>user/</code> that will lead the same place. But for illustrating the power of <strong>Menu Token</strong>, it's a good example.</p>
+
+<h2>Example #2: Current Node Type</h2>
+
+<p>Let's say you have a View that displays nodes of two different content types: Article and Basic Page. This View has a contextual filter to show nodes of the type <code>article</code> when the first parameter after the path to the view is <code>article</code>. And same for the Basic Page (with <code>page</code> being the machine name). The view path is <code>nodes</code>.</p>
+
+<p>Let's create a menu link for the main menu that will link to this view and pass to the URL the content type of the currently viewed node.</p>
+
+<ol>
+<li>Under <code>Method for nodes</code>, select <code>Node from context</code>.</li>
+<li>Best to also check the box <code>Remove token if replacement is not present</code> to avoid problems if the token is not available on a given page</li>
+<li>Browse the available tokens and look for this one: <code>[node:content-type:machine-name]</code>. This is the token for the currently loaded node content type.</li>
+<li>Add you menu title and the following path: <code>nodes/[node:content-type:machine-name]</code></li>
+<li>Save</li>
+</ol>
+
+<p>Now if you navigate to an article page, you'll notice in your main menu a new link to the following path: <code>nodes/article</code>. If you go to a Basic page, it'll be <code>nodes/page</code>. And clicking on these will of course take you to your View page with the filtering applied.</p>
+
+<h2>Conclusion</h2>
+
+<p>These are a couple of simple examples of how you might use <strong>Menu Token</strong>. Of course you can use it in other situations depending on what you need and what tokens are available.</p>
+
+<p>Hope this helps.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/cool-drupal-module">Cool Modules</a></span> | <span class="field-item odd"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-7-menu-toekn" st_title="Cool Module: Menu Token" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-7-menu-toekn" st_title="Cool Module: Menu Token" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-7-menu-toekn" st_title="Cool Module: Menu Token" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

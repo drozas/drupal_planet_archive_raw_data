@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 20 Aug 2013 07:21:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 20 Aug 2013 07:21:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: An Introduction to Previewable Email Templates Part 1: How to Create and Preview Emails
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/introduction-previewable-email-templates-part-1-how-create-and-preview-emails
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: An Introduction to Previewable Email Templates Part 1: How to Create and Preview Emails</title>
+    <base href="http://webwash.net/tutorials/introduction-previewable-email-templates-part-1-how-create-and-preview-emails">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>If you need to send out an email notification in Drupal, the two most common ways are either directly from code, or by using the <a href="https://drupal.org/project/rules">Rules</a> module.</p>
+
+<p>When I say email, I'm not talking about newsletters, I'm talking about emails that get sent on specific events. For the sake of simplicity, let's say you send emails using the <a href="https://drupal.org/project/rules">Rules</a> module. Previewing and testing emails that are sent using Rules can be difficult. On a decent size project, you'll end up with a lot of rules and often forget which ones send out emails, unless of course you document your rules well.</p>
+
+<p>However, even if you document your rules, testing and previewing the email is still tough. For example, if you need to change the email body text, there's no easy way to preview the email without firing off the rule.</p>
+
+<p>Enter, <a href="https://drupal.org/project/pet">Previewable Email Templates</a>.</p>
+
+<p>The <a href="https://drupal.org/project/pet">Previewable Email Templates</a> module or PET for short, allows you to create email templates and preview them within Drupal.</p>
+</div></div></div>
+  </body>
+</html>
+

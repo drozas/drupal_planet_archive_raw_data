@@ -1,0 +1,96 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 03 Sep 2013 13:32:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 03 Sep 2013 13:32:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Nuvole: Configuration Management and Features: a look at Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://nuvole.org/blog/2013/sep/03/configuration-management-and-features-look-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Nuvole: Configuration Management and Features: a look at Drupal 8</title>
+    <base href="http://nuvole.org/blog/2013/sep/03/configuration-management-and-features-look-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-blog-subtitle field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">What CMI will bring to D8 and &quot;Poorman&#039;s Features&quot; for packaging configuration in D8</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>We have always told attendees of our <a href="http://nuvole.org/trainings">Drupal 7 "Code-driven development" trainings</a> that embracing the idea that configuration must be stored in files and not in the database would make their Drupal development future-ready: the specific processes would necessarily change but the concept would stay and be reinforced in Drupal 8, thanks to the nice work being done in the <a href="http://heyrocker.com/cmi-feature-freeze">Configuration Management Initiative</a>.</p>
+
+<p>And this was right. The progress done in CMI is very good, to the point that in our coming DrupalCon training in Prague, <a href="https://prague2013.drupal.org/node/1828">Code-Driven Development: an Effective Drupal Workflow, from D7 to D8</a> we will explore in detail how things work in Drupal 7, but for each topic we'll also describe what is going to improve/change in Drupal 8.</p>
+
+<h2>Configuration Management in a nutshell</h2>
+
+<p>From a site builder's point of view, Configuration Management in Drupal 8 is visible as two items in <code>admin/config/development</code>: "Configuration Export" and "Configuration Import".</p>
+
+<p>The <strong>Export</strong> functionality has no further options, and it provides you with a <code>config.tar.gz</code> file containing hundreds (180+ on a clean installation, many more on a feature-rich test site) of files in YAML format, human- and machine-readable. All the site configuration is there: node types, their fields, permissions, Views, theme settings, variables...</p>
+
+<p>The <strong>Import</strong> functionality, on the converse, will import a <code>config.tar.gz</code> file (or a subset: you can remove files from the archive), show you any configuration changes between the currently active configuration and the one you are trying to import and allow you to (partially) replace the current configuration with the one in the provided files.</p>
+
+<p><a href="http://nuvole.org/sites/default/files/config-import.png" class="inline-image-link" title="View: config-import"><img class="inline thumbnail margin-top margin-bottom" src="http://nuvole.org/sites/default/files/styles/blog-l/public/config-import.png?itok=miTitSyD" alt="config-import" title="config-import" /></a></p>
+
+<p>For many developers, this is a dream come true: with D8, Drupal Core will support a <strong>file-based configuration</strong>, allowing developers to track changes, put configuration under version control, update a production site cleanly... basically, all the advantages that we have described as <a href="http://nuvole.org/blog/2011/jan/13/five-reasons-code-driven-development-and-features-are-good-you">selling points for the Features module</a> in the last several years.</p>
+
+<h2>The Future of Features</h2>
+
+<p>So, if the major selling points of the <a href="https://drupal.org/project/features">Features</a> module are now in core, does Features have a future in Drupal 8?</p>
+
+<p>It still does, but it needs to be repurposed. So far, it had a <a href="https://drupal.org/node/1615518#comment-6384738">dual functionality</a>, serving as:</p>
+
+<ul><li><p>A machinery to export/import configuration from database to code. This will no longer be necessary in Drupal 8. Configuration <a href="https://drupal.org/node/1762632">lives in files</a> and the database is used only for caching. For the same reason, an important problem in Drupal 7 development ("How do I make configuration exportable when there is no native support for Features?") is now solved for good.</p></li>
+<li><p>A convenient way to package and reuse configuration across multiple sites. This is extremely useful to developers and not completely covered by Configuration Management in Drupal 8, even though the basic components are there.</p></li>
+</ul><h2>Poorman's Features: emulating Features in Drupal 8</h2>
+
+<p>Let's see how it is possible to package configuration and emulate, manually, what Features and Drupal 7 allow today.</p>
+
+<p>As an example use case, we will package a "Blog Feature".</p>
+
+<h3>1: Create and export configuration</h3>
+
+<p>Create the Blog content type, configure its fields (use <a href="https://drupal.org/project/kit">proper naming</a> for fields: <code>field_blog_image</code> and so on) and a classic view with a block and page display. Then go to <code>admin/config/development</code> and export your configuration into the <code>config.tar.gz</code> file.</p>
+
+<h3>2: Package relevant configuration into a module</h3>
+
+<p>Create a simple <code>feature_blog</code> module containing:</p>
+
+<ul><li><code>feature_blog.info.yml</code>: a basic <code>.info</code> file in the Drupal 8 format.</li>
+</ul><div class="codeblock"><code>name: Blog<br />type: module<br />description: 'A Blog content type and related configuration.'<br />package: Features<br />version: 8.x-0.1<br />core: 8.x</code></div>
+
+<ul><li><code>feature_blog.module</code>: an empty module file, needed for correct Drupal operations.</li>
+</ul><div class="codeblock"><code>&lt;?php<br />  // Drupal needs this empty file.</code></div>
+
+<ul><li>a <code>config</code> subdirectory: copy to this folder all relevant files from <code>config.tar.gz</code>; filenames are quite helpful here, as it will be enough to copy all files that have "blog" in their name.</li>
+</ul><div class="codeblock"><code>.<br />|-- config<br />|   |-- entity.display.comment.comment_node_blog.default.yml<br />|   |-- entity.display.node.blog.default.yml<br />|   |-- entity.display.node.blog.teaser.yml<br />|   |-- entity.form_display.comment.comment_node_blog.default.yml<br />|   |-- entity.form_display.node.blog.default.yml<br />|   |-- field.field.field_blog_image.yml<br />|   |-- field.instance.comment.comment_node_blog.comment_body.yml<br />|   |-- field.instance.node.blog.body.yml<br />|   |-- field.instance.node.blog.field_blog_image.yml<br />|   |-- node.type.blog.yml<br />|   `-- views.view.blog.yml<br />|-- feature_blog.info.yml<br />`-- feature_blog.module</code></div>
+
+<h3>3: Make the exported files portable (remove UUIDs)</h3>
+
+<p>The feature is ready, but it will only work if imported in the same Drupal 8 site. We need to make it portable to other sites.</p>
+
+<p>The main problem here is that Drupal assigns UUIDs (Universally Unique Identifiers) to each component. When you add, say, an "image" field to a content type, you create an instance of the "image" field, and to describe this relationship Drupal will rely on the UUID of the "image" field. Since UUIDs are site-specific, trying to import this configuration on another site would result in an error message like:</p>
+
+<div class="codeblock"><code>Drupal\field\FieldException: Attempt to create an instance of<br />unknown field 84e904df-2f14-46e8-9700-e00c5ca3f7d3<br />in Drupal\field\Entity\FieldInstance-&gt;__construct()<br />(line 252 of .../core/modules/field/lib/Drupal/field/Entity/FieldInstance.php).</code></div>
+
+<p>Fortunately, in this case configuration import is designed to accept <a href="https://api.drupal.org/api/drupal/core!modules!field!lib!Drupal!field!Entity!FieldInstance.php/function/FieldInstance%3A%3A__construct/8">either names or UUIDs</a> for describing the field this is an instance of. So it is enough to edit all files containing <code>field.instance</code> in their name and manually replace UUIDs with machine names (or just add machine names), something like the following:</p>
+
+<div class="codeblock"><code>-field_uuid: d38ea114-e6dd-442c-9a56-86943affcc0e<br />+field_name: field_blog_image</code></div>
+
+<p>Note that this relies on the specific handling of the <a href="https://api.drupal.org/api/drupal/core!modules!field!lib!Drupal!field!Entity!FieldInstance.php/class/FieldInstance/8">FieldInstance</a> class and may not be a general solution.</p>
+
+<h3>4: Import the feature on another site</h3>
+
+<p>Our module/feature is now ready to be imported. Just copy it to the <code>/modules</code> folder on another site, or a subfolder of it (this is now the <a href="http://drupalcode.org/project/drupal.git/blob/HEAD:/modules/README.txt">recommended location</a> to add modules) and enable it.</p>
+
+<p>Your content type and configuration will be immediately available.</p>
+
+<h2>Possible improvements</h2>
+
+<p>The Configuration Management in Drupal 8 will bring to Drupal Core a clean, unified, professional way to deal with configuration. There will still be the need for a module like Features for packaging and reusing configuration.</p>
+
+<p>Some implementation details of Configuration Management do not behave well in this respect: for example, UUIDs are problematic and user permissions are stored in a packaging-unfriendly way (one file per each user role, with roles identified by UUID).</p>
+
+<p>But, overall, the future looks bright and code-driven! And, as we have seen, it is already entirely possible to manually create basic "Features" (i.e., modules with configuration) that will work in Drupal 8.</p>
+</div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even">Drupal Planet, DrupalCon, Training, Code Driven Development</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 27 May 2014 07:30:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 27 May 2014 07:30:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hall on Drupal 8: Developing Drupal 8 in the Codio web ide
+Content-Transfer-Encoding: 8bit
+Content-Base: http://running-on-drupal8.co.uk/node/21
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hall on Drupal 8: Developing Drupal 8 in the Codio web ide</title>
+    <base href="http://running-on-drupal8.co.uk/node/21">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/21/body/und/rss"><div class="field-items"><div class="field-item even"><h3>Introduction</h3>
+
+<p>Despite all the computers, cloud servers and devices that are 'almost computers' and similar I have access to I still hadn't found a good answer to this type of problem:</p>
+
+<p><strong><em>I have some time spare, I want to be able develop and poke around with Drupal 8 whenever and wherever.</em></strong></p>
+
+<p>Of course you could substitute 'Drupal 8' with many other things in the above problem.</p>
+
+<p>Perhaps I get somewhere 20mins early I can grab a coffee, whip out a Chromebook and continue where I left off, perhaps fire up a web browser on a computer somewhere I am contracting, perhaps I want to teach or show somebody something quickly without the overhead of first going through setting up a development environment.</p>
+
+<p>Virtual machines, and the convenience of Vagrant solve the problem to some extent and are a great choice in many cases, but you still need to bring some fairly heavyweight resourses with you and plan ahead, some devices you may not be able to run a virtual machine on. </p>
+
+<h3>Enter Codio WEB IDE</h3>
+
+<p><a href="https://codio.com/" target="_blank">Codio.com</a> provide a cloud based Web IDE, I started playing around with it a little while ago and initially expected it to simply be a place where you could work on HTML, CSS and Javascript with something special on the back-end to handle Node.js development. Surprisingly each project is backed by a Box Server which is a Ubuntu instance pre-installed with various software and a large, growing collection of other software that can be installed, <a href="https://codio.com/s/features/" target="_blank">check out the features video</a> for more of an idea of what is available.</p>
+
+<p>I tried installing a PHP cms called <a href="http://www.silverstripe.org/" target="_blank">SilverStripe</a> into a Codio project and it worked, after trying a few more things in different projects I thought I would have a go with Drupal 8, I didn't expect it to work. Drupal 8 is a large  beast and not even production ready yet, even so within a short space of time I had a working Drupal 8 project.</p>
+
+<p>When you are working on your project in the web ide you can access a command line to your box where you can do most things that you would on a normal server, you also have access to a Box Url where you can view the server output of your project in another browser tab.</p>
+
+<p>With full Git support and the ability to add tools like Composer and Drush the Codio project is a place where I can actually develop and experiment with Drupal 8 at the drop of a hat, from lots of different places.</p>
+
+<p>You can start doing all of the above for free.</p>
+
+<h4>Caveats</h4>
+
+<p>Codio is still in Beta, I use it regularly and although I rarely have problems occasionally there have been performance or technical issues, usually they are quickly resolved.</p>
+
+<p>I suspect the Box server may struggle a little with a large number of modules enabled or under any other test conditions of high load, I did find problems with running tests in the UI (they ran fine through Drush though).</p>
+
+<p>With a free account your projects are public, although working on public code for an opensource project that is hardly a problem. A paid account costs just $8pm though (plus local taxes), I am more than happy to pay that for the use I get out of Codio.</p>
+
+<p>The web ide is very good but can't offer some of the functionality you may find in Netbeans or PHPstorm (functionality that requires analysis of the entire code-base).</p>
+
+<h3>An easy starting point</h3>
+
+<p>I have written an <a href="http://running-on-drupal8.co.uk/node/20" target="_blank">article about how to set up a Codio project for Drupal 8</a> development and also a <a href="https://github.com/chris-hall-hu/drupal8_codio" target="_blank">little script on Github</a> that will set up everything for you, please feedback if the script doesn't work for you, the aim is to allow automatic setup and install of the latest Drupal 8 code into and an empty Codio project. I try to steer away from putting anything too technical into blog posts as blog posts age naturally but techinical articles and things on Github are easier to keep updated.</p>
+
+<h3>Educational potential</h3>
+
+<p>Codio has a terrific educational potential it is easy to setup widely accessible working examples and public projects can be forked. I have just started using it to aid helping somebody learn to code, Codio provides a great bridge between quickly getting started but still keeping in touch with servers, software and command-line.</p>
+</div></div></div><div  class="field field-node--field-blog-tags field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix clearfix" data-edit-id="node/21/field_blog_tags/und/rss"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0">planet</li><li class="taxonomy-term-reference-1">development</li><li class="taxonomy-term-reference-2">cloud</li></ul></div>
+  </body>
+</html>
+

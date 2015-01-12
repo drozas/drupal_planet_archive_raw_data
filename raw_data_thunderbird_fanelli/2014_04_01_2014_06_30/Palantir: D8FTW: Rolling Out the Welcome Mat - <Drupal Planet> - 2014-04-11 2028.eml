@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 11 Apr 2014 18:28:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 11 Apr 2014 18:28:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Palantir: D8FTW: Rolling Out the Welcome Mat
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.palantir.net/blog/d8ftw-rolling-out-welcome-mat
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Palantir: D8FTW: Rolling Out the Welcome Mat</title>
+    <base href="http://www.palantir.net/blog/d8ftw-rolling-out-welcome-mat">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="featured-blog-image">  
+      <img typeof="foaf:Image" src="http://www.palantir.net/sites/default/files/styles/bloglandingpage-thumbnail/public/blog/images/d8-ftw-welcome.png?itok=JuHHqzNx" width="262" height="175" alt="D8FTW! Welcome!" title="D8FTW: Rolling Out the Welcome Mat" />  </span>
+            <p>At <a href="http://mw2014.museumsandtheweb.com/">Museums and the Web</a> earlier this month <a href="http://palantir.net/about/team/ken-rickard">Ken Rickard</a> and I ran a developer training seminar for the still-in-alpha-but-getting-there Drupal 8.  It was a small group, which wasn't surprising given the event.  One of the most interesting things about it, though, was that there was only one PHP developer in the room.</p>
+<p>The most active student in the class was an experienced C# developer.  He had never worked with PHP before, and, really, didn't seem like he was going to start any time soon.  He was mostly there to get a sense for how to integrate Drupal with his company's product for museums.</p>
+<p>Despite that, he was able to follow the material just fine.  In fact, the only questions he had were related to PHP itself: Its shared-nothing runtime model, the magic <code>__construct()</code> method name, etc.  The actual software engineering parts, the general syntax, dependency injection... all of those were easy.  Most notably, when we got to the concept of services he even said aloud "Oh those, yeah, easy."</p>
+<p>Here's an experienced developer who has never used PHP before, much less Drupal, and he could follow a code-intensive Drupal 8 training class.  Let that sink in.</p>
+<p>There's an old adage that once you know one language you can easily pick up another because it's all "just programming".  That's not actually true; you can easily pick up another language in a similar family.  Jumping between PHP, C#, and Java is fairly easy, but don't expect to jump right into Haskell, Erlang, or ML (or vice versa).</p>
+<p>That's why our C# developer was able to follow Drupal 8 so easily.  PHP's object-oriented model is, by design, very similar to that in Java, C#, and by extension somewhat to C++.  It has its own quirks and flavor, to be sure, as does any language.  The basic concepts, though — classes, methods, interfaces, services, domain objects, dependency injection — are fairly easily transferrable between them.  The best practices that apply in one language are, generally, at least decent practices in another.  The syntax may vary but the underlying principles are closely related and the syntax is generally recognizable.</p>
+<p>In the latest <a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">TIOBE index of programming language popularity</a> (March 2014 as of this writing), PHP has held fairly steady at a very respectable 6th place for over a decade.  That's no mean feat.  Look up a little bit higher on that list, though, and notice a few familiar faces: Java sits at 2nd place, C++ at 4th, and C# at 5th.</p>
+<p>There are a <em>lot</em> of Java and C# developers out there.  The corporate world especially is full of them.  That's millions (yes, millions) of developers who may not know PHP, but already know the same underlying concepts behind modern, object-oriented PHP.  If they need to learn PHP, they can.</p>
+<p>That's millions (yes, millions) of developers who may not know Drupal but if they need to learn it, they can.</p>
+<p>Conversely, what do you think happened when we showed our C# developer hooks?  He recoiled.  Physically.</p>
+<p>Magic naming of language syntax is not a common practice in the Java/C++/C#/PHP family of languages.  To developers coming in from other family languages hooks and big nested arrays are the least-familiar parts of the code base.  Those are, in fact, the hardest to learn for the overwhelming majority of the world that is not already a Drupal developer.  That's why there has been considerable effort to try and migrate away from naked data structures to industry standard language techniques: It makes Drupal easier to learn in the long run, as well as the other benefits of <a href="http://palantir.net/blog/d8ftw-breadcrumbs-work">common patterns</a> and easier modifiability.  Hooks and arrays-of-doom haven't gone away yet, but in the long run their days are numbered.</p>
+<p>Drupal 8 won't just be easier to learn for existing PHP developers.  It will be easier to learn for existing developers, period.</p>
+  </body>
+</html>
+

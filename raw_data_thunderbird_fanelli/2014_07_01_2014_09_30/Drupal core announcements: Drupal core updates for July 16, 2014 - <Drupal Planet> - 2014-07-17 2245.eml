@@ -1,0 +1,135 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 17 Jul 2014 20:45:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 17 Jul 2014 20:45:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal core updates for July 16, 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/433948
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal core updates for July 16, 2014</title>
+    <base href="https://groups.drupal.org/node/433948">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>This week saw the commit of part one and two of the major menu-system rewrite in which menu-links become plugins. The original patch weighed in at over 600kb and was one of the remaining seven beta-blockers. Splitting it into five separate issues made reviews more forthcoming and this was evident with part one and two moving quickly from needs review to RTBC to ultimately being committed. Reviewers have now moved onto parts three through five.<br />
+There was a massive volume of commits this week with cleanups keeping the committers very-busy, lots of deprecated functions were removed and lots of procedural menu and form code was ported to the new Object-oriented approaches.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>In the past week, we've fixed 3 critical issues and 8 major issues, and opened 5 criticals and 9 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">107 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">623 major issues</a>.</p>
+<h3>Outstanding beta blockers</h3>
+<p><img src="https://groups.drupal.org/files/july_beta_blockers.png" alt="Outstanding beta-blocking issues since January 2014, decreasing from 120 to only 7 now!" /></p>
+<h3>Outstanding critical issues in Drupal 8</h3>
+<p><img src="https://groups.drupal.org/files/july_criticals.png" alt="Critical issue count in Drupal 8 since 2011, declining since July 2013" /></p>
+<h3>Outstanding major issues in Drupal 8</h3>
+<p><img src="https://groups.drupal.org/files/july_majors.png" alt="Major issue count in Drupal 8 since 2011, increasing steadily since September 2012" /></p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem-space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>, we could use your help!</p>
+<ul>
+<li>We need people to review <a href="https://www.drupal.org/node/2260457">Issue #2260457: Allow config entities to remove dependent configuration keys when dependencies are deleted</a>. Uninstalling modules in Drupal 8 will remove any configuration that has a dependency on that module. This will keep your site working but at the moment the delete is a bit greedy! Two other related issues, <a href="https://www.drupal.org/node/2212081">#2212081</a> and <a href="https://www.drupal.org/node/1881630">#1881630</a> could use some work too.</li>
+<li><a href="https://www.drupal.org/node/2268939">Issue #2268939: Config overrides not updated when config changes</a> needs review.</li>
+<li>As mentioned above<a href="https://www.drupal.org/node/2256521">Issue #2256521: New plan, Phase 2: Implement menu links as plugins, including static admin links and views, and custom links with menu_link_content entity, all managed via menu_ui module</a> has been split into five issues, three of which still needs reviews, API changes documented, a change record drafted, and existing change records that will need updates identified and updated to reference the issue.</li>
+<li>There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">7 beta-blockers</a> that need to be done to provide a stable data model and stable critical APIs (including a couple of the issues above), and <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status[]=1&amp;status[]=13&amp;status[]=8&amp;status[]=14&amp;status[]=4&amp;version[]=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+deadline">14 non-critical issues that significantly change the data model or critical APIs, and therefore can only be committed before the first beta is released</a>. Please help move them forward!</li>
+</ul>
+<h3>More ways to help</h3>
+<p><a href="https://www.drupal.org/node/1679344">Issue #1679344: Race condition in node_save() when not using DB for cache_field</a> recently caused a Drupal.org outage. The issue already has a proposed resolution recommended in comment #24 — help out by reviewing the patch for either D7 or D8.</p>
+<p>Additionally, there are a bunch of easy documentation issues which need some help moving forward. For each of these, there is a "Child Issues" sidebar. Look there for issues that are "active", "needs work", or "needs review":</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2269389">Issue #2269389: Make sure plugin developer info is discoverable</a></li>
+<li><a href="https://www.drupal.org/node/2294117">Issue #2294117: Some @defgroup topics should be moved/renamed</a></li>
+<li><a href="https://www.drupal.org/node/1908570">Issue #1908570: Update or create hook_help() texts for D8 core modules</a></li>
+</ul>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+<p>You can also help by <a href="https://www.gittip.com/DrupalCoreGittipTeam/">sponsoring Drupal core development</a>.
+</p>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code>git log --since &quot;1 week ago&quot; --pretty=oneline</code> (112 commits in total):</p>
+<ul>
+<li>Various conversions of controllers and forms to OO code, only a handful remain now
+<ul>
+<li><a href="http://drupal.org/node/2010246">Issue 2010246</a> by tim.plunkett, tkuldeep17, plopesc, InternetDevels, pfrenssen, googletorp: Convert update_manager_install_form, update_manager_update_form, update_manager_update_ready_form to the new form interface.</li>
+<li><a href="http://drupal.org/node/2030165">Issue 2030165</a> by Berdir, tim.plunkett, vijaycs85, tkuldeep17 | rteijeiro: Convert form_test_* functions to classes.</li>
+<li><a href="http://drupal.org/node/1978926">Issue 1978926</a> by likin, YesCT, Pancho, kim.pepper, h3rj4n, tim.plunkett, disasm, Luxian, neetu morwani | vijaycs85: Convert locale_translation_status_form to a Controller.</li>
+<li><a href="http://drupal.org/node/2132477">Issue 2132477</a> by tkuldeep17, tim.plunkett | shameemkm: Convert batch_test forms to controllers.</li>
+<li><a href="http://drupal.org/node/2086499">Issue 2086499</a> by phiit, tim.plunkett | Gábor Hojtsy: Convert two page callbacks in language_elements_test.module to the new controller system.</li>
+<li><a href="http://drupal.org/node/2078867">Issue 2078867</a> by tim.plunkett, jackbravo, ianthomas_uk, InternetDevels, piyuesh23, disasm, nano_monkey | vijaycs85: Convert _form_test_* functions to classes.</li>
+<li><a href="http://drupal.org/node/1998198">Issue 1998198</a> by pwolanin, splatio, Albert Volkman, tim.plunkett, andypost, disasm, Les Lim, tkuldeep17: Convert user_pass_reset to a new-style Form object.</li>
+<li><a href="http://drupal.org/node/2302525">Issue 2302525</a> by tim.plunkett: Convert file_module_test_form to a class.</li>
+<li><a href="http://drupal.org/node/2078015">Issue 2078015</a> by er.pushpinderrana, RoSk0 | alexanansi: Modernize views_test_data.module forms.</li>
+<li><a href="http://drupal.org/node/2302531">Issue 2302531</a> by tim.plunkett: Convert database_test_theme_tablesort to a class.</li>
+</ul>
+</li>
+<li><a href="http://drupal.org/node/2291137">Issue 2291137</a> by cilefen | webchick: Rename various *links.yml files to improve DX.</li>
+<li><a href="http://drupal.org/node/2202511">Issue 2202511</a> by hussainweb, benjy | mikeryan: Added Implement migration groups.</li>
+<li><a href="http://drupal.org/node/2302463">Issue 2302463</a> by effulgentsia: Cleanup User::hasPermission() and UserSession::hasPermission() to follow Law of Demeter.</li>
+<li><a href="http://drupal.org/node/2302331">Issue 2302331</a> by kim.pepper: Move drupal_valid_path to PathValidator service.</li>
+<li><a href="http://drupal.org/node/2296839">Issue 2296839</a> by MKorostoff, er.pushpinderrana | YesCT: Remove deprecated comment_num_new().</li>
+<li><a href="http://drupal.org/node/2289063">Issue 2289063</a> by larowlan, andypost | Berdir: Change contact message entity to behave more like a normal entity.</li>
+<li><a href="http://drupal.org/node/2301239">Issue 2301239</a> by pwolanin, dawehner, Wim Leers, effulgentsia, joelpittet, larowlan, xjm, YesCT, kgoel, victoru, berdir, likin, and plach: MenuLinkNG part1 (no UI or conversions): plugins (static + MenuLinkContent) + MenuLinkManager + MenuTreeStorage.</li>
+<li><a href="http://drupal.org/node/2284103">Issue 2284103</a> by alexpott, fabpot, damiankloip, Xano, Xen, Berdir: Fixed Remove the request from the container - this switches from using Request to RequestStack, gets rid of our custom HttpKernel and the Request scope, lets us upgrade Symfony past 2.3 and closes a critical. Special thanks to Fabien Potencier, Project Lead for Symfony for getting the ball rolling and working with the Drupal community on patches.
+</li><li>More standardising of entity-field API
+<ul>
+<li><a href="http://drupal.org/node/2292821">Issue 2292821</a> by andypost, larowlan: Use widget for comment subject field.</li>
+<li><a href="http://drupal.org/node/1498662">Issue 1498662</a> by andypost, larowlan | dawehner: Refactor comment entity properties to multilingual.</li>
+<li><a href="http://drupal.org/node/1856562">Issue 1856562</a> by andypost | sun: Convert "Subject" and "Message" into Message base fields.</li>
+</ul>
+</li>
+<li>Lots of cleanup of deprecated functions
+<ul>
+<li><a href="http://drupal.org/node/2297487">Issue 2297487</a> by er.pushpinderrana, marcingy: Remove the check_plain function.</li>
+<li><a href="http://drupal.org/node/2301591">Issue 2301591</a> by joshi.rohit100: Remove drupal_rebuild_form() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2208893">Issue 2208893</a> by ngocketit, longwave: Remove unused functions from Views.</li>
+<li><a href="http://drupal.org/node/2301601">Issue 2301601</a> by joshi.rohit100: Remove drupal_validate_form() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2301587">Issue 2301587</a> by joshi.rohit100: Remove form_state_defaults() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2301577">Issue 2301577</a> by ParisLiakos, joshi.rohit100: Remove drupal_alter() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2300853">Issue 2300853</a> by joshi.rohit100: Remove language() method from bootstrap.inc as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2300891">Issue 2300891</a> by joshi.rohit100: Remove format_backtrace() from error.inc as deprecated.</li>
+<li><a href="http://drupal.org/node/2301597">Issue 2301597</a> by joshi.rohit100: Remove drupal_prepare_form() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2300831">Issue 2300831</a> by joshi.rohit100: Remove module_exists() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2300857">Issue 2300857</a> by joshi.rohit100: Remove lock() method from bootstrap.inc as deprecated.</li>
+<li><a href="http://drupal.org/node/2300821">Issue 2300821</a> by joshi.rohit100: Remove module_invoke_all() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2300847">Issue 2300847</a> by joshi.rohit100: Remove drupal_get_form() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2300843">Issue 2300843</a> by joshi.rohit100: Remove drupal_json_encode() and drupal_json_decode() methods as deprecated.</li>
+<li><a href="http://drupal.org/node/2300833">Issue 2300833</a> by joshi.rohit100: Remove module_hook() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2300697">Issue 2300697</a> by joshi.rohit100: Remove drupal_is_cli() as It is deprecated.</li>
+<li><a href="http://drupal.org/node/2299499">Issue 2299499</a> by joshi.rohit100: Remove form_clear_error() as it is deprecated.</li>
+<li><a href="http://drupal.org/node/2301975">Issue 2301975</a> by kim.pepper: Move drupal_is_front_page to PathMatcher service.</li>
+</ul>
+</li>
+<li><a href="http://drupal.org/node/697760">Issue 697760</a> by sun: Replace getInfo() in tests with native phpDoc + annotations (following PHPUnit).</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li><a href="http://drupalize.me/blog/201407/drupal-8-plugins-explained">Drupalize.me</a> recap Drupal 8's plugin system.</li>
+<li><a href="http://nuvole.org/blog/2014/jul/15/packaging-and-reusing-configuration-drupal-8">Nuvole</a> give us a preview of their Amsterdam session on packaging and reusing configuration in Drupal 8.</li>
+<li><a href="http://www.drupal4hu.com/node/402">chx</a> gives us an update on Drupal 8 from both his and a MongoDB perspective.</li>
+<li><a href="http://www.wunderkraut.com/blog/configuration-entities-in-drupal-8/2014-07-14">Wunderkraut</a> gave us the lowdown on configuration entities in Drupal 8.</li>
+<li>Cameron Zemek from PreviousNext <a href="http://www.previousnext.com.au/blog/using-mink-web-testing">introduces us to Mink</a> previewing one of the core-conversations from Amsterdam.</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<ul>
+<li><strong>July 17-20</strong>: <a href="http://2014.drupalcorn.org/sprint">DrupalCorn</a> in <strong>Iowa, USA</strong> will have a Drupal 8 contributed module sprint. <a href="https://twitter.com/drupalcorn">@drupalcorn</a></li>
+<li><strong>Aug 7-10</strong>: <a href="http://2014.tcdrupal.org/">Twin Cities DrupalCamp</a> in <strong>Minnesota, USA</strong> will have a sprint room for all four days and has a <a href="https://docs.google.com/spreadsheet/ccc?key=0AtDYnjV5l0uydGFjekZSM1ROR040eldUeEU4OU1JNFE&amp;usp=drive_web#gid=0">sprint sign-up</a>. <a href="https://twitter.com/TCDrupal">@TCDrupal</a></li>
+<li><strong>Aug 7-10</strong>: <a href="http://2014.drupalaton.hu/">Drupalaton</a> at <strong>Lake Balaton, Hungary</strong> has Drupal 8 sessions and sprints. <a href="https://twitter.com/drupalaton">@drupalaton</a></li>
+<li><strong>Aug 22</strong>: <a href="http://www.drupalact.org.au/events/drupalgov-canberra-2014">DrupalGov</a> in <strong>Canberra, Australia</strong> featuring everything relating to Drupal and Australian Government, including Drupal 8 sessions.</li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Attachment</th><th>Size</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="https://groups.drupal.org/files/july_criticals.png">july_criticals.png</a></td><td>40.56 KB</td> </tr>
+ <tr class="even"><td><a href="https://groups.drupal.org/files/july_majors.png">july_majors.png</a></td><td>37.64 KB</td> </tr>
+ <tr class="odd"><td><a href="https://groups.drupal.org/files/july_beta_blockers.png">july_beta_blockers.png</a></td><td>32.25 KB</td> </tr>
+</tbody>
+</table>
+  </body>
+</html>
+

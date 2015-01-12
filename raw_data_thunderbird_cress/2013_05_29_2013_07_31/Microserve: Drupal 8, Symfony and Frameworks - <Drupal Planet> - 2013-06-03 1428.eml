@@ -1,0 +1,73 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 03 Jun 2013 13:28:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 03 Jun 2013 13:28:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Microserve: Drupal 8, Symfony and Frameworks
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.microserveltd.co.uk/blogs/drupal-development/drupal-8-symfony-and-frameworks
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Microserve: Drupal 8, Symfony and Frameworks</title>
+    <base href="http://www.microserveltd.co.uk/blogs/drupal-development/drupal-8-symfony-and-frameworks">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><span style="line-height: 1.538em;">Having recently started working with Drupal in module development and published my first public Module, my interests have gravitated around the next version of Drupal (v8) and what it holds in store.</span></p>
+<div><span style="line-height: 1.538em;">Of excitement to many developers has been the integration of components of the Symfony framework into the core and what benefits it holds for users, module and core developers; this leads into the knowledge I have on working with frameworks, I would like to talk a bit about this today.</span></div>
+<div> </div>
+<div><strong>What are Frameworks</strong></div>
+<div> </div>
+<div>Marc Clifton talks a bit about them in his post <a href="http://www.codeproject.com/Articles/5381/What-Is-A-Framework">'What is a framework?'</a>, but the basic concept it that they are an accumulation of programs some complex, that have been joined together to serve a specific purpose, to use them you must implement/extend them in a prescribed way, web frameworks are specifically for developing websites.</div>
+<div> </div>
+<div><strong>Web Frameworks</strong></div>
+<div> </div>
+<div>With <a href="http://en.wikipedia.org/wiki/Comparison_of_web_application_frameworks#PHP">web frameworks</a>,  there is generally a more specific design pattern, this being Model View Controller (MVC), this is done to link together 3 parts of functionality:</div>
+<div> </div>
+<dl><dt>Model:</dt>
+<dd>Being the Data and information that is to be displayed and the way it is organised.</dd>
+<dt>Controller:</dt>
+<dd>The system used to get the information together, to do any processing and then to pass it in a refined way to the view.</dd>
+<dt>View:</dt>
+<dd>This just looks after taking information and displays it in HTML, attaching CSS and front end scripts (ie JavaScript), to a level this is how Drupal works but not so clearly defined.</dd>
+</dl><div>These three areas split up the work blocks on a website having specific elements that have clearly defined roles, when these parts are enhanced the developers can concentrate on making them work efficiently without having to be distracted by what happens up or down the line, this produces a secure and reliable system.</div>
+<div> </div>
+<div><strong>Next version of Drupal</strong></div>
+<div> </div>
+<div>So for the next version of Drupal, how are we going to benefit from these concepts; from reading <a href="http://symfony.com/blog/symfony2-meets-drupal-8">Fabien Potencier’s blog</a>, it seems the drupal core developers are concentrating on implementing some core components of Symfony, these being (HttpFoundation, HttpKernel, Routing, EventDispatcher, DependencyInjection, and ClassLoader).</div>
+<div> </div>
+<div>Why do this? The answer I come up with is this; looking at all the frameworks that are available (21 PHP in total on the Wiki above they all have the same goals; to take information and display it quickly and easily as a webpage. So what Drupal core developers have done is identified Symfony’s components mentioned above and implemented them to satisfy functionality in the core that has become convoluted.</div>
+<div> </div>
+<div><strong>What do we gain?</strong></div>
+<div> </div>
+<div>So what will Drupal developers/implementers gain from these improvements? They will gain from knowledge that the foundations of the system are on a even more stable keel, and that going forward the system is using the best technologies in respects of optimisation and security.</div>
+<div> </div>
+<div>
+<div><strong>Example</strong></div>
+<div> </div>
+<div>So here is a simple example of creating a module that implements the new functionality, I first create a module folder in the modules folder (the README.txt file gives information).</div>
+<div> </div>
+<div><img alt="" class="media-image" height="145" style="width: 299px; height: 145px;" width="299" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/darrens_module8example.png?itok=xvQK7Utu" /></div>
+<div> </div>
+<div>I then create a module file and a info file, the info file now is in a yaml (Yet another Markup Language) format.</div>
+<div> </div>
+<div> </div>
+</div>
+<p><img alt="" class="media-image" height="229" width="525" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/darren_htscreenshotymlinfo.png" /></p>
+<p>And then write the module functions:</p>
+<p> </p>
+<p><img alt="" class="media-image" height="517" width="681" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/darren_modulecode.png" /></p>
+<p> </p>
+<p><span style="line-height: 1.538em;">In the above code I have implemented</span><a href="http://symfony.com/doc/current/components/http_foundation/introduction.html" style="line-height: 1.538em;"> HttpFoundation</a><span style="line-height: 1.538em;">, what this does is when a user goes to the URL and passes a parameter </span><span class="geshifilter"><code class="php geshifilter-php">?test<span style="color: #339933;">=</span>sometext</code></span><span style="line-height: 1.538em;"> the menu hook will capture the url and pass the user to the call back, before the call back we call the Request method using </span><a href="http://php.net/manual/en/language.namespaces.importing.php" style="line-height: 1.538em;">'use'</a><span style="line-height: 1.538em;"> (PHP 5.3 and higher), in the function <span class="geshifilter"><code class="php geshifilter-php">htfoundexample_callback<span style="color: #009900;">(</span><span style="color: #009900;">)</span></code></span> I do a call to the static method in the Request class called <span class="geshifilter"><code class="php geshifilter-php">createFromGlobals<span style="color: #009900;">(</span><span style="color: #009900;">)</span></code></span>, this populates the </span><span class="geshifilter"><code class="php geshifilter-php"><span style="color: #000088;">$request</span></code></span><span style="line-height: 1.538em;"> varable with an object containing global variables, I want to get the passed variable 'test', so I call the get method on query (line 27) this returns the passed parameter, I then simply echo the string to the screen and exit:</span></p>
+<p> </p>
+<p><img alt="" class="media-image" height="362" style="width: 585px; height: 362px; border: 1px solid rgb(204, 204, 204);" width="585" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/darren_callingfunction.png" /></p>
+<p> </p>
+<p>The value is displayed on the screen.</p>
+<p>Further methods that can be used as part of this class are detailed on the <a href="http://api.drupal.org/api/drupal/namespace/Symfony!Component!HttpFoundation/8?order=object_name&amp;sort=desc">HttpFoundation Drupal API page</a>.</p>
+ </div></div></div>
+  </body>
+</html>
+

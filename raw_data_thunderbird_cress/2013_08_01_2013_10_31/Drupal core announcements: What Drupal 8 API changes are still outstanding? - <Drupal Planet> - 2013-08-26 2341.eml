@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 26 Aug 2013 22:41:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 26 Aug 2013 22:41:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: What Drupal 8 API changes are still outstanding?
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/313408
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: What Drupal 8 API changes are still outstanding?</title>
+    <base href="https://groups.drupal.org/node/313408">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Completing Drupal 8's core APIs is a key step toward releasing Drupal 8. During this phase of Drupal 8's development, we restrict API changes to only those that are necessary to resolve important issues, and API changes must go through an <a href="https://drupal.org/core/release-cycle/api-freeze">approval process</a>. Since the announcement of the beginning of the API freeze on July 1st, we've made substantial progress defining the state of our APIs. 128 major and critical issues have been fixed, and core maintainers have reviewed and approved outstanding <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags=Approved+API+change">API changes</a> in more than 50 open Drupal core issues, with additional changes under review.</p>
+<p>This post details the most important outstanding API changes for core and contributed module developers.</p>
+<h3>Routing and menus</h3>
+<p>All <strong>form and page callbacks</strong> are being converted to the <a href="https://drupal.org/node/1800686">new routing system</a>. The procedural versions of these callbacks will be removed from the core codebase, and before Drupal 8.0 is released, <code>hook_menu()</code> will no longer work to register callbacks. <a href="https://drupal.org/node/1953342">Use the new routing system</a> instead. (Make particular note of the <a href="https://drupal.org/node/2060189">ControllerBase</a> and <a href="https://drupal.org/node/2059245">FormBase</a> classes for simple form and page callbacks.)</p>
+<p>The Drupal 7 <a href="https://drupal.org/node/1959574">Ajax API will also be removed</a>, so Ajax commands should also be converted to the new routing system and use the new <a href="https://drupal.org/node/1843212">Drupal 8 Ajax API</a>.</p>
+<p>There are numerous <a href="https://drupal.org/node/1983534">other outstanding issues with routing, menus, and links</a> that may require additional API changes, so be aware that code using these systems might require additional updates before 8.0 is released.</p>
+<h3>Configuration variables</h3>
+<p>All <strong>configuration variables</strong> are being <a href="https://drupal.org/node/1775842">converted to the Drupal 8 configuration system</a> (or, in some cases, the <a href="https://drupal.org/node/1790518">state system</a>). <code>variable_get()</code>, <code>variable_set()</code>, and <code>variable_delete()</code> will be removed before Drupal 8.0 is released. Use the <a href="https://drupal.org/node/1667894">Configuration system</a> instead when a configuration variable could be deployed between sites, or the <a href="https://drupal.org/node/1790518">state system</a> when a variable is a site-specific flag (for example, the last time that cron was run).</p>
+<h3>Entity Field API</h3>
+<p>The <strong>Entity Field API</strong> has been mostly rewritten for Drupal 8, but not all of the legacy Drupal 7 entity and field APIs have been removed, and the Drupal 8 API is still being refined:</p>
+<ul>
+<li>Core entities are still being <a href="https://drupal.org/node/1983554">converted from an interim version of the Drupal 8 entity API</a> to the final version, and specific interfaces for each entity type are being improved to include useful methods for that type. This will change how entity field values are accessed. Use the new <a href="https://drupal.org/node/1806650">Entity Field API</a>.</li>
+<li><a href="https://drupal.org/node/2014671">Configurable field type definitions</a> are still being converted from old info hook declarations to annotated Drupal 8 definitions. Use <a href="https://drupal.org/node/2064123">field type plugins</a> instead.</li>
+<li>Fields and field instances are now configuration entities and will <a href="https://drupal.org/node/2013679">no longer be accessible as arrays</a>.</li>
+<li>Field data storage is being converted to <a href="https://drupal.org/node/1497374">entity-based storage</a>.</li>
+<li>Configuration entities are being <a href="https://drupal.org/node/2004244">decoupled from content-specific functionality</a>.</li>
+<li>Drupal 7 <a href="https://drupal.org/node/2061107">procedural field functions are being removed</a>.</li>
+</ul>
+<p>If you make use of entities or fields in your code, you can test out these critical APIs and provide feedback while they are still being finalized, but you should expect many additional changes before Drupal 8.0 is released.</p>
+<h3>The disabled module status is being removed</h3>
+<p>To ensure module data integrity and resolve numerous critical issues, the <a href="https://drupal.org/node/1199946">disabled module status is being removed</a>. By the time 8.0 is released, it will no longer be possible to disable a module without uninstalling it. Any logic associated with the disabling of modules should be moved to uninstallation.</p>
+<h3>drupal_set_title(), drupal_set_breadcrumb(), and similar functions will be removed</h3>
+<p>To allow <strong>better render caching</strong> in Drupal core, <a href="https://drupal.org/node/1830588">drupal_set_title() is being removed</a>. Set the page title by adding a <code>_title</code> to your <a href="https://drupal.org/node/1953346">route definition</a>, or add a <code>#title</code> element to your page's render array if you need a dynamic title. (See <a href="https://drupal.org/node/2067859">drupal_set_title() replaced by returning the title in the render array</a> for more details.)</p>
+<p><a href="https://drupal.org/node/2061913">drupal_set_breadcrumb()</a> is also being removed. Use the <a href="https://drupal.org/node/2026025">new breadcrumb system</a> instead.</p>
+<h3>drupal_add_css() and drupal_add_js() will be removed</h3>
+<p>To <strong>improve Drupal's asset management</strong> and support better render caching, <a href="https://drupal.org/node/2073819">drupal_add_css()</a> and <a href="https://drupal.org/node/2073823">drupal_add_js()</a> are being removed. Use the <a href="https://api.drupal.org/api/drupal/core%21includes%21common.inc/function/drupal_process_attached/8">#attached property</a> on the element's render array instead.</p>
+<h3>The global $user is deprecated</h3>
+<p>The global <code>$user</code> variable is no longer supported, and its use will be removed throughout Drupal core before 8.0 is released. While the variable will be retained for certain low-level internals, core and contributed modules should instead use the <a href="https://drupal.org/node/2032447">current user service</a>.</p>
+<h3>Core listings are being converted to Views</h3>
+<p>Core <strong>content listing pages, blocks, and administrative screens</strong> are being <a href="https://drupal.org/node/1823450">converted to views</a> now that <a href="http://drupal.org/node/1805996">the Views module is a part of Drupal core</a>. Therefore, legacy procedural code related to these listings will still be removed, as well as one-off page controllers and block plugins related to these listings.</p>
+<h3>Comments are being converted to a field</h3>
+<p>To allow <strong>comments on any entity type</strong>, comments are being <a href="https://drupal.org/node/731724">converted to a configurable field</a>. Modules extending the comment module will need significant changes following this patch.</p>
+<h3>Other changes</h3>
+<p>The list of changes above is not comprehensive. Numerous other, less impactful API changes have been <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags=Approved+API+change">approved</a>, and other API changes will also be approved as additional issues are addressed. (See more on the <a href="https://drupal.org/core/release-cycle/api-freeze">process for approving API changes</a> during the API completion phase.)</p>
+<p>Note also that numerous functions in the Drupal 8 codebase have been marked <a href="https://api.drupal.org/api/drupal/deprecated/8">@deprecated</a> (including many of those listed above). In general, you should replace calls to deprecated functions with the alternative specified in the function's API documentation.</p>
+<p>For a list of the API changes that have already been made in Drupal 8, see the <a href="https://drupal.org/list-changes/drupal">Change records for Drupal core</a>. Note that <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;version%5B%5D=8.x&amp;issue_tags=Needs+change+notification">many change records are still outstanding</a>. You can help other developers by contributing to this much-needed API change documentation.</p>
+  </body>
+</html>
+

@@ -1,0 +1,47 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 14 Oct 2013 14:25:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 14 Oct 2013 14:25:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Improving Drupal's default registration and login forms
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/blog/improving-drupals-default-registration-and-login-forms
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Improving Drupal's default registration and login forms</title>
+    <base href="http://deeson-online.co.uk/blog/improving-drupals-default-registration-and-login-forms">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h1 class="h4">Improving Drupal&#039;s default registration and login forms</h1></div></div></div><div class="meta">By <a href="/category/author/graeme-blackwood">Graeme Blackwood</a> | 14th October 2013</div><div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="/sites/default/files/styles/580-360/public/post/login-form_0.jpg?itok=6uMYKFJE" alt="Do-Surgery&#039;s new login form" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>We recently completed a complete overhaul of the user experience of <a href="http://www.do-surgery.com">Do-Surgery.com</a>, a video training portal for surgeons, and I want to talk about just one area of the site that we have spent some time getting right.</p>
+<h2>Login, or not to log in</h2>
+<p>Debates about misspelling of the verb "log in" aside, <abbr title="Neologistic noun">login</abbr> forms aren't particularly interesting, right?</p>
+<p>Drupal defaults to having a dedicated page for logging in, and an optional login block that you can put wherever you want. But the login block often gets stuck in a sidebar across the whole site, taking up valuable page real estate and limiting layouts to that classic body-with-sidebar look. Worse, the default approach for a responsive site is often to put the sidebar below the content area, meaning what is otherwise a very useful feature often doesn't even get used.</p>
+<p>Consider the alternative – a dedicated login page. Having to go through a whole server call and wait for a new page to load just to get to the login form is pretty heavy going, especially if you're a mobile user.</p>
+<p>So I revisited the block in an attempt to use it properly. By hiding it initially and intercepting clicks on the "Log in" link, I could keep it right under the header and toggle its appearance as instigated by the user – no server load or waiting times, just a pretty little form. <a href="http://www.do-surgery.com/" title="Link to the Do-Surgery site, click the 'Log in' link">Take a look!</a> The focus states were quite fun to play around with, and I love using :active on buttons to get that depressed look on click, instead of an often-seen gradient flip on hover/focus. I know there isn't anything particularly original about all this; I'm just highlighting that with a bit of attention, there are some really easy wins for the experience of logging in.</p>
+<h2>Registration, and legal and text, Oh My!</h2>
+<blockquote class="pullquote"><p>If the requested data is used to enhance their experience, it's worth making that clear!</p>
+</blockquote>
+<p>Getting the registration form right can be a bit more involved. If your objective is to actively encourage registration, as with Do-Surgery, the registration form has to be right. It is an opportunity to remind the user of how they will benefit by sharing their data, and particularly if the requested data is used to enhance their experience, it's worth making that clear! This is what the old reg form looked like:</p>
+<p><img alt="Old registration form" src="/sites/default/files/uploads/old-reg-form.jpg" /></p>
+<p>In the case of Do-Surgery, these were the factors influencing the requested information:</p>
+<ul>
+<li>Access to the full site content is exclusive to surgeons, and acceptance of a user registration is performed manually after verification of their credentials.</li>
+<li>Once logged in, the site recommends content to the user based on their area(s) of specialism.</li>
+<li>Joining the mailing list also enables webinar registration, event reminders and tailored emails of new content in their area of specialism.</li>
+</ul>
+<h2>The new form</h2>
+<p><img alt="New registration form" src="/sites/default/files/uploads/new-form_1.png" style="width: 580px; height: 906px;" /></p>
+<p>The leader copy is concise, reassuring and aspirational.</p>
+<p>Microcopy (via Drupal's form element descriptions) is used to communicate what information is required, but can overwhelm forms with text. So, I decided to hide the microcopy and show it only when a related textfield is in focus. If you're curious about the technicalities, I used <span class="geshifilter"><code class="css geshifilter-css">input<span style="color: #3333ff;">:focus </span><span style="color: #00AA00;">+</span> .description</code></span>.</p>
+<p>Microcopy is also often only used on forms to describe <em>what</em> is needed (no spaces, lowercase only, that sort of thing). The user probably knows their own name, email address and area of specialism, so I shifted the copy angle to <em>why</em> we need this info, rather than just what. This means on each field, the user is reminded why they are bothering to complete the form, and <em>encouraged</em> to continue.</p>
+<p><img alt="How errors are handled on the new registration form" src="/sites/default/files/uploads/new-reg-form-error.png" style="width: 580px; height: 349px;" /></p>
+<p>The other useful thing about this approach is that if any required fields are incomplete when the user submits the form, we can highlight the microcopy, which explains why it is needed. This means the Drupal error message at the top of the page isn't so disconnected from the fields it refers to. All of this was done with almost no templating – just CSS, a bit of JS and some careful thinking.</p>
+<p>I'm not saying my approach is perfect, but it's a big improvement on the old form, and I'd encourage everyone reading this to look again with fresh eyes at their forms.</p>
+</div></div></div>
+  </body>
+</html>
+

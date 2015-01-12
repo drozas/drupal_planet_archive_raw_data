@@ -1,0 +1,80 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Oct 2013 03:02:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Oct 2013 03:02:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Yuriy Babenko: Introducing: Dev Tools
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yuriybabenko.com/blog/introducting-dev-tools
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Yuriy Babenko: Introducing: Dev Tools</title>
+    <base href="http://yuriybabenko.com/blog/introducting-dev-tools">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="https://drupal.org/project/devtools" title="Dev Tools Module">Dev Tools</a> is a little-known module, which I published a little more than a year ago. As the description states, the module is a "collection of PHP classes and functions which help with and simplify Drupal module development." Sounds pretty vague, right? Hopefully this post will clear things up!</p>
+
+<h3>A little history & reasoning</h3>
+
+<p>Over the many years of Drupal development I accumilated lots of "helper" code, which I carried over with me from project to project. This code was always in a project-specific helper module, and it was a constant pain to rename the module and all associated hooks & files for every new project.</p>
+
+<p>The other pain I encountered was that every mid-large project required dozens of proprietary <em>projectname_foo, projectname_bar</em> modules, resulting in a messy-looking folder structure, and the constant need to write update hooks to enable/disable custom modules, ping other developers to run said hooks (if automation wasn't available), etc. The (experimental) idea behind Dev Tools was to write a single module that compartmentalized all functionality in a style similar to individual modules, and could be extended and built upon.</p>
+
+<h3>The components</h3>
+
+<p>The main Dev Tools module file acts like a gateway to individual components. The <em>.module</em> file contains regular Drupal hooks, but rather than implementing those hooks itself, Dev Tools looks for implementations of those hooks within each component, and then aggregates and returns the result to Drupal. This means that as far as Drupal is concerned, there is only one module, and in order to use a hook within a component, that hook must exist within the main <em>.module</em> file; these are the most important principles for any modules wishing to build upon Dev Tools.</p>
+
+<h3>Using Dev Tools</h3>
+
+<p>Dev Tools must be loaded from a custom module file in order for you to be able to use its components. The simplest way to do this is to place the following code at the top of your <em>.module</em> file, outside of any hooks:</p>
+
+<code>if (module_exists('devtools')) {
+  devtools_load();
+}</code>
+
+<p>... this will load all components within the Dev Tools namespace. Alternatively, you can load one or more individual components:</p>
+
+<code>if (module_exists('devtools')) {
+  // load Debug component from the Dev Tools namespace
+  devtools_load('devtools', 'debug');
+}</code>
+
+<code>if (module_exists('devtools')) {
+  // load Ajax & Debug components from the Dev Tools namespace
+  devtools_load('devtools', array('ajax', 'debug'));
+}</code>
+
+<p>If your custom module builds upon Dev Tools and uses the same components pattern, you would replace the first argument with your module's namespace, but that's certainly not required to use Dev Tools at a basic level.</p>
+
+<p>Now that Dev Tools is loaded you can take advantage of the individual components by simply calling the function names. A small tidbit of helpfulness is that each component function within Dev Tools can be overridden by a custom implementation, by simply registering the name of your overriding function in a global variable.</p>
+
+<p>For example, say you were using the <em>Debug</em> component and wanted to override the <em>print_rr()</em> function to add more whitelisted IPs (which will then be allowed to see the debug messages, but that's details for another post). What you'd do is set the global variable <em>_devtools_handler_print_rr</em> to the name of your overriding function, and then declare that function. The same naming convention can be used to override any other Dev Tools function.</p>
+
+<code>if (module_exists('devtools')) {
+  devtools_load();
+
+  $GLOBALS['_devtools_handler_print_rr'] = 'my_custom_print_rr';
+}
+
+/**
+ * Overrides devtools' print_rr function handler to add new IPs
+ * @param  [type]  $data   [description]
+ * @param  boolean $return [description]
+ * @return [type]          [description]
+ */
+function my_custom_print_rr($data, $return = FALSE) {
+  $debug = \devtools\components\Debug::instance();
+  $debug->addIp('10.0.0.1'); // our new IP
+  return $debug->output($data, $return);
+}</code>
+
+
+<p>I'll be going over some of the functionality of individual components in separate (upcoming) blog posts.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags</div><div class="field-items"><div class="field-item even"><a href="http://yuriybabenko.com/taxonomy/term/72" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">dev tools</a></div><div class="field-item odd"><a href="http://yuriybabenko.com/blog/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item even"><a href="http://yuriybabenko.com/blog/tag/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

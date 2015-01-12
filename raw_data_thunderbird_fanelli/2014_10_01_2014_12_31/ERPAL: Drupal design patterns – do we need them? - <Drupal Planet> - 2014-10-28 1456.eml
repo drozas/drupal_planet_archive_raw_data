@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 28 Oct 2014 13:56:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 28 Oct 2014 13:56:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ERPAL: Drupal design patterns – do we need them?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.erpal.info/de/blog/drupal-design-patterns-do-we-need-them
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ERPAL: Drupal design patterns – do we need them?</title>
+    <base href="http://www.erpal.info/de/blog/drupal-design-patterns-do-we-need-them">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>After six years of working with Drupal, I’ve seen many successful Drupal projects. I’ve also felt how hard it is to become an experienced Drupal developer. When I asked myself why some Drupal projects succeed while others don’t, I came to this conclusion: the projects that integrate with Drupal core and the contrib ecosystem – i.e. the ones that use "best practice" deployment workflows and try to use configuration instead of custom code – keep their flexibility, stay maintainable and avoid "niche know-how". This then ensures that the project can be continued even if the team changes. Of course, there are <a href="http://www.erpal.info/en/blog/how-to-really-plan-successful-projects-part-1-objectives">lots of other non-technical factors that make projects successful</a> but we’re focusing here on the technical ones. The problem is that there’s no central repository of "best practices": almost all developers or Drupal shops have their own.</p>
+<p>This brings me to the point of considering some Drupal design patterns. Whereas in object-oriented programming, developers have patterns for their object models to solve specific problems that appear again and again, we haven’t yet established any in Drupal. But if we look at the configuration layer of Drupal as a "programming language", we could describe some patterns or best practices that would help others with problems that have already been solved hundreds of times before. This would have the same benefits as design patterns in other programming languages. Solutions for equivalent problems / requirements are always designed in a similar way. For any given workflow we could always use the same rules, so everybody would know where to go to change some behavior. The result would be that modules wouldn’t implement their own logic in code but provide actions, events and conditions, and some default rules. People still wouldn’t find a Drupal image gallery module but they would know how to build one according to some patterns. Of course we’d have a longer dependency chain for some modules, but is this really a problem if we’re depending on standard modules?</p>
+<p><img src="http://www.erpal.info/sites/default/files/designpattern_blog_illu_v2_1.png" width="709" height="337" /></p>
+<p> </p>
+<h3>When to choose which module – would patterns work for this?</h3>
+<p>With more than 8000 modules available at Drupal.org, new Drupal users may find it hard to get started. What usually happens is that they enable lots of modules to test them; if the module works for their requirements, it remains enabled. If the user is a technical person, maybe even a developer, he/she will most likely use the Drupal API to extend the Drupal app.<br />
+But wouldn't it be great if we had a list of modules that were "state of the art" for best practices such as using rules for workflows and business logic, ECKs and fields for data structure modelling, views for lists and data queries, restWS and WSclient for communication with other applications, entity view modes in combination with panels for layouting, and features for the deployment. Considering the above, I’ve created the <a href="http://www.brightsolutions.de/sites/default/files/DrupalApplicationStack.pdf">Drupal application stack poster</a> to collect all our modules – along with their specific use cases –and to share this overview with the community. Shouldn't we always have a "Drupal-relevant set" of modules in mind when it comes to the modelling process of our Drupal app? This would keep Drupal apps sustainable and flexible.</p>
+<p> </p>
+<h3>Dos and don’ts</h3>
+<p>There are also some examples of what not to do. In a few projects that had crashed before they came to us to be rebuilt, it became clear that the previous developers had exactly the problems listed above. They had no guide to help them figure out when to use the API and when to choose which module, which further led to code and architectures that nobody but the developer could maintain. After the first release, the projects weren’t extendible, as there was no deployment process established. Wouldn't it help to collect these examples as well, to help people avoid them and get on the right path with Drupal? With a list of positive and negative patterns, we could give users some objective criteria for rating the implementation of their Drupal project.</p>
+<p> </p>
+<h3>Distributions – start from a higher level</h3>
+<p>Distributions built on such best practices as <a href="https://www.drupal.org/project/commerce_kickstart">Drupal commerce kickstart</a> or <a href="http://drupal.org/project/erpal_platform">ERPAL Platform</a> provide a good starting point for new Drupal developers, since they can see how experienced Drupalistas created the distros and which modules they used. Distros can be showcases for Drupal design patterns or a kick-start for vertical use cases like e-commerce sites or business applications.</p>
+<p>If we want the <a href="http://buytaert.net/scaling-open-source-communities">Drupal community to grow</a>, we should help others find the right starting point – not just any old one that could lead them off in the wrong direction: while they might see some quick results, if it wasn’t the right approach, they would only realize that after days of work. Once too much time has elapsed, with the money already spent and the deadline looming ever closer, nobody will ever refactor the Drupal application to improve its structure.</p>
+<p>With Drupal design patterns, we’d be able to offer standard solutions to often-complex problems. What are your thoughts about Drupal design patterns? Would this bring us another step closer to making <a href="http://www.erpal.info/de/blog/two-important-drupal-facts-resulting-from-drupalcon-amsterdam-2014">Drupal into a world-leading web application framework</a>?</p>
+<p><img src="http://www.erpal.info/sites/default/files/designpattern_blog_illu_v2_2.png" width="709" height="337" /></p>
+</div></div></div>
+  </body>
+</html>
+

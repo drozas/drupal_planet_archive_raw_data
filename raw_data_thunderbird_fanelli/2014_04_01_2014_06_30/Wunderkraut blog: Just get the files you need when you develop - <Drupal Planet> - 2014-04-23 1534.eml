@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 23 Apr 2014 13:34:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 23 Apr 2014 13:34:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Just get the files you need when you develop
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.wunderkraut.com/blog/just-get-the-files-you-need-when-you-develop/2014-04-23
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Just get the files you need when you develop</title>
+    <base href="http://www.wunderkraut.com/blog/just-get-the-files-you-need-when-you-develop/2014-04-23">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    When you work locally on development or test on stage/dev whatever you sometimes needs the files from production. Our old way in solving that is downloading the whole file catalogue and have it local. Sometimes the file catalogues where several gigabytes large so that is not a good workflow at all.  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p>To solve that problem we are now using <a href="https://drupal.org/project/stage_file_proxy">Stage file proxy</a>. We have been using it for some time now to get files to stage or locally, and it works really well (we have some issues on D6-sites, but works almost flawless on D7-sites). Stage file proxy downloads the files that are requested from production (or whatever) site running environment.</p><p>So you just get the files you need, and you could easily delete the files locally and get them back when called for. Time and space saver.</p><p><img alt="markering_229.png" class="media-image" height="298" title="markering_229.png" width="480" src="http://www.wunderkraut.com/sites/wunderkraut.com/files/styles/large/public/markering_229.png?itok=PqHjk9H3" /></p><p>A nice patch to the module is getting an <a href="https://drupal.org/node/1545912">admin-interface</a> - so that you don’t need to add settings to settings.php or creating variables. <strong>EDIT:</strong> <a href="https://drupal.org/user/36762">Greggles</a> just committed that patch to dev :-)</p><p><em>Photo by James Butler</em></p> </div>
+    </div>
+  </body>
+</html>
+

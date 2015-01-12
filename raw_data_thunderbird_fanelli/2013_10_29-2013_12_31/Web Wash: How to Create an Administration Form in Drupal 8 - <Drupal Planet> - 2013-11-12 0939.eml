@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 12 Nov 2013 08:39:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 12 Nov 2013 08:39:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: How to Create an Administration Form in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/how-create-administration-form-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: How to Create an Administration Form in Drupal 8</title>
+    <base href="http://webwash.net/tutorials/how-create-administration-form-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>The majority of Drupal projects I've worked on always needed some type of custom administration form.</p>
+
+<p>In the past, I've created a basic form where an editor was able to change a bit of content next to the logo. Instead of hard coding it in the template, the editor would simply change the content from within Drupal.</p>
+
+<p>In Drupal 7, you can build a basic administration form by defining a form and passing it through the <code>system_settings_form()</code> function. And of course, creating a menu item, so the form is accessible.</p>
+
+<p>In Drupal 8, however, things are slightly different.</p>
+
+<p>In this tutorial, I'll show you how to create a basic administration form in Drupal 8. I'll create a form for the <a href="https://drupal.org/project/snippets">Code Snippets</a> module that allows a user to select which element (<code>pre</code> or <code>code</code>) should wrap the code displayed by the module.</p>
+</div></div></div>
+  </body>
+</html>
+

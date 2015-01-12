@@ -1,0 +1,61 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 19 Mar 2014 11:29:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 19 Mar 2014 11:29:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Angular and Drupal/PHP: Get $_POST data working (hint: It's JSON!)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.wunderkraut.com/blog/angular-and-drupalphp-get-post-data-working-hint-its-json/2014-03-19
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Angular and Drupal/PHP: Get $_POST data working (hint: It's JSON!)</title>
+    <base href="http://www.wunderkraut.com/blog/angular-and-drupalphp-get-post-data-working-hint-its-json/2014-03-19">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    A little tip can save you headaches when trying to access your AngularJS app&#039;s post data in Drupal/PHP.  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"><p>Ok, the title says it all, but for all those blog prose aficionados amongst you, here's the long version.</p>
+
+<p><img src="http://angularjs.org/img/AngularJS-large.png" alt="AngularJS by Google" /></p>
+
+<p>These days chances are you implement your frontend functionality in JavaScript as an <a href="http://angularjs.org">AngularJS</a> app (check it out!). In that case you'll probably want to connect your Angular app to fetch data from your backend (Drupal or PHP in general assumed). You'll also probably supply some app parameters such as user input via data, for example in a http post request with Angular's default <a href="http://docs.angularjs.org/api/ng/service/$http">$http service</a>, like that:</p>
+
+<pre><code>  var request_data = {
+    firstname: 'Quentin',
+    lastname: 'Hapsburg'
+  };
+  $http.post(request_url, request_data)
+    .success(request_success_callback)
+    .error(request_error_callback);
+  // ...
+</code></pre>
+
+<p>Now on Drupal/PHP you're eventually going to trying access that post data with good 'ole $_POST superglobal (since we're not dealing with Drupal's form submission handling here):</p>
+
+<pre><code> $firstname = $_POST['firstname'];
+</code></pre>
+
+<p>BUT: This will simply result in an "index not defined" PHP notice, because $_POST is an empty array – you simply can't access your precious http post data with your traditional means.
+And that's going to make you tear your hairs out – why in the world is $_POST data is plain empty, even in a simple non-Drupal PHP script?!?!</p>
+
+<p>The explanation and solution are dead simple:</p>
+
+<p><strong>Angular's $http.post is by default assuming and encoding your post data to be JSON, instead of ye ole querystring-formatted post data you and your PHP would expect as with a &lt;form method="post"...&gt; submit.</strong></p>
+
+<p>To access your Angular app's post data in PHP (and Drupal) you have to <strong>read in the raw request payload and decode it from JSON</strong> into your beloved PHP array form (which you'd have your traditional $_POST data in):</p>
+
+<pre><code>  $data = file_get_contents("php://input");
+  $data = json_decode($data, TRUE);
+</code></pre>
+
+<p>Hope this saved you some minutes or hours. Happy coding!</p>
+</div>
+    </div>
+  </body>
+</html>
+

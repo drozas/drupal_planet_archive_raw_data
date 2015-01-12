@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 25 Nov 2013 08:30:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 25 Nov 2013 08:30:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #24
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/387
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #24</title>
+    <base href="http://www.drupal4hu.com/node/387">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Drupal 8 Alpha 6 is out and it has a migrate module in there! It even has a few complete migrations: variables to the configuration files owned by system module. Since the <a href="https://groups.drupal.org/node/357993">last report</a> the configuration of process has changed significantly, this is now documented in the <a href="https://drupal.org/node/2127611">handbook</a>. We have two patches in the core queue, one potpourri of small fixes and one to split migrate into migrate and migrate_drupal, the latter holding the Drupal 6->Drupal 8 and Drupal 7->Drupal 8 migration. I have a third almost ready, this will be our first config entity migration, namely filter formats. This is actually working but the test is currently not doing much and the documentation is lacking -- once these easy problems are fixed, I will submit this as well. There's quite a lot of documentation to be written because this patch will introduce most generic process plugins we planned to write. A lot of code has been written for a fourth, this will be all the variables to configuration files. There's rapid progress, Mike Ryan now participates on a daily basis which means a lot of domain knowledge has been added to the team. marvil07 is working on porting the CCK fields code from migrate_d2d -- yes, the battle plan is that you will be able to migrate CCK fielded nodes to Drupal 8 straight. bdone and Mike is working on expanding the test coverage on two big classes which were straight ported from Drupal 7. YesCT is fixing our doxygen (I worked on this as well because the terminology was very confusing, hopefully now it's less so). My next task is to go over the existing hook_update_6xxx functions and see whether there's special logic that won't be covered by simple entity-to-entity migrations and create issues for them. fastangel have written the bulk of the fourth patch, I fully expect he will pick a lot of these issues, with the rest of the team piling on them once their work is done. With a little luck and perseverance the Drupal 6 -> Drupal 8 migration will be done by the Drupal birthday (January 15).</p>
+<p>In the longer term, we will need to do Drupal 7 to Drupal 8 and I will need extra helping hands with multilingual issues. Ryan Weal already voluntereed to help, but I am sure we can use a few more so if you know i18n+migrate both, please don't hesitate to <a href="https://drupal.org/user/9446/contact">contact me</a>.</p>
+  </body>
+</html>
+

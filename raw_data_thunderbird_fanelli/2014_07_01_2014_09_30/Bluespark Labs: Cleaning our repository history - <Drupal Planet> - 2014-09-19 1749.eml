@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 19 Sep 2014 15:49:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 19 Sep 2014 15:49:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bluespark Labs: Cleaning our repository history
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.bluespark.com/blog/cleaning-our-repository-history
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bluespark Labs: Cleaning our repository history</title>
+    <base href="http://www.bluespark.com/blog/cleaning-our-repository-history">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In our daily work we all make mistakes in our git commits. Sometimes this errors can easily be repaired just by reverting our commits. But if we are working in a public repository and we have accidentally pushed some sensitive information, we now have a problem.</p>
+<p>That sensitive information is in our repository history and anybody who has the enough time to explore can gain access to that. Our clients or even ourselves are now dealing with a privacy issue.</p>
+<p>We can always try to repair that commit in our local environment and push our code again using the --force parameter. But we know, when you do that, a kitten dies. And if your team members already pushed something, everything in the repository will be messed up.</p>
+<p>So the best option is to try and fix this in a more elegant way that allow us to erase all the traces of our mistake, but preserves repository integrity.</p>
+<p>Git provides the filter-branch command, but sometimes this powerful tool becomes too complicated and slow. In trying to find an easier way to do it, finally came across the <strong>BFG Repo-Cleaner</strong>.</p>
+<p>This tool is an alternative to git <a href="http://git-scm.com/book/en/Git-Tools-Rewriting-History#The-Nuclear-Option:-filter-branch" target="_blank"><strong>filter-branch</strong></a> that provides a faster and easier way to clean git repositories. It is written in Java, so you need to make sure you have JRE 6.0 or above installed. To clean your repository you only have to follow the steps below:</p>
+<p>Clone your repository using the --mirror option. Beforehand, you should repair manually your mistakes in the repository.</p>
+<p><div class="geshifilter"><table class="php geshifilter-php" style="font-family:monospace;"><tbody><tr class="li1"><td style="width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">1
+</pre></td><td style="font-family: monospace; font-weight: normal; font-style: normal"><pre style="font-family: monospace; font-weight: normal; font-style: normal">$ git clone <span style="color: #339933;">--</span>mirror git<span style="color: #339933;">:</span><span style="color: #666666; font-style: italic;">//example.com/my-repo.git</span></pre></td></tr></tbody></table></div></p>
+<p>Now, <a href="http://repo1.maven.org/maven2/com/madgag/bfg/1.11.8/bfg-1.11.8.jar" target="_blank">download BFG</a> and execute it against your cloned repository.<br />
+<div class="geshifilter"><table class="php geshifilter-php" style="font-family:monospace;"><tbody><tr class="li1"><td style="width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">1
+</pre></td><td style="font-family: monospace; font-weight: normal; font-style: normal"><pre style="font-family: monospace; font-weight: normal; font-style: normal">$ java <span style="color: #339933;">-</span>jar bfg<span style="color: #339933;">.</span>jar <span style="color: #339933;">--</span>strip<span style="color: #339933;">-</span>blobs<span style="color: #339933;">-</span>bigger<span style="color: #339933;">-</span>than<span style="color: #339933;">&amp;</span>nbsp<span style="color: #339933;">;</span>1M<span style="color: #339933;">&amp;</span>nbsp<span style="color: #339933;">;</span>my<span style="color: #339933;">-</span>repo<span style="color: #339933;">.</span>git</pre></td></tr></tbody></table></div><br />
+	This step will remove all the blobs bigger than 1MB from your repository.</p>
+<p>Once the index has been cleaned, examine your repository's history and then use the standard git gc command to strip out the unwanted dirty data, which Git will now recognise as surplus to requirements:<br />
+<div class="geshifilter"><table class="php geshifilter-php" style="font-family:monospace;"><tbody><tr class="li1"><td style="width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">1
+2
+3
+</pre></td><td style="font-family: monospace; font-weight: normal; font-style: normal"><pre style="font-family: monospace; font-weight: normal; font-style: normal">$ cd my<span style="color: #339933;">-</span>repo<span style="color: #339933;">.</span>git
+$ git reflog expire <span style="color: #339933;">--</span>expire<span style="color: #339933;">=</span>now <span style="color: #339933;">--</span>all
+$ git gc <span style="color: #339933;">--</span>prune<span style="color: #339933;">=</span>now <span style="color: #339933;">--</span>aggressive</pre></td></tr></tbody></table></div></p>
+<p>Finally, once you're happy with the updated state of your repo, push it back up<br />
+	<div class="geshifilter"><table class="php geshifilter-php" style="font-family:monospace;"><tbody><tr class="li1"><td style="width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">1
+</pre></td><td style="font-family: monospace; font-weight: normal; font-style: normal"><pre style="font-family: monospace; font-weight: normal; font-style: normal">$ git push</pre></td></tr></tbody></table></div></p>
+<p>If everything went well, your repository won't include any of the accidentally committed files.</p>
+<p>Here you have some common examples to use with Drupal:<br />
+	Delete all files named 'id_rsa' or 'id_dsa' :<br />
+<div class="geshifilter"><table class="php geshifilter-php" style="font-family:monospace;"><tbody><tr class="li1"><td style="width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">1
+</pre></td><td style="font-family: monospace; font-weight: normal; font-style: normal"><pre style="font-family: monospace; font-weight: normal; font-style: normal">$ java <span style="color: #339933;">-</span>jar bfg<span style="color: #339933;">.</span>jar <span style="color: #339933;">--</span>delete<span style="color: #339933;">-</span>files id_<span style="color: #009900;">&#123;</span>dsa<span style="color: #339933;">,</span>rsa<span style="color: #009900;">&#125;</span> <span style="color: #339933;">&amp;</span>nbsp<span style="color: #339933;">;</span>my<span style="color: #339933;">-</span>repo<span style="color: #339933;">.</span>git</pre></td></tr></tbody></table></div></p>
+<p>Delete database dumps:<br />
+<div class="geshifilter"><table class="php geshifilter-php" style="font-family:monospace;"><tbody><tr class="li1"><td style="width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">1
+</pre></td><td style="font-family: monospace; font-weight: normal; font-style: normal"><pre style="font-family: monospace; font-weight: normal; font-style: normal">$ java <span style="color: #339933;">-</span>jar bfg<span style="color: #339933;">.</span>jar <span style="color: #339933;">--</span>delete<span style="color: #339933;">-</span>files <span style="color: #339933;">*</span><span style="color: #009900;">&#123;</span><a href="http://www.php.net/mysql"><span style="color: #990000;">mysql</span></a><span style="color: #339933;">,</span><a href="http://www.php.net/mysql"><span style="color: #990000;">mysql</span></a><span style="color: #339933;">.</span>gz<span style="color: #009900;">&#125;</span></pre></td></tr></tbody></table></div></p>
+<p>Delete files folder:<br />
+<div class="geshifilter"><table class="php geshifilter-php" style="font-family:monospace;"><tbody><tr class="li1"><td style="width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">1
+</pre></td><td style="font-family: monospace; font-weight: normal; font-style: normal"><pre style="font-family: monospace; font-weight: normal; font-style: normal">$ java <span style="color: #339933;">-</span>jar bfg<span style="color: #339933;">.</span>jar <span style="color: #339933;">--</span>delete<span style="color: #339933;">-</span>folders files</pre></td></tr></tbody></table></div></p>
+<p>We have to remark that BFG assumes that you have repaired your repository before executing it. You need to make sure your current commits are clean. This protects your current work and gives you peace of mind knowing that the BFG is only changing your repo history, not meddling with the current files of your project.</p>
+<p>Finally, here you have some useful related links:</p>
+<ul><li>BFG repository in GitHub: <a href="https://github.com/rtyley/bfg-repo-cleaner" target="_blank">https://github.com/rtyley/bfg-repo-cleaner</a></li>
+<li>BFG project page: <a href="http://rtyley.github.io/bfg-repo-cleaner" target="_blank">http://rtyley.github.io/bfg-repo-cleaner</a></li>
+<li>GitHub doc - Remove Sensitive data: <a href="https://help.github.com/articles/remove-sensitive-data" target="_blank">https://help.github.com/articles/remove-sensitive-data</a></li>
+<li>Git fitler-branch documentation: <a href="https://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html" target="_blank">https://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html</a></li>
+<li>Git Tools - Rewriting History: <a href="http://git-scm.com/book/en/Git-Tools-Rewriting-History" target="_blank">http://git-scm.com/book/en/</a>Git-Tools-Rewriting-History</li>
+</ul></div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

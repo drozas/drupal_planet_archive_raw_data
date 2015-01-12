@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 26 Aug 2014 17:50:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 26 Aug 2014 17:50:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Displaying Webform submission data in Drupal Views
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/sivaji/displaying-webform-submission-data-drupal-views
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Displaying Webform submission data in Drupal Views</title>
+    <base href="http://knackforge.com/blog/sivaji/displaying-webform-submission-data-drupal-views">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Although <a href="https://www.drupal.org/project/webform">Webform</a> module comes with limited integration to expose the submitted data in <a href="https://www.drupal.org/project/views">Views</a>, it lacks the fine control to make View by Webform field as rows and columns. There is a workaround to achieve this though which I would like to briefly run through in this blog.<br /><br /><a href="https://www.drupal.org/project/webform_mysql_views">Webform MySQL Views</a> together with <a href="https://www.drupal.org/project/data">Data</a> and <a href="https://www.drupal.org/project/schema">Schema</a> modules with a patch to Webform MySQL Views from issue <a href="https://www.drupal.org/node/889306" title="Status: Active">#889306: Allow the designation of a primary key for MySQL views</a> makes this feasible.<br /><br />Webform MySQL Views, as the name implies, allow us to create <a href="http://dev.mysql.com/doc/refman/5.0/en/views.html">MySQL view</a> from Drupal, leveraging the Data module which counts on Schema module.<br /><br />Data module wraps a bundle of sub-modules, among them Data Search provides Views Integration and Data Admin UI for accessing its administrative pages.<br /><br />Once the mentioned modules are enabled. You can see a sub-menu "MySQL Views" under Administration » Content » Webforms. Tick the Webform node whose fields are needed in Views. This form is only meant to create MySQL view.</p>
+<p style="text-align: center;"><img alt="" class="media-image" height="393" width="592" typeof="foaf:Image" src="/sites/default/files/selection_038.png" /></p></div></div></div>
+  </body>
+</html>
+

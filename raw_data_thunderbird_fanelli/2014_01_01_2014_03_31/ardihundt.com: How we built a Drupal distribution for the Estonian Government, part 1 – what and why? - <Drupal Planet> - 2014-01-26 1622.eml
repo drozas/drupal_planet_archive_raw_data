@@ -1,0 +1,53 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 26 Jan 2014 15:22:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 26 Jan 2014 15:22:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ardihundt.com: How we built a Drupal distribution for the Estonian Government, part 1 – what and why?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://ardihundt.com/2014/01/26/estonian-government-drupal-distribution-part1-why/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ardihundt.com: How we built a Drupal distribution for the Estonian Government, part 1 – what and why?</title>
+    <base href="http://ardihundt.com/2014/01/26/estonian-government-drupal-distribution-part1-why/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>In April 2013, Wunderkraut Estonia was tasked to build a website platform for the Government of Estonia. The platform would be used to run the Goverment Office website, all of the 11 main public sites for the Estonian Ministries, and the central &#8220;Government site&#8221; called valitsus.ee (government.ee in Estonian).</p>
+<p>We took our weapon of choice, Drupal, and decided to develop the platform as a Drupal distribution. It did end up having most of the characteristics of a Drupal distribution &#8211; installation profile, theme, a bunch of modules; but it also has some differences &#8211; it&#8217;s not (yet) publicly available, and it ships as a ready-to-go website, with most of the settings already configured.</p>
+<p><span id="more-76"></span></p>
+<p>I have been running this project from the developer side since April and we have now arrived at a stage where we are due to launch first of the sites soon, so this is a good moment to take a look back. This is Part 1 of the series of posts that describe the lifespan of this project. Part 1 concentrates on the reasoning &#8211; what is this project about, and why is it a good idea to build a unified platform for 13 important public sector websites?</p>
+<h2>The preparations</h2>
+<p>Before we had even heard of this project, there was a period of time during 2012 and beginning of 2013 when the <a href="http://valitsus.ee/en/government-office" target="_blank">Government Office</a> did a spetacular job of bringing together all the interested parties, who, as a group, worked out the main principles and functionality of the forthcoming platform. Some decisions were made:</p>
+<ul>
+<li>the platform will be developed centrally, ie. decisions are made as a group and tasks delegated to a single dedicated development team. This means that at least until the deployment phase, noone can press his specific needs into development without finding common ground within the group first.</li>
+<li>the platform will be named &#8220;Government Portal&#8221; and will have to make the 13 sites look as parts of a single big information source, with similar visual language, some shared and aggregated content, and similar structure in menus and page layouts. However, it&#8217;s not a single website, but a separate site for each, installed in different servers, running on independent CMS cores.</li>
+<li>the look and feel of the platform will be obligatory to all group members, but the specific technical solution (ie. Drupal) will be recommended, not forced.</li>
+<li>everyone will try to migrate to the new platform together, the most optimistic deadline being the beginning of 2014.</li>
+</ul>
+<p>These were all important decisions that set the tone for the platform-to-be. Whats probably just as valuable, is that the group got to know each other and made those decisions together. Estonia is a small country, but even here each of the Ministries is a huge administrative machine, with its own traditions, missions, structure, powerful leaders and so on. To make the centralized approach work, you can&#8217;t just throw a finished end product out there and force everyone to use it. It has to be made together, and has to feel like it was made together.</p>
+<div id="attachment_84" style="width: 177px" class="wp-caption alignright"><a href="http://ardihundt.files.wordpress.com/2014/01/vp-frontpage.jpg"><img class="size-medium wp-image-84  " title="Government Portal frontpage" alt="vp-frontpage" src="http://ardihundt.files.wordpress.com/2014/01/vp-frontpage.jpg?w=167&#038;h=300"   /></a><p class="wp-caption-text">The design layout for the frontpage</p></div>
+<p>Another part of the preparations was working out the detailed functionality and designing all the layouts for it. This came to be about 20 pixel-perfect views, from frontpage to news views to content page templates, all the webdesign this project would need (actually ended up being about 80% of the design it needed), with the functionality drawn into it.</p>
+<p>Now, coming from the world of agile and modular Drupal, I have to be critical about this part. A Drupal project should start from Drupal &#8211; prototyping, choosing the right modules, eliminating or redesigning that 5% of the functionality which takes 30% of the effort, etc. As it turned out, we did end up facing some functionality that did not really make sense on Drupal and didn&#8217;t allow for the best user experience. Luckily, client was flexible and understanding enough that this didn&#8217;t turn out to be a mayor problem.</p>
+<p>Understandably, a public sector organization cannot choose a development partner at random to have them onboard from the start. A better scenario here would have been if as soon as the main concept was in place, a single procurement process would have been called to find a design partner and development partner together. And then the detailed functionality and user interface would have been defined together with both of them.</p>
+<p>Too much of the website functionality is still drawn up in Photoshop these days, without a developer present.</p>
+<h2>Why?</h2>
+<p>Why would you do a project like that, and in such a way as the described preparations suggest? Different stakeholders have their own answers to this question, but the following reasons are the way I see it.</p>
+<div id="attachment_101" style="width: 460px" class="wp-caption alignright"><img class="size-full wp-image-101" alt="CMS engine segmentation before Government Portal on Drupal" src="http://ardihundt.files.wordpress.com/2014/01/vp-segmentation-2.jpg?w=800"   /><p class="wp-caption-text">CMS engine segmentation before Government Portal on Drupal</p></div>
+<p>Of course there is the efficiency &#8211; <strong>saving resources and money</strong>. Websites have a lifespan of 3-5 years, sometimes longer. All the 13 websites involved would need to be updated or remade at some point or other. Their look would decay, the technologies involved get hopelessly outdated, needs for new functionality arise etc.</p>
+<p>5 of the sites were running on a CMS engine called Saurus, everyone else had a different backend. Even if those 5 wanted to share resources, they didn&#8217;t, because the sites were quite different.<br />
+Out of 13, maybe 4 could be updated, everyone else needed a remake, because the backend was discontinued or just too old.</p>
+<p>So lets say a complete remake costs 100 apples, an update and a facelift  50. To get everyone done, one would need to spend 9&#215;100 + 4&#215;50 = 1100 apples. No sharing of resources.</p>
+<p>Building the unified platform did cost about 300 apples, about 100 apples will be spent on various ways of deploying the sites. Thats 400 apples total.</p>
+<p>This is, of course, a simplification, but the caliber is correct. And thats a lot of apples saved.</p>
+<p>Another one is <strong>user experience</strong>. People of Estonia dont have to learn how to navigate 13 different public sites, which usually, based on good historical data, have the navigation scheme of a maze.  The news, <a href="http://ardihundt.com/2013/09/15/filtered-google-site-search-for-drupal/" target="_blank">search</a> and contacts of the sites are now unified, helping to deliver the idea that the Government is actually a single large organization.</p>
+<p>This also works on the product owner side &#8211; server administrators and content editors now have unified manuals, they can share knowledge and materials about how to run these sites. Training can be centralized.</p>
+<p><strong>Nobody gets left behind</strong>. Ministries with less resources or time are also helped or forced to the new platform. This contributes to a more modern, unified look across the whole government sector. Security is better. Updates are coordinated together, so that when a more technologically savvy Ministry goes for a new technology or functionality, others get part of it too.</p>
+<p>I suppose there are some cons aswell &#8211; mainly that ministries lose some of their decision-making independence and making ministry-specific functionality is a bit tricky (more on that later). But in no way can I see that those cons would outweigh the pros.</p>
+<p>So this is what the client wanted to build, and some of the reasons why make the effort. Next up, <a href="#">part 2 &#8211; highlights of the technical implementation.</a></p><br /> Tagged: <a href='http://ardihundt.com/tag/case-study/'>case study</a>, <a href='http://ardihundt.com/tag/drupal-7/'>Drupal 7</a>, <a href='http://ardihundt.com/tag/planet-drupal/'>planet drupal</a>, <a href='http://ardihundt.com/tag/workflow/'>workflow</a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/ardihundt.wordpress.com/76/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/ardihundt.wordpress.com/76/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=ardihundt.com&#038;blog=57269041&#038;post=76&#038;subd=ardihundt&#038;ref=&#038;feed=1" width="1" height="1" />
+  </body>
+</html>
+

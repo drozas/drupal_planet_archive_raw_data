@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 02 Aug 2013 16:10:27 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 02 Aug 2013 16:10:27 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Generic files Vs. Rendered files in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/blogs/post/generic-files-vs-rendered-files-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Generic files Vs. Rendered files in Drupal</title>
+    <base href="http://forumone.com/blogs/post/generic-files-vs-rendered-files-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>After you've been working with Drupal profiles for a while, the line between what functionality is a part of core Drupal and what comes from contributed modules tends to blur, but it is important to step back every once in a while and examine these distinctions. I recently had a wheel-spinning moment over the difference between two formatters for file fields: <em>Generic files</em> and <em>Rendered files</em>. Specifically trying to answer the question: Why don't custom Display Suite fields to show up, or why can't I select Display modes (e.g. Default, Teaser, Full content), when a file is formatted with the Generic file formatter? The short answer is because the Generic file formatter does not render a file as an entity. And here is why&hellip;</p>
+<p>I wanted to use the Display Suite module to show an extra field that I had attached to a file entity (In this case, it was a custom display suite code field to show the file size).  Here you see where I am already relying on contributed functionality in Drupal. In out-of-the-box Drupal, files are not entities. You must to use the <a href="https://drupal.org/project/File_entity">File Entity</a> module to allow files to become entities and gain the benefits of an entity, like being field-able or using display modes. Once the file entity module is installed, you now have access to the <em>Rendered file</em> formatter for file fields, which can then display the fields attached to a file entity because the formatter's view function constructs a renderable array that is passed to drupal_render(), a very dynamic method for generating markup compared to a very set theme. Otherwise, when you use the Generic file formatter, you are dedicated to using the theme file_link provided by core's File module. This theme formats fields in a very basic manner; as a link and an icon. Here is what the theme's function returns:</p>
+<p class="rteindent1"><code>return '<span class="file">' . $icon . ' ' . l($link_text, $url, $options) . '</span>';</code></p>
+<p>Which definitely is not as dynamic as how a rendered entity might be output. No fields, no display modes, just the file's basic information as a link (You could give it access to display modes though by making those available in the formatter settings hook, Then you would be responsible for handling those settings in whatever theme you use to render the field).</p>
+<p>In the end, I did not use the Display suite code field at all. It relies on PHP code in the database, which presents issues around security, and also, as a colleague of mine pointed out, PHP code from the database is not cached, so there is a performance hit as well. Instead, I implemented my own Display suite formatter (Which is really just allows DS to use any standard Drupal field formatters) with a theme that re-implements file_field, adding the file size as a part of the display.</p>
+<p>So in short: Generic files and Renderend files share the fact that they are both field formatters, but Rendered file &gt; Renderable array &gt; Rendered entity, while Generic file &gt; file_like theme. It all makes perfect sense now.</p><div class="field field-type-text field-field-short-description">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <p>A quick overview of the differences between &quot;Generic files&quot; and &quot;Rendered files&quot; in Drupal.</p>        </div>
+        </div>
+</div>
+  </body>
+</html>
+

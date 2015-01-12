@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 22 Aug 2013 06:49:01 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 22 Aug 2013 06:49:01 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Drupal Commerce product suggestions with Radioactivity
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wunderkraut.com/blog/drupal-commerce-product-suggestions-with-radioactivity/2013-08-22
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Drupal Commerce product suggestions with Radioactivity</title>
+    <base href="http://wunderkraut.com/blog/drupal-commerce-product-suggestions-with-radioactivity/2013-08-22">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    Some time ago we got involved with a big online store project which was going to be built on top of Drupal Commerce. It was to have all the groovy things of a modern online store, however back then when commerce was just starting to kicking off there weren’t that many modules which provided enhanced functionality that are so commonplace today. Getting customers to buy more and more stuff is a big plus for any online store so having some kind of suggestions for purchases is a good start.  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p>This blog post will cover the details on how to set up a product suggestions feature (sometimes referred to as <em>cross selling</em>) with Radioactivity and Relation modules. The example configuration is downloadable as a feature module at the bottom of the page.</p><p>If you are unfamiliar with <a href="https://drupal.org/project/radioactivity">Radioactivity</a> you might be interested in reading these:</p><ul><li><a href="http://www.wunderkraut.com/blog/radioactivity-2-basics/2011-12-05">Radioactivity 2: basics</a></li><li><a href="http://www.webomelette.com/drupal-radioactivity-module">Radioactivity - Popularity by Decay</a></li></ul><p>If the <a href="https://drupal.org/project/relation">Relation</a> module is unfamiliar, heres a nice round up: <a href="http://wunderkraut.com/da/node/874">Learn the Relation module</a></p><p>The core functionality is done completely in <a href="https://drupal.org/project/rules">Rules</a>, so if Rules is an unfamiliar territory, heres a snappy guide to it: <a href="http://www.wunderkraut.com/blog/taming-the-butler-learning-rules/2011-10-25">Taming the Butler - Learning Rules</a></p><p>And lastly if you are completely lost with the subject, now is the correct time to start learning <a href="http://www.drupalcommerce.org/">Drupal Commerce</a>.</p><h3>Theory</h3><p>We are going to track what other products (B &amp; C) are people buying along with a product (A). We need a relation (R) in between products and in that relation we store the number of times the products have been bought.</p>
+<pre>
+A &lt; R(1) &gt; B
+A &lt; R(1) &gt; C
+</pre>
+<p>Notice that the relation is non-directional; when a customer goes to view product C we can suggest her to buy A and again when she views A we can suggest her to buy B and C. Viewing B would show a suggestion of A.</p><p>By replacing the number with a radioactivity field we can make the list more lively: in effect products which are bought together during a period of time will pick up more energy and thus the suggestion list will change accordingly. In effect during summer products related to summer would be the top suggestions.</p><h3>The setup</h3><p>For all the magic to happen we need the five following pieces:</p><ol><li>A node type which has a field for referencing Commerce products. We’ll call this a <i>product node</i>.</li><li>A relation where we store the energy between two product nodes</li><li>A rule to create the relations between nodes whenever products are purchased</li><li>A rule to add energy to an existing relation between nodes</li><li>A view to list product nodes which are associated with the currently viewed node</li></ol><h3>Node</h3><p>This is a quick one: add a field of type <i>Product reference</i> to the Article content type and name it simply <i>Product reference</i>. In the example module we rely on the field name to be exactly this, but it is relatively easy to change as you will find out later.</p><h3>Relation</h3><p>Instead of directly referencing the commerce products we reference the nodes which are referencing the commerce products. This is because we want to track - for the sake of an example - a product “Wunderkraut t-shirt” instead of the individual “Wunderkraut t-shirt size M” which a single commerce product might represent.</p><p>The Relation between the product nodes which are linked to Drupal Commerce products via a Product reference is configured as follows:</p><p><img alt="rcx-relationcfg.gif" class="media-image" height="480" title="rcx-relationcfg.gif" width="357" src="http://wunderkraut.com/sites/wunderkraut.com/files/styles/large/public/rcx-relationcfg.gif?itok=9TXaTbOB" /></p><h3>Rules</h3><p>The reason I chose rules to implement is the same as why Drupal Commerce is so heavily using it. I will not lie by saying it was an easy task, in fact this is probably the most time consuming Rules configuration I have <em>ever</em> done, and I've done a lot of those.</p><p>After a few iterations and waiting for a few very weird bugs to be fixed in Relation and Rules I got it down to a pretty decent size and shape. So here is the rule <i>XSell logic</i> in a its simplicity:</p><ol><li>When completing the checkout</li><li>Create pairs of the products in the cart</li><li>Solve the referencing nodes for each of the product</li><li>Create pairs of the nodes, relation r[a,b]</li><li>If r[a,b] does not exist, create it</li><li>Add relation to a list</li><li>Loop the list of relations and give each a radioactive boost</li></ol><p>In Rules we actually loop the products twice and create the pairs from that. The following is the rule <em>XSell logic </em>presented in pseudo code. I have marked each additional component call with a hash mark which is followed by the component name.</p>
+<pre>
+products = get products form order
+for a in products do
+	na = solve node for a # XSell fetch entity for line item
+	for b in products do
+		nb = solve node for b # XSell fetch entity for line item
+		if relation(na, nb) exists do
+			load relation(na, nb) # XSell check update relation
+		else
+			create relation(na, nb) # XSell check create relation 
+		end
+		relations[] = relation(na, nb)
+	end
+end
+
+for r in relations do
+	add radioactive energy to r # XCell boost relation
+end
+</pre>
+<p>Suprisingly simple in code format.</p><p>Note: rules has its quirks and with certain versions of the modules and under certain conditions (i.e. when creating the first relation) you might get a bunch of Rules evaluation warnings/errors. However these are usually nothing to worry about and if need be they can be fixed by tweaking the rules.</p><h3>The view</h3><p>The view <em>XSell related products</em> uses the currently viewed nodes nid to figure out the related product nodes. It displays the related nodes title and the relations energy. Simply add the block to be displayed on the product node page.</p><p><img alt="rcx-view.gif" class="media-image" height="432" title="rcx-view.gif" width="480" src="http://wunderkraut.com/sites/wunderkraut.com/files/styles/large/public/rcx-view.gif?itok=fV--hXQW" /></p><h3>The feature!</h3><p>The feature is configured to work with all node types (both in the relation and view). The only must there is the name of the for the Product reference (field_product_reference). If you are using another field name in use you must modify the rule component <em>XSell fetch entity for line item</em> to use the correct field in <i>Fetch entity by property</i> action.</p><p><img alt="rcx-rule.gif" class="media-image" height="480" title="rcx-rule.gif" width="474" src="http://wunderkraut.com/sites/wunderkraut.com/files/styles/large/public/rcx-rule.gif?itok=dZBKKd7x" /></p> </div>
+    </div>
+  </body>
+</html>
+

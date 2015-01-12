@@ -1,0 +1,68 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 30 Sep 2014 16:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 30 Sep 2014 16:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ThinkShout: Adding Encrypted USB Card Reader Support to Commerce iATS
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thinkshout.com/blog/2014/09/commerce-iats-usb-card-reader
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ThinkShout: Adding Encrypted USB Card Reader Support to Commerce iATS</title>
+    <base href="http://thinkshout.com/blog/2014/09/commerce-iats-usb-card-reader">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Ever been in a situation where you wished your Drupal Commerce installation could operate more like a Point of Sale system? Especially for nonprofits, taking donations and charging admission to events are prime examples of times when swiping a customer&#39;s credit card would be a great time saver.</p>
+
+<p>As of version 2.5, <a href="https://www.drupal.org/project/commerce_iats">Commerce iATS</a> supports the use of <a href="http://home.iatspayments.com/developers/encrypted-magnetic-stripe-readers">encrypted USB card readers</a> with iATS Payments.</p>
+
+<p>Setting things up is easy:</p>
+
+<ol>
+<li>Upgrade to <a href="https://www.drupal.org/node/2345737">Commerce iATS 2.5</a></li>
+<li>Edit the Commerce iATS credit card payment method by selecting <code>Store</code>, <code>Configuration</code>, then <code>Payment methods</code> from your Drupal admin menu</li>
+<li>Check the &quot;Use encrypted USB card reader&quot; option of the credit card payment method (see screenshot below)</li>
+<li>Select the name of the USB card reader you&#39;re using</li>
+<li>Save the changes to the payment method and you&#39;re good to go</li>
+</ol>
+
+<p><img src="/assets/images/blog/commerce-iats-card-reader-settings.png" alt="Enable USB card reader functionality"></p>
+
+<p>The USB card reader option is only available to Drupal admin users, not regular customers, so you&#39;ll need to create an order manually through the Drupal Commerce admin interface before you can process a payment by swiping a credit card.</p>
+
+<p>The next time you add a credit card payment to an order, you&#39;ll see something like this:</p>
+
+<p><img src="/assets/images/blog/commerce-iats-card-reader-data.png" alt="Adding a payment with an encrypted USB card reader"></p>
+
+<p>That code is the encrypted credit card data fed into Drupal by the USB card reader. Or it might be the Matrix, we&#39;re still not entirely sure.</p>
+
+<p>In addition to the convenience of not having to type in credit card details, the USB card readers are fully PCI compliant. All sensitive credit card information is encrypted by the reader before it reaches Drupal, meaning you never need to pass unencrypted card data through your server.</p>
+
+<p>For the developers out there, the USB card readers can hook into three of iATS Payments&#39; API services:</p>
+
+<ul>
+<li><p><strong><a href="https://www.iatspayments.com/NetGate/ProcessLink.asmx?op=ProcessCreditCardV1">ProcessCreditCardV1</a></strong></p>
+
+<ul>
+<li>Process a credit card transaction without storing any data locally.</li>
+</ul></li>
+<li><p><strong><a href="https://www.iatspayments.com/NetGate/CustomerLink.asmx?op=CreateCreditCardCustomerCodeV1">CreateCreditCardCustomerCodeV1</a></strong></p>
+
+<ul>
+<li>Create a customer code without a charge. This is a great way to store a customer&#39;s credit card to bill later. Fully PCI compliant as only the iATS Payments customer code is stored on your server, not the credit card information.</li>
+</ul></li>
+<li><p><strong><a href="https://www.iatspayments.com/NetGate/ProcessLink.asmx?op=CreateCustomerCodeAndProcessCreditCardV1">CreateCustomerCodeAndProcessCreditCardV1</a></strong></p>
+
+<ul>
+<li>A combination of the above two services, charge a credit card and create a customer code at the same time.</li>
+</ul></li>
+</ul>
+
+<p>You can see some example card data in iATS Payments&#39; <a href="http://home.iatspayments.com/developers/encrypted-swipe/usb-devices">developer documentation</a>. If you&#39;re ready to start swiping credit cards, the documentation includes links to sites where you can purchase one of the two encrypted USB card readers supported by iATS Payments.</p>
+  </body>
+</html>
+

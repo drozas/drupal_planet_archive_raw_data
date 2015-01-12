@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 20 Apr 2014 18:34:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 20 Apr 2014 18:34:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: The Case Against Drupal Base Themes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/case-against-drupal-base-themes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: The Case Against Drupal Base Themes</title>
+    <base href="http://friendlymachine.net/posts/case-against-drupal-base-themes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>When it comes to Drupal base themes, it seems the conversation is often limited to which one you should choose, rather than discussing whether you should be using one at all. As someone who has spent a lot of time <a href="http://friendlymachine.net/posts/omega-vs-zen-which-base-theme-should-you-choose">extolling the virtues</a> of base themes, I thought I'd share the other side of the argument and ask if we should we use contributed base themes in our projects.</p>
+<p>This discussion is really part of a larger debate that front-end developers are having about CSS and grid frameworks in general (see <a href="http://boagworld.com/dev/css-frameworks">here</a> and <a href="http://www.vanseodesign.com/css/css-frameworks-pros-cons/">here</a>), but it seems particularly relevant when discussing Drupal base themes because all of the issues are magnified due to added complexity.</p>
+<h2 id="why-we-use-base-themes">Why We Use Base Themes</h2>
+<p>Why do so many of us use base themes? The easy answer is that they can save us time and potentially make us more efficient. Sometimes they can also act as common ground for development teams. But I think a more complete answer is that they act as a useful crutch, particularly when first learning Drupal theming or responsive design.</p>
+<p>At some point we all had to build our first Drupal site or our first responsive site - probably under deadline - and we looked to a base theme or framework for help. It allowed us to get the job done on time and within budget, but perhaps without fully understanding everything that was going on under the hood.</p>
+<p>Over time we probably learned <em>most</em> of the base theme and developed a deeper understanding of responsive design, but the framework eventually became a comfortable place. We stuck with it, happily soldiering on until one day...</p>
+<h2 id="when-the-shortcut-becomes-the-long-way">When the Shortcut Becomes the Long Way</h2>
+<p>If you've been working with base themes for a while, the moment has certainly come when you have found yourself fighting with it. By design, base themes and other frameworks are opinionated - they make decisions about how to solve certain problems. Most of the time this is a good thing. It can help you accomplish things more quickly. Until it doesn't, and then your base theme is actually slowing you down and causing problems.</p>
+<p>Part of the reason why this happens is that the developer doesn't have full mastery of the base theme -  or underlying concepts  - and therefore doesn't know why something is happening. This is bound to happen with base themes like Omega and Zen that are complex and have a very granular file structure, lots of hooks, etc. It can take some effort to track issues down.</p>
+<p>Other times it's not mastery as much as the choices being made by the base theme don't match up with the project at hand. You find yourself at cross purposes with the base theme, possibly even trying to sort out incompatibilities between the base theme and a module you want to use.</p>
+<p>And all the hacks you add to sort things out? More kilobytes that have to be downloaded by a user on a mobile device.</p>
+<h2 id="fast-sites-win-the-day">Fast Sites Win the Day</h2>
+<p>This leads us to another reason you might not want to use a base theme - it will probably slow down your site vs a theme that is tailored for a specific project. The case has been definitively made that faster sites are more successful sites (see <a href="http://www.webperformancetoday.com/2014/04/09/web-page-speed-affect-conversions-infographic/">here</a> and <a href="http://www.strangeloopnetworks.com/resources/infographics/web-performance-and-ecommerce/amazon-100ms-faster-1-revenue-increase/">here</a>). In most cases, base themes are going to include a lot of stuff that you are not going to need on a given project. The 'extra' stuff is bloat that will end up slowing your site down.</p>
+<p>This isn't a slam on base themes. Most of them are akin to a Swiss army knife. They have things in them that help accomodate a lot of different scenarios - they're flexible. This can be a big help if you're a beginner, but what if you're a seasoned front-end developer tasked with building a high performance site?</p>
+<p>In that case, maybe a base theme isn't the way to go.</p>
+<h2 id="the-role-for-base-themes">The Role for Base Themes</h2>
+<p>Some will sing the praises of <a href="https://drupal.org/project/mothership">Mothership</a> or <a href="https://drupal.org/project/tao">Tao</a> or their favorite lean base theme of choice, insisting it solves all of the issues I've mentioned. I certainly have no quarrel with using those base themes on projects if you've mastered them and find them useful. It can also be helpful to employ Zen or Omega. It really depends on the specific project. This isn't a post bashing base themes.</p>
+<p>My own thinking on the topic, however, has shifted. I've decided to move away from base themes whenever possible. My decision stems from wanting lean code that helps me build fast, mobile-first sites. It also allows me to understand exactly what is happening with the code because I'm the one who wrote it. Ultimately, I think this practice makes me better at my job as a front-end developer, and importantly, I'm also delivering a better product to my clients. I came to this place after spending so much time hacking apart base themes that they were no longer recognizable. It made more sense to just chuck them entirely and start fresh.</p>
+<p>Of course, I haven't thrown efficiency considerations aside. I have my own starter theme to make my work easier, and this is what I would advise others who are considering a base theme to do as well. Create your own bag of tricks. If there ends up being things in it that don't fit a particular project, you'll know exactly where they are so that you can easily discard them.</p>
+<p>One last tangential thought on this topic - a fantastic development for Drupal 8 would be for core to add no CSS whatsoever, minimal markup and then let themes in contrib add commonly requested bells and whistles. This is a philosophical approach that would be hugely positive for Drupal as a mobile-first approach takes hold as the standard for front-end development.</p>
+<p>If you have any comments on this post, you may politely leave them below.</p>
+</div></div></div>
+  </body>
+</html>
+

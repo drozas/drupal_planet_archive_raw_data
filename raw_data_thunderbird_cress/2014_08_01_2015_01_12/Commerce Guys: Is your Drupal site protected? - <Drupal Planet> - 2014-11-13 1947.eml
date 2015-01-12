@@ -1,0 +1,102 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 13 Nov 2014 19:47:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 13 Nov 2014 19:47:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Commerce Guys: Is your Drupal site protected?
+Content-Transfer-Encoding: 8bit
+Content-Base: https://commerceguys.com/blog/is-your-drupal-site-protected
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Commerce Guys: Is your Drupal site protected?</title>
+    <base href="https://commerceguys.com/blog/is-your-drupal-site-protected">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>On October 15th a new version of Drupal core was published (<a href="https://www.drupal.org/PSA-2014-003">see details of this fix</a>), so naturally everyone is wondering: How do I protect my site?</p>
+
+<h2>How Updates Work in Drupal</h2>
+
+<p>Drupal is open source software managed by a community made up of all kinds of experts and hobbyists. Community members who manage security specialize in the processing and verification of all modules hosted on drupal.org and the core of Drupal itself. This super-smart team has a long history in Drupal and a vast understanding of the core code, its history and its planned future. </p>
+
+<p>They are in charge of analyzing the existing application to protect it from malicious threats, regardless of their origins. When an issue is detected, they evaluate its impact and urgency in order to determine an appropriate mode of communication that meets the needs of the community. This usually means that in the event of a risk, an update is issued on one of the pre-planned bi-weekly release dates.</p>
+
+<p>The security team works independently and regularly offers updates to the modules and Drupal core. Below are some ways you can follow these updates to keep your site secure and up to date.</p>
+
+<h3>The Security Alerts</h3>
+
+<p><span style="line-height: 1.6;">Most Drupal users have an account on drupal.org. If you don’t have one, you’re missing out and you should get one immediately. From your account, you have access to the "Newsletter" tab. On this page, you are invited to subscribe to the security newsletter and be informed of updates.</span></p>
+
+<p><span style="line-height: 1.6;"><img alt="Drupal.org newsletter subscription" src="https://commerceguys.com/sites/default/files/blog/files/newsletter%20tab%20on%20drupalorg.png" style="width: 100%;" /></span></p>
+
+<h3>Twitter</h3>
+
+<p>Like any self-respecting tech community, the security team is on Twitter: <a href="https://twitter.com/drupalsecurity">@drupalsecurity</a>.</p>
+
+<h3>RSS</h3>
+
+<p>You can find subscribe to two different RSS feeds of security advisories for <a href="https://www.drupal.org/security/rss.xml">Drupal core</a> and for <a href="https://www.drupal.org/security/contrib/rss.xml">contributed modules</a>.</p>
+
+<h3>Application maintenance of your site</h3>
+
+<p>Whether you developed your site or worked with an agency, once online it must be maintained. The purpose of this maintenance is not to make your site a Rolls Royce, but rather to protect it against errors, insecurities and to improve it with the new features added to Drupal core and the modules you use. It’s encouraged to update early and often.</p>
+
+<p>You can choose the frequency and process for updates, but the operations to be carried out are always the same: update the core of Drupal, update themes and modules and test the full operation of your application before you push your updated project live. Prior to deployment, ensure you have a full backup of your codebase, your files directories, and your database in case anything goes wrong.</p>
+
+<h2>How do I update my site?</h2>
+
+<p>Several technical means are available to you to get the latest version of core, themes and Drupal modules. Whatever method you choose, you will retrieve new files to install it on your production site. Here is a summary of what to do in general (this protocol is an example for your project, please refer to your usual procedure of deployment).</p>
+
+<p>Starting with a copy of your site on a local environment:</p>
+
+<ul><li>Get the new version of files or a patch containing updates.</li>
+	<li>Review the changelog to see what has been changed that may affect existing functionality on your site, including any new dependencies, minor API changes, or other notes requiring manual intervention in the update process.</li>
+	<li>Replace the files or apply the patch. At this point updates are physically available but they are not necessarily applied on your site.</li>
+	<li>You may be asked to launch an "update" of the database, for example.
+	<ul><li>In this case, start Drush UPDB drush command or run the update.php page on your local copy site. This operation will be applied to your site changes in its database.</li>
+	</ul></li>
+	<li>To ensure that the updates have all been taken into account, empty the cache of your site. Please note this may take some time and will affect the navigation on the site for treatment. For production sites, it is recommended to keep your current deployment procedure.</li>
+	<li>Once this is done, test your site. Check that everything is working properly.</li>
+</ul><p>If you update a Drupal site between two very different versions of the core, it is possible that some functionalities could be affected. However, in an update of one direct release to another, you should not experience major functional changes. When you are confident with this procedure, following your usual process, update your site or sites.</p>
+
+<h2>How to update Security SA-CORE-2014-005 - Drupal core - SQL injection</h2>
+
+<p>If your site has been well-maintained, the security update will be simple and have no effect on the functionality of your project. You can update the core of Drupal as you normally do using this new version: <a href="https://www.drupal.org/project/drupal">https://www.drupal.org/project/drupal</a></p>
+
+<p>However, if you have not maintained the core of your application for some time (skipping several versions) and even though we do not recommend it, if you made a manual change in the core of Drupal, we recommend that you apply the patch only containing the security patch itself, here: <a href="https://www.drupal.org/files/issues/SA-CORE-2014-005-D7.patch">https://www.drupal.org/files/issues/SA-CORE-2014-005-D7.patch</a></p>
+
+<p>In both cases, the changes in the new version of Drupal will have no effect on the functionality of your project, because it only affects one file related to forms.</p>
+
+<h2>How to ensure security on my eCommerce site?</h2>
+
+<p>Security is a key issue for an eCommerce website and it is your duty as a merchant to maintain a safe site for your users. To ensure the security of your site, you must first perform regular Drupal core updates, security or not, or suffer the risky consequences.</p>
+
+<p>Then, regularly update the modules you use. In some cases, this may affect the functionality of your site, and must be treated with kid gloves.</p>
+
+<p>In any case, to make these updates, please refer to the standard procedure for updating your site that you have set up with your agency or web host, or enjoy the new technology implementation of <a href="https://platform.sh">Platform.sh</a> to easily update your site and test with confidence.</p>
+
+<h2>How Commerce Guys ensures the security of your projects</h2>
+
+<p>Subscribers of our Drupal Application Support and Commerce Application Support programs have seen first hand how we can help protect your sites. We patched our customers immediately and 100% were protected whether they hosted with us or not.</p>
+
+<p>Our Platform.sh subscribers benefited from the ability to use a “Drush make” driven workflow to manage the codebase for their sites. This workflow has the advantage of managing the versions of Drupal core and contributed themes and modules on your site through a single configuration file that contains a list of elements that make up your site. Platform.sh uses this file to create and deploy your site by downloading modules and the core of Drupal, making updates fast and easy.</p>
+
+<p>By creating a file Drush Make File, you can ask to recover the latest version of Drupal with the security patch automatically. You gain in maintenance time and reduce your potential for errors.</p>
+
+<p>In addition to ensuring the stability of your hosting, Platform.sh blocked incoming HTTP requests for applications that had not applied the patch. Therefore, only stable sites were available on Platform.sh, and any unprotected sites were immediately aware that action must be taken.</p>
+
+<p>Read more about this protective block <a href="https://platform.sh/blog/2014/10/21/protecting-your-apps/">here</a>.</p>
+
+<p>If you want to know more about the updates to Drupal, the following links to learn more:</p>
+
+<ul><li><a href="https://www.drupal.org/drupal-7.32-release-notes">The details on the newest version of Drupal</a></li>
+	<li><a href="https://www.drupal.org/security">The Drupal.org security page</a></li>
+	<li><a href="https://www.drupal.org/security/secure-configuration">Drupal.org security configuration advice page</a></li>
+	<li><a href="https://github.com/greggles/cracking-drupal/blob/master/after-an-exploit.md">Blog post: Your Drupal site got hacked. Now what?</a> (via <a href="https://twitter.com/qdelance">@qdelance</a>)</li>
+</ul></div></div></div>
+  </body>
+</html>
+

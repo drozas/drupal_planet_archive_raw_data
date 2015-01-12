@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 02 Mar 2014 06:15:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 02 Mar 2014 06:15:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Code Drop: Writing Custom Process Plugins using the Drupal 8 Migrate API
+Content-Transfer-Encoding: 8bit
+Content-Base: http://codedrop.com.au/blog/writing-custom-process-plugins-using-drupal-8-migrate-api
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Code Drop: Writing Custom Process Plugins using the Drupal 8 Migrate API</title>
+    <base href="http://codedrop.com.au/blog/writing-custom-process-plugins-using-drupal-8-migrate-api">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Migrate in Drupal 7 didn't explicitly have the concept of a process plugin but under the hood you were using the "Get" process plugin when you wrote code like $this-&gt;addFieldMapping('source', 'destination');</p>
+<p>The Drupal 8 Migrate API has taken advantage of the new plugin system to provide a flexible way to process fields. In core, we already have a handful of process plugin examples including the Get plugin. I wouldn't look at the Get plugin for a simple example however.</p>
+<h2>Why Process Plugins?</h2>
+<p>The purpose of a process plugin is simply to take a value in and spit a new value out. The plugin can transform the data in anyway it sees fit but if you are following best practices you should ensure that a plugin does only one thing, definitely lean towards multiple process plugins as needed. From our experience so far, process plugins are usually quite simple and often less than 10 lines of code.</p></div></div></div>
+  </body>
+</html>
+

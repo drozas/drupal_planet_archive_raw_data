@@ -1,0 +1,103 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 07 Jun 2014 17:07:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 07 Jun 2014 17:07:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal 8 and iOS: POST, PATCH and DELETE request with Drupal 8 REST services
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tntfoss-vivekvpandya.rhcloud.com/node/35
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal 8 and iOS: POST, PATCH and DELETE request with Drupal 8 REST services</title>
+    <base href="http://tntfoss-vivekvpandya.rhcloud.com/node/35">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/35/title/en/rss">POST, PATCH and DELETE request with Drupal 8 REST services</span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/35/body/en/rss">
+    <div class="field-items">
+          <div class="field-item" property="schema:text"><p>Drupal 8 will have REST support out of the box. But at the time of this writing examples for how to use this REST end points are not much available. In this blog I want to show you how we can create, delete and update a node with REST services with Drupal 8.</p>
+
+<p>First of all we have to enable REST services and related HAL , SERIALIZATION, HTTP Basic Authentication modules. I would also like to recommend you to use REST UI contributed module to configure REST services.</p>
+
+<p> </p>
+<img alt="" data-editor-file-uuid="8d0db19c-e543-43bc-9800-f67be395cca7" height="364" src="/sites/default/files/inline-images/Modules.png" width="1041" /><p> </p>
+
+<p>Now you have to enable REST services for particular entity type like a node, user etc. you can do it by two way:</p>
+
+<p>You may use REST UI to do that from configuration menu and Web services section.
+You may directly manipulate  rest.settings.yml file.</p>
+
+<p>With any of above mentioned way you enable POST, PATCH and DELETE method for certain entity type and also enable ‘basic_auth’ as authentication type.</p>
+
+<p>Now give enough permission to administrator so that he can POST, PATCH and DELETE an entity with REST services.</p>
+
+<p> </p>
+<img alt="" data-editor-file-uuid="85e2b003-ea82-468e-9702-2a406d671a98" height="229" src="/sites/default/files/inline-images/permission.png" width="1142" /><p> </p>
+
+<p>You may use REST Client or Postman - REST client or DHC to test you web services.
+Now let’s try to POST a node with REST services.</p>
+
+<p> </p>
+
+<p>
+<img data-editor-file-uuid="f841e5a3-82b0-49e3-bf0b-116d8b9210c8" src="/sites/default/files/inline-images/POST.png" /></p>
+
+<p> </p>
+
+<p>As shown in the image on your site /entity/node ( as at the time of this writing Drupal 8  is still on alpha release so this path may change in stable release)  is  REST endpoint to POST a node. Pass credential details with Authorization header. Set Content-Type to be application/hal+json.
+In body part you have to specify value for all mandatory fields for entity type. You have to specify “type” of node with “_links” in JSON body. This “type” will be /rest/type/node/{bundle name}  or in case of user entity type it will be /rest/type/user/user. A successful POST will result in 201 http status code.</p>
+
+<p>Now lets try to update a node with PATCH request.</p>
+
+<p> </p>
+
+<p>
+<img data-editor-file-uuid="e03144b8-4834-48f4-a40a-10f0e6aeb68a" src="/sites/default/files/inline-images/PATCH.png" /></p>
+
+<p> </p>
+
+<p>As you can see in the image URL for node it self works as PATCH end point other headers and body section will be same as POST request. If PATCH request done successfully you will get 204 http status code.</p>
+
+<p>At last let’s see how to DELETE a node.</p>
+
+<p> </p>
+
+<p>
+<img data-editor-file-uuid="f623f6b5-021c-4e32-980e-1408fa94e9b6" src="/sites/default/files/inline-images/DELETE.png" /></p>
+
+<p> </p>
+
+<p>Deleting a node is simple. Set request type to DELETE and pass credential information with Authorization header. A successful deletion will result in 204 http status code.</p>
+
+<p>By similar way you can manipulate user entity type.</p>
+
+<p>You can find more about what other details we can specify in JSON body for POST and PATCH request by GET a node with JSON as Accept type.</p>
+
+<p>I am open to discuss this topic. You can mail me at vivekvpandya@gmail.com.
+ </p></div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix" data-quickedit-field-id="node/35/field_tags/en/rss">
+  <h3 class="field-label">Tags: </h3>
+  <ul class="links">
+          <li class="taxonomy-term-reference-0"><a href="/taxonomy/term/3" property="schema:about">Drupal Planet</a></li>
+      </ul>
+</div>
+<div class="field field-node--comment field-name-comment field-type-comment field-label-hidden" data-quickedit-field-id="node/35/comment/en/rss">
+    <div class="field-items">
+          <div class="field-item" rel="schema:comment"><section id="comments" class="comment-wrapper">
+  
+  
+
+  
+</section>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

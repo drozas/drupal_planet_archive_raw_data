@@ -1,0 +1,45 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Apr 2014 19:15:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Apr 2014 19:15:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dcycle: Simpletest Turbo: how I almost quadrupled the speed of my tests
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dcycleproject.org/blog/58/simpletest-turbo-how-i-almost-quadrupled-speed-my-tests
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dcycle: Simpletest Turbo: how I almost quadrupled the speed of my tests</title>
+    <base href="http://dcycleproject.org/blog/58/simpletest-turbo-how-i-almost-quadrupled-speed-my-tests">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>My development team is using a <a href="http://dcycleproject.org/blog/44">site deployment module</a> which, when enabled, deploys our entire website (with translations, views, content types, the default theme, etc.).</p>
+
+<p>We defined about 30 tests (and counting) which are linked to Agile user stories and confirm that the site is doing what it's supposed to do. These tests are defined in Drupal's own Simpletest framework, and works as follows: for every test, our site deployment module is enabled on a new database (<a href="http://dcycleproject.org/blog/48/do-not-clone-database">the database is never cloned</a>), which can take about two minutes; the test is run, and then the temporary database is destroyed.</p>
+
+<p>This created the following problem: because we were deploying our site 30 times during our test run, a single test run was taking over 90 minutes. Furthermore, we are halfway into the project, and we anticipate doubling, perhaps tripling our test coverage, which would mean our tests would take over four hours to run.</p>
+
+<p>Now, we have a Jenkins server which performs all the tests every time a change is detected in Git, but even so, when several people are pushing to the git repo, test results which are 90 minutes old tend to be harder to debug, and developers tend to ignore, subvert and resent the whole testing process.</p>
+
+<p>We could combine tests so the site would be deployed less often during the testing process, but this causes another problem: tests which are hundreds of lines long, and which validate unrelated functionality, are harder to debug than short tests, so it is not a satisfactory solution.</p>
+
+<p>When we look at what is taking so long, we notice that a majority of the processing power goes to install (deploy) our testing environment <em>for each test</em>, which is then destroyed after a very short test.</p>
+
+<p>Enter <a href="https://drupal.org/project/simpletest_turbo">Simpletest Turbo</a>, which provides very simple code to <em>cache</em> your database once the setUp() function is run, so the next test can simply reuse the same database starting point rather than recreate everything from scratch.</p>
+
+<p><img src="http://dcycleproject.org/sites/dcycleproject.org/files/screen_shot_2014-04-22_at_3.13.55_pm.png" /></p>
+
+<p>Although Simpletest Turbo is in early stages of development, I have used it to almost <em>quadruple the speed of my tests</em>, as you can see from this Jenkins trend chart:</p>
+
+<p><img src="http://dcycleproject.org/sites/dcycleproject.org/files/screen_shot_2014-04-22_at_3.14.08_pm.png" /></p>
+
+<p>I know: my tests are failing more than I would like them to, but now I'm getting feedback every 25 minutes instead of every 95 minutes, so failures are easier to pinpoint and fix.</p>
+
+<p>Furthermore, fairly little time is spent deploying the site: this is done once, and the following tests use a cached deployment, so we are not merely speeding up our tests (as we would if we were adding hardware): we are streamlining duplicate effort. It thus becomes relatively cheap to add new independent tests, because they are using a cached site setup.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/blog" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">blog</a></div></div></div>
+  </body>
+</html>
+

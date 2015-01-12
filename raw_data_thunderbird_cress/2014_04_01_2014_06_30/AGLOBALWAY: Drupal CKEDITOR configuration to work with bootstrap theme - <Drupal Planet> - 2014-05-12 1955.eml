@@ -1,0 +1,195 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 12 May 2014 18:55:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 12 May 2014 18:55:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Drupal CKEDITOR configuration to work with bootstrap theme
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/drupal-ckeditor-configuration-work-bootstrap-theme
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Drupal CKEDITOR configuration to work with bootstrap theme</title>
+    <base href="http://www.aglobalway.com/content/drupal-ckeditor-configuration-work-bootstrap-theme">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p class="lead">Drupal and Bootstrap theme are awesome, but when it comes to use ckeditor you can loose some nice framework styles and it can break your responsive website by adding a simple image or table. One of the ways of fixing it is using a simple configuration to extend and adjust ckeditor.</p>
+
+<h4>Adding Boostrap Components to your ckeditor styles and adding extra configuration to ckeditor.config.js</h4>
+
+<p>Before we start copy the <em>sites/all/modules/ckeditor/ckeditor.styles.js</em> and <em>sites/all/modules/ckeditor/ckeditor.config.js</em> file into your theme directory (<em>themes/bootstrap/</em>), and enable them in your ckeditor profile (<em>in CSS tab Predefined styles chose “Define path to ckeditor.styles.js” and change Predefined styles path to “%t/ckeditor.styles.js” and in ADVANCED OPTIONS tab check Load ckeditor.config.js from the theme path to yes</em>). You will need to also enable “styles” menu in your ckeditor toolbar and you may want to use your theme styles to preview ckeditor styles before saving your content.</p>
+
+<ol><li>Open your ckeditor.styles.js, and comment or remove all useless styles.<div class="highlight">
+<pre>
+<code class="bash">
+if(typeof(CKEDITOR) !== 'undefined') {
+    CKEDITOR.addStylesSet( 'drupal',
+    [
+                                                                
+
+    ]);
+}
+</code></pre>
+</div><p><em>You should have something like this</em></p></li><li>2. Copy new bootstrap styles in your ckeditor.styles.js. And save the file<div class="highlight">
+<pre>
+<code class="bash">
+            /* Bootstrap Styles */
+   
+              /* Typography */
+                { name : 'span.H1'        , element : 'span', attributes: { 'class': 'h1' } },
+                { name : 'span.H2'        , element : 'span', attributes: { 'class': 'h2' } },
+                { name : 'span.H3'        , element : 'span', attributes: { 'class': 'h3' } },
+                { name : 'span.H4'        , element : 'span', attributes: { 'class': 'h4' } },
+                { name : 'span.H5'        , element : 'span', attributes: { 'class': 'h5' } },
+                { name : 'span.H6'        , element : 'span', attributes: { 'class': 'h6' } }, 
+
+                { name : 'Paragraph Lead'     , element : 'p', attributes: { 'class': 'lead' } },
+
+                {
+                        name : 'Unstyled List',
+                        element : 'ul',
+                        attributes :
+                        {
+                                'class' : 'list-unstyled'
+                        }
+                },
+                {
+                        name : 'List inline',
+                        element : 'ul',
+                        attributes :
+                        {
+                                'class' : 'list-inline'
+                        }
+                },
+
+
+                {
+                        name : 'Table',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'table'
+                        }
+                },
+
+                {
+                        name : 'Table Striped rows',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'table table-striped'
+                        }
+                },
+                {
+                        name : 'Table Bordered',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'table table-bordered'
+                        }
+                },
+                {
+                        name : 'Table Hover rows',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'table table-hover'
+                        }
+                },
+                {
+                        name : 'Table Condensed',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'table table-condensed'
+                        }
+                },                
+                {
+                        name : 'Image shap rounded',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'img-rounded'
+                        }
+                },
+                {
+                        name : 'Image shap circle',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'img-circle'
+                        }
+                },
+                {
+                        name : 'Image shap thumbnail',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'img-thumbnail'
+                        }
+                },
+                {
+                        name : 'Image float left',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'pull-left'
+                        }
+                },
+                {
+                        name : 'Image float right',
+                        element : 'table',
+                        attributes :
+                        {
+                                'class' : 'pull-right'
+                        }
+                },   
+</code></pre>
+</div></li><li>Open your ckeditor.config.js, search for “config.justifyClasses” and replace it with this line:<div class="highlight">
+<pre>
+<code class="bash">
+config.justifyClasses = [ 'text-left', 'text-center', 'text-right', 'text-justify' ];
+</code></pre>
+</div><p><em>This will change default text alignment classes to new bootstrap classes</em></p></li><li>At very bottom of ckeditor.config.js, copy and paste this lines.<div class="highlight">
+<pre>
+<code class="bash">
+CKEDITOR.on('dialogDefinition', function( ev ) {
+  var dialogName = ev.data.name;
+  var dialogDefinition = ev.data.definition;
+
+  if(dialogName === 'table' || dialogName == 'tableProperties' ) {
+    var infoTab = dialogDefinition.getContents('info');
+
+    //remove fields
+    var cellSpacing = infoTab.remove('txtCellSpace');
+    var cellPadding = infoTab.remove('txtCellPad');
+    var border = infoTab.remove('txtBorder');
+    var width = infoTab.remove('txtWidth');
+    var height = infoTab.remove('txtHeight');
+    var align = infoTab.remove('cmbAlign');
+    
+}
+  if(dialogName === 'image') {
+    var infoTab = dialogDefinition.getContents('info');
+        dialogDefinition.removeContents( 'Link' );
+        dialogDefinition.removeContents( 'advanced' );    
+      infoTab.remove('txtWidth');
+      infoTab.remove('txtHeight');
+      infoTab.remove('txtBorder');
+      infoTab.remove('txtHSpace');
+      infoTab.remove('txtVSpace');
+      infoTab.remove('ratioLock');
+      infoTab.remove('cmbAlign');
+                   
+  }  
+});
+</code></pre>
+</div><p><em>This will remove default inline styles like a width and height from image/table configuration popup.</em></p></li></ol>
+
+<p>Reference:<br /><a href="https://drupal.org/project/bootstrap">https://drupal.org/project/bootstrap</a></p> </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

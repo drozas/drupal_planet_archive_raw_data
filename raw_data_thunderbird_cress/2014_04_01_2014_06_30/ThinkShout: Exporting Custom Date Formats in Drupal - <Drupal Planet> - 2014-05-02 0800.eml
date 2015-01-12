@@ -1,0 +1,117 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 02 May 2014 07:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 02 May 2014 07:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ThinkShout: Exporting Custom Date Formats in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thinkshout.com/blog/2014/05/custom-date-formats-in-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ThinkShout: Exporting Custom Date Formats in Drupal</title>
+    <base href="http://thinkshout.com/blog/2014/05/custom-date-formats-in-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Like most development shops, we like code. It gives us and our clients a feeling of confidence to have configuration and logic as much as possible living in code, rather than in the database. So naturally, as we build Drupal sites, we use the <a href="https://drupal.org/project/features">Features</a> module to lock configuration into code.</p>
+
+<p>Not too long ago, when we were building some features for RidePDW.com, we needed to format some dates in specific ways, primarily on their <a href="https://www.ridepdw.com/events">events page</a> and their <a href="https://www.ridepdw.com/blog">blog</a>. Date formats are used in many places on probably every site, including fields on content type view modes, and in views configurations. They are simple to set up in the dates UI in Drupal, so you would think it would be easy to export into code. Unfortunately, there is no simple way to export it. Fortunately, there is a different way, still easy, to get this into code, and it&#39;s a great introduction to using Drupal module hooks.</p>
+
+<p>We will look at using custom code plus a small export using features and <a href="https://drupal.org/project/strongarm">strongarm</a>. This is the same process we used for RidePDW and it worked perfectly.</p>
+
+<h2>Collect your facts</h2>
+
+<p>Decide on a format. Go ahead and look at the format options at <a href="http://php.net/date">http://php.net/date</a>, so you know what the options are.</p>
+
+<p>Pick a name for that format. Examples: &quot;Month Year&quot; or &quot;Short: MM D&quot;.</p>
+
+<h2>Code it up</h2>
+
+<p>By the time we are adding a custom date format, we usually have a few features modules already created. It&#39;s usually best to put this new code in a generic or common feature, since most date formats will be used by several content types and views.</p>
+
+<p>Let&#39;s say the name of your site is &quot;mysite&quot; and the name of your genric feature module is &quot;mysite_common&quot;. If you don&#39;t have any features modules at all, go ahead and create one and enable it, exporting something like the site name into it, mainly so we have similar starting points.</p>
+
+<p>Quick overview of the code:</p>
+
+<ol>
+<li>hook_date_formats().</li>
+<li>hook_date_format_types().</li>
+<li>strongarm export.</li>
+</ol>
+
+<p>Let&#39;s start with hook_date_formats(). This accomplishes the same thing as creating a new format at admin/config/regional/date-time/formats.</p>
+
+<p><img src="/assets/images/blog/date-formats-list-1.jpg" alt="Date formats screenshot" title="Date formats"></p>
+
+<p><img src="/assets/images/blog/date-formats-creating.jpg" alt="Creating new date format" title="Creating new date format"></p>
+
+<p>Here&#39;s an example.</p>
+<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="sd">/**</span>
+<span class="sd"> * Implements hook_date_formats().</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">mysite_common_date_formats</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+    <span class="c1">// Creates a new format for a new, custom format type.</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;mysite_short_y_m&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;format&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Y-m&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;locales&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
+    <span class="p">),</span>
+    <span class="c1">// Defines a format and makes it available to core&#39;s short format type.</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;short&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;format&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Y-m-d&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;locales&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
+    <span class="p">),</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The type points to the date format type that this format will be available for. I tend to make it unique and prefix it with the site name in order to avoid future namespace collisions. You may want to prefix it with the full module name. The format key is a string that ends up getting passed to <code>date()</code>. I usually leave locales as an empty array because I want the date format to be available for all locales.</p>
+
+<p>The only effect this hook implementation has that it makes formats available in the date admin UI. Nothing more. Full hook documentation at <a href="https://api.drupal.org/hook_date_formats">https://api.drupal.org/hook_date_formats</a>.</p>
+
+<p>Moving on to hook_date_format_types(). This is similar to creating a &quot;date type&quot; at admin/config/regional/date-time, but it only creates a machine name with a human readable name.</p>
+
+<p><img src="/assets/images/blog/date-formats-type-list.jpg" alt="Date format types" title="Date format types"></p>
+
+<p>Here&#39;s the example:</p>
+<div class="highlight"><pre><code class="php language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="sd">/**</span>
+<span class="sd"> * Implements hook_date_format_types().</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">mysite_common_date_format_types</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;mysite_short_y_m&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Short: YYYY-MM&#39;</span><span class="p">),</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Clear caches, return to your site&#39;s date format settings, and you&#39;ll see your new date format.</p>
+
+<p><img src="/assets/images/blog/date-formats-type-list-after.jpg" alt="Date format types, new type added" title="Date format types, new type added"></p>
+
+<p>However, navigate to the display settings of a date field and you will see the name of your custom date format type, but the format won&#39;t be right.</p>
+
+<p><img src="/assets/images/blog/date-formats-field-display.jpg" alt="Field display settings" title="Field display settings"></p>
+
+<p>Come back to the date format settings page and click that &quot;save&quot; button. Now the date formats presented in field settings will be correct.</p>
+
+<p><img src="/assets/images/blog/date-formats-field-display-better.jpg" alt="Field display settings, better" title="Field display settings, better"></p>
+
+<p>To make those setting stick and be deployable, we need to do one final thing. We export a new variable. Saving the date format types page creates a new variable that ties the new date format type (just a name) to an actual format (the code that defines the format, such as &quot;Y-m&quot;).</p>
+
+<p>So head back to the features UI and you should see a new variable listed in the strongarm section.</p>
+
+<p><img src="/assets/images/blog/date-formats-features-export.jpg" alt="Features export" title="Features export"></p>
+
+<p>This is specifically the date format <em>type</em>. Export it into your mysite_common feature.</p>
+
+<h2>Done</h2>
+
+<p>At this point, you should have code that can be deployed to an existing site, and after enabling and reverting the feature, will provide a consistent date format for use wherever dates need to be displayed.</p>
+  </body>
+</html>
+

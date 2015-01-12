@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 09 Apr 2014 07:29:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 09 Apr 2014 07:29:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: .VDMi/Blog: Why does my file get removed after six hours?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vdmi.nl/blog/why-does-my-file-get-removed-after-six-hours
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>.VDMi/Blog: Why does my file get removed after six hours?</title>
+    <base href="http://www.vdmi.nl/blog/why-does-my-file-get-removed-after-six-hours">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-afbeelding field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/blog/why-does-my-file-get-removed-after-six-hours"><img style="max-width: 40%; height: auto; float: left; margin-right: 1em;" align="left" hspace="10" src="http://www.vdmi.nl/sites/vdmisite.s1.aegirhost.nl/files/styles/200_max_width/public/clean-your-garbage-can.jpg?itok=tFJgljq5" width="200" height="200" alt="Why does my file get removed after six hours?" /></a></div></div></div><div class="field field-name-field-samenvatting1 field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">My managed image got removed after a certain amount of time. How did that happen? After searching a bit I figure out.</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>The Form API has a form element called managed_file. It uploads a file and adds it to the managed files table. This way <a href="http://www.vdmi.nl/drupal">Drupal</a> has knowledge about and control over it. But now I got the situation that after a certain amount of time the image got removed. It just disappeared. What is happening here?</p>
+<p>Well the managed_file works with Ajax. To smooth the proces it adds the managed file and leaves the status on temporary until some one specifies 'this is my file its managed'. You do that by adding this snippet of code to your submit handler.</p>
+<p></p><pre><code>$file = file_load($form_state['values']['file_element_name']); <br /><br />
+// Change status to permanent. <br />
+$file-&gt;status = FILE_STATUS_PERMANENT; <br /><br />
+// Save. <br />
+file_save($file);</code></pre><p>If you have your form managed by </p>
+<pre>system_settings_form()</pre><p> you want to add a extra submit handler. You can do that this way.
+</p>
+<pre><code>$form['#submit'][] = 'extra_admin_submit';</code></pre>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,167 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 Aug 2013 17:36:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 Aug 2013 17:36:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Code Refactoring (Episode 1) – An Explanation In Layman’s Terms
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/code-refactoring-episode-1-an-explanation-in-laymans-terms/?utm_source=rss&utm_medium=rss&utm_campaign=code-refactoring-episode-1-an-explanation-in-laymans-terms
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Code Refactoring (Episode 1) – An Explanation In Layman’s Terms</title>
+    <base href="http://www.phase2technology.com/blog/code-refactoring-episode-1-an-explanation-in-laymans-terms/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=code-refactoring-episode-1-an-explanation-in-laymans-terms">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr" id="docs-internal-guid-0a2a511e-bb1e-10ba-7cf8-96f2d09a1865">If you have been working with existing software for a long time, you’ve probably heard these statements:</p>
+<ul>
+<li dir="ltr">
+<p dir="ltr">“Why are there so many hacks in this plug in?”</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">“This is one long procedural script I do not want to touch!”</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">“I am scared to change something here because I might break another feature I do not know about.”</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">“This is against everything my college taught me!”</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">“This piece of code does not belong to this application layer!”</p>
+</li>
+</ul>
+<p dir="ltr">It aggravates us when we encounter code that could be cleanly and efficiently implemented.  However, just because you have gripes about a certain codebase and set up, does not mean rewriting everything is the only solution.  There are many reasons why you may not want to start over.</p>
+<ol>
+<li dir="ltr">
+<p dir="ltr">Budget &#8211; Your team lacks the resources to fix issues at hand, and does not see any value in allocating funds to fix the issue when other problems may yield more value.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Priority &#8211; There are bigger fish to fry, and fixing the issue at hand is nominal in the grand scheme of things</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Practicality &#8211; If it ain’t broke, why fix it?  Rewriting something developed a year ago that still works today is cash in the trash</p>
+</li>
+</ol>
+<p dir="ltr">Don’t lose hope!  As developers, the first step is to identify the problem and put yourself in everyone else’s shoes in order to pitch a good reason to fix it.</p>
+<p dir="ltr">
+<h1 dir="ltr">Why Does Bad Code Exist?</h1>
+<p dir="ltr">Most people will think “let’s blame the guy who wrote it!”  However, this is often not the case.  It’s also bad to have a negative attitude when evaluating code, (not to mention counter-intuitive; where’s the motivation if you hate doing your job?).</p>
+<p dir="ltr">Consider these scenarios:</p>
+<ul>
+<li dir="ltr">
+<p dir="ltr">The codebase could have been written a long time ago, back when certain programming paradigms were not available.  It might have beeen the pinnacle of technology back then, even if it seems like the most obsolete codebase to today’s standards.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Time constraints and situations force developers to make certain reactive decisions on the codebase with little time after solving the immediate problem to refactor it to something more functional.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Sometimes little planning is done for software, without thought to future scalability.  In other words, there might be a chance the system was meant as a short term solution, but then became something that attempts to scale by default.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">It could be that multiple people worked on the project , each applying their own ideologies and methods to the codebase.  Even assuming all their approaches are valid, all of them colliding with each other may not yield the most desirable end result.</p>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h1 dir="ltr">Why Refactor?</h1>
+<p dir="ltr">Knowing all the reasons why code refactoring will not get done, let’s figure out why it’s important (in a developer’s eye):</p>
+<ol>
+<li dir="ltr">
+<p dir="ltr">Simpler Maintenance &#8211; If the code is easier to understand, you are more likely to jump on the issues and make quick fixes, especially when the task given to you is done on a perpetual basis.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Lower Costs &#8211; If the code is easier to maintain, embedding new features and fulfilling change requests in the software will take less time and money, opening up more time and resources for new work.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Decrease Complexity &#8211; Adding new features to an existing code base will be more reliable with more certainty with less doubt.  Knowing is half the battle!</p>
+</li>
+</ol>
+<p>&nbsp;</p>
+<h1 dir="ltr">What Does Scary Code Look Like?</h1>
+<p dir="ltr">We now have our reasons to refactor.  However, what triggers us into thinking that we need to get rid of what exists and start anew?  You don’t need to know code to see the value of why the following needs to be&#8230;reorganized:</p>
+<h2 dir="ltr">Instructions on Building a Burger</h2>
+<p></p><pre class="crayon-plain-tag">Walk down Elm St. from house
+Take a left and walk two blocks down Oak St.
+Turn right and find George’s Butcher.
+Walk up to counter and search for angus meat. &amp;nbsp;Instruct seller to package 1lb. of meat.
+Pay seller using your credit card.
+Walk away with meat.
+Walk two storefronts to the left of George’s Butcher and walk into Abby’s Produce
+Pick up convenient basket at entrance.
+Search for lettuce, collect one head of lettuce and deposit into basket.
+Search for tomatoes, collect one tomato and deposit into basket.
+Seek out cash register, place basket on counter, wait for cashier to process order
+Pay cashier using your credit card
+Walk away with produce
+Walk to intersection of Elm St. and Oak St. and walk back up Elm St.
+Enter your house
+Walk through hallway, into the dining room, and into the archway in the kitchen, then out the door to the patio.
+Place all ingredients in hand on patio table.
+Go back into kitchen, open drawer near sink, acquire knife.
+Walk back out to patio, take out tomatoes, place on top of table.
+Hold tomato upright, then cut tomato in half.
+Take one piece of tomato, cut in half
+Take one piece of tomato, cut in half
+Take one piece of tomato, cut in half
+Take one piece of tomato, cut in half
+Take one piece of tomato, cut in half
+Take one piece of tomato, cut in half
+Take one piece of tomato, cut in half
+Take all pieces of tomatoes and store in upper right corner of patio table
+Take out head of lettuce
+Peel outer layers and deposit into compost just outside patio
+Walk to grill, lift grate off top, place on ground
+Take charcoal nearby, then deposit contents of bag into grill
+Take lighter fluid nearby, spray charcoal with contents
+Take matches nearby, take out one stick from box. &amp;nbsp;Swipe red end on rough surface on box
+Carefully transfer the match to charcoal. &amp;nbsp;Jump back when fire starts
+Run to front of house
+Walk down Elm St. from house
+Take a left and walk two blocks down Oak St.
+Turn right and find George’s Butcher.
+Go to store front to the right of George’s Butcher
+Enter and search for ketchup
+Acquire ketchup
+Search for buns
+Acquire buns
+Go to counter. Place ketchup and buns on counter and let seller process transaction
+Pay seller with credit card
+Acquire ketchup and buns, and walk out of store
+Find nearby newspaper stand
+Find nearby vending machine
+Walk to vending machine, and deposit four coins into receptacle
+Push button for cola
+Wait 5 seconds
+Collect cola from vending machine
+Walk to intersection of Elm St. and Oak St. and walk back up Elm St.
+Enter your house
+Walk through hallway, into the dining room, and into the archway in the kitchen, then out the door to the patio.
+Find meat on patio, pick it up, and place on grill
+Wait 4 minutes
+Find spatula, and attempt to flip meat to other side
+Wait 4 minutes
+Use spatula to pick up meat from grill
+Walk to patio table with meat.
+Place meat on patio table
+Peel one piece of lettuce from head and place on top of meat.
+Take one piece of tomato and place on top of meat and lettuce.
+Open bottom of ketchup, and pour on top of meat, lettuce, and tomato
+Take all contents of the partially created “burger” product and place on top of one side of the bun
+Take other side of bun and place on top of all contents of partially created “burger”
+Done!</pre><p>&nbsp;</p>
+<p dir="ltr">If you managed to read all this (I won’t be offended if you got lost halfway), you might be thinking that these instructions are crazy.  Does it fulfill the job of making a burger?  To an extent, but it works for now…</p>
+<p dir="ltr">Imagine you are instructed to enhance these procedures to improve cleanliness of cooking procedures (after all, I am placing all the ingredients on an outdoor piece of furniture instead of using clean utensils and plates).  Without refactoring, what will most likely happen is, as the developer, you will probably copy and paste instructions to “place ingredients on plate” before every instance where you acquire ingredients on the patio table.  But you’ll most likely forget a few spots, and the program will still be erroneous even after you spent hours sifting through these instructions to make the burger less sickening.</p>
+<p dir="ltr">I didn’t even bring up the inefficiency issue of the whole process (I had to go to the marketplace 2 times&#8230;this while leaving the grill burning with live charcoal.  I&#8217;m surprised my house didn’t catch on fire!).  No matter how many times you walk back to the the marketplace, the end result is still the same (though we’re going to leave the quality of the burger out of the equation for this demonstration…).</p>
+<p dir="ltr">Lastly, if you’ve been thinking that all this can be simplified, you are absolutely right.  Really, all this should be done in fewer steps. Assuming we use some external help, and boiling the steps down to what is essential,  while achieving the same goal will not only greatly improve the process but also leave a lot of outlets for new ways to&#8230; well build a burger!</p>
+<p>&nbsp;</p>
+<h1 dir="ltr">So How Should We Implement This Initiative?</h1>
+<p>Trying to refactor everything all in one swoop wouldn’t be practical.  After all, it does not provide any additional value when time is thrown into the equation.  It is better to take little pieces of the puzzle at a time, (preferably when it involves an active task that needs to be done.) Then, scope out how much of the code base you want to refactor in an effort to not only simplify the code but also complete the task while in most cases making the feature run faster than before.</p>
+<p>Doing this will require careful research, estimation, planning, and time.  The risk factor plays a huge role here as there are a lot more unknowns in the task depending on your knowledge of the codebase.  The good news is that the more your refactor, the better your knowledge of the system and the more accurate estimates you can make when taking on future changes in the system.</p>
+<p>There is a chance that you will discover new unknowns in the process, so do not be discouraged if you happen to hit a wall in the process.  The worse thing that can happen is not having a plan and spending time trying to figure out how to hack the code, which may not end up being refactored progress.</p>
+<p>Stay tuned for Episode 2 &#8211; &#8220;Making Changes for the Biggest Bang for your Buck&#8221; to learn some tips on refactoring your code in the most maintainable and performant fashion without breaking your software.</p>
+  </body>
+</html>
+

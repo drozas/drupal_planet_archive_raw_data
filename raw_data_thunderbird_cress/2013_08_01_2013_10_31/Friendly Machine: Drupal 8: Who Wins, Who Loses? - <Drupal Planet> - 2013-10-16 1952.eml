@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Oct 2013 18:52:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Oct 2013 18:52:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: Drupal 8: Who Wins, Who Loses?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/drupal-8-who-wins-who-loses
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: Drupal 8: Who Wins, Who Loses?</title>
+    <base href="http://friendlymachine.net/posts/drupal-8-who-wins-who-loses">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>By now you have no doubt heard that the latest version of Drupal is due in early 2014. You may also be aware that it is shaping up to be a rather controversial release, even provoking a split in the community with a high profile fork of Drupal called Backdrop.</p>
+<p>There are two things that have recently caught my attention and given me some concern regarding Drupal 8. First, having read various discussion threads and social media exchanges, I’m struck by the level of confusion and misinformation I’ve seen. There’s a lot of worry over Drupal 8 from people that actually stand to benefit greatly from it.</p>
+<!--break-->
+<p>The second major point of concern comes from the table below showing CMS market share over the past six months:</p>
+<table style="width: 100%;" border="0"><tbody><tr><th style="text-align: center;"><strong>CMS</strong></th>
+<th style="text-align: center;"><strong>Market share Mar 2013</strong></th>
+<th style="text-align: center;"><strong>Market share Jun 2013</strong></th>
+<th style="text-align: center;"><strong>Market share Sep 2013</strong></th>
+<th style="text-align: center;"><strong>% change</strong></th>
+</tr><tr><td>WordPress</td>
+<td style="text-align: center;"> <span>54.4%</span></td>
+<td style="text-align: center;"> <span>57.7%</span></td>
+<td style="text-align: center;"><span>58.5%</span> </td>
+<td style="text-align: center; color: green;"><strong> 7.53%</strong></td>
+</tr><tr><td>Joomla</td>
+<td style="text-align: center;"> 8.5%</td>
+<td style="text-align: center;"> <span>10.4%</span></td>
+<td style="text-align: center;"> <span>9.5%</span></td>
+<td style="text-align: center; color: green;"><strong> 11.76%</strong></td>
+</tr><tr><td>Drupal</td>
+<td style="text-align: center;"> 7.2%</td>
+<td style="text-align: center;"> <span>6.4%</span></td>
+<td style="text-align: center;"><span>5.7%</span> </td>
+<td style="text-align: center; color: red;"><strong>-20.83% </strong></td>
+</tr></tbody></table><p>The <a href="http://w3techs.com/technologies/history_overview/content_management">source</a> is W3Techs, a site that in the past has shown Drupal making strong gains. Now, however, the trend looks concerning, showing a <strong>20% drop in market share in only six months</strong>. What’s behind this? As I’ve thought about it, I can’t help but wonder if the controversy around Drupal 8 is partially to blame.</p>
+<p>What follows are a few of my thoughts on Drupal 8 and the general direction of the project. The opinions I offer are those of a front-end guy, a theme developer. I don’t have any special inside knowledge. However, as someone who makes his living with Drupal, I’m a very interested observer.</p>
+<p>With those caveats out of the way, let’s begin by considering the recent messaging around Drupal.</p>
+<h2>Drupal for the Enterprise</h2>
+<p>For the past two years or so, there has been a consistent message delivered in keynotes near and far - Drupal is an “enterprise” solution. I don’t want to get too far into the weeds here, but in all honesty, this isn’t how many in the Drupal community see the organizations they work for - or even Drupal for that matter.</p>
+<p>Most I’ve talked to have loved that Drupal is great for building all kinds of sites, big and small. It’s really about the requirements, and Drupal can help people do amazing things whether they are working for General Motors or a small grant funded project. I personally know far more people who work on the latter type of project.</p>
+<p>Is it great that Drupal is a powerful tool for building enterprise websites? Hell, yeah! Does it alienate a significant part of the community by marketing Drupal in this way? Hell, yeah!</p>
+<p>I don’t care to get bogged down in the semantic arguments I’ve seen erupt when discussing what “enterprise” means. Perhaps we can agree the term is commonly understood to mean, “big companies”? This intended meaning is underlined by many of the large firms that get mentioned in the same breath as “enterprise” during recent presentations.</p>
+<p>So why the focus on enterprises, particularly in regard to Drupal 8? This is mostly about Acquia (led by Dries Buytaert, Drupal founder) and other large Drupal firms that primarily have enterprise-level clients.</p>
+<p>This change in focus isn’t necessarily bad and I’ve come to accept it. But I also wonder if it may also be partially to blame for the recent loss of market share. Not everyone sees themselves in this space, and when you start feeling like a square peg in a round hole, you naturally begin to look elsewhere. This is unfortunate because I strongly believe Drupal is a great solution for many non-enterprise clients and will continue to be so in the future.</p>
+<h2>The Drupal 8 Fracas</h2>
+<p>The crux of the recent dispute over Drupal 8 involves Symfony and object-oriented programming (OOP) vs Drupal 7’s procedural code. For some, this is a rather arcane dispute. But this is a big part of what <a href="http://backdropcms.org/">Backdrop CMS</a> is about - resisting a move to the complexity of object-oriented programming. Unfortunately, a whole lot of people worrying about Drupal 8 aren’t involved in the conversation at this level of detail. All they know is that they hear there’s a problem and the noise from the debate has them spooked.</p>
+<p>Many site builders (and site owners) seem to be experiencing something like, “Uh oh! Upgrading to Drupal 8 is going to be a nightmare! We better switch to Backdrop/WordPress/Joomla!“</p>
+<p>Or something like that.</p>
+<p>This is really a shame, because Drupal 8 has so many improvements that for most people, it will be a big step up. I’ll share some resources that discuss those improvements in a moment, but first I’d like to quickly address the people that will likely have to think carefully about Drupal 8.</p>
+<h2>Developers and Site Owners</h2>
+<p>There have been some unpleasant exchanges about object-oriented vs. procedural coding among Drupal folks lately. This is unfortunate. I think that Nate Haug and Jen Lampton (the two main drivers of Backdrop) have made a good case for the existence of their new project.</p>
+<p>Two of the key points they make in favor of Backdrop are the learning curve for Drupal 8 programming and the cost of migrating custom Drupal 7 modules to the new version. These are two very valid concerns for both developers and site owners. They both represent a big investment of time and money. Rational people who find themselves facing these kind of challenges will of course pause to consider options.</p>
+<p>I don’t have a decision matrix to help with these tough choices. At this point I only have an informed opinion. My feeling is that sticking with Drupal 8 will have long term benefits no matter where you stand within the Drupal community. Yes, for many people there will be short term pain, but I think it will likely be worth it for them to stick with Drupal for the long run.</p>
+<p>A really <strong>BIG</strong> point here is that if you aren’t opposed to OOP in Drupal, the upcoming version is an unequivocal win. Theme developers, site builders and content editors will be doing backflips of joy at many of the changes. Some Symfony developers will undoubtedly join the fold. Some current Drupal devs will gain new, high value skills. Good stuff.</p>
+<p>And if you’re a site owner without custom code, you really shouldn’t be stressing much. Upgrading to Drupal 8 will be similarly painful to the last major version update, but the good news is that future updates will likely be much smoother.</p>
+<p>So the big losers? The people who feel that making the shift to Symfony and OOP just isn’t worth it. They truly face a wrenching choice. Many will sadly leave behind a community they have a lot invested in.</p>
+<h2>Be Nice</h2>
+<p>One of the things that bugs me is when people get religious about technology. This inevitably leads to bad behavior - nasty comments, insults and the demonization of other points of view. Keep in mind, Drupal is a tool for building robust websites - that’s it. It’s not a social movement or some great cause that gives people license to shit on those with whom they disagree. Unfortunately, the recent debate about Drupal 8 has brought out some of this negative behavior.</p>
+<p>Dispensing with hero worship and fanboy behavior will help in developing a clear-eyed assessment of where Drupal is headed as well as the legitimate concerns of others.</p>
+<p>Accept that Drupal may no longer be a grassroots project. It’s headed where Acquia wants it to head. So far, that’s been a pretty good ride to be on, but on the day that ceases to be true for you and your organization, there are lots of options. Unfortunately, it seems some Drupal folks are already at that point and moving on.</p>
+<p>It’s important to be tolerant and cordial to those with whom you disagree. Keep the big picture in mind, and failing that, at least try to keep the jackassery to a minimum.</p>
+<p>That’s my nickel’s worth on this subject.</p>
+<h2>Drupal 8 Resources</h2>
+<p>Want to get an idea of what’s on tap with Drupal 8? Take a look at the resources below:</p>
+<ul><li><a href="http://getlevelten.com/blog/ian-whitcomb/drupal-8-module-development-part-1-getting-started">Drupal 8 Module Development, Part 1: Getting Started</a></li>
+<li><a href="https://www.acquia.com/blog/tutorial-drupal-8-site-building-preview-less-more">Drupal 8 Site Building preview - Less is more</a></li>
+<li><a href="https://www.acquia.com/blog/content-editing-enhancements-drupal-8">Content editing enhancements in Drupal 8</a></li>
+<li><a href="http://www.youtube.com/watch?v=tPJ6LRJN0nw&amp;feature=youtu.be"># Using TWIG: The New Template Engine in Drupal 8</a></li>
+<li><a href="http://www.mediacurrent.com/blog/twig-getting-started-drupal-8">TWIG: Getting Started in Drupal 8</a></li>
+</ul><p>If you have any comments, you may politely leave them below.</p>
+</div></div></div>
+  </body>
+</html>
+

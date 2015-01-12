@@ -1,0 +1,88 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 15 Aug 2013 10:58:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 15 Aug 2013 10:58:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Commerce Webform
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/commerce-webform
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Commerce Webform</title>
+    <base href="http://deeson-online.co.uk/labs/commerce-webform">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><iframe allowfullscreen="" frameborder="0" height="315" src="//www.youtube.com/embed/zRVXnL6nvxo?rel=0" width="420"></iframe></p>
+<p>The Drupal <a href="http://drupal.org/project/commerce_webform">Commerce Webform</a> module combines the flexibility of the <a href="http://drupal.org/project/webform">Webform module</a> with the <a href="http://drupal.org/project/commerce">Drupal Commerce</a> framework. This allows website administrators the ability to create complex questionnaires and sell products alongside them without need to gain a deep understanding of Drupal Commerce or of Drupal content types and fields.</p>
+<p>The Webform module allows content administrators to easily produce online webforms for their websites for capturing responses from end users. Commerce webform provides a new product element which can be added to a webform which allows end users to select products. On submission of the webform, the chosen products are put into the users shopping cart where they can then purchase them. A reference is kept between the users order and the original webform so that the purchased state of the order is relayed back to the webform submission. When the administrator downloads all the webform submissions, they can see those submissions that paid and those that did not. Also, webform submission details are available when viewing the order.</p>
+<p>This module allows content administrators to easily capture additional details with an order without having to work with commerce's custom line items in the familiar webform interface.</p>
+<p>A (reasonably) easy guide to get started is provided below. For this example we are going to sell tickets to an event, lets call the event <strong>Drupal training</strong>...</p>
+<h4>1. Install the modules</h4>
+<p>From a fresh Drupal install download the commerce module, webform module and commerce webform module and place into your sites/all/modules directory.</p>
+<h4>2. Enable the modules</h4>
+<p>Enable the followinng modules, you'll be told to enable a few more as well, just say yes :- webform, commerce_webform, commerce_ui, commerce_order_ui, commerce_payment_ui, commerce_product_ui</p>
+<h4>3. Add a payment module</h4>
+<p>You'll need a payment module as well, commerce comes with an example one that doesn't take any money off you</p>
+<h4>4. Create a new product you want to sell</h4>
+<ul>
+<li>Store -&gt; Products -&gt; Add a product -&gt; Create product</li>
+<li>SKU: drupal-training-ticket Title: Drupal training ticket</li>
+<li>Price: 100 USD</li>
+<li>Status: Active</li>
+<li>Click Save Product</li>
+</ul>
+<p><img alt="" src="http://cdn.deeson-online.co.uk/cdn/farfuture/h8AKKi0ceh_al5aKTKlcbbpE_Id2O4RThYFQONyRYLI/mtime:1375629517/sites/default/files/uploads/commerce_webform_step_4.png" style="width: 500px; height: 286px;" /></p>
+<h4>5. Create new webform node</h4>
+<ul>
+<li>Content -&gt; Add Content -&gt; Webform</li>
+<li>Title: Drupal Training Body: Come to our Drupal training event!</li>
+<li>Click Save</li>
+</ul>
+<h4>6. Add webform components to the webform</h4>
+<p>You should already be on the webform tab for the webform created in 5.</p>
+<ul>
+<li>New component name: Ticket</li>
+<li>Type: Commerce product skus</li>
+<li>Mandatory: yes</li>
+<li>Click Add</li>
+<li>Product type: (do not select anything here)</li>
+<li>Product skus: drupal-training-ticket</li>
+<li>Click Save Component</li>
+</ul>
+<h4>7. Add some more fields</h4>
+<p>You should be back on the webform tab, now lets add some more details to the order form like collecting the lunch preference of the person</p>
+<ul>
+<li>New component name: Lunch preference</li>
+<li>Type: Select Options</li>
+<li>Mandatory: yes</li>
+<li>Click Add</li>
+<li>Options (one per line):
+<ul>
+<li>0|Any</li>
+<li>1|Vegetarian</li>
+<li>2|Vegan</li>
+</ul>
+</li>
+<li>Click Save Component</li>
+</ul>
+<p><img alt="" src="http://cdn.deeson-online.co.uk/cdn/farfuture/BLN63RU9t3TSIO2OXJcMYFR7t5I7AI7GghEJaVQSGD0/mtime:1375629900/sites/default/files/uploads/commerce_webform_step_7.png" style="width: 500px; height: 166px;" /></p>
+<h4>8. Go buy a ticket</h4>
+<p>Go view the webform node, you'll be able to select the product and the meal preferences then click add to cart. Go visit your cart and you'll see the drupal event in it. Go checkout and pay for the event.</p>
+<p><img alt="" src="http://cdn.deeson-online.co.uk/cdn/farfuture/mddjg4jlz7YgyY9dEWI9xGCQDyKnKqCKZN3AP4eH0bc/mtime:1375629339/sites/default/files/uploads/commerce_webform_step_8.png" style="width: 500px; height: 421px;" /></p>
+<h4>9. Review the results</h4>
+<p>Return to the webform. On the results tab you'll see, under analysis the number of webform submissions with Paid or Unpaid tickets (unpaid are people who submitted the form but did not get to the end of checkout). The Download option allows you to inspect the orders in a spreadhsheet program like Excel.</p>
+<p><img alt="" src="http://cdn.deeson-online.co.uk/cdn/farfuture/dMBY6rJc7UMeA-nzQlJipAdYBsDz0HiiOfQpn_o7cAY/mtime:1375629436/sites/default/files/uploads/commerce_webform_step_9.png" style="width: 500px; height: 102px;" /></p>
+<h4>10. Fine tuning</h4>
+<p>Other options you might like to check on your webform settings: Redirection location: Set to cart to send the user straight to the shopping cart on submission of the webform Submission access: Disallow anonymous from making purchases or restrict purchasing to just certain roles Show notice about previous submissions: Untick this to allow the same user to make return purchases</p>
+<h4>What next?</h4>
+<p>The 2.x branch of Commerce Webform is compatible with the in development branch of webform (4.x) and supports webform conditionals. These show or hide form elements depending on a users choices on the form.</p>
+<h4>Commerce Customizable Products</h4>
+<p>There is a non-webform alternative to this called <a href="https://drupal.org/project/commerce_custom_product">Commerce Customizable Products</a> which uses Drupal content types, fields and line item entities which gives a better data structure for more advanced users. Checkout how to use this by watching Randy Fay's video on <a href="http://commerceguys.com/blog/commerce-module-tuesday-commerce-customizable-products-screencast">Commerce Customizable Products</a>.</p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/commerce-webform">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Commerce Webform</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/john-ennew">John Ennew</a> | 15th August 2013</div></div></div>
+  </body>
+</html>
+

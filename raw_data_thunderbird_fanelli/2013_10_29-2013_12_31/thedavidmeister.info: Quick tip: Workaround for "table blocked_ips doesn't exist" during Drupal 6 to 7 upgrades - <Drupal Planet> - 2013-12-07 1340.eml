@@ -1,0 +1,67 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 07 Dec 2013 12:40:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 07 Dec 2013 12:40:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: thedavidmeister.info: Quick tip: Workaround for "table blocked_ips doesn't exist" during Drupal 6 to 7 upgrades
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.thedavidmeister.info/post/quick-tip-workaround-table-blockedips-doesnt-exist-during-drupal-6-7-upgrades
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>thedavidmeister.info: Quick tip: Workaround for "table blocked_ips doesn't exist" during Drupal 6 to 7 upgrades</title>
+    <base href="http://www.thedavidmeister.info/post/quick-tip-workaround-table-blockedips-doesnt-exist-during-drupal-6-7-upgrades">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-title field-type-text field-label-hidden"><div class="field-items"><div class="field-item even">Quick tip: Workaround for &quot;table blocked_ips doesn&#039;t exist&quot; during Drupal 6 to 7 upgrades</div></div></div><div class="field field-name-post-date field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">Saturday, 7th Dec 2013</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><h3>Problem/Motivation</h3>
+
+<p>Recently I've been working on a couple of Drupal 6 to 7 site upgrades. A lot of people recommend taking the <a href="https://drupal.org/project/migrate">Migrate</a> approach (which is in Core for upgrading to Drupal 8 now), which is fair enough, but for D6/7 it is possible to upgrade directly, if that makes more sense to you.</p>
+
+<p>One thing that you'll find if you want to attempt a direct upgrade is that taking a scripted approach is pretty much the only way to stay sane. You'll want to be leveraging drush heavily and doing a lot of dry runs to make sure everything runs perfectly before the final deployment.</p>
+
+<p>While there is a whole host of fatal errors and circular logic that you'll be working through before you can reliably do smooth test runs, some of these errors are far gnarlier than others. There is one error that I found particularly frustrating until I stumbled upon the solution.</p>
+
+<p>Once you've disabled all your Drupal 6 modules, pulled your database into Drupal 7 and then want to do anything using drush (like run all the outstanding upgrade hooks) you might see a fatal error complaining about the <code>blocked_ips</code> table not existing. If you visit <code>http://yoursite.com/update.php</code> in the browser, you likely won't see this error because <code>update_prepare_d7_bootstrap()</code> will be used during bootstrap, which contains a workaround in it for this exact problem. Drush, however, will choke on just about any command you give it until the <code>blocked_ips</code> table is created.</p>
+
+<p>The problem is, the "blocked_ips" table doesn't exist in Drupal 6 and isn't created until <code>system_update_7002()</code> during the upgrade. Creating the table manually ahead of time lets you use drush, but then causes <code>system_update_7002()</code> to fail so you still won't get very far. In order to keep everything neatly scripted, without killing kittens, we want to use drush to run all our update hooks. It looks like we have a bit of a "catch 22" here but it turns out that there is a fairly simple, practical solution.</p>
+
+<h3>Solution</h3>
+
+<p>The clue for a solution can be found in <code>update_prepare_d7_bootstrap()</code>. Amongst various other workarounds and fixes we have:</p>
+
+<pre class="prettyprint">
+  // The new {blocked_ips} table is used in Drupal 7 to store a list of
+  // banned IP addresses. If this table doesn't exist then we are still
+  // running on a Drupal 6 database, so we suppress the unavoidable errors
+  // that occur by creating a static list.
+  $GLOBALS['conf']['blocked_ips'] = array();
+</pre>
+
+<p>Luckily this is really easy to replicate ourselves. All we need to do is add the same configuration to our <code>settings.php</code> file temporarily, during the migration.</p>
+
+<p>I like to maintain a separate <code>settings.migrate.inc</code> file, so this line would look something like this in context:</p>
+
+<pre class="prettyprint">
+/**
+ * @file
+ * Configuration for our D6-7 migration.
+ */
+  global $conf;
+
+  // Allow free access to update.php during the migration.
+  $update_free_access = TRUE;
+
+  // Avoid "table blocked_ips doesn't exist" errors in drush.
+  $conf['blocked_ips'] = array();
+</pre>
+
+<p>All of this is alluded to in the issue summary at <a href="https://drupal.org/node/517742">https://drupal.org/node/517742</a> but for some reason it took me a long time to figure this one out. I thought I'd leave some explicit notes and hopefully save someone else from some drama.</p>
+
+<p>On a related note, I'd also like to point out that there are other errors that will stop drush from bootstrapping a Drupal 6 database on a Drupal 7 codebase, at least until you visit <code>update.php</code> directly at least once. <code>update_prepare_d7_bootstrap()</code> has some extra logic to repair a few tables in the database that will be missing in Drupal 6 but are required for a Drupal 7 bootstrap. The easiest way I found to fix this up was simply adding <code>wget http://yoursite.com/update.php</code> very early in the upgrade script (before any <code>drush @foo updb</code> calls). This cleaned up a lot of other cryptic errors straight away but unfortunately didn't help me with the missing <code>blocked_ips</code> table.</p>
+</div></div></div><div class="field field-name-field-syndicate field-type-taxonomy-term-reference field-label-above"><div class="field-label">Syndicate:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/syndicate/planet-drupal">planet drupal</a></div></div></div>
+  </body>
+</html>
+

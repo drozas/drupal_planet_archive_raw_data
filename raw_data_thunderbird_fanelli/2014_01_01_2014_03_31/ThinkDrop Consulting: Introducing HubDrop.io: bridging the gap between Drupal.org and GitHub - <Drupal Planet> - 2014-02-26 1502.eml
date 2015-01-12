@@ -1,0 +1,109 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 26 Feb 2014 14:02:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 26 Feb 2014 14:02:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ThinkDrop Consulting: Introducing HubDrop.io: bridging the gap between Drupal.org and GitHub
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thinkdrop.net/blog-entry/february-26-2014-902am/introducing-hubdropio-bridging-gap-between-drupalorg-and-github
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ThinkDrop Consulting: Introducing HubDrop.io: bridging the gap between Drupal.org and GitHub</title>
+    <base href="http://thinkdrop.net/blog-entry/february-26-2014-902am/introducing-hubdropio-bridging-gap-between-drupalorg-and-github">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>NOTE: This blog post cross posted from&nbsp;<a href='http://blog.hubdrop.io/2014/02/08/the-future.html'>http://blog.hubdrop.io/2014/02/08/the-future.html</a></p>
+
+<hr />
+<p>This project is simply something I wanted to do. No one paid for it. I built it in my spare time as a way to refine the knowledge I learned over the last few years about Symfony, Vagrant, and Chef. I want to grow this tool, but it takes time and a server, which both == money.</p>
+
+<p>So I&#39;m opening up a <a href='https://www.gittip.com/hubdrop/'>GitTip</a> account to raise funding for development of hubdrop.io.</p>
+
+<p>But before I do that, I wanted to formally introduce HubDrop to the Drupal aocmmunity.</p>
+
+<h2>What is HubDrop?</h2>
+
+<p>HubDrop.io is currently a tool that mirrors Drupal projects on GitHub. In the future it will do all sorts of magic things with your git repos.</p>
+
+<p>It was also a learning experience for me, and hopefully it will be for others. I hope to use HubDrop&#39;s code as a lesson in building web services.</p>
+
+<p>In the future, I want put together a detailed case study and document the process of building the entire HubDrop service for all to learn from.</p>
+
+<p>HubDrop is also a part of the Drupal community. There is a lot of debate about the drupal.org tools, and the effort it takes to improve them. There was a huge discussion of moving to github outright, years ago. The idea for hubdrop was to act as a bridge, so we don&#39;t have to decide for everyone what tool they must use for development, and can maybe get the best of both worlds in the meantime.</p>
+
+<h2>Principles</h2>
+
+<p>I&#39;ve got some important ideas that I believe in. This project is a tool for the community, and I&#39;ve come up with these three principles to keep it that way.</p>
+
+<ol>
+	<li>HubDrop will always be 100% open source.</li>
+	<li>Mirroring of public open source code and site projects will always be free.</li>
+	<li>HubDrop will always strive to survive on community funding, plus revenue from mirroring private repos.</li>
+</ol>
+
+<p>We&#39;ll see how it goes. I am a cynic idealist. If the funding comes in, there&#39;s so much that can be done.</p>
+
+<h2>Future Features</h2>
+
+<p>There are a number of features that I am sure everyone is thinking of. Here is my priority list:</p>
+
+<ol>
+	<li>
+	<p>GitHub to Drupal sync.</p>
+
+	<p>This will allow projects to move development to GitHub, while maintaining a mirror on drupal.org for releases, presence in the community, etc.</p>
+
+	<p>This is already working for the &quot;drupalprojects&quot; organization, but I have to run a command on the server to do so. This is a very tricky feature because you have to decide who gets commit access.</p>
+
+	<p>I have this working as well, and I&#39;ll write more about it later, but the point is, the next step is letting developers create their own repos in any organization, and plug it into Drupal&#39;s git service. This part will require some work because there is no database in hubdrop and I&#39;d like to keep it that way.</p>
+	</li>
+	<li>
+	<p>Private 3rd Party Mirroring (and merging)</p>
+
+	<p>By which I mean, mirroring your Pantheon, Acquia, or other git host repo on your own GitHub account or organization, private or public.</p>
+
+	<p>I already set this up as a test by messing with the pushUrl and it works, but its lumped in with the contrib projects. Also this depends on feature #1 because we need some kind of authentication to set this up.</p>
+
+	<p>The merging part is mainly for Acquia Cloud. We could let devs keep their drupal code in the root of their repo, and automatically sync it to your acquia cloud repo, which must keep drupal atdocroot.</p>
+	</li>
+	<li>
+	<p>Drupal Core Update Merging</p>
+
+	<p>What if you could give hubdrop access to your repo, and, whenever there was a core update, it could make a branch of your master and apply the update for your review? Basically what Pantheon does but for&nbsp;any&nbsp;drupal repo.</p>
+	</li>
+	<li>
+	<p>Drush Make and Distribution Repos</p>
+
+	<p>Using drupal/drush make-driven-drupal-development? Want to, but don&#39;t want to teach your devs to build the site all the time?</p>
+
+	<p>Got a distribution that drupal.org packages?</p>
+
+	<p>HubDrop could track changes to your makefile, and sync that with a full drupal site repo, making for more flexible development and distribution.</p>
+	</li>
+</ol>
+
+<h2>All the things</h2>
+
+<p>I&#39;ll end with a tweet from a fan. HubDrop has already inspired a meme.</p>
+
+<p>While I don&#39;t see a need for mirroring&nbsp;all&nbsp;the things, I do think the freedom for developers to develop with the tool they prefer is an important freedom to have.</p>
+
+<p>My hope is that this tool will bring more people together to improve code for all.</p>
+
+<p>Thanks!</p>
+
+<p>Jon</p>
+
+
+<center>
+<blockquote class="twitter-tweet" lang="en"><p>Sync all the modules! <a href="http://t.co/5db358ZyUw">http://t.co/5db358ZyUw</a> <a href="https://twitter.com/search?q=%23drupal&amp;src=hash">#drupal</a> <a href="http://t.co/71gVpXwy11">pic.twitter.com/71gVpXwy11</a></p>&mdash; Dave Hall (@skwashd) <a href="https://twitter.com/skwashd/statuses/407295986860433408">December 1, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/planet-drupal">Planet Drupal</a></div><div class="field-item odd"><a href="/tags/git">git</a></div><div class="field-item even"><a href="/tags/hubdrop">hubdrop</a></div></div></div>
+  </body>
+</html>
+

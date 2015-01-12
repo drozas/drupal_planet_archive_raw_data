@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 23 Apr 2014 12:41:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 23 Apr 2014 12:41:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Frederick Giasson: Exporting Entities using OSF for Drupal (Screencast)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fgiasson.com/blog/index.php/2014/04/23/exporting-entities-using-osf-for-drupal-screencast/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Frederick Giasson: Exporting Entities using OSF for Drupal (Screencast)</title>
+    <base href="http://fgiasson.com/blog/index.php/2014/04/23/exporting-entities-using-osf-for-drupal-screencast/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rfr_id=info%3Asid%2Focoins.info%3Agenerator&amp;rft.title=Exporting Entities using OSF for Drupal (Screencast)&amp;rft.aulast=Giasson&amp;rft.aufirst=Frederick&amp;rft.subject=Open Semantic Framework&amp;rft.subject=OSF Academy&amp;rft.subject=OSF for Drupal&amp;rft.subject=Planet Drupal&amp;rft.subject=Semantic Web&amp;rft.subject=Structured Dynamics&amp;rft.source=Frederick Giasson&#8217;s Weblog&amp;rft.date=2014-04-23&amp;rft.type=blogPost&amp;rft.format=text&amp;rft.identifier=http://fgiasson.com/blog/index.php/2014/04/23/exporting-entities-using-osf-for-drupal-screencast/&amp;rft.language=English"></span>
+<p>This screencast will introduce you to the <a href="https://drupal.org/project/osf"><code>OSF for Drupal</code></a> features that let you export <code>Drupal Entities</code> in one of the following supported serializations:</p>
+<ul>
+<li><a class="external text" href="http://www.w3.org/TR/REC-rdf-syntax/" rel="nofollow">RDF+XML</a> (RDF in XML)</li>
+<li><a class="external text" href="http://www.w3.org/TeamSubmission/n3/" rel="nofollow">RDF+N3</a> (RDF in N3)</li>
+<li><a title="StructJSON" href="http://wiki.opensemanticframework.org/index.php/StructJSON">structJSON</a> (Internal OSF RDF serialization in JSON)</li>
+<li><a title="StructXML" href="http://wiki.opensemanticframework.org/index.php/StructXML">structXML</a> (Internal OSF RDF serialization in XML)</li>
+<li><a title="Instance Record and Object Notation (irON) Specification" href="http://wiki.opensemanticframework.org/index.php/Instance_Record_and_Object_Notation_%28irON%29_Specification#SUB-PART_2:_irJSON_PROFILE">ironJSON</a> (irON serialization in JSON)</li>
+<li><a title="Instance Record and Object Notation (irON) Specification" href="http://wiki.opensemanticframework.org/index.php/Instance_Record_and_Object_Notation_%28irON%29_Specification#SUB-PART_3:_commON_PROFILE">commON</a> (CSV serialization to be used in spreadsheet applications)</li>
+</ul>
+<p>I will show you how you can use <code>OSF for Drupal</code> to export entire <a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Exporting_a_Dataset">datasets of <code>Entities</code></a>, or how to export <a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Exporting_Resources"><code>Entities</code> individually</a>. You will see how you can configure Drupal such that different users roles get access to these functionalities.</p>
+<p>I will also briefly discuss how you can create new converters to support more data formats.</p>
+<p>Finally, I will show you how Drupal can be used as a <code><a href="http://en.wikipedia.org/wiki/Linked_data">linked data</a></code> platform with a feature that makes every Drupal <code>Entities</code> <a href="http://en.wikipedia.org/wiki/Dereferenceable_Uniform_Resource_Identifier"><code>dereferencable</code></a> on the Web<sup class='footnote'><a href='#fn-2408-1' id='fnref-2408-1' onclick='return fdfootnote_show(2408)'>1</a></sup>. You will see how you can use <a href="http://curl.haxx.se/">cURL</a> to export the <code>Entities</code>&#8216; descriptions using their URI in one of the 6 supported serialization formats.</p>
+<p><center><br />
+<a href="https://www.youtube.com/watch?v=KI7uIbXQIbE"><img class="aligncenter size-full wp-image-2414" src="http://fgiasson.com/blog/wp-content/uploads/2014/04/tut_11_blog_400.png" alt="tut_11_blog_400" width="400" height="225" /></a></center>&nbsp;</p>
+<div class='footnotes' id='footnotes-2408'>
+<div class='footnotedivider'></div>
+<ol>
+<li id='fn-2408-1'>OSF for Drupal follows the<a href="http://www.w3.org/TR/cooluris/"> Cool URIs for the Semantic Web</a> W3C&#8217;s interest group notes <span class='footnotereverse'><a href='#fnref-2408-1'>&#8617;</a></span></li>
+</ol>
+</div>
+  </body>
+</html>
+

@@ -1,0 +1,74 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 23 Nov 2014 21:22:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 23 Nov 2014 21:22:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: orkjerns blogg: Headless Drupal with head fallback
+Content-Transfer-Encoding: 8bit
+Content-Base: http://orkjern.com/headless-head-fallback
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>orkjerns blogg: Headless Drupal with head fallback</title>
+    <base href="http://orkjern.com/headless-head-fallback">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden">Headless Drupal with head fallback</span>
+<span class="field field-node--uid field-name-uid field-type-entity-reference field-label-hidden"><span lang="" about="/user/1" typeof="schema:Person" property="schema:name" datatype="">admin</span></span>
+<span class="field field-node--created field-name-created field-type-created field-label-hidden">Sun, 11/23/2014 - 21:22</span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden">
+    <div class="field-items">
+          <div property="schema:text" class="field-item"><p>I just wanted to take a moment to talk about how I approached the hot word "headless Drupal" on my blog. It uses some sort of "headless" communication with the Drupal site, but it also leverages Drupal in a standard way. For different reasons. (by the way, <a href="https://groups.drupal.org/headless-drupal">if you are interested in "headless Drupal", there is a groups.drupal.org page about the subject.)</a></p>
+<p>First of all, let's examine in what way this simple blog is headless. It is not headless in the way that it offers all the functionality of Drupal without using Drupals front-end. For example, these words I am typing is not typed into a decoupled web-app or command-line tool. Its only headless feature is that it loads content pages with ajax through Drupal 8's new REST module. Let's look at a typical set-up for this, and how I approached it differently.</p>
+<h2>A typical setup</h2>
+<p>A common way to build a front-end JavaScript application leveraging a REST API, is using a framework of your choice (backbone / angular / or something else *.js) and build a single-page application (or SPA for short). Basically this could mean that you have an index.html file with some JavaScript and stylesheets, and all content is loaded with AJAX. This also means that if you request the site without JavaScript enabled, then you would just see an empty page (except of course if you have some way of scraping the dynamic content and outputting plain HTML as fallback).</p>
+
+<h2>Head fallback</h2>
+<p>I guess the "headless" metaphor sounds strange when I change it around to talk about "head fallback". But what I mean with this is that I want a user to be able to read all pages with no JavaScript enabled, and I want Drupal (the head) to handle this. All URLs should also contain (more or less) the same content if you are browsing with JavaScript or without it. Luckily, making HTML is something Drupal always has done, so let's start there.</p>
+
+<p>Now, this first part should be obvious. If a user comes to the site, we show only the output of each URL as intended with the activated theme. This is a out-of-the box feature with Drupal (and any other CMS). OK, so the fallback is covered. The next step is to leverage the REST module, and load content async with AJAX.</p>
+
+<h2>Head first, headless later</h2>
+<p>A typical scenario would be that for the front page I would want to request the "/node" resource with the header "Accept:application/hal+json" to get a list of nodes. Then I would want to display these in the same way the theme displays it statically on a page load. The usual way of doing this is that when the document is ready, we request the resource and build and render the page, client side. This is impractical in one way: You are waiting to load the entire document to actually render anything at all. Or maybe even worse: You could be waiting for the entire /node list to load, only to destroy the DOM elements with the newly fetched and rendered JSON. This is bad for several reasons, but one concrete example is a smart phone on a slow network. This client could start rendering your page on the first chunk of html transferred, and that would maybe be enough to show what is called the "above the fold content". This is also something <a href="https://developers.google.com/speed/docs/insights/PrioritizeVisibleContent"> that is a criteria in the often used Google PageSpeed.</a> Meaning in theory that our page would get slower (on first page load) by building a SPA on top of the fallback head.</p>
+
+<p>It is very hip with some "headless Drupal" goodness, but not at the cost of performance and speed. So what I do for the first page load, is trust Drupal to do the rendering, and then initializing the JavaScript framework (<a href="http://lhorie.github.io/mithril/">Mithril.js</a> in my case) when I need it. Let's take for example you, dear visitor, reading this right now. You probably came to this site via a direct link. Now, why would I need to set up all client side routes and re-render this node when all you probably wanted to do, was to read this article?</p>
+
+<h2>Results and side-effects</h2>
+<p>OK, so now I have a fallback for JavaScript that gives me this result (first picture is without JavaScript, second is with JavaScript):</p>
+<img src="/sites/default/files/no-js.png" style="border: 4px solid black;width:95%;display:block;margin:auto" /><img src="/sites/default/files/js.png" style="border: 4px solid black;width:95%;display:block;margin:auto" /><p>As you can see, the only difference is that the disqus comment count can not be shown on the non-js version. So the result is that I have a consistent style for both js and non-js visitors, and I only initialize the headless part of the site when it is needed.</p>
+<p>A fun (and useful) side-effect is the page speed. Measured in Google PageSpeed this now gives me a score of 99 (with the only suggestion to increase the cache lifetime of the google analytics js)</p>
+<img src="/sites/default/files/pagespeed.png" style="border: 4px solid black;width:95%;display:block;margin:auto" /><h2>Is it really headless, then?</h2>
+<p>Yes and no. Given that you request my site with JavaScript enabled, the first page request is a regular Drupal page render. But after that, if you choose to go to the front page or any other articles, all content is fetched with AJAX and rendered client side.</p>
+<h2>Takeaways and lessons learned</h2>
+<p>I guess some of these are more obvious than others.</p>
+<ul><li>Do not punish your visitor for having JavaScript <em>disabled</em>. Make all pages available for all users. Mobile first is one thing, but you could also consider no-js first. Or both?</li>
+<li>Do not punish your visitor for having JavaScript <em>enabled</em>. If you render the page based on a AJAX request, the time between initial page load and actual render time will be longer, and this is especially bad for mobile.</li> 
+<li>Subsequent pages are way faster to load with AJAX, both for mobile and desktop. You really don't need to download more than the content (that is, the text) of the page you are requesting, when the client already have the assets and wrapper content loaded in the browser.</li>
+</ul><h2>Disclaimers</h2>
+<p>First: these techniques might not always be appropriate for everyone. You should obviously consider the use case before using a similar approach</p>
+<p>If you, after reading this article, find yourself turning off JavaScript to see what the page looks like, then you might notice that there are no stylesheets any more. Let me just point out that this would not be the case if your _first_ page request were without JavaScript. By requesting and rendering the first page with JavaScript, your subsequent requests will say to my server that you have JavaScript enabled, and thus I also assume you have stored the css in localStorage (as the js does). <a href="http://orkjern.com/running-on-drupal-8">Please see this article for more information</a></p>
+<p>Let's just sum this up with this bad taste gif in the category "speed":</p></div>
+      </div>
+</div>
+<div class="field field-node--field-image field-name-field-image field-type-image field-label-hidden">
+    <div class="field-items">
+          <div class="field-item">  <img property="schema:image" src="http://orkjern.com/sites/default/files/field/image/pegasus_e0.gif" width="135" height="135" alt="" typeof="foaf:Image" />
+
+</div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix">
+      <h3>Tags: </h3>
+    <ul class="links field-items">
+          <li><a href="/taxonomy/term/1" property="schema:about">planet drupal</a></li>
+          <li><a href="/taxonomy/term/2" property="schema:about">drupal 8</a></li>
+          <li><a href="/taxonomy/term/5" property="schema:about">javascript</a></li>
+      </ul>
+</div>
+<ul class="links inline"><li class="comment-forbidden"></li></ul>
+  </body>
+</html>
+

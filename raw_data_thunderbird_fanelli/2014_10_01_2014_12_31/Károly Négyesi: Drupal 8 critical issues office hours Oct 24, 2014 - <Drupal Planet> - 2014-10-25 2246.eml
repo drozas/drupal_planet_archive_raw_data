@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 25 Oct 2014 20:46:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 25 Oct 2014 20:46:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 critical issues office hours Oct 24, 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/411
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 critical issues office hours Oct 24, 2014</title>
+    <base href="http://www.drupal4hu.com/node/411">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>This was our first critical office hours. <a href="https://www.drupal.org/u/webflo">webflo</a> have <a href="https://www.drupal.org/node/1948418">forward ported</a> a Views SA (turned out that Twig autoescape made short work of the security hole -- yay! so now it's just a test) and even past the office hours followed up with a patch that now passes. I will monitor the issue further and make sure it gets reviewed and committed. <a href="https://www.drupal.org/u/ksenzee">ksenzee</a> started on <a href="https://www.drupal.org/node/918538">decoupling cache tags from cache bins</a> -- there's no patch yet, I need to follow up on this one however from our discussion it was clear she was making a lot of progress. I was trying to help <a href="https://www.drupal.org/u/penyaskito">penyaskito</a> with the <a href="https://www.drupal.org/node/2355909">language.settings config is not scalable</a> issue but turned out his problems went away with a fresh install so that issue is now progressing well even without the office hours. So as far as I am concerned, that's two down and one moving (and as a bonus, webflo rerolled <a href="https://www.drupal.org/node/2324371">fix common HTML escaped render #key values due to Twig autoescape</a> which is major I am not sure why it's not critical). I think critical issues office hours was off to a good start, more people would of course be better. I count <a href="https://www.drupal.org/project/issues/search/drupal?text=&amp;assigned=&amp;submitted=&amp;project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;status[2]=8&amp;status[3]=14&amp;status[4]=4&amp;status[5]=16&amp;priorities[0]=400&amp;&version[0]=8.0.x-dev&amp;&issue_tags_op=%3D&amp;issue_tags=&amp;page=2">123 critical issues</a>. </p>
+  </body>
+</html>
+

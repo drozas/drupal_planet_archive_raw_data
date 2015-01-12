@@ -1,0 +1,95 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 15 Oct 2013 23:06:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 15 Oct 2013 23:06:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: DrewPull - The Drupal Blog: Drupal 8 Twig template engine
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drewpull.drupalgardens.com/blog/drupal-8-twig-template-engine
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>DrewPull - The Drupal Blog: Drupal 8 Twig template engine</title>
+    <base href="http://drewpull.drupalgardens.com/blog/drupal-8-twig-template-engine">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>As you probably know, one of the best new features of Drupal 8 is the new template engine based on Twig and also used by Symfony community.</p>
+<p>We will continue improving Bingo module so you can find all example code in the <a href="https://drupal.org/sandbox/rteijeiro/2087957">Drupal sandbox for Bingo module</a>. </p>
+<p>There are some changes that make better creating templates for your module pages but other things are still the same. For example we still have <a href="https://api.drupal.org/api/drupal/core!modules!system!system.api.php/function/hook_theme/8" target="_blank">hook_theme</a>:</p>
+<p><strong>bingo.module</strong></p>
+<pre>/**
+ * Implements hook_theme().
+ */
+function bingo_theme() {
+  return array(
+    // Template for list of bingo participants.
+    'bingo_list' =&gt; array(
+      'template' =&gt; 'bingo-list',
+      'variables' =&gt; array(
+        'items' =&gt; array(),
+      ),
+    ),
+  );
+}</pre><p>As you can see the structure is the same, so you have the template name and the variables to render. The important change is that there are not theme functions anymore. All the data to build your page should be created using renderable arrays. Then you can create the renderable array for bingo participants list page this way:</p>
+<p><strong>lib/Drupal/bingo/BingoController.php</strong></p>
+<pre>  // Bingo participants list page.      
+
+  public function content() {
+    $items = array();
+
+    foreach(BingoStorage::getAll() as $name) {
+      $items[] = l($name, "bingo/delete/$name");
+    }
+
+    return array(
+      '#theme' =&gt; 'bingo_list',
+      '#items' =&gt; $items,
+      '#attached' =&gt; array(
+        'css' =&gt; array(drupal_get_path('module', 'bingo') . '/css/bingo.module.css'),
+      ),
+    );
+  }
+</pre><p>You only need to construct the renderable array passing the theme name (bingo_list), the variables to render ($items) and attach some CSS or JS if you need it.</p>
+<p>If you need to alter the variables or add new ones to be available in the template you can do it in the corresponding template_preprocess function. For example we can add a custom message to indicate that the participants list is empty and a couple of link to let the user add more participants or start the Bingo game:</p>
+<pre>/**
+ * Preprocess variables for list of bingo participants page.
+ *
+ * @param array $variables
+ *  An associative array containing:
+ *  - items: Array of participant names.
+ */
+function template_preprocess_bingo_list(&amp;$variables) {                                 
+
+  // Check if there are participants.
+  // If not add a default message.
+  if (empty($variables['items'])) {
+    $variables['items'][] = t('No participants found. Please add participants.');
+  }
+
+  $variables['add_link'] = l(t('Add'), 'bingo/add');
+  $variables['play_link'] = l(t('Play'), 'bingo/play');
+}</pre><p>You only need to add the new variables in the $variables array. And now you can create the twig template and display the variables with your cool markup. The template name should be the same you entered in hook_theme() function followed by html.twig as you can see:</p>
+<p><strong>templates/bingo-list.html.twig</strong></p>
+<pre>&lt;section class="bingo"&gt;
+
+  &lt;ul class="bingo-items"&gt;
+    {% for item in items %}
+      &lt;li class="bingo-item"&gt;{{ item }}&lt;/li&gt;
+    {% endfor %}
+  &lt;/ul&gt;
+
+  &lt;aside class="bingo-links"&gt;
+    {{ add_link }}
+    {{ play_link }}
+  &lt;/aside&gt;
+
+&lt;/section&gt;</pre><p>Twig syntax is more readable than the old phptemplate syntax. Twig also include some helper functions, filters and operands that make theming really easy. Take a look at <a href="http://twig.sensiolabs.org/documentation" target="_blank">Twig documentation</a> for more info.</p>
+<p>Don't forget that this new Drupal 8 feature is being developed thanks to some awesome contributors. The Twig initiative guys are working hard to bring you a <a href="https://drupal.org/node/1980004" target="_blank">cleaner and more maintainable markup</a> inside twig templates. So if you want to <a href="http://drupal.org/node/2008464" target="_blank">learn more about the initiative</a> and help contributing to the Drupal community just join them in the regular meetings or the #drupal-twig IRC channel.</p>
+<p>See you in the next post where I will show you how to deal with other new Drupal 8 feature: Plugins.</p>
+ </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal-8" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal 8</a></div><div class="field-item odd"><a href="/tags/twig" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">twig</a></div><div class="field-item even"><a href="/tags/template" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">template</a></div><div class="field-item odd"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

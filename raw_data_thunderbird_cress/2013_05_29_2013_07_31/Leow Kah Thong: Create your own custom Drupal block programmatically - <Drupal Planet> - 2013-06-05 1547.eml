@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Jun 2013 14:47:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Jun 2013 14:47:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Leow Kah Thong: Create your own custom Drupal block programmatically
+Content-Transfer-Encoding: 8bit
+Content-Base: http://kahthong.com/2013/06/create-your-own-custom-drupal-block-programmatically
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Leow Kah Thong: Create your own custom Drupal block programmatically</title>
+    <base href="http://kahthong.com/2013/06/create-your-own-custom-drupal-block-programmatically">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/156/body/und/rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Super duper simple example on how to programmatically create your own custom Drupal blocks and display any content.</p>
+<p><em>Code snippet below needs to be in a custom module.</em></p>
+<div class="codeblock"><code>/**<br /> * Implements hook_block_info().<br /> */<br />function YOUR_MODULE_block_info() {<br />  $blocks = array();
+<p>  $blocks['YOUR_BLOCK_ABC'] = array(<br />    'info' =&gt; t('YOUR BLOCK NAME'),<br />  );</p>
+<p>  return $blocks;<br />}</p>
+<p>/**<br /> * Implements hook_block_view().<br /> */<br />function YOUR_MODULE_block_view($delta = '') {<br />  $block = array();</p>
+<p>  switch ($delta) {<br />    case 'YOUR_BLOCK_ABC':<br />      $block['subject'] = '';<br />      $block['content'] = _YOUR_MODULE_BLOCK_ABC_CONTENT();<br />      break;<br />  }</p>
+<p>  return $block;<br />}</p>
+<p>function _YOUR_MODULE_BLOCK_ABC_CONTENT() {<br />  $output = t('Hello world');<br />  return $output;<br />}</p></code></div>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above" data-edit-id="node/156/field_tags/und/rss"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/block" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">block</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/programmatically" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">programmatically</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/custom" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">custom</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/hookblockinfo" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_block_info</a></div></div></div>
+  </body>
+</html>
+

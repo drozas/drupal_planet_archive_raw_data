@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 01 Nov 2014 18:30:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 01 Nov 2014 18:30:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Modules Unraveled: Why doesn't Drupal offer an auto update feature like Wordpress?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://modulesunraveled.com/blog/why-doesnt-drupal-offer-auto-update-feature-wordpress
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Modules Unraveled: Why doesn't Drupal offer an auto update feature like Wordpress?</title>
+    <base href="http://modulesunraveled.com/blog/why-doesnt-drupal-offer-auto-update-feature-wordpress">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--name-field-image field--type-image field--label-hidden"><div class="field__items"><div class="field__item even" rel="og:image rdfs:seeAlso" resource="http://modulesunraveled.com/sites/default/files/styles/large/public/field/image/DrupalAutoUpdate_0.png?itok=h6KjNUQA"><img typeof="foaf:Image" src="http://modulesunraveled.com/sites/default/files/styles/large/public/field/image/DrupalAutoUpdate_0.png?itok=h6KjNUQA" width="480" height="288" alt="Drupal Auto Update Feature?" /></div></div></div><span class="submitted-by"></span><div class="field field--name-body field--type-text-with-summary field--label-hidden"><div class="field__items"><div class="field__item even" property="content:encoded"><p>Let me start out by stating that I don't know the technical implications of an autocomplete feature. Okay? I don't have the answer. I'm just looking for information. Best case, I can help get something started that will benefit the entire Drupal community in the future.</p>
+<p>With that out of the way, I firmly believe that anything is possible with Drupal. And with the "Drupageddon" of late, an auto update feature would be greatly appreciated by many, I'm sure. (I certainly would have benefited from one.)</p>
+<p>I was recently discussing the security update with some friends, and one of them asked "Does Drupal have an auto update?"</p>
+<p>And I was like "...no."</p>
+<p>Immediately, I thought about all of the updates I don't immediately apply to contrib projects because they change a configuration option, or otherwise modify the way I've set up the site.</p>
+<p>So I thought "I don't really want an auto update because it might break things.</p>
+<p>That said, why can't Drupal automatically update security fixes - at least in core - automatically? If it did, Drupageddon could have never been a widespread issue.</p>
+<p>It's easy to think, "Well, it's fixed now, so there's nothing to worry about."</p>
+<p>But I think that's shortsighted.</p>
+<p>The particular vulnerability that caused "Drupageddon" has been around since the inception of Drupal 7, which was officially released in 2011. So, for at least 3 years, every time we've fixed a security flaw, we've thought, "It's fixed now, so there's nothing to worry about." ... until the next issue was found, and this last one was a pretty gigantic one!</p>
+<p>Wordpress introduced auto update in version 3.7 on October 24, 2013. They also included options in their configuration file that can be set to disable auto updates, as well as choose which types of updates should be performed automatically: none, major and minor or minor only.</p>
+<p>You can read more about it on the Configuring Automatic Background Updates page:<br />
+http://codex.wordpress.org/Configuring_Automatic_Background_Updates</p>
+<p>I'm just curious if this is something that can be added in a point release of D8 (like 8.5 or something).</p>
+<p>Also, I've ready a few posts saying that auto updates would not fit their workflow. They use Drush, Git, etc. to manage their development workflow. And if that's you, I'd say that turning the auto update setting to off would mean that you can continue to work the way you currently do.</p>
+<p>However, small business owners, churches, non-profits and the like that have volunteers (with little to no development background) managing their sites don't have the luxury of utilizing Git, Drush etc. In those scenarios, I think the case could be made that an autoupdate feature (as long as the updates are tested before release) could be a much more stable way of maintaining a site than having a volunteer FTP files to a server without really knowing what they are doing.</p>
+<p>If you have thoughts, please add them below. I'd love to hear them!</p>
+<p><strong>Updates</strong></p>
+<ol><li>After doing some more research, I've found that some people tried to do this in D7, but postponed to D8. However, there hasn't been any movement since April 28, 2013. <a href="https://www.drupal.org/node/606592" rel="nofollow">https://www.drupal.org/node/606592</a></li>
+<li>There's also a post explaining why auto updates would be a very bad idea from September 1, 2011.  <a href="http://www.freelock.com/blog/john-locke/2011-09/why-auto-updates-are-very-bad-idea" rel="nofollow">http://www.freelock.com/blog/john-locke/2011-09/why-auto-updates-are-very-bad-idea</a> I'm not sure that I agree with everything he says though.</li>
+</ol></div></div></div><div class="field field--name-field-tags field--type-taxonomy-term-reference field--label-above"><div class="field__label">Tags:&nbsp;</div><div class="field__items"><div class="field__item even" rel="dc:subject"><a href="/tags/drupal-core" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Core</a></div><div class="field__item odd" rel="dc:subject"><a href="/tags/security" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Security</a></div><div class="field__item even" rel="dc:subject"><a href="/tags/auto-update" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Auto-Update</a></div><div class="field__item odd" rel="dc:subject"><a href="/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet-drupal</a></div></div></div>
+  </body>
+</html>
+

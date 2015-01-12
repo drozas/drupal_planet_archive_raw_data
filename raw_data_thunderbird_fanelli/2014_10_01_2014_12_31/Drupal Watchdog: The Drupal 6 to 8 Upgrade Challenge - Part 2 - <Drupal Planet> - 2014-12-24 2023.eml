@@ -1,0 +1,146 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 24 Dec 2014 19:23:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 24 Dec 2014 19:23:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: The Drupal 6 to 8 Upgrade Challenge - Part 2
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/blog/2014/12/drupal-upgrade-2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: The Drupal 6 to 8 Upgrade Challenge - Part 2</title>
+    <base href="http://drupalwatchdog.com/blog/2014/12/drupal-upgrade-2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--body field-type-text-with-summary field-label-hidden field--rss">
+              <p><em><a href="https://www.drupal.org/u/catch">Nathaniel Catchpole </a>, the Drupal 8 release maintainer and Tag1 Senior Performance Engineer, suggested that Drupal shops everywhere could support the release of Drupal 8 by upgrading their own sites and addressing the issues they find along the way. This is part two of a series chronicling the journey from Drupal 6 to Drupal 8. </em></p>
+<p><a href="/blog/2014/12/drupal-upgrade-1">Part 1: Readiness Assessment</a></p>
+<h2>Part 2: Preparing to Migrate D6 to D8</h2>
+<p>Having concluded the readiness assessment, we turn next to migrating the content and configuration. In reality, there’s little chance that we would migrate anything but the blogs from our old site, For the sake of giving Migrate in Core a workout with real conditions, however, we’re going to upgrade with core’s Migrate Drupal module rather than rebuilding.</p>
+<p>Migrate in core is pretty exciting!</p>
+<p>It means that we can:</p>
+<ul><li>Migrate content from the old site</li>
+<li>Build new functionality on the new site</li>
+<li>Continue to migrate content from the D6 site to the D8 site periodically</li>
+<li>Keep the sites side-by-side until we’re ready to make the new one live</li>
+<li>Publish</li>
+</ul><p>Conceptually, then, the Migrate Drupal module is different than past major version upgrades. There’s no more running and rerunning the monolithic update.php! It means you need two databases, the D6 database and the D8 database.</p>
+<p>There’s a lot of documentation on running Migrations available on Drupal.org. Here are some key entry points:</p>
+<ul><li><a href="https://www.drupal.org/upgrade/migrate">Upgrading from Drupal 6 or 7 to Drupal 8</a></li>
+<li><a href="https://www.drupal.org/node/2257723">Executing a Drupal 8 migration</a>. This is part of the API handbook and is more developer-focused.</li>
+<li><a href="https://www.drupal.org/node/2167633">Known issues with the Drupal 6 -&gt; 8 migrate path</a></li>
+</ul><p>What follows is my specific journey and you should return to the main documentation when upgrading your own site.</p>
+<h2>Get the D8 Compatible Version of Drush</h2>
+<p>Full documentation for Drush is available at <a href="//docs.drush.org/en/master/install/#composer-one-drush-for-all-projects">Read the Docs</a>. My directions below are slightly different than the recommended install as I prefer to keep my source files in /usr/local/src, not a user home directory.</p>
+<ol><li>Install Composer globally (if you haven’t already).</li>
+<li>Install Drush 7.x (dev) which is required for Drupal 8:<br /><pre>
+$ sudo mkdir /usr/local/src/drush    // create the directory if it doesn't exist
+$ cd /usr/local/src/drush
+$ sudo composer require drush/drush:dev-master
+$ sudo ln -s /usr/local/src/drush/vendor/drush/drush/drush /usr/local/bin/drush
+$ sudo drush      // one time only with root privileges
+</pre></li>
+</ol><h2>Prepare the D6 Site</h2>
+<h3>Uninstall Disabled Modules</h3>
+<p>Although access to the legacy site is read-only, it’s not recommended that you run migrations against a production site, so I work from my local development copy with a fresh copy of the prod database.</p>
+<p>The only real preparation necessary is uninstalling unused modules. Migrate will try to migrate all the content in the database, including things related to disabled modules.</p>
+<p>The command  <span class="geshifilter"><code class="php geshifilter-php">drush pm-list --type=Module --status=disabled</code></span> shows me what’s available to uninstall:</p>
+<pre>
+Package          Name                                 Version      
+CCK              Content Copy (content_copy)          6.x-2.9      
+Core - optional  Book (book)                          6.31         
+Core - optional  Forum (forum)                        6.31         
+Core - optional  Poll (poll)                          6.31         
+Core - optional  Search (search)                      6.31         
+</pre><p>
+I’ve uninstalled all of these to eliminate the chance of orphaned data causing an issue with the migration:</p>
+<pre>
+$ drush pm-uninstall book forum poll search content_copy -y
+</pre><h3>Delete Unwanted Content, Especially Spam</h3>
+<p>Many site owners prevent spam from being displayed, but they don’t always delete it. My first try at upgrading was taking a really long time on the comments migration. A quick peek showed me:</p>
+<pre>
+MariaDB [tag1dev]&gt; select count(*), status from comments group by status;
++----------+--------+
+| count(*) | status |
++----------+--------+
+|       57 |    0   |
+|   173851 |    1   |
+|     1024 |    9   |
++----------+--------+
+</pre><p>
+Brief investigation told me that 0 is published, 1 is unpublished and 9 is unapproved. Everything not explicitly published appeared to be spam. I took them out with <span class="geshifilter"><code class="php geshifilter-php">delete from comments where status = 1 or status = 9;</code></span> and sped up the migration considerably.</p>
+<h3>See if There’s Evaluated PHP in the Body of Blocks or Nodes</h3>
+<p>I was reminded of this, too, after running my first migration: There might be PHP in blocks, nodes, or comments that are best found and addressed before upgrading.</p>
+<p>One way to do that is run the <a href="https://www.drupal.org/project/security_review">Security Review</a> module. It’s only partly helpful, though. It will reveal any node with <span class="geshifilter"><code class="php geshifilter-php">&lt;?php</code></span> in it, which, if preceded by a <span class="geshifilter"><code class="php geshifilter-php">&lt;pre&gt;</code></span> tag is not being interpreted. That sort of usage will cause Security Review to report some false positives. Still, there’s a lot of good information, and you may find other problems you’d like to correct either before or after migrating.</p>
+<p>The good news, no untrusted roles were allowed to use the filter. In fact, <em>no</em> roles were. Still, because it was enabled, I did a quick check on blocks and nodes with these snippets from <a href="http://wtanaka.com/node/7801">Wesley Tanaka</a>:</p>
+<pre>
+MariaDB [tag1dev]&gt; select bid, info from boxes where format in (select format from filters where module = 'php' and delta = 0);
+
+MariaDB [tag1dev]&gt; select nid, vid from node_revisions where format in (select format from filters where module = 'php' and delta = 0);
+</pre><p>
+They turned up two blocks as well as the one node I’d already found with Security Review. I removed the php prior to the migration and disabled the php filter since it’s not available for D8 and we wouldn’t want to use it if it were.</p>
+<h2>Prepare the D8 Site</h2>
+<p>I wanted to work with the dev branch of D8, not the beta, because I anticipated finding bugs and didn’t want to spend time troubleshooting a bug in beta that had already been fixed in dev. Note that at this point, there’s no upgrade path from D8 to D8, and I wouldn’t want to work with a Beta or consider this project for production deployment until that exists.</p>
+<p>I added a new site to apache, <em>eight</em>, and updated /etc/hosts accordingly. You’d set up your localhost web server however you’d normally run a second site on your development machine.</p>
+<h3>The Dev branch</h3>
+<p>Since I was working with dev and I might need to submit patches back, I cloned from git. Drupal Core is big, so I just grabbed the development branch for now.</p>
+<pre>
+$ mkdir /var/www/eight
+$ cd /var/www/eight
+$ git clone --branch 8.0.x http://git.drupal.org/project/drupal.git --single-branch
+$ cd drupal
+</pre><p>
+IMPORTANT: From here on out, all commands should be run in the root of your new Drupal 8 site! If you had installed like me, that means all the commands would be run from <span class="geshifilter"><code class="php geshifilter-php">/var/www/eight/drupal</code></span> unless otherwise specified.</p>
+<h3>Install Drupal 8</h3>
+<p>I performed a standard installation following the directions in the <span class="geshifilter"><code class="php geshifilter-php">core/INSTALL.txt</code></span> file.</p>
+<h2>Prepare the Manifest</h2>
+<p>Currently, Drush provides the cleanest way to run a Migration. The Migrate user interface is still under development; you can follow along here: <a href="https://www.drupal.org/project/migrate_upgrade">https://www.drupal.org/project/migrate_upgrade</a>  </p>
+<ol><li>Enable Migrate Drupal and any modules that should be receiving data from your D6 site. I won’t need any contributed modules enabled.<br /><pre>$ drush en migrate_drupal, migrate -y</pre></li>
+<li>Get the latest list of migrations available:<br /><pre>$ drush config-list | grep migrate</pre><p>
+You’ll see output like the following, but more of it.</p>
+<pre>
+migrate.migration.d6_action_settings
+migrate.migration.d6_aggregator_feed
+migrate.migration.d6_aggregator_item
+migrate.migration.d6_aggregator_settings
+</pre><p><strong>IMPORTANT:</strong> If migrate and migrate_drupal are not enabled, you 'll see a message that Migrate is not installed instead.</p>
+</li>
+<li>Make a <span class="geshifilter"><code class="php geshifilter-php">manifest.yml</code></span> file. You can actually call this anything.yml that you want since you’ll be calling it by name when you run the migration. To include each of these individual migrations in the manifest, remove the <span class="geshifilter"><code class="php geshifilter-php">migrate.migration.</code></span> and replace it with a dash followed by a space, so you’ll have <span class="geshifilter"><code class="php geshifilter-php">- d6_action_settings</code></span>, for example. You can use the following to write the manifest file directly:<br /><pre>
+$ drush config-list  | grep migrate | sed -e  's/migrate.migration./- /' &gt; manifest.yml
+</pre></li>
+</ol><p>I like to include all the migrations in the manifest and use a # symbol to comment out migrations I’m not running. For example, I don’t have anything related to aggregator on the D6 site. Migrate would tell me so if I left the aggregator migrations in the file, with a message like:</p>
+<pre>
+Running d6_aggregator_feed                                  [ok]
+Invalid argument supplied for foreach()
+RequirementsException.php:63                           [warning]
+Migration d6_aggregator_feed did not meet the requirements. Missing source provider aggregator                         [error]
+</pre><p>
+I can disable individual migrations by commenting them out with <span class="geshifilter"><code class="php geshifilter-php">#</code></span>, thereby avoiding cluttering its output with warnings. In addition, we’re not using book module, so I disabled it. The top of the manifest file looks like:</p>
+<pre>
+- d6_action_settings                                                        
+#- d6_aggregator_feed                                                      
+#- d6_aggregator_item                                                       
+#- d6_aggregator_settings                                                   
+- d6_block                                                                  
+#- d6_book                                                                 
+#- d6_book_settings                                                        
+- d6_cck_field_revision              
+- d6_cck_field_values
+
+…
+</pre><p>
+NOTE: In addition to unused modules and deleting spam, I also commented out the following to speed up the process:</p>
+<pre>
+# - d6_node_revision
+# - d6_cck_field_revision
+# - d6_term_node_revision
+</pre><p>
+I plan to run all three  of them once I've worked through any issues I encounter.</p>
+        </div>
+  </body>
+</html>
+

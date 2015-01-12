@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 22 Nov 2013 20:04:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 22 Nov 2013 20:04:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Another Drop in the Drupal Sea: WTF: How can I find out what information is available in the node table?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.isaacsonwebdevelopment.com/blog/2013/11/22/wtf-how-can-i-find-out-what-information-available-node-table
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Another Drop in the Drupal Sea: WTF: How can I find out what information is available in the node table?</title>
+    <base href="http://blog.isaacsonwebdevelopment.com/blog/2013/11/22/wtf-how-can-i-find-out-what-information-available-node-table">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>What's that File (layout)?</p>
+<p>There are many different ways to figure out what information the node table contains.</p>
+<ol>
+<li>You could use <code>dsm($node);</code> in an appropriate place in your code, assuming you have the <a href="https://drupal.org/project/devel">Devel module</a> installed.</li>
+<li>You could also use a poor man's version of dsm, a la <code><a href="https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_set_message/7">drupal_set_message</a>('&lt;pre&gt;' . print_r($node, 1) . '&lt;/pre&gt;');</code>.</li>
+</ol><p><a href="http://blog.isaacsonwebdevelopment.com/blog/2013/11/22/wtf-how-can-i-find-out-what-information-available-node-table" target="_blank">read more</a></p>
+  </body>
+</html>
+

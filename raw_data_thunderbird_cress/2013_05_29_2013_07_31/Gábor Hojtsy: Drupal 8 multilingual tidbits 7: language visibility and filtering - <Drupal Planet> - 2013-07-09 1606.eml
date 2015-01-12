@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 09 Jul 2013 15:06:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 09 Jul 2013 15:06:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 7: language visibility and filtering
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-jul-09/drupal-8-multilingual-tidbits-7-language-visibility-and-filtering
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 7: language visibility and filtering</title>
+    <base href="http://hojtsy.hu/blog/2013-jul-09/drupal-8-multilingual-tidbits-7-language-visibility-and-filtering">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>Once you have detailed language information on content, configuration, etc, which is now widely possible in Drupal 8 (see <a href="http://hojtsy.hu/blog/2013-jun-21/drupal-8-multilingual-tidbits-5-almost-limitless-language-assignment">the tidbit on language assignment</a>), you can use this data to pull out content for specific languages.</p>
+<h3>Block visibility</h3>
+<p>One of the great goals of Drupal 8 was to make all special page components including the site name, slogan, menus etc. be blocks. Not all of that is (yet?) complete, however for multilingual sites this would provide great opportunities.</p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8LanguageVisibility.png" /></div>
+<p>A great addition to Drupal 8 core provided by the Language module is block language visibility, available if you have more than one configured language on your website. While prior versions of Drupal provided visibility settings based on user roles, content types, paths, etc. this is now expanded to languages too. Here you can pick specific languages, even multiple of them (applying in an <em>or</em> relation). This is a great tool to swap out language specific content, for example an easy way to have separate menus for separate languages displayed via blocks.</p>
+</div></div></div>
+  </body>
+</html>
+

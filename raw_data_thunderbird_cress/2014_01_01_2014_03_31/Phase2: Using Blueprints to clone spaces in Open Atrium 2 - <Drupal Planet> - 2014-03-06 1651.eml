@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Mar 2014 16:51:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Mar 2014 16:51:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Using Blueprints to clone spaces in Open Atrium 2
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/using-blueprints-to-clone-spaces-in-open-atrium-2/?utm_source=rss&utm_medium=rss&utm_campaign=using-blueprints-to-clone-spaces-in-open-atrium-2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Using Blueprints to clone spaces in Open Atrium 2</title>
+    <base href="http://www.phase2technology.com/blog/using-blueprints-to-clone-spaces-in-open-atrium-2/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=using-blueprints-to-clone-spaces-in-open-atrium-2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><img class="alignright" alt="atrium-logo" src="http://www.phase2technology.com/wp-content/uploads/2013/03/atrium-logo.png" width="300" height="82" />Open Atrium 2 supports many different patterns for your site&#8217;s Information Architecture.  Through the use of <a title="OA2 terminology" href="http://docs.openatrium.com/content/oa2-terminology-privacy-diagram">Spaces, sub-Spaces, and Sections</a> you can easily create a hierarchy of content within your Intranet.  However, it can be tedious to create every new section within every new space.  The new 2.15 release of Open Atrium adds &#8220;Blueprints&#8221; which will allow you to clone an existing space structure and automatically create the necessary sections!</p>
+<h2>Creating a Blueprint</h2>
+<p>To create a Blueprint, simply create a sample space that contains all of the sections and content that you want to bundle.  Let&#8217;s create a Blueprint for a basic &#8220;Project Space&#8221;.  In this example, we want our Project Space to contain an Event Calendar, a Discussion Forum, a Document section, and a Task list.</p>
+<ol>
+<li>Create a new Space called &#8220;Project Blueprint&#8221; and save it as a Draft so other users don&#8217;t see it.</li>
+<li><img class="size-medium wp-image-6674 alignright" alt="OA2_Section_Types-2" src="http://www.phase2technology.com/wp-content/uploads/2014/03/OA2_Section_Types-2-300x147.png" width="300" height="147" />Create each Section: Calendar, Discussions, Documents, Tasks.  In the new 2.15 release you&#8217;ll notice that the &#8220;Create New Section&#8221; action in the drop-down menu on the toolbar allows you to choose which type of section you want to create.</li>
+<li>At this point you can adjust any other settings for the space, such as color scheme, banners, taxonomies, permissions, etc.  You can even create sub-spaces within this Space and create additional Sections within those sub-spaces.  You can also create sample content, such as a Welcome document, or sample discussion forum.</li>
+<li>You can also customize any of the Section or Space landing pages using the &#8220;Customize Layout&#8221; and &#8220;Customize Page&#8221; buttons.  You can place additional widgets on the landing pages, or make any other customizations needed for the Space.</li>
+<li>Once your sample space is set up the way you like, click on the &#8220;gear icon&#8221; in the upper-right portion of the Space landing page and select the &#8220;Create Blueprint from this Space&#8221; option.  You will be taken to a form where you can enter the to name your Blueprint (we&#8217;ll call it &#8220;Project Space&#8221; in this example) and also enter a short description for this Blueprint.  Be sure the &#8220;Clone an existing Space&#8221; checkbox is enabled and that the &#8220;Space to clone&#8221; is set to the &#8220;Project Space&#8221; node you created above.  All of this should be set by default, but it&#8217;s good to verify.  When you are done, click the Save button.</li>
+</ol>
+<p>Viola! You have created your first Space Blueprint!</p>
+<h2>Using a Blueprint to create a new Space</h2>
+<p>Now when you select &#8220;Create New Space&#8221; in the toolbar drop-down menu you&#8217;ll see a choice for the different Blueprints available on your site.  Simply select &#8220;Create new Project Space&#8221; from the menu and you&#8217;ll be taken to a normal Create Space form where you can enter the name of your new project space.  All of the other fields on this page are filled in automatically with the values from the Blueprint.  Change anything you like, then click Publish when you are finished and your Blueprint will be cloned into your new space.</p>
+<p>You will be redirected automatically to your new space landing page.  Click the drop-down menu in the toolbar next to the space name and you will see the Sections for Calendar, Discussions, Documents, Tasks that you created above.  You didn&#8217;t need to create these manually, they were created for you automatically by cloning the Blueprint!</p>
+<p>That&#8217;s really all there is to it&#8230;it&#8217;s simple to use and simple to understand and will save you hours and hours of work.</p>
+<h2>Behind the Scenes</h2>
+<p>How does Open Atrium 2 accomplish this magic?  The Drupal <a title="node_clone" href="http://drupal.org/project/node_clone">node_clone</a> module is being used for the heavy lifting of cloning the actual content nodes, such as spaces and sections.  It provides hooks such as hook_clone_access_alter() that can be used to add custom functionality for specific OA2 plugins.  Beyond that, the new oa_clone submodule handles all of the OA2-specific settings, such as the space and section panelizer layout.  In addition, a new hook_oa_clone_group_metadata() allows submodules to clone any additional space-specific settings, such as the space colors handled by the oa_appearance module.</p>
+<p><img class="alignright size-medium wp-image-6676" alt="OA_Clone_options-2" src="http://www.phase2technology.com/wp-content/uploads/2014/03/OA_Clone_options-2-300x107.png" width="300" height="107" /></p>
+<p>In addition to cloning the nodes and settings, oa_clone creates a new &#8220;Space Blueprint&#8221; vocabulary term (previously called &#8220;Space Type&#8221;) to represent your new Blueprint.  New fields have been added to this vocabulary to indicate an existing space should be cloned when creating spaces using this taxonomy term.  By selecting the &#8220;Clone an existing Space&#8221; option, the panelizer layout is taken from the specified &#8220;Space to clone&#8221; along with all of it&#8217;s structure and content.</p>
+<p>If you don&#8217;t want to clone an existing space you can still create your own Space Blueprint taxonomy term as in the past to point to a specific custom panelizer layout by selecting the &#8220;Specify layout and node types by hand&#8221; option.</p>
+<p>By controlling the cloning process via the &#8220;Space Blueprint&#8221; taxonomy, you can easily integrate other Drupal tools for importing content into this architecture.  For example, imagine you have a list of Projects to be created already saved in a *.csv spreadsheet.  Using the Feeds module you can import that spreadsheet to create a new Space node for each entry.  By simply specifying the Space Blueprint taxonomy term from the spreadsheet, each new space can be created as a clone of existing space structures, building out all of the child pages that are needed for each space quickly and easily.</p>
+<h2>Cloning Content</h2>
+<p>In addition to creating a Blueprint from an existing space, you can also just clone content directly.  On any content page, a &#8220;Clone this content&#8221; option is added to the &#8220;gear&#8221; icon in the upper-right corner of the page for users that have permission to clone content.   You can use this to clone an entire space, sub-space, or section.  You can also use it to clone specific documents, discussion posts, events, or any other content in Open Atrium.  Any &#8220;child&#8221; content is also cloned, such as content with sections, or replies within a discussion topic.</p>
+<h2>Conclusion</h2>
+<p>The ability to create entire Space hierarchies by simply cloning a Blueprint greatly increases the day-to-day usability of Open Atrium 2.  By allowing site admins to create their own Blueprints directly from existing Space examples, rather than filling out complex forms makes it even easier.  Open Atrium 2 was designed to be used as a toolkit for building many different types of collaboration sites, from intranets to project management sites to web portals.  Each OA2 use-case requires a different content structure and set of content-type features.  Blueprints allow you to easy to design your site&#8217;s information architecture and keep it consistent across all of your Spaces.</p>
+<p>(NOTE: The OA 2.15 release still calls the taxonomy &#8220;Space Type&#8221; rather than &#8220;Blueprint&#8221;.  The vocabulary was changed to &#8220;Blueprint&#8221; in the recent -dev version.)</p>
+<p>To get more tips and tricks for getting the most out of Open Atrium, sign up to attend this month&#8217;s <a href="https://www4.gotomeeting.com/register/426589215">Open Atrium webinar!</a></p>
+  </body>
+</html>
+

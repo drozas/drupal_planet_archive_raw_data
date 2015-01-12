@@ -1,0 +1,54 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Nov 2014 17:06:58 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Nov 2014 17:06:58 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: David Stoline: Fake DNS Hosts with Behat with custom behat parameters
+Content-Transfer-Encoding: 8bit
+Content-Base: http://davidstoline.com/fake-dns-hosts-behat-custom-behat-parameters
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>David Stoline: Fake DNS Hosts with Behat with custom behat parameters</title>
+    <base href="http://davidstoline.com/fake-dns-hosts-behat-custom-behat-parameters">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I was recently working on a Drupal project that had some internal DNS managed via hosts file. Tell me about it. Having no publicly accessible DNS or IP creates a challenge when your SaaS based Jenkins runs the tests.</p>
+
+<p>The solution for this is a little custom work in your FeatureContext constructor and a BeforeScenario method.</p>
+
+<p><noscript></noscript><script src="//gist.github.com/unn/eba330ba057772dc1c55.js?file=FeatureContext.php"></script></p>
+
+<p>And a little glue in the behat.yml to pass the custom hostHeader variable to the FeatureContext. Make sure that you're also setting the IP of the server for base_url and you're all set.</p>
+
+<p><noscript></noscript><script src="//gist.github.com/unn/eba330ba057772dc1c55.js?file=behat.yml"></script></p>
+
+<p>You can use this same pattern to pass around other variables from behat.yml to your FeatureContext.</p>
+</div></div></div><section class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above view-mode-rss clearfix">
+
+      <h2 class="field-label">Tags:&nbsp;</h2>
+  
+  <ul class="field-items">
+
+    
+      <li class="field-item even">
+        <a href="/tags/behat" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">behat</a>      </li>
+
+    
+      <li class="field-item odd">
+        <a href="/tags/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet</a>      </li>
+
+    
+      <li class="field-item even">
+        <a href="/tags/code-snippet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Code Snippet</a>      </li>
+
+    
+  </ul>
+
+</section>
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 06 Dec 2014 04:38:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 06 Dec 2014 04:38:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Bits at Web-Dev: Manage Drupal Feature Updates
+Content-Transfer-Encoding: 8bit
+Content-Base: http://web-dev.wirt.us/info/drupal-7-code-snippets/manage-drupal-feature-updates
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Bits at Web-Dev: Manage Drupal Feature Updates</title>
+    <base href="http://web-dev.wirt.us/info/drupal-7-code-snippets/manage-drupal-feature-updates">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>When using <a href="https://www.drupal.org/project/features" target="_blank">Features module</a> to move changes from one  development environment to the next, it can be tricky to track which Feature ought to be 'reverted' in order make the new code be incontrol.  Sure you can revert them all in one shot with `drush <strong>features-revert-all`</strong>, but that is pretty intensive to do especially on a production site and can lead to some race conditions.</p></div></div></div><ul class="links inline"><li class="node-readmore first"><a href="/info/drupal-7-code-snippets/manage-drupal-feature-updates" rel="tag" title="Manage Drupal Feature Updates">Read more<span class="element-invisible"> about Manage Drupal Feature Updates</span></a></li>
+<li class="comment_forbidden last"></li>
+</ul>
+  </body>
+</html>
+

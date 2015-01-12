@@ -1,0 +1,123 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Nov 2014 11:53:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Nov 2014 11:53:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Creating you own API endpoint using Services
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/code-snippet/creating-you-own-api-endpoint-using-services-0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Creating you own API endpoint using Services</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/creating-you-own-api-endpoint-using-services-0">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php">
+/**
+* Implements of hook_services_resources().
+*/
+function mymodule_services_services_resources() {
+  $api = array(
+    'frontpage' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'help' => 'Retrieves front page',
+          'callback' => '_mymodule_services_frontpage_retrieve',
+          'access callback' => 'user_access',
+          'access arguments' => array('access content'),
+          'access arguments append' => FALSE,
+          'args' => array(
+            array(
+              'name' => 'fn',
+              'type' => 'string',
+              'description' => 'Function to perform',
+              'source' => array('path' => '0'),
+              'optional' => TRUE,
+              'default' => '0',
+            ),
+            array(
+              'name' => 'nitems',
+              'type' => 'int',
+              'description' => 'Number of latest items to get',
+              'source' => array('param' => 'nitems'),
+              'optional' => TRUE,
+              'default' => '0',
+            ),
+            array(
+              'name' => 'since',
+              'type' => 'int',
+              'description' => 'Posts from the last number of days',
+              'source' => array('param' => 'since'),
+              'optional' => TRUE,
+              'default' => '0',
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+  return $api;
+}
+
+/**
+* Callback function for blog retrieve
+*/
+function _mymodule_services_frontpage_retrieve($fn, $nitems, $timestamp) {
+  // Check for mad values
+  $nitems = intval($nitems);
+  $timestamp = intval($timestamp);
+  return _mymodule_services_blog_items($nitems, $timestamp);
+}
+
+
+/**
+* Gets frontpage blog posts
+*/
+function _mymodule_services_blog_items($nitems, $timestamp) { 
+  // Compose query
+  $query = db_select('node', 'n');
+  $query->join('node_revision', 'v', '(n.nid = v.nid) AND (n.vid = v.vid)');
+  $query->join('comment', 'c', 'c.nid = n.nid');
+  $query->join('users', 'u', 'n.uid = u.uid');
+  $query->fields('v', array('timestamp', 'title'));
+  $query->addField('u', 'name', 'author');
+  $query->addField('n', 'nid');
+  $query->addField('n', 'title'); 
+  $query->addField('n', 'uid');
+  $query->addField('n', 'created');
+  $query->addField('n', 'changed');
+  $query->addField('u', 'picture');
+  $query->addExpression('COUNT(c.cid)', 'comments');
+  $query->condition('n.type', 'blog', '=');
+  $query->groupBy('n.nid');
+  // How many days ago?
+  if ($timestamp) {
+   $query->condition('v.timestamp', time() - ($timestamp * 60 * 60 * 24), '>');
+  }
+  $query->orderBy('v.timestamp', 'DESC');
+  // Limited by items?
+  if ($nitems) {
+    $query->range(0, $nitems);
+  }
+  $items = $query->execute()->fetchAll();
+  return $items;
+}
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/hookservicesresources" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_services_resources</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/headlessdrupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">headlessdrupal</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/services" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">services</a></li><li class="taxonomy-term-reference-3"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/creating-you-own-api-endpoint-using-services-0"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Creating you own API endpoint using Services">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/code-snippet/creating-you-own-api-endpoint-using-services-0&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/creating-you-own-api-endpoint-using-services-0"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/creating-you-own-api-endpoint-using-services-0" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

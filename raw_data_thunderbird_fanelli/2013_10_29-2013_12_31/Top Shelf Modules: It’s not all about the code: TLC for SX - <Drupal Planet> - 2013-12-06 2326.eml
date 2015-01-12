@@ -1,0 +1,146 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 06 Dec 2013 22:26:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 06 Dec 2013 22:26:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Top Shelf Modules: It’s not all about the code: TLC for SX
+Content-Transfer-Encoding: 8bit
+Content-Base: http://topshelfmodules.com/blog/its-not-all-about-the-code-tlc-for-sx
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Top Shelf Modules: It’s not all about the code: TLC for SX</title>
+    <base href="http://topshelfmodules.com/blog/its-not-all-about-the-code-tlc-for-sx">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-collection-container clearfix"><div class="section field field-name-field-blog-content field-type-field-collection field-label-hidden"><div class="field-items"><div class="field-item odd"><div class="field-collection-view clearfix view-mode-full field-collection-view-final"><div class="entity entity-field-collection-item field-collection-item-field-blog-content clearfix">
+  <div class="content">
+    <div class="section field field-name-field-blog-text field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item odd"><div id="yui_3_13_0_ym1_1_1386368557561_2474">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2028" style="margin-left:27px;">
+<div id="yui_3_13_0_ym1_1_1386368557561_2057">
+<div id="yiv3479053382">
+<div id="yui_3_13_0_ym1_1_1386368557561_2056">
+<div id="yui_3_13_0_ym1_1_1386368557561_2055">
+<div id="yui_3_13_0_ym1_1_1386368557561_2522">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2480"><span id="yui_3_13_0_ym1_1_1386368557561_2479">When I was invited to write about my experience as a “vetted”&nbsp;<a href="http://topshelfmodules.com/" rel="nofollow" target="_blank">TSM</a>&nbsp;module maintainer, I contemplated the obvious topics: best-coding practices,&nbsp;<a href="http://pareview.sh/pareview" rel="nofollow" target="_blank">pareview.sh</a>, handy programming idioms, etc.</span></div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2523">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2527"><span id="yui_3_13_0_ym1_1_1386368557561_2526">But then I thought: is that&nbsp;<strong>all</strong>&nbsp;what releasing a great module is about?</span></div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2528">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2054"><span id="yui_3_13_0_ym1_1_1386368557561_2053"><span id="yui_3_13_0_ym1_1_1386368557561_2052"><span id="yui_3_13_0_ym1_1_1386368557561_2049">And I thought, no, it's not. So I will write about something just as important, but mostly neglected, when it comes to module best practices. After&nbsp;</span></span><a href="http://drupal.org/community-initiatives/drupal-core/usability" rel="nofollow" target="_blank">UX</a>&nbsp;(user) ,&nbsp;</span><a href="https://drupal.org/about/accessibility" rel="nofollow" target="_blank">AX</a>&nbsp;(accessibility),&nbsp;<a href="https://drupal.org/community-initiatives/drupal-core/d8dx" rel="nofollow" target="_blank">DX</a>&nbsp;&amp;&nbsp;<a href="https://drupal.org/search/site/%2523D8CX?f%5B0%5D=ss_meta_type%3Amodule" rel="nofollow" target="_blank"><u>CX</u></a>&nbsp;(developer, contrib) experiences I am today introducing&nbsp;<em><strong>SX</strong></em>.</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2058">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2059">This one’s for piggy in the middle.&nbsp;<span style="line-height: 1.5;">The boy or girl that trawls through the&nbsp;</span><em id="yui_3_13_0_ym1_1_1386368557561_2060" style="line-height: 1.5;">drupal.org/project/*</em><span style="line-height: 1.5;">&nbsp;pages in search for the right modules to give the U’s the best possible X.&nbsp;</span><span style="line-height: 1.5;">The person that had to resort to learning PHP just so they can understand what the hell this module does and how to configure it… as the documentation was once again non-existent or poorly written.&nbsp;</span><span style="line-height: 1.5;">Yep, I’m talking about the undervalued role of&nbsp;</span><strong style="line-height: 1.5;">site-builder</strong><span id="yui_3_13_0_ym1_1_1386368557561_3067" style="line-height: 1.5;"><span id="yui_3_13_0_ym1_1_1386368557561_3066">&nbsp;and about how you, as a hot-shot D(eveloper) can make S's lives a little easier. Don’t forget we’ve all installed and configured other people’s modules, so a little SX (Site-builder eXperience) is welcome to all of us.</span></span></div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_3071">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2069"><span id="yui_3_13_0_ym1_1_1386368557561_2068">Developers who craft modules that are easy to find, easy to understand and easy to configure, i.e. developers that give us great SX, are doing the community a huge service.&nbsp;</span><span style="line-height: 1.5;">Getting it right is only partly about the code.</span></div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2547">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2533"><span id="yui_3_13_0_ym1_1_1386368557561_2532">Let’s take the&nbsp;<span id="yui_3_13_0_ym1_1_1386368557561_2530"><strong id="yui_3_13_0_ym1_1_1386368557561_2529">project page</strong></span><span id="yui_3_13_0_ym1_1_1386368557561_3060"><span id="yui_3_13_0_ym1_1_1386368557561_3059">&nbsp;for starters, i.e.&nbsp;</span></span><em>drupal.org/project/somemoduleortheme</em>.</span></div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2534">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2535"><span id="yui_3_13_0_ym1_1_1386368557561_3077">Dear D with a heart,</span></div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2546">&nbsp;</div>
+
+<ol>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2552">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2551"><span id="yui_3_13_0_ym1_1_1386368557561_2550">Many a project page fails on my number 1 gripe: no clear and concise explanation of what the module does. I won’t name and shame any module in particular, but like you dear reader, we have seen too many.</span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2077">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2076"><span id="yui_3_13_0_ym1_1_1386368557561_2075"><span id="yui_3_13_0_ym1_1_1386368557561_2074"><span id="yui_3_13_0_ym1_1_1386368557561_2071"><span id="yui_3_13_0_ym1_1_1386368557561_2070">Dear D… please don’t make us download the module before we can access the README (you do have one don't you?) You can link directly from your project page to the repository. It’s easy, just follow this&nbsp;</span></span></span><a href="http://drupalcode.org/project/session_cache.git/blob_plain/refs/heads/7.x-1.x:/README.txt" rel="nofollow" target="_blank">URL pattern</a></span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2541">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2540"><span id="yui_3_13_0_ym1_1_1386368557561_2539"><span id="yui_3_13_0_ym1_1_1386368557561_2545"><span id="yui_3_13_0_ym1_1_1386368557561_2544"><span id="yui_3_13_0_ym1_1_1386368557561_2543">A link to a demo site, e.g. the&nbsp;</span></span></span><a href="https://drupal.org/project/leaflet_more_maps" rel="nofollow" target="_blank">Try out a demonstration</a><span id="yui_3_13_0_ym1_1_1386368557561_2538"><span id="yui_3_13_0_ym1_1_1386368557561_2537"><span id="yui_3_13_0_ym1_1_1386368557561_2536">&nbsp;in the RHS bar of the project page would be fantastic. Or, if the module is easy to set up, provide instructions for a taster on&nbsp;</span></span></span><a href="http://simplytest.me/" rel="nofollow" target="_blank"><em>simplytest.me</em></a></span>, ideally with presets downloading any dependent modules. Like&nbsp;<a href="http://simplytest.me/project/geolocation?add[]=views&amp;add[]=ctools&amp;add[]=geolocation_proximity" id="yui_3_13_0_ym1_1_1386368557561_2542" rel="nofollow" target="_blank">this one</a>, taken from the&nbsp;<a href="https://drupal.org/project/geolocation" rel="nofollow" target="_blank">Geolocation Field</a>&nbsp;project page.</div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2086">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2085"><span id="yui_3_13_0_ym1_1_1386368557561_2084"><span id="yui_3_13_0_ym1_1_1386368557561_2083"><span id="yui_3_13_0_ym1_1_1386368557561_2080"><span id="yui_3_13_0_ym1_1_1386368557561_2079">A picture tells a thousand words. Screenshots of the module in action are great! Buttons it creates, output it produces etc. Want to add annotations, highlighting, big red arrows... perfect! Examples:&nbsp;</span></span></span><a href="https://drupal.org/project/comment_notify" rel="nofollow" target="_blank">Comment Notify</a>,&nbsp;</span><a href="http://topshelfmodules.com/project/getdirections" rel="nofollow" target="_blank">GetDirections</a>,&nbsp;<a href="https://drupal.org/project/mixpanel" rel="nofollow" target="_blank">Mixpanel</a>,&nbsp;<a href="https://drupal.org/project/site_audit" rel="nofollow" target="_blank">Site Audit</a>.</div>
+
+	<div>Sometimes screenshots won’t do the module justice or won’t aid in explaining what it does. That doesn’t stop you from using&nbsp;<a href="http://drupal.org/project/filter_harmonizer" rel="nofollow" target="_blank">a helpful image that sticks</a>.</div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2557">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2556"><span id="yui_3_13_0_ym1_1_1386368557561_2555">Add a roadmap statement. What are the short-term and long term plans for the module, if you had hours and funding to spare? Plans for a D8 port?</span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2091">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2090"><span id="yui_3_13_0_ym1_1_1386368557561_2089">In all of this, keep it concise. Your project page should constitute an elevator pitch, not a catholic mass. Move background information to drupal.org documentation pages or the README.</span></div>
+	</li>
+</ol>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2314"><span id="yui_3_13_0_ym1_1_1386368557561_2313">As far as your <strong>code</strong> is concerned, dear D, here are a number of tips for improving SX:</span></div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2559">&nbsp;</div>
+
+<ol>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2567">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2566"><span id="yui_3_13_0_ym1_1_1386368557561_2565"><span id="yui_3_13_0_ym1_1_1386368557561_2564"><span id="yui_3_13_0_ym1_1_1386368557561_2561"><span id="yui_3_13_0_ym1_1_1386368557561_2560">In the .info file refer to the module configuration page, e.g.&nbsp;</span></span><br />
+	<em id="yui_3_13_0_ym1_1_1386368557561_2569"><span id="yui_3_13_0_ym1_1_1386368557561_2568">configure = admin/config/system/mymodulename</span></em></span></span></div>
+
+	<div id="yui_3_13_0_ym1_1_1386368557561_2576"><span id="yui_3_13_0_ym1_1_1386368557561_2575"><span id="yui_3_13_0_ym1_1_1386368557561_2572"><span id="yui_3_13_0_ym1_1_1386368557561_2571">This then automatically shows up as a link on the&nbsp;</span></span><em>admin/modules&nbsp;</em>page. Helpful to newbie site-builders.</span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2581">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2580"><span id="yui_3_13_0_ym1_1_1386368557561_2579">Implement hook_help(). This also produces a link on the module page and lets you put helpful comments at the top of targeted pages, visited by site-builders and punters alike.</span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2321">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2320"><span id="yui_3_13_0_ym1_1_1386368557561_2319"><span id="yui_3_13_0_ym1_1_1386368557561_2316"><span id="yui_3_13_0_ym1_1_1386368557561_2315">Implement hook_enable(). Normally for "very serious" purposes, why not employ this hook to welcome the site-builder with a helpful message upon enabling the module? For instance: "Thank you for using MODULE-X. Installation was successful. Click&nbsp;</span></span><u>here</u><span id="yui_3_13_0_ym1_1_1386368557561_2325"><span id="yui_3_13_0_ym1_1_1386368557561_2324"><span id="yui_3_13_0_ym1_1_1386368557561_2323">&nbsp;to complete configuration." See <a href="http://drupal.org/project/getlocations">Getlocations</a> and <a href="http://drupal.org/project/workflow">Workflow</a> modules</span></span></span></span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2334">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2333"><span id="yui_3_13_0_ym1_1_1386368557561_2332"><span id="yui_3_13_0_ym1_1_1386368557561_2329"><span id="yui_3_13_0_ym1_1_1386368557561_2328"><span id="yui_3_13_0_ym1_1_1386368557561_2327">Implement hook_requirements(). Give the site-builder a module health-check on the&nbsp;</span></span></span><em>admin/status/reports&nbsp;</em><span id="yui_3_13_0_ym1_1_1386368557561_2337"><span id="yui_3_13_0_ym1_1_1386368557561_2336"><span id="yui_3_13_0_ym1_1_1386368557561_2335">page, e.g., whether any required libraries were found, and confirm what versions were loaded.</span></span></span></span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2466">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2465"><span id="yui_3_13_0_ym1_1_1386368557561_2464"><span id="yui_3_13_0_ym1_1_1386368557561_2469"><span id="yui_3_13_0_ym1_1_1386368557561_2468"><span id="yui_3_13_0_ym1_1_1386368557561_2467">The function comment above your hook_update_N() implementation is what will be displayed to the sitebuilder as they run&nbsp;</span></span></span><em id="yui_3_13_0_ym1_1_1386368557561_2461"><span id="yui_3_13_0_ym1_1_1386368557561_2460"><span id="yui_3_13_0_ym1_1_1386368557561_2459">/update.php</span></span></em>. Use wisely.</span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2343">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2342"><span id="yui_3_13_0_ym1_1_1386368557561_2341"><a href="http://drupal.org/project/features" id="yui_3_13_0_ym1_1_1386368557561_2458" rel="nofollow" target="_blank">Features</a>/<a href="http://drupal.org/project/strongarm" rel="nofollow" target="_blank">Strongarm</a>&nbsp;interfaces can make make deployment-process-savvy site-builders go all gooey. And here's the great news. If your module only uses variable_set/variable_get, then as a developer you're done! To make that 100% clear, just mention on your project page that your module has Features support: win-win!</span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2430">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2429"><span id="yui_3_13_0_ym1_1_1386368557561_2428"><span id="yui_3_13_0_ym1_1_1386368557561_2427"><span id="yui_3_13_0_ym1_1_1386368557561_2424"><span id="yui_3_13_0_ym1_1_1386368557561_2423"><span id="yui_3_13_0_ym1_1_1386368557561_2422">Use the Libraries module and .libraries.info files instead of core's hook_library() and drupal_add_library(). The Libraries module also supports so-called variants, so that site-builders can switch between alternatives.&nbsp;</span></span></span></span><a href="http://drupal.org/project/table_trash" rel="nofollow" target="_blank">Code example inside this module</a>.</span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2435">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2434"><span id="yui_3_13_0_ym1_1_1386368557561_2433">Drush interface, if applicable. You know site-builders love Drush. You use it yourself, don’t you?</span></div>
+	</li>
+	<li id="yui_3_13_0_ym1_1_1386368557561_2440">
+	<div id="yui_3_13_0_ym1_1_1386368557561_2439"><span id="yui_3_13_0_ym1_1_1386368557561_2438">hook_uninstall(): clean up after yourself, don't make the site-builder clear out your trash from his db!</span></div>
+	</li>
+</ol>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2441">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2442">What are <em>your</em> tips for improving SX ?</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2443">&nbsp;</div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2445"><strong>Related:</strong></div>
+
+<div id="yui_3_13_0_ym1_1_1386368557561_2446"><span id="yui_3_13_0_ym1_1_1386368557561_2457">“</span><a href="http://2013.badcamp.net/sessions/art-magic-module-selection" rel="nofollow" target="_blank">The Art &amp; Magic of Module Selection</a><span id="yui_3_13_0_ym1_1_1386368557561_2456"><span id="yui_3_13_0_ym1_1_1386368557561_2453"><span id="yui_3_13_0_ym1_1_1386368557561_2452"><span id="yui_3_13_0_ym1_1_1386368557561_2451">”, BADcamp 2013 presentation by Karl Scheier.</span></span></span></span></div>
+
+<div>&nbsp;</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div></div>  </div>
+</div>
+</div></div></div></div></div>
+<div class="field field-name-field-taxonomy field-type-taxonomy-term-reference field-label-above clearfix">
+      <p class="field-label">Send to :&nbsp;</p>
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/tags/drupal-planet">Drupal Planet</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

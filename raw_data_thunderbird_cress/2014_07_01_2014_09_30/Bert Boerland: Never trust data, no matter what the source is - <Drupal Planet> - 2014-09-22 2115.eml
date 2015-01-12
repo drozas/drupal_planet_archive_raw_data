@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 22 Sep 2014 20:15:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 22 Sep 2014 20:15:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bert Boerland: Never trust data, no matter what the source is
+Content-Transfer-Encoding: 8bit
+Content-Base: http://willy.boerland.com/myblog/never_trust_data_no_matter_what_the_source_is
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bert Boerland: Never trust data, no matter what the source is</title>
+    <base href="http://willy.boerland.com/myblog/never_trust_data_no_matter_what_the_source_is">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://www.flickr.com/photos/bertboerland/15319642941" title="xss in the zone boerland.com by bert boerland, on Flickr"><img src="https://farm4.staticflickr.com/3846/15319642941_a710e8f2fc_z.jpg" width="640" height="155" alt="xss in the zoen boerland.com"></a><br />
+Drupal is becoming increasingly a backend CMS. For editers so they can easy manage their content while for example <a href="https://angularjs.org/">AngularJS</a >is delivering the content. Or as a backend hup combining content from multiple sources, databases and systems. </p>
+<p>Drupal evolved towards this from a blog alike system 10 years ago, a content type with user generated comments below. Back then everybody knew that you should filter User Generated Content and stripe the HTML if you cared about the site. Many other systems up to today however do not filter UGC good enough; user signups, search input and many other ways a user can give input ot the system.</p>
+<p>Now Drupal is talking to other systems, combining data from multiple sources, devs still need to understand that one should ***never*** trust input data, no matter if the source is another database or a user.</p>
+<p>Because, what could possibly go wrong with just displaying this data directly or injecting it in the database? Why should you "checkplain" the TXT fields in zone of a domain? <a href="http://mxtoolbox.com/SuperTool.aspx?action=txt%3Aboerland.com&amp;run=toolpage">Why</a>?</p>
+  </body>
+</html>
+

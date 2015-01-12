@@ -1,0 +1,247 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 01 Oct 2013 09:38:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 01 Oct 2013 09:38:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Liran Tal's enginx: Drupal 8 module development #3 - adding a settings page - revision
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.enginx.com/content/drupal-8-module-development-3-adding-settings-page-revision
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Liran Tal's enginx: Drupal 8 module development #3 - adding a settings page - revision</title>
+    <base href="http://www.enginx.com/content/drupal-8-module-development-3-adding-settings-page-revision">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><em><strong>This is the 3rd of several on-going blog post series which aim to educate on the process of porting modules to Drupal 8 with real life examples by porting a popular Drupal 7 module to Drupal 8.</strong></em></p>
+<p><img alt="" src="http://icons.iconarchive.com/icons/harwen/pleasant/256/Settings-icon.png" style="float:left; height:120px; width:120px" /></p>
+<p><span style="font-size:12.727272033691406px">In the <a href="http://www.enginx.com/content/drupal-8-module-development-3-adding-settings-page">previous article</a> we introduced the configuration system and showed how to create a settings form, integrate with the configuration management system and enable our module to save it's configuration data using this system.</span></p>
+<p>As things <a href="https://drupal.org/list-changes">still change</a> pretty quickly in the Drupal 8 arena some of the items in the previous post are not valid anymore so while I've updated the code for our <a href="https://drupal.org/project/globalredirect">Global Redirect module</a> on drupal/git, I wanted to post the revised and full and up-to-date (for now :)) version of the settings form:</p>
+<p> </p>
+<pre class="brush: php">
+/**
+ * @file
+ * This is the GlobalRedirect admin include which provides an interface to global redirect to change some of the default settings
+ * Contains \Drupal\globalredirect\Form\GlobalredirectSettingsForm.
+ */
+
+namespace Drupal\globalredirect\Form;
+
+use Drupal\Core\Form\ConfigFormBase;
+
+/**
+ * Defines a form to configure module settings.
+ */
+class GlobalredirectSettingsForm extends ConfigFormBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFormID() {
+    return 'globalredirect_settings';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildForm(array $form, array &amp;$form_state) {
+
+  	// Get all settings
+  	$config = $this-&gt;config('globalredirect.settings');
+  	$settings = $config-&gt;get();
+
+    $form['settings'] = array(
+    	'#tree' =&gt; TRUE,
+  	);
+
+  	$form['settings']['deslash'] = array(
+  		'#type' =&gt; 'checkbox',
+  		'#title' =&gt; $this-&gt;t('Deslash'),
+  		'#description' =&gt; $this-&gt;t('If enabled, this option will remove the trailing slash from requests. This stops requests such as <code>example.com/node/1/</code> failing to match the corresponding alias and can cause duplicate content. On the other hand, if you require certain requests to have a trailing slash, this feature can cause problems so may need to be disabled.'),
+  		'#default_value' =&gt; $settings['deslash'],
+  	);
+
+	  $form['settings']['nonclean_to_clean'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Non-clean to Clean'),
+	    '#description' =&gt; $this-&gt;t('If enabled, this option will redirect from non-clean to clean URL (if Clean URL\'s are enabled). This will stop, for example, node 1  existing on both <code>example.com/node/1</code> AND <code>example.com?q=node/1</code>.'),
+	    '#default_value' =&gt; $settings['nonclean_to_clean'],
+	  );
+
+	  $form['settings']['trailing_zero'] = array(
+	    '#type' =&gt; 'radios',
+	    '#title' =&gt; $this-&gt;t('Remove Trailing Zero Argument'),
+	    '#description' =&gt; $this-&gt;t('If enabled, any instance of "/0" will be trimmed from the right of the URL. This stops duplicate pages such as "taxonomy/term/1" and "taxonomy/term/1/0" where 0 is the default depth. There is an option of limiting this feature to taxonomy term pages ONLY or allowing it to effect any page. <strong>By default this feature is disabled to avoid any unexpected behavior. Also of note, the trailing /0 "depth modifier" was removed from Drupal 7.</strong>'),
+	    '#options' =&gt; array(
+	      0 =&gt; $this-&gt;t('Disabled'),
+	      1 =&gt; $this-&gt;t('Enabled for all pages'),
+	      2 =&gt; $this-&gt;t('Enabled for taxonomy term pages only'),
+	    ),
+	    '#default_value' =&gt; $settings['trailing_zero'],
+	  );
+
+	  $form['settings']['menu_check'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Menu Access Checking'),
+	    '#description' =&gt; $this-&gt;t('If enabled, the module will check the user has access to the page before redirecting. This helps to stop redirection on protected pages and avoids giving away <em>secret</em> URL\'s. <strong>By default this feature is disabled to avoid any unexpected behavior</strong>'),
+	    '#default_value' =&gt; $settings['menu_check'],
+	  );
+
+	  $form['settings']['case_sensitive_urls'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Case Sensitive URL Checking'),
+	    '#description' =&gt; $this-&gt;t('If enabled, the module will compare the current URL to the alias stored in the system. If there are any differences in case then the user will be redirected to the correct URL.'),
+	    '#default_value' =&gt; $settings['case_sensitive_urls'],
+	  );
+
+
+	  $form['settings']['language_redirect'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Language Path Checking'),
+	    '#description' =&gt; $this-&gt;t('If enabled, the module will check that the page being viewed matches the language in the URL or the system default. For example, viewing a French node while the site is in English will cause a redirect to the English node.'),
+	    '#default_value' =&gt; $settings['language_redirect'],
+	  );
+
+
+	  $form['settings']['canonical'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Add Canonical Link'),
+	    '#description' =&gt; $this-&gt;t('If enabled, will add a <a href="!canonical">canonical link</a> to each page.', array('!canonical' =&gt; '<a href="http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html">http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonica...</a>')),
+	    '#default_value' =&gt; $settings['canonical'],
+	  );
+
+
+	  $form['settings']['content_location_header'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Set Content Location Header'),
+	    '#description' =&gt; $this-&gt;t('If enabled, will add a <a href="!canonical">Content-Location</a> header.', array('!canonical' =&gt; '<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.14">http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.14</a>')),
+	    '#default_value' =&gt; $settings['content_location_header'],
+	  );
+
+
+	  $form['settings']['term_path_handler'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Taxonomy Term Path Handler'),
+	    '#description' =&gt; $this-&gt;t('If enabled, any request to a taxonomy/term/[tid] page will check that the correct path is being used for the term\'s vocabulary.'),
+	    '#default_value' =&gt; $settings['term_path_handler'],
+	  );
+
+	  $form['settings']['frontpage_redirect'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Frontpage Redirect Handler'),
+	    '#description' =&gt; $this-&gt;t('If enabled, any request to the frontpage path will redirect to the site root.<br />
+	                         Whatever you set as the path of the front page on the !link settings page will redirect to the site root (e.g. "node" or "node/1" and also its alias (e.g. in case you have set "node/1" as your home page but that page also has an alias "home")).', array(
+	      '!link' =&gt; l($this-&gt;t('Site Information'), 'admin/settings/site-information'),
+	    )),
+	    '#default_value' =&gt; $settings['frontpage_redirect'],
+	  );
+
+	  $form['settings']['ignore_admin_path'] = array(
+	    '#type' =&gt; 'checkbox',
+	    '#title' =&gt; $this-&gt;t('Ignore Admin Path'),
+	    '#description' =&gt; $this-&gt;t('If enabled, any request to the admin section of the site will be ignored by Global Redirect.<br />
+	                         This is useful if you are experiencing problems with Global Redirect and want to protect the admin section of your website. NOTE: This may not be desirable if you are using path aliases for certain admin URLs.'),
+	    '#default_value' =&gt; $settings['ignore_admin_path'],
+	  );
+
+	  $form['buttons']['reset'] = array(
+	    '#type' =&gt; 'submit',
+	    '#submit' =&gt; array(array($this, 'submitResetDefaults')),
+	    '#value' =&gt; t('Reset to defaults'),
+	  );
+
+    return parent::buildForm($form, $form_state);
+  }
+
+  /**
+   * Compares the submitted settings to the defaults and unsets any that are equal. This was we only store overrides.
+   */
+  public function submitForm(array &amp;$form, array &amp;$form_state) {
+
+  	// Get config factory
+  	$config = $this-&gt;configFactory-&gt;get('globalredirect.settings');
+
+  	$form_values = $form_state['values']['settings'];
+
+    $config
+      -&gt;set('deslash', $form_values['deslash'])
+      -&gt;set('nonclean_to_clean', $form_values['nonclean_to_clean'])
+      -&gt;set('trailing_zero', $form_values['trailing_zero'])
+      -&gt;set('menu_check', $form_values['menu_check'])
+      -&gt;set('case_sensitive_urls', $form_values['case_sensitive_urls'])
+      -&gt;set('language_redirect', $form_values['language_redirect'])
+      -&gt;set('canonical', $form_values['canonical'])
+      -&gt;set('content_location_header', $form_values['content_location_header'])
+      -&gt;set('term_path_handler', $form_values['term_path_handler'])
+      -&gt;set('frontpage_redirect', $form_values['frontpage_redirect'])
+      -&gt;set('ignore_admin_path', $form_values['ignore_admin_path'])
+      -&gt;save();
+
+    parent::submitForm($form, $form_state);
+
+  }
+
+
+
+  /**
+   * Clears the caches.
+   */
+  public function submitResetDefaults(array &amp;$form, array &amp;$form_state) {
+  	$config = $this-&gt;configFactory-&gt;get('globalredirect.settings');
+
+    // Get config factory
+  	$settingsDefault = $this-&gt;getDefaultSettings();
+
+    $config
+      -&gt;set('deslash', $settingsDefault['deslash'])
+      -&gt;set('nonclean_to_clean', $settingsDefault['nonclean_to_clean'])
+      -&gt;set('trailing_zero', $settingsDefault['trailing_zero'])
+      -&gt;set('menu_check', $settingsDefault['menu_check'])
+      -&gt;set('case_sensitive_urls', $settingsDefault['case_sensitive_urls'])
+      -&gt;set('language_redirect', $settingsDefault['language_redirect'])
+      -&gt;set('canonical', $settingsDefault['canonical'])
+      -&gt;set('content_location_header', $settingsDefault['content_location_header'])
+      -&gt;set('term_path_handler', $settingsDefault['term_path_handler'])
+      -&gt;set('frontpage_redirect', $settingsDefault['frontpage_redirect'])
+      -&gt;set('ignore_admin_path', $settingsDefault['ignore_admin_path'])
+      -&gt;save();
+
+    parent::submitForm($form, $form_state);
+
+  }
+
+
+  /**
+   * Returns an associative array of default settings
+   * @return array
+   */
+  public function getDefaultSettings() {
+
+    $defaults = array(
+      'deslash' =&gt; 1,
+      'nonclean_to_clean' =&gt; 1,
+      'trailing_zero' =&gt; 0,
+      'menu_check' =&gt; 0,
+      'case_sensitive_urls' =&gt; 1,
+      'language_redirect' =&gt; 0,
+      'canonical' =&gt; 0,
+      'content_location_header' =&gt; 0,
+      'term_path_handler' =&gt; 1,
+      'frontpage_redirect' =&gt; 1,
+      'ignore_admin_path' =&gt; 1,
+    );
+
+    return $defaults;
+
+  }
+
+}
+</pre><p> </p>
+<p><span style="font-size:13px">With credits and t</span><span style="font-size:13px">hanks to </span><a href="https://twitter.com/matthewtift" style="font-size: 13px; line-height: 20px;">Matt</a><span style="font-size:13px"> </span><span style="font-size:13px">who pointed this out and was generous enough to comment on the previous blog and update me on this change.</span></p>
+</div></div></div><!-- google_ad_section_end --><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal8" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal8</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal-planet</a></div></div></div>
+  </body>
+</html>
+

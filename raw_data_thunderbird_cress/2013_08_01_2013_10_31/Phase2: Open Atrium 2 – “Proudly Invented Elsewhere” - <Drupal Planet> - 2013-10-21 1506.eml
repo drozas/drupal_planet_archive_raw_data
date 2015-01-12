@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Oct 2013 14:06:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Oct 2013 14:06:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Open Atrium 2 – “Proudly Invented Elsewhere”
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/open-atrium-2-proudly-invented-elsewhere/?utm_source=rss&utm_medium=rss&utm_campaign=open-atrium-2-proudly-invented-elsewhere
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Open Atrium 2 – “Proudly Invented Elsewhere”</title>
+    <base href="http://www.phase2technology.com/blog/open-atrium-2-proudly-invented-elsewhere/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=open-atrium-2-proudly-invented-elsewhere">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Last year at BADcamp 2012, <a href="https://drupal.org/user/24967">webchick</a> gave a <a href="http://2012.badcamp.net/program/sessions/drupal-8-what-you-need-know">session on Drupal 8</a> and used the phrase &#8220;Proudly invented elsewhere&#8221; when describing its Symfony foundations.  At the time, I was in the middle of <a href="https://community.openatrium.com/dev/node/4412">architecting the new 2.0 version</a> of <a href="http://openatrium.com">Open Atrium</a> (OA2) and I thought this quote was a great representation of our philosophy of building OA2 using the best available solutions.</p>
+<p>The greatest strength of Drupal is its community.  Not just the thousands of modules that are available, but the thousands of people who pour their energy into developing and supporting these modules.  Building a successful Drupal distribution is all about choosing the right modules while balancing this with custom code to better integrate the modules together.</p>
+<p>When building Open Atrium 2, we didn&#8217;t want to spend time &#8220;re-inventing the wheel&#8221;.  OA2 needed a rich and customizable content layout system.  Rather than just using Panels directly, we looked at other Distributions and chose <a href="http://drupal.org/project/panopoly">Panopoly</a> as our base.  Panopoly provided not only a well integrated set of Panels modules, but also a nice WYSIWYG, improved content editor experience, integrated search, and many other features.  By using Panopoly we were able to focus our Phase2 resources on specific Open Atrium core modules.</p>
+<p>When we built the Event Management plugin for OA2, we looked at the best available current solutions for events, calendars, and location awareness.  Rather than just using the typical Calendar and Location modules, we modernized OA2 by using <a href="http://drupal.org/project/fullcalendar">FullCalendar</a> and <a href="http://drupal.org/project/geofield">GeoField</a>/<a href="http://drupal.org/project/geocoder">GeoCoder</a>.  For a responsive mobile theme that was Panels and Panopoly-aware, we choose <a href="http://drupal.org/project/radix">Radix</a>, which is based upon the popular <a href="http://getbootstrap.com/">Bootstrap</a> CSS framework.  For a CaseTracker replacement, we looked to the community and adopted the new <a href="http://drupal.org/project/oa_worktracker">Work Tracker</a> module (sponsored by Bucket Brigade).  We even incorporated some of the <a href="http://www.phase2technology.com/blog/content-editing-goodies-in-open-atrium-2/">content editor usability improvements</a> planned for Drupal 8.</p>
+<h3 style="text-align: center;">Here is a tag-cloud representing all of the modules being used in Open Atrium 2.<a href="http://www.phase2technology.com/wp-content/uploads/2013/10/OA2-modules-cloud.png"><img class="aligncenter size-full wp-image-5658" alt="OA2 modules cloud" src="http://www.phase2technology.com/wp-content/uploads/2013/10/OA2-modules-cloud.png" width="815" height="442" /></a><a href="http://www.phase2technology.com/wp-content/uploads/2013/10/OA2-modules-cloud.png"><br />
+</a></h3>
+<p>The size of the tag roughly represents the number of commits made to the current branch of the module on drupal.org.  You&#8217;ll see that Open Atrium 2 is a very rich and functional distribution built on many of the most popular Drupal modules, but also some lesser-known high quality ones.</p>
+<h3 style="text-align: center;">Behind all of these modules are people.  <a href="http://www.phase2technology.com/wp-content/uploads/2013/10/OA2-people-cloud.png"><img class="aligncenter size-full wp-image-5657" alt="OA2 people cloud" src="http://www.phase2technology.com/wp-content/uploads/2013/10/OA2-people-cloud.png" width="841" height="406" /></a></h3>
+<p>These are the people who have made more than 30 commits to these modules.  These are the people who are giving back to the Drupal community with their time and resources.  The combination of large sponsoring organizations, such as Phase2, along with the vast work of the community is what makes it possible to build a robust distribution such as Open Atrium 2.  The success of these distributions will help lower the barrier-to-entry for new users to Drupal and expand the Drupal user community.</p>
+<p>So a personal thanks from me to everybody on this list.  If you are at <a href="http://2013.badcamp.net/">BADcamp 2013</a> next week, <a href="http://2013.badcamp.net/sessions/extending-open-atrium-2-drupal">come to my session</a> to say &#8220;Hi&#8221; and help celebrate the 2.0 release of Open Atrium 2.  It was with your help that we went from an initial architecture BOF at BadCamp last year to a full release just one year later.</p>
+<p>&nbsp;</p>
+  </body>
+</html>
+

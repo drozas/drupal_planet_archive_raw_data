@@ -1,0 +1,113 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 02 Apr 2014 21:32:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 02 Apr 2014 21:32:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This week-ish in Drupal core: April 2, 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/417273
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This week-ish in Drupal core: April 2, 2014</title>
+    <base href="https://groups.drupal.org/node/417273">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>The past three weeks saw some exciting progress on Drupal 8, in part due to the hard work of everyone who went to <a href="http://szeged2014.drupaldays.org/">DrupalDevDays 2014</a> in Szeged, Hungary. It also saw the release of <a href="https://drupal.org/node/2221163"><code>drupal-8.x-alpha10</code></a>.</p>
+<h3>Drupal Developer Days Szeged</h3>
+<p><a href="http://szeged2014.drupaldays.org/">DevDays Szeged</a> was a landmark for the Drupal 8 release cycle. Participants marveled at how productive and well-organized the event was, and core maintainers commented they'd never seen such momentum in the RTBC queue. During the week-long sprint, 19 beta blocking issues were fixed (with three more RTBC) and <strong>every single missing change record was written</strong>. Outside core, sprinters also made significant progress on everything from the <a href="https://drupal.org/project/search_api">Search API module</a> for Drupal 8 to <a href="https://drupal.org">Drupal.org</a> itself. A robot doll, chocolates, bunny ears, stickers, and Drupal-ified Hungarian folk music also made it the event of the year. (<a href="https://twitter.com/drupaldevdays/status/450950606191341568">Szeged slide show</a>)</p>
+<p><img src="https://groups.drupal.org/files/beta_bunny.jpg" alt="Sprinters at DevDays Szeged wearing bunny ears, in front of colored issue charts." /></p>
+<h3>Alpha 10 released; Alpha 11 due Apr. 23</h3>
+<p><a href="https://drupal.org/node/2221163">Alpha 10</a> was released on March 19th, just before Drupal Dev Days. Some notable changes include:</p>
+<ul>
+<li><a href="https://drupal.org/node/2152073">Drupal now requires PHP 5.4.2 or higher.</a></li>
+<li><a href="https://drupal.org/node/340723">modules and installation profiles only require .info.yml files</a></li>
+<li><a href="https://drupal.org/node/1053648">the logo, site name and slogan have been converted from special theme variables into a block</a></li>
+</ul>
+<p>... for the full list of changes, see <a href="https://drupal.org/node/2221163">the alpha 10 release notes</a>.</p>
+<p>These alphas are provided to give you something more stable to work off of than having to chase <code>HEAD</code> every day.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>Core momentum increased again in March, with a new all-time record of 51 criticals fixed over the month. In fact, we've nearly recovered to the level of known technical debt we had as of feature freeze a year ago. :P There's still a long ways to go, so help us focus on the most important issues and on releasing a sound Drupal 8 beta.</p>
+<p><img src="https://groups.drupal.org/files/mar_outstanding_criticals.png" alt="A graph of the outstanding critical issues per month since 2011, showing a steep decline this month." /></p>
+<p>Our steady progress toward that first beta release continues as we divide the outstanding beta blockers into actionable sub-steps. Among March's fixed criticals were over 30 beta blockers, more than half the total, showing the community's tight focus on unblocking this milestone.</p>
+<p><img src="https://groups.drupal.org/files/apr1_beta_progress.png" alt="Graph indicating the numbers of beta blocker, beta target, and change record issues outstanding since Jan. 1 2014." /><br />
+Note that the number of beta target issues (which are issues that would be good to resolve for the beta, but are not critical enough to block it) continues to increase. As we get closer to beta, it's important to also pay attention to these issues, so we'll be highlighting beta targets more in the coming weeks.</p>
+<p>Last week, we fixed 25 critical issues and 24 major issues, and opened 15 criticals and 29 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">118 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">486 major issues</a>.</p>
+<p>16 beta-blocking issues were fixed last week. There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">28 of 142 beta blockers</a> that must be resolved before we can <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">release a Drupal 8 beta</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>.</p>
+<ul>
+<li>At Szeged, we had an important Developer Experience (DX) discussion about Drupal 8's <a href="https://drupal.org/node/2124749">use of request attributes (#2124749)</a> and its impact on frequently used public APIs. To move forward, we need more feedback on the recent discussion (see @effulgentsia's writeup in comment #32).</li>
+<li>For the D8 Menu system, the most critical critical issue is <a href="https://drupal.org/node/2227179">#2227179: Step 2: Wrap the existing logic of accessing menu links into a plugin manager</a>, part of <a href="https://drupal.org/node/2178723">finalizing the API for declaring default menu links</a>. This is <em>the</em> #1 API that contributed modules interact with, since most modules add links to their administration pages, and therefore it's very important to get the developer experience and architecture right. Help review the current patch and the overall proposal.</li>
+<li>In the Configuration system, <a href="https://drupal.org/node/1808248">Add a separate module install/uninstall step to the config import process</a> is the next step to making Configuration synchronization stable and reliable. The patch needs review.</li>
+<li>And, finally, much of the remaining beta-blocking work in the Entity Field API hinges on <a href="https://drupal.org/node/2226197">Introduce StorageFieldDefinitionInterface in the Entity Field API</a>.
+</li>
+</ul>
+<h3>More ways to help</h3>
+<p>Love Drupal and want to help out, but not a coder or unsure where to start? From <a href="https://drupal.org/contributor-tasks/add-steps-to-reproduce">breaking things</a> (for science!), to <a href="https://drupal.org/project/issues/search?projects=&amp;project_issue_followers=&amp;issue_tags_op=%3D&amp;issue_tags=styleguide%2C+design">designing things</a>; from <a href="https://drupal.org/contributor-tasks/write-issue-summary">summarizing issues</a> to  <a href="https://drupal.org/node/700538">writing documentation</a>, there's lots of ways you can contribute! And, <a href="http://drupalmentoring.org/">there are more than 125 mentors</a> willing to help you!</p>
+<p>Our current priority is <a href="https://drupal.org/node/1005304">updating the documentation for Drupal 8</a>. Rich, helpful documentation for Drupal 8 is incredibly important: it's a great way to market Drupal to potential clients, it saves you from writing as much documentation for your existing clients, it empowers new users, site builders, developers, and themers to learn and solve their problems; and, with all the changes that have happened since Drupal 7, it's pretty useful for seasoned Drupal veterans as well!</p>
+<p>The documentation team is working on updating:</p>
+<ul>
+<li>the <a href="http://drupal.org/project/issues/search?status[]=Open&amp;issue_tags=d8docs">Core module handbook</a>,</li>
+<li>the <a href="https://drupal.org/node/1908570">help module's pages</a>, and</li>
+<li><a href="https://drupal.org/node/2148255">the new developer documentation on the api.drupal.org landing page for D8</a>.</li>
+</ul>
+<p>... for more information, visit the <code>#drupal-docs</code> channel <a href="https://drupal.org/irc">on IRC</a> or jump into <a href="http://drupal.org/project/issues/search?status[]=Open&amp;issue_tags=d8docs">the documentation issue queue</a>.</p>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.
+</p>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code>git log --after=2014-03-12 --pretty=oneline</code> (253 commits in total):</p>
+<p>Amazing work on the configuration system's architecture and dependency management, notably:</p>
+<ul>
+<li><a href="https://drupal.org/node/2080823">Issue #2080823</a> by alexpott, swentel, Wim Leers: Create API to discover content or config entities' soft dependencies and use this to present a confirm form on module uninstall.</li>
+<li><a href="https://drupal.org/node/2030073">Issue #2030073</a> by alexpott: Config cannot be imported in order for dependencies.<br />You can now declare dependencies for configuration entities, so you can ensure their dependencies are met before importing them.</li>
+<li><a href="https://drupal.org/node/2219499">Issue #2219499</a> by Berdir, alexpott, Gábor Hojtsy, vijaycs85, swentel: Generalize language config override responsibility.<br />This patch simplifies the way that language-specific overrides work and significantly reduces the amount of code that needs to run on sites with only one language.</li>
+</ul>
+<p>And, we resolved some of the menu/routing issues that had been causing headaches for developers:</p>
+<ul>
+<li><a href="https://drupal.org/node/2178725">Issue #2178725</a> by pwolanin, crowdcg, effulgentsia, Sutharsan: Make all core menu link machine names and the corresponding route names match.</li>
+<li><a href="https://drupal.org/node/2226903">Issue #2226903</a> by pwolanin, dawehner, tvn, martin107, jessebeach: Step 1: Move static menu links to yml files.<br />Now, default menu links are declared the same way as local tasks and local actions. (The next step is to <a href="https://drupal.org/node/2227179">finalize the underlying architecture</a> for this change.)</li>
+<li><a href="https://drupal.org/node/2207893">Issue #2207893</a> by dawehner, pwolanin, jessebeach, Boobaa: Convert menu tree building to a service.<br />This removes a whole bunch of the code in menu.inc, makes the menu-building code unit-testable and decouples it from other subsystems. It also unblocks beta-blocking work on the Menu Link API.</li>
+</ul>
+<p>In the "things that always annoyed you about Drupal" category,</p>
+<ul>
+<li><a href="https://drupal.org/node/318975">Issue #318975</a> by sun, Bojhan, linclark: Remove confirmation page after installation.<br />When the installer is finished, it drops you on the front page of your new site!</li>
+<li><a href="https://drupal.org/node/340723">Issue #340723</a> by ParisLiakos, sun, Berdir, glennpratt, Cottser, swentel, tstoeckler, Xano, tim.plunkett, BassistJimmyJam: Make modules and installation profiles only require .info.yml files.<br />That means no more empty <code>.module</code> and <code>.profile</code> files! <acronym title="Developer Experience">DX</acronym> <acronym title="for the win">FTW</acronym>!</li>
+<li><a href="https://drupal.org/node/2122693">Issue #2122693</a> by jayeshanandani, YesCT, sun, alexpott, BMDan: Installer does not work on a completely empty settings.php.<br />This had been possible in D7.</li>
+</ul>
+<p>Other notable commits:</p>
+<ul>
+<li><a href="https://drupal.org/node/2188613">Issue #2188613</a> by Berdir, Xen, andypost: Rename EntityStorageController to EntityStorage.<br />This 600K patch was added to make it easier to distinguish between Entity storage classes and Routing controllers.</li>
+<li><a href="https://drupal.org/node/2213451">Issue #2213451</a> by andypost, bdone, benjy, penyaskito, chx, claudiu.cristea, damiankloip, gregboggs, InternetDevels, jessehs, jhedstrom, marvil07, mikeryan, pcambra, Xano, YesCT: Update Migrate API in core.<br />This huge update to the migrate API adds support for requirements/dependencies; adds  migrations for passwords, URL aliases and config entities; improves entity, bundle and field support; adds lots of Drupal 6 migrations; allows you to set the MigrateSource and MigrateDestination using annotations; and improves documentation. Awesome work Migrate team!</li>
+<li><a href="https://drupal.org/node/1194136">Issue #1194136</a> by Berdir, damiankloip, Wim Leers: Re-organise core cache bins.<br />This groups cached items by the type of data (e.g.: rendered HTML, data, entity), rather than the type of item (e.g.: node, block, etc.). This will make cache bins for frequently-requested items (like configuration) smaller with less-frequent updates, which makes it easier for query caches. And, it allows you to tune performance by choosing the most-efficient storage engine / storage location for the type of data (for example, putting the configuration cache table in RAM or on an <acronym title="solid state drive">SSD</acronym>).</li>
+<li><a href="https://drupal.org/node/2211553">Issue #2211553</a> by andypost, Berdir: Allow usage of entity_reference field widget and formatter for base fields.<br />Entity reference fields are being used in core, but there had been no way to use it's widget and formatter.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Here are a few notable blog posts about Drupal 8 in the past few weeks:</p>
+<ul>
+<li>Last Call Media explains <a href="https://lastcallmedia.com/drupal-8-lessons-for-developers">the lessons they learned when upgrading their website to Drupal 8</a>.</li>
+<li>Justin Harrell <a href="http://drupalize.me/blog/201404/questionnaire-confirms-designers-arent-clear-how-help-drupal-8">interviews Bojhan Somers and Lisa Rex about making it easier for designers to contribute to Drupal</a></li>
+<li>Drunomics <a href="http://drunomics.com/en/blog/drupal-dev-days-szeged-wrap">wraps-up Drupal Dev Days Szeged</a>.</li>
+<li>Pixelite Magazine posted a tutorial on <a href="http://www.pixelite.co.nz/article/upgrading-php-54-ubuntu-1204-lts-support-drupal-8">Upgrading PHP to 5.4 on Ubuntu 12.04 LTS to support Drupal 8</a></li>
+<li>OSTraining <a href="http://www.ostraining.com/blog/drupal/twig/">introduces Twig and the new, simple Drupal 8 render pipeline</a>.</li>
+<li><a href="https://drupal.org/node/2217905">larowlan</a> starts a series on <a href="http://origin.previousnext.com.au/blog/drupal-8-now-writing-drupal-7-code-eye-towards-drupal-8">Writing Drupal 7 code with an eye towards Drupal 8</a> by explaining <a href="http://origin.previousnext.com.au/blog/drupal-8-now-psr-0-code-drupal-7"> the benefits of writing PSR-0 code in your Drupal 7 modules now</a>.
+</li><li>Jeffrey McGuire <a href="https://www.acquia.com/resources/podcasts/acquia-podcast-129-lukas-smith-drupal-symfony-mutual-benefit">inteviews Lukas Smith, Symfony contributor</a> and <a href="https://www.acquia.com/resources/podcasts/acquia-podcast-130-fabrice-bernhard-symfony2-and-drupal-working-together-working-better">Fabrice Bernhard, co-founder of Theodo (a Symfony SaaS provider)</a> about the benefits of Symfony and Drupal working together on episodes 129 and 130 of the Acquia podcast respectively.</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<p>If you would like to get away from the computer, meet other Drupal users, learn about Drupal 8, and have fun at the same time, you can look forward to:</p>
+<ul>
+<li><a href="http://www.nyccamp.org/">NYC Camp</a> on <strong>April 10-13</strong>: you can get Twig training, there are 13 accepted Drupal 8 sessions, 10 sprints scheduled and there's even a <a href="http://www.nyccamp.org/2014/summit/drupal-core-summit">Core summit</a>!</li>
+<li><a href="https://2014.drupalcamp-frankfurt.de/">DrupalCamp Frankfurt 2014</a> in Frankfurt, Germany on <strong>April 12 and 13</strong>; with 8 proposed Drupal 8 sessions on everything from Twig to the Configuration Management Initiative.</li>
+<li><a href="https://groups.drupal.org/node/416323">Drupal Camp Japan 2014</a> in Kyoto on <strong>April 12</strong>, featuring an introduction to Drupal 8.</li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. If you'd like to volunteer for helping to draft these posts, please <a href="https://drupal.org/node/2220285">follow the steps here</a>!</p>
+  </body>
+</html>
+

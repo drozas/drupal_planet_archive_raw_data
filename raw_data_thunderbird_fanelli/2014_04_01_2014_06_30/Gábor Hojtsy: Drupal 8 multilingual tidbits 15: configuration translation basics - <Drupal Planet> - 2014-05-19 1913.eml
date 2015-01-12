@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 19 May 2014 17:13:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 19 May 2014 17:13:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 15: configuration translation basics
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2014-may-19/drupal-8-multilingual-tidbits-15-configuration-translation-basics
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 15: configuration translation basics</title>
+    <base href="http://hojtsy.hu/blog/2014-may-19/drupal-8-multilingual-tidbits-15-configuration-translation-basics">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>After a long 8 months break in the article series, we are back to talk about configuration translation basics. Why the long break? Well, both the configuration and content system was in heavy development with changes and I did not want to get you content that would be quickly outdated. Hopefully now it is safer to talk about what is going to end up in Drupal 8 for these systems. If not, well, then I’m sorry. We’ll cover configuration first because that is more baked.</p>
+<h3>The Drupal 8 configuration system is a boon for language</h3>
+<p>As I wrote <a href="http://hojtsy.hu/blog/2013-sep-13/drupal-8-multilingual-tidbits-14-intro-content-and-configuration">in the previous article in the series</a>, configuration is now encompassing lots of settings that were variables or used custom settings storage in Drupal 7. The biggest value for non-English and multilingual sites in Drupal 8 of the configuration changes is that now a common system is used to manage your site name, email text settings through to views, field settings, entity form displays, etc. We can introduce language and translation support in a way that modules will need to plan with. It is not just an optional contributed add-on but a core feature.</p>
+</div></div></div>
+  </body>
+</html>
+

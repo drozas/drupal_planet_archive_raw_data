@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 May 2013 22:56:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 May 2013 22:56:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Freelock : A security reminder
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.freelock.com/blog/john-locke/2013-05/security-reminder
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Freelock : A security reminder</title>
+    <base href="http://www.freelock.com/blog/john-locke/2013-05/security-reminder">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="g-plusone-wrapper" style="margin: 0 1em 1em 1em;float:right" ><g:plusone href="http://www.freelock.com/blog/john-locke/2013-05/security-reminder" size="medium" annotation="bubble" width="250" ></g:plusone></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>Yesterday <a href="http://drupal.org">Drupal.org</a> got hacked, and potentially all the password hashes on the site fell into malicious hands. According to the security team's <a href="https://drupal.org/news/130529SecurityUpdate">announcement</a>, the attack was not a result of a Drupal vulnerability, but of other, as yet undisclosed, software on the server.</p>
+<p>Drupal has long had one of the best security track records among open source CMSs. The security team does a great job of tracking down even the smallest exploits, often removing modules that maintainers choose not to fix. The vast majority of fixes and security updates we see are protecting against "privilege escalation" -- vulnerabilities that can only be exploited by users who already have some level of administrative access.</p>
+<p>For example, there was a webform update yesterday to close a hole that allowed somebody who already had permission to create or edit a webform, to gain full administrative access. We use webforms on a huge number of sites, but we have never set up a configuration where we give an untrusted user the power to create or edit webforms. And yet on a large, community driven site, you might want to give some people the ability to create a survey without further access. This kind of strict, detailed review leads to a project that has a high level of security baked in. It's very rare that we see the more dangerous kinds of exploits -- SQL Injection, Cross-site scripting (XSS), or Remote Code Execution.</p>
+<p>This incident highlights that there is more to security than just the software. In this case, something else in the hosting environment provided a weakness that allowed an attacker to break in. What was it? They haven't said, so far, but we can speculate on some possibilities:</p>
+ </div></div></div><div class="field field-name-taxonomy-vocabulary-5 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tag/security">Security</a></div><div class="field-item odd"><a href="/tag/drupal-planet">Drupal Planet</a></div></div></div><div class="field field-name-taxonomy-vocabulary-7 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Industry:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/business">Business</a></div><div class="field-item odd"><a href="/e-commerce-0">E-Commerce</a></div><div class="field-item even"><a href="/software">Software</a></div></div></div><div class="field field-name-taxonomy-vocabulary-6 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Story Type:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/sustainableopen-business">Sustainable/Open Business</a></div></div></div>
+  </body>
+</html>
+

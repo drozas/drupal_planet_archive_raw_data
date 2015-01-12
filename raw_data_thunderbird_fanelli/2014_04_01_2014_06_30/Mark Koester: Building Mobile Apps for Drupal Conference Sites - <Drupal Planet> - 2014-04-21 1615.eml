@@ -1,0 +1,117 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Apr 2014 14:15:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Apr 2014 14:15:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mark Koester: Building Mobile Apps for Drupal Conference Sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://int3c.com/blog/2014/04/building-mobile-apps-drupal-conference-sites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mark Koester: Building Mobile Apps for Drupal Conference Sites</title>
+    <base href="http://int3c.com/blog/2014/04/building-mobile-apps-drupal-conference-sites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://int3c.com/sites/int3c.com/files/styles/large/public/field/image/building-mobile-apps-for-drupal-conference-sites.jpg?itok=L3i1MCD8"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/styles/large/public/field/image/building-mobile-apps-for-drupal-conference-sites.jpg?itok=L3i1MCD8" width="480" height="180" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I'm excited to announce that we've built our first Drupal-powered apps for <a href="https://itunes.apple.com/us/app/gpec-2014/id823604079">iOS</a> and <a href="https://play.google.com/store/apps/details?id=org.sperecycling.gpec2014">Android</a>. The apps are in the Android and Apple marketplace and are helped to improve one association's yearly technical conference.</p>
+
+<p>There are times when apps are overkill and unneeded. Frankly there are already too many apps out there. But as we as a company continue to focus on conference sites, this was an obvious use case where taking the plunge into mobile app development made sense. It’s nearly become standard to have an event app at major conferences around the world.</p>
+
+<p>At events, internet connectivity isn't that reliable and attendees, speakers and organizers are able to navigate the event much easier with the right mobile tool. Conference sites provide more media attention for sponsors and also provide various ways for networking.</p>
+
+<p>In this post, I'd like to discuss our recent work building two mobile apps---one for Apple iOS and another for Google Android. Specifically in this post we’ll look at what we built, and in a future post, we’ll look at how we built these apps using different technologies (Drupal, iOS and Android) as well as some technical and business takeways we gained from this process of integrating a CMS like Drupal with a mobile device.</p>
+
+<p>Let's take a look at what we've built.</p>
+
+<h3>Drupal-Powered Conference Sites</h3>
+
+<p>One of our main focuses over the last several years has been event and conference sites.</p>
+
+<p>Drupal handles content, users and commerce with increasing sophistication and flexiblity. In Drupal 6, we used <a href="http://usecod.org">COD</a> to build club and simple event management systems.  In Drupal 7, we decided to shift away from COD and Ubercart and have been building our own <a href="https://drupal.org/project/panopoly_event">events registration system using Panopoly, Drupal Commerce and Registration</a>.</p>
+
+<p>The first fruit of this work was <a href="http://int3c.com/blog/2013/04/event-registration-site-panopoly-drupal-commerce-registration-and-stripe-drupal-awesome">a romance writers conference</a> that last year took some 150+ orders in the first 10 minutes for signup. This year the same event was even more rapid fire and took <a href="https://www.facebook.com/Int3c/posts/386364044836045">200+ orders in the first 3 minutes after registration opened</a>!</p>
+
+<p>We love building Drupal sites for events so much that we are, in fact, also working on our first alpha release for this platform called <a href="https://drupal.org/project/events">"Events for Drupal"</a>.</p>
+
+<p>Along with that site, this past year we've gotten the chance to test and refine the system on other projects.</p>
+
+<p>Several months ago, <a href="https://sperecycling.org">SPE Environomental Division</a> came to us to overhaul their site to better deal with their yearly event, GPEC (Global Plastics Environmental Conference). Specifically, we cleaned up their legacy content and sessions and built a clean flexible design and layout. We organized their content and products around their yearly event and we empowered them to handle their own ecommmerce needs and registrations.</p>
+
+<p>Along with a full upgrade to handle registration and paid sponsorship, we overhauled their session and awards submissions processes. Potential speakers could submit their abstracts months before the event and admin could manage it from approval to scheduling and room assignment. This allowed them to create <a href="https://sperecycling.org/conference/13/sessions">a dynamic schedule</a> and, most importantly for their app, to make their content available for mobile distribution.</p>
+
+<p>So, with the content exposed via an API, what did we build?</p>
+
+<p><a href="http://int3c.com/sites/int3c.com/files/styles/large/public/sperecycling-ios-preview.jpg"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/styles/large/public/sperecycling-ios-preview.jpg" alt="" style="width: 100%; height: auto;"></a></p>
+
+<h3>What We Built: A Conference App with a Drupal Backend</h3>
+
+<p>To be honest, it's not that uncommon to see conference apps these days. It's one of the easier mobile use cases to build for. (There are even several companies that provide a platform for generating your own apps for events, like Guidebook.)</p>
+
+<p>Most conference or event apps provide the following features: event schedule, session and speaker info, venue maps and various "about" pages as well as perhaps a facebook or twitter feed.</p>
+
+<p>We wanted to have all of this along with one key additional change: it needed to be dynamic. In particularly, we wanted a dynamic "my schedule" functionality; a way that the user could mark sessions they wanted to go to and a dynamic my schedule display. This "marking attendance" needed to be available and synced on either the site or app. This would then allow the "my schedule" page to be seen on the app, in the site or even in an exportable and printable format.</p>
+
+<p>In the Drupal world, there are also several conference apps. There is nearly a new app for each DrupalCon. These apps provide attendees with the schedule and other event info. While these "Drupal" apps are quite helpful, they are in most cases static. The event content (sessions, rooms, speakers, etc) was exported and simply built into a page-by-page functionality. Some do provide data pulls but I didn't see any that went far into the functionality we wanted, like login and “flagging” sessions to attend.</p>
+
+<p>In many cases this static format is enough, but we felt that these apps missed out on providing a more dynamic and interactive experience. In big events with dozens or hundreds of sessions, a conference without a personalized user schedule is not that helpful. Many attendees end up using a paper version for the simple ability to circle and markup the sessions they want to go to.</p>
+
+<p>As such, we took the more dramatic choice to build a dynamic app integrated into the website's backend.</p>
+
+<p>This approach allowed us to provide a way for attendees to download the most up to date session info (meaning you didn't have to wait to download a revised version of the app itself, just the content). Event administrators could change the session info even minutes before the event and users could update and see it.</p>
+
+<p>The method also allowed attendees to create and manage their own schedule. Users could mark sessions they wanted to attend either via the site or one of the apps. They could then view their personalized schedule both before and during the conference. From a user perspective this was a huge success.</p>
+
+<p>From administrative side, since the attendence data was synced with the site, it also gave the event organizers some rough total attendence numbers for different sessions BEFORE the actual start. Sessions that appeared to have higher demand could be moved to bigger rooms accordingly.</p>
+
+<p>Like most conference apps, we also chose to put various bits of static info in the app. As I had to explain to different organizers, you can't just extend an existing site into a mobile app. Unlike a CMS like Drupal, each dynamic app functionality takes longer to develop, so where the content was likely to stay static, we built it into the app as static. As such, we elected to keep our about pages, organizer pages and sponsor lists as embedded content.</p>
+
+<p><a href="http://int3c.com/sites/int3c.com/files/styles/large/public/sperecycling-android-preview.jpg"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/styles/large/public/sperecycling-android-preview.jpg" alt="" style="width: 100%; height: auto;"></a></p>
+
+<h3>Conclusion:</h3>
+
+<p>From a technical perspective, building Mobile Apps with Android and iOS wasn't that easy. It's also not without additional time and cost. Many times a responsive, mobile design is enough since it allows users to have a reasonably good experience on whatever device they use.</p>
+
+<p>From my personal builder and developer perspective, it wasn't quite as hard as I imagined it could have been either. Neither easy nor hard, this approach carried various challenges.</p>
+
+<p>For iOS, we were fortunate to have a preexisting library that made developing an iOS onto of an existing Drupal Site: <a href="github.com/kylebrowning/drupal-ios-sdk">Drupal iOS SDK</a> from Kyle Browning. This library significantly helped in creating our iOS app. Specifically, this library abstracted out several common features like logins, pulling node data, etc as well provided an add-on library for integrating flags.</p>
+
+<p>Like a lot of US-based development, we started with iOS and then built the Android app after. There was no doubt though that we were going to build for both platforms. Unfortunately there wasn’t a preexisting library to use but the basics and structures in the iOS library helped clarify what we needed for the Android version.</p>
+
+<p>In conclusion, mobile apps are the more recent and current tech wave. In some cases mobile apps are superfluous. But for Drupal-powered conference sites, a mobile app can be a good fit to improve the user experience and interaction before, during and after you event.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-conference" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Conference</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/conferences" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">conferences</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/mobile-apps" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">mobile apps</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/ios" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">iOS</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/android" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Android</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-commerce" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Commerce</a></div></div></div><div class="view view-author view-id-author view-display-id-entity_view_1 view-dom-id-f6eef1806d9900875aa4d8cb399ebb1d">
+      
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field views-field-nothing">        <span class="field-content"><div class="author_block">
+  <div class="user_image">
+    <img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/styles/square_thumbnail/public/pictures/picture-2-1395211903.jpg?itok=iqKuC39y" width="180" height="180" alt="" /> 
+  </div>
+ <div class="user_details">
+  <span class="name">Mark  Koester</span>
+  <span class="twitter_handle"><a href="https://twitter.com/markwkoester" target="_blank">@markwkoester</a></span>
+  <span class="job_title">Mark has worked on Drupal since the early days of D6. He is passionate about open source as well as entrepreneurship. When he isn&#039;t building, he enjoys traveling and speaking one of his many foreign languages. </span>
+  <span class="location">Chengdu, China</span>
+ </div>
+</div></span>  </div>  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div> <ul class="links inline"><li class="sharethis first last"><span class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://int3c.com/blog/2014/04/building-mobile-apps-drupal-conference-sites" st_title="Building Mobile Apps for Drupal Conference Sites" class="st_facebook_large" displaytext="facebook"></span>
+<span st_url="http://int3c.com/blog/2014/04/building-mobile-apps-drupal-conference-sites" st_title="Building Mobile Apps for Drupal Conference Sites" class="st_twitter_large" displaytext="twitter"></span>
+<span st_url="http://int3c.com/blog/2014/04/building-mobile-apps-drupal-conference-sites" st_title="Building Mobile Apps for Drupal Conference Sites" class="st_googleplus_large" displaytext="googleplus"></span>
+<span st_url="http://int3c.com/blog/2014/04/building-mobile-apps-drupal-conference-sites" st_title="Building Mobile Apps for Drupal Conference Sites" class="st_email_large" displaytext="email"></span>
+<span st_url="http://int3c.com/blog/2014/04/building-mobile-apps-drupal-conference-sites" st_title="Building Mobile Apps for Drupal Conference Sites" class="st_sharethis_large" displaytext="sharethis"></span>
+<script type='text/javascript'>var switchTo5x=true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({publisher:'dr-8d62520e-c444-86e2-d911-ab27da97627b'});</script></div></span></li></ul>
+  </body>
+</html>
+

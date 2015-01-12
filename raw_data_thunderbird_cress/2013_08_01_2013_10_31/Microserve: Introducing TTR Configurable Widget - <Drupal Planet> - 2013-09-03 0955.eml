@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 03 Sep 2013 08:55:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 03 Sep 2013 08:55:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Microserve: Introducing TTR Configurable Widget
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.microserveltd.co.uk/blogs/drupal-development/ttr-configurable-widget
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Microserve: Introducing TTR Configurable Widget</title>
+    <base href="http://www.microserveltd.co.uk/blogs/drupal-development/ttr-configurable-widget">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p style="margin-bottom: 0.35cm">Microserve is proud to announce the submission of another Drupal contrib module – <a href="https://drupal.org/project/ttr_configurable_widget">TTR Configurable Widget</a>. The module extends upon the Taxonomy Term Reference field by adding further customisable options to use rather than the default ‘Checkboxes’ and ‘Select List’.</p>
+<p style="margin-bottom: 0.35cm"><b>Use Case Scenario</b></p>
+<p style="margin-bottom: 0.35cm">To explain a suitable use case scenario, it would be a good idea to start with our own. We had a design which required us to list a bunch of configurable taxonomy terms in an unusual way, which was dubbed by the designer as ‘The Word Wall’. It was obvious that it was a taxonomy term reference field; however it didn’t appear to be a Select list or Checkboxes. We decided the best route to take was to create a module which adds to the core functionality, and then create any new interfaces as sub-modules.</p>
+<p style="margin-bottom: 0.35cm"><b>How to use </b></p>
+<p style="margin-bottom: 0.35cm">What the module does is adds all the additional configurations - such as ordering and limiting - and then allows the user to choose a new widget type to display the terms. The Module comes pre-packaged with the Word Wall sub-module, however TTR Configurable Widget has been designed in a way which makes it easy for other developers to build their own extensions and contribute them back to the module.</p>
+<p style="margin-bottom: 0.35cm">To get started you need to first download and enable both the TTR Configurable Widget and Wall modules.</p>
+<p style="margin-bottom: 0.35cm"><img alt="" class="media-image" height="161" width="480" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/enable_module.jpg?itok=ODHAxloi" /></p>
+<p style="margin-bottom: 0.35cm">Once that's done you need to configure the fields of a content type to use the widget. To do this navigate to <em>Structure &gt;&gt; Content types &gt;&gt; YOUR-CONTENT-TYPE &gt;&gt; Manage fields.</em></p>
+<p style="margin-bottom: 0.35cm">Then create a new Term reference field and choose TTR Configurable Widget as the Widget. Or if you already have Term reference field that you would like to use <span style="line-height: 1.538em;">TTR Configurable Widget with, simply click on it's currently used widget in the "WIDGET" column then choose</span><span style="line-height: 1.538em;"> </span><span style="line-height: 1.538em;">TTR Configurable Widget in the select list on the next page then continue (you will need to click on "Edit" on return to the Manage Fields page to configure the widget).</span></p>
+<p style="margin-bottom: 0.35cm"><img alt="" class="media-image" height="46" width="480" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/create_field.jpg?itok=fQTAhoCM" /></p>
+<p style="margin-bottom: 0.35cm">On the Edit Field page you will be able to configure the widget through a set of options listed in the "TTR CONFIGURATION SETTINGS" fieldset. Here you can choose the number of terms to display on the form, the order of these terms and the View type which controls how the terms are displayed on the form. For this example we've selected Wordwall as the View type. The Wordwall view also relies on the "Number of values" option in the "FIELD SETTINGS" fieldset to limit the number of choosable terms on the node form. We've set the number of selectable terms to 3.</p>
+<p style="margin-bottom: 0.35cm"><img alt="" class="media-image" height="337" width="480" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/configure_field.jpg?itok=nEvZeRqs" /></p>
+<p style="margin-bottom: 0.35cm">Once the configuration has been saved you will be able to see TTR Configurable Widget in action on the node form. The Wordwall view offers a clear and user-friendly way to select terms. Try it out!</p>
+<p style="margin-bottom: 0.35cm"><img alt="" class="media-image" height="66" style="line-height: 1.538em;" width="480" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/selected_1.jpg?itok=TXRnxR7X" /></p>
+<p style="margin-bottom: 0.35cm"><em>(Maximum number of items selected)</em></p>
+<p style="margin-bottom: 0.35cm"><img alt="" class="media-image" height="66" width="480" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/styles/large/public/selected_2.jpg?itok=fmL79K4A" /></p>
+<p style="margin-bottom: 0.35cm"> </p>
+<p style="margin-bottom: 0.35cm"><b>Adding additional widget interfaces</b></p>
+<p style="margin-bottom: 0.35cm">We would love to hear any ideas for new interfaces to add to the module, just leave us a comment below and we will take it into consideration. If any developers have built anything themselves then feel free to open a ticket in the issue queue and we can get any contributions submitted to the next release.</p>
+<p style="margin-bottom: 0.35cm"> </p>
+<p style="margin-bottom: 0.35cm">See how we use it in one of our own projects below:</p>
+<p style="margin-bottom: 0.35cm"><img alt="" class="media-image" height="491" width="616" typeof="foaf:Image" src="http://www.microserveltd.co.uk/sites/default/files/word-wall-example.jpg" /></p>
+ </div></div></div>
+  </body>
+</html>
+

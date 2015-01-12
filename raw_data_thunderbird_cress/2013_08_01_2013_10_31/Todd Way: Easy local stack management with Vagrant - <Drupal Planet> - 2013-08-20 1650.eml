@@ -1,0 +1,75 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 20 Aug 2013 15:50:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 20 Aug 2013 15:50:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Todd Way: Easy local stack management with Vagrant
+Content-Transfer-Encoding: 8bit
+Content-Base: http://toddway.com/post/58794129376
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Todd Way: Easy local stack management with Vagrant</title>
+    <base href="http://toddway.com/post/58794129376">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I’m using <a href="http://www.vagrantup.com">Vagrant</a> to hand-off complete copies of my local development environment to other members of my team.  This is a great way to lower setup time, isolate dependencies and eliminate inconsistencies.  Frontend developers are able to work against a full local environment without wasting time on backend configuration.  The following describes how Vagrant can make this possible without any additional <a href="http://docs.vagrantup.com/v2/provisioning/">provisioning tools</a>.  Those tools are powerful and offer even more efficiencies, but we’re leaving them out in the interest of simplicity.</p>
+
+<p><!-- more --></p>
+
+<h2>A sample environment</h2>
+
+<p>On my MacBook Pro, I built a VM that runs the entire technology stack for a web application I’m currently working on called Jude.  It’s a <a href="http://virtualbox.org">VirtualBox</a> VM with things like Linux, Apache Web Server, MySQL, PHP, Memcache, APC, Drush, and Apache Solr installed and configured to work together.  The codebase is checked out from a remote SVN code repository to a local directory on my Mac that’s also shared to the VM.  I can use my regular Mac text editor (<a href="http://netbeans.org">NetBeans</a>) to edit code locally, and the changes are immediately available in the running VM.  I can also use the command line (SSH), a database explorer (<a href="http://www.sequelpro.com">Sequel Pro</a>), and a breakpoint debugger (NetBeans) to inspect the running web app.</p>
+
+<p><img src="https://docs.google.com/drawings/d/1PVaPLsQnPE50MaMChk1ceFVk9xsUNMBSd5eGhi4LAiw/pub?w=724&amp;h=585"/></p>
+
+<p>Vagrant, <a href="http://www.opscode.com/chef/">Chef</a>, and the <a href="https://drupal.org/project/vagrant">Drupal Vagrant</a> project made most of this configuration automatic, but manual configuration would have worked just as well.  The point being it doesn&#8217;t matter how the initial VM gets created or what the technology stack is.  It just matters that we set it up once and we want an easy way to copy it to another machine.</p>
+
+<h2>Sample workflow for spinning up a new VM copy</h2>
+
+<h3>Step 1: Package the source VM</h3>
+
+<p>First we need to package up the initial VM from the source machine and make it available for download.  The following command packs up the VirtualBox VM called vagrant_1374870184 and creates a file on the source machine called jude.box.</p>
+
+<pre><code>vagrant package --base vagrant_1374870184 --output jude.box --vagrantfile box.Vagrantfile
+</code></pre>
+
+<p>The box file then needs to be copied to the target machine or uploaded to a publicly accessible URL.</p>
+
+<h3>Step 2: Install the target VM</h3>
+
+<p>On the target machine we need to install <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> and <a href="http://downloads.vagrantup.com/">Vagrant</a>, then open up a terminal window and run the following commands.</p>
+
+<pre><code>mkdir &lt;project-directory&gt;
+cd &lt;project-directory&gt;
+svn co https://path/to/repo/trunk/htdocs public/dev-site.vbox.local/www/
+echo -e '33.33.33.10\tdev-site.vbox.local' | sudo tee -a /etc/hosts
+vagrant init jude https://path/to/file/jude.box
+</code></pre>
+
+<p>The first three lines create the project directory and checkout the codebase from a remote SVN repository.  The <code>public</code> directory in the checkout location is the directory that will be mounted to the VM via NFS.  The <code>dev-site.vbox.local/www</code> directory represents the web root of an Apache vhost on our VM.</p>
+
+<p>Line four adds the site’s domain alias to our local hosts file.  <code>33.33.33.10</code> is the IP address we defined in the Vagrantfile on our source VM and <code>dev-site.vbox.local</code> is the vhost we defined in the source VM&#8217;s Apache conf.</p>
+
+<p>Line five uses the source box file we packaged in the first step to initialize the target VM configuration.  We now have a file called <code>Vagrantfile</code> in our project directory where we could override environment settings if we needed.</p>
+
+<h3>Step 3: Start the target VM</h3>
+
+<p>Now we&#8217;re ready to start up the new VM by running:</p>
+
+<pre><code>vagrant up
+</code></pre>
+
+<p>The first start up may take a few minutes, especially if the box file is remote and has not been downloaded yet. Start ups in the future will be much faster.  Once this is complete we can access our new local copy of Jude at  <a href="http://"><a href="http://dev-site.vbox.local">http://dev-site.vbox.local</a></a>.</p>
+
+<h2>Further possibilities</h2>
+
+<p>At my company, we use a similar technology stack across many of our projects.  Vagrant can be used to manage reusable VM components across all these projects.  In addition to developer workstation installations, these could be used to spin up identical development, testing and production environments.  Say goodbye to &#8220;works on my machine&#8221; bugs.</p>
+
+<p>If you&#8217;re interested in using this approach on your next project and you&#8217;re using Drupal, be sure to check out <a href="https://drupal.org/project/vagrant">Drupal Vagrant</a>.  It made the setup of my initial VM really simple.  The only piece that needed to be manually configured was Apache Solr.</p>
+  </body>
+</html>
+

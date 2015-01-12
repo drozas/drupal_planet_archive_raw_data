@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 18 Jun 2014 19:03:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 18 Jun 2014 19:03:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Code Drop: Writing Custom Mail Backends in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://codedrop.com.au/blog/writing-custom-mail-backends-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Code Drop: Writing Custom Mail Backends in Drupal 8</title>
+    <base href="http://codedrop.com.au/blog/writing-custom-mail-backends-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Writing mail backends is probably something you won't do very often but this <a href="https://drupal.org/node/2191201">change notice</a> caught my eye because I've been maintaining my own mail backend for Drupal 7 that handles mail in Simpletest when you're using <a href="http://drupal.org/project/mimemail">Mime Mail</a>. <span style="font-size: 0.923em; line-height: 1.5em;">Drupal 8 has adopted annotations as a way to describe entities. Blocks, fields, widgets, formatters and more all have their own annotations and now so do mail backends. </span></p>
+<p>Emails sent using Mime Mail come through in a different format and break the Drupal 7 TestingMailSystem. Mime Mail should probably provide its own testing class but previously I wrote my own. Lets take a look at what a port of that class may look like in Drupal 8.</p>
+<p>
+</p></div></div></div>
+  </body>
+</html>
+

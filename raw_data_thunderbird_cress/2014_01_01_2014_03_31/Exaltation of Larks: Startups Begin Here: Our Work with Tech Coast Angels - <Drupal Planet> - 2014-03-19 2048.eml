@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 19 Mar 2014 20:48:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 19 Mar 2014 20:48:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Exaltation of Larks: Startups Begin Here: Our Work with Tech Coast Angels
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.larks.la/case-studies/startups-begin-here-our-work-with-tech-coast-angels
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Exaltation of Larks: Startups Begin Here: Our Work with Tech Coast Angels</title>
+    <base href="https://www.larks.la/case-studies/startups-begin-here-our-work-with-tech-coast-angels">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://www.larks.la/case-studies/startups-begin-here-our-work-with-tech-coast-angels"><img src="https://www.larks.la/sites/all/files/clients/techcoastangels.png" width="225" height="172" hspace="5" alt="Tech Coast Angels" align="right" border="0" /></a> <a href="https://www.techcoastangels.com">Tech Coast Angels</a> (<span class="caps">TCA</span>) is the largest angel investment organization in the United States. With over 300 members throughout Southern California, Tech Coast Angel&#8217;s members have invested over $120 million in over 200 startup companies since their inception in&nbsp;1997.</p>
+<p>Since 2013, Exaltation of Larks has been working with Tech Coast Angels with their online systems, including an extensive Drupal web application that their members use as a deal flow tracker and document management system. Services we’ve provided include support, maintenance, security improvements, performance optimization, and mobile&nbsp;integration.</p>
+<p>The website that Tech Coast Angels uses allows its members to view startup companies&#8217; applications for funding, discuss each company&#8217;s application and collaborate with one another in researching each company, which then helps them make individual decisions on&nbsp;funding.</p>
+<h3><span class="caps">IDENTIFYING</span> <span class="caps">TECH</span> <span class="caps">COAST</span> <span class="caps">ANGELS</span>&#8217;&nbsp;<span class="caps">NEEDS</span></h3>
+<p>Mike Panesis, Chairman of Tech Coast Angels&#8217; Board of Governors, says of the collaboration, &#8220;Tech Coast Angels engaged Exaltation of Larks to perform a security audit on our web site. Exaltation of Larks did a comprehensive analysis, compiled a task list with time estimates and risk assessments, and made recommendations for&nbsp;proceeding.&#8221;</p>
+<p>Exaltation of Larks began this project with a site audit to evaluate the quality and maintainability of the existing Drupal web application and server environment, with a focus on performance optimization and general best&nbsp;practices.</p>
+<p>During the site audit, we found Drupal and several contributed modules had been modified from their original versions, which made feature development and regular maintenance such as updates much more complicated. Many of the modules were out of date and required security updates, and several modules were development versions, which made it difficult to determine whether they needed updating, and if so what version to update them&nbsp;to.</p>
+<p>With a go-ahead from Tech Coast Angels, we then performed a more in-depth review, which unearthed further security and server memory issues. We documented them and helped Tech Coast Angels prioritize which ones to tackle&nbsp;first.</p>
+<p>Tech Coast Angels also enlisted Exaltation of Larks to help them create an iPhone app. This presented an interesting challenge: Tech Coast Angels’ website used Drupal 6, but the <a href="https://drupal.org/project/services">Services module</a>, which provides key data in a format that a smartphone app could read, had been discontinued since its authors and maintainers focused their efforts on versions for Drupal 7 and Drupal&nbsp;8.</p>
+<h3><span class="caps">OUR</span>&nbsp;<span class="caps">SOLUTION</span></h3>
+<p>First, we brought the modified codebase that had outdated versions — and unversioned development releases — back into mainstream Drupal core and contrib&nbsp;releases.</p>
+<p>Next, we worked on the security and server memory issues. There were two types of improvements needed: quick fixes and larger upgrades. Quick fixes included enabling Views caching and turning off unneeded modules on the production server. Among these modules were Locale, Devel, and String&nbsp;Overrides.</p>
+<p>Many of the upgrades had to do with memory usage and resource management. We migrated the website to a current <span class="caps">LAMP</span> environment, which included upgrading MySQL from 5.1 to 5.5, which has many performance and memory management improvements. We adjusted many MySQL cache parameters to improve performance and reconfigured both MySQL and Apache to dramatically reduce memory usage, including configuring Apache to use 25 modules, rather than the 57 that the legacy server had been&nbsp;using.</p>
+<p>All web hosting is provided by Amazon Web Services (<span class="caps">AWS</span>), for which Exaltation of Larks is a delivery partner. Even though we stayed with the same size <span class="caps">AWS</span> instance, we configured the production server to be more efficient using the same hardware resources, so there was plenty of memory capacity in case of traffic spikes. We rebuilt the new <span class="caps">AWS</span> server for optimized <span class="caps">IO</span> operations per second, which added moderate extra costs, but substantially reduced overall system latency. These extra costs were easily offset by purchasing a heavy utilization reserved&nbsp;instance.</p>
+<p>Further configuration improvements allowed us to reduce the memory usage of the staging server so it could run on a smaller, more lower cost instance. The production site went from allocating almost all its memory on the original instance to performing better than the legacy site on a smaller&nbsp;instance.</p>
+<p>Security upgrades included configuring Apache to not have write access to Drupal&#8217;s <span class="caps">PHP</span> files, an important security improvement; adding <span class="caps">SSL</span> and making it mandatory for all connections; implementing a backup strategy that moves backups to Amazon S3; and using MySQL accounts with the least necessary privileges for accessing MySQL&nbsp;databases.</p>
+<p>Finally, we decided to backport the Drupal 7 security fixes and new <span class="caps">REST</span> server features in the Services module to the Drupal 6 version. Working with Tech Coast Angels’ mobile application developer team, we used this backported version of Services to create an <span class="caps">API</span> that exposed the appropriate data to their iPhone app. We plan is to make the Drupal 6 version of Services available to the larger Drupal&nbsp;community.</p>
+<h3><span class="caps">PROJECT</span>&nbsp;<span class="caps">OUTCOME</span></h3>
+<p><span class="dquo">&#8220;</span>We have been very happy with the Larks&#8217; performance,&#8221; Panesis says. &#8220;They are truly Drupal experts, conduct themselves in a professional manner, and treat our website as if it was their&nbsp;own.&#8221; </p>
+<p>In the future, Exaltation of Larks and Tech Coast Angels plan to work together on a site redesign and an upgrade to Drupal 7. We continue to work with Tech Coast Angels on ongoing feature development and provide support and maintenance&nbsp;services.</p>
+<p><a href="https://www.larks.la/case-studies/startups-begin-here-our-work-with-tech-coast-angels" target="_blank">read more</a></p>
+  </body>
+</html>
+

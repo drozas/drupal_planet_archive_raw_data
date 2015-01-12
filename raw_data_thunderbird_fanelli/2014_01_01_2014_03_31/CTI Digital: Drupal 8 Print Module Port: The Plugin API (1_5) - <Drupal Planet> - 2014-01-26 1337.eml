@@ -1,0 +1,169 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 26 Jan 2014 12:37:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 26 Jan 2014 12:37:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CTI Digital: Drupal 8 Print Module Port: The Plugin API (1/5)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.ctidigital.com/blog/development/porting-drupal8-print-module-1
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CTI Digital: Drupal 8 Print Module Port: The Plugin API (1/5)</title>
+    <base href="http://www.ctidigital.com/blog/development/porting-drupal8-print-module-1">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><img src="http://www.ctidigital.com/sites/default/files/field/image/blogimage_0.jpg" /></p>
+<p><span style="line-height: 1.538em;">This post is part of a longer, multipart series as I begin to rearchitect the Print module for Drupal 8. The print module has been in the toolkit of many Drupal developers since its Drupal 4.6 release in 2005. Getting this module ready for a Drupal 8 release seemed like a great time to take stock, and look how this module could be built with all the great new systems in Drupal 8.</span></p>
+<p>In this series of blog posts, I will try to steer clear of explaining the concepts that are covered brilliantly in many other Drupal blog posts, and instead focus on some of the currently less well documented areas of Drupal 8. There are areas that I will skim over, however I will ensure these are areas that have documentation in the Drupal or wider PHP community.</p>
+<p>One of the first unexpected issues I faced is that “print” is a reserved keyword in PHP, which therefore means it can not be used within a namespace. Due to this, in this Drupal 8 port I have renamed the module hardcopy. I feel this name actually better reflects what the Print module does, with its PDF and ePub formats.</p>
+<p>The current state of the code can be found in the <a href="https://drupal.org/sandbox/splatio/2110621">hardcopy sandbox</a>. I suggest you take a look at the code and follow along, as I will only being posting small snippets of the key areas of code in this post. Although the changes in Drupal 8 are starting to stabilise, everything in this post is subject to change when the final version is released.</p>
+<p>One of my favourite advancements in Drupal 8, and something that I think contributed modules will use heavily is the Plugin API. Plugins should be used where you have some functionality that could be implemented in multiple different ways. The closest thing this could be related to in Drupal 7 are Ctools plugins, or *_info() hooks that provide metadata alongside related hooks that provide the functionality. For example, the block module invokes hook_block_info(), hook_block_settings_form() and hook_block_view(). In Drupal 8, the *_info() hook becomes an annotation on the plugin class, and the additional hooks become methods on that class. I believe this is a great improvement, as it keeps the related functions grouped with the metadata in a single class.</p>
+<p>The new architecture for the hardcopy module relies heavily on the plugin system to allow additional formats (e.g. print, PDF, ePub) to be made available by any modules that implement the plugin.</p>
+<p>The plugin API is actually a very simple system and rudimentary plugin types can be built very quickly and easily. They are also very flexible, which means that complex systems can be built from the API as well (for example, entities are defined as plugins). I think it is a credit to the developers that have worked on this API that it is able to cover all the levels of complexity that it does.</p>
+<p>So, how do we define a plugin? The first thing that is required is a plugin manager service, which is a class that implements the PluginManagerInterface. In the hardcopy module we define the class HardcopyFormatPluginManager:</p>
+<pre>
+<code>/**
+ * @file
+ * Contains \Drupal\hardcopy\HardcopyFormatPluginManager.
+ */
+ 
+namespace Drupal\hardcopy;
+ 
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Plugin\DefaultPluginManager;
+ 
+/**
+ * Manages hardcopy format plugins.
+ */
+class HardcopyFormatPluginManager extends DefaultPluginManager {
+ 
+}
+
+</code></pre><p>A plugin manager is responsible for the following:</p>
+<ul><li><strong>Discovery -</strong> Discovering the plugin definitions (the metadata associated with the plugin). Core provides a few different methods for discovering plugins including hook, YAML discovery and the most commonly used method: annotated class discovery. Annotated class discovery is used by defining a namespace subdirectory (the namespace without “Drupal\[module]”) and the fully qualified namespace of the annotation class (more on this below).</li>
+<li><strong>Creation -</strong> A class responsible for instantiating another class is referred to as a factory. The plugin API uses factories to instantiate instances of the plugin classes through a createInstance() method.</li>
+<li><strong>Mapping -</strong> Returns the preconfigured plugin instance appropriate for a particular runtime condition. This allows a plugin manager to return fully configured and instantiated plugins based upon an arbitrarily definable array of options (as opposed to passing a plugin ID as with the createInstance() method).</li>
+</ul><p>Generally the manager proxies any requests to methods on the manager to a specific class for each responsibility.</p>
+<p>The great thing about the plugin API is that for 90% of use cases when using the DefaultPluginManager, only the __construct() method needs to be implemented, calling DefaultPluginManager::__construct() like so:</p>
+<pre>
+<code>class HardcopyFormatPluginManager extends DefaultPluginManager {
+
+  public function __construct(\Traversable $namespaces, ConfigFactory $config) {
+    parent::__construct('Plugin/HardcopyFormat', $namespaces, 'Drupal\hardcopy\Annotation\HardcopyFormat');
+  }
+}
+
+</code></pre><p>The hardcopy plugin manager additionally is responsible for retrieving configuration from the config system and passing this to the plugin during instantiation.</p>
+<pre>
+<code>class HardcopyFormatPluginManager extends DefaultPluginManager {
+
+  protected $config;
+
+  public function __construct(\Traversable $namespaces, ConfigFactory $config) {
+    $this-&gt;config = $config;
+    parent::__construct('Plugin/HardcopyFormat', $namespaces, 'Drupal\hardcopy\Annotation\HardcopyFormat');
+  }
+
+  public function createInstance($plugin_id, array $configuration = array()) {
+    $configuration += (array) $this-&gt;config-&gt;get('hardcopy.format')-&gt;get($plugin_id);
+    return parent::createInstance($plugin_id, $configuration);
+  }
+
+</code></pre><p>This plugin manager uses AnnotatedClassDiscovery for class discovery at the given namespace sub directory, using the given annotation. This annotation is defined in a class, which for plugin annotations should extend Plugin. This class defines the properties that make up this annotation type:</p>
+<pre>
+<code>namespace Drupal\hardcopy\Annotation;
+
+use Drupal\Component\Annotation\Plugin;
+
+class HardcopyFormat extends Plugin {
+
+  public $id;
+
+  public $module;
+
+  public $title;
+
+  public $description = '';
+
+}
+
+</code></pre><p>We have now built the plugin manager, next we need to actually create some plugin classes themselves. Plugin classes are simply PHP classes which implement an interface for that plugin type. This interface ensures that the code calling the plugins knows how to interact with plugins of this type, and can interact in a uniform way with each. Here is an abbreviated version of HardcopyFormatInterface:</p>
+<pre>
+<code>namespace Drupal\hardcopy\Plugin;
+
+use Drupal\Component\Plugin\ConfigurablePluginInterface;
+use Drupal\Core\Plugin\PluginFormInterface;
+
+interface HardcopyFormatInterface extends ConfigurablePluginInterface, PluginFormInterface {
+
+  public function getLabel();
+
+  public function getDescription();
+
+  public function setContent(array $content);
+
+  public function getResponse();
+}
+
+</code></pre><p>You will notice that the HardcopyFormatInterface also extends two other very useful interfaces: ConfigurablePluginInterface and PluginFormInterface. ConfigurablePluginInterface is the standard interface for plugins that use some kind of configuration to change their behaviour. It is often used alongside PluginFormInterface to allow the configuration to be changed from the user interface.</p>
+<p>It is also very common to create a base class for plugins as most plugins of a given type will share some similarities. This is done with an abstract class as can be seen with the HardcopyFormatBase class:</p>
+<pre>
+<code>namespace Drupal\hardcopy\Plugin;
+
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Plugin\PluginBase;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\hardcopy\HardcopyCssIncludeInterface;
+use Drupal\Core\Page\HtmlPage;
+use Drupal\hardcopy\LinkExtractor\LinkExtractorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
+
+abstract class HardcopyFormatBase extends PluginBase implements HardcopyFormatInterface, ContainerFactoryPluginInterface {
+
+  protected $configFactory;
+
+  protected $hardcopyCssInclude;
+
+  protected $linkExtractor;
+
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, ConfigFactory $config_factory,
+         HardcopyCssIncludeInterface $hardcopy_css_include, LinkExtractorInterface $link_extractor) {}
+
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, array $plugin_definition) {}
+
+  public function getLabel() {}
+
+  public function getDescription() {}
+
+  public function defaultConfiguration() {}
+
+  public function getConfiguration() {}
+
+  public function setConfiguration(array $configuration) {}
+
+  public function validateConfigurationForm(array &amp;$form, array &amp;$form_state) {}
+
+  public function setContent(array $content) {}
+
+  public function getResponse() {}
+
+  protected function buildContent() {}
+
+  protected function getOutput() {}
+}
+</code></pre><p>This base class takes care of persisting any plugin configuration into the configuration system and providing some basic boilerplate for the hardcopy formats.</p>
+<p>After putting the plugin manager, plugin interface and plugin base class together we can create as many plugins as may be required. They are all using a common interface so can be swapped in and out within any code making use of the plugins. Other modules can now quickly and consistently provide a hardcopy format by specifying a single class.</p>
+<p>Hopefully this post demonstrates the simplicity and power that the plugin API offers contrib developers in Drupal 8. The plugin API should make modules better organised and more easily extensible in a uniform way. The next post in the series will build on this post and look one of the more advanced features of the plugin API: plugin derivatives.</p>
+<p> </p>
+<h3>About the Author</h3>
+<p><strong>Matt Smith</strong> is a Drupal developer working both on frontend and backend development. Matt has been working with Drupal 8 since March 2013 contributing both to core and contrib. You can find Matt on Drupal.org as <a href="https://drupal.org/user/1012210">splatio</a> or on Twitter as <a href="https://twitter.com/splatio_">@splatio_</a>.</p>
+<p><small>Image courtesy of <a href="http://www.flickr.com/photos/amulligan/370214398/">Adam Mulligan</a></small></p>
+ </div></div></div>
+  </body>
+</html>
+

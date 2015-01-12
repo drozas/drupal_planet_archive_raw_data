@@ -1,0 +1,91 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 12 Jul 2013 18:43:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 12 Jul 2013 18:43:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: An Introduction to Drupal Commerce And A Real World Example
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/an-introduction-to-drupal-commerce-and-a-real-world-example/?utm_source=rss&utm_medium=rss&utm_campaign=an-introduction-to-drupal-commerce-and-a-real-world-example
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: An Introduction to Drupal Commerce And A Real World Example</title>
+    <base href="http://www.phase2technology.com/blog/an-introduction-to-drupal-commerce-and-a-real-world-example/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=an-introduction-to-drupal-commerce-and-a-real-world-example">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://drupal.org/project/Commerce">Drupal Commerce</a> is a powerful set of modules written by <a href="http://commerceguys.com/">Commerce Guys</a>, most notably <a title="Ryan Szrama" href="https://drupal.org/user/49344" target="_blank">Ryan Szrama</a>. It is built on Drupal 7&#8242;s core functionality as well as some contrib modules. This blog post broadly outlines the concepts of Drupal Commerce. You can find more in-depth information in the official documentation at <a title="Drupal Commerce User Guide" href="http://www.drupalcommerce.org/user-guide" target="_blank">drupalcommerce.org</a></p>
+<h1>The Basics</h1>
+<p>Drupal 7 introduced the concept of entities to the open source platform. Entities are field-able objects that serve specific purposes but share common base level functionality. You may already be familiar with some existing entities: nodes, users, taxonomy terms &amp; comments.</p>
+<p style="text-align: center;"><a href="http://www.phase2technology.com/wp-content/uploads/2013/07/mockup_d7_entities.png"><img class="size-full wp-image-4538 aligncenter" alt="mockup_d7_entities" src="http://www.phase2technology.com/wp-content/uploads/2013/07/mockup_d7_entities.png" width="542" height="345" /></a></p>
+<p>Drupal Commerce introduces several new entities to your site: Products, Orders, Line Items, Payment Transactions &amp; Customer Profiles.</p>
+<p style="text-align: center;"><a href="http://www.phase2technology.com/wp-content/uploads/2013/07/mockup_d7_commerce_entities.png"><img class=" wp-image-4539 aligncenter" alt="mockup_d7_commerce_entities" src="http://www.phase2technology.com/wp-content/uploads/2013/07/mockup_d7_commerce_entities.png" width="674" height="455" /></a></p>
+<h2>Products</h2>
+<p>Products represent something you&#8217;re trying to sell, physical or not. It has a title and a price associated with it. To give an end user the ability to place an instance of a product in their cart, you will need to make a product reference on a node page the end user sees.</p>
+<h2>Orders</h2>
+<p>Orders start out as carts. They are a container that holds all of the information given your current shopping experience. It contains line items, which are specific instances of products with options attached. It contains customer information after the order is successful. It also contains any successful and unsuccessful references to payment transactions.</p>
+<h2>Line Items</h2>
+<p>Line Items represent an instance of a product in your cart (or order) with options attached.  For example, if a product were a T-Shirt with the ability to choose a color and a user places a T-Shirt in the cart with the red option chosen, a line item with that specific product reference and options is added to the cart.</p>
+<h2>Payment Transactions</h2>
+<p>Payment Transactions hold all of the detailed financial metadata for every attempt to checkout with line items in the cart.  Payment transactions usually hold the amount paid, timestamps and some payload information from the payment gateway.</p>
+<h1>Payment Gateways</h1>
+<p>There is an undesired cost of resources and labor to store your customers&#8217; payment information. That&#8217;s why most online stores use a payment gateway.  A payment gateway is third party software that you can send transaction information to securely. They process transactions and return information if it succeeds or fails. There are many payment gateways out there like: Paypal, Payflow Pro, Authorize.Net and <a title="Drupal Commerce Payment methods" href="http://www.drupalcommerce.org/extensions/module/payment" target="_blank">much much more!</a></p>
+<p>There&#8217;s even a module for accepting <a title="Drupal Commerce Bitcoin" href="https://drupal.org/project/commerce_bitcoin" target="_blank">bitcoin</a> as payment!</p>
+<h1>Checkout Process</h1>
+<p style="text-align: center;"><a href="http://www.phase2technology.com/wp-content/uploads/2013/07/mockup_checkout.png"><img class=" wp-image-4545 aligncenter" alt="mockup_checkout" src="http://www.phase2technology.com/wp-content/uploads/2013/07/mockup_checkout.png" width="672" height="466" /></a></p>
+<p style="text-align: center;">
+<h3 style="text-align: left;">Here is the checkout process:</h3>
+<ol>
+<li>A user shops around your site and adds things to his cart.</li>
+<li>During the process a user can remove or change the quantity of items.</li>
+<li>Once the user is ready to checkout they enter customer profile information, shipping information if applicable, &amp; payment information.</li>
+<li>A request is made to the payment gateway for the desired amount.</li>
+<li>The payment gateway responds with payment accepted or denied.</li>
+<li>If the payment is accepted the user is brought to a confirmation page and a receipt is emailed to them.</li>
+</ol>
+<p>From here, the order can be managed and updated by the site administrator or other users with proper permissions.</p>
+<h1>Commerce Rules</h1>
+<p>It&#8217;s important to note that the checkout process has rules integrated into it. Rules can be used to calculate tax on a given order or a discount given some pre-existing conditions. Shipping Rules can be put into place to request shipping quotes from 3rd party web services (Like <a title="Fed Ex Web Services" href="http://www.fedex.com/us/web-services/" target="_blank">FedEx</a> or <a title="UPS Web Services" href="https://www.ups.com/upsdeveloperkit" target="_blank">UPS</a>).</p>
+<h1>Shipping &amp; Inventory</h1>
+<p>If you do plan on shipping physical products, you&#8217;ll need to install the <a title="Drupal Commerce Shipping" href="https://drupal.org/project/commerce_shipping" target="_blank">Commerce Shipping</a> module so you can leverage customer shipping profiles. This is important to have when a customer&#8217;s billing profile is different from where they want their purchase to be shipped.</p>
+<p>Inventory (or stock) can be managed with another contrib module: <a title="Drupal Commerce Stock" href="https://drupal.org/project/commerce_stock" target="_blank">Commerce Stock</a>. With this module enabled, you can set the amount of each product and it will decrement the current stock when each successful transaction has gone through.</p>
+<h1>Some Useful Hooks for Developers</h1>
+<p><strong>hook_commerce_checkout_router</strong>: Routes checkout/%commerce_order* to an alternate URL if necessary.</p>
+<p><strong>hook_commerce_checkout_complet</strong>e: Allows other modules you make to perform business logic when an order is complete.</p>
+<p><strong>hook_commerce_checkout_pane_info</strong>: Defines checkout panes available for use on checkout pages.</p>
+<p><strong>hook_commerce_checkout_pane_info_alter</strong>: Alter an existing checkout pane.</p>
+<p><a title="Drupal Commerce Hooks" href="http://api.drupalcommerce.org/api/Drupal%20Commerce/includes!module.inc/group/hooks/DC" target="_blank">There are tons of them!</a></p>
+<h1>Commerce Kickstart</h1>
+<p>If you want to get up and running right away and play with a nice out of the box installation of Drupal Commerce, check out the <a title="Commerce Kickstart" href="https://drupal.org/project/commerce_kickstart" target="_blank">Commerce Kickstart</a> installation profile.</p>
+<h1>A Real World Example</h1>
+<p style="text-align: center;"><a href="http://www.phase2technology.com/wp-content/uploads/2013/07/FINAL_RH_logo_RGB.png"><img class="size-full wp-image-4533 aligncenter" alt="FINAL_RH_logo_RGB" src="http://www.phase2technology.com/wp-content/uploads/2013/07/FINAL_RH_logo_RGB.png" width="432" height="76" /></a></p>
+<p><a title="Robin Hood NYC" onclick="_gaq.push(['_trackpageview', '/internal-links/rhportfolio']);" href="http://www.phase2technology.com/client/robin-hood-foundation/" target="_blank">Robin Hood</a> is a non-profit poverty fighting organization in NYC. In 2011 they invested nearly $146 million to the most effective poverty fighting organizations in NYC. 92% of people who enter Robin Hood funded housing programs don&#8217;t return to shelters. Robin Hood programs increase the chance of getting a GED by 76%. Robin Hood&#8217;s job training programs are twice as effective as others, yielding higher salaries and job retention rates than other city-funded programs.</p>
+<p>In March, Robin Hood started accepting donations utilizing Drupal Commerce. We used the concept of products to create a customized product type called &#8220;donation product.&#8221;  The donation product displays are referred to by nodes called campaigns. A site administrator can set up a campaign and associate one or many different types of donation products, representing different amounts or the desire to have a recurring donation given a certain frequency of time.</p>
+<p>After adding a donation product to their cart, a user is taken to the checkout process where some extra meta-information can be added to your donation, such as being anonymous or making the donation in honor of someone. All of these extra options are stored in fields kept in custom line items called &#8220;donation line items.&#8221;</p>
+<p>The donor inputs payment information and upon success is taken to a confirmation page and emailed a receipt for tax purposes.</p>
+<p>All of this was made possible by the flexibility of entities and the vast amount of hooks we were able to implement to customize the checkout process.</p>
+<h1>Go Further!</h1>
+<p>In conclusion, Drupal Commerce is a nice suite of modules built with lessons learned from the past in mind. I hope this inspires you to open up your own web store or non-profit using Drupal! Here&#8217;s a list of useful resources that I find helpful and will help you delve deeper into the world of Drupal Commerce!</p>
+<ul>
+<li><a title="Drupal Commerce" href="https://drupal.org/project/commerce" target="_blank">Drupal Commerce</a></li>
+<li><a title="Drupal Commerce User guide" href="http://www.drupalcommerce.org/user-guide" target="_blank">Drupal Commerce User Guide</a></li>
+<li><a title="Drupal Commerce Hooks" href="http://api.drupalcommerce.org/api/Drupal%20Commerce/includes!module.inc/group/hooks/DC" target="_blank">Drupal Commerce Hooks for developers</a></li>
+<li><a title="Drupal Commerce demo site" href="http://demo.commerceguys.com/ck/" target="_blank">Drupal Commerce Demo Site</a></li>
+<li><a title="Drupal Commerce Features" href="https://drupal.org/project/commerce_features" target="_blank">Commerce Features</a></li>
+<li><a title="Drupal Commerce Extra" href="https://drupal.org/project/commerce_extra" target="_blank">Commerce Extra</a></li>
+<li><a title="Drupal Commerce Shipping" href="https://drupal.org/project/commerce_shipping" target="_blank">Commerce Shipping</a></li>
+<li><a title="Drupal Commerce Stock" href="https://drupal.org/project/commerce_stock" target="_blank">Commerce Stock</a></li>
+<li><a title="Commerce Addressbook" href="https://drupal.org/project/commerce_addressbook" target="_blank">Commerce Addressbook</a></li>
+<li><a title="Commerce Reporting" href="https://drupal.org/project/commerce_reports" target="_blank">Commerce Reporting</a></li>
+<li><a title="Drupal Commerce Paypal" href="https://drupal.org/project/commerce_paypal" target="_blank">Commerce Paypal</a></li>
+<li><a title="Drupal Commerce Payflow Pro" href="https://drupal.org/project/commerce_payflow_pro" target="_blank">Commerce Payflow Pro</a></li>
+<li><a title="Drupal Commerce Authorize.Net" href="https://drupal.org/project/commerce_authnet" target="_blank">Commerce Authorize.Net</a></li>
+<li><a title="Drupal Commerce Bitcoin" href="https://drupal.org/project/commerce_bitcoin" target="_blank">Commerce Bitcoin</a></li>
+<li><a title="Drupal commerce payment methods" href="http://www.drupalcommerce.org/extensions/module/payment" target="_blank">Commerce Payment methods</a></li>
+</ul>
+<p>If you are in the New York area, you can learn more about Drupal Commerce in my <a onclick="_gaq.push(['_trackpageview', '/outbound-links/jrsession']);" href="http://nyccamp.org/intro-drupal-commerce-real-world-examples">NYCCamp session</a> on July 13th!  Hope to see you there!</p>
+  </body>
+</html>
+

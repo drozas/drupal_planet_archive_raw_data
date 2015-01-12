@@ -1,0 +1,73 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Jun 2013 08:51:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Jun 2013 08:51:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Code Enigma: Connecting your Drupal site to an LDAP server
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.codeenigma.com/blog/connecting-your-drupal-site-ldap-server
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Code Enigma: Connecting your Drupal site to an LDAP server</title>
+    <base href="http://www.codeenigma.com/blog/connecting-your-drupal-site-ldap-server">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Drupal has become a hugely popular framework for building big websites and is becoming more and more widely used in government and public sector.  The likelihood of these organisations wanting to offer SSO to their users is pretty big also.</p>
+<p>The Drupal Lightweight Directory Access Protocol or “LDAP” module allows, for organisations that hold their user data in an Active Directory installation, their users to login to the Drupal site using those credentials.</p>
+<p>The setup of an Active Directory instance is a little outside the scope of this blogpost but there is a fantastic knowledge base article by Rackspace that guides you through the setup perfectly (<a href="http://www.rackspace.com/knowledge_center/article/installing-active-directory-on-windows-server-2008-r2-enterprise-64-bit">http://www.rackspace.com/knowledge_center/article/installing-active-dire...</a>).</p>
+<p>The configuration screen (found at <span style="background-color: #99ccff;">admin/config/people/ldap</span>) is split into a number of tabs.  We will firstly be concerned with “Server”, this tab allows us to define our connection credentials to our Active Directory instance. Multiple server configurations can exist and we can even define multiple server configurations for a single physical LDAP server for things like, alternate base DN’s (Distinguished names) or alternate service accounts with different privileges.</p>
+<p><strong>Connection Settings</strong></p>
+<p>The connection settings screen is pretty self explanatory, fill it out with your server credentials, I would normally leave ‘Enabled’ un-ticked until you verify that everything is working correctly.￼</p>
+<p><img alt="" class="image-blog_full_width" height="577" src="/sites/default/files/styles/blog_full_width/public/field/images/connection_settings.png?itok=IAV8nSpI" width="600" /></p>
+<p>After the server connection details are entered, this is where things get a little more complicated.  The following fieldsets, Binding Method, LDAP User to Drupal User Relationships and LDAP Group Configuration all ask for DN’s or attributes belonging to LDAP objects.  I found the best way to navigate around the LDAP server was by using a third party piece of software called ‘<a href="http://directory.apache.org/studio/" target="_blank" title="Apache Directory Studio">Apache Directory Studio</a>’.  It is available free on OSX, Windows and Linux!  Here are a few common terminologies used in LDAP.</p>
+<ul><li>DN - Distinguished name</li>
+<li>DC - Stands for domain component and is used to specify domain or ap‐ plication partition objects</li>
+<li>CN - Common name</li>
+<li>O - Organization name</li>
+<li>OU - Organizational unit name C Country name</li>
+<li>DC - Domain component</li>
+<li>UID - User ID</li>
+</ul><p><strong>Binding Methods</strong></p>
+<p>The LDAP.module suggest using a Service account to allow for searches and to determine user objects and their groups memberships.  Within our LDAP instance we created a service account ‘Code Enigma’, we can use the Apache Directory Studio to drill down to that user object and determine its DN.￼</p>
+<p><img alt="" class="image-blog_full_width" height="372" src="/sites/default/files/styles/blog_full_width/public/field/images/service_account.png?itok=-qUjHKyE" width="600" /></p>
+<p>From the screenshot above we can see that our Code Enigma user has a Distinguished name of</p>
+<p><span style="background-color: #99ccff;">CN=Code Enigma,CN=Users,DC=windows,DC=codeenigma,DC=com</span></p>
+<p>We use this DN to populate the following section of the form, along with its password to allow it to authenticate to the Active Directory server.</p>
+<p><img alt="" class="image-blog_full_width" height="184" src="/sites/default/files/styles/blog_full_width/public/field/images/Screen%20Shot%202013-06-05%20at%2016.56.51.png?itok=ZFmlXFfE" width="600" /></p>
+<p>Our base DN for users, groups and other entities can be found in the same way.  Our Base DN for our users for example is <span style="background-color: #99ccff;">CN=Users,DC=windows,DC=codeenigma,DC=com</span> which exists one level above our Code Enigma user.</p>
+<p> </p>
+
+<p><strong>LDAP Group Configuration</strong></p>
+<p><em>Name of Group Object Class</em><br />
+We find the name of the group object class in the same way, we drill down the LDAP tree and find the groups under CN=BuiltIn.  In this instance our group object class is named ‘group’.￼</p>
+<p><em><img alt="" class="image-blog_full_width" height="373" src="/sites/default/files/styles/blog_full_width/public/field/images/group_name.png?itok=xgAv4uMM" width="600" /></em></p>
+<p><em>Attribute in User Entry Containing Groups</em><br />
+This value is taken from the attribute that lists a users group memberships.  In our instance this is <span style="background-color: #99ccff;">memberOf</span>, from the screenshot below you can see that the user ‘mark’ is a member of both Administrators and Users.</p>
+<p><img alt="" class="image-blog_full_width" height="372" src="/sites/default/files/styles/blog_full_width/public/field/images/memberOff.png?itok=itzB3ogL" width="600" /></p>
+<p>Once you have your connection setup and working, we can move onto setting up how the site will interact with the LDAP server.</p>
+<p><strong>LDAP to OG group Configuration</strong></p>
+<p>The Drupal LDAP module comes bundled with “LDAP Authorization - OG (Organic Groups)” module that allows us to automatically join users to Drupal groups dependant on their LDAP groups.</p>
+<p>The workflow for achieving this is to inspect your LDAP server and make note of the groups you want users to automatically join as an Organic Group.  The LDAP module does not provision these Organic Groups for us, therefore we need to create the Organic Groups and map them from LDAP to Drupal. </p>
+<p>Using ‘Apache Directory Studio’ we can find the DN to our individual groups, such as for Administrators.</p>
+<p><span style="background-color: #99ccff;">CN=Administrators,CN=Builtin,DC=windows,DC=codeenigma,DC=com</span></p>
+<p><img alt="" class="image-blog_full_width" height="373" src="/sites/default/files/styles/blog_full_width/public/field/images/administrator_group.png?itok=H-BuVzD5" width="600" /></p>
+<p>The mapping of LDAP to OG group is in the format, <span style="background-color: #99ccff;">DN</span>|<span style="background-color: #ccffcc;">Organic Group Title</span>:<span style="background-color: #ffcc99;">Member Type</span>.  Using the screenshot above as an example, I created an Organic Group called 'Administrators' and used the following code in the "Mapping of LDAP to OG group (one per line)" textarea.</p>
+<p><span style="background-color: #99ccff;">CN=Administrators,CN=Builtin,DC=windows,DC=codeenigma,DC=com</span>|<span style="background-color: #ccffcc;">node:Administrators</span>:<span style="background-color: #ffcc99;">member</span> </p>
+<p>The help text here is great and explains things very well, note that once you save, the module appears to append a shorthand version of your definition in the format (raw: node:1:2).</p>
+<p>This format can be helpful if your Organic Group's title contain a : in the title, you can then use the alternative definition format <span style="background-color: #99ccff;">DN</span>|<span style="background-color: #ccffcc;">Organic Group ID</span>:<span style="background-color: #ffcc99;">Member Type</span>.</p>
+<p><strong>LDAP to drupal role Configuration</strong></p>
+<p>The role configuration is much the same as the Organic Groups settings.  We simply discover what our Role DN's are in LDAP and map them to Drupal roles using the form provided.</p>
+<p><img alt="" height="70" src="/sites/default/files/field/images/ldap_roles_to_drupal.png" width="673" /></p>
+<p>The above configuration will map an Administrators group in Active Directory to an Administrtors role in our drupal install.  The common name (CN) of the group and the role name do not have to match here, we are simply mapping one onto the other.</p>
+<p>The "Create drupal roles if they do not exist" is an important setting that is hidden under "Part III. Even More Settings.", without this ticked any roles will not be created and only existing roles will be mapped.  This may be the setup that you wish but it is without doubt a gotcha to look out for.</p>
+<p> </p>
+<p>I hope this helps get your site up and running with Drupal, Active Directory and LDAP!</p>
+<p> </p>
+</div></div></div><div class="field field-name-field-blog-service-areas field-type-node-reference field-label-above"><div class="field-label">Related Service Areas:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/consultancy">Consultancy</a></div><div class="field-item odd"><a href="/development">Development</a></div><div class="field-item even"><a href="/support">Support</a></div></div></div><div class="field field-name-field-blog-intro field-type-text-long field-label-above"><div class="field-label">Teaser:&nbsp;</div><div class="field-items"><div class="field-item even">Mark Davies explains how to configure Microsoft Active Directory and Drupal&#039;s LDAP module for Enterprise integration with Drupal</div></div></div><div class="field field-name-field-blog-categories field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/category/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div><div class="field-item odd"><a href="/category/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item even"><a href="/category/support" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Support</a></div></div></div><div class="field field-name-field-blog-primary-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Primary Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/category/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/ldap" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">ldap</a></div><div class="field-item odd"><a href="/tags/active-directory" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">active directory</a></div><div class="field-item even"><a href="/tags/sso" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">sso</a></div><div class="field-item odd"><a href="/tags/microsoft" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">microsoft</a></div><div class="field-item even"><a href="/tags/integration" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">integration</a></div></div></div>
+  </body>
+</html>
+

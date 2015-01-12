@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 21 May 2014 18:20:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 21 May 2014 18:20:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Colour contrast for accessibility: making your site readable
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/colour-contrast-accessibility-making-your-site-readable
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Colour contrast for accessibility: making your site readable</title>
+    <base href="http://www.aglobalway.com/content/colour-contrast-accessibility-making-your-site-readable">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>One of the trends in minimalist web design is to choose fonts and colours that are small thin, or light. Understandably, this makes for a clean look and adds subtlety to your design. Despite the visual appeal, this approach can create some problems with accessibility.</p>
+<p>As part of the small (though not insignificant) segment of the population that is colour-blind, I have particular difficulty reading text styled in this manner. The <a href="http://www.w3.org/TR/2014/NOTE-WCAG20-TECHS-20140408/G18">WCAG Standard</a> describes the minimum contrast ratio for text that is less than 18 point (if not bold) and less than 14 point (if bold) as 4.5:1. The linked above provides some example scenarios and technique suggestions for ensuring that this contrast ratio can be achieved, as well as some resources to guide you in your development.</p>
+<p>One thing that is easy to do is to when developing your site is to disable images using Firefox developer tools (or something similar), and see what your text looks like. Often we will have white text on a dark background - but if that background image disappears the text can be impossible to read. Simply adding a background colour to your text to match your image colour can prevent this from being an issue when images are turned off. Other methods like shadows or similar effects can also help to achieve readability.</p>
+<p>Remember, keep your text at a readable size (no more tiny text!), and turn up the contrast. Many people have visual impairments of some form or another, and we want everyone to be able to read our content.</p>
+<p><strong>Bonus</strong>: if you enjoy playing around while you work, <a href="http://leaverou.github.io/contrast-ratio/">this</a> is one of my favourite tools for checking your colour contrast.</p>
+ </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

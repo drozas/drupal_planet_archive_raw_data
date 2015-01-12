@@ -1,0 +1,86 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 02 Dec 2013 13:00:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 02 Dec 2013 13:00:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mark Koester: More Flexibility for Flags: Using Flag Limiter to create simple registration and signup
+Content-Transfer-Encoding: 8bit
+Content-Base: http://int3c.com/blog/2013/12/more-flexibility-flags-using-flag-limiter-create-simple-registration-and-signup
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mark Koester: More Flexibility for Flags: Using Flag Limiter to create simple registration and signup</title>
+    <base href="http://int3c.com/blog/2013/12/more-flexibility-flags-using-flag-limiter-create-simple-registration-and-signup">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="https://drupal.org/project/flag_limiter">Flag limiter</a> allows you to put limits on any <a href="https://drupal.org/project/flag">flag</a> in your Drupal site.</p>
+
+<p>Like Views or Rules modules, flag module is one of my favorite, general purpose Drupal modules. Flag module let’s you create a customizable system of “flags” for things like bookmarks, important content, friends, flag as offensive or whatever. With great Views and Rules integration, it’s a powerful combination for site builders.</p>
+
+<p>Flag Limiter builds upon version 3.x of Flag module (which allows fields on flags!) to enable you to add limits on the the total number of flags per entity or node as well as a limit per user of that particular flag. So, for example, you could limit one page to be flagged up to 15 times and limit individual users to only 2 flags of that type.</p>
+
+<p>In the spirit of Drupal flexibility, this allows for some interesting usages. For example as an alternative voting system, a simple user promotional method, or as a simple signup or registration method.</p>
+
+<p>In this post, I’d like to present how to setup Flag Limiter and specifically how to use flag limits to create an alternative signup or registration method.</p>
+
+<h2>How to Install and Setup Flag Limiter Module</h2>
+
+<p>In order to use Flag Limiter, you’ll also need the 3.x release of Flag module. You’ll need to install and enable both of these modules. Once installed, you’ll need to create an initial flag.</p>
+
+<p>After you’ve installed the modules and created your flag, setting up flag limits is quite simple. Go to the flag settings under Structure > Flags, then select the flag you wish to work on and click “edit.” From there you’ll be able to see the tab for “Limiter” which is where you can customize different settings on each flag.</p>
+
+<p><a href="http://int3c.com/sites/int3c.com/files/styles/large/public/flag_limiter_settings_page.png"><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/styles/large/public/flag_limiter_settings_page.png" alt="" style="width: 100%; height: auto;"></a></p>
+
+<p>As you can see from the screenshot above, there are two settings you can change:</p>
+
+<ol>
+<li>total number of flags per user</li>
+<li>total number of flag per individual node or entity page</li>
+</ol>
+
+<p>Finally, it should be noted that there is a setting for hiding flag links once the limit has been reached.</p>
+
+<p>That’s basically it. Now let’s look at a real-life example involving a simple registration system on <a href="http://int3c.com/node/129/">RTConvetion.com’s conference site</a>.</p>
+
+<h2>Simple Registration System for Author Appearance Signups</h2>
+
+<p>While we work a lot on [conference registration websites]( # LINK HERE #) and generally love and use Entity Registration module to handle most of the registration work, we decided that this module was a bit too heavy, required too many confusing steps and was not quite as flexible as we needed for a recent site build.</p>
+
+<p>RTConvention.com is a great example of how to use Drupal to accomplish your site-specific goals. They run a large yearly conference for writers and readers of Romance fiction. They have a growing a passionate customer basis and have multiple websites serving their users in different ways.</p>
+
+<p>In past years, from their conference registration, they’ve used Ubercart and signup modules but this year we used Drupal Commerce to handle all of the e-commerce work for the registration and for all of the promotional sales. We wrote small customizations for various specific products in order to create specific sales pages on speciality items. We used Views and basic flag module to allow users to create a dynamic schedule of events they want to attend.</p>
+
+<p>But when it came time to allow authors to signup for their author appearances, we ran into a problem. RTConvention needed a way for authors to signup for appearance times but each slot needed to be limited to 15 total signups and 2 total signups per user. While Registration module is great for handling the signup and registration collection of each attendee, it wasn’t quite flexible enough for our use case. Viola Flag Limiters.</p>
+
+<p>With Flag and Flag Limiter modules, this task was actually pretty straightforward. Here is the basic recipe:</p>
+
+<ol>
+<li><p><em>Author Appearance content type</em>: This was just a normal node content type with a  date time field</p></li>
+<li><p><em>Author Appearance flag</em>: We customized the link text slightly to make the usage more understandable to authors and limited the flag to only the “author” role.</p></li>
+<li><p><em>Flag Limits</em>: For the flag limits, we limited it to 15 total per node and 2 total per user, as specified in the original request.</p></li>
+<li><p><em>View page</em>: We used views to create several views page, including the basic signup page for authors, a total signup count report for admin and finally the public page showing which authors would be appearing during which time slots.</p></li>
+</ol>
+
+<p>Take a look at a sample of the final result:</p>
+
+<p><img typeof="foaf:Image" src="http://int3c.com/sites/int3c.com/files/styles/large/public/rtconvention_author_appearances_schedule.png" alt="" style="width: 100%; height: auto;"></p>
+
+<h2>Conclusion:</h2>
+
+<p>As you can see from the installation and setup guide above, Flag Limiter is a simple and straightforward module. It allows non-technical users to put limits of flag and, in turn, create custom usages and displays using Views and Rules modules.</p>
+
+<p>Thanks to the wonderful folks at <a href="https://www.rtconvention.com">RTConvention</a> for sponsoring this work. Please post any module problems or issues in the <a href="https://drupal.org/project/issues/2127097?status=All&amp;categories=All">project issue queue</a>.</p>
+
+<p>NOTE: It’s worth admitting that there was already at least one other module ((Flag Limit)[<a href="https://drupal.org/project/flag_limit]">https://drupal.org/project/flag_limit]</a>) proposing this same functionality. Unfortunately at the time of development and now writing, this module was not working. We hope to (merge efforts in the future)[<a href="https://drupal.org/comment/8229585#comment-8229585]">https://drupal.org/comment/8229585#comment-8229585]</a>.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-module" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal module</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/flag" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">flag</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-conference" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Conference</a></div></div></div><ul class="links inline"><li class="sharethis first last"><span class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://int3c.com/blog/2013/12/more-flexibility-flags-using-flag-limiter-create-simple-registration-and-signup" st_title="More Flexibility for Flags: Using Flag Limiter to create simple registration and signup" class="st_facebook_large" displaytext="facebook"></span>
+<span st_url="http://int3c.com/blog/2013/12/more-flexibility-flags-using-flag-limiter-create-simple-registration-and-signup" st_title="More Flexibility for Flags: Using Flag Limiter to create simple registration and signup" class="st_twitter_large" displaytext="twitter"></span>
+<span st_url="http://int3c.com/blog/2013/12/more-flexibility-flags-using-flag-limiter-create-simple-registration-and-signup" st_title="More Flexibility for Flags: Using Flag Limiter to create simple registration and signup" class="st_googleplus_large" displaytext="googleplus"></span>
+<span st_url="http://int3c.com/blog/2013/12/more-flexibility-flags-using-flag-limiter-create-simple-registration-and-signup" st_title="More Flexibility for Flags: Using Flag Limiter to create simple registration and signup" class="st_email_large" displaytext="email"></span>
+<span st_url="http://int3c.com/blog/2013/12/more-flexibility-flags-using-flag-limiter-create-simple-registration-and-signup" st_title="More Flexibility for Flags: Using Flag Limiter to create simple registration and signup" class="st_sharethis_large" displaytext="sharethis"></span>
+<script type='text/javascript'>var switchTo5x=true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({publisher:'dr-8d62520e-c444-86e2-d911-ab27da97627b'});</script></div></span></li></ul>
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 04 Aug 2014 22:13:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 04 Aug 2014 22:13:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #28
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/405
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #28</title>
+    <base href="http://www.drupal4hu.com/node/405">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>The <a href="https://www.drupal.org/node/2302617">standard mechanism for backend-aware service overrides</a> is in and these services are already <a href="https://www.drupal.org/node/2306071">tagged</a>. We have agreed on how to <a href="https://www.drupal.org/node/2314577">transfer</a> data from one backend to another and my <a href="https://www.drupal.org/node/1857558/git-instructions/transfer/nonmaintainer">sandbox</a> contains the first <code>getTransferIterator</code> implementation for config with more to follow. There's a small amendment in the works that makes the old backend <a href="https://www.drupal.org/node/2314819">available</a> too.</p>
+<p>More <a href="https://www.drupal.org/node/2312093">field</a> <a href="https://www.drupal.org/node/2154435">renames</a> are in the works. That's why I am not focusing on the MongoDB drivers just yet. Let's wait for beta. The drivers in a state where we can do some meaningful testing (which lead to making sure <a href="https://drupal.org/node/2229011">tests are modifiable</a> before) and so we can make sure everything will work for us but writing the entity drivers themselves at this point is a waste of time -- let's wait for a (more) stable API. The transfer work started because MongoDB needed to solve taking over config storage and while we had it solved, there is really nothing MongoDB specific so I am pushing for core inclusion.</p>
+<p>I didn't mention <a href="drupal.org/project/config_devel">config devel</a> in this series -- although I did previously on this blog -- I firmly believe this will be used widely and lead to a more joyous CMI experience. Reminder: everyone using CMI is what makes the Drupal on MongoDB only feasible in the first place. </p>
+  </body>
+</html>
+

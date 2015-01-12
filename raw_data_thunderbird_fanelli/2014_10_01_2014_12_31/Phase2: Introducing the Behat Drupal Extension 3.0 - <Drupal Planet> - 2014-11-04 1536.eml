@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 04 Nov 2014 14:36:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 04 Nov 2014 14:36:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Introducing the Behat Drupal Extension 3.0
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/behat-drupal-extension-3/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Introducing the Behat Drupal Extension 3.0</title>
+    <base href="http://www.phase2technology.com/blog/behat-drupal-extension-3/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I am proud to announce the release of the <a href="https://github.com/jhedstrom/drupalextension">Behat Drupal Extension 3.0</a>! Since 2012, the Drupal Extension has been used for Behaviour Driven Development of thousands of Drupal sites all over the world. The project began as part of the Drupal.org upgrade, and was quickly generalized to enable the testing of any Drupal site.</p>
+<p>Version 3 has many exciting new features, and is compatible with <a href="http://github.com/behat/behat">Behat 3</a>. Note version 2 does not exist, wanting to avoid version soup.</p>
+<h2>Behavior Driven Development at BADCamp</h2>
+<p>Before I dive into the new features, it is important to clarify the difference between testing an application, and Behavior Driven Development (BDD).</p>
+<p>As <a href="http://everzet.com/">everzet</a> pointed out <a href="https://amsterdam2014.drupal.org/session/doing-behaviour-driven-development-behat">at Drupalcon</a> no business-critical feature starts with</p><pre class="crayon-plain-tag">When browsing an article
+User
+Should be able to see related articles</pre><p>rather, it starts with a conversation</p><pre class="crayon-plain-tag">In order to read more interesting articles
+As a reader
+I need to see related articles to the one I'm reading</pre><p>While both are testing something, only the latter is truly describing a behavior that matters to a stakeholder. This is the subject of a blog post, or series of posts, in and of itself, so more on this subject later.</p>
+<h2>What&#8217;s new</h2>
+<h3>Documentation</h3>
+<p>Documentation for this project has been integrated into the repository, and is <a href="https://behat-drupal-extension.readthedocs.org">automatically building on readthedocs.org</a>. Thanks to <a href="https://twitter.com/lz411">Melissa Anderson</a> for this awesome work!</p>
+<h3>A starter context</h3>
+<p>A starter Drupal context that makes no assumptions around the language used for each test, but still provides all the previous functionality to interact directly with Drupal.</p>
+<p>Users are encouraged to start tests from this context which will allow them to use <a href="https://en.wikipedia.org/wiki/Domain-driven_design">truly ubiquitous language</a> that is specific to each project.</p>
+<h3>Drupal Drivers</h3>
+<p>The Drupal Drivers now exist in a <a href="https://github.com/jhedstrom/DrupalDriver">separate project</a>, allowing for non-Behat applications to interact with Drupal (e.g., calling directly from Mink, or Codeception).</p>
+<p>Note that the Drupal 6 driver has been removed, but since drivers are now separate projects, it will be easy to port that over to the Drupal Extension 3, should somebody want.</p>
+<p>It should also be noted that Drupal 8 support will require ongoing work as the code base there evolves towards release.</p>
+<h3>More granular pre-defined step-definitions</h3>
+<p>Existing step definitions have been split into 4 indepentent contexts:</p>
+<ul>
+<li><code>DrupalContext</code> &#8211; This contains steps for working with content, users, and taxonomies.</li>
+<li><code>MinkContext</code> &#8211; This is an extension to the <a href="https://github.com/Behat/MinkExtension">Mink Extension</a>, providing additional steps for working with regions and forms.</li>
+<li><code>MessageContext</code> &#8211; Provides steps for working with Drupal success/warning/error messages.</li>
+<li><code>DrushContext</code> &#8211; Provides steps for calling drush commands directly from scenarios</li>
+</ul>
+<p>This allows for the use of some pre-definied step-definitions, rather than the previous all-or-none approach.</p>
+<h3>No more regex!</h3>
+<p>The pre-definied steps now use the new <strong>turnip</strong> syntax introduced in Behat 3:</p><pre class="crayon-plain-tag">Given I am viewing a/an :type (content )with the title :title</pre><p>rather than</p><pre class="crayon-plain-tag">Given /^(?:a|an) "(?P&lt;type&gt;[^"]*)" node with the title "(?P&lt;title&gt;[^"]*)"$/</pre><p></p>
+<h3>What&#8217;s a &#8216;node&#8217;?!</h3>
+<p>The term <em>node</em> has been removed from steps and replaced with <em>content</em> in all pre-defined steps.</p>
+<h2>What&#8217;s next?</h2>
+<ul>
+<li>A REST driver that would allow the full power of the Drupal API to be utilized from a remote server.</li>
+<li><a href="https://www.drupal.org/node/2232861">Testing Drupal core with Mink and the Drupal Drivers</a>?</li>
+</ul>
+<h2>BDD Mini Summit</h2>
+<p>I will be attending the <a href="https://2014.badcamp.net/event/behat-mini-summit">Behat mini-summit</a> at BADCamp along with several other folks from Phase 2. I hope to highlight the Drupal Extension 3, and discuss best-practices for the wide variety of testing needs. I also hope to continue discussions around Behat, Mink and Drupal core.</p>
+  </body>
+</html>
+

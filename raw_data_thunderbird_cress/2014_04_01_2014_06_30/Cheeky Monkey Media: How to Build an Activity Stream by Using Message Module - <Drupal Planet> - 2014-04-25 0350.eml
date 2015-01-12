@@ -1,0 +1,135 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 25 Apr 2014 02:50:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 25 Apr 2014 02:50:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Cheeky Monkey Media: How to Build an Activity Stream by Using Message Module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://cheekymonkeymedia.ca/blog/how-build-activity-stream-using-message-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Cheeky Monkey Media: How to Build an Activity Stream by Using Message Module</title>
+    <base href="http://cheekymonkeymedia.ca/blog/how-build-activity-stream-using-message-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="image">
+    <img src="http://cache.cheekymonkeymedia.ca.s3.amazonaws.com/styles/blog_thumb/s3/nodes/images/drupal 7.jpg?itok=eRVPetwW" width="135" height="135" />  </div>
+
+  <div class="field-submitted-by field-wrapper">
+    Submitted by <a href="/users/yan-yong" title="View user profile." class="username">Yan Yong</a> on Thu, April 24.  </div>
+
+  <div class="body field">
+     <p dir="ltr"><span style="line-height: 1.5;">What does do: the message module logs system events which can be used to create user activity streams.</span></p>
+<p dir="ltr">Skill Requirement:</p>
+<p dir="ltr">1) Be able to create a list using views module</p>
+<p dir="ltr">2) Be able to use rules to set up triggers</p>
+<p dir="ltr">3) Be able to create new content type and add fields</p>
+<p dir="ltr">4) Understand what view modes are</p>
+<p dir="ltr">Modules required: message, rules, views, entity reference, token</p>
+<p dir="ltr">What we are going to build:</p>
+<p dir="ltr">We are going to build a block that lists all recent activities of a given user. It looks like this:</p>
+<div dir="ltr">
+<table><colgroup><col width="478" /><col width="146" /></colgroup>
+<tbody>
+<tr>
+<td>
+<p dir="ltr">John has created a post “10 things wordpress can’t do for you”</p>
+</td>
+<td>
+<p dir="ltr">Apr 21st, 2014</p>
+</td>
+</tr>
+<tr>
+<td>
+<p dir="ltr">John has created a post “Our logo design process - Cheeky monkey media”</p>
+</td>
+<td>
+<p dir="ltr">Mar 30th, 2014</p>
+</td>
+</tr>
+<tr>
+<td>
+<p dir="ltr">John has updated a blog post “Why I need to learn message module”</p>
+</td>
+<td>
+<p dir="ltr">Feb 27th, 2014</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br /><span style="line-height: 1.5;">General steps:</span></p>
+<p dir="ltr">Step 1) In order to log system events, we need to setup a message to capture data first.</p>
+<p dir="ltr">Step 2) We need to tell Drupal when and how to log the system event.</p>
+<p dir="ltr">Step 3) Create a block using views to display logged messages to the user.</p>
+<p><span style="line-height: 1.5;">Detailed instructions:</span></p>
+<p dir="ltr">Assumption: to get a working Drupal installation with a clean url, and the required modules installed and enabled. I also assume you to have the blog post content type configed.</p>
+<p dir="ltr"><strong>Step 1: Setup Message</strong></p>
+<p dir="ltr">As we can see from the above table, in our Message we need to capture the following data:</p>
+<p dir="ltr">user name, blog post URL, blog post title and timestamp.</p>
+<p dir="ltr">We are going to store all the text from the first column of the table into a Message text field, and timestamp in date field. Ok, enough talk, lets configure the blog message.</p>
+<p dir="ltr">1) Go to /admin/structure/messages</p>
+<p dir="ltr">2) Click Add message type, give it a name called {blog message}</p>
+<p dir="ltr">3) In the MESSAGE TEXT section, add the following text:</p>
+<p dir="ltr">[message:user:name] has created a post "10 things wordpress can’t do for you"</p>
+<p dir="ltr">4) Since we put some static text in the message field, we need to come back later to make it dynamic, but for now we can just carry on.</p>
+<p dir="ltr">5) Click manage fields of the blog message we just created</p>
+<p dir="ltr">6) We are going to attach this blog message to the blog content type, so we can get the blog title and url information. Type Blog reference in the Add new field section, and select Entity reference in the FIELD TYPE selection list. Then finally select Autocompleted in the WIDGET selection list and click Save.</p>
+<p dir="ltr">7) In the next screen, make sure you select Node for the Target type selection list, and check Blog post (your blog post content type) in the Target bundles section. Click Save.</p>
+<p dir="ltr">You will need to repeat this step in the next page, don’t worry it’s normal.</p>
+<p dir="ltr">8) Now, our Blog message is attached to the Blog post content type, which gives us some data to work with. Click edit link of the Blog Message, and replace the text to the following</p>
+<p dir="ltr">[message:user:name] has created a post "&lt;a href="[message:field-blog-reference:url]"&gt;[message:field-blog-reference:title]&lt;/a&gt;"</p>
+<p dir="ltr">9) Now, we need to store timestamp data in a post date field, although the message entity comes with a timestamp, I find it easier to work with the timestamp store in a separate field. &nbsp;Now let’s add a post date field to the blog message entity. I use Date (ISO format) and WIDGET use Text field.</p>
+<p dir="ltr">10) For the last step, we need to ensure that Message text and Post Date field are visible and the Blog reference is hidden. Click the manage display link of Blog message, then make sure all the field visibilities are set up correctly.</p>
+<p dir="ltr"><strong>Step 2: Setup rules to log events</strong></p>
+<p dir="ltr">In this step, we are going to tell Drupal to create a new blog message instance (when a blog post was created or updated). We also need to send the information needed to create a new message instance.</p>
+<p dir="ltr">1) go to /admin/config/workflow/rules</p>
+<p dir="ltr">2) click Add action, in the React on event selection list, select After saving new content event. (you need to add another event After updating existing content as well)</p>
+<p dir="ltr">1) Restrict this rule to fire only to the blog post content type by using Content is of type in the condition section</p>
+<p dir="ltr">2) Create a new action, select Create a new entity from the Select the action to add selection list. Then select Message from ENTITY TYPE selection list.</p>
+<p dir="ltr">3) Select the blog message type that we created in step 1 from the TYPE selection list.</p>
+<p dir="ltr">4) Type node:author in text field of the USER section</p>
+<p dir="ltr">5) Do not change anything else, click Save.</p>
+<p dir="ltr">The above steps creates a rule that triggers after every time a user creates a new blog post content type, the rules module will create a new message entity instance, to associate with that event. The next logical step is to provide data to the newly created message instance.</p>
+<p dir="ltr">3) click Add action again, select Set a data value from select the action to add selection list.</p>
+<p dir="ltr">1) Use data selector in the DATA section to target the property you want to provide data to</p>
+<p dir="ltr">2) Use data selector in the VALUE section to select the source of data for the above targeted property</p>
+<p dir="ltr">3) As a reference, I passed</p>
+<p dir="ltr">node to entity-created:field-blog-reference</p>
+<p dir="ltr">and</p>
+<p dir="ltr">entity-created:timestamp to entity-created:field-post-date</p>
+<p dir="ltr">4)Until you covered all the data needed in your message then click Save</p>
+<p dir="ltr">5)Repeat</p>
+<p dir="ltr"><strong>Step 3: Create a block to display logged messages</strong></p>
+<p dir="ltr">In this step we are going to use the views module to create a block which lists all the blog post related activities of a given user id:</p>
+<p dir="ltr">1) go to /admin/structure/views</p>
+<p dir="ltr">2) click Add new view link and give a name</p>
+<p dir="ltr">2.1) in the Show section, make sure select Message, and leave of type to All</p>
+<p dir="ltr">2.2) check Create a block and uncheck Create a page</p>
+<p dir="ltr">2.3) check Use a pager as well, and set items to 5 per page, then click Continue &amp; edit</p>
+<p dir="ltr">3) change Show: Fields in the FORMAT section to Rendered entity instead, I choose Full in View mode selection list</p>
+<p dir="ltr">4) Click Advanced button to expand it</p>
+<p dir="ltr">4.1) click Add button beside CONTEXTURE FILTERS</p>
+<p dir="ltr">4.2) In the Search text field type uid, check Message: User uid in the result list</p>
+<p dir="ltr">4.3) in the next screen select Display contents of "No results found" in the WHEN THE FILTER VALUE IS NOT AVAILABLE section and check Specify validation criteria, select Basic validation in Validator selection list, and select Display contents of "No results found" again in the Display contents of "No results found" selection list</p>
+<p dir="ltr">That’s it. Congratulations! You have done it!</p>
+<p dir="ltr"></p>
+<p><br /><br /></p>
+<p dir="ltr"></p>
+<p><br /><br /><br /><br /></p>   </div>
+
+  <div class="field-cta-buttons field-wrapper">
+    <div class="cta-wrap">
+	<h3>Learn more about...</h3>
+	<a href="../services/drupal-web-development" class="button" onClick="_gaq.push(['_trackEvent', 'LearnMore', 'Click', 'Web Development']);">Web Development</a>
+	<a href="../services/web-development-design" class="button" onClick="_gaq.push(['_trackEvent', 'LearnMore', 'Click', 'Web Design']);">Web Design</a>
+	<a href="/web-design-company" class="button" onClick="_gaq.push(['_trackEvent', 'LearnMore', 'Click', 'Cheeky Monkey Media']);">Cheeky Monkey Media</a>
+</div>  </div>
+<div class="field-categories inline field-wrapper clearfix"><h2 class="field-label">Categories: </h2><ul class="links inline"><li class="taxonomy-term-reference-0" class="field-item even"><a href="/categories/drupal-planet">Drupal Planet</a></li></ul></div><div class="field-tags inline field-wrapper clearfix"><h2 class="field-label">Tags: </h2><ul class="links inline"><li class="taxonomy-term-reference-0" class="field-item even"><a href="/tags/drupal-planet">drupal planet</a></li><li class="taxonomy-term-reference-1" class="field-item even odd"><a href="/tags/building-activity-stream-using-message-module">building an activity stream using message module</a></li></ul></div>
+  </body>
+</html>
+

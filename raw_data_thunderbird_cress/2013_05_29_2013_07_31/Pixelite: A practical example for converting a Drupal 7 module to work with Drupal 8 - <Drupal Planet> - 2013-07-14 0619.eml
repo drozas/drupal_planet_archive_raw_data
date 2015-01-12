@@ -1,0 +1,198 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 14 Jul 2013 05:19:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 14 Jul 2013 05:19:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: A practical example for converting a Drupal 7 module to work with Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/practical-example-converting-drupal-7-module-work-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: A practical example for converting a Drupal 7 module to work with Drupal 8</title>
+    <base href="http://www.pixelite.co.nz/article/practical-example-converting-drupal-7-module-work-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/practical-example-converting-drupal-7-module-work-drupal-8&amp;count=horizontal&amp;via=&amp;text=A%20practical%20example%20for%20converting%20a%20Drupal%207%20module%20to%20work%20with%20Drupal%208&amp;counturl=http%3A//www.pixelite.co.nz/article/practical-example-converting-drupal-7-module-work-drupal-8" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/practical-example-converting-drupal-7-module-work-drupal-8&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/practical-example-converting-drupal-7-module-work-drupal-8" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/practical-example-converting-drupal-7-module-work-drupal-8" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-body">
+    <p>Drupal.org has this information, but it is largely scattered around on these URLs:</p>
+
+<ul>
+<li><a href="https://drupal.org/update/modules/7/8">https://drupal.org/update/modules/7/8</a></li>
+<li><a href="https://drupal.org/list-changes/drupal?to_branch=8.x">https://drupal.org/list-changes/drupal?to_branch=8.x</a></li>
+</ul>
+
+<p>It can be hard to find a real life example on how to update your contributed modules with the new Drupal 8 architecture.</p>
+
+<p>Here is an example module that I maintain (<a href="https://drupal.org/project/js_injector">js_injector</a>), which at the moment depends on:</p>
+
+<ul>
+<li>Drupal 7 core</li>
+<li>ctools exportables (see the <a href="https://drupal.org/node/928026">documentation</a> for more information on this)</li>
+</ul>
+
+<p>I am going to try and refactor the module to use Drupal 8 core components only and deprecate the ctools dependency.</p>
+
+<h2>The .info is dead, long live <abbr title="YAML Ain't Markup Language">YAML</abbr></h2>
+
+<p>One of the first things you will notice is there is no longer the <code>.ini</code> syntax .info file in the root of the module. It has now been converted to <abbr title="YAML Ain't Markup Language">YAML</abbr>.</p>
+
+<p><strong>Old info file:</strong></p>
+
+<pre><code>name = JS injector
+description = Adds JavaScript to the page output based on configurable rules
+core = 7.x
+configure = admin/config/development/js-injector
+dependencies[] = ctools
+</code></pre>
+
+<p><strong>New .info.yml file</strong></p>
+
+<pre><code>name: 'JS injector'
+type: module
+description: 'Adds JavaScript to the page output based on configurable rules.'
+core: 8.x
+configure: admin/config/development/js-injector
+</code></pre>
+
+<p>So not too many changes here, mainly just syntax. It is important to read the <a href="https://drupal.org/node/1935708">change record</a> for this if you .info file is more advanced, as items such as the new autoloader deprecate the Drupal 7 <code>files[]</code> super arrays.</p>
+
+<h2>The switch from ctools exportables to Drupal 8's configuration entities (<abbr title="Configuration Management Initiative">CMI</abbr>)</h2>
+
+<p>One of the major changes to Drupal 8 is the Configuration Management Initiative (<abbr title="Configuration Management Initiative">CMI</abbr>). This initiative was introduced as a standardised way to have configuration stored outside your database, so that it could be staged and deployed. There were helper modules for Drupal 7 to do some of this (e.g. Features and strongarm) but there were always holes with this approach (e.g. try and export a block configuration). <abbr title="Configuration Management Initiative">CMI</abbr> solves this issue by storing <em>all</em> configuration as configuration entities that reside solely in the filesystem as <abbr title="YAML Ain't Markup Language">YAML</abbr> files.</p>
+
+<p>You can take a sneak peak are what Drupal is storing in <abbr title="YAML Ain't Markup Language">YAML</abbr> if you open up the directory sites/default/files/config_[hash]/active</p>
+
+<p><img src="/sites/default/files/article_images/d8-yaml.png" width="796" height="411" alt="YAML files sitting in the config directory in Drupal 8"  /></p>
+
+<h3>What this meant for the js_injector module</h3>
+
+<p>This code could be re-used:</p>
+
+<ul>
+<li>the form API definition - pretty much no changes here which is nice</li>
+</ul>
+
+<p>This code was changed/new:</p>
+
+<ul>
+<li>Removal of all ctools plugins supporting code</li>
+<li>Update hook to convert all legacy rows in the custom table into new configuration entities</li>
+<li>Removal of hook_schema() as this is no longer required</li>
+<li>New classes that implement/extend the required interfaces that the <abbr title="Configuration Management Initiative">CMI</abbr> provides</li>
+<li>Annotations, these are fun</li>
+<li>Converting all load functions to use the entity loading framework</li>
+</ul>
+
+<p>All in all, it is a massive change to switch from ctools exportables to the new <abbr title="Configuration Management Initiative">CMI</abbr> configuration entities. But when it is all said and done, the new code is much cleaner, easier to read and is lazily loaded with the new Symfony autoloader.</p>
+
+<p>Here is a screenshot of the new entitylist screen:</p>
+
+<p><img src="/sites/default/files/article_images/js_injector_d8.png" width="840" height="551" alt="New CMI based entity list screen in Drupal 8"  /></p>
+
+<p>Another really awesome resource I found for <abbr title="Configuration Management Initiative">CMI</abbr> information was actually the user roles <abbr title="Configuration Management Initiative">CMI</abbr> configuration found in Drupal 8 core. You can view the code <a href="http://drupalcode.org/project/drupal.git/tree/refs/heads/8.x:/core/modules/user">online within the repository</a>.</p>
+
+<p>Helpful links:</p>
+
+<ul>
+<li>Blog post by PreviousNext on <a href="http://previousnext.com.au/blog/understanding-drupal-8s-config-entities">config entities</a></li>
+<li>Drupal 8 <a href="https://drupal.org/node/1479454">conversion of user_roles into <abbr title="Configuration Management Initiative">CMI</abbr></a></li>
+<li>Drupal <a href="https://drupal.org/node/1818734">change notice</a></li>
+</ul>
+
+<h2>hook_menu() is still there, but now with Symfony routes integration</h2>
+
+<p><strong>Old hook_menu() code:</strong></p>
+
+<p>None, this was handled entirely by ctools exportables.</p>
+
+<p><strong>New hook_menu() code:</strong></p>
+
+<pre><code>$items['admin/config/development/js-injector'] = array(
+  'title' =&gt; 'JS injector rules',
+  'description' =&gt; 'Add and modify JavaScript injector rules.',
+  'route_name' =&gt; 'js_injector_rule_admin',
+);
+</code></pre>
+
+<p><strong>New route information (in file js_injector.routing.yml):</strong></p>
+
+<pre><code>js_injector_rule_admin:
+  pattern: '/admin/config/development/js-injector'
+  defaults:
+    _entity_list: 'js_injector_rule'
+  requirements:
+    _permission: 'administer js_injector'
+</code></pre>
+
+<p>The new Symfony routing components extend what was impossible with plain ol hook_menu() in Drupal 7. It is now possible to overload path placeholders and have one that listens for an integer, and another that is listening for a string. Similarly you can also add HTTP requirements to each end point.</p>
+
+<p>For more information see the <a href="https://drupal.org/node/1800686">change request</a> and the <a href="http://symfony.com/doc/current/book/routing.html">Symfony documentation</a>.</p>
+
+<h2>hook_init() is gone</h2>
+
+<p>I was wondering why this hook was not firing, turns out this was <a href="https://drupal.org/node/2013014">removed recently</a> - I was able to replace it instead with <a href="https://api.drupal.org/api/drupal/core%21modules%21system%21system.api.php/function/hook_page_build/8">hook_page_build()</a>.</p>
+
+<p>So this was a simple change. I actually like this change from Drupal here, as all to often contributed modules like to do silly expensive things within hook_init() not realising in Drupal 7 they fire on every page request.</p>
+
+<h2>$_GET['q'] is gone</h2>
+
+<p>The PHP super global key<code>$_GET['q']</code> is 100% missing in Drupal 8, now you are forced to use the standard method current_path(). For more information see the <a href="https://drupal.org/node/1659562">change request</a>.</p>
+
+<h2>variable_set()/variable_get() are gone</h2>
+
+<p>In Drupal 7, all variables are global, so accessing and saving them is done this way:</p>
+
+<pre><code>// Load the site name out of configuration.
+$site_name = variable_get('site_name', 'Drupal');
+// Change the site name to something else.
+variable_set('site_name', 'This is the dev site.');
+</code></pre>
+
+<p>In Drupal 8, configuration will only be lazy-loaded when needed. The above code would therefore change as follows:</p>
+
+<pre><code>// Load the site name out of configuration.
+$config = config('core.site_information');
+$site_name = $config-&gt;get('site_name');
+// Change the site name to something else.
+$config-&gt;set('site_name', 'My Awesome Site');
+$config-&gt;save();
+</code></pre>
+
+<p>It would be worth reading <a href="https://drupal.org/node/1667896">this tutorial</a> for more information on how to upgrade your code.</p>
+
+<h2>Conclusion</h2>
+
+<p>So it took a few hours of reading, writing, testing, breaking and fixing in order to upgrade the js_injector module to Drupal 8, but all in all, it was a positive experience. I have created a 8.x-1.x branch for js_injector and did the <a href="http://drupalcode.org/project/js_injector.git/commit/a007b54dddf2fc3f6c9f7fa88014c0d29d7c5f44">entire upgrade largely with one commit</a>.</p>
+
+<p>I encourage you to read through the commit, hopefully this comes in handy for your module in the near future. I am keen to hear feedback on this branch, let me know how well the module worked for you on Drupal 8, and if you have any suggestions for improvements let me know.</p>
+
+<!-- Abbreviations -->
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">development</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">tutorial</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="https://drupal.org/list-changes/drupal?to_branch=8.x">Change records for Drupal core</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

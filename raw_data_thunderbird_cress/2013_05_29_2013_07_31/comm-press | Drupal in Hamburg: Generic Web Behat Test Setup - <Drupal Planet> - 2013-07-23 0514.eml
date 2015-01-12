@@ -1,0 +1,164 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 23 Jul 2013 04:14:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 23 Jul 2013 04:14:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: Generic Web Behat Test Setup
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/generic-web-behat-test-setup
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: Generic Web Behat Test Setup</title>
+    <base href="http://comm-press.de/en/blog/generic-web-behat-test-setup">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h3 class="category" >Knowledge</h3><div class="form-item form-type-item">
+  <label>Language </label>
+ English
+</div>
+<div class="field field-name-title"><h1><a href="/en/blog/generic-web-behat-test-setup">Generic Web Behat Test Setup</a></h1></div><span class="author" >Cathy Theys</span><span class="published" >07/23/2013 - 06:14</span><div class="field field-name-field-teaser"><p>While at Drupal Dublin Dev Days, I heard people talking about <a href="http://behat.org/">Behat</a> and saw a demo.
+I wanted to try setting up my system so I could run Behat tests on Drupal projects and prepare for the possibility of helping get Behat testing into core.</p>
+
+<h3>The frustration</h3>
+
+<p>I started with the <a href="http://docs.behat.org/quick_intro.html#installation">Behat Quick Intro Instructions</a>. And things went ok, but then they got into a long example about how to write tests, using the unix ls command as an example. I was not patient enough to do that, but I appreciated reading the ls example. I wanted to do web tests. At the end there was a link to <a href="http://docs.behat.org/cookbook/behat_and_mink.html">setting up Mink</a>, but it was not clear if that was supposed to be done in a separate project directory, or on top of the first Behat setup example. Also, it seemed to me that it would make more sense to install the programs in my bin, and not over again for each project. ... Also, the web test example did not work for me. The -dl would show the web tests should be available, but when running them, it would suggest to me the skeleton for the methods so I could write them. Ack. I was pretty frustrated.</p>
+
+<p>I watched another video someone shared with me after hearing me loudly complaining in the TCdrupal (Twin Cities) coder lounge. And in that video, the person did something (added a use, and changed an extend) that was missing from the <a href="http://docs.behat.org/cookbook/behat_and_mink.html">behat.org written Mink instructions</a>.</p>
+
+<p>Perhaps it can work just following the Mink set up instructions. If so, please tweet at me, @ctheys, and let me know what I missed.</p>
+
+<p>After going through the instructions several times, here is what I ended up doing and hopefully this will save you the frustration I had.</p>
+
+<h3>Before Steps</h3>
+
+<p>Note, I have a bin directory where I put commands. See the section at the end to set up your path to include your bin.</p>
+
+<p>I have a webroot... named foo. I do not think that the behat tests need to be in the webroot, but that is where I put them.</p>
+
+<p>I have Mac OS X, and use the bash shell, and the config file ~/.bash_profile</p>
+
+<p>Your set up is probably a bit different, so you will have to make some adjustments to the commands.</p>
+
+<h3>Steps</h3>
+
+<p><code>$ cd ~/bin</code></p>
+
+<p><code>$ mkdir behat_and_mink_src</code></p>
+
+<p><code>$ cd !$</code></p>
+
+<p>(!$ is one of my favorite unix shortcuts. It means: the last argument from the last command. So in this case, it is the equivalent of: cd behat_and_mink_src.)</p>
+
+<p><code>$ vi composer.json</code></p>
+
+<p>(Use your favorite editor.)
+Put in the composer.json file the contents the mink instructions, <a href="http://docs.behat.org/cookbook/behat_and_mink.html">http://docs.behat.org/cookbook/behat_and_mink.html</a>, recommend:</p>
+
+<div class="codeblock"><code>{<br />&nbsp;&nbsp;&nbsp; &quot;require&quot;: {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/behat&quot;: &quot;2.4.*@stable&quot;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/mink&quot;: &quot;1.4.*@stable&quot;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/mink-extension&quot;: &quot;*&quot;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/mink-goutte-driver&quot;: &quot;*&quot;,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;behat/mink-selenium2-driver&quot;: &quot;*&quot;<br />&nbsp;&nbsp;&nbsp; },<br />&nbsp;&nbsp;&nbsp; &quot;minimum-stability&quot;: &quot;dev&quot;,<br />&nbsp;&nbsp;&nbsp; &quot;config&quot;: {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;bin-dir&quot;: &quot;bin/&quot;<br />&nbsp;&nbsp;&nbsp; }<br />}</code></div>
+
+<p>Save and quit the editor.</p>
+
+<p>The mink instructions from behat.org are pretty good at this point. I just did what they said to:</p>
+
+<p><code>$ curl http://getcomposer.org/installer | php</code></p>
+
+<p><code>$ php composer.phar install</code></p>
+
+<p>So far:
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130723/behat-mink-install.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130723/behat-mink-install.png?itok=IvPk6DdB" width="800" height="782" alt="" /></a></div></div></div></div></p>
+
+<p>I wanted to just be able to run behat from anywhere, so I made a link to behat in my bin by:</p>
+
+<p><code>$ ln -s /Users/ctheys/bin/behat_and_mink_src/bin/behat /Users/ctheys/bin/behat</code></p>
+
+<p>Use whatever your specific paths are.</p>
+
+<p>To test that my system would find the behat executable, I did:</p>
+
+<p><code>$ cd</code></p>
+
+<p><code>$ behat -h</code></p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130723/behat-h.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130723/behat-h.png?itok=K5pf2R63" width="800" height="562" alt="" /></a></div></div></div></div></p>
+
+<h4>Setting up a project to hold tests</h4>
+
+<p><code>$ cd ~/foo</code></p>
+
+<p><code>$ mkdir my_behat_project</code></p>
+
+<p><code>$ cd !$</code></p>
+
+<p>Initialize the project</p>
+
+<p><code>$ behat --init</code></p>
+
+<p>The missing steps were to edit the file features/bootstrap/FeatureContext.php to add a</p>
+
+<p><code>use Behat\MinkExtension\Context\MinkContext;</code></p>
+
+<p>and change the class FeatureContext extended to MinkContext to make the extends like like</p>
+
+<p><code>class FeatureContext extends MinkContext</code></p>
+
+<p>So I did</p>
+
+<p><code>$ vi features/bootstrap/FeatureContext.php</code></p>
+
+<p>made those changes, saved and quit.</p>
+
+<p>Here is what the diff looked like (you do not have to do a diff, but I thought the visual might help).
+<div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130723/mink-diff.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130723/mink-diff.png?itok=rYXGx2Ru" width="800" height="444" alt="" /></a></div></div></div></div></p>
+
+<p>Then I continued with their instructions and make a behat.yml and put in what they tell me (with the added base url line the instructions explain later to add).</p>
+
+<p><code>$ vi behat.yml</code></p>
+
+<p>Putting in</p>
+
+<div class="codeblock"><code># behat.yml<br />default:<br />&nbsp;&nbsp;&nbsp; extensions:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Behat\MinkExtension\Extension:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; base_url: http://en.wikipedia.org<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goutte: ~<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selenium2: ~</code></div>
+
+<p>Save and quit.</p>
+
+<p>Now I can see if it knows about the mink web steps by</p>
+
+<p><code>$ behat -dl</code></p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130723/behat-dl.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130723/behat-dl.png?itok=bXgbJwpG" width="550" height="316" alt="" /></a></div></div></div></div></p>
+
+<p>And, like the instructions say, I create a file: features/search.feature</p>
+
+<p><code>$ vi features/search.feature</code></p>
+
+<p>and put in it:</p>
+
+<div class="codeblock"><code># features/search.feature<br />Feature: Search<br />&nbsp; In order to see a word definition<br />&nbsp; As a website user<br />&nbsp; I need to be able to search for a word<br /><br />&nbsp; Scenario: Searching for a page that does exist<br />&nbsp;&nbsp;&nbsp; Given I am on &quot;/wiki/Main_Page&quot;<br />&nbsp;&nbsp;&nbsp; When I fill in &quot;search&quot; with &quot;Behavior Driven Development&quot;<br />&nbsp;&nbsp;&nbsp; And I press &quot;searchButton&quot;<br />&nbsp;&nbsp;&nbsp; Then I should see &quot;agile software development&quot;<br /><br />&nbsp; Scenario: Searching for a page that does NOT exist<br />&nbsp;&nbsp;&nbsp; Given I am on &quot;/wiki/Main_Page&quot;<br />&nbsp;&nbsp;&nbsp; When I fill in &quot;search&quot; with &quot;Glory Driven Development&quot;<br />&nbsp;&nbsp;&nbsp; And I press &quot;searchButton&quot;<br />&nbsp;&nbsp;&nbsp; Then I should see &quot;Search results&quot;</code></div>
+
+<p>And I can run the tests in that feature file by:</p>
+
+<p><code>$ behat features/search.feature</code></p>
+
+<p>(Because I added the use, and changed the extend.)
+I get the tests passed.
+Which is pretty cool. My first behat tests run.</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130723/pass.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130723/pass.png?itok=IGuWGI5Q" width="800" height="780" alt="" /></a></div></div></div></div></p>
+
+<h3>Next step for you</h3>
+
+<p>Try it on your system!
+Let me know if it worked or if you have any advice for me.</p>
+
+<h3>Next step for me</h3>
+
+<p>Try writing and running Behat tests next time I am manually testing a Drupal 8 core issue.</p>
+
+<p>-YesCT</p>
+</div>
+  </body>
+</html>
+

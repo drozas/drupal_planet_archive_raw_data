@@ -1,0 +1,34 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 25 Nov 2013 09:50:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 25 Nov 2013 09:50:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Cool module: Webform Scheduler
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/cool-module-webform-scheduler
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Cool module: Webform Scheduler</title>
+    <base href="http://www.webomelette.com/cool-module-webform-scheduler">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><a href="https://drupal.org/project/webform_scheduler" target="_blank">Webform Scheduler</a> is a cool module that allows you to schedule the opening and closing of a given webform. It works similarly to the <a href="https://drupal.org/project/scheduler" target="_blank">Scheduler</a> module except it does not publish/unpublish the node but simply opens/closes the webform on the node.</p>
+<p>I have come across this module only recently due to a request that was made for webforms to be automatically closed at a specified date. Needless to say, this module worked like a charm for me so I decided to show you. </p>
+<p>To get it going real quick, install like usual. With Drush if you go like <code>drush dl webform_scheduler</code> and <code>drush en webform_scheduler -y</code>, you are good to go. Make sure you have the <a href="https://drupal.org/project/webform" target="_blank">Webform</a> module installed though as it depends on it (<code>drush dl webform &amp;&amp; drush en webform -y</code> will take care of that).</p>
+<p>To use the webform scheduling functionality, edit the form settings of the webform you want (found at <code>node/[node-id]/webform/configure</code>) and below the <strong>Submission Access</strong> group you’ll find a new one called <strong>Scheduler</strong>:</p>
+<p><img src="/sites/default/files/images/20132111184858.png" alt="" class="push-left" /></p>
+<p><p>There you can specify at what date the form should be open and at what date it should be closed. And you can rest assured that if you decide to manually close the form, this will take precedence over any scheduling. And you can also choose what happens when the form does get closed due to the scheduling: deny access to the whole page or just the webform itself or even show the webform but hide its components. Now this is some nice features to have.</p>
+<p>And you have to admit the module is pretty powerful if you are dealing with a big website that needs to run many forms at the same time with various degree of overlap between their open times. </p>
+<p>There is one thing however I needed and the module does not provide. I dread the default Webform <code>drupal_set_message()</code>-like message that appears at the top of the page when you are on a closed webform node. What I needed was a similar message appearing in the same place where the actual form was when it was open. So with some custom code I got rid of the top message (thaank god) and altered the node view to display my message instead of the webform when the latter is closed. Can you think of a better alternative? Drop a line in the comments if you can. Cheers!</p>
+<p>Hope this helps.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/cool-drupal-module">Cool Modules</a></span> | <span class="field-item odd"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/cool-module-webform-scheduler" st_title="Cool module: Webform Scheduler" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/cool-module-webform-scheduler" st_title="Cool module: Webform Scheduler" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/cool-module-webform-scheduler" st_title="Cool module: Webform Scheduler" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

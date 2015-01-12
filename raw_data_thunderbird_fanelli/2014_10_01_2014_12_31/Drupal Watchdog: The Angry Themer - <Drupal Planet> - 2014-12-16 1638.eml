@@ -1,0 +1,45 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 16 Dec 2014 15:38:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 16 Dec 2014 15:38:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: The Angry Themer
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/angry-themer-sass-css
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: The Angry Themer</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/angry-themer-sass-css">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Column        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/field/image/4.1-AngryThemer-web.jpg" alt="Row of seeds" class="img-responsive img-thumbnail  margin-right" width="50%" align="right" />Sometimes CSS feels like it stands for “Complete Sh*t Show.”</p>
+<p>            Lucky for us, there’s a tool to help get our CSS under control. This tool is Sass; Simply Awesome Style Sheets. Well, actually: Syntactically Awesome Stylesheets.</p>
+<p>            Sass is a preprocessor for CSS. Just like PHP &amp; Drupal create Drupal’s Very Rich and Enhanced Markup™, Sass does the same for CSS, but properly, by taking your <span class="geshifilter"><code class="php geshifilter-php">.scss</code></span> (sass) files and turning them into super <span class="geshifilter"><code class="php geshifilter-php">.css</code></span> files, with variables, functions, and other fancy powers.</p>
+<p><em>.sass files -&gt; [magic thingie] -&gt; .css</em> </p>
+<h3>Install Sass</h3>
+<p>            Installing Sass on your machine is straightforward, if you’re not afraid of the terminal. Simply do a "<span class="geshifilter"><code class="php geshifilter-php">sudo gem install sass</code></span>".</p>
+<p>            Boom.</p>
+<p>            You’re ready to get Sassy.</p>
+<p>            But if the terminal gives you agita, you can install Sass with a GUI, a complete list can be found on sass-lang.com/install or LiveReload.com.</p>
+<p>            Here’s a video showing how this process works: <a href="http://wdog.it/4/1/video">http://wdog.it/4/1/video</a></p>
+<h3>Setup your Drupal theme</h3>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/print/4.1-partials.png" alt="How Sass works with multiple files" class="img-responsive img-thumbnail" width="20%" align="right" /><br />
+            In order to make Sass work in your theme, you need:</p>
+<ul><li>a Ruby <span class="geshifilter"><code class="php geshifilter-php">config.rb</code></span> file, for configuration;
+</li><li>a Sass folder for all your Sass files;
+</li><li>a CSS folder where all your compiled CSS files will be created.
+ </li></ul><h3>Say Good-bye to Your CSS Files</h3>
+<p>            First, accept that once you convert your CSS files to Sass, you will never again have to look into the CSS folder. </p>
+<blockquote><p>
+Your days of fiddling directly with CSS are over, and everything is gonna be OK.
+</p></blockquote>        </div>
+  </body>
+</html>
+

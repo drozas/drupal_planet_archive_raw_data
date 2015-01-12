@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 04 Jun 2014 11:13:01 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 04 Jun 2014 11:13:01 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Sina Salek Official Site: NEW Drupal Module : Hook Post Action
+Content-Transfer-Encoding: 8bit
+Content-Base: http://sina.salek.ws/content/new-drupal-module-hook-post-action
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Sina Salek Official Site: NEW Drupal Module : Hook Post Action</title>
+    <base href="http://sina.salek.ws/content/new-drupal-module-hook-post-action">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p style="text-align: justify;">Currently Drupal core does not offer any hook to do actions after a node/entity is inserted/updated/deleted in Database. So for example you can not send an email mentioning the node after the node is inserted because Drupal uses SQL transactions and the node is not yet fully written to database when hook node presave is called so if for any reason the transaction is rolled back, users will receive a false mail.</p><p>So <a href="https://drupal.org/project/hook_post_action">Hook Post Action</a> module introduces several new Drupal hooks to overcome this limitation</p><p><a href="http://sina.salek.ws/content/new-drupal-module-hook-post-action" target="_blank">read more</a></p>
+  </body>
+</html>
+

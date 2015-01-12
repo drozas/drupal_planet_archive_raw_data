@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 16 Sep 2014 21:03:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 16 Sep 2014 21:03:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Upgrading Your Modules
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/upgrading-your-modules
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Upgrading Your Modules</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/upgrading-your-modules">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Feature        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/field/image/4.1-UpgradingYourModules-web.jpg" alt="" class="img-responsive img-thumbnail" width="350" height="368" align="right" />            Drupal's philosophy regarding backward compatibility is "<a href="http://wdog.it/4/1/drop">the Drop is always moving</a>". In order to create a framework that is as performant, scalable, and extensible as possible, each major release of Drupal can and will make changes, often radical changes, to its developer APIs in order to provide optimal solutions for Drupal users and developers.</p>
+<p>            To this end, Drupal 8, far more-so than any previous release, has undergone extensive refactoring under the hood. It sports an object-oriented architecture powered by Symfony components. In addition, it utilizes modern PHP (5.4 or later) best-practices, a new Plugin API that provides consistency for pluggable pieces such as blocks and image styles, a revamped and complete Entity and Field API, a new Configuration API to provide fully deployable settings, and numerous other great improvements.</p>
+<p>            The flip-side is that while a <em>data</em> migration path is always provided between major versions of Drupal for a site's content and users (and in Drupal 8's case, from both Drupal 6 and Drupal 7), migrating the <em>code</em> of contributed and custom modules is left for developers to do.</p>
+<p>            This article will therefore provide some starting points for folks trying to port their modules from Drupal 7 to Drupal 8. (If you still have Drupal 6 modules kicking around, the "Coder Upgrade" sub-module of <a href="http://wdog.it/4/1/coder">Coder</a> will get you a fair chunk of the way towards converting them to Drupal 7.)</p>
+<p>            Note that as of this writing, Drupal 8 is still in active development. While the hope is that by the time this article is published, Drupal 8 will be at least in beta, and the APIs relatively stable (apart from API changes necessary to fix critical issues), information here could still change prior to D8’s final release.</p>        </div>
+  </body>
+</html>
+

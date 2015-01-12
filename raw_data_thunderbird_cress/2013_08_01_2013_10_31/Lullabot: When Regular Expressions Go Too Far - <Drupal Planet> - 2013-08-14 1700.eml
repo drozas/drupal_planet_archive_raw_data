@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 14 Aug 2013 16:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 14 Aug 2013 16:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Lullabot: When Regular Expressions Go Too Far
+Content-Transfer-Encoding: 8bit
+Content-Base: http://feedproxy.google.com/~r/lullabot/planet-feed/~3/Y5xt1-fiZfc/when-regular-expressions-go-too-far
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Lullabot: When Regular Expressions Go Too Far</title>
+    <base href="http://feedproxy.google.com/~r/lullabot/planet-feed/~3/Y5xt1-fiZfc/when-regular-expressions-go-too-far">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>This week, I finally learned how to fix a regular expression problem that has long vexed me and stumped my Googling skills. The details are tricky to explain, but the simplest example is easy to describe. In many cases, a regular expression would get the <em>last</em> instance of a match in a string instead of the <em>first</em> instance. This has caused me all sorts of headaches when using <code>preg_replace()</code> to touch up some HTML in Drupal.</p>
+  </body>
+</html>
+

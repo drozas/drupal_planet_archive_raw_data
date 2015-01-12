@@ -1,0 +1,146 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 16 Sep 2014 21:26:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 16 Sep 2014 21:26:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Ben's SEO Blog: Top SEO Factors for Drupal in 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.volacci.com/blog/top-seo-factors-drupal-2014
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Ben's SEO Blog: Top SEO Factors for Drupal in 2014</title>
+    <base href="https://www.volacci.com/blog/top-seo-factors-drupal-2014">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--name-field-image field--type-image field--label-hidden"><div class="field-items"><div class="field-item even" rel="schema:contentURL" resource="https://www.volacci.com/sites/default/files/styles/blog_main_image/public/blog/image/seo-ranking-factors-2014-crop.png?itok=zkGsre_B"><img typeof="foaf:Image" src="https://www.volacci.com/sites/default/files/styles/blog_main_image/public/blog/image/seo-ranking-factors-2014-crop.png?itok=zkGsre_B" width="1024" height="596" alt="" title="SEO ranking factors 2014" /></div></div></div><div class="field field--name-body field--type-text-with-summary field--label-hidden"><div class="field-items"><div class="field-item even" property="schema:articleBody content:encoded"><p>On Sept 15, 2014, Searchmetrics released their <a href="http://www.searchmetrics.com/en/knowledge-base/ranking-factors/">2014 Ranking Factors Study</a>. In it, they analyzed 10,000 search results and created correlations between characteristics of websites and their rankings. In other words, webites that rank high, do x. Sites that ranks low, do y. For this blog post, I’m leaving out things like Backlinks (factor 4, 9, 12, etc.) because - as far as I know - there just aren’t that many modules or settings that can help you with it.</p>
+<p>Now, with all the usual caveats about correlations not equaling causation, here’s a list of their top correlated ranking factors that can be influenced with the proper use of Drupal and/or a module. (A quick note about correlations. Um...NM. Just read <a href="http://www.dummies.com/how-to/content/how-to-interpret-a-correlation-coefficient-r.html">this</a>.)</p>
+<h2>Factor 1: Click-Through Rate</h2>
+<p style="margin-left: 40px;">People that click in the search engines, want to visit relevant and interesting websites.</p>
+<h3 style="margin-left: 40px;">Correlation: .65 (Pretty Strong)</h3>
+<p style="margin-left: 40px;">Now, take this with a grain of salt. Of course sites with high rankings have a high click-through rate. They're at the top of Google. Still, there are some things you can do to increase your click-through rate and that's never a bad thing.</p>
+<h3 style="margin-left: 40px;">How to influence your website's click-through rate in Google.</h3>
+<p style="margin-left: 40px;">Make your listing in Google as interesting as possible to make it stand out from everyone else. Use your target keyword at least once in the title (Factor 45) and in the description (Factor 40). Make sure the keyword is used as close to the beginning of the Title tag as you can (Factor 27 &amp; 29). Google bolds words that match the search so your listing will stand out.</p>
+<p><img alt="Google Search Appearance Overview" src="https://www.volacci.com/sites/default/files/blog-files/Google%20Search%20Appearance%20Overview.png" /></p>
+<h3 style="margin-left: 40px;">Module(s) that increase your click-through rate:</h3>
+<ul style="margin-left: 40px;"><li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/metatag">Metatag</a> - Write great, optimized Title Tags and great Meta Descriptions (Factor 35).</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/custom_breadcrumbs">Custom Breadcrumbs</a> - If they’re available, Google search results will list breadcrumbs instead of the URL. It looks nicer.<br /><img alt="Breadcrumbs" src="https://www.volacci.com/sites/default/files/blog-files/Breadcrumbs.jpg" /><br />source: loseyourmarbles.co</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/schemaorg">Schema.org</a> - Highlights events or product ratings that will make your listing stand out and give you extra links in the search results.</p>
+</li>
+</ul><h2>Factor 2: Relevant terms</h2>
+<p style="margin-left: 40px;">People search for topical content, not just specific keywords. Including keywords that are not exact or are on related topics can help your rankings.</p>
+<h3 style="margin-left: 40px;">Correlation: .34 (Weak)</h3>
+<h3 style="margin-left: 40px;">How to increase the number of SEO relevant terms on your Drupal website.</h3>
+<p style="margin-left: 40px;">Think about topics and organization based on topical areas, not just keywords. Create topical silos in your site content. Write your content using a list of terms, not just a single term.</p>
+<h3 style="margin-left: 40px;">Module(s) that increase the SEO relevant terms on your site:</h3>
+<ul style="margin-left: 40px;"><li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/documentation/modules/path">Path</a> &amp; <a href="https://www.drupal.org/project/pathauto">PathAuto</a>: Create paths that naturally organize your content by topical areas.<img alt="Pathauto example" src="https://www.volacci.com/sites/default/files/blog-files/Pathauto%20example.png" /></p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/documentation/modules/taxonomy">Taxonomy</a>: Tag content with appropriate terms. Tags link to term pages. Term pages link to related content. That connection helps.</p>
+</li>
+</ul><h2>Factor 3: Google +1</h2>
+<p style="margin-left: 40px;">People love to share great content so top ranking content tends to have a lot of shares. This also encompasses Facebook Shares (Factor 5), Facebook Total (Factor 6), Facebook Comments (Factor 7), Pinterest (Factor 8) Facebook Likes (Factor 10), and Tweets (Factor 11). Social is very important to SEO!</p>
+<h3 style="margin-left: 40px;">Correlation: .33 (Weak)</h3>
+<h3 style="margin-left: 40px;">How to increase your social shares on a Drupal website</h3>
+<p style="margin-left: 40px;">Write great, unique, sharable content. Make it easy to share by sharing it first. (Retweets and likes are easier than sharing it yourself.)</p>
+<h3 style="margin-left: 40px;">Module(s) that increase social sharing on Drupal</h3>
+<ul style="margin-left: 40px;"><li>
+<p style="margin-left: 40px;">There are <a href="https://www.drupal.org/search/site/social sharing?f[0]=im_vid_44%3A13028&amp;f[1]=&amp;f[2]=im_vid_3%3A52&amp;f[3]=drupal_core%3A103&amp;f[4]=sm_field_project_type%3Afull&amp;f[5]=ss_meta_type%3Amodule&amp;solrsort=iss_project_release_usage+desc">many social modules</a>! Pick one.</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/sharethis">ShareThis</a> is popular.</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/google_plusone">Google+ module</a><br /><img alt="Google+1 icon" src="https://www.volacci.com/sites/default/files/blog-files/google_plus_icon.png" /></p>
+</li>
+</ul><p style="margin-left: 40px;"><em><strong>By the way…if this blog post is helpful, please share it to your favorite social network! :) </strong></em></p>
+<p>(Note: Factor 4 - 18 are almost all either Linking or Social. These are very important factors that are outside the scope of this article.)</p>
+<h2>Factor 18: Number of Internal Links</h2>
+<p style="margin-left: 40px;">Linking to yourself is a good indicator of the quality of a piece of content.</p>
+<h3 style="margin-left: 40px;">Correlation: .16 (Very Weak)</h3>
+<h3 style="margin-left: 40px;">How to increase the number of internal links</h3>
+<p style="margin-left: 40px;">Link to your own great content! Use keywords in your internal links for extra credit. (factor 30)</p>
+<h3 style="margin-left: 40px;">Module(s) for internal linking on a Drupal website</h3>
+<ul style="margin-left: 40px;"><li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/alinks">aLinks</a> - Use this module judiciously. For example, set up links to your taxonomy term pages for your top keywords or topics.</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/documentation/modules/menu">Menu</a> - Build menus of great content. Use them throughout your site. Those links are valuable!</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/documentation/modules/taxonomy">Taxonomy</a> - As mentioned above, tag your content. Drupal automatically creates the links.</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/apachesolr">Solr's More Like This</a> - Adds links to related content using Apache Solr.</p>
+</li>
+</ul><h2>Factor 20: Keywords in the Body</h2>
+<p style="margin-left: 40px;">It’s just logical. If you want to rank for a certain term, you’ve got to have that term on the page.</p>
+<h3 style="margin-left: 40px;">Correlation: .15 (Very Weak)</h3>
+<h3 style="margin-left: 40px;">How to use keywords in the body</h3>
+<p style="margin-left: 40px;">Use the target keyword once or twice in the body field of each node. Don’t write like a robot, though. That’s bad.</p>
+<h3 style="margin-left: 40px;">Module(s) to increase keyword use in the body</h3>
+<ul style="margin-left: 40px;"><li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/seo_checker">SEO Compliance Checker</a> - Set up the rules to match these recommendations. SEO Checker will also look at other SEO-related things like use of keywords in the title or header.</p>
+</li>
+</ul><h2>Factor 21: HTML Length</h2>
+<p style="margin-left: 40px;">Longer articles tend to rank better than shorter ones. I’m going to lump in Text Character length (factor 22), Word Count (factor 23) here as they’re practically the same correlation and meaning.</p>
+<h3 style="margin-left: 40px;">Correlation: .14 (Very Weak)</h3>
+<h3 style="margin-left: 40px;">How to increase HTML Length</h3>
+<p style="margin-left: 40px;">Write longer content. (Seems pretty obvious...)</p>
+<h3 style="margin-left: 40px;">Modules(s) to help you write longer content</h3>
+<ul style="margin-left: 40px;"><li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/rules">Rules</a> or <a href="https://www.drupal.org/project/workbench">Workbench</a> would allow you to create workflows that require certain body length.</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/field_validation">Field Validation</a> module could be set to require a certain length. Seems draconian to me but certainly possible.</p>
+</li>
+</ul><h2>Factor 24: Site speed</h2>
+<p style="margin-left: 40px;">People don’t like to wait so don’t make them!</p>
+<h3 style="margin-left: 40px;">Correlation: .11 (Very Weak)</h3>
+<h3 style="margin-left: 40px;">How to increase your Drupal 7 website speed</h3>
+<p style="margin-left: 40px;">Make your pages lean and mean. Use sitespeed testers available online such as in Google Webmaster Tools or (my favorite) in Chrome (hit command-i). Fix any problems or suggestions.</p>
+<h3 style="margin-left: 40px;">Module(s) that speed up Drupal 7</h3>
+<ul style="margin-left: 40px;"><li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/advagg">Advanced CSS/JS Aggregation</a> + HTTP Parallel Request &amp; Threading Library</p>
+</li>
+<li>
+<p style="margin-left: 40px;"><a href="https://www.drupal.org/project/cdn">CDN</a></p>
+</li>
+<li>
+<p style="margin-left: 40px;">Caching like <a href="https://www.drupal.org/project/varnish">Varnish</a> or <a href="https://www.drupal.org/project/memcache">Memcache</a></p>
+</li>
+</ul><p style="margin-left: 40px;"> </p>
+<p style="margin-left: 40px;">That’s it! Covering those 21 factors (7 major factors with another 14 mixed in for good measure) should be fairly straightforward for any Drupal 7 website owner. There are other factors as well but with correlations weaker than very weak, I’m just not sure they matter that much. Read about <a href="http://www.dummies.com/how-to/content/how-to-interpret-a-correlation-coefficient-r.html">correlations here</a>, by the way.</p>
+<h2>Miscellaneous SEO Factors and the Drupal Modules that affect them</h2>
+<p style="margin-left: 40px;">Here’s a quick shotgun list of a lot of the remaining low-correlation factors and modules that might help.</p>
+<ul style="margin-left: 40px;"><li>
+<p style="margin-left: 40px;">Time on Site - <a href="https://www.drupal.org/project/apachesolr">Solr's More Like This</a> Module</p>
+</li>
+<li>
+<p style="margin-left: 40px;">Presence of H2 - Theming</p>
+</li>
+<li>
+<p style="margin-left: 40px;">Image Count (the more the better) - <a href="https://www.drupal.org/project/media">Media</a></p>
+</li>
+<li>
+<p style="margin-left: 40px;">Presence of H1 - Theming (Don’t put the H1 on the site name or logo, please!)</p>
+</li>
+<li>
+<p style="margin-left: 40px;">Video Integration - <a href="https://www.drupal.org/project/media_youtube">YouTube add-on module for Media</a> (and many others)</p>
+</li>
+</ul><p> </p>
+<p>Did I miss anything? Let me know in the comments.</p>
+<p>Here's the full infographic if you'd like to see for yourself:</p>
+</div></div></div><div class="field field--name-field-subtitle field--type-text field--label-hidden"><div class="field-items"><div class="field-item even" property="schema:alternativeHeadline">We look at the searchmetrics 2014 SEO factors and apply them to Drupal 7.</div></div></div><div class="field field--name-field-terms field--type-taxonomy-term-reference field--label-hidden"><div class="field-items"><a href="/drupal-seo" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal seo</a>, <a href="/planet-drupal-teasers" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div><div class="field field--name-field-file field--type-file field--label-hidden"><div class="field-items"><div class="field-item even" rel="" resource="https://www.volacci.com/sites/default/files/blog-files/seo-ranking-factors-2014-big.png"><span class="file"><img class="file-icon" alt="" title="image/png" src="/modules/file/icons/image-x-generic.png" /> <a href="https://www.volacci.com/sites/default/files/blog-files/seo-ranking-factors-2014-big.png" type="image/png; length=212714">seo-ranking-factors-2014-big.png</a></span></div></div></div><span rel="schema:url" resource="/blog/top-seo-factors-drupal-2014" class="rdf-meta"></span><span property="schema:name" content="Top SEO Factors for Drupal in 2014" class="rdf-meta"></span>
+  </body>
+</html>
+

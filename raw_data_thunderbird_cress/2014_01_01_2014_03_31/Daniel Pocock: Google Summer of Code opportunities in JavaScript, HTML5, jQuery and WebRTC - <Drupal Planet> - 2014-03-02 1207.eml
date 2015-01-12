@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 02 Mar 2014 12:07:25 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 02 Mar 2014 12:07:25 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Daniel Pocock: Google Summer of Code opportunities in JavaScript, HTML5, jQuery and WebRTC
+Content-Transfer-Encoding: 8bit
+Content-Base: http://danielpocock.com/google-summer-of-code-opportunities-in-javascript-html5-jquery-webrtc-jscommunicator
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Daniel Pocock: Google Summer of Code opportunities in JavaScript, HTML5, jQuery and WebRTC</title>
+    <base href="http://danielpocock.com/google-summer-of-code-opportunities-in-javascript-html5-jquery-webrtc-jscommunicator">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="http://www.webrtc.org">WebRTC</a> is one of the highlights of HTML5.  The latest stable releases of Google Chrome (including the free <a href="http://packages.debian.org/chromium">Chromium browser</a>) and <a href="http://www.mozilla.org">Firefox</a> include support for this technology and although the specifications are still being finalized, this is the time when developers can start preparing the first generation of web-apps that will define the future of this technology.</p>
+<p><a href="http://jscommunicator.org"><img src="http://jscommunicator.org/sites/jscommunicator.org/files/woman-webcam.jpg#overlay-context=" /></a></p>
+<p>The <a href="http://jscommunicator.org">JSCommunicator</a> project aims to make it easy to integrate WebRTC into existing web applications.</p>
+<p>It provides a high-level API on top of the popular <a href="http://jssip.net">JsSIP SIP stack for JavaScript</a>.  The JSCommunicator API provides basic dialing and call control features, allowing you to focus on the application level rather than the SIP level.  The <a href="https://github.com/opentelecoms-org/jscommunicator/blob/master/config-sample.js">configuration file</a> suggests many possible ways it can be deployed and customized without any coding at all.</p>
+<p>The popular <a href="http://www.drucall.org">DruCall module for the Drupal CMS</a> provides a practical demonstration of how <em>JSCommunicator</em> can be embedded in other products, multiplying the power of WebRTC for millions of other web developers, bloggers, online shops and other sites.  This part of the <a href="http://drupalcode.org/sandbox/pocock/1926052.git/blob/HEAD:/drucall.module#l68">DruCall source code provides a practical demonstration of how JSCommunicator integrates with PHP</a> and this demonstrates how <a href="http://drupalcode.org/sandbox/pocock/1926052.git/blob/HEAD:/js/drucall.js">we extract the parameters from PHP in the JavaScript and convert them to the JSCommunicator configuration object</a>.</p>
+<h3>Practical deployments of WebRTC today</h3>
+<p>The student selected for this GSoC project will focus on two practical, real-world deployments of <em>JSCommunicator</em>:</p>
+<ul><li>The popular new <a href="https://rtc.debian.org">Debian Developer WebRTC portal at <em>https://rtc.debian.org</em></a></li>
+<li>The <a href="https://freephonebox.net">FreePhoneBox.net</a></li>
+</ul><p>It is particularly important to think about ways to make this technology useful for the Debian Developer community in the pursuit of <a href="https://www.debian.org/social_contract">Debian's work</a>.</p>
+<h3>Not just for Debian</h3>
+<p>A communication product is not much use if there is nobody to talk to.</p>
+<p>The optimal outcome of this project may involve helping two or three additional free software communities to build portals similar to <a href="https://rtc.debian.org">https://rtc.debian.org</a> so that they can interact with Debian and each other using <a href="http://www.rtcquickstart.org">Federated SIP</a>.  As <a href="http://en.wikipedia.org/wiki/Metcalfe%27s_law">Metcalfe's Law explains</a>, this outcome would be a win-win situation for everybody.</p>
+<p><a href="http://en.wikipedia.org/wiki/Metcalfe%27s_law"><img alt="Metcalfe's Law - Network effect" src="http://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Metcalfe-Network-Effect.svg/220px-Metcalfe-Network-Effect.svg.png" /></a></p>
+<h3>Mentors needed too</h3>
+<p>The more diverse the mentoring community, the more positive outcomes we can achieve with this project.</p>
+<p>If you would like to be part of a mentoring team for this project, please email me and subscribe to the <a href="http://lists.alioth.debian.org/mailman/listinfo/soc-coordination">Debian SOC co-ordination email list</a>.  There is no strict requirement for all mentors in the team to be full Debian Developers and emerging technology like this clearly needs people with strengths in a range of different areas.</p>
+<h3>Get started now</h3>
+<p>For general ideas about getting selected for Google Summer of Code, please see the comments at the bottom of <a href="/google-summer-of-code-data-science-machine-learning-ganglia">my earlier blog post about Ganglia projects</a></p>
+<p>For this project in WebRTC in particular, please:</p>
+<ul><li>Review the <a href="https://wiki.debian.org/SummerOfCode2014/Projects#SummerOfCode2014.2FProjects.2FWebRTC_portal_for_the_Debian_community.WebRTC_portal_for_the_Debian_community">project brief on the Debian wiki</a></li>
+<li>Discuss your ideas on the <a href="https://groups.google.com/group/jssip">JsSIP Google group</a></li>
+<li>Send an email to introduce yourself on the <a href="http://lists.alioth.debian.org/mailman/listinfo/soc-coordination">Debian SOC co-ordination email list</a> and give a link to your post on the JsSIP list</li>
+<li><b>You must</b> complete a coding test.  Please see the <a href="https://github.com/opentelecoms-org/jscommunicator/issues">open bug list for JSCommunicator</a>, complete one of these tasks and submit a pull request on Github.  Please send an email to the <a href="https://groups.google.com/group/jssip">JsSIP Google group</a> to discuss your pull request.</li>
+<li>Explain what features you would create during the summer</li>
+<li>Explain which other tools or libraries you would like to use</li>
+<li>Give examples of previous work you have done with HTML and JavaScript</li>
+<li>Explain how <em>your</em> participation will benefit Debian, free software and the wider world.  Give some practical examples.</li>
+<li>If you are interested in other JavaScript and jQuery opportunities for GSoC 2014, please also read more about the <a href="https://github.com/ganglia/monitor-core/wiki/GSoC-2014-project-ideas">web components in the Ganglia project</a> - if you apply for both Debian and Ganglia, you only have to complete one coding test as part of your application.</li>
+</ul></div></div></div>
+  </body>
+</html>
+

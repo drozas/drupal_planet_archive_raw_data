@@ -1,0 +1,56 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 30 Jul 2014 19:25:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 30 Jul 2014 19:25:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal 8 and iOS: REST Export for Drupal 8 View
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tntfoss-vivekvpandya.rhcloud.com/node/64
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal 8 and iOS: REST Export for Drupal 8 View</title>
+    <base href="http://tntfoss-vivekvpandya.rhcloud.com/node/64">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/64/title/en/rss">REST Export for Drupal 8 View</span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/64/body/en/rss">
+    <div class="field-items">
+          <div class="field-item" property="schema:text"><h3><strong><span>Swiss knife of Drupal 8’s REST api</span></strong></h3>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">Hi! Drupal Community.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">As we all are working very hard for upcoming major release I am feeling excited to write this. This blog is all about <b>REST Export </b>feature of Drupal 8’ view. Let me first brief you about what is the REST api and than I will explain you how REST Export is important for building custom REST api for your Drupal 8.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">REST (Representational State Transfer) is a web service architecture to expose your resources to outer world. It follows <b>http</b> architecture to expose the resources of your web site i.e you have </span><span style="font-family: Menlo; letter-spacing: 0px;">GET, POST, PATCH,DELETE</span><span style="letter-spacing: 0.0px"> etc methods to manipulate resources with out web interface. In context to Drupal , a node will have </span><span style="font-family: Menlo; letter-spacing: 0px;">GET</span><span style="letter-spacing: 0.0px"> method that will require node id and it will return you details related to that node in </span><span style="font-family: Menlo; letter-spacing: 0px;">XML, JSON or HAL + JSON </span><span style="letter-spacing: 0.0px">format. If you have ever used REST api for some famous web services like twitter, facebook then you will find those API very well defined for example </span><span style="font-family: Menlo; letter-spacing: 0px;"> GET on /status</span><span style="letter-spacing: 0.0px"> will give you current status details and </span><span style="font-family: Menlo; letter-spacing: 0px;">GET on /status/comments </span><span style="letter-spacing: 0.0px">will give you comments posted on your current status. In context to Drupal we should get node details with </span><span style="font-family: Menlo; letter-spacing: 0px;">GET on  /node/{id}</span><span style="letter-spacing: 0.0px"> and comments on particular node with </span><span style="font-family: Menlo; letter-spacing: 0px;">GET on /node/{id}/comments</span><span style="letter-spacing: 0.0px">. In Drupal 8 we have first REST endpoint but we don’t have second. Drupal has opt for different approach. In Drupal you can use contextual filters on view to filter content as per your parameters passed in URL . The same concept we can applies to REST Export . We can attach a REST Export to a view that only show comments with contextual filter with nodeID as parameter. So the rest export will return XML or JSON for comments related to particular node.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">Here is a screenshot for it.</span></p>
+<img alt="Contextual Filter with REST Export" data-editor-file-uuid="5a4c478c-ebf5-4e29-894a-7425a9a49e62" height="344" src="http://tntfoss-vivekvpandya.rhcloud.com/sites/default/files/inline-images/contextualFilter.png" width="1198" /><p> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">We can use REST Export with taxonomy_terms for particular vocabulary as parameter. This concept will make Drupal 8 REST api robust and it also provides good example where view modules and REST module works to gather to provide developer flexibility to develop custom REST api for their Drupal site.</span></p>
+</div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix" data-quickedit-field-id="node/64/field_tags/en/rss">
+  <h3 class="field-label">Tags: </h3>
+  <ul class="links">
+          <li class="taxonomy-term-reference-0"><a href="/taxonomy/term/3" property="schema:about">Drupal Planet</a></li>
+      </ul>
+</div>
+<div class="field field-node--comment field-name-comment field-type-comment field-label-hidden" data-quickedit-field-id="node/64/comment/en/rss">
+    <div class="field-items">
+          <div class="field-item" rel="schema:comment"><section id="comments" class="comment-wrapper">
+  
+  
+
+  
+</section>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

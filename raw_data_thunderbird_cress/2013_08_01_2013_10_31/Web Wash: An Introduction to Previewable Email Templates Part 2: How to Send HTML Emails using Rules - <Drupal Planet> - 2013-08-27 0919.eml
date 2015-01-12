@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 27 Aug 2013 08:19:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 27 Aug 2013 08:19:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: An Introduction to Previewable Email Templates Part 2: How to Send HTML Emails using Rules
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/introduction-previewable-email-templates-part-2-how-send-html-emails-using-rules
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: An Introduction to Previewable Email Templates Part 2: How to Send HTML Emails using Rules</title>
+    <base href="http://webwash.net/tutorials/introduction-previewable-email-templates-part-2-how-send-html-emails-using-rules">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>In <a href="http://webwash.net/node/162">part one</a>, I introduced you to <a href="https://drupal.org/project/pet">Previewable Email Templates</a> or PET for short. We learnt how to create email templates, preview and send them directly within Drupal.</p>
+
+<p>In this tutorial, we'll create a rule action that sends an email when a user account has been canceled and deleted. Also, the email will be sent as HTML instead of plain text.</p>
+
+<p>It's important to note that Drupal can notify users when their account has been canceled. You don't need to setup Rules or PET to send the email. However, it's off by default, just head over to the "Accounts settings" page and check the "Notify user when account is canceled." checkbox to enable the notification.</p>
+
+<p>But as a demonstration, we'll recreate this functionality using PET and Rules.</p>
+
+<p>It's important to note that you can <strong>not</strong> translate email templates using PET into other languages. If you need multilingual support then look at <a href="https://drupal.org/project/mail_edit">Mail Editor</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

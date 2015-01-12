@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 23 Dec 2013 04:30:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 23 Dec 2013 04:30:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: groups.drupal.org frontpage posts: Want to help design the next iteration of Drupal's Automated Testing infrastructure?
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/388908
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>groups.drupal.org frontpage posts: Want to help design the next iteration of Drupal's Automated Testing infrastructure?</title>
+    <base href="https://groups.drupal.org/node/388908">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>On October 18th, 2007, Chad Phillips (hummonk) made an initial commit to the ‘Project Issue File Test’ module, with the description “initial commit of an integrated file testing platform for project issue module”.  This kicked off the pursuit of automated testing integration between drupal.org and qa.d.o (then referred to as testing.drupal.org).  In 2009, Jimmy Berry (boombatower) performed a significant overhaul and redesign of the system with the release of PIFT/PIFR 2.0, introducing a number of structural and architectural changes and improvements.</p>
+<p>By the time Drupal 8 is launched, we’ll have been running for 5 years on the current architecture, and almost 6½ years on the project.  In that time it has served us well; but unfortunately the code has not kept up with technology and the changing needs of the Drupal community.  The D8 launch brings with it a host of new requirements, such as an urgent need to test against PHP 5.4 and PHP 5.5; while simultaneously supporting PHP 5.3 for legacy D6/D7 contrib projects.</p>
+<p>While we are committed to providing support for different PHP versions within the existing 6.x-2.x PIFR codebases (i.e. selected based on per core Drupal version), the ever-increasing demand for new features continues to stretch us beyond the design intent of the current system.  Each new change brings with it the added risk of instability, at a time when stability is critical as the project drives towards a D8 beta release.  As such, my preference would be to feature-freeze PIFR 6.x-2.x after the 'multiple PHP versions' requirement is delivered, and focus all future attention on the development of a new iteration of Drupal’s Continuous Integration tools.</p>
+<p>I have a plan for that next iteration, one that leverages a blend of industry-standard 'Not-Invented-Here' tools with new modern approaches; providing a platform which will increase our testing capabilities and overall flexibility while decreasing our development cycle for new features and functionality ... all assembled in parallel to the existing environment in order to ensure the least possible disruption to the D8 development cycle.  An outline of this plan was introduced at the Dev-Ops summit at BADCamp this fall, where it received general approval and an offering of support from numerous participants.</p>
+<p>At that same event, I volunteered to help coordinate activities related to this initiative, and expect to be able to start formally structuring things sometime in the early January time frame.  An overview of the entire plan will have to wait for a future post ... but in the meantime, think "PIFT -&gt; Jenkins -&gt; Docker -&gt; PIFR", where the PIFR worker functionality is slowly augmented or replaced by specialized job workers over time, and the Jenkins server is potentially used as a generic job dispatcher for other future 'external' d.o features as needed.</p>
+<p>Of course, this is an ambitious undertaking; and as such, it can only succeed through the support of volunteers within the community, people like you.  To get involved, please take a moment to join the g.d.o group at <a href="https://groups.drupal.org/drupal-org-testing-infrastructure" title="https://groups.drupal.org/drupal-org-testing-infrastructure">https://groups.drupal.org/drupal-org-testing-infrastructure</a>, and join the discussion below ... being sure to point out any relevant experience or specific area of interest that you'd like to help out in.  Alternatively, feel free to email me via my <a href="https://drupal.org/user/148199/contact">drupal.org contact form (<a href="https://drupal.org/user/148199/contact" title="https://drupal.org/user/148199/contact">https://drupal.org/user/148199/contact</a>)</a>.</p>
+<p>I look forward to hearing your thoughts!</p>
+  </body>
+</html>
+

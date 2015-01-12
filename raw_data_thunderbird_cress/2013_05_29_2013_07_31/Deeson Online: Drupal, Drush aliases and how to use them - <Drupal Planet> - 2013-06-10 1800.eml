@@ -1,0 +1,71 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 10 Jun 2013 17:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 10 Jun 2013 17:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Drupal, Drush aliases and how to use them
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/drupal-drush-aliases-and-how-use-them
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Drupal, Drush aliases and how to use them</title>
+    <base href="http://deeson-online.co.uk/labs/drupal-drush-aliases-and-how-use-them">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>drush aliases allow you to run a drush commands on your local server but actually execute the command on a remote server.  This is a real time saver when working locally and then you want to do something on the remote server.  Your specific workflows will depend on your particular setup but, as an example on Acquia dev cloud, how about pushing code up to your remote dev server and running updatedb in two commands.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">$ git push origin
+$ drush <span style="color: #339933;">@</span>site<span style="color: #339933;">.</span>dev updatedb <span style="color: #339933;">-</span>y</pre></div>
+<p>Setting up your local computer to use an alias needs a little configuration. Alias configuration files can go into a .drush folder in your home directory.  You can add as many alias files as you like here with the naming convention: </p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">sitename<span style="color: #339933;">.</span>aliases<span style="color: #339933;">.</span>drushrc<span style="color: #339933;">.</span>php</pre></div>
+<p>Each file can contain any number of aliases descriptions which are just entries in a multi dimensional array, the key of which is the subitem for that alias.  For example, an alias file called mysite.aliases.drushrc.php with one dev entry like this ...</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000088;">$aliases</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'dev'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+  <span style="color: #0000ff;">'parent'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'@parent'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'site'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'mysite'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'env'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'dev'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'root'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'/var/www/html/mysite.dev/docroot'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'remote-host'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'example.myserver.com'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'remote-user'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'mysite'</span><span style="color: #339933;">,</span>
+<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div>
+<p>... gives one alias which is accessed via the @mysite.dev drush argument. For example,</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">drush <span style="color: #339933;">@</span>mysite<span style="color: #339933;">.</span>dev status</pre></div>
+<p>There is also a drush command to get you started on producing an alias drushrc file:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">drush sa <span style="color: #009900;">&#91;</span>uri<span style="color: #009900;">&#93;</span></pre></div>
+<h2>Holy Cow! What else can I do with drush aliases?</h2>
+<p>I am glad you asked.  How about download the remote db in one command ...</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">drush <span style="color: #339933;">@</span>mysite<span style="color: #339933;">.</span>dev sql<span style="color: #339933;">-</span>dump <span style="color: #339933;">&gt;</span> <span style="color: #339933;">/</span>tmp<span style="color: #339933;">/</span>dbdump<span style="color: #339933;">.</span>sql</pre></div>
+<p><em>Note: don't use --result-file here as that will put the sql file on the remote server!</em></p>
+<p>How about bring all the remote files down to your local system? From the root of the site on your local install run ...</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">drush rsync <span style="color: #339933;">@</span>mysite<span style="color: #339933;">.</span>dev<span style="color: #339933;">:</span>sites<span style="color: #339933;">/</span><span style="color: #b1b100;">default</span><span style="color: #339933;">/</span>files<span style="color: #339933;">/</span> sites<span style="color: #339933;">/</span><span style="color: #b1b100;">default</span><span style="color: #339933;">/</span>files<span style="color: #339933;">/</span></pre></div>
+<p><em>Note: Run <strong>drush help rsync</strong> for help with this one!</em></p>
+<h2>Notes on Acquia and Drush aliases</h2>
+<p>We often use Acquia dev cloud to host our client's sites.  On Acquia hosted sites setting up local drush aliases are made very simple.  Under the cloud menu on the subscription tab there is a utility link which describes exactly how to add the alias files to your local computer.  </p>
+<p>Acquia executes drush commands using drush 4 by default. To use drush 5, you'll need to edit your alias files in the .drush folder and for each environment add a path-aliases entry which describes which drush script to execute.  The precise syntax is shown below.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000088;">$aliases</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'dev'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+  <span style="color: #0000ff;">'parent'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'@parent'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'site'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'mysite'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'env'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'dev'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'root'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'/var/www/html/mysite.dev/docroot'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'remote-host'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'mysite.com'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'remote-user'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'mysite'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'path-aliases'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'%drush-script'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'drush5'</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div>
+<h2>Other reading</h2>
+<p>This link shows all the goodness that can be put into a sites drushrc file ... <a href="http://drush.ws/examples/example.aliases.drushrc.php">http://drush.ws/examples/example.aliases.drushrc.php</a></p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/drupal-drush-aliases-and-how-use-them">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Drupal, Drush aliases and how to use them</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/john-ennew">John Ennew</a> | 10th June 2013</div></div></div>
+  </body>
+</html>
+

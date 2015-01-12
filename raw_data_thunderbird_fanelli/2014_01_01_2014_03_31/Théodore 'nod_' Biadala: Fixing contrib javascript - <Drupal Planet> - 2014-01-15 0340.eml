@@ -1,0 +1,120 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 15 Jan 2014 02:40:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 15 Jan 2014 02:40:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Théodore 'nod_' Biadala: Fixing contrib javascript
+Content-Transfer-Encoding: 8bit
+Content-Base: http://read.theodoreb.net/2014/fixing-contrib-javascript.html
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Théodore 'nod_' Biadala: Fixing contrib javascript</title>
+    <base href="http://read.theodoreb.net/2014/fixing-contrib-javascript.html">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>In my previous post about <a href="/2014/life-of-js-maintainer.html" title="Life of a JS maintainer">javascript maintainership</a>,
+I stated that <q cite="/2014/life-of-js-maintainer.html">If
+core JS doesn’t get in your way, as far as I’m concerned,
+I did my job</q>. While true, it’s pretty much Level 0 of my ambition. I
+do have an overreaching <em>Evil plan</em><sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> <sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> and first I want to talk about
+where it comes from.</p>
+
+<h2 id="backstory">Backstory</h2>
+
+<p>I started contributing to Drupal in 2011, I’d been using it for a couple of
+years but didn’t really run into problems. Then I got a job to work on a
+website for a pretty big brand and with some fairly complex mapping
+functionalities. They needed to draw lines on a map so I used the OpenaLayer
+module and a ton of custom code. The Drupal integration of the OpenLayers
+library does some pretty wierd stuff and I wasn’t really happy about it so I
+send a few patches and eventually became maintainer of the module — and found
+out that it’s hard to maintain a big module with lots of users.</p>
+
+<p>Those maps were showing up in views, <a href="http://www.kalenji-running.com/fr-FR/calendrier-des-courses">ajax views</a> (it looks
+broken, probably is, no idea). I ran into various javascript bugs of the
+ctools module. Sent patches. Thankfully most of them made it in so I
+didn’t have to worry about a patched ctools. The jQuery UI patch for ctools
+modal was the most fun, had a solution that <a href="https://drupal.org/node/1397370#comment-5520722" title="Make modal.js use jQuery dialog">monkey-patched the JS like crazy</a>.</p>
+
+<p>At that point I was pretty horrified by the quality of javascript code
+in contrib and there were a number of problems I would see in pretty much
+every contrib module I’d use. So I looked into core javascript — originally
+to understand why is OpenLayers <a href="http://drupalcode.org/project/openlayers.git/blob/f0eadcdf046ecdc70de4bdc72423f0d1df6d12e9:/js/openlayers.js#l95" title="openlayers.js:95">recursively calling
+<code>Drupal.attachBehaviors</code></a> — it became
+obvious that all the modules copy pasted some piece of core JS and tweaked it.</p>
+
+<p>To fix contrib I had to fix core.</p>
+
+<h2 id="evil-plan">Evil plan</h2>
+
+<p>Drupal powers some huge sites out there so improving Drupal actually improves
+the web. My real ambition is to use Drupal to make the web a better place and
+stop seeing horrible javascript everywhere.</p>
+
+<p>Originally my plan was for Drupal 9 because there was a huge amount of work.
+That’s until my <a href="https://drupal.org/node/1400310" title="Issue #1400310: Use of .parents() is really .closest()">first big clean-up patch</a> was committed by Dries 14
+days after I opened the issue. Seeing how quickly that got in,
+there was hope so I put the plan in motion.</p>
+
+<h3 id="achieve-good">Achieve Good</h3>
+
+<p>The very first thing is to gain people’s trust, and the best way to do that
+in Drupal is to fix <a href="https://drupal.org/project/issues/search/drupal?version[0]=8.x&amp;status[0]=1&amp;status[1]=4&amp;status[2]=8&amp;status[3]=13&amp;status[4]=14&amp;status[5]=15&amp;priorities[0]=400&amp;categories[0]=1" title="Drupal 8 critical bugs">critical bugs</a> and <a href="https://groups.drupal.org/node/394113" title="Learn more about Drupal 8 and help the wider Drupal community by writing up a Change Record">write change notices</a>. Recruit a minion and make him work on a complex <a href="https://drupal.org/node/1279226#comment-6363796" title="Issue #1279226: jQuery and Drupal JavaScript libraries and settings are output even when no JS is added to the page">major
+performance bug</a>, refresh the aging JS and get it to follow best
+practices or help out a <a href="https://drupal.org/community-initiatives/drupal-core/spark" title="Spark: Authoring Experience++ in Drupal 8 core">review-starved team</a> so they owe you — don’t
+worry they know how to “Friendly blackmail” too.</p>
+
+<h3 id="plant-evil">Plant Evil</h3>
+
+<p>Now you have some opportunities to push for and use <em>trojan patches</em><sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup>:</p>
+
+<ul>
+  <li>The very first <a href="http://drupalcode.org/project/drupal.git/blob/c478bf4062e910357c2dd89c9dd069ffd2d959a2:/core/themes/seven/js/mobile.install.js" title="seven/js/mobile.install.js">standalone JS script</a>,
+look Ma! no jQuery! and very soon a no-jQuery script will be available to
+<a href="https://drupal.org/node/1979468" title="Issue #1979468: '.active' from linkGenerator(), l() and theme_links() forces an upper limit of per-page caching for all content containing links">add the <code>active</code> class on links</a>.</li>
+  <li>Replace collapsible fieldsets with the <code>&lt;details&gt;</code> element and use that
+to <a href="https://drupal.org/node/1851414#comment-7935105" title="Issue #1851414: Convert Views to use the abstracted dialog modal">take out the horribly annoying javascript animation of collapsible
+fieldsets</a> in our polyfill because after all,
+Chrome doesn’t animate <code>&lt;details&gt;</code>. It was also causing a bug in this case.</li>
+</ul>
+
+<h2 id="new-world-order">New world order</h2>
+
+<p>In the end, what does it mean for contrib? Here is what I hope contrib
+authors will do:</p>
+
+<ol>
+  <li><strong><a href="https://drupal.org/node/1955232" title="JSHint settings">run JSHint</a> and fix every. single. error.</strong></li>
+</ol>
+
+<p>there is not <em>2.</em>, I know you guys are just as lazy as me. JSHint will
+find bugs and it will make you a better JS developer. I’m not shooting for
+perfect, I only wish that one day I’ll be able to say <q>Drupal javascript?
+It’s not just good, it’s good enough!</q>. For the smartypants™ that already
+run JSHint, there is a follow-up post talking about jQuery,
+<a href="http://vanilla-js.com/" title="Vanilla JS is a fast, lightweight, cross-platform framework for building incredible, powerful JavaScript applications.">Vanilla JS</a> and what you can do if you have time to spare.</p>
+
+<h3 id="run-jshint-if-you-dont-know-how-to-fix-a-jshint-error-ping-me">Run JSHint. If you don’t know how to fix a JSHint error, ping me.</h3>
+
+<p>Help Drupal make the web a better place, thank you.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>It’s not really an “Evil plan”, it’s because “Good plan” just doesn’t sound as good. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>Sure, trust that guy <sup id="fnref:1:1"><a href="#fn:1" class="footnote">1</a></sup>, see what happens. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>Better known as <q>excuse to be able to say <q>but look we’re already doing it like that there, it’s for consistency</q></q> patch. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+  </body>
+</html>
+

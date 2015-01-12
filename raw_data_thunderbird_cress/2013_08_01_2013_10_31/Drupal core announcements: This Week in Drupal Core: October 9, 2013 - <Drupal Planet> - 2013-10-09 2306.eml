@@ -1,0 +1,91 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 09 Oct 2013 22:06:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 09 Oct 2013 22:06:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This Week in Drupal Core: October 9, 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/343258
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This Week in Drupal Core: October 9, 2013</title>
+    <base href="https://groups.drupal.org/node/343258">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Welcome to the third edition of <a href="https://groups.drupal.org/taxonomy/term/98113">This week in Drupal Core</a>!</p>
+<h2>What's new in Drupal 8?</h2>
+<h3>Goodbye, legacy BC routing support!</h3>
+<p>This week's most exciting news: After five months of work, we've <a href="https://drupal.org/node/2106709">removed the legacy BC support</a> from the routing system. This means that module developers testing Drupal 8's APIs will quickly discover the need to upgrade their <code>hook_menu()</code> page callbacks to route declarations and page controllers, and we can surface gaps in the new system. Next steps: <a href="https://drupal.org/node/2107533">remove the legacy menu router entirely</a> and <a href="https://drupal.org/node/2046367">fix core's routing API documentation</a> to clean up stale, inaccurate information and provide clearer explanations of the new system.</p>
+<h3>Migrate and D8 documentation at PNWDS</h3>
+<p>The <a href="http://2013.pnwdrupalsummit.org/">Pacific Northwest Developer Summit</a> was also held over the weekend. Core developers kicked off work on the <a href="https://drupal.org/sandbox/chx/2105305">new Drupal 8 data migration system</a> (which will replace the existing database upgrade system and allow direct upgrades from D6 to D8). Documentation lead <a href="https://drupal.org/user/155601">jhodgdon</a> also met with <a href="https://drupal.org/user/24967">webchick</a> to hammer out a plan for <a href="https://drupal.org/node/2107875">addressing Drupal 8's documentation deficiencies</a>.</p>
+<h3>Core momentum</h3>
+<p>In the three months of Drupal 8's <a href="http://buytaert.net/drupal-8-apis-are-freezing-but-not-frozen">API completion phase</a> following the July 1 API freeze deadline, core contributors have shifted focus to finishing Drupal 8's APIs and resolving release-blocking issues. Between July 1 and September 30, we fixed <strong>99 critical issues</strong>, compared to only 66 fixed between April 1 and June 30. The best part? This week, for the first time in a long time, <strong>we've steadily reduced the number of open critical issues in Drupal 8</strong>. (For a closer look at our momentum on critical issues, see: <a href="http://xjm.drupalgardens.com/blog/when-its-ready">When it's ready™</a>.)</p>
+<p>Meanwhile, core contributors continue to work through the results of DrupalCon Prague sprints. The <a href="https://drupal.org/project/issues/drupal?page=1&amp;order=last_comment_timestamp&amp;sort=asc&amp;status=14&amp;version=8.x&amp;text=&amp;priorities=All&amp;categories=All&amp;component=All">RTBC queue</a> is back under two pages, thanks to tireless work by Drupal 8's core maintainers, who committed almost twice as many patches this week as in preceding weeks.</p>
+<h2>Notable Commits</h2>
+<p>The best of <code> git log --since &quot;1 week ago&quot; --pretty=oneline</code> (135 commits in total):</p>
+<h3>Important API and data model changes</h3>
+<p>Developers take note: These four changes help stabilize our API and data model, moving us that much closer to beta.</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/1653026">#1653026</a> by damiankloip, alexpott, sun, tim.plunkett, dawehner, mtift: Fixed All configuration values are stored as strings.</li>
+<li>Issue <a href="http://drupal.org/node/2057401">#2057401</a> by plach, socketwench, kfritsche, Damien Tournoud: Fixed Make the node entity database schema sensible.</li>
+<li>Issue <a href="http://drupal.org/node/1953408">#1953408</a> by swentel, aspilicious, andypost, yched: Remove ArrayAccess BC layer from field config entities.</li>
+<li>Issue <a href="http://drupal.org/node/2106709">#2106709</a> by tim.plunkett: Remove legacy router backwards compatibility layer.</li>
+</ul>
+<h3>Contributors stepping up as core component maintainers</h3>
+<p>Core's <a href="http://drupalcode.org/project/drupal.git/blob/refs/heads/8.x:/core/MAINTAINERS.txt">MAINTAINERS.txt</a> contains a listing of contributors who've committed to leading the charge in a certain area of Drupal core. These folks play an important role in managing Drupal 8 toward release. (See the <a href="https://drupal.org/project/issues/search/?issue_tags=Component%20maintainers">Component maintainers</a> tag for issues focused on helping fill out this team for Drupal 8. Want to help? Just start working in your chosen component's queue, and then take a look at the <a href="https://drupal.org/contribute/core-maintainers#component">component maintainer handbook page</a> and <a href="http://xjm.drupalgardens.com/blog/wanted-core-taxonomy-co-maintainer">xjm's blog post</a> for more information on what goes into being a component maintainer.)</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/2099977">#2099977</a> by andypost: Add andypost as a component maintainer for comment.module.</li>
+<li>Issue <a href="http://drupal.org/node/2107151">#2107151</a> by claudiu.cristea: Add claudiu.cristea to core maintainers for image.</li>
+<li>Issue <a href="http://drupal.org/node/2103231">#2103231</a> by Mark Carver: Add Mark Carver to the list of theme system maintainers in MAINTAINERS.txt.</li>
+</ul>
+<h3>Progress towards removing the legacy variable system</h3>
+<p>One of the big outstanding tasks for the <a href="http://drupal8cmi.org/">Configuration Management Initiative</a> is completing the conversion of legacy variables in core to the new Drupal 8 APIs. These conversions are in their home stretch, with just 5% of the conversions left to go. Four conversions landed this week:</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/1829170">#1829170</a> by LinL, socketwench, vijaycs85, mtift, LittleCoding, andypost, dawehner, ianmthomasuk: Convert the Maintenance Theme variable to settings.</li>
+<li>Issue <a href="http://drupal.org/node/1798732">#1798732</a> by sun, Dean Reilly, mbrett5062, chx, westie, alexpott, juanolalla, Mark Carver, catch, jthorson, cam8001, Berdir: Convert install_task(), install_time() and install_current_batch() to use the state system.</li>
+<li>Issue <a href="http://drupal.org/node/2102503">#2102503</a> by swentel: Fixed Convert ContentTranslationController to CMI.</li>
+<li>Issue <a href="http://drupal.org/node/2101661">#2101661</a> by swentel: Fixed Update cache checking logic in core/includes/langauge.inc to use config system.</li>
+</ul>
+<h3>Developer experience (DX) improvements</h3>
+<p>An essential part of Drupal 8's API completion phase is <a href="https://drupal.org/community-initiatives/drupal-core/d8dx">improving the Drupal 8 developer experience</a>, by enhancing learnability, reducing boilerplate code, managing complexity, and documenting unfamiliar concepts. Here's a few of this week's commits that move Drupal 8 toward a better developer experience:</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/2105123">#2105123</a> by pwolanin: Add a currentUser() method to \Drupal\Core\Plugin\PluginBase.</li>
+<li>Issue <a href="http://drupal.org/node/2105557">#2105557</a> by Berdir, dawehner: Add an admin_permission to EntityType annotations to provide simple default access handling.</li>
+<li>Issue <a href="http://drupal.org/node/2099095">#2099095</a> by jibran, tim.plunkett: Create BreadcrumbBuilderBase and remove the boilerplate code from BreadcrumbBuilders.</li>
+</ul>
+<h3>User experience (UX) improvements</h3>
+<p>Drupal 8 makes great strides in improving the user experience for administrators, site builders, content authors, and end users. Here's a sampling of some of the small fixes that are adding up to a big UX boost:</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/2102019">#2102019</a> by nod_: Fixed Vertical tabs looks broken on small screens.</li>
+<li>Issue <a href="http://drupal.org/node/2080217">#2080217</a> by Wim Leers, tkoleary, Bojhan: Polish entity toolbar visually.</li>
+<li>Issue <a href="http://drupal.org/node/2030631">#2030631</a> by emma.maria | LewisNyman: Make 'Save and Continue' buttons primary buttons.</li>
+<li>Issue <a href="http://drupal.org/node/1837998">#1837998</a> by Bojhan, xjm, dawehner, David Hernández: Show the embed display in the UI.</li>
+</ul>
+<h2>Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>Dante Taylor presents <a href="http://www.mediacurrent.com/blog/twig-getting-started-drupal-8">how to get started with Twig</a> and the <a href="https://drupal.org/project/layout">Layout</a> project.</li>
+<li>Ruben Teijeiro continues his <a href="http://drewpull.drupalgardens.com/tags/drupal-8">series on getting started with Drupal 8 module development</a>, by showing <a href="http://drewpull.drupalgardens.com/blog/forms-database-drupal-8">how to implement forms that write to the database</a>.</li>
+<li>Heather James shows off <a href="https://www.acquia.com/blog/content-editing-enhancements-drupal-8">some of Drupal 8's content editing enhancements</a>, and lists <a href="https://www.acquia.com/blog/tutorial-drupal-8-site-building-preview-less-more">29 commonly needed Drupal 7 contrib modules now either no longer needed or less commonly needed in Drupal 8</a>.</li>
+<li>Janez Urevc summarizes the conclusions reached at DrupalCon Prague about how to architect <a href="http://janezurevc.name/drupal-bootstrap-drupal-gr8-media">a great media handling ecosystem of contrib modules</a> in Drupal 8, and how you can help.</li>
+<li>Andrew Riley offers up <a href="http://www.mediacurrent.com/blog/drupal-8-pictures-users">a 17 picture/animation teaser of some Drupal 8 features</a>.</li>
+<li>Jeffrey McGuire, Daniel Wehner, Lee Rowlands, and Tim Plunkett discuss <a href="http://previousnext.com.au/blog/drupal-8-wont-kill-your-kittens">why they consider Drupal 8's embrace of OOP and modern PHP coding approaches to be empowering</a>.</li>
+</ul>
+<h2>Drupal 8 in "Real Life"</h2>
+<p><strong>October 24-27</strong>: <a href="http://2013.badcamp.net/">BADCamp 2013</a> is just two weeks away! The four-day event includes lots of great Drupal 8 content for site builders, module authors, and core contributors, plus a full-day <a href="http://2013.badcamp.net/events/core-developer-summit">core summit</a> on October 27. Also don't miss the extended <a href="http://2013.badcamp.net/sprints">sprints</a> which run from October 21 all the way through to October 29. The teams for Views, Configuration, Multilingual, Web Services, Documentation, Usability, Media, and Twig all need your help to make Drupal 8 awesome! Sign up now.</p>
+<p>Other events coming up in the next couple of weeks that have a decent amount of content dedicated to Drupal 8 include:</p>
+<ul>
+<li><strong>October 11</strong>: <a href="http://drupaldelphia.com/">Drupaldelphia</a> in Philadelphia, Pennsylvania, USA there are proposed sessions on <a href="http://drupaldelphia.com/program/schedule/sessions/your-first-drupal-8-module">Your First Drupal 8 Module</a>, <a href="http://drupaldelphia.com/program/schedule/sessions/drupal-8-routing-method-madness">Drupal 8 Routing</a>, and <a href="http://drupaldelphia.com/program/schedule/sessions/drupal-8-design-patterns-dependency-injection">Dependency Injection</a>.</li>
+<li><strong>October 12-13</strong> <a href="http://lviv2013.drupal.ua/en/program">Lviv Euro Drupal Camp</a> includes an exciting session comparing D7 to D8 from bootstrap to render, as well as information on multilingual in Drupal 8.</li>
+<li><strong>October 13</strong>: Join <a href="https://drupal.org/user/258568">YesCT</a> for a <a href="https://groups.drupal.org/node/316193">Drupal issue sprint</a> in Oak Park, IL.</li>
+<li><strong>October 19</strong> <a href="https://www.drupalcampatlanta.com/program/schedule">DrupalCamp Atlanta</a> includes sessions on <a href="https://www.drupalcampatlanta.com/session/twig-core-basics-drupal-8s-new-theming-engine">Twig in core</a>, <a href="https://www.drupalcampatlanta.com/session/drupal-8-creating-blog-drupal-8-configuration-api">Creating a Blog in Drupal 8 &amp; the Configuration API</a>, and <a href="https://drupal.org/user/20975">agentrickard's</a> great Drupal 8 overview, <a href="https://www.drupalcampatlanta.com/session/how-i-learned-stop-worrying-and-love-drupal-8">How I Learned to Stop Worrying and Love Drupal 8</a>.
+</li></ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Expect more great things as all the work done at DrupalCon Prague comes to fruition, and see you maybe at BADCamp or in the queues!</p>
+  </body>
+</html>
+

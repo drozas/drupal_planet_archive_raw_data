@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 06 Apr 2014 06:09:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 06 Apr 2014 06:09:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: David Herron: Stopping server overload, cleaning up the site front page, disabling comments, and general goodness
+Content-Transfer-Encoding: 8bit
+Content-Base: http://davidherron.com/blog/2014-04-05/stopping-server-overload-cleaning-site-front-page-disabling-comments-and-general
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>David Herron: Stopping server overload, cleaning up the site front page, disabling comments, and general goodness</title>
+    <base href="http://davidherron.com/blog/2014-04-05/stopping-server-overload-cleaning-site-front-page-disabling-comments-and-general">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items" id="md1"><div class="field-item even"><p>The last few days the server hosting this site was overloaded, and I finally took a look at the access log, saw a continuous stream of requests that shouldn't be occurring, and realized the "links" row of teasers on the front page needed to go away.  The default links row includes one reading "Log in to post comments" but this blog doesn't allow anybody else to register for an account, and in any case comments are handled by Disqus rather than Drupal's commenting system.  The link didn't need to be there at all, and the more I looked at the links row the more useless it looked.</p><br/><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2401070691062219";
+/* davidherron teaser */
+google_ad_slot = "6159841370";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div></div></div>
+  </body>
+</html>
+

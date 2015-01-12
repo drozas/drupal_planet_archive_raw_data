@@ -1,0 +1,79 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 21 May 2014 10:46:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 21 May 2014 10:46:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Code Enigma: Drupal 6 Performance Testing
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.codeenigma.com/en/blog/drupal-6-performance-testing
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Code Enigma: Drupal 6 Performance Testing</title>
+    <base href="http://www.codeenigma.com/en/blog/drupal-6-performance-testing">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>We were recently asked to investigate poor performance on a Drupal 6 site. Memcache was enabled, but a <a href="http://www.joedog.org/siege-home/">siege</a> test was still showing poor results.</p>
+<pre class="brush:plain;">
+Transactions:		         145 hits
+Availability:		      100.00 %
+Elapsed time:		      525.34 secs
+Data transferred:	        1.89 MB
+Response time:		       17.08 secs
+Transaction rate:	        0.28 trans/sec
+Throughput:		        0.00 MB/sec
+Concurrency:		        4.71
+Successful transactions:         145
+Failed transactions:	           0
+Longest transaction:	       28.38
+Shortest transaction:	       13.03</pre><p>We run <a href="http://newrelic.com/">New Relic</a> for performance testing and the siege traffic gives it plenty to analyse.</p>
+<p>The first thing we noticed in New Relic was that there were some slow hook_init functions being called. The worst performing of these was in the Password Policy module, covered at <a href="http://drupal.org/node/2008282">http://drupal.org/node/2008282</a>. Fixing this didn't make a huge change to the performance though.</p>
+<p>The site also runs CiviCRM and in the New Relic transactions, it showed that civicrm_invoke was taking a long time to process. Digging into the transaction details, we came across this:</p>
+<p><img alt="" height="487" src="http://www.codeenigma.com/sites/default/files/NewRelic_theme_build_registry_0.png" width="610" /></p>
+<p>The theme registry was being rebuilt on every page load. We checked to see if there were any theme settings that had been left enabled from development that were causing the theme rebuild, but found none.</p>
+<p>Checking through the functions that appeared in the transaction log, the only reason for the theme registry to be rebuilt each time that we could come up with was that it was failing to be saved in the cache. The log shows that <a href="http://api.drupal.org/api/drupal/includes%21theme.inc/function/_theme_load_registry/6">_theme_load_registry()</a> is called, it checks memcache for the cached theme registry, but then rebuilds it.</p>
+<pre class="brush:php;">
+function _theme_load_registry($theme, $base_theme = NULL, $theme_engine = NULL) {
+  // Check the theme registry cache; if it exists, use it.
+  $cache = cache_get("theme_registry:$theme-&gt;name", 'cache');
+  if (isset($cache-&gt;data)) {
+    $registry = $cache-&gt;data;
+  }
+  else {
+    // If not, build one and cache it.
+    $registry = _theme_build_registry($theme, $base_theme, $theme_engine);
+    _theme_save_registry($theme, $registry);
+  }
+  _theme_set_registry($registry);
+}</pre><p>Checking all the logs failed to show any errors relating to memcache. For a quick check, we decided to try moving the cache table (where the theme registry is cached) out of memcache, back into the Drupal database. In settings.php, this was done by changing</p>
+<pre class="brush:plain;">
+$conf['memcache_bins'] = array(
+    'cache' =&gt; 'default',
+    ...</pre><p>to</p>
+<pre class="brush:plain;">
+$conf['memcache_bins'] = array(
+    'cache' =&gt; 'database',
+    ...</pre><p>Running the siege test again showed a marked improvement.</p>
+<pre class="brush:plain;">
+Transactions:		         112 hits
+Availability:		      100.00 %
+Elapsed time:		       97.70 secs
+Data transferred:	        1.46 MB
+Response time:		        3.83 secs
+Transaction rate:	        1.15 trans/sec
+Throughput:		        0.01 MB/sec
+Concurrency:		        4.39
+Successful transactions:         112
+Failed transactions:	           0
+Longest transaction:	        5.92
+Shortest transaction:	        2.80</pre><p>That seemed conclusive, but didn't help to understand why memcache was failing to store the theme registry. Further investigation led us to <a href="http://drupal.org/node/435694">http://drupal.org/node/435694</a>. Memcache will only store data up to 1M in size - not only that, but it fails silently, so nothing appears in the logs.</p>
+<p>There are patches in <a href="http://drupal.org/node/435694">http://drupal.org/node/435694</a> to add logging to capture these memcache failed saves and there's also a php snippet at <a href="http://gist.github.com/typhonius/8798894">http://gist.github.com/typhonius/8798894</a> to scan all the Drupal cache tables and highlight any objects over 1M in size.</p>
+<p>If you're using memcache 1.4.2 or later, you can increase the 1M maximum object size, see <a href="https://code.google.com/p/memcached/wiki/ReleaseNotes142">https://code.google.com/p/memcached/wiki/ReleaseNotes142</a> for example, but increasing this too much may impact memcache's efficiency.</p>
+<p>New Relic certainly made it much quicker for us to diagnose the underlying issue though and having the near instant feedback is great.</p>
+</div></div></div><div class="field field-name-field-blog-service-areas field-type-node-reference field-label-above"><div class="field-label">Related Service Areas:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/consultancy">Consultancy</a></div><div class="field-item odd"><a href="/en/development">Development</a></div><div class="field-item even"><a href="/en/support">Support</a></div></div></div><div class="field field-name-field-blog-intro field-type-text-long field-label-above"><div class="field-label">Teaser:&nbsp;</div><div class="field-items"><div class="field-item even">A scenario where memcache can actually impair performance</div></div></div><div class="field field-name-field-blog-categories field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/category/consultancy" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Consultancy</a></div><div class="field-item odd"><a href="/en/category/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div><div class="field-item even"><a href="/en/category/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item odd"><a href="/en/category/support" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Support</a></div></div></div><div class="field field-name-field-blog-primary-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Primary Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/category/consultancy" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Consultancy</a></div></div></div>
+  </body>
+</html>
+

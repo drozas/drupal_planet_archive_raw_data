@@ -1,0 +1,129 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 10 Feb 2014 16:40:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 10 Feb 2014 16:40:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bluespark Labs: New JavaScript libraries in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.bluespark.com/blog/new-javascript-libraries-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bluespark Labs: New JavaScript libraries in Drupal 8</title>
+    <base href="http://www.bluespark.com/blog/new-javascript-libraries-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>A few new JavaScript&nbsp;libraries have made their way into Drupal 8 core code, the same way&nbsp;jQuery&nbsp;once&nbsp;did. This blog post&nbsp;examines the reasoning behind each inclusion, and explains how they are intended to be used.</p>
+
+<h2>Underscore &amp; Backbone</h2>
+
+<p>In recent years we have seen a large number of JavaScript&nbsp;frameworks intended to facilitate the creation of web&nbsp;<a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank">MVC</a>/<a href="http://en.wikipedia.org/wiki/Model_View_ViewModel" target="_blank">MVVM</a> applications. You may know some of them: <a href="http://angularjs.org/" target="_blank">Angular.js</a>, <a href="http://emberjs.com/" target="_blank">Ember.js</a>, <a href="http://sammyjs.org/" target="_blank">Sammy.js</a>, <a href="http://sproutcore.com/" target="_blank">SproutCore</a>, and of course <a href="http://backbonejs.org/" target="_blank">Backbone.js</a>.</p>
+
+<p>Drupal has its own AJAX framework&nbsp;largely based on jQuery but it has become outdated in relation to the recent AJAX innovations.</p>
+
+<p>The <a href="http://drupal.org/project/spark" target="_blank">Spark</a> distribution has served as a laboratory for new UI innovations, like <a href="http://drupal.org/project/edit" target="_blank">Edit</a>, <a href="http://drupal.org/project/layout" target="_blank">Layout</a>&nbsp;or <a href="http://drupal.org/project/gridbuilder" target="_blank">Gridbuilder</a>,&nbsp;that were candidates to be included in Drupal core. Most of them use&nbsp;Backbone.js as their JavaScript library of choice.</p>
+
+<p>This led to a <a href="http://drupal.org/node/1149866" target="_blank">discussion</a>&nbsp;about including one of these libraries into Drupal core.&nbsp;Backbone was chosen because it currently&nbsp;has the largest community of users, and the most stability.</p>
+
+<p>Underscore is a utility JavaScript library on which Backbone depends, so it has to be included as well.</p>
+
+<ul>
+	<li><a href="http://drupal.org/node/1149866" target="_blank">Add Backbone.js and Underscore.js to core​</a></li>
+	<li><a href="http://drupal.org/node/2053901" target="_blank">Backbone.js and Underscore.js are bundled into Drupal 8​</a></li>
+</ul>
+
+<h2>CKEditor</h2>
+
+<p>Arguably&nbsp;the number one feature request for Drupal core has&nbsp;been the inclusion of a&nbsp;WYSIWYG editor. There are a number of <a href="https://drupal.org/node/208456" target="_blank">options</a> in the&nbsp;contributed modules space, but none of them has risen to become a de-facto standard,&nbsp;so there was no clear choice among the available&nbsp;modules.</p>
+
+<p>Drupal 8 was the version where <a href="https://drupal.org/node/1890502" target="_blank">this issue</a> was going to be taken seriously.&nbsp;Based on the work of the <a href="https://drupal.org/project/wysiwyg_ckeditor" target="_blank">CKEditor</a> module writers and maintainers, the CKEditor&nbsp;library was chosen to be used in core.</p>
+
+<p>This means you no longer have&nbsp;to <a href="http://www.chapterthree.com/blog/jennifer-lampton/choosing-wysiwyg-editor-drupal" target="_blank">wonder</a>&nbsp;what editor to use in your projects, since CKEditor will be shipped with and enabled by default in Drupal 8.</p>
+
+<ul>
+	<li><a href="http://drupal.org/node/1890502" target="_blank">WYSIWYG: Add CKEditor module to core​</a></li>
+	<li><a href="http://drupal.org/node/1878344" target="_blank">Add CKEditor JS library to core</a></li>
+	<li><a href="http://buytaert.net/from-aloha-to-ckeditor">From Aloha to CKEditor</a></li>
+	<li><a href="http://ckeditor.com/blog/CKEditor-Joins-Drupal" target="_blank">CKEditor joins Drupal</a></li>
+</ul>
+
+<h2>jQuery UI</h2>
+
+<p>This library was included&nbsp;to try to&nbsp;homogenize the way modal dialogs are implemented in Drupal, as well as making them more accessible.</p>
+
+<p>Contrary to the module's name, the Overlay module introduced in Drupal 7&nbsp;didn't really eliminate the need for&nbsp;other modal dialog modules&nbsp;in Drupal. There are many use cases for modals,&nbsp;and several contributed modules that provide utilities to create modal dialogs.</p>
+
+<p>The&nbsp;accessibility of these dialogs is also important since Drupal tries to improve accessibility with each version and the available options in the Drupal ecosystem are not as accessible as desired.</p>
+
+<p>In the <a href="http://drupal.org/node/1175830" target="_blank">issue discussion</a>&nbsp;people agreed that&nbsp;jQuery UI Dialogs was the way to go&nbsp;and this external library was included, embracing the "Proudly found&nbsp;elsewhere" mantra for Drupal 8. &nbsp;JQuery UI provides many more&nbsp;JavaScript&nbsp;UI utilities besides&nbsp;modal dialogs.&nbsp;</p>
+
+<ul>
+	<li><a href="http://drupal.org/node/1175830" target="_blank">Research and implement accessible / reusable modal dialog</a></li>
+</ul>
+
+<h2>jQuery&nbsp;UI Touch Punch</h2>
+
+<p>Drupal 8 is intended to be touch compatible, to enable it to be used on mobile and tablet devices. Some UI features&nbsp;use the&nbsp;jQuery&nbsp;UI library and the current version is not touch compatible.</p>
+
+<p>Touch compatibility has been planned for a future version of&nbsp;jQuery&nbsp;UI, so as a temporary measure,&nbsp;<a href="http://touchpunch.furf.com" target="_blank">jQuery&nbsp;UI Touch Punch</a>&nbsp;plugin has been placed in core.</p>
+
+<ul>
+	<li><a href="http://drupal.org/node/1955926" target="_blank">​CKEditor admin interface not touch-compatible (Add jQuery Touch Punch to core)</a></li>
+</ul>
+
+<h2>modernizr</h2>
+
+<p>We don't live in a desktop web world anymore. Many different kinds of devices can access our websites, mobile devices with touch interfaces, screen readers, etc.</p>
+
+<p>At the same time we are relying more and more in JavaScript to implement new features in our user interfaces.</p>
+
+<p>The problem is that not all user interface features are available to be used in all devices, and in some case they do more harm than good if you try to use them on an incompatible device.</p>
+
+<p><a href="http://modernizr.com/" target="_blank">Modernizr</a> is the tool of the moment to implement device feature detection, allowing you to select what JavaScript files you need to load depending on the device capabilities detected.</p>
+
+<ul>
+	<li><a href="http://​http://drupal.org/node/1252178​" target="_blank">​</a><a href="http://drupal.org/node/1252178​" target="_blank">Add Modernizr to core​</a></li>
+</ul>
+
+<h2>domReady</h2>
+
+<p>​Any Drupal page requests loads the misc/drupal.js file, which is essential for all JavaScript functionality in core.</p>
+
+<p>The drupal.js file uses jQuery just for a simple $(window).ready() call, and jQuery&nbsp;alone is 90 kb.&nbsp;This is loaded for any Drupal page, even if we are not using it.</p>
+
+<p><a href="https://github.com/ded/domready" target="_blank">Domready</a>&nbsp;is used for&nbsp;jQuery's&nbsp;same ready method, but it only includes that functionality, which makes this library just 740 bytes.</p>
+
+<p>By making drupal.js use domReady instead of jQuery, Drupal 8 drastically reduces the amount of code required for a page load.</p>
+
+<p>See the <a href="http://drupal.org/node/1974580" target="_blank">issue discussion</a> for more details.</p>
+
+<ul>
+	<li><a href="http://drupal.org/node/1974580" target="_blank">Introduce domReady to remove jQuery dependency from drupal.js and clean it up.</a></li>
+</ul>
+
+<h2>html5shiv &amp;&nbsp;classList</h2>
+
+<p>The HTML markup produced by Drupal 8 is&nbsp;<a href="http://buytaert.net/html5-in-drupal-8" target="_blank">HTML5</a>, but we still want to make Drupal websites look and behave reasonably well for users running browsers without HTML5 support.</p>
+
+<p>These two libraries provide some compatibility for HTML5 in older browsers.</p>
+
+<ul>
+	<li><a href="http://drupal.org/node/2167431" target="_blank">Add classList polyfill for IE9</a></li>
+	<li><a href="http://drupal.org/node/1077878" target="_blank">Add HTML5shiv to core</a></li>
+	<li><a href="http://drupal.org/node/1993334" target="_blank">Remove HTML5shiv</a></li>
+</ul>
+
+<h2>More Drupal 8 JavaScript&nbsp;blog posts</h2>
+
+<ul>
+	<li><a href="http://www.slideshare.net/theodorebiadala/upgrade-your-javascript-to-drupal-8">Upgrade your javascript to Drupal 8</a></li>
+	<li><a href="http://​http://previousnext.com.au/blog/understanding-drupal-8s-modal-api-and-dialog-controller">​</a><a href="http://previousnext.com.au/blog/understanding-drupal-8s-modal-api-and-dialog-controller" target="_blank">Understanding Drupal 8's modal API and dialog controller</a></li>
+	<li><a href="http://www.slideshare.net/theodorebiadala/java-script-changes2013">In-depth Changes to Drupal 8 JavaScript</a></li>
+	<li><a href="http://drupal.org/node/1787222" target="_blank">Strategy for updating vendor JS libraries within a major stable version</a></li>
+</ul> </div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/drupal-planet">Drupal Planet</a></div><div class="field-item odd"><a href="/blog/drupal">Drupal</a></div><div class="field-item even"><a href="/blog/javascript">JavaScript</a></div><div class="field-item odd"><a href="/blog/development">Development</a></div></div></div>
+  </body>
+</html>
+

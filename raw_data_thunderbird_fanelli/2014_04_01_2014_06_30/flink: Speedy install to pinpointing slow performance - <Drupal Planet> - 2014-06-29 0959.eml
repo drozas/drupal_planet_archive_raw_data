@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 29 Jun 2014 07:59:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 29 Jun 2014 07:59:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: flink: Speedy install to pinpointing slow performance
+Content-Transfer-Encoding: 8bit
+Content-Base: http://flink.com.au/tips-tricks/speedy-install-to-pinpointing-slow-performance
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>flink: Speedy install to pinpointing slow performance</title>
+    <base href="http://flink.com.au/tips-tricks/speedy-install-to-pinpointing-slow-performance">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://flink.com.au/sites/default/files/styles/large/public/field/image/xhprof%20in%20action.png?itok=hdlvyrvc"><img typeof="foaf:Image" src="http://flink.com.au/sites/default/files/styles/large/public/field/image/xhprof%20in%20action.png?itok=hdlvyrvc" width="480" height="317" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="http://www.php.net/manual/en/book.xhprof.php">XHProf</a> is a great server-side performance profiler.  And as we say in our Drupal community… <em>"there is a module for that"</em>. Great as it is, the Drupal <a href="http://drupal.org/project/xhprof">XHProf module</a> comes with little documentation. So finding out how and where to install some of the unmentioned bits and pieces can be a chore. Especially when you find yourself faced with downloading and compiling various components on a machine that doesn’t have the full gamut of tools like pecl, apt-get or Homebrew, etc ready to go.</p>
+<p>So this is what I normally do for Macs, greatly facilitated by Cameron Tod's <a href="https://github.com/cam8001/php-xhprof-mamp">very handy page</a>.</p>
+<!--break--><p>
+o Let’s start on familiar Drupal grounds. Install the <a href="http://drupal.org/project/xhprof">XHProf</a> module. The module allows you to easily flick profiling on and off, without the need for defining an additional virtual host and accompanying special domain. The module also comes with some nice touches like selecting the verbosity of the XHProf output and not running XHProf on admin pages.</p>
+<p>o The page <em>..../admin/reports/status/php</em> on your Drupal site will tell you which PHP configuration file (php.ini file) your site has loaded. Edit that php.ini, adding these lines:<br /><code><br />
+extension = xhprof.so<br />
+xhprof.output_dir = ...<br /></code><br />
+On a Mac, typical candidates for filling out the above dots are /Users/USERNAME/Sites/xhprof/runs or /tmp/xhprof. Whatever you choose, make sure to create that directory or the xhprof module will spit the dummy. Keep in mind that the /tmp directory is automatically cleared upon startup, so you’ll have to create /tmp/xhprof again after a reboot.</p>
+<p>o On <a href="https://github.com/cam8001/php-xhprof-mamp">https://github.com/cam8001/php-xhprof-mamp</a> select the pre-compiled version of <strong>xhprof.so</strong> that corresponds to the PHP version you found above. Drop the xhprof.so in /Applications/MAMP/bin/php/php5.x.x/lib/php/extensions/no-debug-non-zts-200xxxxx/, replacing the x'es with your PHP version and date. If you've done this correctly then after restarting MAMP and refreshing the page <em>.../admin/reports/status/php</em> will display a xhprof section.</p>
+<p>o In a Terminal window type these commands:<br /><code><br />
+cd ~/Sites<br />
+curl http://pecl.php.net/get/xhprof &gt; xhprof.tgz<br />
+tar -xzf xhprof.tgz<br />
+mv xhprof-* xhprof<br />
+mkdir xhprof/runs<br />
+# or: mkdir /tmp/xhprof<br /></code></p>
+<p>o Visit <em>.../admin/config/development/xhprof</em> and tick the “Enable” box. Accept the remaining defaults for now. You can revisit these later.</p>
+<p>o Visit the home page, or any other page of your site. Scroll UP to see a link “XHProf output” at the very bottom of your browser window. Click that link and a list of the top 100 suspects should come up.</p>
+<p>Happy profiling!</p>
+<p>In a follow-up article we'll demonstrate how XHProf can help you discover where exactly server-side performance is lost on your site and a handy module that came out of that.</p>
+</div></div></div><div class="field field-name-field-file-under field-type-taxonomy-term-reference field-label-above">
+      <h3 class="field-label">File under:&nbsp;</h3>
+    <span class="field-items">
+                  <a href="/file-under/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a>            </span>
+</div>
+  </body>
+</html>
+

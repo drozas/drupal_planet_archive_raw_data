@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 19 Aug 2014 20:00:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 19 Aug 2014 20:00:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Profiling Drupal Performance with PHPStorm and Xdebug
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/profiling-drupal-performance-with-phpstorm-and-xdebug-2/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Profiling Drupal Performance with PHPStorm and Xdebug</title>
+    <base href="http://www.phase2technology.com/blog/profiling-drupal-performance-with-phpstorm-and-xdebug-2/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Profiling is about measuring the performance of PHP code, at least when we are talking about Drupal and <a href="http://xdebug.org/">Xdebug</a>. You might need to profile your site or app if you work at a firm where performance is highly scrutinized, or if you are having problems getting a migration to complete. Whatever the reason, if you have been tasked with analyzing the performance of your Drupal codebase, profiling is one great way of doing so. Note that Xdebug’s profiler does not track memory usage. If you want to know more about memory performance tracking you should check out Xdebug’s <a href="http://xdebug.org/docs/execution_trace">execution trace features</a>.</p>
+<h3><em>Alright then lets get started! </em></h3>
+<p>Whoa there cowboy! First you need to know that the act of profiling your code is itself taking resources to accomplish. The more work your code does, the more information that the profiler stores; file sizes for these logs can get very big very quickly. You have been warned. To get going with profiling Drupal in PHPStorm and Xdebug you need:</p>
+<ul>
+<li><a title="PHPStorm" href="http://www.jetbrains.com/phpstorm/" target="_blank">PHPStorm</a></li>
+<li>PHP with the <a title="Xdebug" href="http://xdebug.org/" target="_blank">Xdebug</a> extension</li>
+<li>A website running on Drupal.</li>
+</ul>
+<p>To setup your environment, edit your php.ini file and add the following lines:</p><pre class="crayon-plain-tag">xdebug.profiler_output_dir=/tmp/profiler/
+xdebug.profiler_enable=on
+xdebug.profiler_trigger=on
+xdebug.profiler_append=on</pre><p>Depending on what you are testing and how, you may want to adjust the settings for your site. For instance, if you are using Drush to run a migration, you can’t start the profiler on-demand, and that affects the profiler_trigger setting. For my dev site I used the php.ini config you see above and simply added a URL parameter “XDEBUG_PROFILE=on” to my site’s url; this starts Xdebug profiling from the browser.</p>
+<p>To give you an idea of what is possible, lets profile the work required to view a simple Drupal node. To profile the node view I visited http://profiler.loc/node/48581?XDEBUG_PROFILE=on in my browser. I didn&#8217;t see any flashing lights or hear bells and whistles, but I should have a binary file that PHPStorm can inspect, located in the path I setup in my php.ini profiler_output_dir directive.</p>
+<p><a href="http://www.phase2technology.com/wp-content/uploads/2015/08/profiler_url.png"><img alt="profiler_url" src="http://www.phase2technology.com/wp-content/uploads/2015/08/profiler_url-1024x100.png" width="608" height="59" /></a></p>
+<p>Finally lets look at all of our hard work! In PHPStorm navigate to Tools-&gt;Analyze Xdebug Profile Snapshot. Browse to your profiler output directory and you should see at least one cachgrind.out.%p file (%p refers to the process id the script used). Open the file with the largest process id appended to the end of the filename.</p>
+<p><img alt="PHPStorm Cachgrind Picker" src="http://www.phase2technology.com/wp-content/uploads/2015/08/Screen-Shot-2014-08-18-at-6.44.44-PM-266x300.png" width="266" height="300" /></p>
+<p>We are then greeted with a new tab showing the results of the profiler.</p>
+<p><a href="http://www.phase2technology.com/wp-content/uploads/2015/08/Screen-Shot-2014-08-18-at-6.46.02-PM.png"><img alt="PHPStorm Xdebug Profiler" src="http://www.phase2technology.com/wp-content/uploads/2015/08/Screen-Shot-2014-08-18-at-6.46.02-PM-1024x560.png" width="655" height="358" /></a></p>
+<p>&nbsp;</p>
+<p>The output shows us the functions called, how many times they were called, and the amount of execution time each function took. Additionally, you can see the hierarchy of all function calls and follow potential bottlenecks down to their roots.</p>
+<p>There you have it! Go wild and profile all the things! Just kidding, don’t do that.</p>
+  </body>
+</html>
+

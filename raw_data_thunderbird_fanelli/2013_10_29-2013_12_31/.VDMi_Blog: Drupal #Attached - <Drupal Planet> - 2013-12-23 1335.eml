@@ -1,0 +1,98 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 23 Dec 2013 12:35:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 23 Dec 2013 12:35:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: .VDMi/Blog: Drupal #Attached
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vdmi.nl/blog/drupal-attached
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>.VDMi/Blog: Drupal #Attached</title>
+    <base href="http://www.vdmi.nl/blog/drupal-attached">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-afbeelding field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/blog/drupal-attached"><img style="max-width: 40%; height: auto; float: left; margin-right: 1em;" align="left" hspace="10" src="http://www.vdmi.nl/sites/vdmisite.s1.aegirhost.nl/files/styles/200_max_width/public/683px-duct-tape.jpg?itok=Ik4u1UPa" width="200" height="176" alt="Drupal #Attached" /></a></div></div></div><div class="field field-name-field-samenvatting1 field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">What is drupal attached?
+Drupal #Attached allows loading of CSS, Javascript, libraries, or custom types when the render array is built. 
+
+
+</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><a href="http://www.vdmi.nl/drupal">Drupal</a> #Attached VS drupal_add_js / drupal_add_css<br />
+If you are using drupal_add_js() in your form building function, you are attaching JavaScript to a page, and that's it.<br />
+If you are using $form['#attached']['js'], other modules may interact.<br />
+If something gets rendered in drupal and you cache it, then drupal saves the render array and drupal will not execute drupal_add_js/drupal_add_css/drupal_add_library. So when drupal reads the render array and check if #attached is in there. Drupal will always execute the drupal add functions.</p>
+<p>Here is an example of adding a custom javascript file with drupal attached in a custom module. </p>
+<p>In your custom module or form you can add the #attached to your render array.<br />
+In this array you specify to add css or javascript of a library using </p>
+<pre><code>$content['#attached']['js'];<br />
+$content['#attached']['css'];<br />
+$content['#attached']['library'];</code></pre><p>
+Then you want to specify what type of file you want to add.<br />
+Just like drupal_add_js you can set a type to use inline code or a file or a external file.<br />
+Example:<br />
+1. File </p>
+<pre><code>$form['#attached']['js'][] = array( 'data' =&gt; 'file.js', 'type' =&gt; 'file');</code></pre><p>
+2. Inline code </p>
+<pre><code>$form['#attached']['js'][] = array( 'data' =&gt; '/* some javascript here */', 'type' =&gt; 'inline');</code></pre><p>
+3. External file </p>
+<pre><code>$form['#attached']['js'][] = array('data' =&gt; '<a href="http://domain.com/file.js'">http://domain.com/file.js'</a>, 'type' =&gt; 'external');</code></pre><p>Then you can set options like preprocess and every page, like</p>
+<pre><code> 'options' =&gt; array(<br />
+        'preprocess' =&gt; TRUE,<br />
+        'every_page' =&gt; TRUE,<br />
+      ),</code></pre><p>For more information see <a href="https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7#attached" target="_blank">Drupal Form #Attached API</a> </p>
+<p>Then you want to add your data/variables so you can read them from your javascript.<br />
+Here we use custom_data as the identifier, we use that later in the javascript. And the variable $my_data is our data we wish to use in the javascript. This could be just a variable or an array.</p>
+<pre><code>  array(<br />
+      'data' =&gt; array(<br />
+        'custom_data' =&gt; $my_data,<br />
+      ),<br />
+      'type' =&gt; 'setting',<br /><br />
+    ),</code></pre><p>
+Now your code should look something like this:</p>
+<pre><code>$content = array();<br />
+  $content['#markup'] = "&lt;div class='rendered-div'&gt;&lt;/div&gt;";<br /><br />
+  $content['#attached']['js'] = array(<br />
+    array(<br />
+      'data' =&gt; drupal_get_path('module', 'custom_module') . '/js/script.js',<br />
+      'options' =&gt; array(<br />
+        'preprocess' =&gt; TRUE,<br />
+        'every_page' =&gt; TRUE,<br />
+      ),<br />
+    ),<br />
+    array(<br />
+      'data' =&gt; array(<br />
+        'custom_data' =&gt; $my_data,<br />
+      ),<br />
+      'type' =&gt; 'setting',<br /><br />
+    ),<br />
+  );<br />
+  return $content;</code></pre><p>
+Now for the javascript we use this is the code below.<br />
+Drupal.behaviors is not simply a replacement for jQuery.ready since the latter only runs once (when DOM is ready for manipulation): behaviors can be fired multiple times during page execution and can be run whenever new DOM elements are inserted into the document.</p>
+<p>When your using Drupal.behaviors be sure you use a unique name that is not been used.</p>
+<p>Then we use the attach:function<br />
+In here we can load our data we had in our php file using Drupal.settings<br />
+To get the data we have set befor in the php just type the array key we used.<br />
+In this case it was 'custom_data'.<br />
+A reminder from our php file below.</p>
+<pre><code> array(<br />
+      'data' =&gt; array(<br />
+       //See here<br />
+       'custom_data' =&gt; $my_data,<br />
+      ),<br />
+      'type' =&gt; 'setting',<br /><br />
+    ),</code></pre><p>So the javascript file would something like this:</p>
+<pre><code>(function ($) {<br />
+    Drupal.behaviors.uniquename = {<br />
+        attach:function (context, settings) {<br />
+            var obj = Drupal.settings['custom_data'];<br />
+            alert(obj);<br />
+        }<br />
+    };<br />
+})(jQuery);</code></pre></div></div></div>
+  </body>
+</html>
+

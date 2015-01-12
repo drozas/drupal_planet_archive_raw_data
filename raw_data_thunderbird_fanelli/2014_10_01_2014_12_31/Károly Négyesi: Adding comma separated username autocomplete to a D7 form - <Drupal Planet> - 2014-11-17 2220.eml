@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Nov 2014 21:20:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Nov 2014 21:20:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Adding comma separated username autocomplete to a D7 form
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/413
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Adding comma separated username autocomplete to a D7 form</title>
+    <base href="http://www.drupal4hu.com/node/413">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Today I needed to add autocomplete to a field that could contain comma separated usernames and obviously the requirements included autocomplete. I thought this problem must be solved already in the ecosystem and sure, Views has it already. So I have added <code>&#039;#autocomplete_path&#039; =&gt; &#039;admin/views/ajax/autocomplete/user&#039;, &#039;#element_validate&#039; =&gt; array(&#039;my_module_usernames_validate&#039;)</code> and then</p>
+<p><div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">my_module_usernames_validate</span><span style="color: #007700">(&amp;</span><span style="color: #0000BB">$element</span><span style="color: #007700">) {<br />&nbsp; if (</span><span style="color: #0000BB">$values </span><span style="color: #007700">= </span><span style="color: #0000BB">drupal_explode_tags</span><span style="color: #007700">(</span><span style="color: #0000BB">$element</span><span style="color: #007700">[</span><span style="color: #DD0000">'#value'</span><span style="color: #007700">])) {<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #FF8000">// Good thing Views doesn't use the native constructor.<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$handler </span><span style="color: #007700">= new </span><span style="color: #0000BB">views_handler_filter_user_name</span><span style="color: #007700">();<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #FF8000">// And this function doesn't use the object at all.<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$handler</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">validate_user_strings</span><span style="color: #007700">(</span><span style="color: #0000BB">$element</span><span style="color: #007700">, </span><span style="color: #0000BB">$values</span><span style="color: #007700">);<br />&nbsp; }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div></p>
+<p>Ps. This has been confirmed as working (with a plugin instance) in D8 too.</p>
+  </body>
+</html>
+

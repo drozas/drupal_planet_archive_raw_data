@@ -1,0 +1,64 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 05 Dec 2014 22:20:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 05 Dec 2014 22:20:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: David Norman: Drupal 8's installer and Xdebug don't mix
+Content-Transfer-Encoding: 8bit
+Content-Base: https://deekayen.net/drupal8-xdebug-installer-timeout
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>David Norman: Drupal 8's installer and Xdebug don't mix</title>
+    <base href="https://deekayen.net/drupal8-xdebug-installer-timeout">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+  
+  
+                <p>Anecdotally, Drupal 8 is slower than anything before it - maybe 4x slower. While installing Drupal 8.0.0-beta3 so I could work on upgrading the <a href="https://www.drupal.org/project/masquerade">Masquerade</a> module, I found the installer dreadfully slow. I started a timer when I got to the Batch API-enabled "Install site" page. The installer ran for <em>10 minutes</em> to get as far as step 32 of 37. Then it errored-out.</p>
+
+<p><img src="https://deekayen.net/sites/deekayen.net/files/installed_shortcut_module.jpg" alt="Installed shortcut module" /></p>
+
+<blockquote>
+  <p>An AJAX HTTP error occurred. HTTP Result Code: 200 Debugging information follows. Path: <a href="http://localhost/drupal8/core/install.php?langcode=en&amp;profile=standard&amp;id=1&amp;op=do_nojs&amp;op=do">http://localhost/drupal8/core/install.php?langcode=en&amp;profile=standard&amp;i...</a> StatusText: OK ResponseText: ( ! ) Fatal error: Maximum execution time of 30 seconds exceeded in /Users/davidnorman/Sites/drupal8/core/lib/Drupal/Core/Extension/ModuleHandler.php on line 261</p>
+</blockquote>
+
+<p><a href="https://www.evernote.com/l/AOzsGB4dMnlJT787xLr0gGOSg_w68zOSfNo"><img src="https://deekayen.net/sites/deekayen.net/files/maximum_execution_time.jpg" alt="Maximum execution time exceeded" /></a></p>
+
+<p>I've installed Drupal probably thousands of times and I knew my MacBook Pro Retina, 3rd-generation quad core i7 processor with a SSD wasn't a bottleneck. At the time, I only had one extra PHP extension enabled - Xdebug (<a href="https://www.evernote.com/l/AOzGBx3wd6hF8ZruecT4gFAHvAFXmBwm_VI">see my phpinfo()</a>). It only had a basic configuration. Sometimes I enable things like <code>xdebug.collect_assignments</code> or <code>xdebug.show_local_vars</code>, but even those weren't enabled at the time.</p>
+
+<pre><code>[xdebug]
+zend_extension="/usr/local/Cellar/php56-xdebug/2.2.6/xdebug.so"
+xdebug.auto_trace = On
+</code></pre>
+
+<p>To get Drupal to install, I commented the Xdebug <code>zend_extension</code> at <code>/usr/local/etc/php/5.6/conf.d/ext-xdebug.ini</code>, did a <code>brew install php56-apcu</code>, and restarted my MacBook.</p>
+
+<p>After I swapped Xdebug for APCU, the "Install site" portion of the Drupal 8 installer took only 30 seconds to complete and did not time-out, versus the 10 minutes with ultimate failure while Xdebug was enabled.</p>
+
+<p>At this point, I'm seem to be left to conclude that if I wanted to use Xdebug to debug the installer, that my only option is to increase the default 30 second timeout in my <code>/usr/local/etc/php/5.6/php.ini</code>. Alternatively, if I want to use Xdebug for day-to-day module development, that I'll need to disable Xdebug temporarily to get a local install setup.</p>
+
+<p>Drupal 8 does a lot more stuff to process a page. Core developers have succeeded in moving most of the code to use object oriented methods with namespaces and protected variable spaces, but at the expense of turning a vanilla install into about 76MB. Drupal 7.34 is only 15MB.</p>
+
+<p>To make a point, I inserted a <code>debug_print_backtrace()</code> in <code>EntityAccessControlHandler::access()</code>. This is a basic call in core that would check access on anything that's an entity - users, nodes, etc. After Firefox choked on the resulting output, I attempted to make a snapshot of the page using Evernote to link to in this article. Instead, even Evernote told me that the page was too big to capture.</p>
+
+<p><img src="https://deekayen.net/sites/deekayen.net/files/clip_to_evernote_error.jpg" alt="Sorry, the entire page is too big for Evernote to clip." /></p>
+
+<p>I guess I don't really have any other point to make. It's not like this article is going to make Drupal 8 faster. I don't have advice for making it lightweight. It's what we have to live with now in the supposed pursuit of progress and modern sophistication. I'm just leaving my breadcrumb for other developers who might find it impossible to even get Drupal 8 installed using an environment that worked for Drupal 7 since I was able to get through the "Install site" part of the Drupal 7.34 installer <em>with Xdebug enabled</em> and with <em>APCU disabled</em> in only 14 seconds.</p>
+        </div>
+
+<!-- field.tpl -->
+
+<div class="field field-name-taxonomyextra field-type-taxonomy-term-reference field-label-above">
+  
+      <label>Post categories</label>
+  
+                <div class="field-item"><i class="fa fa-tag"></i> <a href="/taxonomy/term/27">Drupal</a></div>
+        </div>
+  </body>
+</html>
+

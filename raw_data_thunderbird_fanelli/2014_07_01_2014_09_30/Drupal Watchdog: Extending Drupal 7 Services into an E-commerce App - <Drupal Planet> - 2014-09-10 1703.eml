@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 10 Sep 2014 15:03:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 10 Sep 2014 15:03:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Extending Drupal 7 Services into an E-commerce App
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-2/extending-drupal-7-services-e-commerce-app
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Extending Drupal 7 Services into an E-commerce App</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-2/extending-drupal-7-services-e-commerce-app">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Article        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/4.2-ExtendingECommerce_0.png" alt="Shopping Cart Design" width="400" height="397" align="right" class="img-responsive img-thumbnail margin-left" />By now, you’ve surely heard that Drupal 8 is pushing boundaries for users, content editors, administrators, and developers – if not, where have you been?</p>
+<p>             Obviously, not every site has the luxury of being able to migrate and adopt new technologies. If you are in the same position as me, then many of your clients – or indeed, the company you work for – have spent lots of time and money investing in Drupal 7; at this point, urging a new platform on them is probably going to fall on deaf ears. But all is not lost! Drupal 7 can still create a powerful RESTful Web Service API or a terrific mobile application.</p>
+<p>             So the old adage again rings true: “Where there is a Drupal 8 core initiative, there is a Drupal 7 contributed module.”</p>
+<p>             Having attended the Commerce 2.x sprint in Paris, I can safely say that if you do eventually upgrade to Drupal 8, it won’t be a massive undertaking molding your Drupal 8 Core services output to match that of Drupal 7 contrib services. Not all your work will be lost.</p>
+<p>             When I first started down the road of mobile apps, I was certain I did not have the time to learn Objective C and Java, as well as the intricacies of each mobile platform. (Sound familiar?) All I wanted was the ability to utilize the Drupal technology I already knew, and then enable <a href="http://phonegap.com">PhoneGap</a> without having to learn any device-specific language.</p>
+<p>             For purposes of this article, I won’t assume you know mobile apps technology nor much about Drupal’s Services module, REST, jQuery Mobile, Xcode, or PhoneGap. I do assume that you know Drupal, can work your way around the administration interface, and know some basic PHP and Javascript. With that in mind let’s take an overview of technologies you can utilize for your mobile application.</p>
+<p>             First, let’s install <a href="http://wdog.it/4/2/gap">DrupalGap and its dependencies</a>.</p>
+<p>             Now we have a core DrupalGap service and the basic service resources we might want for our mobile application.  All the generic things we use on most Drupal sites are right there: resources are content-available for query through endpoints; and DrupalGap supplies us with a default endpoint.            </p>        </div>
+  </body>
+</html>
+

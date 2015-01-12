@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Four easy to fix mistakes that will kill site performance
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/four-easy-fix-mistakes-will-kill-site-performance%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Four easy to fix mistakes that will kill site performance</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/four-easy-fix-mistakes-will-kill-site-performance%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <ol><br />
+	<li><br />
+		<h2>Not Changing APC's Default apc.shm_size Value</h2><br />
+	</li><br />
+</ol><br />
+<br />
+<p>You'll understand why this obscure setting is #1 on the list when you consider the benchmarks of drupal_load below (If you're not using APC, or have no idea what APC is I suggest you keep that fact a secret, and install it now):</p><br />
+<br />
+<blockquote>Without APC: 286ms<br><br />
+	APC with 32m shm_size: 700ms (default APC setting)<br><br />
+	APC with 64m shm_size: <strong>37ms!!!</strong></blockquote><br />
+<br />
+<p><img border="0" height="313" src="http://www.chapterthree.com/sites/default/files/legacy/3vfiim.jpg" style="float: right; margin-left: 10px;" width="250"></p><br />
+<br />
+<p>Basically, 32m is not enough memory for the majority of drupal installs, and APC actually slows down a site when it is full. Typically, 64M is a sufficent value though I've seen some sites need as much as 128M. This setting is changed in apc.ini (or php.ini depending on your setup). You can find the location of the files by doing a find in the phpinfo() page for ".ini". You'll need to restart apache, of course, for the change to take effect.</p><br />
+<br />
+<p><a href="http://2bits.com/articles/high-php-execution-times-drupal-and-tuning-apc-includeonce-performance.html">There's some good further discussion of this and other APC settings at 2bits.com.</a></p><br />
+<br />
+<ol><br />
+	<li><br />
+		<h2>Not Turning Views Render Cache On (With Query Cache Off)</h2><br />
+<br />
+		<p>Views render cache uses the result set of a query as its cache key. In other words, if you publish an article, all cached views that the article appears in will magically update and no one will ask you why their article isn't showing up where they think it should.</p><br />
+<br />
+		<p>The one limitation of this technique is that if an editor were to change the title of an article that appeared in the view, the change wouldn't appear until the render cache expired. This is usually acceptable in most situations given that this trick doesn't shave, as much as brutally hack off a huge chuck time spent loading the page. Also, if your view's query is terrible, this obviously won't help. However, that's rarely the case: in almost all cases, over 95% of the time spent generating the view will be the rendering, not the querying.</p><br />
+<br />
+		<p>Many, including myself, believe this trick should actually be the default setting for all views.</p><br />
+	</li><br />
+	<li><br />
+		<h2>Not Tweaking Block Cache Settings</h2><br />
+<br />
+		<p>The bad news is the default cache settings for blocks are stupid (usually NO_CACHE, actually). The good news is you're smart, and can alter them using the <a href="https://drupal.org/project/blockcache_alter">block cache alter module</a>. Go ahead: take a look at your site. Are there elements that are the same on every page and don't change (perhaps a mega footer or mega drop down menu?)? Then take 15 seconds and set that cache to global. Such a change will easily shave 0.1 seconds of time off of every page load. Start looking at which blocks only need to update every hour (a most commented / most popular / most emailed quicktabs block for example). There goes another 0.1 second of load time.</p><br />
+<br />
+		<p>If you think shaving 0.1 seconds is an insignificant improvement, then I implore you:&nbsp;<em>raise your standards</em> of how fast a drupal site should be. The impact of these "small" tweaks have a tendency to add up quickly.&nbsp;</p><br />
+	</li><br />
+	<li><br />
+		<h2>Removing a Module Without Disabling It</h2><br />
+<br />
+		<p>I see this one less often, but it's impact is severe enough that it deserves mention. It's not a performance problem, as much as it is your site crashing into a mountain and burning in flames. &nbsp;Fortunately, <a href="https://drupal.org/project/clean_missing_modules">there is a very quick way to scan for, and fix this problem.&nbsp;</a>Expect to shave at least 2-5 (maybe more) seconds of page load time if you fix <a href="https://drupal.org/node/1081266#comment-5090980">this issue</a>.</p><br />
+	</li><br />
+</ol><br />
+  </body>
+</html>
+

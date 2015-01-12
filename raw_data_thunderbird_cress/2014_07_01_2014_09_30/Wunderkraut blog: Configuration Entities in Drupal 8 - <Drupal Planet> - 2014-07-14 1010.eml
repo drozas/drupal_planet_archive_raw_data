@@ -1,0 +1,511 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 14 Jul 2014 09:10:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 14 Jul 2014 09:10:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Configuration Entities in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.wunderkraut.com/blog/configuration-entities-in-drupal-8/2014-07-14
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Configuration Entities in Drupal 8</title>
+    <base href="http://www.wunderkraut.com/blog/configuration-entities-in-drupal-8/2014-07-14">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    With the overhaul of many API&#039;s in Drupal 8, one of the new kids on the block is the configuration system with its integration with the entity API. This means that we can now define configuration entities (that work much like the regular content entities) for the purpose of managing more complex configuration. For example, a View is a configuration entity and so is a field or an image style.  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p>In this article we will look at how to define a configuration entity type that will serve a simple purpose, describe dummy <em>flower</em> configuration entities. We will do so in a module called <em>flower</em> and will use the alpha13 release of Drupal 8 to do it.</p>
+
+<p>Before we get started, let's define a practical goal for this tutorial. As I said, we will have a flower config entity type with a couple of properties: name, number of petals, color and season. And by the end, we will have a fully fledged UI to create and manage them. The final code you can also find in <a href="https://github.com/upchuk/drupal-8-config-entities" target="_blank">this repository</a>.</p>
+
+<p>So let's begin.</p>
+
+<h2>The configuration entity interface</h2>
+
+<p>The first thing we need to do is define an interface our <em>Flower</em> entity type class can implement and that extends the default <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Config%21Entity%21ConfigEntityInterface.php/interface/ConfigEntityInterface/8">ConfigEntityInterface</a>. So inside of our module's <em>src/</em> folder, create a file called <em>FlowerInterface.php</em> with the following interface:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * @file
+ * Contains \Drupal\flower\FlowerInterface.
+ */</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">namespace</span> Drupal\flower<span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Config\Entity\ConfigEntityInterface<span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #009933; font-style: italic;">/**
+ * Provides an interface defining a flower entity type.
+ */</span>
+<span style="color: #000000; font-weight: bold;">interface</span> FlowerInterface <span style="color: #000000; font-weight: bold;">extends</span> ConfigEntityInterface <span style="color: #009900;">&#123;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div>
+
+<p>As you can see, we are just extending the default configuration entity interface without adding any methods to it (which is possible).</p>
+
+<h2>The configuration entity class</h2>
+
+<p>Next, we will focus on the crux of defining our own configuration entity class. Go ahead and create a folder inside the <em>src/</em> directory called <em>Entity</em>, and within it, a file called <em>FlowerEntity.php</em>:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * @file
+ * Contains \Drupal\flower\Entity\FlowerEntity.
+ */</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">namespace</span> Drupal\flower\Entity<span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Config\Entity\ConfigEntityBase<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Config\Entity\ConfigEntityInterface<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\flower\FlowerInterface<span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #009933; font-style: italic;">/**
+     * Defines a Flower configuration entity class.
+     *
+     * @ConfigEntityType(
+     *   id = &quot;flower&quot;,
+     *   label = @Translation(&quot;Flower&quot;),
+     *   fieldable = FALSE,
+     *   controllers = {
+     *     &quot;list_builder&quot; = &quot;Drupal\flower\FlowerListBuilder&quot;,
+     *     &quot;form&quot; = {
+     *       &quot;add&quot; = &quot;Drupal\flower\Form\FlowerForm&quot;,
+     *       &quot;edit&quot; = &quot;Drupal\flower\Form\FlowerForm&quot;,
+     *       &quot;delete&quot; = &quot;Drupal\flower\Form\FlowerDeleteForm&quot;
+     *     }
+     *   },
+     *   config_prefix = &quot;flower&quot;,
+     *   admin_permission = &quot;administer site configuration&quot;,
+     *   entity_keys = {
+     *     &quot;id&quot; = &quot;id&quot;,
+     *     &quot;label&quot; = &quot;name&quot;
+     *   },
+     *   links = {
+     *     &quot;edit-form&quot; = &quot;flower.edit&quot;,
+     *     &quot;delete-form&quot; = &quot;flower.delete&quot;
+     *   }
+     * )
+     */</span>
+    <span style="color: #000000; font-weight: bold;">class</span> FlowerEntity <span style="color: #000000; font-weight: bold;">extends</span> ConfigEntityBase implements FlowerInterface <span style="color: #009900;">&#123;</span>
+&nbsp;
+      <span style="color: #009933; font-style: italic;">/**
+       * The ID of the flower.
+       *
+       * @var string
+       */</span>
+      <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000088;">$id</span><span style="color: #339933;">;</span>
+&nbsp;
+      <span style="color: #009933; font-style: italic;">/**
+       * The flower name.
+       *
+       * @var string
+       */</span>
+      <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000088;">$name</span><span style="color: #339933;">;</span>
+&nbsp;
+      <span style="color: #009933; font-style: italic;">/**
+       * The flower color.
+       *
+       * @var string
+       */</span>
+      <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000088;">$color</span><span style="color: #339933;">;</span>
+&nbsp;
+      <span style="color: #009933; font-style: italic;">/**
+       * The number of petals.
+       *
+       * @var int
+       */</span>
+      <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000088;">$petals</span><span style="color: #339933;">;</span>
+&nbsp;
+      <span style="color: #009933; font-style: italic;">/**
+       * The season in which this flower can be found.
+       *
+       * @var string
+       */</span>
+      <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000088;">$season</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #009900;">&#125;</span></pre></div>
+
+<p>What we have here is a simple class defining the entity properties we want (name, id, color, number of petals and season). This class extends the default <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Config%21Entity%21ConfigEntityBase.php/class/ConfigEntityBase/8">ConfigEntityBase</a> class and implements our interface. What happens above the class definition is what's interesting though.</p>
+
+<p>Using <a href="https://api.drupal.org/api/drupal/core!modules!system!system.api.php/group/annotation/8">annotations</a>, we are basically telling Drupal about our <em>Flower</em> entity type.</p>
+
+<p>The <em>@ConfigEntityType</em> tells Drupal that this is a configuration entity type (as opposed to a plugin or something else). Within its definition, we have an array-like structure with the following information (I will only mention the keys that are not super obvious):</p>
+
+<ul><li><em>label</em> - the label of the entity type passed through the translation system.</li>
+<li><em>fieldable</em> - the configuration entities are not fieldable, but the content entities are. Since we are using the same entity API, we can specify this.</li>
+<li><em>controllers</em> - all the classes needed to manage these entities. The <em>list_builder</em> class will provide an admin overview interface of the entities, whereas the <em>form</em> classes are used to perform the CRUD operations through the UI.</li>
+<li><em>config_prefix</em> - a configuration identifier</li>
+<li><em>entity keys</em> - mapping of the main entity keys to the entity properties we defined. For instance, when we call the <em>label()</em> method on the entity object, it will return the flower name.</li>
+<li><em>links</em> - administration links for editing and deleting entities with values referencing routes. Specifying them here will make Drupal add them automatically to the <em>operations</em> column on the entity overview page (we'll see this in a minute).</li>
+</ul><p>For more information about the structure of an entity class annotation, follow this <a href="https://drupal.org/node/2207559">documentation page</a>.</p>
+
+<h2>The entity forms</h2>
+
+<p>The next thing we need to do is create the forms we referenced in the annotations above: for adding, editing and deleting flower entities. The cool thing is that the form for <em>adding</em> can be reused for <em>editing</em> as well. For delete, we extend a special class that gives us all we need for a confirmation form. But first, the add/edit form (<em>FlowerForm.php</em>) inside of the <em>src/Form/</em> folder:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * @file
+ * Contains \Drupal\flower\Form\FlowerForm.
+ */</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">namespace</span> Drupal\flower\Form<span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Entity\EntityForm<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Entity\EntityInterface<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Entity\EntityTypeInterface<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Url<span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #009933; font-style: italic;">/**
+ * Class FlowerForm
+ *
+ * Form class for adding/editing flower config entities.
+ */</span>
+<span style="color: #000000; font-weight: bold;">class</span> FlowerForm <span style="color: #000000; font-weight: bold;">extends</span> EntityForm <span style="color: #009900;">&#123;</span>
+&nbsp;
+   <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> form<span style="color: #009900;">&#40;</span><a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #000088;">$form</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #339933;">&amp;</span><span style="color: #000088;">$form_state</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+    <span style="color: #000088;">$form</span> <span style="color: #339933;">=</span> parent<span style="color: #339933;">::</span><span style="color: #004000;">form</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$form</span><span style="color: #339933;">,</span> <span style="color: #000088;">$form_state</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #000088;">$flower</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">entity</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// Change page title for the edit operation</span>
+    <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">operation</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'edit'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'#title'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Edit flower: @name'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'@name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// The flower name.</span>
+    <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'name'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'textfield'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Name'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#maxlength'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">255</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#default_value'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Flower name.&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#required'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// The unique machine name of the flower.</span>
+    <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'id'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'machine_name'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#maxlength'</span> <span style="color: #339933;">=&gt;</span> EntityTypeInterface<span style="color: #339933;">::</span><span style="color: #004000;">BUNDLE_MAX_LENGTH</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#default_value'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">id</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#disabled'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #339933;">!</span><span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">isNew</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#machine_name'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'source'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'name'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'exists'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'flower_load'</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// The flower color.</span>
+    <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'color'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'textfield'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Color'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#maxlength'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">255</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#default_value'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">color</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Flower color.&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#required'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// The number of petals.</span>
+    <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'petals'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'textfield'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Petals'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#maxlength'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">255</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#default_value'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">petals</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;The number of petals.&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#required'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// The season.</span>
+    <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'season'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'select'</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#options'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'Spring'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Spring'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'Summer'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Summer'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'Automn'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Automn'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'Witer'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Winter'</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Season'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#maxlength'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #cc66cc;">255</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#default_value'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">season</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;The season in which this flower grows.&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'#required'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$form</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> save<span style="color: #009900;">&#40;</span><a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #000088;">$form</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #339933;">&amp;</span><span style="color: #000088;">$form_state</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+    <span style="color: #000088;">$flower</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">entity</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #000088;">$status</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">save</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$status</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      <span style="color: #666666; font-style: italic;">// Setting the success message.</span>
+      drupal_set_message<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Saved the flower: @name.'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'@name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">&#125;</span>
+    <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span>
+      drupal_set_message<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'The @name flower was not saved.'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'@name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$flower</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">&#125;</span>
+    <span style="color: #000088;">$url</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> Url<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'flower.list'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$form_state</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'redirect'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$url</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">toString</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span> </pre></div>
+
+<p>In our <em>FlowerForm</em> class we are extending the Drupal <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21EntityForm.php/class/EntityForm/8">EntityForm</a> class and implementing 2 of its methods: <em>form()</em> and <em>save()</em>. In the first one, we define a regular Form API form very similar to what we do in Drupal 7. But there are a few cool new things happening there as well:</p>
+
+<ul><li>We extend the parent form and add our elements to that definition.</li>
+<li>We get the configuration entity object from the <em>entity</em> property of the parent class.</li>
+<li>We check the operation being performed on the entity and if the user is editing it, we change the title of the page to reflect this</li>
+<li>Instead of using the procedural <em>t()</em> function, we access <em>$this-&gt;t()</em> on the parent class for <a href="https://www.drupal.org/node/2079611">best practice</a>.</li>
+<li>We access the config entity public properties and set them as the defaults in the form elements' definition.</li>
+<li>For the <em>machine_name</em>, we use the <em>flower_load()</em> helper function (that we will need to define in our <em>.module</em> file) in order to automatically check whether an entity with that ID already exists.</li>
+</ul><p>In the <em>save()</em> method we perform the simple operation of saving the entity object to the configuration system. Couldn't get simpler than this. And after the save is performed, we redirect to the flower entity overview page. Here we use the <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Url.php/class/Url/8">Url</a> class to build a url object based on a route (that we will define later).</p>
+
+<p>Next, let's quickly create the delete form.</p>
+
+<p>Inside the same <em>src/Form/</em> folder, create a <em>FlowerDeleteForm.php</em> file with the following class:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * @file
+ * Contains \Drupal\flower\Form\FlowerDeleteForm.
+ */</span>
+<span style="color: #000000; font-weight: bold;">namespace</span> Drupal\flower\Form<span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Entity\EntityConfirmFormBase<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Url<span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #009933; font-style: italic;">/**
+ * Form that handles the removal of flower entities.
+ */</span>
+<span style="color: #000000; font-weight: bold;">class</span> FlowerDeleteForm <span style="color: #000000; font-weight: bold;">extends</span> EntityConfirmFormBase <span style="color: #009900;">&#123;</span>
+&nbsp;
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> getQuestion<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Are you sure you want to delete this flower: @name?'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'@name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> getCancelRoute<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000000; font-weight: bold;">new</span> Url<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'flower.list'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> getConfirmText<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Delete'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> submit<span style="color: #009900;">&#40;</span><a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #000088;">$form</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a> <span style="color: #339933;">&amp;</span><span style="color: #000088;">$form_state</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// Delete and set message</span>
+    <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">delete</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    drupal_set_message<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'The flower @label has been deleted.'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'@label'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$form_state</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'redirect_route'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getCancelRoute</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+
+<p>With this form class we are extending the Drupal <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21EntityConfirmFormBase.php/class/EntityConfirmFormBase/8">EntityConfirmFormBase</a> that provides us with all we need for a delete confirmation form. By implementing these self-explanatory methods, we take care of the entity delete process. Finally, it's time to define the admin overview page.</p>
+
+<h2>The entity list builder</h2>
+
+<p>As we declared when defining the config entity class, we now need a class file responsible for building the overview page of our entities. So straight in the <em>src/</em> folder of our module you can create a <em>FlowerListBuilder.php</em> class file with the following class:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * @file
+ *
+ * Contains Drupal\flower\FlowerListBuilder
+ */</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">namespace</span> Drupal\flower<span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Config\Entity\ConfigEntityListBuilder<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\Core\Entity\EntityInterface<span style="color: #339933;">;</span>
+&nbsp;
+&nbsp;
+<span style="color: #000000; font-weight: bold;">class</span> FlowerListBuilder <span style="color: #000000; font-weight: bold;">extends</span> ConfigEntityListBuilder <span style="color: #009900;">&#123;</span>
+&nbsp;
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> buildHeader<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$header</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'label'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Name'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$header</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'color'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Color'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$header</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'petals'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Number of petals'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$header</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'season'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Season'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$header</span> <span style="color: #339933;">+</span> parent<span style="color: #339933;">::</span><span style="color: #004000;">buildHeader</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> buildRow<span style="color: #009900;">&#40;</span>EntityInterface <span style="color: #000088;">$entity</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// Label</span>
+    <span style="color: #000088;">$row</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'label'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getLabel</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$entity</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// Color</span>
+    <span style="color: #000088;">$row</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'color'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">color</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// Petals</span>
+    <span style="color: #000088;">$row</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'petals'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">petals</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #666666; font-style: italic;">// Season</span>
+    <span style="color: #000088;">$row</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'season'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">season</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$row</span> <span style="color: #339933;">+</span> parent<span style="color: #339933;">::</span><span style="color: #004000;">buildRow</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$entity</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> render<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+    <span style="color: #000088;">$build</span> <span style="color: #339933;">=</span> parent<span style="color: #339933;">::</span><span style="color: #004000;">render</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+    <span style="color: #000088;">$build</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'#empty'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'There are no flowers available.'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$build</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span> </pre></div>
+
+<p>In this class that extends the <a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Config!Entity!ConfigEntityListBuilder.php/class/ConfigEntityListBuilder/8">ConfigEntityListBuilder</a>, we implement three methods. The <em>buildHeader()</em> method is responsible for creating the table header of our overview page whereas <em>buildRow()</em> will create the rows based on the number of entities and their values. Lastly, we are overriding the <em>render()</em> method so that we can specify a custom message to display in case there are no entities to show (personal preference). And that's basically it with the list builder class.</p>
+
+<h2>Miscellaneous</h2>
+
+<p>There are a few more things we need to take care of in order to round up our configuration entity type. The first one has <a href="https://www.drupal.org/node/2288297">just became kind of mandatory</a> so I'll start with that: <a href="https://www.drupal.org/node/1905070">the configuration schema</a>. So let's quickly create the folder structure inside our module (<em>config/schema/</em>) and inside a file called <em>flower.schema.yml</em> we can have the following:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #666666; font-style: italic;"># Schema for the configuration files of the Flower module.
+</span>
+    flower<span style="color: #339933;">.</span>flower<span style="color: #339933;">.*:</span>
+      type<span style="color: #339933;">:</span> mapping
+      label<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Flower'</span>
+      mapping<span style="color: #339933;">:</span>
+        id<span style="color: #339933;">:</span>
+          type<span style="color: #339933;">:</span> string
+          label<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Flower identifier'</span>
+        uuid<span style="color: #339933;">:</span>
+          type<span style="color: #339933;">:</span> string
+          label<span style="color: #339933;">:</span> <span style="color: #0000ff;">'UUID'</span>
+        name<span style="color: #339933;">:</span>
+          type<span style="color: #339933;">:</span> label
+          label<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Name'</span>
+        color<span style="color: #339933;">:</span>
+          type<span style="color: #339933;">:</span> string
+          label<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Color'</span>
+          translatable<span style="color: #339933;">:</span> <span style="color: #009900; font-weight: bold;">true</span>
+        petals<span style="color: #339933;">:</span>
+          type<span style="color: #339933;">:</span> integer
+          label<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Number of petals'</span>
+        season<span style="color: #339933;">:</span>
+          type<span style="color: #339933;">:</span> string
+          label<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Season'</span>
+          translatable<span style="color: #339933;">:</span> <span style="color: #009900; font-weight: bold;">true</span></pre></div>
+
+<p>On the first line (after the comment) we start defining the schema for the <em>(flower module).(flower configuration entity type).(all flower configuration entities)</em>. And it follows to map all the entity properties and specify what data type they are. Although the <em>uuid</em> property was not defined by us, Drupal adds it by default and we can specify it here.</p>
+
+<p>As far as I could tell, the <em>label</em>-typed properties become translatable automatically whereas for all the rest we want translatable we can specify <em>translatable: true</em>. Translation is one of the biggest reasons for which we use these schemas for configuration entities.</p>
+
+<p>And now that the schema is taken care of, it's time for some finishing touches. First, let's create our routes so that we can access everything in the browser. Inside of a file called <em>flower.routing.yml</em> in the module root folder, add the following:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">flower<span style="color: #339933;">.</span><a href="http://www.php.net/list"><span style="color: #990000;">list</span></a><span style="color: #339933;">:</span>
+  path<span style="color: #339933;">:</span> <span style="color: #0000ff;">'/admin/structure/flowers'</span>
+  defaults<span style="color: #339933;">:</span>
+    _entity_list<span style="color: #339933;">:</span> <span style="color: #0000ff;">'flower'</span>
+    _title<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Flowers'</span>
+  requirements<span style="color: #339933;">:</span>
+    _permission<span style="color: #339933;">:</span> <span style="color: #0000ff;">'administer site configuration'</span>
+flower<span style="color: #339933;">.</span>add<span style="color: #339933;">:</span>
+  path<span style="color: #339933;">:</span> <span style="color: #0000ff;">'/admin/structure/flowers/add'</span>
+  defaults<span style="color: #339933;">:</span>
+    _entity_form<span style="color: #339933;">:</span> <span style="color: #0000ff;">'flower.add'</span>
+    _title<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Add a new flower'</span>
+  requirements<span style="color: #339933;">:</span>
+    _permission<span style="color: #339933;">:</span> <span style="color: #0000ff;">'administer site configuration'</span>
+flower<span style="color: #339933;">.</span>edit<span style="color: #339933;">:</span>
+  path<span style="color: #339933;">:</span> <span style="color: #0000ff;">'/admin/structure/flowers/edit/{flower}'</span>
+  defaults<span style="color: #339933;">:</span>
+    _entity_form<span style="color: #339933;">:</span> <span style="color: #0000ff;">'flower.edit'</span>
+    _title<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Edit flower'</span>
+  requirements<span style="color: #339933;">:</span>
+    _permission<span style="color: #339933;">:</span> <span style="color: #0000ff;">'administer site configuration'</span>
+flower<span style="color: #339933;">.</span>delete<span style="color: #339933;">:</span>
+  path<span style="color: #339933;">:</span> <span style="color: #0000ff;">'/admin/structure/flowers/delete/{flower}'</span>
+  defaults<span style="color: #339933;">:</span>
+    _entity_form<span style="color: #339933;">:</span> <span style="color: #0000ff;">'flower.delete'</span>
+    _title<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Delete flower'</span>
+  requirements<span style="color: #339933;">:</span>
+    _permission<span style="color: #339933;">:</span> <span style="color: #0000ff;">'administer site configuration'</span></pre></div>
+
+<p>For more information about the structure of a route file (and what the above keys actually mean), please consult <a href="https://www.drupal.org/node/2092643">this documentation page</a>. But an important take-away are the paths we defined at <em>admin/structure/flowers</em>.</p>
+
+<p>Second, on the flower overview page, we'd probably like a link to add new flowers to the site. So let's create another YML file in the root of our module called <em>flower.local_actions.yml</em> to define that link:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">flower<span style="color: #339933;">.</span>add<span style="color: #339933;">:</span>
+  route_name<span style="color: #339933;">:</span> <span style="color: #0000ff;">'flower.add'</span>
+  title<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Add flower'</span>
+  appears_on<span style="color: #339933;">:</span>
+    <span style="color: #339933;">-</span> flower<span style="color: #339933;">.</span><a href="http://www.php.net/list"><span style="color: #990000;">list</span></a></pre></div>
+
+<p>This is a simple local action link definition called <em>flower.add</em> that uses the <em>flower.add</em> route and appears on the page given by the route <em>flower.list</em>. For more information about defining local actions, consult <a href="https://www.drupal.org/node/2133247">this documentation page</a>.</p>
+
+<p>Third, we can create a menu link under the <em>Structure</em> admin menu that will take us to the flower overview page. So inside of a file called <em>flower.menu_links.yml</em> in the module root folder, add the following:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">flower<span style="color: #339933;">.</span><a href="http://www.php.net/list"><span style="color: #990000;">list</span></a><span style="color: #339933;">:</span>
+  title<span style="color: #339933;">:</span> Flowers
+  description<span style="color: #339933;">:</span> <span style="color: #0000ff;">'Administer the flower entities'</span>
+  parent<span style="color: #339933;">:</span> <a href="http://www.php.net/system"><span style="color: #990000;">system</span></a><span style="color: #339933;">.</span>admin_structure
+  route_name<span style="color: #339933;">:</span> flower<span style="color: #339933;">.</span><a href="http://www.php.net/list"><span style="color: #990000;">list</span></a></pre></div>
+
+<p>Here we create a link called <em>flower.list</em> found under the <em>system.admin_structure</em> link and that uses the <em>flower.list</em> route name. Simple.</p>
+
+<p>Finally, we need to create the auto loader function that will be used by the <em>machine_name</em> form element to check whether an entity with a given machine name already exists (on the flower <em>add</em> form). So inside the <em>flower.module</em> file, create this function:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Menu argument loader. Returns a flower entity
+ *
+ * @param $id
+ * @return \Drupal\Core\Entity\EntityInterface|static
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> flower_load<span style="color: #009900;">&#40;</span><span style="color: #000088;">$id</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #b1b100;">return</span> FlowerEntity<span style="color: #339933;">::</span><span style="color: #004000;">load</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$id</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+
+<p>And don't forget to <em>use</em> the <em>FlowerEntity</em> class at the top of the file:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">use</span> \Drupal\flower\Entity\FlowerEntity<span style="color: #339933;">;</span></pre></div>
+
+<p>And that should be about it. Clear the caches, make sure the module is enabled, and start poking at it. Navigate to <em>/admin/structure/flowers</em> and create, edit, delete flower entities. Additionally, you can turn on configuration translation and translate all your entities into multiple languages. Cool, no?</p>
+
+<h2>Conclusion</h2>
+
+<p>In this tutorial we've looked at how we can create our own simple configuration entity type in Drupal 8. The <em>alpha13</em> version (latest at the time of writing) has been used for this, so make sure that if you are using a newer one you make the necessary code adaptations if needed.</p>
+
+<p>In Drupal 7 we do not have configuration entities and we are left with creating custom tables that hold data meant as configuration. And obviously, integration with the modest D7 entity API is practically inexistent. This all changes in Drupal 8 with the development of a robust entity API - fully integrated with the multilingual and configuration systems. Because of this, we now have exportable and translatable configuration entities used to manage more complex data that is not content.</p>
+
+<p>And with all these new developments, we are being introduced to a few new concepts that can scare us a bit (<a href="http://www.webomelette.com/drupal-8-dependency-injection-service-container-and-all-jazz">services, dependency injection</a>, <a href="https://www.drupal.org/node/1637614#comment-7415530">plugins</a>, <a href="http://drupalwatchdog.com/volume-3/issue-1/object-oriented-programming-101">OOP</a> and so on). However, once we get used to them a bit, they will become a friend rather than foe and open the door to more sane, performant and modern development within the Drupal framework.</p> </div>
+    </div>
+  </body>
+</html>
+

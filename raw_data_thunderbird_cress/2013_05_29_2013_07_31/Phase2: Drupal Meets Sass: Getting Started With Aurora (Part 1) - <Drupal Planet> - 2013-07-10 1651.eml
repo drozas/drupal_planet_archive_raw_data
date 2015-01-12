@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 10 Jul 2013 15:51:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 10 Jul 2013 15:51:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Drupal Meets Sass: Getting Started With Aurora (Part 1)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-1/?utm_source=rss&utm_medium=rss&utm_campaign=drupal-meets-sass-getting-started-with-aurora-part-1
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Drupal Meets Sass: Getting Started With Aurora (Part 1)</title>
+    <base href="http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-1/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=drupal-meets-sass-getting-started-with-aurora-part-1">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Drupal theming trends have slowly but surely kept up with the rest of the front end world, and leading that charge is <a title="Pushing Responsive Development Forward- Introducing NYCCamp’s Responsive Advertising Sprint" href="http://www.phase2technology.com/blog/pushing-responsive-development-forward-introducing-nyccamps-responsive-advertising-sprint/">our friend</a> Sam Richard (aka <a title="Snugug on Drupal.org" href="https://drupal.org/user/820332">Snugug</a>) and his <a title="Aurora theme on Drupal.org" href="https://drupal.org/project/aurora">Aurora</a> theme. Aurora is the grand introduction of Sass/Compass to Drupal, and it&#8217;s a joy to use.</p>
+<p>In this post I&#8217;ll walk you through setting up and configuring both the theme itself and a Sass/Compass development environment. In follow up posts, I&#8217;ll talk about how to make the best use out of this approach in your theming workflow.</p>
+<h2>Wait, what?</h2>
+<p>Before we jump into the steps, you (being the astute reader that you are) might find yourself wondering what these words mean. Worry not, it&#8217;s actually pretty simple.</p>
+<h3>Sass</h3>
+<dl>
+<dd><a href="http://sass-lang.com/">Sass</a> stands for &#8220;Syntactically Awesome Stylesheets&#8221; and it can be an absolute godsend to anyone who writes a good bit of CSS. It&#8217;s basically an extension of CSS which adds some great features on top of it and smartly compiles down to regular old CSS so that the browser doesn&#8217;t know the difference. Some of the nicer parts include nested rules, variables, and mixins, but it brings <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html">a lot more than just that</a> to the table. </dd>
+<dd></dd>
+<dt></dt>
+</dl>
+<h3>Compass</h3>
+<dl>
+<dd><a href="http://compass-style.org/">Compass</a> takes things even further. It&#8217;s a framework built on top of Sass that adds a metric ton of helpers and pre-build mixins and layout tools and lots of other cool stuff. It&#8217;s also a command line tool (a Ruby gem specifically) which can watch your Sass files for changes and automatically compile raw CSS for the browser on the fly.</dd>
+<dd></dd>
+<dt></dt>
+</dl>
+<h3>Aurora</h3>
+<dl>
+<dd>The Aurora base theme for Drupal integrates Sass and Compass into a Drupal theming workflow, and is optimized for mobile first and responsive. Beyond that, it&#8217;s fairly minimal as base themes go&#8211;it basically integrates Sass and Compass into Drupal, sets up a code structure for your Sass, and leaves the rest of the decisions up to you.</dd>
+</dl>
+<h2>Step 1: Install Sass/Compass</h2>
+<p>So first you have to install Sass and Compass to your computer. This should be done wherever you develop&#8211;if you develop in a VM then you&#8217;ll want to install them there. The steps required depend on your OS.</p>
+<p><strong>Windows</strong> users need to first install Ruby using <a href="http://rubyinstaller.org/">Ruby Installer</a> and can then open up a Ruby command prompt and run:</p><pre class="crayon-plain-tag">gem install compass</pre><p><strong>OSX</strong> users already have Ruby installed so all you need to do is open up a terminal and run:</p><pre class="crayon-plain-tag">sudo gem install compass</pre><p><strong>Linux </strong>users, being naturally intelligent and good looking, know that installation depends on the distribution you&#8217;re using. Here are <a href="http://ndever.net/articles/linux/installing-sass-and-compass-ubuntu-1210-1304">Ubuntu instructions</a> if that&#8217;s your flavor. Otherwise, you&#8217;ll likely want to Google &#8220;install compass &lt;distroname&gt;&#8221; to find distro-specific instructions.</p>
+<h2>Step 2: Install Aurora</h2>
+<p>Once you have Sass/Compass installed, you&#8217;re ready to grab Aurora. First, you&#8217;ll want to install the &#8220;compass-aurora&#8221; gem using:</p><pre class="crayon-plain-tag">gem install compass-aurora</pre><p>Then, just download the Aurora theme from Drupal.org as you would any other theme. You&#8217;ll also need to install the required <a href="https://drupal.org/project/magic">Magic</a> module for lots of helpers which Aurora integrates, and you might want to install the highly recommend <a href="http://drupal.org/project/html5_tools">HTML5 Tools</a> module as well. If you&#8217;re curious, you could also check out Aurora&#8217;s <a href="http://snugug.github.io/Aurora/modules/">list of recommended modules</a> which you might find useful.</p>
+<h2>Step 3: Create your custom subtheme</h2>
+<p>Once everything is installed, you&#8217;re ready to generate your custom subtheme. There are three different flavors of subthemes to choose from:</p>
+<ul>
+<li><strong>Corona </strong>is a subtheme which lacks a lot of structure to the Sass, including only a base folder, a global folder, and a design folder. To use Corona, run:<br />
+<pre class="crayon-plain-tag">compass create YOURTHEMENAME -r aurora --using aurora/corona</pre>
+</li>
+<li><strong>Polaris</strong> makes it easy to write code in accordance with <a href="https://smacss.com/">SMACCS</a> and includes folders/partials laid out according to the guidelines of SMACCS. To base your subtheme on Polaris, run:<br />
+<pre class="crayon-plain-tag">compass create YOURTHEMENAME -r aurora --using aurora/polaris</pre>
+</li>
+<li><strong>Aurora</strong> is the default and is based around the ideas that you that you start your theming with a style guide and as you theme you keep layout and design rules separate. As such, in addition to a global folder, it also includes a style guide folder along with a layout folder and a design folder. To use Aurora, run:<br />
+<pre class="crayon-plain-tag">compass create YOURTHEMENAME -r aurora --using aurora</pre>
+</li>
+</ul>
+<p>Once you have your subtheme created, you&#8217;ll want to install its dependencies. So &#8220;cd&#8221; into your subtheme&#8217;s directory and then run:</p><pre class="crayon-plain-tag">bundle install</pre><p>Note that if you get command not found errors for &#8220;bundle&#8221;, you may have to install it using:</p><pre class="crayon-plain-tag">gem install bundler</pre><p></p>
+<h2>Step 4: Configure and run Compass</h2>
+<p>At this point you have everything installed and a custom subtheme set up, so you&#8217;re ready to roll.</p>
+<p>First, you should open up your subtheme&#8217;s config.rb file to take a glance at the default settings to get a feel for the options and see if you&#8217;d like to change anything. Particularly, you will likely want to uncomment the following line so that your browser&#8217;s dev tools can map the generated CSS to the location in the source Sass files (more on this in Part 2):</p><pre class="crayon-plain-tag"># In development, we can turn on the debug_info to use with FireSass or Chrome Web Inspector. Uncomment:
+# debug = true</pre><p>Once you&#8217;re happy with that, all you need to do is tell Compass to start watching your Sass files for changes, so that it knows when to recompile your CSS. So make sure you&#8217;re still in your subtheme&#8217;s directory, and then run:</p><pre class="crayon-plain-tag">bundle exec compass watch</pre><p>Now, any time you make a change to any Sass files in your subtheme, Compass will see that and will instantly regenerate the CSS which the browser uses, so by the time you switch to your browser and refresh the page, you should see your newly generated CSS.</p>
+<p>Note that you&#8217;ll probably be running that 4 word command every time you start working on your theme and it can get kind of tiresome, so you might want to add something like this to your bash or zsh config so you can just type &#8220;becc&#8221; instead:</p><pre class="crayon-plain-tag">alias becc='bundle exec compass watch'</pre><p></p>
+<h2>Step 5: Perform a sanity check</h2>
+<p>Just to make sure everything&#8217;s working correctly, you&#8217;ll want to open up one of your subtheme&#8217;s Sass files such as &#8220;sass/partials/design/_design.scss&#8221; and make an obvious change such as:</p><pre class="crayon-plain-tag">body {
+  background: red;
+}</pre><p>Then watch the command line output in the terminal where Compass is running. You should see it telling you that it detected a change and is rebuilding style.css, like this:</p><pre class="crayon-plain-tag">Change detected at 10:34:47 to: partials/design/_design.scss
+overwrite stylesheets/style.css</pre><p>Once that completes, switch to your browser and refresh your page. If your subtheme is set as the default theme and everything went according to plan, you should be presented with a horrible looking blue background. Success!</p>
+<h2>Next steps</h2>
+<p>So now you have yourself a shiny new Sass/Compass based Drupal theme and you&#8217;re ready to get to work. In Part 2 of this series, I&#8217;ll walk through a nice and easy theming workflow using Aurora and give you some tips on making best use of Sass/Compass in Drupal. Stay tuned! In the meantime, learn about the Omega theme in Josh Cooper&#8217;s <a onClick="_gaq.push(['_trackpageview', '/internal-links/joshcooperblog']);" href="http://www.phase2technology.com/blog/leveraging-responsive-design-patterns-to-create-penn-states-beautiful-online-experience/">recent blog post</a>.</p>
+  </body>
+</html>
+

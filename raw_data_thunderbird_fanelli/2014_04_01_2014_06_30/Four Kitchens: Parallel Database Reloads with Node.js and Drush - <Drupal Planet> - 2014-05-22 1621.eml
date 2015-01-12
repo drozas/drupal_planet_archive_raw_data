@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 22 May 2014 14:21:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 22 May 2014 14:21:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Four Kitchens: Parallel Database Reloads with Node.js and Drush
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fourkitchens.com/blog/2014/05/22/parallel-database-reloads-nodejs-and-drush
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Four Kitchens: Parallel Database Reloads with Node.js and Drush</title>
+    <base href="http://fourkitchens.com/blog/2014/05/22/parallel-database-reloads-nodejs-and-drush">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-body">
+    <p>Have you ever found yourself working on a large Drupal site, pleased with whatever new piece of functionality you’re adding but simultaneously terrified of inevitably needing to reload the database? The thought of waiting twenty, thirty, forty, or more minutes to pull down a database is completely unacceptable and a huge waste of valuable developer&nbsp;time.</p>
+<p>Our friends at Lullabot certainly have been thinking about this problem and created the <a href="https://github.com/deviantintegral/mysql-parallel">mysql-parallel</a> set of scripts to address the issue. The idea is to break a database dump and import into per-table tasks that can be run in parallel, greatly improving the overall performance of a database dump and import. I had some problems with the script though: while the general approach is certainly appreciated, it was a little trickier to use than I was happy with and I found myself writing another script to wrap mysql-parallel – because, like a good terminal nerd I’m lazy and don’t like typing out long commands or series of&nbsp;commands.</p>
+<p>Wrapping mysql-parallel still wasn’t a great solution for me though, so I decided to take the idea and run with it in a different direction. The result? Two node.js modules, one general and one&nbsp;specific:</p>
+<ol><li><a href="https://www.npmjs.org/package/drush-reloadp">drush-reloadp</a> – a node.js module for reloading drush databases in&nbsp;parallel.</li>
+<li><a href="https://www.npmjs.org/package/drush-node">drush-node</a> – a node.js module for executing arbitrary drush&nbsp;commands.</li>
+</ol><h3>drush-reloadp</h3>
+<p>Aside from being a little tricky to use, one of the issues I had with mysql-parallel is that although the dumps and imports were happening in parallel the&nbsp;script</p>
+<ol><li>Does not take into account the number of processors available on the source and destination machines, which could potentially lead to unacceptable load generated during a database&nbsp;dump.</li>
+</ol><p>and</p>
+<ol><li>Runs the dumps in parallel, then the imports after the dumps are&nbsp;finished.</li>
+</ol><p>drush-reloadp addresses both of my&nbsp;concerns.</p>
+<p>After you’ve installed the module gobally (<code>npm install -g drush-reloadp</code>) you can execute it against a source and destination as&nbsp;follows:</p>
+<div class="geshifilter">
+<pre class="text geshifilter-text" style="font-family:monospace;">drush-reloadp -s @fourkitchens.stage -d @fourkitchens.local</pre></div>
+<p>The <code>-s</code> and <code>-d</code> flags stand for <code>source</code> and <code>destination</code> and correspond to <a href="https://drupal.org/node/670460">drush aliases</a> which in turn will contain all the information you need to connect to the source and destination servers and&nbsp;databases.</p>
+<p>When the command is executed the module will first determine how many processors are available on the source and destination servers. These values are used to limit the number of processes that will execute in parallel to avoid placing the machines under too much load that could result in <a href="http://en.wikipedia.org/wiki/Process_state">task swapping</a>.</p>
+<p>After the number of cores are determined the module drops all of the destination database’s tables so that only clean data will be imported. Once that’s complete the module determines the tables that need to be imported from the source. Here’s where things start to get interesting: the module creates a job queue using the node.js <a href="https://github.com/caolan/async">async</a> module. This module allows you to execute jobs in parallel without exceeding a certain limit (no swapping here!). Additionally, you can create a queue and fill it up over time, so after we start receiving dumps we immediately start adding to an import queue and begin processing those jobs. The result is a safe but fast execution of all the tasks we need to fill up our&nbsp;database.</p>
+<p>After the import is complete <code>drush updb</code> is run against the destination site to run any locally pending update hooks and clear site caches. Some people might not like this. If you don&#8217;t open a <a href="https://github.com/elliotttf/drush-reloadp/compare/">pull request</a> to add a flag to disable this&nbsp;feature.</p>
+<h3>drush-node</h3>
+<p>In true node.js fashion, I separated out the underlying functionality needed for this process into as small and modular pieces as I could. The result was the drush-node module which allows node.js code to run arbitrary drush commands. There’s nothing too fancy here, the module is just running <a href="http://nodejs.org/docs/latest/api/child_process.html#child_process_child_process_exec_command_options_callback"><code>child_process.exec()</code></a> with whatever drush command you’re asking&nbsp;for.</p>
+<p>A nice feature of this though is that the module uses JavaScript <a href="http://www.html5rocks.com/en/tutorials/es6/promises/">promises</a> (via the <a href="https://github.com/kriszyp/promised-io">promised-io</a> module) so commands can be chained together in code like&nbsp;this:</p>
+<div class="geshifilter">
+<pre class="javascript geshifilter-javascript" style="font-family:monospace;"><span style="color: #003366; font-weight: bold;">var</span> drush <span style="color: #339933;">=</span> require<span style="color: #009900;">(</span>‘drush’<span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #003366; font-weight: bold;">var</span> group <span style="color: #339933;">=</span> require<span style="color: #009900;">(</span><span style="color: #3366CC;">'promised-io/promise'</span><span style="color: #009900;">)</span>.<span style="color: #660066;">all</span><span style="color: #009900;">(</span><span style="color: #009900;">[</span>
+  drush.<span style="color: #660066;">init</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+  drush.<span style="color: #660066;">exec</span><span style="color: #009900;">(</span><span style="color: #3366CC;">'updb'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+  drush.<span style="color: #660066;">exec</span><span style="color: #009900;">(</span><span style="color: #3366CC;">'fra'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+  drush.<span style="color: #660066;">exec</span><span style="color: #009900;">(</span><span style="color: #3366CC;">'cc all'</span><span style="color: #009900;">)</span>
+<span style="color: #009900;">]</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+ 
+group.<span style="color: #660066;">then</span><span style="color: #009900;">(</span><span style="color: #003366; font-weight: bold;">function</span> <span style="color: #009900;">(</span>res<span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+  console.<span style="color: #660066;">log</span><span style="color: #009900;">(</span>res.<span style="color: #660066;">join</span><span style="color: #009900;">(</span><span style="color: #3366CC;">"<span style="color: #000099; font-weight: bold;">\r</span>"</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span></pre></div>
+<h3>Caveats</h3>
+<p>As mentioned in the drush-reloadp <a href="https://github.com/elliotttf/drush-reloadp#caveats"><span class="caps">README</span></a> this solution isn&#8217;t without its flaws. Consistency is sacrificed in the name of speed here. In the use cases I&#8217;ve had this hasn&#8217;t been a  problem, but you will want to take this into account in the event that the source site you&#8217;re dumping from is highly trafficked – although you might want to consider not dumping directly from a active, highly trafficked site&nbsp;anyway.</p>
+<p>Furthermore, this solution won&#8217;t work with Pantheon due to the unique way the <span class="caps">DROP</span>s architecture works. I&#8217;d be interested in ideas for expanding functionality to support Pantheon but an intermediary solution might be to have an overnight job to copy the site database onto a non-pantheon server that your team has access to. Then your team could use drush-reloadp as&nbsp;usual.</p>
+<p>The hope with this is that other developers can leverage this general code to create new, interesting, and useful node scripts of their own to integrate node.js and Drupal tasks and that developers with huge databases to import will be able to spend more time coding and less time on reddit looking at pictures of&nbsp;cats.</p>
+  </div>
+  </body>
+</html>
+

@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 12 Dec 2014 10:20:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 12 Dec 2014 10:20:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: The Drupal 8 configuration schema cheat sheet
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2014-dec-12/drupal-8-configuration-schema-cheat-sheet
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: The Drupal 8 configuration schema cheat sheet</title>
+    <base href="http://hojtsy.hu/blog/2014-dec-12/drupal-8-configuration-schema-cheat-sheet">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p><a href="http://hojtsy.hu/files/ConfigSchemaCheatSheet1.0.pdf"><img src="http://hojtsy.hu/files/ConfigSchemaCheatSheet1.0.png" style="float: right; margin: 0 0 2em 2em;" /></a>After over a month of concentrated work, Drupal 8 was ready today to finally flip the switch and enforce strict configuration schema adherence in all TestBase derived tests in core. <a href="https://groups.drupal.org/node/451983">See the announcement in the core group</a>. </p>
+<p>If you are a Drupal 8 contrib developer and provided some configuration schema earlier (or you integrate with an existing core system like blocks, views, fields, etc.) then your tests may now fail with configuration schema errors. Unless of course all your configuration schema is correct: #highfive for you then. </p>
+<p>Otherwise I thought you'll have questions. There is of course the <a href="https://www.drupal.org/node/1905070">existing configuration schema documentation</a> that I helped wrote. However if you are a visual person and want to get an understanding of the basics fast, I thought a cheat sheet would be a great tool. So sat down today and produced this one in the hopes it will help you all! Enjoy!</p>
+</div></div></div>
+  </body>
+</html>
+

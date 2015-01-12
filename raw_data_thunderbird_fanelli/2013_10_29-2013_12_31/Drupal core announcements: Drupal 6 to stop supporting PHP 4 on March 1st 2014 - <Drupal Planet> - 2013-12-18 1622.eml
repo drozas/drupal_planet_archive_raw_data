@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 18 Dec 2013 15:22:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 18 Dec 2013 15:22:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal 6 to stop supporting PHP 4 on March 1st 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/390343
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal 6 to stop supporting PHP 4 on March 1st 2014</title>
+    <base href="https://groups.drupal.org/node/390343">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://drupal.org/drupal-6.0">Drupal 6.0 was released almost 6 years ago</a> in February 2008. The Drupal community is committed to release Drupal 6 bugfixes until Drupal 8.0 is released and <a href="https://drupal.org/comment/8273013#comment-8273013">with recent changes provide security fixes much longer</a>.</p>
+<p>The hosting and development landscape was very different in 2008 though. PHP has gone a long way since we released Drupal 6. While Drupal 6 is still supported on PHP 4.x, the PHP developer community itself <a href="http://php.net/eol.php">end-of-lifed PHP 4 just half a year after Drupal 6.0 came out</a>. According to public statistics and data available to us about Drupal 6 sites, we estimate that there is a very small number of Drupal sites which may still run on PHP 4. We also don't believe it is in our best interest to support Drupal 6 on a possibly insecure but definitely unsupported base system, so we <a href="https://drupal.org/node/2140113">discussed and decided</a> to <strong>drop support for PHP 4 on March 1st 2014</strong>.</p>
+<p>If you are running a Drupal 6 site on PHP 4.x, we suggest you look at your hosting situation as it is likely there are other outdated (and possibly insecure) components involved in your environment as well. For the secure operations of your site, we suggest you look at other hosting options. We suggest to look for hosting with at least PHP 5.2.4 (same as Drupal 7's oldest supported PHP version).</p>
+<p>While we don't plan to deliberately introduce PHP 5 constructs in Drupal 6, this change also lets contributed module developers to use PHP 5 more easily in their code.
+</p>
+  </body>
+</html>
+

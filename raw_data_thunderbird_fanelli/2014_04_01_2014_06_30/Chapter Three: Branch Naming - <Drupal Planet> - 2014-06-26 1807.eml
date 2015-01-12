@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 26 Jun 2014 16:07:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 26 Jun 2014 16:07:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Branch Naming
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com//blog/branch-naming
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Branch Naming</title>
+    <base href="http://chapterthree.com//blog/branch-naming">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">Having a good workflow is important. A workflow that is repeatable and consistent makes your life easier.</p><br />
+<br />
+<p dir="ltr">I create a branch for every Drupal core issue that I work on and use the issue’s node id as a branch name. For example:</p><br />
+<br />
+<p dir="ltr"><code>git checkout -b 2284103</code></p><br />
+<br />
+<p dir="ltr">This system has many advantages, especially if you work on multiple patches. It’s also quite easy to implement. If you are reading an issue on <a href="https://www.drupal.org">Drupal.org</a>, you already have the branch name. From there, it’s as simple as copying and pasting from the url. If you have <a href="https://gist.github.com/trey/2722934#bash-fanciness">git shell completion</a> installed, you can change your command prompt so that you know which issue you are working on by glancing at the terminal prompt.</p>
+  </body>
+</html>
+

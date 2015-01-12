@@ -1,0 +1,65 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Feb 2014 16:59:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Feb 2014 16:59:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chromatic: How to Organize Drupal Features, Reduce Merge Conflicts, and Stay Sane
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.chromaticsites.com/blog/how-organize-drupal-features-reduce-merge-conflicts-and-stay-sane
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chromatic: How to Organize Drupal Features, Reduce Merge Conflicts, and Stay Sane</title>
+    <base href="http://www.chromaticsites.com/blog/how-organize-drupal-features-reduce-merge-conflicts-and-stay-sane">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+              	<p><img src="http://blog-media.chromaticsites.com.s3.amazonaws.com/drupal/uploads/2014/02/20/drupal-features-organization-purpose.jpg" alt="" /></p>
+
+	<p>Features play a significant role in any major Drupal 6 or 7 project. The organization of features is often overlooked, but becomes important as a project grows. Agreeing on an effective organization strategy avoids headaches and reduces merge conflicts. After experiencing just about every strategy on projects of all sizes, we’d love to share what works best for us.</p>
+
+	<h2>Why is feature organization significant?</h2>
+
+	<p>The <a href="https://drupal.org/project/features">Features project page</a> defines a feature as a collection of reusable components. After all, a feature is a module. A majority of features, however, are only created to get configuration into code. This is understandable, but it remains important to build each feature with a modular approach. It doesn’t matter if there is any intention to reuse them on another project.</p>
+
+	<p>What does the opposite approach look like? One feature for each category of component: a Content Types feature, a Views feature, a Strongarm feature, and so on. A developer can update every feature after each round of development and commit their work. Life is good.</p>
+
+	<p>This approach becomes a problem as more developers join a project. Each developer can be working on a separate section of the site, but they all must push their Views and Content Types to the same features. Nasty merge conflicts surface. Spider webs of interdependency between features form. A few always report as Overridden no matter how many times they’re updated. Not to mention, the Content Types feature is now huge and that page takes five minutes to load before anything can be added to it.</p>
+
+	<p>There has to be a better way.</p>
+
+	<h2>Creating modular features: how and why?</h2>
+
+	<p>A modular approach involves basing each feature on a major content type or specific section of the site. Each feature should include relevant content types, views, contexts, panel pages, variables, contrib dependencies, image styles, taxonomy vocabularies, javascript files, hook implementations, and so on. A basic News feature may contain the Article content type, the Recent News view, and the context that adds it to a page.</p>
+
+	<p>This may create a larger number of smaller modules, but the tradeoff in maintainability is worth it. Dodging merge conflicts and unmanageable interdependencies is a huge benefit. So is the next developer knowing where to find the preprocess function that alters the Article’s teaser view mode. More on that later.</p>
+
+	<h2>One size never fits all</h2>
+
+	<p>What if more than one feature uses a single image style, view, or bit of custom code? Don’t just pick one feature to add it in. Don’t copy and paste the custom code across both. Instead, try creating a separate, shared feature and list it as a dependency by those that use it.</p>
+
+	<p>Some components just don’t belong in the modular features we’ve described above. Menus, menu items, user roles, permissions (debatable), and text/date formats are good examples. Creating one or more site-wide features for these elements can prevent a lot of confusion. Custom code used by most features belongs here as well.</p>
+
+	<p>We also like creating a custom Developer feature to store all development-related configuration. All modules that are never enabled on production get listed as a dependency on the Developer feature. This includes modules like Views UI, Fields UI, and Devel. A development environment is ready to go after enabling one module and production stays lean.</p>
+
+	<h2>A feature is just another custom module</h2>
+
+	<p>Once upon a time, we kept exported configuration in our features and all custom code in separate custom modules. That is, until we realized we could just add our custom code to the .module files of the relevant feature. We started adding our own include files and javascript files, too. That preprocess function we mentioned earlier can now live in the same module as the exported content type. Don’t worry, these custom pieces aren’t overwritten or lost when updating the feature.</p>
+
+	<h2>A few more bits worth mentioning</h2>
+
+	<p>This is less important, but a debatable topic is where to keep features within the modules folder structure. A common approach is to have three directories: contrib, custom, and features. We tend to combine the latter two. A custom module can become a feature with one line of code and with so much custom code in our features, we see little reason to separate them.</p>
+
+	<p>Another quick lesson to learn is to add a prefix to all feature names. Find initials or a short version of your site’s name and add it to the module’s machine (xyz_news) and readable (<span class="caps">XYZ</span> News) names. This will avoid conflicts with any contrib modules that have the same name.</p>
+
+	<p>Finally, no approach will be successful without developers paying attention when updating features. Features is usually aware of what shouldn’t get added, but it isn’t unusual for something to sneak in where it doesn’t belong. To combat this when staging commits, we use a git <span class="caps">GUI</span> like Tower or <code class="prettyprint">git add -p</code> when working from the command line. This requires deciphering features code, but blind commits can unwind any organization in seconds.</p>
+
+	<h2>Features: A necessary evil</h2>
+
+	<p>Drupal 8’s <a href="http://heyrocker.com/how-use-drupal-8-configuration-system">configuration management system</a> will replace the need to export configuration with Features. Until then, Features is a necessary evil and staying organized can help developers stay sane. The organization strategy and other ideas we’ve shared value modularity and avoid merge conflicts. We were fortunate to learn many of these ideas while working with the wonderful folks at <a href="https://www.lullabot.com/">Lullabot</a>. We’d love to hear about strategies you’ve found success with or any ideas to improve ours!</p>          </div>
+  </body>
+</html>
+

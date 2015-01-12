@@ -1,0 +1,47 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 02 Dec 2013 20:45:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 02 Dec 2013 20:45:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Matt Farina: HTML5: The Semantic Difference Between Bold and Strong
+Content-Transfer-Encoding: 8bit
+Content-Base: http://engineeredweb.com/blog/2013/html5-semantic-diff-bold-strong/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Matt Farina: HTML5: The Semantic Difference Between Bold and Strong</title>
+    <base href="http://engineeredweb.com/blog/2013/html5-semantic-diff-bold-strong/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://en.wikipedia.org/wiki/HTML5">HTML5</a> changed the semantic meaning of some elements and there has been little talk about it. I stumbled upon the difference while reading the <a href="http://www.w3.org/TR/html5/">HTML5 specification</a> for the <a href="https://github.com/Masterminds/html5-php">PHP HTML5 parser and serializer</a>. What has changed is that there is now a difference between strong and bold along with a difference between emphasized and italics.</p>
+
+<p>These elements have had quite a history.</p>
+
+<h2>Bold and Italics Before HTML5</h2>
+
+<p>Bold was a visual styling and that should be in CSS rather than tags, right? So, we have the strong tag. The same type of thing happened for the italics tag. In the <a href="http://www.w3.org/TR/html4/struct/text.html#h-9.2.1">HTML4.01 spec</a> and <a href="http://www.w3.org/TR/xhtml11/xhtml11_schema.html#a_xhtml11_schema">XHTML</a> specs there were no longer bold or italics tags.</p>
+
+<p>But, they didn't go away. Not in use.</p>
+
+<h2>Strong and Bold</h2>
+
+<p>In HTML5 <code>&lt;strong&gt;</code> and <code>&lt;b&gt;</code> both exist and have a different meaning.</p>
+
+<p>The <code>&lt;b&gt;</code> tag is for "offset text conventionally styled in bold". If you read deeper into <a href="http://dev.w3.org/html5/markup/b.html">the details</a> you'll see it adds, "without conveying any extra emphasis or importance".</p>
+
+<p><code>&lt;strong&gt;</code> <a href="http://dev.w3.org/html5/markup/strong.html">is different</a>. It "represents a span of text with strong importance." There is semantic meaning of importance here. In fact, a <code>&lt;strong&gt;</code> tag within another <code>&lt;strong&gt;</code> tag has even more importance. There is nested importance. The <a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-strong-element">html5 spec is enlightening on this</a>.</p>
+
+<h2>Emphasized and Italics</h2>
+
+<p>Just like <code>&lt;strong&gt;</code> and <code>&lt;b&gt;</code> we have changes to <code>&lt;em&gt;</code> and <code>&lt;i&gt;</code>. The <a href="http://dev.w3.org/html5/markup/i.html"><code>&lt;i&gt;</code></a> tag is for "text conventionally styled in italic". There is no semantic meaning. <a href="http://dev.w3.org/html5/markup/em.html"><code>&lt;em&gt;</code></a> "represents a span of text with emphatic stress". Like <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code> is <a href="http://www.w3.org/TR/html5/text-level-semantics.html#the-em-element">a tag with semantic meaning and that matters when nested</a>.</p>
+
+<h2>Does The Spec Represent The Practice?</h2>
+
+<p>I'm not really sure. We'd need to go to those who read the markup while caring about semantic meaning to find out. I know that many tools don't take this into account. For example, <a href="http://ckeditor.com">CK Editor</a> has buttons for italics and bold but uses the <code>&lt;em&gt;</code> and <code>&lt;strong&gt;</code> tags. This may be a part of HTML5 that just isn't widely understood or used.</p>
+<p><a href="http://engineeredweb.com/blog/2013/html5-semantic-diff-bold-strong/">Continue Reading &raquo;</a></p>
+  </body>
+</html>
+

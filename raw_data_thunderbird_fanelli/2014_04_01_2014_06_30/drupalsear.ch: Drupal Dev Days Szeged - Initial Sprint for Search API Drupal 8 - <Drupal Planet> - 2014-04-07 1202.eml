@@ -1,0 +1,80 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 07 Apr 2014 10:02:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 07 Apr 2014 10:02:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: drupalsear.ch: Drupal Dev Days Szeged - Initial Sprint for Search API Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalsear.ch/node/396
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>drupalsear.ch: Drupal Dev Days Szeged - Initial Sprint for Search API Drupal 8</title>
+    <base href="http://drupalsear.ch/node/396">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>Szeged</h2>
+<p>I’ll tell you in a small prelude a story of a small place in the world named Szeged and why it holds a special place in my heart for me (Nick_vh). When I was job-hunting about 5 years and a half ago I found many companies willing to offer me a job after graduating but the one company I chose was willing to take a huge bet on me and offered me a job + an instant trip to Szeged, Hungary. It seemed that that was the location of the gathering of the Drupal Community in 2008. They said it would be amazing and I never looked back since then and I am still connected to the same and growing Drupal Community.</p>
+<p>Going back to Szeged promised to be a lot of nostalgia and a lot of fun also.</p>
+<h2>Looking back</h2>
+<p>For those that just tune in on this story of the Search API Drupal 8 port, there is <a href="https://www.acquia.com/blog/battleplan-search-solr-drupal-8">some reading to do</a>.</p>
+<blockquote><p>In short: <strong>“Contrib Search maintainers are committed to make Drupal 8 kick ass with Search API.”</strong></p>
+</blockquote>
+<p>This is also exactly what we wanted to prove on this wonderful trip to Hungary.</p>
+<h2>What our goals were</h2>
+<p>Thomas and I already agreed this week in Szeged would be the first of a series of sprints to get Search API to a decent state in Drupal 8. As you can read in the <a href="http://szeged2014.drupaldays.org/program/code-sprints/search-api-drupal-8">Search API for Drupal 8 sprint entry for the Drupal Dev Days</a>  the goals were the following: “The primary focus will be to get the Search API to a usable state in D8 and then decide on and implement framework improvements”</p>
+<p>We discussed and talked about what needed to happen but in true community style, not many words were needed to get the first port started and so it happened that, even before all of this, freblasty started a sandbox and already ported a good chunk of the Drupal 7 code to well factored Drupal 8 code.</p>
+<p>There was a sign up sheet for the sprints and to our surprise a LOT of people signed up for the sprint. I’ve masked the last names to protect their privacy, so they can opt-in on the exposure of their full name. Drunkenmonkey also prepared a nice list of meta issues that mark the Drupal 8 state before the sprint.</p>
+<p><img alt="" src="https://www.evernote.com/shard/s44/sh/bd599d54-46b2-4fba-87ed-3668f26a0e4b/10d2bffa8308499781f167fad39545b1/deep/0/Sprint-attendance-availability-for-Drupal-Dev-Days-Szeged-2014.png" style="height:147px; width:150px" /></p>
+<h2>Plan of attack</h2>
+<p>Some of us already arrived early Monday, the other half arrived Monday afternoon. The team was already hacking away on the code when we decided to use a Google Doc that would semi-coordinate the progress. Process was simple:</p>
+<ol><li>Raise your hand and say your name and that you wanted to help out</li>
+<li>You were given commit access to the sandbox</li>
+<li>Choose a task from the “To Do” in the collaborative document</li>
+<li>Solve it and commit it</li>
+<li>Say “I committed, please pull!” and do a little Ski-Dance (ask Aspilicious for specifics)</li>
+<li>Go to 3 and repeat until Sunday afternoon.</li>
+</ol><p>We purposefully supported this simple plan of attack because adding more process would block people from making progress and we figured it was better to break all the things than to block people from helping out.</p>
+<h2>The attack itself</h2>
+<p>II’m not going to waste a lot of empty words here but let the hard work/visuals speak for itself.</p>
+<ul><li>During the whole week we’ve had <strong>322</strong> commits.</li>
+<li>Heaviest hours were from <strong>09:00 till 19:00</strong> and then it went up again from <strong>22:00 till 24:00</strong>. Thanks to freblasty we even had commits during the middle of the night, <strong>9 of them at 04:00</strong>.</li>
+<li><strong>Wednesday</strong> was our most productive day with <strong>75 commits</strong>. Saturday was our low point with only 36 commits, I guess that has something to do with the party on Friday evening…!</li>
+<li><strong>20834</strong> lines were added, <strong>11996</strong> were removed</li>
+</ul><p>In total we had <strong>15 contributors!!!! </strong>We’ve listed them by # of commits but by no means this means that the ones with more commits worked harder.</p>
+<ol><li>drunkenmonkey            55    (15.62%)</li>
+<li>mollux_                51    (14.49%)</li>
+<li>Nick_vh            46     (13.07%)</li>
+<li>aspilicious            43     (12.22%)</li>
+<li>Andrew_l            38     (10.80%)</li>
+<li>freblasty            34     (9.66%)</li>
+<li>ekes                23     (6.53%)</li>
+<li>m1r1k                18     (5.11%)</li>
+<li>dpovshed            17     (4.83%)</li>
+<li>Andre-B            12     (3.41%)</li>
+<li>baldwinlouie            7     (1.99%)    </li>
+<li>sdecabooter            3     (0.85%)</li>
+<li>penyaskito            3     (0.85%)</li>
+<li>tstoeckler            1     (0.28%)</li>
+<li>pcambra             1     (0.28%)</li>
+</ol><h2>Drupal 8 Codebase versus Drupal 7 codebase</h2>
+<p>A quick preview ofthe differences in terms of files of Drupal 8 vs Drupal 7.</p>
+<p><img alt="" src="https://www.evernote.com/shard/s44/sh/9b2c6dfb-c883-4f25-b25a-f55dc2365b09/2e8494b621d6ea25678474073d94da10/deep/0/StopwordsTest.php---drupal------Sites-dev-drupal8searchapi-drupal-.png" style="height:250px; line-height:1.6; width:100px" /> versus <img alt="" src="https://www.evernote.com/shard/s44/sh/388d930f-ed36-4e30-bbf1-daafa340ba13/b7b69d71b7f849646fdb1c051f613c1a/deep/0/search_api.drush.inc---drupal7dev------Sites-dev-drupal7dev-.png" style="height:250px; width:75px" /> </p>
+<h2>Future plans</h2>
+<p>For now, work continues in the sandbox until the basic functionality is working. Also, mollux is already working on a port of the Database Search backend, which will allow us to test the module with a real search backend.</p>
+<p>Once the functionality is stable and we get into improvement/feature-adding mode, the project will be transferred back to the 8.x branch of the proper search_api project and work will continue in the normal style of patches and issues. (Issues for the individual tasks from the Google document have already been converted to issues in the sandbox’s issue queue as of last meeting).</p>
+<h2>Weekly Meetings on Hangout &amp; IRC</h2>
+<p>We also set up a weekly meeting in the form of a Google hangout, every Tuesday at 18:00 UTC. Please contact us if you want to be invited, everyone who wants to help with this project is welcome!</p>
+<p>Other than this, there is also the possibility of discussing and coordinating via IRC. We are using a special channel, #drupal-search-api on Freenode &lt;<a href="irc://freenode/drupal-search-api&gt;">irc://freenode/drupal-search-api&gt;</a>, where you can also just join in and ask around if you want to get involved.</p>
+<h2>Thanks</h2>
+<p>Many many many thanks to all those involved in the sprint. We understand this takes a big personal commitment and passion to focus so hard on complex problems to drive the next generation of Drupal Search. Also many thanks to all companies that sponsored the time and funds for allowing those people to be there. I hope this blogpost can help your company to convince them to send you to these events. It's educational, helpful and will lift you and your company to a higher level.</p>
+<p> </p>
+<h2>Proof of the team in Szeged, hard at work</h2>
+<p><img alt="" src="https://farm8.staticflickr.com/7208/13690299544_6034090cf0_n.jpg" /><img alt="" src="https://farm8.staticflickr.com/7170/13689987863_57ee771b60_n.jpg" /><img alt="" src="https://farm4.staticflickr.com/3782/13689986873_d3a74127b6_n.jpg" /><img alt="" src="https://farm4.staticflickr.com/3674/13431532744_32634518d0_n.jpg" /><img alt="" src="https://farm4.staticflickr.com/3728/13447960905_db9d8e92ac_n.jpg" /><img alt="" src="https://farm3.staticflickr.com/2916/13423655693_42075fc247_n.jpg" /></p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/taxonomy/term/91" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">searchapi</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/taxonomy/term/106" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">szeged</a></li><li class="taxonomy-term-reference-2" rel="dc:subject"><a href="/taxonomy/term/111" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupaldevdays</a></li><li class="taxonomy-term-reference-3" rel="dc:subject"><a href="/taxonomy/term/86" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div>
+  </body>
+</html>
+

@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 18 Aug 2014 19:55:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 18 Aug 2014 19:55:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Daniel Pocock: Is WebRTC private?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://danielpocock.com/is-webrtc-private
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Daniel Pocock: Is WebRTC private?</title>
+    <base href="http://danielpocock.com/is-webrtc-private">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>With the <a href="https://lists.debian.org/debian-devel-announce/2014/08/msg00007.html">exciting developments</a> at <a href="https://rtc.debian.org">rtc.debian.org</a>, many people are starting to look more closely at browser-based real-time communications.</p>
+<p>Some have dared to ask: does it solve the privacy problems of existing solutions?</p>
+<h3>Privacy is a relative term</h3>
+<p>Perfect privacy and its technical manifestations are hard to define.  I had a go at it in a blog <a href="http://danielpocock.com/the-gold-standard-in-free-communications-technology">on the Gold Standard for free communications technology</a> on 5 June 2013.  By pure co-incidence, a few hours later, <a href="http://www.theguardian.com/world/2013/jun/23/edward-snowden-nsa-files-timeline">the first Snowden leaks appeared</a> and this particular human right was suddenly thrust into the spotlight.</p>
+<h3>WebRTC and ICE privacy risk</h3>
+<p>WebRTC does not give you perfect privacy.</p>
+<p>At least one astute observer at <a href="http://france.debian.net/events/minidebconf2014/">my session at Paris mini-DebConf 2014</a> questioned the privacy of <a href="http://tools.ietf.org/html/rfc5245">Interactive Connectivity Establishment (ICE, RFC 5245)</a>.</p>
+<p>In its most basic form, ICE scans all the local IP addresses on your machine and NAT gateway and sends them to the person calling you so that their phone can find the optimal path to contact you.  This clearly has privacy implications as a caller can work out which ISP you are connected to and some rough details of your network topology at any given moment in time.</p>
+<h3>What WebRTC does bring to the table</h3>
+<p>Some of this can be mitigated though: an ICE implementation can be tuned so that it only advertises the IP address of a dedicated relay host.  If you can afford a little latency, your privacy is safe again.  This privacy protecting initiative could be made by a browser vendor such as <a href="http://www.mozilla.org">Mozilla</a> or it can be done in JavaScript by a softphone such as <a href="http://jscommunicator.org">JSCommunicator</a>.</p>
+<p>Many individuals are now using a proprietary softphone to talk to family and friends around the world.  The softphone in question has properties like a virus, siphoning away your private information.  This proprietary softphone is also an insidious threat to open source and free operating systems on the desktop.  WebRTC is a positive step back from the brink.  It gives people a choice.</p>
+<p>WebRTC is a particularly relevant choice for business.  Can you imagine going to a business and asking them to make all their email communication through hotmail?  When a business starts using a particular proprietary softphone, how is it any different?  WebRTC offers a solution that is actually easier for the user and can be secured back to the business network using TLS.</p>
+<p>WebRTC is based on open standards, particularly HTML5.  Leading implementations, such as the <a href="https://www.resiprocate.org/WebRTC_and_SIP_Over_WebSockets">SIP over WebSocket support in reSIProcate</a>, <a href="http://jscommunicator.org">JSCommunicator</a> and the <a href="http://www.drucall.org">DruCall module for Drupal</a> are fully open source.  Not only is it great to be free, it is possible to extend and customize any of these components.</p>
+<h3>What is missing</h3>
+<p>There are some things that are not quite there yet and require a serious effort from the browser vendors.  At the top of the list for privacy:</p>
+<ul><li><a href="http://www.lumicall.org/encryption">ZRTP support</a> - browsers currently support <a href="http://tools.ietf.org/html/rfc5764">DTLS-SRTP</a>, which is based on X.509.  ZRTP is more like <a href="http://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a>, a democratic and distributed peer-to-peer privacy solution without needing to trust some central certificate authority.</li>
+<li><a href="http://tools.ietf.org/html/rfc6091">TLS with PGP</a> - the TLS protocol used to secure the WebSocket signalling channel is also based on X.509 with the risk of a central certificate authority.  There is increasing chatter about the need for TLS to use <a href="http://en.wikipedia.org/wiki/Pretty_Good_Privacy">PGP</a> instead of X.509 and WebRTC would be a big winner if this were to eventuate and be combined with ZRTP.</li>
+</ul><p>You may think "I'll believe it when I see it".  Each of these features, including WebRTC itself, is a piece of the puzzle and even solving one piece at a time brings people further out of danger from the proprietary mess the world lives with today.</p>
+</div></div></div>
+  </body>
+</html>
+

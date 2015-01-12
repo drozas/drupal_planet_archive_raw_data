@@ -1,0 +1,69 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 01 Sep 2014 10:19:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 01 Sep 2014 10:19:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: PHP: Using the usort / uasort functions
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/php-using-usort-uasort-functions
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: PHP: Using the usort / uasort functions</title>
+    <base href="http://www.webomelette.com/php-using-usort-uasort-functions">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Have you ever had to sort an array in PHP? There are a bunch of functions available, the most common being <a href="http://us1.php.net/manual/en/function.sort.php">sort()</a>. This function does a default sorting of the values in your array. So if you have numbers or want to do alphabetical sorting, <code>sort()</code> will get the job done.</p>
+
+<p>But what if you require a more complex sorting logic? Let's say you have an array of names that need to be sorted in a specific order. I don't know, because your client says so. Let me show you how.</p>
+
+<p>Let's say your DB returns a list of names in an array:</p>
+
+<pre><code>$names = array("Christian", "Daniel", "Adrian");
+</code></pre>
+
+<p>And your client says they need to be arranged in the following order: <em>Adrian, Christian, Daniel</em>. You can use the <a href="http://us1.php.net/manual/en/function.usort.php">usort()</a> function together with a comparator function you write yourself. How does this system work?</p>
+
+<p>As a second argument of the <code>usort()</code> function, we pass in the name of our custom comparator function. The way this gets processed is that all the values in the array that needs sorting are passed to this function 2 at the time (usually you'll see them as <code>$a</code> and <code>$b</code>). This is done to determine which one takes precedence over which. The comparator has to return 0 if the 2 values are considered equal, a negative integer if the first value is <em>less</em> than the second value or a positive integer if the second value is <em>less</em> than the first. What <em>less</em> means is up to you to determine. So let's put this in practice with our example:</p>
+
+<pre><code>function _name_comparer($a, $b) {
+    $correct_order = array("Adrian", "Christian", "Daniel");
+
+    $a_key = array_search($a, $correct_order);
+    $b_key = array_search($b, $correct_order);
+
+    if ($a_key == $b_key) {
+        return 0;
+    }
+
+    return ($a_key &lt; $b_key) ? -1 : 1;
+}
+
+usort($names, "_name_comparer");
+</code></pre>
+
+<p><div  id="block-inject-2" class="block-inject block-inject-2"></div><div class="clearfix"></div><p>So what happens in my comparator function? First, I create an array that contains the proper order of the names. This means that each value has an integer key that can be easily compared (and that I store in the <code>$a_key</code> and <code>$b_key</code> variables). After comparing these, I return 0, a negative or positive integer. The result is that the <code>$names</code> array gets resorted in the order they appear in the <code>$correct_order</code> local variable I created. And that's it.</p>
+
+<p>If the <code>$names</code> variable is associative and you need to maintain the keys as they were, you can use the <a href="http://us1.php.net/manual/en/function.uasort.php">uasort()</a> function:</p>
+
+<pre><code>$names = array(
+    "christian" =&gt; "Christian", 
+    "daniel" =&gt; "Daniel", 
+    "adrian" =&gt; "Adrian",
+);
+usort($names, "_name_comparer");
+</code></pre>
+
+<p>The comparator function can stay the same, but the <code>uasort()</code> function will take into account and maintain the index association of your values.</p>
+
+<p>And that's it. Hope this helps.</p>
+</div></div></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/php-using-usort-uasort-functions" st_title="PHP: Using the usort / uasort functions" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/php-using-usort-uasort-functions" st_title="PHP: Using the usort / uasort functions" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/php-using-usort-uasort-functions" st_title="PHP: Using the usort / uasort functions" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

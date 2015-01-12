@@ -1,0 +1,59 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 15 Jul 2014 03:20:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 15 Jul 2014 03:20:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: NEWMEDIA: Drupal PCI Compliance White Paper: Version 1.1 Released!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.newmediadenver.com/blog/drupal-pci-compliance-white-paper-version-11-released
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>NEWMEDIA: Drupal PCI Compliance White Paper: Version 1.1 Released!</title>
+    <base href="http://www.newmediadenver.com/blog/drupal-pci-compliance-white-paper-version-11-released">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-text field-label-hidden" data-edit-field-id="node/124/title/en/rss">Drupal PCI Compliance White Paper: Version 1.1 Released!</span><div class="field field-node--field-intro field-name-field-intro field-type-text-long field-label-hidden" data-edit-field-id="node/124/field_intro/en/rss"><div class="field-items"><div class="field-item">Version 3.0 of the PCI compliance standard becomes mandatory on January 1st, 2015 and will be a complete game changer for most Drupal eCommerce sites.Are you ready to meet the challenge?</div></div></div><div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-field-id="node/124/body/en/rss"><div class="field-items"><div class="field-item"><p><em>For those wanting to dive right in, simply click <a href="http://drupalpcicompliance.org/files/DrupalPCICompliance.pdf">this link</a> to download the white paper.</em></p>
+
+<p>Matt Kleve was spot on in his DrupalCon Denver 2013 presentation title <a href="http://denver2012.drupal.org/program/sessions/pci-four-letter-word-e-commerce">PCI: a Four-Letter Word of eCommerce</a>. Whenever I present on or discuss the subject matter with other members of the community, there is usually some level of disdain for the payment card industry (PCI) for creating the data security standard (DSS) that we all commonly know as PCI compliance. The complaints are many:</p>
+
+<ul>
+	<li>It&#39;s too confusing.</li>
+	<li>It&#39;s too difficult.</li>
+	<li>It&#39;s too expensive to deal with.</li>
+	<li>It&#39;s security theater.</li>
+	<li>It doesn&#39;t guarantee you&#39;ll never get hacked.</li>
+</ul>
+
+<p>Once everyone has finished airing their grievances, there is always the unspoken question that you can see on everyone&#39;s face... Can&#39;t we just ignore this little nuisance of a requirement and get back to processing credit card transactions?</p>
+
+<p>The reality is that we cannot pretend PCI compliance doesn&#39;t exist. The growth of the eCommerce market can only continue as long as users trust the process, and that can only happen if the end-to-end process remains secure. Oh&mdash;and any merchant agreement you sign will stipulate PCI compliance as a requirement (make sure to read all that fine print!). Therefore, if you want to accept credit or debit cards payments online (even through 3rd party) then you really have no other choice. Compliance is mandatory.</p>
+
+<p>That&#39;s the bad news. The good news is that understanding where and how to get started for a Drupal site is much easier as a result of the <a href="http://drupalpcicompliance.org/">Drupal PCI Compliance White Paper</a> that was initially published a year ago (and a HUGE thanks to the <a href="http://drupalpcicompliance.org/sponsors/">many sponsors</a> that helped make that happen). It&#39;s readable within an hour and can help everyone involved on a Drupal project make informed decisions and reduce their risk as much as possible.</p>
+
+<h3>The Standard Gets Stronger</h3>
+
+<p>As the volume of eCommerce transactions continues to grows, it becomes even more important to protect every component in the entire system handling the transaction. After all, a single point of failure was responsible for <a href="http://www.businessweek.com/articles/2014-03-13/target-missed-alarms-in-epic-hack-of-credit-card-data">Target debacle</a>, where the credit card records of 40+ million customers were compromised. This resulted in a huge financial loss for the company as well as a PR nightmare to deal with.</p>
+
+<p>To minimize these types of attacks from growing in size and frequency, the security standard must keep up. The latest update to the PCC-DSS (version 3.0) was published in November, 2013 and will become mandatory of all eCommerce sites on January 1st, 2015.</p>
+
+<h3>What PCI-DSS 3.0 Means for Drupal</h3>
+
+<p>It&#39;s hard to understate the impact this will have on the Drupal community. In version 1.0 of the standard, there was a there was a very easy way out. Simply redirect the user to a hosted payment page on PayPal or Authorize.Net and you could outsource almost all of your responsibilities. This became the goto solution for many budget conscious eCommerce websites.</p>
+
+<p>Version 2.0 of the standard introduced a gray area. The PCI council created a <a href="http://goo.gl/R21rw">supplemental guide</a> that stated the hosted payment pages, direct post, and iframe solutions all had vulnerabilities. Despite disclosing these attack vectors, the PCI council didn&#39;t directly come out and state that they must now meet a larger set of security controls. This didn&#39;t stop certain vendors (notably Braintree) from promising compliance within 15 minutes. The dilemma for someone interpreting version 2.0 of the standard was obvious: if there were ways to break in and steal cards, wouldn&#39;t that require one to fully lock down the LAMP stack and Drupal application layer? This gray area only led to additional confusion among the Drupal community, who (as a whole) simply opted for the easy route interpretation of the standard.</p>
+
+<p>Version 3.0 ended the confusion entirely. Now hosted payment pages and direct post solutions fall into a new category (SAQ A-EP), which includes over 139 security controls that cover everything from anti-virus to password policy requirements. What used to be trivial (SAQ A) for most websites to achieve has become very challenging. No longer are shared hosting solutions viable. No longer can a website lag behind on updating Drupal core and contrib modules when security updates are available. No longer is it acceptable to enable php filter, allow authenticated users to use the full HTML filter, or manage a site through a shared FTP login.</p>
+
+<p>In short, this is a big damn deal for the Drupal eCommerce community. Without readily available &quot;turnkey&quot; solutions (such as PCI Level 1 managed hosting), many smaller eCommerce sites may not be able to meet the requirements and may be forced to seek non-Drupal based alternatives. In fact, the cost of achieving and maintaining SAQ A-EP could easily fall within the $10,000-$100,000 price range, which is likely to exceed the entire budget of most Drupal eCommerce sites!</p>
+
+<h3>Learning More</h3>
+
+<p>Covering all the ins and outs of PCI compliance is difficult to do in a single blog post (trust me, I tried with the excessively long article titled <a href="http://soundpostmedia.com/article/lets-talk-about-pci-compliance-ubercart-and-drupal-commerce/">Let&#39;s Talk About PCI Compliance for Ubercart and Drupal Commerce</a>. Therefore, I&#39;ll close with this final recommendation (or plea): if you build, maintain, operate, or own an eCommerce website, then you should absolutely read the new version of the <a href="http://drupalpcicompliance.org/">Drupal PCI Compliance White Paper</a>. And if you have any comments, questions, or concerns, please submit an issue in the <a href="https://github.com/rickmanelius/drupalpcicompliance/issues">github issue queue</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

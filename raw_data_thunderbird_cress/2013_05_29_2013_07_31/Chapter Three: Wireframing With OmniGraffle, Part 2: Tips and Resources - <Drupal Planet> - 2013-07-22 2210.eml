@@ -1,0 +1,67 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 22 Jul 2013 21:10:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 22 Jul 2013 21:10:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Wireframing With OmniGraffle, Part 2: Tips and Resources
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.chapterthree.com/blog/garret-voorhees/wireframing-omnigraffle-part-2-tips-and-resources
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Wireframing With OmniGraffle, Part 2: Tips and Resources</title>
+    <base href="http://www.chapterthree.com/blog/garret-voorhees/wireframing-omnigraffle-part-2-tips-and-resources">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Now that you’ve got a basic framework for your wireframes, you’re ready to dive in! You should have a fat stack of paper wireframes to work from, so the hard thinking should be done already.</p>
+<p>This is the part of the process where you can relax a bit and switch your brain to “zen-like robot mode”. You don’t need to worry about making them beautiful; this is a rare moment when you can just use Helvetica and call it a day. Savor it.</p>
+<p><em>Disclaimer: This is my current wireframing process for desktop-only sites. We, and everybody else, are still figuring the best scalable approach for responsive wireframing, although I believe that OmniGraffle can easily serve that purpose as well.</em></p>
+<p><strong>Where to start?</strong><br />
+I like to start with one of the pages that includes a lot of “site DNA”. These are pages that include elements that will be repeated on other pages (and will therefore be easy to copy/paste!). A key landing page is often a good starting point, since it’ll include at least your header, footer, some graphics and basic text styles.</p>
+<p><img src="http://www.chapterthree.com/sites/default/files/imagecache/500px_wide/landing_page.png" alt=""  class="imagecache-500px_wide" /></p>
+<p><strong>Keep it simple</strong><br />
+It’s easy to want to jump right into designing these pages, but take a deep breath and count to ten! Your wireframes <em>should be ugly</em>. They <em>shouldn’t look like the final site</em>. They exist to help you figure out site/page hierarchy and to identify usability challenges in your structure.</p>
+<p>For your typography, stick to Helvetica (or a similarly neutral typeface) and only use a few sizes. Instead of images, use a gray box with an X inside (the "bread and butter" of any wireframe).</p>
+<p>It’s okay to approximate a multi-column layout without using an explicit grid. OmniGraffle has great built-in alignment and spacing functionality so your page objects will snap right into place when they’re evenly spaced apart.</p>
+<p><img src="http://www.chapterthree.com/sites/default/files/part2_images_01.jpg" width="553" height="430" alt="" /></p>
+<p><strong>Minimize your color palette</strong><br />
+Some clients have trouble digesting wireframes, but a minimal (or absent) color palette helps to bring focus to the things that matter. Stick to black and white for your text, and choose just a few shades of gray for supporting page elements. I like to toggle to the grayscale color palette and plug in percentages to keep it easy.</p>
+<p>The only exceptions are blue and maybe red, where I use color to communicate functionality. Use <font color="blue">that lovely default blue color</font> for your links so when somebody looks at the wireframe they know immediately which page elements are links. Red is appropriate for things like error messages or delete/cancel buttons so that they stand out.</p>
+<p><img src="http://www.chapterthree.com/sites/default/files/imagecache/500px_wide/blue_links.png" alt=""  class="imagecache-500px_wide" /></p>
+<p><strong>Making symbols</strong><br />
+If you have an element that repeats on a lot of pages, like your header, footer, or a sidebar, you should turn it into a symbol so you only need to edit one instance to make changes! OmniGraffle is a bit wonky with this, but <a href="http://viget.com/inspire/how-to-make-master-objects-in-omnigraffle">the folks at Viget have written up a great article</a> on how to make it happen. You’ll still need to copy/paste the element onto each page but this will save you big headaches when you need to reorder or change the names of your navigation items!</p>
+<p><strong>Get stencilized</strong><br />
+This could easily be its own post, but stencils are one of the most important features in OmniGraffle and will save you a TON of time. Stencils are graphics (usually vector-based, so they scale nicely) that you can drag-and-drop into your document. These are incredibly useful for common UI elements like form fields, dropdown selectors, or buttons. There are stencils for tabs or calendar widgets or social media icons (or pretty much anything you might need).</p>
+<p><img src="http://www.chapterthree.com/sites/default/files/imagecache/500px_wide/stencil_window.png" alt=""  class="imagecache-500px_wide" /></p>
+<p><a href="https://www.graffletopia.com/ ">Graffletopia</a> is the best resource for stencils that I’ve found. These are my most commonly-used stencil sets:</p>
+<ul>
+<li><a href="http://konigi.com/tools/omnigraffle-wireframe-stencils ">Konigi Wireframe Stencils</a></li>
+<li><a href="http://zurb.com/playground/foundation-stencil-sets ">Zurb Foundation Stencils</a></li>
+<li><a href="http://viget.com/inspire/an-omnigraffle-stencil-for-twitter-bootstrap-2 ">Twitter Bootstrap</a></li>
+<li><a href="http://www.graffletopia.com/stencils/768">Drupal 7 Components</a></li>
+<li><a href="http://www.graffletopia.com/stencils/767">Drupal 7 E-commerce</a></li>
+<li><a href="http://www.graffletopia.com/stencils/769">Drupal 7 Search</a></li>
+</ul>
+<p>There are oodles of stencil packs for mobile and tablet mockups, making it easier to work on responsive projects, too. Here’s a selection of some of the higher-quality ones, although some of these are too high-fidelity for basic wireframes:</p>
+<ul>
+<li><a href="https://www.graffletopia.com/stencils/413">Ultimate iPhone Stencil</a></li>
+<li><a href="https://www.graffletopia.com/stencils/1062">iOS gestures</a></li>
+<li><a href="https://www.graffletopia.com/stencils/1046">Android Stencils Kit</a></li>
+<li><a href="https://www.graffletopia.com/stencils/1040">Android Phone Wireframe Stencil</a></li>
+</ul>
+<p>You can install stencils by searching within OmniGraffle's Stencil palette or by manually downloading and placing the files in the appropriate directory. <a href="https://www.graffletopia.com/install#mac">Here’s more information about installing stencils</a>.</p>
+<p><img src="http://www.chapterthree.com/sites/default/files/imagecache/500px_wide/urology_stencils.png" alt=""  class="imagecache-500px_wide" /></p>
+<p><strong>Get real!</strong><br />
+Depending on the project, you might not have approved copy until after your wireframes are complete. However, use whatever you do have, even if it’s rough. There’s nothing wrong with a little <a href="http://lipsum.org/">Lipsum</a>, but try to include copy that is a representative length for your content. For something like a blog title, try including a one-line and two-line variation to start thinking about where your site structure needs to be flexible.</p>
+<p>These tips should allow you to quickly put together a wireframe that you can refine as you get feedback. Don’t forget to print out your wireframes periodically and share them with others to be sure that they make sense.</p>
+<p><img src="http://www.chapterthree.com/sites/default/files/imagecache/500px_wide/wireframe_wall.jpg" alt=""  class="imagecache-500px_wide" /></p>
+<p>We currently have a huge wall of wireframes in our office as we’re working through a redesign of our own website. Having them visible has made it possible for everyone in the office to provide feedback easily and quickly.</p>
+<p>How do you leverage stencils and other tools in OmniGraffle? Share your thoughts in the comments!</p>
+<p>If you haven’t already done so, be sure to <a href="http://chapterthree.com/sites/default/files/Chapter%20Three%20Wireframing%20Template.zip ">download our Chapter Three Wireframing Template</a> to help you get started!</p>
+<p><em>In Part 3, I’ll discuss the current solutions for responsive wireframing in OmniGraffle and talk about how we transition from OmniGraffle wireframes to Fireworks comps easily. Stay tuned!</em></p>
+  </body>
+</html>
+

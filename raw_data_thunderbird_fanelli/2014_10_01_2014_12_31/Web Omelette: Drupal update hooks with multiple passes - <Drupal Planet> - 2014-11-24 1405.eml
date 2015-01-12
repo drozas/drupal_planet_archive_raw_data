@@ -1,0 +1,98 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 24 Nov 2014 13:05:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 24 Nov 2014 13:05:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Drupal update hooks with multiple passes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-update-hooks-multiple-passes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Drupal update hooks with multiple passes</title>
+    <base href="http://www.webomelette.com/drupal-update-hooks-multiple-passes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>If you do a lot of Drupal development and need to deploy configuration I am sure that you are using update hooks to some extent at least. If you don't use Features and want to create a taxonomy vocabulary or something in code, the <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_update_N/7">hook_update_N()</a> hook is the way to go.</p>
+
+<p>But have you ever needed to perform an update the size of which would exceed PHP's maximum execution time? If you need to create 1000 entities (let's just say as an example), it's not a good idea to trust that the production server will not max out and leave you hanging in the middle of a deploy. So what's the solution?</p>
+
+<p>You can use the batch capability of the update hook. If you were wondering what the <code>&amp;$sandbox</code> argument is for, it's just for that. You use it for two things mainly:</p>
+
+<ul>
+<li>store data required for your operations across multiple passes (since it is passed by reference the values remain)</li>
+<li>tell Drupal when it should stop the process by setting the <code>$sandbox['#finished']</code> value to 1. </li>
+</ul>
+
+<p>Let me show you how this works. Let's say we want to create a vocabulary and a bunch of taxonomy terms with names from a big array. We want to break this array into chunks and create the terms one chunk at the time so as to avoid the load on the server.</p>
+
+<p>So here is how you do it:</p>
+
+<pre><code>/**
+ * Create all the terms
+ */
+function my_module_update_7001(&amp;$sandbox) {
+
+  $names = array(
+    'Fiona',
+    'Jesse',
+    'Michael',
+    ...
+    'Sam',
+    'Nate',
+  );
+
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['limit'] = 5;
+    $sandbox['max'] = count($names);
+
+    // Create the vocabulary
+    $vocab = (object) array(
+      'name' =&gt; 'Names',
+      'description' =&gt; 'My name vocabulary.',
+      'machine_name' =&gt; 'names_vocabulary',
+    );
+
+    taxonomy_vocabulary_save($vocab);
+    $sandbox['vocab'] = taxonomy_vocabulary_machine_name_load('names_vocabulary');
+  }
+
+  // Create the terms
+  $chunk = array_slice($names, $sandbox['progress'], $sandbox['limit']);
+  if (!empty($chunk)) {
+    foreach ($chunk as $key =&gt; $name) {
+      $term = (object) array(
+        'name' =&gt; $name,
+        'description' =&gt; 'The name is: ' . $name,
+        'vid' =&gt; $sandbox['vocab']-&gt;vid,
+      );
+
+      taxonomy_term_save($term);
+      $sandbox['progress']++;
+    }
+  }
+
+  $sandbox['#finished'] = ($sandbox['progress'] / $sandbox['max']);
+
+
+}
+</code></pre>
+
+<p><div  id="block-inject-2" class="block-inject block-inject-2"></div><div class="clearfix"></div><p>So what happens here? First, we are dealing with an array of names (can anybody recognise them by the way?) Then we basically see if we are at the first pass by checking if we had set already the <code>progress</code> key in <code>$sandbox</code>. If we are at the first pass, we set some defaults: a limit of 5 terms per pass out of a total of <code>count($names)</code>. Additionally, we create the vocabulary and store it as a loaded object in the sandbox as well (because we need its id for creating the terms).</p>
+
+<p>Then, regardless of the pass we are on, we take a chunk out of the names always offset by the progress of the operation. And with each term created, we increment this progress by one (so with each chunk, the progress increases by 5) and of course create the terms. At the very end, we keep setting the value of <code>$sandbox['#finished']</code> to the ratio of progress per total. Meaning that with each pass, this value increases from an original of 0 to a maximum of 1 (at which point Drupal knows it needs to stop calling the hook).</p>
+
+<p>And like this, we save a bunch of terms without worrying that PHP will time out or the server will be overloaded. Drupal will keep calling the hook as many times as needed. And depending on the operation, you can set your own sensible chunk sizes.</p>
+
+<p>Hope this helps.</p>
+</div></div></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-update-hooks-multiple-passes" st_title="Drupal update hooks with multiple passes" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-update-hooks-multiple-passes" st_title="Drupal update hooks with multiple passes" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-update-hooks-multiple-passes" st_title="Drupal update hooks with multiple passes" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 21 Aug 2014 13:39:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 21 Aug 2014 13:39:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: erdfisch: New module: Image widget default image
+Content-Transfer-Encoding: 8bit
+Content-Base: https://blog.erdfisch.de/2014/08/new-module-image-widget-default-image
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>erdfisch: New module: Image widget default image</title>
+    <base href="https://blog.erdfisch.de/2014/08/new-module-image-widget-default-image">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As part of a client project we recently had the requirement of displaying an image field's default image in the node add form, before the user had uploaded a picture. This seemed simple enough to implement but thinking about it I realized this was quite a generic feature request and that such a module might prove useful for others. Rather by accident I even noticed that <a href="https://drupal.org">Drupal.org <img src="https://blog.erdfisch.de/sites/blog.erdfisch.de/files/urlicon/drupal_org.ico"  alt="" title="favicon" class="urlicon urlicon-drupal_org" /></a> itself employs the same feature on user profile pages.</p>
+<p>Thus, I hereby present the <a href="https://www.drupal.org/project/image_widget_default_image">Image widget default image <img src="https://blog.erdfisch.de/sites/blog.erdfisch.de/files/urlicon/www_drupal_org.ico"  alt="" title="favicon" class="urlicon urlicon-www_drupal_org" /></a> module, which does just that: If you have provided a default image for an image field and the user has not yet uploaded an image for that field, it displays that default image as a preview. Not many bells or whistle, but it works. (I can claim that, because it comes with tests. <img src="https://blog.erdfisch.de/sites/blog.erdfisch.de/modules/contrib/smileys/packs/Roving/wink.png" title="Wink" alt="Wink" class="smiley-content"/>) If it does not work for you or if you have any questions please leave a comment or open an issue on Drupal.org.</p>
+ <div class="field field-type-filefield field-field-blogbild">
+      <div class="field-label">Weitere Bilder:&nbsp;</div>
+    <div class="field-items">
+            <div class="field-item odd">
+                    <img  class="imagefield imagefield-field_blogbild" width="545" height="722" alt="" src="https://blog.erdfisch.de/sites/blog.erdfisch.de/files/image-widget-default-image_0.png?1408616293" />        </div>
+        </div>
+</div>
+  </body>
+</html>
+

@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 06 Jan 2014 16:45:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 06 Jan 2014 16:45:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Microserve: MixItUp and Drupal Views
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.microserveltd.co.uk/blogs/drupal-development/mixitup-and-drupal-views
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Microserve: MixItUp and Drupal Views</title>
+    <base href="http://www.microserveltd.co.uk/blogs/drupal-development/mixitup-and-drupal-views">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <h2>Introduction</h2>
+<p>Recently I had to create a View with exposed filters that refine the results by certain taxonomy terms. In the meantime, the design team came across the MixItUp JQuery library and recommended it for the View in order to improve the user experience. It turns out that combining Views with this library was relatively easy and the result was quite impressive. In this post I will briefly describe how this library works and one way you can combine it with Views.</p>
+<h2>About the MixItUp plugin</h2>
+<p>MixItUp is a JQuery plugin that provides animated sorting and filtering for ordered and categorised elements, such as unordered list elements (</p>
+<p> </p>
+<ul></ul><p> </p>
+<ul><li class="“filter”" data-filter="“cats”">Cats</li>
+<p></p></ul><p> </p>
+<ul><li class="“sort”" data-sort="“age”">Sort by age</li>
+<p></p></ul><p> </p>
+<ul><li class="“mix" data-age="“2”">...</li>
+</ul><p> </p>
+<p><option value="“x”">[Taxonomy term value]</option></p><p>In order to make these elements behave as filter controls, some classes and attributes had to be added, which was done with JavaScript as described in the next paragraph.</p>
+<h2>JavaScript code</h2>
+<p>So far some of the required classes were added in the View, but the attributes and the classes in each filter and each filtered element still needed to be added. These requirements were handled with the JQuery code below:</p>
+<p><span class="geshifilter"><code class="jquery geshifilter-jquery"> <span style="color: #006600; font-style: italic;">// Selecting from every list item in the View // the values that match the filters (the practice // areas and surname each list item is showing) and // adding to this list item these values as classes $(&amp;#39;ul.mixitup li&amp;#39;).each(function() { $(this).find(&amp;#39;div.practice-areas div&amp;#39;).each(function() { var str = $(this).text(); str = str.trim().replace(/\s+/g, &amp;#39;-&amp;#39;).toLowerCase().replace(&amp;#39;&amp;amp;&amp;#39;,&amp;#39;a&amp;#39;); $(this).closest(&amp;#39;li&amp;#39;).addClass(str); }); $(this).find(&amp;#39;.field-surname&amp;#39;).each(function() { var str = $(this).text(); str = str.trim().replace(/\s+/g, &amp;#39;-&amp;#39;).toLowerCase().replace(&amp;#39;&amp;amp;&amp;#39;,&amp;#39;a&amp;#39;); $(this).closest(&amp;#39;li&amp;#39;).addClass(str); }); }); // Adding to every option in the exposed filters, // the class &amp;quot;filter&amp;quot; and the attribute &amp;quot;data-filter&amp;quot; // with the value defined in the option&amp;#39;s value //Practice Areas dropdown $(&amp;#39;#edit-tid option&amp;#39;).each(function() { $(this).addClass(&amp;#39;filter&amp;#39;); var str = $(this).text(); str = str.trim().replace(/\s+/g, &amp;#39;-&amp;#39;).toLowerCase().replace(&amp;#39;&amp;amp;&amp;#39;,&amp;#39;a&amp;#39;); $(this).attr(&amp;#39;data-filter&amp;#39;, str); }); // Triggerring the &amp;quot;click&amp;quot; event when an option is // selected, for the MixItUp to handle the filtering $(&amp;#39;#edit-tid&amp;#39;).change(function(){ $(this).find(&amp;#39;option:selected&amp;#39;).trigger(&amp;#39;click&amp;#39;); }); //Surnames dropdown $(&amp;#39;#edit-tid-1 option&amp;#39;).each(function() { $(this).addClass(&amp;#39;filter&amp;#39;); var str = $(this).text(); str = str.trim().replace(/\s+/g, &amp;#39;-&amp;#39;).toLowerCase().replace(&amp;#39;&amp;amp;&amp;#39;,&amp;#39;a&amp;#39;); $(this).attr(&amp;#39;data-filter&amp;#39;, str); }); // Triggerring the &amp;quot;click&amp;quot; event when an option is // selected, for the MixItUp to handle the filtering $(&amp;#39;#edit-tid-1&amp;#39;).change(function(){ $(this).find(&amp;#39;option:selected&amp;#39;).trigger(&amp;#39;click&amp;#39;); }); // Calling the MixItUp plugin for this View $(&amp;#39;.mixitup&amp;#39;).mixitup(); </span></code></span></p>
+ </div></div></div>
+  </body>
+</html>
+

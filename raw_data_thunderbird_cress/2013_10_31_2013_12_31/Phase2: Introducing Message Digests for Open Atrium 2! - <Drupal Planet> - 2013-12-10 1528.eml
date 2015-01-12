@@ -1,0 +1,200 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 10 Dec 2013 15:28:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 10 Dec 2013 15:28:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Introducing Message Digests for Open Atrium 2!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/introducing-message-digests-for-open-atrium-2/?utm_source=rss&utm_medium=rss&utm_campaign=introducing-message-digests-for-open-atrium-2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Introducing Message Digests for Open Atrium 2!</title>
+    <base href="http://www.phase2technology.com/blog/introducing-message-digests-for-open-atrium-2/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=introducing-message-digests-for-open-atrium-2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>One of the fun features we built for <a href="http://www.openatrium.com">Open Atrium 2</a> is the ability to group recent messages together into a daily digest. Anyone who has been subscribed to a popular comment thread and has suffered through the &#8220;MAKE IT STOP&#8221; series of email after email knows how useful this feature is, so naturally it was a must for OA2.</p>
+<p>Since OA2 makes heavy use of the <a href="http://https://drupal.org/project/message">Message module stack</a> (which includes Message Notify and Message Subscribe), we opted to implement the feature as a ctools plugin which adds another 2 notification types on top of the default &#8220;Email&#8221; and SMS&#8221; provided by Message Notify. Specifically, we added &#8220;Daily Digest&#8221; and &#8220;Weekly Digest&#8221; which do exactly what you&#8217;d expect.</p>
+<p>So how did we build it? Well, right off the bat, we know we&#8217;re implementing a ctools plugin for message_notify so let&#8217;s go ahead and declare that in our .module file.</p><pre class="crayon-plain-tag">/**
+ * Implements hook_ctools_plugin_api().
+ */
+function message_digest_ctools_plugin_api($module, $api) {
+  if ($module == 'message_notify' &amp;amp;&amp;amp; $api == 'notifier') {
+    return array('version' =&amp;gt; 1);
+  }
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function message_digest_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'message_notify') {
+    return 'plugins/' . $plugin;
+  }
+}</pre><p>Now we can go ahead and create our plugins. Since digest_day and digest_week will share most of the code (i.e., everything besides the actual interval), we first create an abstract class that they inherit from. This is currently done in plugins/notifier/abstract.inc, although that <a href="https://drupal.org/node/2134183">should be renamed</a> to MessageDigest.inc.</p>
+<p>So we first create our class.</p><pre class="crayon-plain-tag">/**
+ * Message Digest notifier.
+ */
+class MessageDigest extends MessageNotifierBase {
+  // Awesome stuff goes here.
+}</pre><p>And then we write a custom <code>-&gt;deliver()</code> method because that is what message_notify calls to send messages. In our case, we don&#8217;t want to actual &#8220;send&#8221; the message anywhere except for the database, so that&#8217;s what we do.</p><pre class="crayon-plain-tag">// Do not actually deliver this message because it will be delivered
+  // via cron in a digest, but return TRUE to prevent a logged error.
+  // Instead, we &quot;deliver&quot; it to the message_digest DB table so that it
+  // can be retrieved at a later time.
+  public function deliver(array $output = array()) {
+    $message = $this-&amp;gt;message;
+    $plugin = $this-&amp;gt;plugin;
+
+    $message_digest = array(
+      'receiver' =&amp;gt; $message-&amp;gt;uid,
+      'gid' =&amp;gt; !empty($message-&amp;gt;gid) ? $message-&amp;gt;gid : 0,
+      'notifier' =&amp;gt; $plugin['name'],
+      'sent' =&amp;gt; FALSE,
+      'timestamp' =&amp;gt; $message-&amp;gt;timestamp,
+    );
+    // This will only have a value if the message is not a message_subscribe message.
+    $mid = isset($message-&amp;gt;mid) ? $message-&amp;gt;mid : NULL;
+
+    // Our $message is a cloned copy of the original $message with the mid field removed to
+    // prevent overwriting (this happens in message_subscribe) so we need to fetch the mid manually.
+    if (empty($mid)) {
+      $mid = db_select('message', 'm')
+        -&amp;gt;fields('m', array('mid'))
+        -&amp;gt;condition('timestamp', $message-&amp;gt;timestamp)
+        -&amp;gt;condition('type', $message-&amp;gt;type)
+        -&amp;gt;execute()
+        -&amp;gt;fetchField();
+    }
+
+    if (!empty($mid)) {
+      $message_digest['mid'] = $mid;
+    }
+
+    drupal_write_record('message_digest', $message_digest);
+
+    return TRUE; // Sent! Sort of...
+  }</pre><p>And oh yeah, we&#8217;re going to need a table to write to, so <a href="http://drupalcode.org/project/message_digest.git/blob/refs/heads/7.x-1.x:/message_digest.install">message_digest.install</a> creates that for us.</p>
+<p>So that handles preventing sending at the time of creation, and it also takes care of storing the message in a custom table for us to use later. That&#8217;s half the battle.</p>
+<p>The second half is aggregating, formatting, and sending the actual digests every day or week (depending on which notification type the user has set as his/her default).</p>
+<p>Let&#8217;s make it run on cron to keep things simple. Here&#8217;s what our cron hook looks like. Note that this basically just calls all the functions from the plugins without including much of its own logic, so we&#8217;ll dig in piece by piece.</p><pre class="crayon-plain-tag">/**
+ * Implements hook_cron().
+ * Aggregate, format and send Digest emails.
+ */
+function message_digest_cron() {
+  foreach (message_notify_get_notifiers() as $plugin_name =&amp;gt; $plugin) {
+    if (strpos($plugin_name, 'digest') === FALSE) {
+      // Only load the &quot;Digest&quot; notifiers and skip the rest.
+      continue;
+    }
+
+    // Grab some info we'll need in a bit.
+    $plugin = message_notify_get_notifier($plugin_name);
+    $class = ctools_plugin_load_class('message_notify', 'notifier', $plugin_name, 'class');
+    $notifier = new $class($plugin, new Message());
+    $interval = $notifier-&amp;gt;getInterval();
+    $last_run = variable_get('message_digest_' . $interval . '_last_run', 0);
+
+    if ($last_run &amp;gt; strtotime(&quot;-&quot; . $interval)) {
+      // Not time to run this again yet. Wait until the interval has elapsed.
+      continue;
+    }
+
+    // Gather up all the messages into neat little digests and send 'em out.
+    $digests = $notifier-&amp;gt;aggregate();
+    foreach ($digests as $uid =&amp;gt; $groups) {
+      foreach ($groups as $gid =&amp;gt; $messages) {
+        $context = array(
+          'uid' =&amp;gt; $uid, // reference only, cannot change
+          'gid' =&amp;gt; $gid,
+          'view_modes' =&amp;gt; $plugin['view_modes'],
+          'deliver' =&amp;gt; TRUE,  // set to FALSE to prevent delivery
+          'plugin' =&amp;gt; $plugin, // reference only
+          'messages' =&amp;gt; $messages,
+        );
+        drupal_alter('message_digest_view_mode', $context);
+        if ($context['deliver']) {
+          $formatted_messages = $notifier-&amp;gt;format($context['messages'], $context['view_modes']);
+          $result = $notifier-&amp;gt;deliverDigest($uid, $context['gid'], $formatted_messages);
+        }
+      }
+      $notifier-&amp;gt;markSent($uid, $plugin_name);
+    }
+    variable_set('message_digest_' . $interval . '_last_run', time());
+  }
+}</pre><p>So the first interesting thing we&#8217;re doing there is the call to <code>-&gt;aggregate()</code>. That function is defined in the abstract MessageDigest class like so:</p><pre class="crayon-plain-tag">/**
+   * Aggregate all of the messages for this interval and notifier that haven't
+   * already been sent, and group them by user and then by group.
+   */
+  public function aggregate() {
+    $interval = $this-&amp;gt;getInterval();
+    $start = strtotime('-' . $interval); // Invert $interval since it's in the past.
+    $message_groups = array();
+
+    $query = db_select('message_digest', 'md');
+    $query-&amp;gt;fields('md');
+    $query-&amp;gt;condition('timestamp', $start, '&amp;gt;');
+    $query-&amp;gt;condition('sent', FALSE);
+    $query-&amp;gt;condition('notifier', $this-&amp;gt;plugin['name']);
+    $result = $query-&amp;gt;execute();
+
+    foreach ($result as $row) {
+      $gid = $row-&amp;gt;gid;
+      if (empty($gid)) {
+        $gid = 0;
+      }
+      $account = user_load($row-&amp;gt;receiver);
+      $context = array(
+        'account' =&amp;gt; $account,  // reference only
+        'data' =&amp;gt; $row,
+        'gid' =&amp;gt; $gid,  // set this to zero to aggregate group content
+        'plugin' =&amp;gt; $this-&amp;gt;plugin, // reference only
+      );
+      drupal_alter('message_digest_aggregate', $context);
+      if (!empty($context['data']-&amp;gt;mid)) {
+        $message_groups[$context['data']-&amp;gt;receiver][$context['gid']][] = $context['data']-&amp;gt;mid;
+      }
+    }
+    return $message_groups;
+  }</pre><p>Basically, we&#8217;re building an array of all the messages to send out in digests, keyed by the receiver and then by the group (in OA2&#8242;s case, the Space).</p>
+<p>Also of note is that <code>-&gt;getInterval()</code> function which is coincidentally the only function that the digest_day and digest_week plugins have to implement. The default provided by the MessageDigest (abstract.inc) looks like this:</p><pre class="crayon-plain-tag">/**
+   * This will be overridden in subclasses with custom intervals.
+   */
+  public function getInterval() {
+    return '1 day';
+  }</pre><p>So back to the hook_cron call, you&#8217;ll note that after running <code>-&gt;aggregate()</code>, we move on to cycling through the users and the respective groups and then running <code>-&gt;format()</code> on the messages. This also comes from MessageDigest (abstract.inc) and looks like so:</p><pre class="crayon-plain-tag">/**
+   * Given an array of mids, build the full message content for them
+   * and combine them into one blob of email content.
+   */
+  public function format($digest, $view_modes) {
+    $output_array = array();
+    foreach ($digest as $mid) {
+      $message = message_load($mid);
+      if (empty($message) || !is_object($message)) {
+        continue;
+      }
+      $rows = array();
+      foreach ($view_modes as $view_mode) {
+        $content = $message-&amp;gt;buildContent($view_mode);
+        $rows[$view_mode] = render($content);
+      }
+      $output_array[] = theme('message_digest_row', array(
+        'rows' =&amp;gt; $rows,
+        'plugin' =&amp;gt; $this-&amp;gt;plugin,
+        'message' =&amp;gt; $message,
+      ));
+    }
+    return theme('message_digest', array(
+      'messages' =&amp;gt; $output_array,
+      'plugin' =&amp;gt; $this-&amp;gt;plugin,
+    ));
+  }</pre><p>Pretty simple right? Loop through the messages, build the content for each by using a regular old view mode on the Message entity, add it all to an array, and return it to a theme function.</p>
+<p>Once that&#8217;s done, back in <code>hook_cron()</code>, we pass it into <code>-&gt;deliverDigest()</code> which just passes it to <code>drupal_mail()</code> and is simple enough that there&#8217;s no need to post it here.</p>
+<p>And finally, we run <code>-&gt;markSent()</code> to update those rows in the DB table to show that they are sent and don&#8217;t need to be included in further digests, and also update the variable which shows when we last sent that digest.</p>
+<p>And that&#8217;s it! A super useful feature complete with support for custom view modes/display types and extensibility (need a different interval? Just write a 5 line class similar to digest_day and digest_week!). Pretty neat! Huge thanks to the great <a href="https://drupal.org/project/message">Message module stack</a> by <a href="https://drupal.org/user/57511">Amitai Burstein</a> for making it this easy!</p>
+<p>Be sure to catch Mike Potter&#8217;s <a href="https://www4.gotomeeting.com/register/652070623">Open Atrium Webinar</a> tomorrow (12/11, 11AM EST.) to learn more about Open Atrium&#8217;s new email digest in addition to improved responsive theming and tutorial content! <a href="https://www4.gotomeeting.com/register/652070623">Register for the webinar here!</a></p>
+  </body>
+</html>
+

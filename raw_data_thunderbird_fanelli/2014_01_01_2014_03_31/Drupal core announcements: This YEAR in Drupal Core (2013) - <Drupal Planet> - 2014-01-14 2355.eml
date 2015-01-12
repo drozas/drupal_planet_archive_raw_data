@@ -1,0 +1,231 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 14 Jan 2014 22:55:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 14 Jan 2014 22:55:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This YEAR in Drupal Core (2013)
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/397733
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This YEAR in Drupal Core (2013)</title>
+    <base href="https://groups.drupal.org/node/397733">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>Co-authored by <a href="https://drupal.org/user/65776">xjm</a> and <a href="https://drupal.org/user/24967">webchick</a></em></p>
+<p>Welcome! For Drupal's 13th birthday, in addition to <a href="https://groups.drupal.org/node/390873">Give Drupal a Birthday Present: Tackle a D8 Issue!</a>, we wanted to celebrate the occasion with a retrospective of the year 2013 as it relates to Drupal core development!</p>
+<p>Here are some stats to get us started:</p>
+<ul>
+<li><strong>1,120 unique Drupal 8 patch contributors during 2013, bringing the total number of contributors for the release to over 1,800!</strong></li>
+<li>4,175 Drupal 8 core patches committed (even with one core maintainer on leave for several months).</li>
+<li><a href="https://groups.drupal.org/node/390693">316 critical issues fixed</a>.</li>
+<li>Nearly 10,000 automated test assertions added, bringing our total to <a href="https://qa.drupal.org/8.x-status">nearly 60,000 tests</a>!</li>
+<li>Over 60,000 lines of documentation added (and for the record, less than 2% of our lines of documentation are <code>{@inheritdoc}</code>). :P</li>
+</ul>
+<p><img src="/files/tag-cloud.png" alt="A tag cloud showing the top Drupal 8 contributors" /><br />
+<em><br />
+A tag cloud showing the <a href="http://ericduran.github.io/drupalcores/">top Drupal 8 contributors</a><br />
+Photo credit: <a href="http://wordle.net/">Wordle.net</a></em></p>
+<!--break--><!--break--><p>On the whole, 2013 represented a major shift in the Drupal 8 codebase toward modern best practices. Most core systems now use interfaces and classed objects for better developer experience. Sprawling procedural include files have largely been converted to self-contained component classes, and the new Drupal 8 plugin system is now used consistently for pluggable systems. ;)</p>
+<p>2013 also saw some fantastic improvements for Drupal site builders, themers, and site users. At the beginning of the year, Views was in core, but core didn't use it. Now, 3 admin listings, 2 RSS feeds, 3 blocks, and the front page content listing are all views. We've added a WYSIWYG editor, several new configurable field types including Entity Reference field, configurable form modes to allow customizing of data entry forms, and a new theme templating system, <a href="http://twig.sensiolabs.org/">Twig</a>.</p>
+<p>Finally, we made Drupal core truly multilingual in 2013. At the start of the year, node titles and the site name were not translatable -- now, Drupal 8 core is more translatable than Drupal 7 with all of contrib, and translations can be downloaded right away on installation.</p>
+<p><em>Amazing</em> work, everyone!</p>
+<p>Here's a month-by-month breakdown of the milestone events and patches of 2013.</p>
+<h2>Jan 2013</h2>
+<p>On January 15, Drupal turned 12! The Blocks and Layouts, Web Services, and Multilingual initiatives also hit several important milestones.</p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1535868">#1535868</a>: Blocks converted to plugins</li>
+<li><a href="https://drupal.org/node/1848490">#1848490</a>: Import translations automatically during install</li>
+<li><a href="https://drupal.org/node/1866610">#1866610</a>: Configuration schemas</li>
+<li><a href="https://drupal.org/node/1874500">#1874500</a>: CMF-based routing component</li>
+</ul>
+<h2>Feb 2013</h2>
+<p>After <a href="http://buytaert.net/from-aloha-to-ckeditor">switching from Aloha to CKEditor</a>, the long-awaited WYSIWYG in core issue landed. Hooray!</p>
+<h3>DrupalCon Sydney</h3>
+<p><img src="/files/sprinting_beach_style.jpg" alt="Twig sprint at DrupalCon Sydney on the patio with a whiteboard" /><br />
+<em><br />
+Sprinting Sydney style, in the sunshine with an ocean view<br />
+Photo credit: <a href="http://www.flickr.com/photos/63401575@N02/8505503322/in/pool-2166672@N21/">xjm</a></em></p>
+<p>In Feburary, leading up to the end of <a href="http://buytaert.net/code-freeze-and-thresholds">Feature completion phase</a>, there was a rocking code sprint in the sun at <a href="http://sydney2013.drupal.org/">DrupalCon Sydney</a>!</p>
+<p>In between working on patches, conference attendees actually went <acronym title="n. the world outside of or away from houses; open air.">outdoors</acronym> once in awhile to enjoy the <acronym title="n. A star that is the basis of the solar system and that sustains life on Earth, being the source of heat and light.">sun</acronym>.</p>
+<p><img src="/files/druplicon_sand.png" alt="Druplicon, drawn in the sand on Coogee Beach." /><br />
+<em>Even Druplicon came to play in the sand!<br />
+Photo credit: <a href="http://www.flickr.com/photos/63401575@N02/8504390003/">xjm</a></em></p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1890502">#1890502</a>: WYSIWYG in core</li>
+<li><a href="https://drupal.org/node/1801304">#1801304</a>: Entity reference in core</li>
+<li><a href="https://drupal.org/node/1913084">#1913084</a>: FormInterface added</li>
+<li><a href="https://drupal.org/node/1809352">#1809352</a>: Tour module added
+<a href="https://groups.drupal.org/node/283223">Announcement of Seven Style Guide</a>
+</li><li><a href="https://drupal.org/node/1510532">#1510532</a>: New content creation page implemented</li>
+</ul>
+<h2>March 2013</h2>
+<p>March saw the commit of <a href="http://phpunit.de/">PHPUnit</a> following work at the DrupalCon Sydney code sprint. (Since then, we've added 1240 assertions in 164 PHPUnit test classes!). We also converted the very first core listing page (the /node front page) to a view!</p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1732730">#1732730</a>: Converted all entity fields to new Entity Field API</li>
+<li><a href="https://drupal.org/node/1901670">#1901670</a>: PHPUnit added to core.</li>
+<li><a href="https://drupal.org/node/1806334">#1806334</a>: Node frontpage converted to a view</li>
+<li><a href="https://drupal.org/node/1875086">#1875086</a>: Improve DX of drupal_container()->get()</li>
+</ul>
+<h2>April 2013</h2>
+<p>In April, <a href="http://buytaert.net/alex-pott">alexpott joined the Drupal 8 core maintainer team</a>. Since he started, Alex has committed nearly half of all Drupal 8 core patches. The epic patch to convert fields to CMI was committed a week later (the next big test of Drupal 8's new configuration system after Views was added to core in 2012).</p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1862398">#1862398</a> Replace drupal_http_request() with <a href="http://docs.guzzlephp.org/en/latest/">Guzzle</a>.</li>
+<li><a href="https://drupal.org/node/1735118">#1735118</a>: Fields converted to CMI</li>
+<li><a href="https://drupal.org/node/1935538">#1935538</a>: Switch REST to default to HAL.</li>
+<li><a href="https://drupal.org/node/1971384">#1971384</a>: Efforts begin to port all core page callbacks to the new Drupal 8 routing system (a.k.a. "Converting Drupal 8 to Drupal 8")</li>
+</ul>
+<h2>May 2013</h2>
+<h3>DrupalCon Portland</h3>
+<p><img src="https://groups.drupal.org/files/hard_problems.jpg" alt="Key contributors sit around a table discussing hard problems." /><em><br />
+The Portland "Hard Problems" discussions<br />
+Photo credit: <a href="http://www.flickr.com/photos/x-foto/8755881170/in/pool-2194067@N22/">Amazee Labs</a></em></p>
+<p>Several days of in-depth technical discussions before the start of the conference. <strong>This was the largest DrupalCon sprint ever, with over 650 participants!</strong></p>
+<blockquote class="twitter-tweet" lang="en"><p>Check out the spike from <a href="https://twitter.com/drupalcon">@DrupalCon</a> Portland sprints on this graph! By FAR the highest core participation in 2 years. <a href="http://t.co/5dSSjT9H3P">pic.twitter.com/5dSSjT9H3P</a></p>
+<p>&mdash; xjm (@xjmdrupal) <a href="https://twitter.com/xjmdrupal/statuses/342110917380698113">June 5, 2013</a></p></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script><p>
+Of particular note, the Twig sprint at DrupalCon Portland was amazing to behold. Tons of themers and front-end developers worked together in a massive push to convert core templates to Twig well before the API freeze deadline.</p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1987510">#1987510</a>: Convert all template files to Twig</li>
+<li><a href="https://drupal.org/node/1498674">#1498674</a>: Make all node properties translatable
+</li></ul>
+<pre>
+ _________________________________________
+/ Committed and pushed to 8.x. Thanks!    \
+| Thanks plach, das-peter, Schnitzel,     |
+| dawehner, YesCT, attiks, Berdir, Gábor |
+| Hojtsy, Soul88, Carsten Müller. You    |
+\ are awesome!                            /
+ -----------------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+</pre><p>&nbsp;</p>
+
+
+<h2>June 2013</h2>
+<p>Lots of hard work on technical debt between DrupalCon Portland and API freeze. More major issues fixed than any other month of the 8.x cycle, and a near-record for criticals.</p>
+<h3>DevDays Dublin</h3>
+<p><img src="https://pbs.twimg.com/media/BN2xJxdCcAElBwC.jpg:medium" alt="Sprinters at tables at the Dublin Institute of Technology" /><br />
+<em>DevDays Dublin sprint room<br />
+Photo credit: <a href="https://twitter.com/m_aaark/status/350631127448449024/photo/1">@m_aaark</a></em></p>
+<p><a href="http://dublin2013.drupaldays.org/">Drupal Developer Days Dublin</a> hosted a week-long codesprint leading up to the start of Drupal 8's <a href="http://buytaert.net/drupal-8-apis-are-freezing-but-not-frozen">API freeze</a>.<br />
+<a href="http://comm-press.de/en">comm-press</a> put together a great video interviewing DevDays attendees about what they're most excited about in Drupal 8:<br />
+<iframe width="640" height="360" src="//www.youtube.com/embed/PDBGluyY0B8" frameborder="0" allowfullscreen></iframe></p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1851086">#1851086</a>: admin/people converted to a view</li>
+<li><a href="https://drupal.org/node/1895160">#1895160</a>: admin/content converted to a view</li>
+<li><a href="https://drupal.org/node/1337554">#1337554</a>: Redesign the installer</li>
+<li><a href="https://drupal.org/node/2014821">#2014821</a>: Introduced a UI for configurable form modes (huge win for site builders!)</li>
+</ul>
+<h2>July 2013</h2>
+<p>July 1 marked the beginning of <a href="http://buytaert.net/drupal-8-apis-are-freezing-but-not-frozen">API freeze</a>. As a result, focus shifted to finishing in-progress API conversions, including Twig and theme layer improvements, conversions to the new-style form and page controllers introduced by the WSCCI initiative, and porting things over to the new configuration system.</p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1963544">#1963544</a>: Aggregator RSS feed converted to a view.</li>
+<li><a href="https://drupal.org/node/2021817">#2021817</a>: Field widgets and formatters work on everything! (Entity base fields like titles as well as configurable fields).
+</li><li><a href="https://drupal.org/node/1784234">#1784234</a>: Schema.org support in RDF</li>
+</ul>
+<h2>August 2013</h2>
+<p>By August, attention had started turning towards <a href="https://drupal.org/community-initiatives/drupal-core/d8dx">Developer Experience (DX) improvements</a>, and an examination of what API changes were left outstanding to complete prior to Drupal 8.0.</p>
+<h3>Midwest Developer Summit</h3>
+<p><img src="https://pbs.twimg.com/media/BRuP8pgCIAApjCl.jpg:medium" alt="Sprinters at the Palatir office discuss a range of topics" /><br />
+<em>Midwest Developer Summit at <a href="http://palantir.net/">Palantir's</a> offices<br />
+Photo credit: <a href="https://twitter.com/eatings/status/368046066647572481">eatings</a></em></p>
+<p>The Midwest Developer Summit was a three-day, supercharged developer sprint: No sessions, no booths, no distractions. There were sprints on everything from media to web services, and Dries worked with several core issue queue wranglers to <a href="https://drupal.org/core/release-cycle/api-completion">approve each proposed API change -- or not</a>, with the goal of finishing Drupal 8's APIs, to move away from adding new things and toward release. </p>
+<p>We also brainstormed with testbot cardiologist <a href="https://drupal.org/user/148199">jthorson</a> to determine how to best support core development through <a href="https://groups.drupal.org/node/388908">testing infrastructure improvements</a>. (Check out these <a href="https://groups.drupal.org/node/372153">recent metrics on the testing infrastructure</a>.)</p>
+<p><img src="/files/testbot_whiteboard.jpg" alt="A list of potential features for the Drupal testing infrastructure written on a whiteboard, ordered and prioritized." /><br />
+<em>Testbot brainstorm whiteboard<br />
+Photo credit: xjm</em></p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/2049159">#2049159</a>: ControllerBase</li>
+<li><a href="https://drupal.org/node/2059245">#2059245</a>: FormBase</li>
+<li><a href="https://drupal.org/node/1808544">#299792458</a>: AllYourBase</li>
+</ul>
+<h2>September 2013</h2>
+<h3>DrupalCon Prague</h3>
+<p><img src="/files/coder_lounge_view.jpg" alt="The Prague city skyline" /><br />
+<em><br />
+View from the Prague coder lounge<br />
+Photo credit: <a href="http://www.flickr.com/photos/63401575@N02/10106480635/in/set-72157636227146276/">xjm</a></em></p>
+<p><a href="https://prague2013.drupal.org/">DrupalCon Prague</a> was a landmark event for Drupal 8. Core maintainers <a href="https://prague2013.drupal.org/session/drupal-8-leadership-qa">announced the Migrate in core initiative live</a> and that core would provide a D6 to D8 migration path:</p>
+<blockquote><p>
+If you've just built a Drupal 7 or you've had one running successfully for two years, you're probably not looking to upgrade it. But if you have a five year old Drupal 6 site, you are, and we're coming back for you.<br />
+<em>Core maintainer <a href="https://drupal.org/user/157725">alexpott</a>
+</em></p></blockquote>
+<p> At Prague we also started building consensus to <a href="https://drupal.org/node/2135189">overhaul the Drupal 8 release cycle</a> to provide a better experience for businesses and developers alike.</p>
+<p>To read more, see <a href="https://groups.drupal.org/node/335828">This Week in Drupal Core from October 2, 2013</a>.</p>
+<p><img src="http://farm8.staticflickr.com/7332/9963614865_0e7fd208ed_z.jpg" alt="Several core contributors discussing hard problems around a table with laptops" /><br />
+<em>Prague sprint day<br />
+Photo credit: <a href="http://www.flickr.com/photos/amazeelabs/9963614865/in/pool-2141068@N20/">Amazee Labs</a></em></p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1497374">#1497374</a>: Entity storage</li>
+<li><a href="https://drupal.org/node/1199946">#1199946</a>: Disabled modules status removed</li>
+<li><a href="https://drupal.org/node/1605290">#1605290</a>: Entity render caching</li>
+<li><a href="https://drupal.org/node/1203886">#1203886</a>: PHP module removed</li>
+<li><a href="https://drupal.org/node/2083811">#2083811</a>: Field langcode handling uncrazified</li>
+<li><a href="https://drupal.org/node/1983554">#1983554</a>: No more Entity BC-mode</li>
+<li><a href="https://drupal.org/node/731724">#731724</a>: Comments converted to a field that works with any entity type, after a year of epic work.</li>
+</ul>
+<h2>October 2013</h2>
+<p>After the swell of development from DrupalCon, October was also the month with more critical issues fixed than any other month of the 8.x cycle!</p>
+<h3>BADCamp</h3>
+<p><img src="http://blog.amazeelabs.com/sites/default/files/0-badcamp-4_0.jpg" alt="Numerous sprinters at BADCamp." /><br />
+<em>BADCamp pre-sprint<br />
+Photo credit: <a href="http://www.amazeelabs.com/">Amazee Labs</a></em></p>
+<p>Among the sprinting at BADCamp was the big kick-off of the <a href="https://groups.drupal.org/imp">Migrate in Core</a> initiative. Additionally, the CMI folks put together a <a href="https://drupal.org/node/2121751">concrete battleplan for finishing the configuration system</a>.</p>
+<p>This also led to <a href="https://drupal.org/developing/api/8">creating overview/example API documentation for Drupal 8</a> this month, including <a href="https://drupal.org/node/2122071">routing system</a>, <a href="https://drupal.org/node/1667894">configuration system</a>, and the <a href="https://drupal.org/developing/api/entity">entity system</a>. These are now a part of the new <a href="https://drupal.org/drupal-8.0">Drupal 8.0 landing page</a>, also created in October.</p>
+<p><img src="/files/drupal-8-landing-page.png" alt="Drupal 8 Landing page" /></p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/2106709">#2106709</a>: Router BC layer removed</li>
+<li><a href="https://drupal.org/node/1851414">#1851414</a>: Views converted to accessible modals</li>
+<li><a href="https://drupal.org/node/2023563">#2023563</a>: Entity field types converted to the new field type plugin</li>
+<p>.
+</p></ul>
+<h2>November 2013</h2>
+<p>November saw the passing of a dearly beloved old friend, the Overlay module. In its place is a nice "Back to site" link in the admin UI which will return you to where you were on the front-end. All of the usability, far less JavaScript! :D</p>
+<p><img src="/files/overlay-tombstone.jpg" alt="Overlay module, RIP." /></p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/1952394">#1952394</a>: Configuration translation UI<br />
+<blockquote class="twitter-tweet" lang="en"><p>With Content + Config Translation in core D8 core is more translatable than D7 with all of contrib. <a href="https://twitter.com/search?q=%23drupal&amp;src=hash">#drupal</a></p>
+<p>&mdash; Tobias Stöckler (@tstoeckler) <a href="https://twitter.com/tstoeckler/statuses/402410686359158784">November 18, 2013</a></p></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></li>
+<li><a href="https://drupal.org/node/1498574">#1498574</a>: Decision made to require PHP 5.4</li>
+<li><a href="https://drupal.org/node/2055853">#2055853</a>: Revamped Block UI</li>
+<li><a href="https://drupal.org/node/2088121">#2088121</a>: Removed overlay</li>
+<li><a href="https://drupal.org/node/1886448">#1886448</a>: Theme registry service</li>
+<li><a href="https://drupal.org/node/2125717">#2125717</a>: First Migrate in core patch lands</li>
+<li><a href="https://drupal.org/node/2047229">#2047229</a>: Entity field and data definitions become classed objects, significantly improving Entity &amp; Field API DX</li>
+</ul>
+<h2>December 2013</h2>
+<p>We closed 2013 with two big announcements: the <a href="https://drupal.org/node/2135189">New release cycle for core was finalized</a> , as well as the <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">criteria around Drupal 8 beta 1</a>.</p>
+<h3>Milestone issues</h3>
+<ul>
+<li><a href="https://drupal.org/node/2130811">#2130811</a>: Config validation</li>
+<li><a href="https://drupal.org/node/1957276">#1957276</a>: Views block conversions unblocked</li>
+<li><a href="https://drupal.org/node/2097189">#2097189</a>: Rebuild script</li>
+<li><a href="https://drupal.org/node/1786490">#1786490</a>: State system caching (huge performance boost)</li>
+</ul>
+<h2>And now, onto 2014!</h2>
+<p>2013 was an amazing year, but now it's time to turn our sights to 2014. We've finally turned the corner on attacking our technical debt, and are making steady progress on beta release-blocking issues which, if current trends continue, could result in a beta release as early as March.</p>
+<p><img src="https://groups.drupal.org/files/outstanding-issues.png" alt="A graph of critical issues over time, showing a huge explosion in 2013 that is starting to taper off since September." /></p>
+<p>We'll need all hands on deck though to pull off a Drupal 8.0.0 release in 2014. We'll see you in the <a href="https://drupal.org/project/issues/search/drupal?status[]=1&amp;status[]=13&amp;status[]=8&amp;status[]=14&amp;status[]=4&amp;version[]=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">beta blockers</a> and <a href="https://drupal.org/project/issues/search/drupal?status[]=1&amp;status[]=13&amp;status[]=8&amp;status[]=14&amp;status[]=4&amp;priorities[]=400&amp;version[]=8.x&amp;issue_tags_op=%3D">criticals</a> queues, as well as at <a href="https://drupal.org/core-office-hours">weekly core mentoring hours</a>, <a href="http://szeged2014.drupaldays.org/">Drupal Dev Days Szeged</a> and <a href="https://austin2014.drupal.org/">DrupalCon Austin</a>!</p>
+  </body>
+</html>
+

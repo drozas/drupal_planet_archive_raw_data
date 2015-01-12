@@ -1,0 +1,127 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Jul 2014 07:20:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Jul 2014 07:20:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: godel.com.au: Creating an immersive Drupal front-end with Yes Way
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.godel.com.au/blog/creating-immersive-drupal-front-end-yes-way
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>godel.com.au: Creating an immersive Drupal front-end with Yes Way</title>
+    <base href="https://www.godel.com.au/blog/creating-immersive-drupal-front-end-yes-way">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-blog-header-image-display">
+    <div class="blog-header-image-inner" data-image-url="https://www.godel.com.au/sites/default/files/styles/darken_and_desaturated/public/godel-work_yes-way_screenshot-1_3.png?itok=-5dHjhYC"></div>  </div>
+
+  <div class="field-post-date">
+    Mon July 21, 2014  </div>
+
+  <div class="field-title">
+    <h2>Creating an immersive Drupal front-end with Yes Way</h2>  </div>
+
+  <div class="field-body">
+    <p class="lead">
+Yes Way are a creative agency who connect businesses, brands and communities with the creative talent they need. They specialise in strategic planning for businesses and representation for creative individuals to engage their target audience through branding, events and marketing.
+</p>
+<h3>The brief</h3>
+<p>Godel were approached by Yes Way to help complete designs for their website update and produce a custom responsive website built in a Drupal 7 backend with a totally custom front-end that leveraged a minimalist and modern <a href="https://www.drupal.org/project/aurora">Aurora subtheme</a>, <a href="http://singularity.gs/">Singularity</a> grids and a lot of <a title="Javascript is an interpreted computer programming language. It is used to create client-side interactions between the user and the browser including asynchronous behaviours (AJAX). Javascript is primarily used to alter the structure of the DOM to create animated effects and load page content. Javascript has also become common in server-side programming and game development. It is commonly used in the form of jQuery." class="glossify-link" href="/content/javascript">Javascript<img src="/sites/all/themes/custom/gt/glossify.png" class="glossify-img" /></a> via <a href="https://www.drupal.org/update/modules/6/7#drupal_behaviors">Drupal behaviors</a>.</p>
+<p><img src="/sites/default/files/godel-work_yes-way_screenshot-1.png" width="1796" height="868" alt="The landing page" /></p>
+<p>The brief was to create a vibrant online presence to reflect the creatives that Yes Way represent; specialists in photography, street art, fine art, illustration and fashion styling. Yes Way wanted to stick with their existing branding, but give it new life through a new design. As such, the new site design that we created for Yes Way is not only clean and minimalist with a typographic focus, but also projects a vibrant persona, bringing creative talent to the forefront through their personal profiles and visual portfolios.</p>
+<p>Working on projects like this is a great experience as it allows us to work closely with the client to iteratively improve on an existing product. Although we did the redesign and site build in a short period of time this time, this sort of iterative improvement process can work as on ongoing agreement as well, allowing us to build trust with our clients and gradually make improvements to their product over time, keeping it up to current standards in design and dev and allowing the client freedom to make suggestions based on their changing needs.</p>
+<p><img src="/sites/default/files/portfolio.png" width="1797" height="867" alt="The portfolio (in an overlay)" /></p>
+<h3>The site</h3>
+<p>Yes Way's new landing page features a full length background image and a retractable navigation which engages as soon as the viewer starts scrolling. More information is revealed about Yes Way as you scroll down past each header and when the a navigation menu item is clicked the screen smoothly transits to the appropriate area on the site using <a title="jQuery is a cross-browser Javascript Library. It is free, open-source and licensed under the MIT License. jQuery uses methods and functions (prefixed by the $ symbol) that contain chunks of extremely useful Javascript that can be called by writing less code. jQuery's open API allows developers to create plugins to extend its functionality." class="glossify-link" href="/content/jquery">jQuery<img src="/sites/all/themes/custom/gt/glossify.png" class="glossify-img" /></a>.</p>
+<p>Godel wanted to bring the site up to date with dynamic and responsive features. Responsive design elements include the use of <a href="http://mmenu.frebsite.nl/">mmenu</a> which creates a slick, user-friendly navigation pattern for mobile devices. The desktop functions as a "one pager" with some pop-up overlays. The navigation uses the <a href="https://github.com/flesler/jquery.scrollTo">scrollTo library</a> to hijack the normal scrolling behaviour of the browser when the user clicks a menu item from the sticky header. The idea was to make site navigation as easy and fun as possible - the user never has to reload the page or follow a series of links, only interact with a single page.</p>
+<p>All of the second-level sections are created using a nice little technique we've created using data-attributes. It allows us to create an immersive Javascript-powered app-style front end for a Drupal CMS backend, which creates websites that don't necessarily have to look "like Drupal sites".</p>
+<h3>Data attributes and custom display suite fields</h3>
+<p><strong>This section is a brief technical explanation of our technique, skip it if it's Greek to you!</strong><br />
+The day we learnt about custom display suite fields from <a href="http://www.previousnext.com.au/blog/creating-custom-display-suite-fields-or-how-i-learned-stop-worrying-and-use-hookdsfieldsinfo">This PreviousNext blog post</a> was a happy day for us. Although DS offers a lot of great tools for UI-focused node display building, for devs who want more control it was starting to feel a bit limiting. We didn't want to go down the php field route (<em>shudder</em>) so we were happy to be able to create fields with PHP possibilities through this custom DS field technique.</p>
+<p>One of the best things about the custom fields is the ability to generate fields that actually contain more data than the eye can see, stored in data attributes of HTML elements away from the visible part of the <a title="The DOM (Document Object Model) is a cross-platform, language-independent convention for representing and interacting with objects in HTML, XHTML and XML documents. The DOM is usually viewed as a text-based expression of the structure of a webpage by inspecting elements on a page. Languages like Javascript can alter the DOM. PHP and HTML are used to create elements in the DOM. " class="glossify-link" href="/content/dom">DOM<img src="/sites/all/themes/custom/gt/glossify.png" class="glossify-img" /></a>. For example, we were able to store all of the data for an artist portfolio popup in the teaser tile for that artist that appears on the initial page load. What that means is that when the user clicks on an artist's face to view their portfolio, it loads dynamically in to the page via Javascript and that data that it displays is already stored on the page, just hidden.</p>
+<p>First, we define the info hook for our field:</p>
+<pre><code>/**
+ * Implements hook_ds_fields_info.
+ */
+
+function gp_global_ds_fields_info($entity_type) {
+  $fields = array();
+
+  $fields['node']['body'] = array(
+    'title' =&gt; t('Body data attribute'),
+    'field_type' =&gt; DS_FIELD_TYPE_FUNCTION,
+    'function' =&gt; 'gp_global_ds_field_body',
+  );
+
+  if (isset($fields[$entity_type])) {
+    return array($entity_type =&gt; $fields[$entity_type]);
+  }
+
+  return;
+}
+</code></pre><p>Then we make the markup for the field itself, which is surprisingly simple:</p>
+<pre><code>/**
+ * Return the body as a div with a data attribute.
+ */
+function gp_global_ds_field_body($field) {
+  $entity = $field['entity'];
+  if(isset($entity-&gt;body[LANGUAGE_NONE][0]['safe_value'])){
+    $data = $entity-&gt;body[LANGUAGE_NONE][0]['safe_value'];
+    $content = '&lt;div class="body" data-body="' . check_plain($data) . '"&gt;&lt;/div&gt;';
+    return $content;
+  }
+}
+</code></pre><p>The key is "data-body", a custom data attribute we create and then store the body text in. It doesn't get rendered on the page until we grab it with our Javascript, like this (abridged version):</p>
+<pre><code>(function($, undefined) {
+
+    // We get the element that has the data-attribute on it and extract the data from the attribute
+    bodyEl: '.fullwidth .body',
+    _this.bodytext = $(element).find('[data-body]').data('body');
+
+    bodyText: function bodyText() 
+      var _this = Drupal.behaviors.overlayAnimate;
+      // We replace the HTML of the blank element with the data we grabbed earlier.
+      $(_this.bodyEl).html(_this.bodytext);
+    },
+
+}) (jQuery);
+</code></pre><h3>Why this technique is meaningful</h3>
+<p>We think it's a step towards creating a better reputation for Drupal by creating beautiful sites that don't necessarily need to use the template themes Drupal provides. We use techniques like this in combination with very bare themes to build up our own custom front-end markup.</p>
+<p><img src="/sites/default/files/ipad_duo.png" width="3000" height="1802" alt="Mobile menu" /></p>
+<p>You can see this technique in action with the unique hover state overlays for each featured artist on the main page. The user can click through to more information about each person including a written blurb, gallery of images and even a video. For each of those things, the data is entered as a node in the Drupal backend, sent to the front of the site as a data attribute in a custom display suite field and triggered in to visibility via Javascript.</p>
+<p><img src="/sites/default/files/godel-work_yes-way_screenshot-3.png" width="1796" height="871" alt="The artist section" /></p>
+<p>All in all, the user experience is intended to have an immersive web-app feeling, with content loading in to the page quietly, displayed in seamless overlays rather than new page loads and making them most of a one-page layout with some animated navigation styles. Yes Way are able to keep users on their site for longer by holding their attention for longer. Because users aren't directed off site (not even off-page!) they're more likely to click around and explore the single page they see. Because we already load the data into the page before we display it, they get the added benefit of a fast-loading site as well.</p>
+<p>We think the result is an engaging site that uses some cool techniques to satisfy a real business need. Check out the website <a href="http://yesway.com.au/">here!</a></p>
+<p><img src="/sites/default/files/godel-work_yes-way_screenshot-extra-1.png" width="1798" height="870" alt="The footer" /></p>  </div>
+
+  <div class="field-author-info">
+    <div class="group-left"><div class="field-profile-picture">  <div class="user-picture">
+    <a href="/users/emma-forster" title="View user profile."><img src="https://secure.gravatar.com/avatar/c5e41cd6c27f67d4360056523642e9eb.jpg?d=mm&amp;s=160&amp;r=G" alt="Emma Forster&#039;s picture" title="Emma Forster&#039;s picture" /></a>  </div>
+</div></div><div class="group-right"><div class="field_name"><h3><a href="/users/emma-forster" title="View user profile." class="username">Emma Forster</a></h3></div><div class="field-position-title">Project manager</div></div><div class="group-footer"><div class="field-position-description">Emma manages our client relations and sits in between the dev team and the site owner to facilitate efficient, productive and fun projects. </div></div>  </div>
+
+  <div class="field-blog-social">
+    <a class="facebook-share icon-facebook" href="javascript:window.open('https%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php%3Fu%3Dhttps%3A%2F%2Fwww.godel.com.au%2Frss%2Fplanet-drupal', '_blank', 'width=500,height=300');void(0);" target="_blank">f</a><a class="twitter-share icon-twitter" href="javascript:window.open('https%3A%2F%2Ftwitter.com%2Fshare', '_blank', 'width=500,height=300');void(0);" target="_blank">t</a>  </div>
+
+  <div class="field-custom-pager">
+    <div  role="article" class="ds-1col node node-blog-entry view-mode-custom_pager clearfix">
+
+  
+  
+  <div class="field-title">
+    <h3><a href="/blog/ideas-help-keep-your-drupal-project-secure-against-owasp-top-10">Ideas to help keep your Drupal project secure against the OWASP Top 10</a></h3>  </div>
+
+  <div class="field-post-date">
+    Fri July 11, 2014  </div>
+
+  <div class="field-body">
+    I'm sure you've heard the phrase "Security is a process, not a product" before, or something along those lines. Drupal has a pretty good track record as far as Web-based CMS security goes, and there's a dedicated team of experts looking after Core and Contrib, but it's no secret that...  </div>
+</div>
+
+<div class="next no-result node-blog-entry"></div>  </div>
+  </body>
+</html>
+

@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 12 Oct 2013 18:20:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 12 Oct 2013 18:20:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Kalpana Goel: Unset title links in views
+Content-Transfer-Encoding: 8bit
+Content-Base: http://kalpanagoel.com/node/6
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Kalpana Goel: Unset title links in views</title>
+    <base href="http://kalpanagoel.com/node/6">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Follow these steps if you want to remove link from title field in views -<br />
+1. Add a boolean field on content type where you can set the values as  0|No, 1|yes (this boolean field is to determine if you want to display the title link or not)<br />
+2. In the views, add "content:title" field and check "Exclude from display", remember not to check "link this field to the original content" field<br />
+3. Add "content:nid" field and check "Exclude from display"<br /></p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/taxonomy/term/5" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">views</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/taxonomy/term/12" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></li></ul></div>
+  </body>
+</html>
+

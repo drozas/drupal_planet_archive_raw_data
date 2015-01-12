@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 02 Apr 2014 13:17:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 02 Apr 2014 13:17:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Last Call Media: Drupal 8 Lessons for Developers
+Content-Transfer-Encoding: 8bit
+Content-Base: https://lastcallmedia.com/drupal-8-lessons-for-developers
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Last Call Media: Drupal 8 Lessons for Developers</title>
+    <base href="https://lastcallmedia.com/drupal-8-lessons-for-developers">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-edit-field-id="node/83/title/en/rss">Drupal 8 Lessons for Developers</span><div class="field field-node--field-blog-image field-name-field-blog-image field-type-image field-label-hidden" data-edit-field-id="node/83/field_blog_image/en/rss"><div class="field-items"><div class="field-item"><img class="image-style-blog" src="https://lastcallmedia.com/sites/default/files/styles/blog/public/lead-images/blog_drupal-8-lessons.jpg?itok=1kjsdJpH" width="758" height="606" alt="" /></div></div></div><div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-field-id="node/83/body/en/rss"><div class="field-items"><div class="field-item"><p>A couple months ago, we decided to rebuild our company site on Drupal 8.  We had two goals in mind when we were planning the project.  First, we wanted to expose our developers to some real life scenarios in working with Drupal 8.  We had all been involved in the Drupal 8 development cycle in one way or another, but building a production site is very different from setting up a development instance.  Our second goal was to prove that it was possible to launch a feature complete Drupal 8 site without any contributed modules.  In my opinion, we succeeded on both counts.  There were certainly some snags in the process, but overall it was an enjoyable experience for everyone.  I’d like to share our major take-aways from the project with you.</p>
+
+<p>1.  <strong><span style="text-transform:uppercase;">Stronger division between the “themer” and “module developer” roles</span></strong>  <br />
+The switch to object-oriented programming for all of the core subsystems has been talked about quite a lot.  And yes, it is a big transition.  Some crazy high percentage of our core code has changed or moved.  As a module developer, it’s going to be up to you to learn all about Routes, Plugins, Event Listeners, and more just to do the same things you used to use hooks for.  I don’t think anyone will argue that the new way is simpler for module developers.  But I was ready for that.  I transitioned from Drupal 6 to Drupal 7.  I remember that feeling of firing up the new version for the first time and feeling like you’re walking into your house after your mother-in-law dropped by for a visit - you know everything’s there, but you just don’t know where it is anymore.  <br />
+What caught me by surprise is how little has actually changed at the theme level.  Sure, there’s Twig, but when you get right down to it, Twig doesn’t even feel that different from raw PHP templates.  Once you learn the basics, my guess is that most people working with Twig will feel more comfortable there than in PHP code.  So, what’s really changed from the themer’s perspective?  Not a whole lot.  In fact, right now it feels like a conscious effort was made to keep things consistent at the theme level.  </p>
+
+<p>2.  <strong><span style="text-transform:uppercase;">Fewer conflicts</span></strong><br />
+I’ve been using and teaching Features for years, and there’s one question that always made me cringe: “How do I avoid conflicts/merge conflicts with my features?”  My answer would usually get very abstract and I’d be talking about packaging strategies and complex push/pull/revert commands.  Now that CMI is here, we have the tool we always wanted.  Instead of combining stuff into giant PHP files as Features does, CMI writes one file per configuration object.  While this sounds really verbose, it prevents a situation where you’d get a conflict if you and a coworker change different views in the same file, since every view is in it’s own file.  In the two-month development cycle we had for our website, I think we may have ended up with a single merge conflict resulting from configuration changes.</p>
+
+<p>3.  <strong><span style="text-transform:uppercase;">No more packaging nightmares</span></strong><br />
+This goes along with my previous point about CMI, but trying to teach the right way to use Features involved a lot of abstract and hand-wavey concepts like semantic grouping and composition (and that’s just for the way I consider right).  Now that we have a true configuration management tool, we don’t need to worry about packaging at all.  Think that through for a moment.  There is no longer a need to bundle components into groups.  It all goes into one big bucket for your site.  For those of you who actually do use Features for bundling reusable components, don’t worry.  Features already has a dev release for Drupal 8 that focuses solely on grouping config into modules.  </p>
+
+<p>4.  <strong><span style="text-transform:uppercase;">You need an editor that autocompletes</span></strong><br />
+Sorry, Notepad++ enthusiasts, but you’re going to want a bona fide IDE to do any serious development on Drupal 8.   Now that we’re using a lot of OO code, you can have a documentation trail that might be spread over 5-10 parent classes/interfaces.  It is extremely nice to be able to command+click a method name to go directly to the definition and read the docblock.  It’s even better to have your editor autocomplete the method name for you.  Plus, there are a lot more types of code in core these days (YAML, JSON, and others), and it’s nice to have syntax highlighting.</p>
+
+<p>5.  <strong><span style="text-transform:uppercase;">Think global, act local</span></strong><br />
+In case you hadn’t heard, theme(), drupal_add_js(), and drupal_add_css() functions have all been removed from Drupal 8.  The new way of doing things is to always return a render array.  The short explanation for this is that rendering stuff involves adding assets (CSS/JS) to the page, and when you call theme(), those assets are just added to a global variable somewhere.  That worked fine for Drupal 7, but since we’re a bunch of forward-thinking folks, we want our pages to be able to work with subrequests, which are a way of rendering a page using multiple processes. And guess what?  Separate processes don’t share global variables.  So, when you return the HTML for your cute little teddy bear field formatter, you should return a render array with your CSS/JS assets specified using the #attached property.</p>
+
+<p><strong><span style="text-transform:uppercase;">In summary…</span></strong><br />
+Diving into Drupal 8 was a lot of fun for our team.  Yes, that’s right, I said fun.  We enjoyed it, partly because it’s the new stuff, and partly because it was our project.  Whereas we would have felt dangerously stressed doing our first Drupal 8 site for a client under a tight deadline, we were able to focus on learning the new workflows, contributing bugfixes, and developing best practices.  </p>
+
+<p><em>We first posted about our Drupal 8 launch <a href="https://lastcallmedia.com/wysiwyg-with-drupal-8">here</a>.</em></p>
+
+<p><em>Attached below are wallpaper ready versions of the image at the top of this post.</em></p>
+</div></div></div>
+  </body>
+</html>
+

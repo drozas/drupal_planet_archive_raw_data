@@ -1,0 +1,149 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 09 Jul 2013 16:16:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 09 Jul 2013 16:16:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Propeople Blog: How to build a Popup in Drupal for Login or Register form
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wearepropeople.com/blog/how-to-build-a-popup-in-drupal-for-login-or-register-form
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Propeople Blog: How to build a Popup in Drupal for Login or Register form</title>
+    <base href="http://wearepropeople.com/blog/how-to-build-a-popup-in-drupal-for-login-or-register-form">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Recently we have launched two <a href="/blog/drupal-tools-and-resources-for-ecommerce-website-development">commerce</a> projects at our <a href="http://wearepropeople.com">Drupal Agency</a>, that have the same functionality: For an anonymous user, when he clicks on “Checkout” on the card, he gets a pop-up that asks to login or to register. </p>
+
+<p><img alt="" class="media-image" height="779" width="770" typeof="foaf:Image" src="http://wearepropeople.com/sites/default/files/popup.png" /></p>
+
+<p>In this article I would like to share the way how this functionality can be implemented in Drupal.</p>
+ 
+<p>In order to have this popup flexible to customize we will display a mini panel. We will make the popup by using ctool modal.</p>
+ 
+<p>First we should ajaxify the “Checkout” button to display popup, as we want all values of the cart form to be saved before we display the popup.</p>
+ 
+<code>
+/**
+ * Alter for form 'views_form_commerce_cart_form_default'.
+ */
+function mymodule_form_views_form_commerce_cart_form_default_alter(&amp;$form, &amp;$form_alter) {
+  if (user_is_logged_in()) {
+	return;
+  }
+ 
+  $order = commerce_cart_order_load();
+  if (isset($order-&gt;data['mymodule_popup_showed'])) {
+	return;
+  }
+ 
+  $form['#prefix'] = '&lt;div id="commerce-checkout-dialog"&gt;';
+  $form['#suffix'] = '&lt;/div&gt;';
+ 
+  $form['actions']['checkout']['#ajax'] = array(
+	'callback' =&gt; 'mymodule_checkout_ajax_callback',
+  );
+}
+</code>
+ 
+<p>We will ajaxify the form only for the anonymous users and only in case the user hasn't made the decision yet. This means that in case the visitor has already chosen to register, to login or simply close the dialog we do not want him to see the dialog again.</p>
+ 
+<p>Our ajax callback will look like this:</p>
+
+<code>
+function mymodule_checkout_ajax_callback($form, $form_state) {
+  // Put a flag in order that user has already seen the popup and has done decision
+  // so he doesn't need to see it again.
+  $order = commerce_cart_order_load();
+  $order-&gt;data['mymodule_popup_showed'] = TRUE;
+  commerce_order_save($order);
+ 
+  ctools_include('ajax');
+  ctools_include('modal');
+  ctools_modal_add_js();
+ 
+  $commands = array();
+  $commands[] = ajax_command_replace('#commerce-checkout-dialog', drupal_render($form));
+  $commands[] = ajax_command_prepend(NULL, theme('status_messages'));
+ 
+  $dialog_minipanel = _mymodule_render_login_register_minipanel();
+  $commands[] = ctools_modal_command_display('Login', $dialog_minipanel);
+  return array('#type' =&gt; 'ajax', '#commands' =&gt; $commands);
+}
+</code>
+ 
+<p>To display dialog popup we need to return ctools_modal_command_display() command. Function _mymodule_render_login_register_minipanel() simply renders our custom minipanel. The minipanel will consist of two panes – one with login form, another with user register form.</p>
+ 
+<p>The biggest pitfall we have faced during the implementation of this drupal task was that ctools ajaxifies all form buttons displayed in the popup (this happens in ZZCToolsModal behavior of modal.js), so we need to make sure that all forms do have ajax callbacks.</p>
+ 
+<p>In order to achieve this we create custom panes that will display forms. Here is an example of the pane render callback:</p>
+
+<code>
+function mymodule_pane_login_pane_render($subtype, $conf, $args, $contexts) {
+  $block = new stdClass();
+ 
+  $block-&gt;title = t('Login');
+  $form_state['mymodule_alter'] = TRUE;
+  $form = drupal_build_form('user_login_block', $form_state);
+  $block-&gt;content = '&lt;div id="mymodule-user-login-block"&gt;' . drupal_render($form) . '&lt;/div&gt;';
+ 
+  return $block;
+}
+</code>
+ 
+<p>We set a property 'mymodule_alter' in $form_state so in form_alter we can add ajax callback for submit button. We do this as we do not want to add this effect to all user_login_block forms. For example if somebody will place a login block on the page it should not be ajaxified.</p>
+ 
+<p>Form alter looks in following way:</p>
+<code>
+function mymodule_form_user_login_block_alter(&amp;$form, &amp;$form_state) {
+  _mymodule_alter_ajax_form($form, $form_state, 'mymodule_user_login_block_ajax_callback');
+}
+ 
+function _mymodule_alter_ajax_form(&amp;$form, &amp;$form_state, $ajax_callback) {
+  if (!isset($form_state['mymodule_alter'])) {
+	return;
+  }
+ 
+  $form_state['cache'] = TRUE;
+  $form['actions']['submit']['#ajax'] = array(
+	'callback' =&gt; $ajax_callback,
+  );
+}
+</code>
+ 
+<p>Helper function _mymodule_alter_ajax_form has been introduced as Register form uses exactly same logic so we can reuse the same code (the only difference is the name of the ajax callback).</p>
+
+<p>Now lets take a look at ajax callback of the submit button from the Login form.</p>
+ 
+<code>
+function mymodule_user_login_block_ajax_callback($form, $form_state) {
+  return _mymodule_form_ajax_callback($form, 'mymodule-user-login-block');
+}
+ 
+function _mymodule_form_ajax_callback($form, $wrapper_id) {
+  $commands = array();
+  $commands[] = ajax_command_replace('#' . $wrapper_id, theme('status_messages') . drupal_render($form));
+ 
+  $form_errors = form_get_errors();
+  if (empty($form_errors)) {
+    ctools_include('ajax');
+	$commands[] = ctools_ajax_command_redirect('checkout');
+  }
+  return array('#type' =&gt; 'ajax', '#commands' =&gt; $commands);
+}
+</code>
+ 
+<p>As ajax callback in case of Login and Register forms has the same logic, again, we have separated it to the helper function. The idea is that if we have no validation errors on the form we redirect the user to the checkout page.</p>
+ 
+<p>And this is it. Now we have dialog popup with two forms. In case of successful submission of one of them we got redirected to checkout.</p>
+ </div></div></div><div class="control-group form-type-item form-item">
+  <label class="control-label">Language </label>
+<div class="controls"> English
+</div></div>
+<div id="comment-wrapper"></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div><div class="field-item even"><a href="/tags/tutorials" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorials</a></div></div></div><div class="field field-name-field-drupal-planet field-type-taxonomy-term-reference field-label-above"><div class="field-label">Check this option to include this post in Planet Drupal aggregator:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

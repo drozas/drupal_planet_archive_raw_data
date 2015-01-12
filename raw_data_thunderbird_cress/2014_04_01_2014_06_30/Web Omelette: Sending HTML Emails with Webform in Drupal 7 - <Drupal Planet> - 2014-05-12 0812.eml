@@ -1,0 +1,87 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 12 May 2014 07:12:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 12 May 2014 07:12:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Sending HTML Emails with Webform in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-webform-html-emails
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Sending HTML Emails with Webform in Drupal 7</title>
+    <base href="http://www.webomelette.com/drupal-webform-html-emails">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Have you ever wondered how you can include HTML markup in the emails you send with Webform? Out of the box, you cannot. But I am going to show you a simple way to achieve this using the <em>Mime Mail</em> module and some simple theming. Additionally, I will show you how to control which webforms should send HTML emails and which should not.</p>
+
+<p>First though, make sure you install and enable the <em>Mime Mail</em> and <em>Mail System</em> modules (the latter is a dependency of the former). With Drush, all you have to do is use this command:</p>
+
+<pre><code>drush en mimemail -y
+</code></pre>
+
+<p>It will take care of all you need to do. If you commit the module to your repo, don't forget that the <em>Mail System</em> module also gets downloaded, so make sure you include it as well.</p>
+
+<p>Next, edit your theme's <code>template.php</code> file and paste this block of code (explained after):</p>
+
+<pre><code>function your_theme_webform_mail_headers($variables) {
+
+  $headers = array();
+
+  $headers = array(
+    'Content-Type'  =&gt; 'text/html; charset=UTF-8; format=flowed; delsp=yes',
+    'X-Mailer'      =&gt; 'Drupal Webform (PHP/'. phpversion() .')',
+  );
+
+  return $headers;
+
+}
+</code></pre>
+
+<p>Make sure you change <code>your_theme</code> with the name of your theme. So what happens here? We override the <a href="http://drupalcontrib.org/api/drupal/contributions!webform!webform.module/function/theme_webform_mail_headers/7">theme_webform_mail_headers()</a> declared by the Webform module. We do this in order to add a <code>content type</code> to the mail headers, and set it to HTML. And that's pretty much it.</p>
+
+<p>If you now clear your caches and test a webform, you'll see that you can add anchor tags and other basic HTML tags.</p>
+
+<p><p>One problem you might run into though is that all your webforms are now sending emails in HTML format - a result only partially desired. You'll notice that the default email that you send no longer provides any spacing and all the text gets put on one line - as HTML in fact.</p>
+
+<p>So what you can do is make a selection of webforms for which you'll want HTML emails. A handy way of doing this is by adding a field to your webform content type that will be used to swith HTML emails on/off for a given node. So to illustrate this, let's say we added a new field to the relevant content type called <em>HTML Emails</em> (with the machine name: <code>field_html_email</code>). This field is a boolean type (a single checkbox basically) with the values of 1 for on and 0 for off.</p>
+
+<p>It follows to adapt the theme override above and replace it with something like this:</p>
+
+<pre><code>function your_theme_webform_mail_headers($variables) {
+
+  $headers = array(
+    'X-Mailer' =&gt; 'Drupal Webform (PHP/' . phpversion() . ')',
+  );
+
+  // Get the HTML Email field
+  $html_email_field = field_get_items('node', $variables['node'], 'field_html_email');
+
+  // Check if this webform node needs to send HTML emails
+  if (!empty($html_email_field)) {
+    $html = $html_email_field[0]['value'] == 1 ? TRUE : FALSE;
+  }
+
+  if ($html === TRUE) {
+    $headers['Content-Type'] = 'text/html; charset=UTF-8; format=flowed; delsp=yes';
+  }
+
+  return $headers;
+} 
+</code></pre>
+
+<p>If you consult the documentation for this theme function, you'll know that the <code>$variables</code> parameter contains also the node object which uses Webform to send the email. So we basically check for the value of our field and if it is 1, we add the HTML information to the mail headers. Otherwise, we return the <code>$headers</code> array containing the value it does by default (essentially making no changes).</p>
+
+<p>You can now clear the caches and test it out. Edit a node of the respective content type and check the box. You'll see that it now sends HTML emails. However, if you uncheck the box, it will fallback to the default format that comes with the Webform module.</p>
+
+<p>Hope this helps.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal-theming">Theming</a></span> | <span class="field-item odd"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-webform-html-emails" st_title="Sending HTML Emails with Webform in Drupal 7" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-webform-html-emails" st_title="Sending HTML Emails with Webform in Drupal 7" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-webform-html-emails" st_title="Sending HTML Emails with Webform in Drupal 7" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

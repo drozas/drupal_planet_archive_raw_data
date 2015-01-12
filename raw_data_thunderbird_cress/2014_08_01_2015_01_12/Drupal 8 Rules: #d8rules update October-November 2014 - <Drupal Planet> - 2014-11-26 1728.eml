@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 26 Nov 2014 17:28:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 26 Nov 2014 17:28:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal 8 Rules: #d8rules update October-November 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: http://d8rules.org/news/d8rules-update-october-november-2014
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal 8 Rules: #d8rules update October-November 2014</title>
+    <base href="http://d8rules.org/news/d8rules-update-october-november-2014">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Curious why the Rules module still isn't finished, even when our <a href="/node/27">initial milestone planning</a> aimed to ship Rules 8.x by 2014? The bad news is we are a bit delayed, but that pretty much aligns with the state of Drupal 8 core. And we are working hard on solving problems in a generic way for entire Drupal core instead of having to fork APIs in Rules.</p>
+<h2>DrupalCon Amsterdam Recap</h2>
+<p><img alt="#d8rules BoF @ DrupalCon Amsterdam" title="#d8rules BoF @ DrupalCon Amsterdam" height="160" width="240" class="panopoly-image-quarter media-element file-teaser panopoly-image-quarter" src="http://d8rules.org/files/styles/panopoly_image_quarter/public/DSCF6588.JPG?itok=h7eT8jV6" /></p>
+<p>We were quite active at DrupalCon Amsterdam: I gave a 12 minutes update on the #d8rules initiative (<a href="https://amsterdam2014.drupal.org/session/drupal-8-contrib-module-update">video</a> &amp; <a href="https://docs.google.com/presentation/d/1b2_LuGr7-MgO9Ni6CX4SBv4e73ejjTVOnCulfnRBDZc/edit#slide=id.g3b2135a07_00">slides</a>) and we had some productive discussions on crowd funding in general at the community summit (<a href="https://docs.google.com/document/d/1DO6Cra1GcW45lP5Chwsp21fYE5rVgGHZzkhiGrtmUMs/edit">notes</a> &amp; <a href="https://amsterdam2014.drupal.org/session/funding-drupal-core">related core conversation</a>).</p>
+<p>On Thursday, we had a BoF to get contributors up to speed with development for Rules in Drupal 8 and on Friday we sprinted the whole day to port actions and get Milestone 1 finished.</p>
+<h2>Development status </h2>
+<p>As <a href="https://www.drupal.org/node/2245015">[META] Rules 8.x Roadmap</a> states, most of the funded Milestone 1 tasks have been finished but a number of core integration tasks are still in progress. The <a href="https://www.drupal.org/node/2011038">unified context</a> system is going to be used across Blocks, Conditions and Actions API as well as related contrib modules like the Drupal 8 version of <a href="https://www.drupal.org/project/page_manager">Page Manager</a>. In Drupal 7 CTools and Rules together with the Entity module basically invented two separate "context systems", so compared to that this is a big step fowards and will bring site builders and developers a much better plugin interopability &amp; re-usability in Drupal 8.</p>
+<p>Some core tasks we are currently working on are:</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2349991">Provide a trait for categorizing plugin managers and use it for conditions and actions</a></li>
+<li><a href="https://www.drupal.org/node/2011038">Use Context system for actions</a></li>
+<li><a href="https://www.drupal.org/node/2329937">Allow definition objects to provide options</a></li>
+</ul>
+<p>In Rules 8.x-3.x, we recently finisihed the conversion of all condition and action test cases to PHPUnit based integration tests, what helps to test the plugins including their annotation and runs very fast (without a full bootstrap). During the sprints in Amsterdam we worked with contributors on porting more of Rules' actions to the new Action API, including test coverage. We'll continue to work on porting actions with contributors via the issue queue and run sprints on the coming events we attend.</p>
+<h2>Next steps &amp; events</h2>
+<p><img alt="dasjo presenting on #d8rules" title="dasjo presenting on #d8rules" height="360" width="240" class="panopoly-image-quarter media-element file-teaser panopoly-image-quarter" src="http://d8rules.org/files/styles/panopoly_image_quarter/public/15397950091_f3a035cbd8_z.jpg?itok=gnc_Ng6N" /></p>
+<p>We anticipate to use the budget raised by the end of 2014. Next year, we will have to look for further funding resources or limit work on Rules 8.x to our free time. Thanks again to <a href="http://d8rules.org/supporters">everyone supporting us so far</a>!</p>
+<p>There are already some great Drupal events lined up for next year where the #d8rules initiative will be present:</p>
+<p><strong>DrupalCon Bogota, 10-12 of February 2014</strong> will feature a full session on upgrading modules to integrate with Rules in Drupal 8 by dasjo: <a href="https://latinamerica2015.drupal.org/session/d8rules-web-automation-rules-drupal-8">#d8rules - Web-automation with Rules in Drupal</a></p>
+<p><strong>European Drupal Days Milano, 19-21 of March 2015</strong>  will include a <a href="http://milano2015.drupaldays.it/program">session, training workshop &amp; sprints</a> provided by fago &amp; dasjo.</p>
+<p><a href="http://d8rules.org/support">Let us know</a> if you want to get involved at any of these events and see you the core &amp; Rules issue queues!</p>
+<p>dasjo on behalf of the <a href="http://d8rules.org/team">#d8rules team</a> </p>
+</div></div></div>
+  </body>
+</html>
+

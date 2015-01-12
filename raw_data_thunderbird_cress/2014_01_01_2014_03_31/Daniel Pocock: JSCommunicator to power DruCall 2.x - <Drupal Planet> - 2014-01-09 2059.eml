@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 09 Jan 2014 20:59:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 09 Jan 2014 20:59:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Daniel Pocock: JSCommunicator to power DruCall 2.x
+Content-Transfer-Encoding: 8bit
+Content-Base: http://danielpocock.com/jscommunicator-to-power-drucall-2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Daniel Pocock: JSCommunicator to power DruCall 2.x</title>
+    <base href="http://danielpocock.com/jscommunicator-to-power-drucall-2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="http://jscommunicator.org">JSCommunicator 1.0.0</a> appeared over the festive season, making it even easier for people to build <a href="http://danielpocock.com/get-webrtc-going-faster">WebRTC</a> real-time voice and video capabilities into their web sites.</p>
+<p>In fact, it is so easy to use that I was simply able to drop it over the top of <a href="http://drupalcode.org/sandbox/pocock/1926052.git/blob/HEAD:/drucall-phone.tpl.php">the drupal-phone.tpl.php template file</a> in <a href="http://www.drucall.org">DruCall</a>, tweak the <a href="http://www.lumicall.org/modules/local/drucall/js/drucall.js">drucall.js</a> module to call <a href="https://github.com/opentelecoms-org/jscommunicator/blob/master/init.js#L23">JSCommManager.init()</a> and <em>DruCall</em> is now the first solid implementation of <em>JSCommunicator</em>.</p>
+<h3>Put it to the test</h3>
+<p>Before pushing this new version out to the community, it is undergoing some testing / baptism by fire.  <a href="http://www.lumicall.org">Lumicall</a> recently announced <a href="http://danielpocock.com/free-calling-from-browser-to-mobile">free calling from desktop browser to mobile app</a> powered by <a href="http://jssip.net">JsSIP's "tryit" demo code</a>.</p>
+<p>The DruCall module has now been <a href="http://www.lumicall.org/drucall">deployed here on the Lumicall website</a> as a parallel solution to access the same free calling service.</p>
+<h3>Browser version sensitivity</h3>
+<p><a href="http://www.webrtc.org">WebRTC</a> is the next big thing: it won't work in old browsers.  It depends on JavaScript.  At best, we aim to give some helpful error when it can not run.</p>
+<h3>CSS styling opportunity</h3>
+<p><a href="http://jscommunicator.org">JSCommunicator</a> comes from server-side developers rather than web developers.  It provides a solid communications tool but it doesn't look great.</p>
+<p>The project aims to be a HTML fragment that can drop into just about any page on any web site, so it has been designed to be as raw as possible and allow the styling of the existing web site to influence it.  Nonetheless, it could still look a little bit nicer and I would be delighted to see any CSS-based skins that people may develop to enhance it.</p>
+<h3>This is a phone:</h3>
+<p><img src="http://s1.ibtimes.com/sites/www.ibtimes.com/files/styles/v2_article_large/public/2013/01/10/samsung-galaxy-s4-rumors.png" /></p>
+<h3>and now this is too:</h3>
+<pre>
+<div id="dtmf-pad" class="session-active">
+<input type="button" value="1" class="dtmf-number" /><input type="button" value="2" class="dtmf-number" /><input type="button" value="3" class="dtmf-number" /><br /><input type="button" value="4" class="dtmf-number" /><input type="button" value="5" class="dtmf-number" /><input type="button" value="6" class="dtmf-number" /><br /><input type="button" value="7" class="dtmf-number" /><input type="button" value="8" class="dtmf-number" /><input type="button" value="9" class="dtmf-number" /><br /><input type="button" value="*" class="dtmf-symbol" /><input type="button" value="0" class="dtmf-number" /><input type="button" value="#" class="dtmf-symbol" /></div>
+</pre><p>and <a href="https://github.com/opentelecoms-org/jscommunicator/blob/master/jscommunicator.inc#L73">here it is in HTML</a></p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,95 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 27 Feb 2014 14:52:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 27 Feb 2014 14:52:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hall on Drupal 8: Using Drupal 8 to decouple yourself from Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://running-on-drupal8.co.uk/node/15
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hall on Drupal 8: Using Drupal 8 to decouple yourself from Drupal</title>
+    <base href="http://running-on-drupal8.co.uk/node/15">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/15/body/und/rss"><div class="field-items"><div class="field-item even"><h3>Introduction</h3>
+
+<p>When doing development <a href="http://searchnetworking.techtarget.com/definition/loose-coupling" target="_blank">loose coupling </a>is good, generally I don't think there would be a lot of argument there. For this post I want to extend the metaphor to coupling between a developer and the tools they use.</p>
+
+<p>I suggest that currently many (not all) Developers using Drupal are tightly coupled to Drupal and that this harms their potential career development, it harms their employers (and/or people that may wish to use their services) and ultimately it harms the entire Drupal community.</p>
+
+<p>I believe that Drupal 8 will go a long way to removing the negative effects of this tight coupling, something that is good all around but that there may be a bumpy ride ahead for some. Ultimately I trust that mastery of Drupal 8 will break the tight coupling opening up many more opportunities and approaches.</p>
+
+<p>My view is that if most of the knowledge you have about what you need to do your work is specific to a particular tool, you are tightly coupled to it, and prior to Drupal 8 there was no way to avoid this to a large degree. </p>
+
+<h3>Site building versus development</h3>
+
+<p>For somebody who is mostly working through the administrative interface of Drupal and various contrib. modules, there will always be a high degree of coupling. Although some degree of generic CMS information and knowledge will be part of their work, switching to a completely different CMS will require a significant amount of re-learning, apart from the administrative interface they will have to get used to a new landscape of modules and plugins (or whatever the equivalent is in the new CMS).</p>
+
+<p>If you are a developer it is worth installing and playing with Drupal 8 <strong>now</strong>, to get a feel for these changes even if you are not ready to poke around under the hood yet, it will not take you long to find your feet.</p>
+
+<p>Fortunately for the Sitebuilder things have just got better, my experience of the Drupal 8 admin interface so far is that it is mostly familiar, but much improved (try doing serious work on the average Drupal 7 site with a 7 inch tablet for example). Assuming that there are enough contrib. modules available I don't foresee most SiteBuilders having problems with Drupal 8, in fact the small amount of re-learning required will come with many benefits, and the new configuration management implies more opportunities for site builders to take on management of multiple sites and environments without requiring development assistance.</p>
+
+<p>Whilst there are many differences between CMSs there is a big problem if somebody can't learn to start using one 'relatively quickly' for this reason I don't think a fork like the one seen for <a href="http://backdropcms.org/" target="_blank">Backdrop</a> is going to be driven by Sitebuilders. Changes in Drupal 8 for SiteBuilders and Administrators are in the order of magnitude that you would expect for a new version of anything these days and come with the expected improvements in usability and functionality.</p>
+
+<p>Drupal like all it's competitors is in the business of making more and more possible for SiteBuilders (it would be failing if it wasn't) development fits into the remaining 10% - 20% you can't do without coding PHP (much higher percentages for particularly bespoke or enterprise needs, migration, upgrades etc. these are the bits where I get involved and interested).</p>
+
+<h3>Developer versus 'Drupal Developer'</h3>
+
+<p>This is going to ruffle a few feathers, but if it doesn't apply to you then ...... it doesn't apply to you so relax, it doesn't apply to many people developing with Drupal, there is enough of a problem to really cause issues if you are hiring developers to do Drupal work however.</p>
+
+<p>Many (not all) Drupal Developers are incapable of moving outside of Drupal and operating as modern PHP developers or quickly assimilating a new framework or even new programming languages. Stable geniuses in their own environment, they cannot operate effectively out of it, or at least would have to drop down a couple of pay scales. To these people everything starts looking like content (even when dealing with data and data processing tasks) and Drupal is the answer to everything (because it is the only answer they have experience of providing).</p>
+
+<p>I have seen and been in places with 'Drupal Developers' and developers (who handle EVERYTHING not Drupal).</p>
+
+<p>I have heard organisations refusing to use Drupal because in the current climate "it is too hard to find Drupal Developers".</p>
+
+<p>I have been through a 1.5 hour telephone interview for a PHP position where at the end the interviewer apologised for the simplicity of some of the questions but stated "We have found we have to do this to weed out certain types of Wordpress and Drupal developers, who have years of experience but fundamental gaps".</p>
+
+<p>Generally recruitment for Drupal demands two years or so commercial experience. whereas for many frameworks six months would be enough assuming it was associated with other development experience. i know that Drupal is first a CMS but it has to be considered a full framework now in my opinion simply becasue for many websites Drupal is used for <strong>everything</strong> the site does.</p>
+
+<p>Accomplished non-drupal developers with lots of experience usually fail to produce acceptable sites quickly enough if they are dropped in to using Drupal, they can become productive much more quickly in other new frameworks.</p>
+
+<p>I have been working on websites for more than fifteen years now, using ASP, ColdFusion, Perl, Java, PHP and Python and used a number of frameworks particularly in Java. I found the Drupal learning curve (started seriously for me in the early days of 6) to be the most unpleasant and bizarre, eventually it paid off but it would have been easy to give up and stick with Java. Everything above is based on my own experience and from looking around the agencies, companies and devs. in the places I work.</p>
+
+<p>All the above points indicate the strong coupling between the Drupal Developer and the tool.</p>
+
+<h3>Community versus tribe</h3>
+
+<p>The Drupal community has some terrific aspects but there are times when it verges towards tribalism, this is seen for example in one area which is a particular 'pet hate' of mine, framing all things opensource in the context of Drupal. Some (not all) Drupal developers are so tightly coupled to Drupal that they show disdain (and often disrespect) to developers who use Drupal but have not contributed. The usual warm welcome given to perceived newcomers eventually turns to a feeling of  "you have been using Drupal for years now yet YOU HAVE NOT CONTRIBUTED", 'taker' vs 'maker' arguments are raised.</p>
+
+<p>This individual tool-centric world-view is not the way opensource is supposed to work, you have to turn it around and frame Drupal in the context of all things opensource. A Drupal site sits in a sea of opensource, probably the OS and supporting software of the server, various Javascript libraries used, the IDE you develop in? do I need to go on? Anybody who has not contributed to Drupal may have contributed to any of these, they may even give up free time to run a Drupal site for a community project or charity (which imho. totally absolves them from the sin of being a 'taker'). </p>
+
+<p>In my experience the communities where everybody has/should be a contribute are the same ones where there is a very tight exclusive coupling between the developer and tool.</p>
+
+<p>I still foresee a strong Drupal community ahead, but with more blurring at the edges and more transitioning amongst the members.</p>
+
+<h3>Drupal 8 loosens the ties</h3>
+
+<p>The obvious nature of the Symfony components in Drupal 8 tend to help dissolve tribalism. It is amusing to see one or two instances in issues now where attitude changes noticeably when people suddenly realise that new guy with the Drupal profile a few weeks old is actually an accomplished and skilled Symfony developer (who knows more about the current problem being discussed than most).</p>
+
+<p>Now it is possible to learn some aspects of Drupal 8 development by reading Symfony documentation, reading more about Symfony teaches a lot about  frameworks in general.</p>
+
+<p>Now it is possible to bring people already comfortable with Twig into a project (or move the other way), you could have frontend developers moving between Django (a Python framework) and Drupal in the same company. </p>
+
+<p>Some of the knowledge that is useful for Drupal 8 is directly applicable in many other technologies. An example from many: Skulpin a PHP static site generator, which can use Twig templates, and employs the Symfony HTTP kernal.</p>
+
+<h3>My journey</h3>
+
+<p>I have never regretted my decision to focus on using Drupal, but I have been nervous over the last year or so about the amount of knowledge I am using that is Drupal or Drupal 7 specific. Fourteen years ago ColdFusion looked like a good bet, I was delighted however when ColdFusion switched to running on Java, I could diversify and eventually moved into Java development (and now most people snigger when I mention ColdFusion). Drupal should be more resilient due to it's opensource background but there are no certainties, this industry is characterised by sweeping change.</p>
+
+<p>Since I have started looking at Drupal 8 it is like the lifting of a great weight from my mind. Finally a chance to do some serious OO work in PHP (although a lot is familar from Java I need  time on task to internalise the differences, some subtle some not so subtle). I have happily taken on more non-Drupal work than ever before (Drupal still figures heavily in my day to day work though). I fixed up and released an ExpressionEngine site, have worked extensively on a bespoke OO PHP framework I inherited. All the time I can keep my eyes open and learn/hone skills that will help with my Drupal 8 development but that are also universally applicable elsewhere.</p>
+
+<p>If Drupal continues to rise, Drupal 8 onwards in particular  (which is what I am betting on) , it is all win for me, if not I have options "never bet more than you can afford to lose".</p>
+
+<h3>An industry of change</h3>
+
+<p>Change is a given in the industry I work in, specific knowledge of configuration params and arcane hooks used in a version of Drupal, whilst useful for a while, has little value over time. General knowledge and practice of common design patterns, advanced techniques and widely used components are much more bankable.</p>
+</div></div></div><div  class="field field-node--field-blog-tags field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix clearfix" data-edit-id="node/15/field_blog_tags/und/rss"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0">career</li><li class="taxonomy-term-reference-1">planet</li></ul></div>
+  </body>
+</html>
+

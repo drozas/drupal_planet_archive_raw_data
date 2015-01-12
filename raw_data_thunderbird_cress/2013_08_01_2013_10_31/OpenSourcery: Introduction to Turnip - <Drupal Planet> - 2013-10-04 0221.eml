@@ -1,0 +1,58 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 04 Oct 2013 01:21:27 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 04 Oct 2013 01:21:27 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: OpenSourcery: Introduction to Turnip
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.opensourcery.com/blog/michael/introduction-turnip
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>OpenSourcery: Introduction to Turnip</title>
+    <base href="http://www.opensourcery.com/blog/michael/introduction-turnip">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="what-is-turnip">What is Turnip?</h2>
+<p><a href="http://github.com/opensourcery/turnip">Turnip</a> is a Drupal starter kit created by the OpenSourcery as starting point on scratch built Drupal installs. Turnip provides a basic setup that puts site builders several steps ahead of the vanilla Drupal install.</p>
+<p>Furthermore, Turnip adds a host of community contributed modules that make up the core sitebuilding &amp; development functionality at the OpenSourcery. This post is the first of a series highlighting the tools &amp; methodologies that make up Turnip.</p>
+<h2 id="what-are-the-components">What are the components?</h2>
+<p>The main components of Turnip are:</p>
+<ul>
+<li>Drush make</li>
+<li>Profiler</li>
+<li>Features</li>
+<li>Behat</li>
+<li>Deploy</li>
+</ul>
+<p>Individually they represent codebase, installation, configuration management, testing and content staging tools. Together they allow devs to build complex websites that can be deployed and built on nearly any platform with little adaptation.</p>
+<h3 id="drush-make">Drush make</h3>
+<p>Drush make is a sub-command of Drush (If you haven't of Drush, stop right now and go check it out, it <em>will</em> change the way you develop with Drupal forever.) Drush make is a package manager (like <span class="geshifilter"><code class="text geshifilter-text">composer</code></span>, <span class="geshifilter"><code class="text geshifilter-text">apt-get</code></span>, or <span class="geshifilter"><code class="text geshifilter-text">gem</code></span>) that can, given a manifest of modules, download them to a central location ready for use.</p>
+<p>These manifests, or lists of modules are composed into make files. Drupal doesn't interface with these directly, which is why you need Drush installed.</p>
+<p>Unlike the old days of Drupal, where a distrobution contained not only the custom code created by the maintainers, but Drupal core and all the contrib modules the custom code depended upon. Drush make files can track the core and contrib versions and download them. All that is needed is a path to put the contrib modules.</p>
+<pre><div class="geshifilter"><pre class="text geshifilter-text" style="font-family:monospace;">projects[drupal][type] = &quot;core&quot;
+projects[drupal][version] = &quot;7.23&quot;
+projects[mollom][version] = &quot;2.7&quot;</pre></div></pre><p>Since the OpenSourcery uses install profiles, we prefer to put any and all contrib modules in <span class="geshifilter"><code class="text geshifilter-text">/profiles/PROJECT_NAME/modules/contrib</code></span>. Custom modules can be put into <span class="geshifilter"><code class="text geshifilter-text">custom</code></span> and any features in <span class="geshifilter"><code class="text geshifilter-text">features</code></span> (more on features later).</p>
+<p>Furthermore Drush make is even more useful given when modules aren't exactly perfect in their stable release state. Given enough time working on Drupal projects and one is bound to find a bug in a module. One of the greatest things about Open Source Software, and doubly so for Drupal, is that bugs are discussed publicly and the fixes are available immediately. Bugs are first fixed using files called patches. Oftentimes patches exist for a module long before the maintainers see fit to roll a new release. If the fix exists, but isn't part of the code base yet, what's a dev to do? Patching the module and entering it into source control is one option, but any and all changes to the module in the future must also be tracked for the duration of the project. Luckily enough, drush make allows projects to have patches applied to a given project. This is an even bigger win, if you discover a bug in a contrib module, figure out the fix for it, and submit the patch to fix it on Drupal.org! You get a working module, street cred for posting a patch, and the community gets a more stable, workable product. EVERYONE WINS!</p>
+<p>To build the site, simply run <span class="geshifilter"><code class="text geshifilter-text">drush make PATH/TO/MAKEFILE DRUPAL_DIRECTORY</code></span>. If you forget the exact command to build the site in drush, no worries. Just use <span class="geshifilter"><code class="text geshifilter-text">bin/rebuild</code></span> and the site will be built in the <span class="geshifilter"><code class="text geshifilter-text">/drupal</code></span> directory.</p>
+<h3 id="profiler">Profiler</h3>
+<p>Profiler is a neat library that extends the functionality of the install profile. Gone are the days where custom install profiles meant long and largely unreadable database updates. Followed by obscure Drupal function calls and more database queries. With profiler, creating basic placeholder content is done in a human readable format. Even custom fields can be included given the proper set of parameters. It all starts out with the install profile's .info file. Adding a placeholder node is as simple as this.</p>
+<pre><div class="geshifilter"><pre class="text geshifilter-text" style="font-family:monospace;">nodes[about][type] = page
+nodes[about][title] = About
+nodes[about][body][und][0][value] = PLACEHOLDER
+nodes[about][body][und][0][format] = full_html
+nodes[about][uid] = 1
+nodes[about][language] = und</pre></div></pre><p>The above example isn't exactly easy, but it is quite a bit more straightforward than creating a node object and calling <span class="geshifilter"><code class="text geshifilter-text">node_save()</code></span>.</p>
+<h3 id="features">Features</h3>
+<p>Features is a way to assemble and export site components into a custom module. Features can be exported via the interface in the site itself. The feature can then be tracked in source control, making transferring settings from dev to test site and then onto deployment more straightforward. #### Module development, point &amp; click style Features shine at taking things that are built in the UI like permissions or views. The components are then exported to a custom includes file specific to the components in the feature. Features can be managed via drush using commandes like <span class="geshifilter"><code class="text geshifilter-text">features-update</code></span> or <span class="geshifilter"><code class="text geshifilter-text">features-revert</code></span> to move features out of the database into code or the reverse. ### Behat Behat is a framework, independent of Drupal that tests whether or not software behaves in a given way. Since the software is being tested on a more interface driven level, the tests can be less specific to verifying the state of a variable. The upshot of Behat it is that the tests are designed to be human readable and writable.</p>
+<h4 id="testing-on-the-client-side">Testing on the client side</h4>
+<p>Since tests can be almost directly ported from user stories, the responsibility of writing the tests can be reassigned from the developer or the QA lead to a Project Manager or possibly even the client. Tests can be tagged to differentiate levels of depth, or even browser versions.</p>
+<h3 id="deploy">Deploy</h3>
+<p>Deploy is a project that uses the Universally Unique Identifier (UUID) to export staged content, much in the same way that Features indentifies and exports site architecture, deploy exports and manages content.</p>
+<p>Stay tuned for a deeper dive into the components that make up Turnip.</p>
+  </body>
+</html>
+

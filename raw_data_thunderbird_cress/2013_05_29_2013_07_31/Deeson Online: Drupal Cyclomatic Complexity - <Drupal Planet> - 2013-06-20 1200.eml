@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Jun 2013 11:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Jun 2013 11:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Drupal Cyclomatic Complexity
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/drupal-cyclomatic-complexity
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Drupal Cyclomatic Complexity</title>
+    <base href="http://deeson-online.co.uk/labs/drupal-cyclomatic-complexity">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>We are sometimes asked when signing contracts to adhere to some arbitrary numeric qualification for <em>quality code</em>. The intent is sensible but the specific measures can often be irrelevant to Drupal or fail to address quality meaningfully. For example <em>no function should be longer than 10 lines</em>.</p>
+<p>As professional Software Engineers, we want to be able to demonstrate compliance and adherence to best practice without need for what can be arbitrary metrics on the quality of code. The obvious is that our code meets the <a href="https://drupal.org/coding-standards">Drupal Coding Standards</a> which can be measured by <em>clean output from the <a href="http://drupal.org/project/coder">Coder module</a></em>. </p>
+<p>However, the need for concise code that meets the objective of <a href="http://en.wikipedia.org/wiki/Separation_of_concerns">separation of concerns</a> – that <em>no function should be longer than 10 lines</em> is trying to address – is not sufficiently covered by coder at present. What is needed is a more useful measurement which does not constrain developers and meets the needs of the clients.</p>
+<p><a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">Cyclomatic Complexity</a> puts a numeric value on the complexity of a function by calculating the number of possible routes through the function. We should be striving to make small and understandable blocks of code, a function which is overly complex would be difficult for a new developer to pick up or even for the original developer to remember what they were doing when they revisit it months later.</p>
+<p>Another test for a function becoming complex is its nesting levels. This is the number of indentations in the code caused by switching such as if statements or foreach loops. Deep and complex nesting makes understanding the flow through the function difficult.</p>
+<p>A check in the coding standards which measure complexity, with the tools to support it (via the Drupal <a href="http://pear.php.net/package/PHP_CodeSniffer">PHPCS</a> plugin provided by the Coder module) would alert developers that their code needs refactoring. This would usually involve refactoring functions into smaller, more manageable chunks in which the purpose of the smaller functions is smaller but more clearly defined. This can also help with code reviews where another developer is able to look at each function briefly and in isolation and understand its purpose.</p>
+<p>To run the coder code review using drush with the Drupal PHPCS standards you use the following syntax to check the node module for example:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">drush coder node <span style="color: #339933;">--</span>sniffer</pre></div>
+<h2>Show me an example!</h2>
+<p>The PHP Coding Standards put an upper limit on cyclomatic complexity at 10 and which is reasonable in our experience. Perhaps unsurprisingly, the Drupal 7 core comment module has some functions which fall short of these metrics. The function <a href="https://api.drupal.org/api/drupal/modules!comment!comment.module/function/comment_node_view/7">comment_node_view</a> has a cyclomatic complexity of 15, so 5 above the threshold. </p>
+<p>Functions of this sort are ripe for refactoring and this test immediately indicates this. <a href="https://api.drupal.org/api/drupal/modules%21comment%21comment.module/function/comment_save/7">comment_save()</a> and <a href="https://api.drupal.org/api/drupal/modules!comment!comment.module/function/comment_form/7">comment_form()</a> also score above 10.</p>
+<p>The PHP Coding Standards put an upper limit of nesting levels of 5. On this metric, <a href="https://api.drupal.org/api/drupal/modules!comment!comment.module/function/comment_node_view/7">comment_node_view</a> has a nesting depth of 6, meaning 6 levels of indentation due to code blocks, which again indicates a function which needs some refactoring to make it easier to read.</p>
+<h2>Let's make this happen!</h2>
+<p>If this is something that interests you, if you have an opinion on the limits of the metric or you hate the idea completely then add your voice to the conversation here: <a href="http://drupal.org/node/1960996">http://drupal.org/node/1960996</a> or test the patch for Coder here: <a href="http://drupal.org/node/1934594#comment-7171972">http://drupal.org/node/1934594#comment-7171972</a></p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/drupal-cyclomatic-complexity">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Drupal Cyclomatic Complexity</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/john-ennew">John Ennew</a> | 20th June 2013</div></div></div><div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://cdn.deeson-online.co.uk/sites/default/files/labs/cyclomatic_complexity.gif" alt="" /></div></div></div>
+  </body>
+</html>
+

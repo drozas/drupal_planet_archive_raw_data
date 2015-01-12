@@ -1,0 +1,114 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 01 Aug 2013 19:17:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 01 Aug 2013 19:17:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Radarearth.com: Automatically Generate Barcodes for Users on a Drupal Site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://radarearth.com/content/automatically-generate-barcodes-users-drupal-site
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Radarearth.com: Automatically Generate Barcodes for Users on a Drupal Site</title>
+    <base href="http://radarearth.com/content/automatically-generate-barcodes-users-drupal-site">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-taxonomy-vocabulary-2 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/category/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal</a></div><div class="field-item odd"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal Planet</a></div><div class="field-item even"><a href="/category/tags/drupal-modules" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal Modules</a></div><div class="field-item odd"><a href="/tags/python" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Python</a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>What is the problem?</h2>
+
+<p>As a conference organizer for a few of Florida's past DrupalCamps, and an attendee of many other conferences, I've noticed a huge bottleneck during the attendee registration process the day of the conferences.</p>
+
+<p>Organizations like to account for attendance, and often a group of volunteers assume the daunting task of asking an attendee their name, finding this name on a multi-page spreadsheet, finding the attendees pre-printed badge, and then handing them their swag-bag.</p>
+
+<p>Quite a few commercial applications exist, but they aren't open source or free.</p>
+
+<p>There are also online services like <a href="http://eventbrite.com">Eventbrite</a>, but you don't own your data and they also can have fees attached to them. They also depend on wifi, which may or may not be available at the conference.</p>
+
+<h2>How do we solve this?</h2>
+
+<p>This is a two-step process:</p>
+
+<ol>
+<li>Accounting for Attendees the day of the conference.</li>
+<li>Generating a method to assign attendees barcodes.</li>
+</ol>
+
+<h3>Accounting for attendees.</h3>
+
+<p>I started the <a href="https://github.com/benhosmer/brzr-desktop">brzr</a>, (pronounced <em>breezer</em>), project to handle the accounting of attendance the day of the event. brzr isn't Drupal specific and can be used with any system as long as you can create barcodes for the attendees.</p>
+
+<p>It is an <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a> licensed, free and open source project that uses an inexpensive barcode scanner to scan attendee barcodes and store them in a SQLite database. I got my test scanner for $25.00. Everything is stored locally and it doesn't require an internet connection to work.</p>
+
+<p>There is much more detailed documentation in the <a href="https://github.com/benhosmer/brzr-desktop/blob/master/README.md">README</a> on the brzr project page.</p>
+
+<p>You can use it on any operating system that you can install <a href="http://python.org">Python</a> on, including Windows, Mac, and Linux.</p>
+
+<p>I plan on using it with a <a href="http://raspberrypi.org/">Raspberry Pi</a>, I've included support for attaching an LCD display to the Raspberry Pi, so you don't even need a monitor on the already cluttered registration table. The Raspberry Pi costs about $35.00.</p>
+
+<p>Now we have a way to quickly check attendees in the day of the conference. Scanning a barcode takes approximately one second with my scanner.</p>
+
+<h3>Creating the barcodes.</h3>
+
+<p>Hopefully this will speed up some of the process, but the second step is getting barcodes on attendee badges and asking them to bring these barcodes with them the day of the event.</p>
+
+<p>This way, a volunteer can quickly check them in by scanning their barcode.</p>
+
+<p>If we can get half of the attendees to do this, it will greatly speed up the check-in process. For my particular conference, I'm going to email them a reminder with their barcode before the conference and ask them to print it out and bring it with them.</p>
+
+<p>Maybe the awesome volunteers might get to eat breakfast before the conference starts!</p>
+
+<h3>Configure your site.</h3>
+
+<p>Now we need a way to assign a unique number to their barcodes. Obviously this a Drupal related post, and because I am using a Drupal site for the conference site, I've come up with a Drupal solution.</p>
+
+<p>We're already storing attendee data in the site, since they've registered an account and signed up for the event.</p>
+
+<p>Using a few contributed modules, I'll outline the steps to generate barcodes and attach them to their user profiles. These barcodes correlate to their user id, which is unique on the Drupal 7 site.</p>
+
+<p>I'll outline the steps I took to get this working now. First, you'll need need three additional modules:</p>
+
+<ol>
+<li><a href="http://drupal.org/project/barcode">barcode</a> 
+
+<ul>
+<li><em>Note</em>: As of the writing of this post, you'll need to apply    this <a href="https://drupal.org/files/barcode-support_other_entities-1434178-3.patch">patch</a> from the <a href="https://drupal.org/node/1434178">barcode issue que</a> to use token support to supply a value to the barcode from entities other than nodes. If you don't know how to do this, check out the <a href="https://drupal.org/patch/apply">documention</a> from <a href="http://drupal.org">drupal.org</a>.</li>
+</ul></li>
+<li><a href="http://drupal.org/project/field_permissions">field_permissions</a>
+
+<ul>
+<li>We don't want users changing or creating their own barcodes, since we need to correlate them with a known value later to account for their attendance, so we'll use field_permissions to prevent them from editing this field in their profile.</li>
+</ul></li>
+<li><a href="http://drupal.org/project/token">token</a>
+
+<ul>
+<li>This allows us to supply a default value containing the user's id for the barcode field.</li>
+</ul></li>
+</ol>
+
+<p>Download and enable these modules, and be sure to apply the patch to the barcode module.</p>
+
+<p>Now, add a barcode field to the user profile. Choose the <a href="http://en.wikipedia.org/wiki/Codabar"><em>codabar</em></a> style for your barcode. This gives you the most flexibility with character counts and formatting. Make sure you supply a default value for this, otherwise it will end up blank.</p>
+
+<p>If you're using the Drupal user id like me, use the token <code>A[user:uid]A</code>. The letters in front of the token are arbitrary, but you'll need to supply something. The codabar format requires a start and stop character, and that is what those letters are for. You can pick any letter you want, and even correlate them to a code for your conference if you like.</p>
+
+<p>Now set the permissions on the field to prevent the user from editing this field. If you plan on requesting users to print their barcodes, set the permission to allow them to view this field.</p>
+
+<p>Users can view their profile after registering for an account on the site and print their barcodes.</p>
+
+<p>You can use the <a href="http://drupal.org/project/views">views</a> module to show and sort the attendee badges as well for those that don't bring their barcode with them that day.</p>
+
+<p>One caveat is that the unique barcode is generated at the time the account is created. This method won't work for users that already exist. You'll need to manually edit their profiles or write some code to this all of this for you.</p>
+</div></div></div><ul class="links inline"><li class="addtoany first last"><span>
+		<a class="da2a_button" href="http://www.addtoany.com/share_save" id="da2a_1"><img src="/sites/all/modules/addtoany/images/share_save_171_16.png" width="171" height="16" alt="Share/Save"/></a>
+		<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+da2a.script_load();
+//--><!]]>
+</script>
+		</span></li>
+</ul>
+  </body>
+</html>
+

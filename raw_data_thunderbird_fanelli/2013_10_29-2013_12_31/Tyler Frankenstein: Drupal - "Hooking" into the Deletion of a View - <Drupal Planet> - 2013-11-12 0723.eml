@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 12 Nov 2013 06:23:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 12 Nov 2013 06:23:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Tyler Frankenstein: Drupal - "Hooking" into the Deletion of a View
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tylerfrankenstein.com/code/drupal-hooking-deletion-view
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Tyler Frankenstein: Drupal - "Hooking" into the Deletion of a View</title>
+    <base href="http://tylerfrankenstein.com/code/drupal-hooking-deletion-view">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-page-tags field-type-taxonomy-term-reference field-label-hidden clearfix"><ul class="links"><li class="taxonomy-term-reference-0"><a href="/tags/drupal-7x" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7.x</a></li><li class="taxonomy-term-reference-1"><a href="/tags/views" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">views</a></li><li class="taxonomy-term-reference-2"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet drupal</a></li></ul></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>Today I stumbled upon the need to do something I've never done before in Drupal. I needed a hook to run some custom code when a View was deleted. First, I checked out the list of <a href="https://api.drupal.org/api/views/views.api.php/group/views_hooks/7">Views Hooks</a> and didn't find any hooks that appeared to be able to get the job done.</p><p>After a bit of Googling and chatting in #drupal-support on IRC, I was directed to <a href="https://drupal.org/node/551808">this old closed issue</a>. From my understanding, the delete hook doesn't exist and it  sounds like it won't be existing anytime soon. What can we do? Well never fear, Drupal is here.</p><p></div></div></div>
+  </body>
+</html>
+

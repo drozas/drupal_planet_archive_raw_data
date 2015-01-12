@@ -1,0 +1,102 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 17 Jan 2014 19:32:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 17 Jan 2014 19:32:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Manually Migrating Comments from Drupal to Disqus
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/blogs/post/manually-migrating-comments-drupal-disqus
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Manually Migrating Comments from Drupal to Disqus</title>
+    <base href="http://forumone.com/blogs/post/manually-migrating-comments-drupal-disqus">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Even if you've never heard of&nbsp;<a href="http://disqus.com">Disqus</a>&nbsp;before, you've almost certainly seen it. With slick social integration, support for a variety of platforms (including WordPress, Blogger, Tumblr, and Drupal) and a rapidly expanding user base, Disqus has become one of the most popular hosting services for website comments. If you've had misgivings about the commenting system you're using &ndash; or just envied the functionality and polish of other systems &ndash; you may get to a point where you decide (as we did for our Forum One blogs) to make the switch to Disqus.</p>
+<p>Making this switch is fairly straightforward &ndash; but what about all those wonderful comments that your blogs have earned over the years? You don't want to lose all the valuable discussion, tips and virtual high fives from your online fans, do you? Probably not. So if you're using Drupal and looking to upgrade to Disqus from a system like Mollom, there are various resources that already exist for manually migrating those comments, but nothing explains the process from A-Z, so I've compiled this step-by-step guide to show you how to manually migrate your comments from Drupal.</p>
+<p>There are two primary ways to migrate comments: (1) Using the API to automate the whole process by directly connecting to Disqus from Drupal and move the comments for you (which isn't working at the moment); or (2) Using the Disqus XML export tool to migrate comments from Drupal in XML format which you can then import manually into Disqus.</p>
+<h3>Versions</h3>
+<ul>
+    <li><a href="https://drupal.org/project/disqus">Disqus module</a>&nbsp;(Do NOT use 6.x-1.9 which was the stable version at the time of writing this. In normal Drupal fashion the Dev version is the one to use which is 6.x-1.x-dev released Nov 22, 2013 which contains the extra features needed to do this.)</li>
+    <li>This was done in Drupal 6 though D7 is very similar</li>
+</ul>
+<h3>Step 1 - Module Enabled</h3>
+<p>Enable both Disqus and Disqus Migrate modules (Disqus Migrate provides migration tools for moving comments between Disqus and the Drupal comment system). <a href="http://disqus.com/admin/drupal/">Disqus has a great reference for this</a>.</p>
+<p><em>Note: There are additional steps to enable Disqus (ie. downloading and installing the API library, adding your Disqus keys and verifying connection with Disqus, as well as actual Drupal access permissions) which are well documented in the list of references I've provided at the foot of this article. Since those steps are primarily used for setting up the module rather than carrying out the actual migration, I will not review those steps here.</em></p>
+<h3>Step 2 - Export Drupal Comments</h3>
+<p>&nbsp;</p>
+<p><img src="/sites/default/files/u/Screen%20Shot%202013-12-16%20at%201.41.53%20PM.png" width="807" height="323" alt="" /></p>
+<ul>
+    <li>Navigate to the Disqus export page /admin/content/comment/disqus_export which contains two buttons, <strong>Export Awaiting Comments Using API</strong> (which doesn't work as of writing this) and <strong>Export All Comments to XML File</strong> which is the one you should click.</li>
+    <li>Select <strong>Export All Comments to XML File</strong> (This option is explained as Exporting via XML will just gather all of your websites comments and format them for importing manually into Disqus)</li>
+    <li>Save the file to your local file system.</li>
+</ul>
+<p>At this point you will have all the comments from your site in XML format which we will not import into Disqus.</p>
+<h3>Step 3 - Import Drupal Comments Into Disqus</h3>
+<p>&nbsp;</p>
+<p><img src="/sites/default/files/u/Screen%20Shot%202013-12-16%20at%201.41.29%20PM.png" width="562" height="318" alt="" /></p>
+<ul>
+    <li>Log into Disqus and navigate to <strong>Admin -&gt; Discussions (Tab) -&gt; Import (Tab)</strong></li>
+    <li>Select the <strong>Generic WXR</strong> sub-tab option.</li>
+    <li>Select the <strong>Upload WXR</strong> file browser button and select your XML file you saved locally.</li>
+    <li>Select <strong>Upload and Import</strong> button.</li>
+</ul>
+<p>Upon completing this, the comments will be imported to Disqus and you might want to do some house cleaning of those comments using the Disqus Admin interface tools.</p>
+<h3>Step 4 - Optional, but pretty much needed</h3>
+<p>After the comments are imported you may notice that some comments that exist on your Drupal nodes are not being displayed in Disqus. This is most likely caused by URL aliases. Since Disqus maps comments to nodes by path, this means that example.com/node/32 and example.com/how-to-play-ball may be the same node, but Disqus doesn't know that &ndash; so the result is that those comments will only show for the URL that was in the export XML file. What we need to do now is provide Disqus URL mapping.</p>
+<p><img src="/sites/default/files/u/Screen%20Shot%202013-12-16%20at%201.48.25%20PM.png" width="900" height="119" alt="" /></p>
+<ul>
+    <li>In Disqus navigate to <strong>Admin -&gt; Discussions (Tab) -&gt; Tools (Tab)</strong></li>
+    <li>Select <strong>Start URL Mapper</strong>. This takes you to a page that will give you a list of comment paths Disqus knows so you can provide manual path mapping information OR you can have Drupal create a mapping file for you. I chose to do this using a custom script.<br />
+    <br />
+    This page shows you the format it expects the CSV format (comma separated value) file to be in:<br />
+    <em>http://example.com/old-path/old/posta.html, <a href="http://example.com/new-path/new/posta.html" title="http://example.com/new-path/new/posta.html">http://example.com/new-path/new/posta.html</a><br />
+    </em><em>http://example.com/old-path/old/postb.html, <a href="http://example.com/new-path/new/postb.html" title="http://example.com/new-path/new/postb.html">http://example.com/new-path/new/postb.html</a><br />
+    <br type="_moz" />
+    </em></li>
+    <li>Follow the link to download the CSV file from Disqus to your local file system and name it <strong>disqus-urls.csv</strong>.</li>
+    <li>Copy this CSV file to your Drupal root directory.</li>
+    <li>Create a file with the following PHP code in that same Drupal directory called <strong>disqus-custom-script.php</strong></li>
+</ul>
+<blockquote>
+<p>&lt;?php</p>
+<p>$base = 'http://forumone.com/';</p>
+<p>$n = strlen($base);</p>
+<p>foreach (file('disqus-urls.csv') as $url) {</p>
+<p>&nbsp; $path = substr(trim($url), $n);</p>
+<p>&nbsp; $source = drupal_get_normal_path($path);</p>
+<p>&nbsp; if ($source != $path) {</p>
+<p>&nbsp; &nbsp; echo &quot;$base$path, $base$source\n&quot;;</p>
+<p>&nbsp; }</p>
+<p>&nbsp; else {</p>
+<p>&nbsp; <span class="Apple-tab-span" style="white-space:pre">	</span>$source = drupal_get_path_alias($path);</p>
+<p>&nbsp; <span class="Apple-tab-span" style="white-space:pre">	</span>echo &quot;$base$path, $base$source\n&quot;;</p>
+<p>&nbsp; }</p>
+<p>}</p>
+</blockquote>
+<ul>
+    <li>Browse to the PHP file (or execute your preferred way so you can see echo output). Browsing to it with yoursite.com/disqus-custom-script.php assuming you named your PHP file that and saved it in the root directory as asked.<br />
+    <br />
+    This will give you output that can be saved into a CSV file and will be in the exact format that Disqus expects.<br />
+    &nbsp;</li>
+    <li>In Disqus navigate back to <strong>Admin -&gt; Discussions (Tab) -&gt; Tools (Tab) -&gt; Start URL Mapper</strong> (Button) and upload the text file containing the output from our PHP script.</li>
+</ul>
+<p>Make sure you give it a few minutes to complete, as the mapping in Disqus isn't instantaneous, but you should start seeing your comments appear where they should for the URLs that were in the mapping CSV file.</p>
+<p>That's it! Below I've provided a list of references that you can use when following these steps. If this guide is helpful for you, or if you discover a different solution, please leave us a comment ;)</p>
+<h3>References</h3>
+<p><a href="https://drupal.org/project/disqus">Disqus Module</a></p>
+<p><a href="http://disqus.com/admin/drupal/">Disqus setup instructions for Drupal</a></p>
+<p><a href="http://help.disqus.com/customer/portal/articles/912757-url-mapper">Disqus URL mapper</a></p>
+<p><a href="http://tag1consulting.com/blog/imported-disqus-comments-do-not-show-drupal-nodes">Imported DISQUS Comments Not Showing Up On Drupal Nodes</a></p><div class="field field-type-text field-field-short-description">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <p>There are two primary ways to migrate comments from Drupal to Disqus. The API way that automates the whole process by directly connecting to Disqus from Drupal and moves the comments for you. The second way is an XML export tool that Disqus migrate provides to migrate comments from Drupal in XML format which you can import into Disqus manually which is what I will show you how to do.</p>        </div>
+        </div>
+</div>
+  </body>
+</html>
+

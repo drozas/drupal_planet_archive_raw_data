@@ -1,0 +1,78 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 02 Jul 2014 04:24:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 02 Jul 2014 04:24:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Association News: Drupal.org team week notes #27
+Content-Transfer-Encoding: 8bit
+Content-Base: https://assoc.drupal.org/blog/tvn/drupal.org-team-week-notes-27
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Association News: Drupal.org team week notes #27</title>
+    <base href="https://assoc.drupal.org/blog/tvn/drupal.org-team-week-notes-27">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><img class="left" src="https://association.drupal.org/files/do.png" /></p>
+<h2>Upcoming deployments: CDN switch for Drupal.org</h2>
+<p>We have successfully switched all of the Drupal.org sub-sites over to our CDN (Content Delivery Network) provider.  On July 2nd <a href="https://www.drupal.org/node/2295253">we will be pointing</a> Drupal.org (www.drupal.org) at our CDN.  This deployment improves our ability to serve static files (images, javascript, css, patches, etc.) and improves our network routes outside of North America.</p>
+<h2>Looking for community feedback</h2>
+<p>Community Tools Team is working on new layout for user profiles on Drupal.org. The first iteration of mockups is now <a href="https://www.drupal.org/node/2281763">open for community feedback</a>.</p>
+<h2>Previous deployments</h2>
+<p>We deployed lots of things on Drupal.org in the previous few weeks. Here is a list of most significant deployments:</p>
+<ul><li><a href="https://www.drupal.org/node/2281413">Change "Report security issue" to "Report security vulnerability"</a></li>
+<li><a href="https://www.drupal.org/node/2274555">Update codefilter module</a></li>
+<li><a href="https://www.drupal.org/node/2125301">%20 in image file names triggers the "local images only" filter</a></li>
+<li><a href="https://www.drupal.org/node/2144903">LICENSE.txt has executable bit set (mode 755)</a></li>
+<li><a href="https://www.drupal.org/node/2133545">Regression: updating an issue no longer redirects to your new comment</a></li>
+<li><a href="https://www.drupal.org/node/2212631">Pages matching the URL /profile/.* disabled</a></li>
+<li><a href="https://www.drupal.org/node/2250385">Issues feed for user is broken</a></li>
+<li><a href="https://www.drupal.org/node/667122">Manage e-mail notifications: Add option to not email the person who is making the update</a></li>
+<li><a href="https://www.drupal.org/node/2193793">New issue comment/edit form should not be available when comments are closed for the issue</a></li>
+<li><a href="https://www.drupal.org/node/1033368">project/user/(name) should be in user's section</a></li>
+<li><a href="https://www.drupal.org/node/2281829">New URL aliases for user profiles breaks drupalorg_crosssite user tabs</a></li>
+<li><a href="https://www.drupal.org/node/2224917">Tracker page doesn't order results properly</a></li>
+<li><a href="https://www.drupal.org/node/2118545">/project/issue/search returns results on two-character results</a></li>
+<li><a href="https://www.drupal.org/node/2282049">List of maintainers on a project page should display Drupal usernames instead of git usernames</a></li>
+<li><a href="https://www.drupal.org/node/2200243">Wrong page title 'Drupal.org | Community plumbing'</a></li>
+<li><a href="https://www.drupal.org/node/2281673">Project issue link filter doesn't handle 'pre' or 'code' with newlines</a></li>
+<li><a href="https://www.drupal.org/node/2248075">Related Issues with HTML cannot be added</a></li>
+<li><a href="https://www.drupal.org/node/2286555">lacking bottom margin under issue listing description</a></li>
+<li><a href="https://www.drupal.org/node/2282043">Create a variable for regex in updating stats on project usage</a></li>
+<li><a href="https://www.drupal.org/node/2229611">Floats in Planet Drupal feed-items are not cleared</a></li>
+<li><a href="https://www.drupal.org/node/1921902">add ' autocapitalization="none" ' to the "name" field on the login form</a></li>
+<li><a href="https://www.drupal.org/node/1963092">Convert .info file rewriting in packaging plugins to deal with D8 .info.yml files</a></li>
+<li><a href="https://www.drupal.org/node/2289483">Fix up video on drupal-7.0 landing page</a></li>
+<li><a href="https://www.drupal.org/node/2237789">Update broken link in notification for 'Not a Spammer'</a></li>
+<li><a href="https://www.drupal.org/node/2238035">Titles for empty fields appear on new organization nodes</a></li>
+<li><a href="https://www.drupal.org/node/2119673">Wrong page when project maintainer hasn't set git username</a></li>
+<li><a href="https://www.drupal.org/node/658048">Drupal.org search (solr) fails an enormous number of simple searches</a></li>
+<li><a href="https://www.drupal.org/node/2291717">Account url alias lead to Forbidden</a></li>
+<li><a href="https://www.drupal.org/node/2180995">"Log in to search issues" should be a link</a></li>
+<li><a href="https://www.drupal.org/node/2211743">Style system message comments</a></li>
+<li><a href="https://www.drupal.org/node/2291879">Userprofile redirecting to wrong profile</a></li>
+<li><a href="https://www.drupal.org/node/2272799">Create 'supporters' section on Drupal.org</a></li>
+<li><a href="https://www.drupal.org/node/2289245">Your Issues block (on d.o. dashboard) does not list postponed issues</a></li>
+</ul><h2>Drupal.org infrastructure news</h2>
+<p>We are working to improve many pieces of Drupal.org.  Over the last month we have made improvements to our development environments with continued migrations to our OpenStack cluster, upgrades to CentOS 6, and increased disk speed and capacity.</p>
+<p>Additional features on our CDN account also enabled us to shift project usage data gathering from our local Varnish logs to CDN logs.  This let us push nearly 7TB of traffic a month off of our servers and network off to our CDN, freeing up resources for Drupal.org and Git.</p>
+<p>We have been making good progress on migrating Git from a single node to a highly available pair of servers for improved redundancy, reliability and performance.<br />
+Monitoring improvements are being added as time allows, and we will be rolling out a new monitoring server with Icinga and Cacti.</p>
+<h2>Other news</h2>
+<h3>Drupal.org User Research</h3>
+<p>We kicked off Drupal.org user research with a full-day workshop at DrupalCon Austin. You can find our summary and some outcomes of the workshop in <a href="https://assoc.drupal.org/blog/tvn/drupal.org-user-research-stakeholder-workshop-outcomes">this blog post</a>. Right now we are busy conducting remote interviews with Drupal.org users all over the world. Expect more updates from the team in the next couple of weeks.</p>
+<h3>Drupal Jobs</h3>
+<p>Drupal Job is coming soon. We have just a couple more features to be launch ready. (In particular, we are figuring out coupon codes and adding some finishing polish.) We hope to launch around mid-July.</p>
+<h2>DrupaCon Austin</h2>
+<p>Thank you to those who joined us in Austin for sprints related to Drupal.org. We were able to make some progress on many of the issues that led to the flood of deployments over the past couple of weeks. </p>
+<p>Thanks also to those that took the time to be interviewed by the user research team led by Whitney Hess. You gave us a ton of useful information to incorporate into the personas we are developing for our redesign efforts. There were several intriguing feature requests that came out of those interviews as well.</p>
+<p>---<br />
+As always, we’d like to say thanks to all volunteers who are working with us and to the Drupal Association <a href="https://drupal.org/supporting-partners">Supporting Partners</a> and <a href="https://drupal.org/technology-supporters">Technology Supporters</a>, who made it possible for us to work on these projects. The <a href="https://association.drupal.org/supporting-partners">Supporting Partner Program</a> crowd sources funds that pay for the development team’s time and Drupal.org hosting costs.</p>
+<p>Cross-posting from <a href="https://groups.drupal.org/node/431383">g.d.o/drupalorg</a></p>
+</div></div></div><div class="field field-name-taxonomy-vocabulary-4 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Personal blog tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/taxonomy/term/588">week notes</a></div></div></div>
+  </body>
+</html>
+

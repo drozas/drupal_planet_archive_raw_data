@@ -1,0 +1,214 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 03 Dec 2014 15:18:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 03 Dec 2014 15:18:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dcycle: What is content? What is configuration?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dcycleproject.org/blog/83/what-content-what-configuration
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dcycle: What is content? What is configuration?</title>
+    <base href="http://dcycleproject.org/blog/83/what-content-what-configuration">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>What is content? What is configuration? At first glance, the question seems simple, almost quaint, the kind one finds oneself patiently answering for the benefit of Drupal novices: content is usually information like nodes and taxonomy terms, while  content types, views and taxonomy vocabularies are usually configuration.</p>
+
+<p>Content lives in the database of each environment, we say, while configuration is exportable via Features or other mechanisms and should live in the Git repo (this has been called code-driven development).</p>
+
+<p>Still, a definition of content and configuration is naggingly elusive: why "usually"? Why are there so many edge cases? We're engineers, we need precision! I often feel like I'm trying to define what a bird is: every child knows what a bird is, but it's hard to define it. Ostriches can't fly; platypuses lay eggs but aren't birds.</p>
+
+<h2>Why the distinction?</h2>
+
+<p>I recently saw an interesting comment titled "<a href="http://agaric.com/comment/1499#comment-1499">A heretic speaks</a>" on a blog post about code-driven development. It sums up some of the uneasiness about the place of configuration in Drupal: "Drupal was built primarily with site builders in mind, and this is one reason [configuration] is in the database".</p>
+
+<p>In effect, the primary distinction in Drupal is between code (Drupal core and config), and the database, which contains content types, nodes, and everything else.</p>
+
+<p>As more complex sites were being built, a new distinction had to be made between two types of information in the database: configuration and content. This was required to allow development in a dev-stage-production workflow where <em>features</em> being developed outside of a production site could be deployed to production without squashing the database (and existing comments, nodes, <em>and the like</em>). We needed to move those features into code and we called them "configuration".</p>
+
+<p>Thus the <a href="https://www.drupal.org/project/features">features</a> module was born, allowing views, content types, and vocabularies (but not nodes and taxonomy terms) to be developed outside of the database, and then deployed into production.</p>
+
+<p>Drupal 8's <a href="http://dcycleproject.org/blog/68/approach-code-driven-development-drupal-8">config management system</a> takes that one step further by providing a mature, central API to deal with this.</p>
+
+<h2>The devil is in the details</h2>
+
+<p>This is all fine and good, but edge cases soon begin to arise:</p>
+
+<ul>
+<li>What about an "About us" page? It's a menu item (deployable) linking to a node (content). Is it config? Is it content?</li>
+<li>What about a "Social media" menu and its menu items? We want a Facebook link to be deployable, but we don't want to hard-code the actual link to our client's Facebook page (which <em>feels</em> like content) -- we probably don't even know what that link is during development.</li>
+<li>What about a block whose placement is known, but whose content is not? Is this content? Is it configuration?</li>
+<li>What about a view which references a taxonomy term id in a hard-coded filter. We can export the view, but the taxonomy term has an incremental ID ans is not guaranteed to work on all environments.</li>
+</ul>
+
+<p>The wrong answer to any of these questions can lead to a misguided development approach which will come back to haunt you afterward. You might wind up using <a href="http://dcycleproject.org/blog/50/do-not-use-incremental-ids-your-code">incremental IDs in your code</a> or deploying something as configuration which is, in fact, content.</p>
+
+<h2>Defining our terms</h2>
+
+<p>At the risk of irking you, dear reader, I will suggest doing away with the terms "content" and "configuration" for our purposes: they are just too vague. Because we want a formal definition with no edge cases, I propose that we use these terms instead (we'll look at each in detail a bit further on):</p>
+
+<ul>
+<li><strong>Code</strong>: this is what our deliverable is for a given project. It should be testable, versioned, and deployable to any number of environments.</li>
+<li><strong>Data</strong>: this is whatever is potentially different on each environment to which our code is deployed. One example is comments: On a dev environment, we might generate thousands of dummy comments for theming purposes, but on prod there might be a few dozen only.</li>
+<li><strong>Placeholder content</strong>: this is any data which should be created as part of the installation process, meant to be changed later on.</li>
+</ul>
+
+<h2>Code</h2>
+
+<p>This is what our deliverable is <em>for a given project</em>. This is important. There is no single answer. Let's take the following examples:</p>
+
+<ul>
+<li><p>If I am a contributor to the <a href="https://www.drupal.org/project/views">Views</a> contrib project, my <em>deliverable</em> is <em>a system which allows users to create views in the database</em>. In this case I will not export many particular views.</p></li>
+<li><p>For another project, my deliverable may be <em>a website which contains a set number of lists (views)</em>. In this case I may use <a href="https://www.drupal.org/project/features">features</a> (D7) or <a href="http://dcycleproject.org/blog/68/approach-code-driven-development-drupal-8">config management</a> (D8) to export all the views my client asked for. Furthermore, I may enable views_ui (the Views User interface) only on my development box, and disable it on production.</p></li>
+<li><p>For a third project, my deliverable may a website with a number of set views, <em>plus the ability for the client to add new ones</em>. In this only certain views will be in code, and I will enable the views UI as a dependency of my <a href="http://dcycleproject.org/blog/44/what-site-deployment-module">site deployment module</a>. The views my client creates on production will be data.</p></li>
+</ul>
+
+<h2>Data</h2>
+
+<p>A few years ago, I took a step back from my day-to-day Drupal work and thought about what my main pain points were and how to do away with them. After consulting with colleagues, looking at bugs which took longest to fix, and looking at major sources of regressions, I realized that the one thing all major pain points had in common were our deployment techniques.</p>
+
+<p>It struck me that <a href="http://dcycleproject.org/blog/48/do-not-clone-database">cloning the database from production to development was wrong</a>. Relying on production data to do development is sloppy and will cause problems. It is better to invest in <a href="https://www.drupal.org/project/realistic_dummy_content">realistic dummy content</a> and a good <a href="http://dcycleproject.org/blog/44/what-site-deployment-module">site deployment module</a>, allowing the standardized deployment of an environment in a few minutes from any commit.</p>
+
+<p>Once we remove data from the development equation in this way, it is easier to define what data is: anything which can differ from one environment to the next without overriding a feature.</p>
+
+<p>Furthermore, I like to think of <em>production</em> as just another environment, there is nothing special about it.</p>
+
+<p>A new view or content type created on production outside of our development cycle resides on the database, is never used during the course of development, and is therefore data.</p>
+
+<p>Nodes and taxonomy terms are data.</p>
+
+<p>What about a view which is deployed through features and later changed on another environment? That's a tough one, I'll get to it (See <em>Overriden features</em>, below).</p>
+
+<h2>Placeholder content</h2>
+
+<p>Let's get back to our "About us" page. Three components are involved here:</p>
+
+<ul>
+<li>The menu which contains the "About us" menu item. These types of menus are generally deployable, so let's call them code.</li>
+<li>The "About us" node itself which has an incremental <code>nid</code> which can be different on each environment. On some environments it might not even exist.</li>
+<li>The "About us" menu item, which should link to the node.</li>
+</ul>
+
+<p>Remember: we are not cloning the production database, so the "About us" does not exist anywhere. For situations such as this, I will suggest the use of Placeholder content.</p>
+
+<p>For sake of argument, let's define our <em>deliverable</em> for this sample project as follows:</p>
+
+<pre><code>"Define an _About us_ page which is modifiable".
+</code></pre>
+
+<p>We might be tempted to figure out a way to assign a unique ID to our "About us" node to make it deployable, and devise all kinds of techniques to make sure it cannot be deleted or overridden.</p>
+
+<p>I have an approach which I consider more logical for these situations:</p>
+
+<p>First, in my <a href="http://dcycleproject.org/blog/44/what-site-deployment-module">site deployment module</a>'s <code>hook_update_N()</code>, create the node and the menu item, bypassing features entirely. Something like:</p>
+
+<pre><code>function mysite_deploy_update_7023() {
+  $node = new stdClass();
+  $node-&gt;title = 'About us';
+  $node-&gt;body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
+  $node-&gt;body[LANGUAGE_NONE][0]['value'] = 'Lorem ipsum...';
+  $node-&gt;type = 'page';
+  node_object_prepare($node);
+  $node-&gt;uid = 1;
+  $node-&gt;status = 1;
+  $node-&gt;promote = 0;
+  node_save($node);
+
+  $menu_item = array(
+    'link_path' =&gt; 'node/' . $node-&gt;nid,
+    'link_title' =&gt; 'About us',
+    'menu_name' =&gt; 'my-existing-menu-exported-via-features',
+  );
+
+  menu_link_save($item);
+}
+</code></pre>
+
+<p>If you wish, you can also implement <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_requirements/7"><code>hook_requirements()</code></a> in your custom module, to check that the About us page has not been accidentally deleted, that the menu item exists and points to a valid path.</p>
+
+<p>What are the advantages of placeholder content?</p>
+
+<ul>
+<li>It is deployable in a standard manner: any environment can simply run <code>drush updb -y</code> and the placeholder content will be deployed.</li>
+<li>It can be changed without rendering your features (D7) or configuration (D8) overriden. This is a good thing: if our incremental deployment script calls <a href="http://drupalcontrib.org/api/drupal/contributions!features!features.module/function/features_revert/7"><code>features_revert()</code></a> or <code>drush fra -y</code> (D7) or <code>drush cim -y</code> (D8), all changes to features are deleted. We do not want changes made to our placeholder content to be deleted.</li>
+<li>It can be easily tested. All we need to do is make sure our site deployment module's <a href="http://dcycleproject.org/blog/65/basic-install-file-deployment-module"><code>hook_install()</code> calls all <code>hook_update_N()</code>s</a>; then we can enable our site deployment module <a href="http://dcycleproject.org/blog/30/basic-test">within our simpletest</a>, and run any tests we want against a known good starting point.</li>
+</ul>
+
+<h2>Overriden features</h2>
+
+<p>Although it is easy to override features on production, I would not recommend it. It is important to define with your client and your team what is code and what is data. Again, this depends on the project.</p>
+
+<p>When a feature gets overridden, it is a symptom that someone does not understand the process. Here are a few ways to mitigate this:</p>
+
+<ul>
+<li>Make sure your features are reverted (D7) or your configuration is imported (D8) as part of your deployment process, and <a href="http://dcycleproject.org/blog/46/continuous-deployment-drupal-style">automate that process</a> with a continuous integration server. That way, if anyone overrides a feature on a production, it won't stay overridden long.</li>
+<li>Limit administrator permissions so that only user 1 can override features (this can be more trouble than it's worth though).</li>
+<li>Implement <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_requirements/7"><code>hook_requirements()</code></a> to check for overridden features, warning you on the environment's dashboard if a feature has been overridden.</li>
+</ul>
+
+<h2>Some edge cases</h2>
+
+<p>Now, with our more rigorous approach, how do our edge cases fare?</p>
+
+<p><strong>Social media menu and items</strong>: Our deliverable here is the existence of a social media menu with two items (twitter and facebook), but whose links can be changed at any time on production without triggering an overridden feature. For this I would use placeholder content. Still, we need to theme each button separately, and our css does not know the incremental IDs of the menu items we are creating. I have successfully used the <a href="https://www.drupal.org/project/menu_attributes">menu attributes</a> module to associate classes to menu items, allowing easy theming. Here is an example, assuming <code>menu_attributes</code> exists and <code>menu-social</code> has been exported as a feature.</p>
+
+<pre><code>/**
+ * Add facebook and twitter menu items
+ */
+function mysite_deploy_update_7117() {
+  $item = array(
+    'link_path' =&gt; 'http://twitter.com',
+    'link_title' =&gt; 'Twitter',
+    'menu_name' =&gt; 'menu-social',
+    'options' =&gt; array(
+      'attributes' =&gt; array(
+        'class' =&gt; 'twitter',
+      )
+    )
+  );
+  menu_link_save($item);
+  $item = array(
+    'link_path' =&gt; 'http://facebook.com',
+    'link_title' =&gt; 'Facebook',
+    'menu_name' =&gt; 'menu-social',
+    'options' =&gt; array(
+      'attributes' =&gt; array(
+        'class' =&gt; 'facebook',
+      )
+    )
+  );
+  menu_link_save($item);
+}
+</code></pre>
+
+<p>The above code creates the menu items linking to Facebook and Twitter home pages, so that content editors can put in the correct links directly on production when they have them.</p>
+
+<p>Placeholder content is just like regular data but it's created as part of the deployment process, as a service to the webmaster.</p>
+
+<p><strong>A block whose placement is known, but whose content is not</strong>. It may be tempting to use the <a href="http://drupal.org/project/box">box</a> module which makes blocks exportable with feature. But in this case the block is more like placeholder content, so it should be deployed outside of features. And if you create your block programmatically, its id is incremental and it cannot be deployed with <a href="https://www.drupal.org/project/context">context</a>, but should be placed in a region directly, again, programmatically in a hook_update_N().</p>
+
+<p>Another approach here is to create a content type and a view with a block display, fetching the last published node of that content type and displaying it at the right place. If you go that route (which seems a bit overengineered to me), you can then place your block with the context module and export it via features.</p>
+
+<p><strong>A view which references a taxonomy term id in its filter</strong>: If a view requires access to a taxonomy term nid, then perhaps taxonomy is the wrong tool here. Taxonomy terms are data, they can be deleted, their names can be changed. It is not a good idea for a view to reference a specific taxonomy term. (Your view can use taxonomy terms for contextual filters without a problem, but we don't want to hard-code a specific term in a non-contextual filter -- See <a href="https://github.com/alberto56/dcyclesite/issues/3">this issue</a> for an example of how I learned this the hard way, I'll get around to fixing that soon...).</p>
+
+<p>For this problem I would suggest rethinking our use of a taxonomy term. Rather I would define a select field with a set number of options (with defined keys and values). These are deployable and guaranteed to not change without triggering a features override. Thus, our views can safely use them. If you are implementing this change on an existing site, you will need to update all nodes from the old to the new technique in a hook_update_N() -- and probably add an automated test to make sure you're updating the data correctly. This is one more reason to think things through properly at the onset of your project, not midway through.</p>
+
+<h2>In conclusion</h2>
+
+<p>Content and configuration are hard to define, I prefer the following definitions:</p>
+
+<ul>
+<li><strong>Code</strong>: deployable, deliverable, versioned, tested piece of software.</li>
+<li><strong>Data</strong>: anything which can differ from one environment to the next.</li>
+<li><strong>Placeholder content</strong>: any data which should be created as part of the deployment process.</li>
+</ul>
+
+<p>In my experience, what fits in each category <em>depends on each project</em>. Defining these with your team as part of your sprint planning will allow you create a system with less edge cases.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/blog" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">blog</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

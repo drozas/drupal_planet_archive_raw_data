@@ -1,0 +1,126 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 08 Jun 2014 04:04:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 08 Jun 2014 04:04:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal 8 and iOS: POST, PATCH and DELETE request with Drupal 8 REST services
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tntfoss-vivekvpandya.rhcloud.com/node/40
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal 8 and iOS: POST, PATCH and DELETE request with Drupal 8 REST services</title>
+    <base href="http://tntfoss-vivekvpandya.rhcloud.com/node/40">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/40/title/en/rss">POST, PATCH and DELETE request with Drupal 8 REST services</span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/40/body/en/rss">
+    <div class="field-items">
+          <div class="field-item" property="schema:text"><p style="margin: 0px; font-size: 11px; font-family: Helvetica;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">Drupal 8 will have REST support out of the box. But at the time of this writing examples for how to use this REST end points are not much available. In this blog I want to show you how we can create, delete and update a node with REST services with Drupal 8.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">First of all we have to enable REST services and related HAL , SERIALIZATION, HTTP Basic Authentication modules. I would also like to recommend you to use REST UI contributed module to configure REST services.</span></p>
+
+<div> </div>
+
+<p> <img data-editor-file-uuid="89abf358-1f26-423d-8900-b091688d2198" src="http://tntfoss-vivekvpandya.rhcloud.com/sites/default/files/inline-images/Modules_2.png" /></p>
+
+<p> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">Now you have to enable REST services for particular entity type like a node, user etc. you can do it by two way:</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<ol><li style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">You may use REST UI to do that from configuration menu and Web services section.</span></li>
+	<li style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">You may directly manipulate  rest.settings.yml file.</span></li>
+</ol><p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">With any of above mentioned way you enable POST, PATCH and DELETE method for certain entity type and also enable ‘basic_auth’ as authentication type.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">Now give enough permission to administrator so that he can POST, PATCH and DELETE an entity with REST services.</span></p>
+
+<div> </div>
+
+<p><img data-editor-file-uuid="a32eb6ba-83a7-441b-9510-16b5fed6346e" src="http://tntfoss-vivekvpandya.rhcloud.com/sites/default/files/inline-images/permission_1.png" /></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">You may use REST Client or Postman - REST client or DHC to test you web services.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">Now let’s try to POST a node with REST services.</span></p>
+
+<div> </div>
+
+<p><img data-editor-file-uuid="784a0ea6-2f9e-4ffd-9b18-2455b8bfb9f4" src="http://tntfoss-vivekvpandya.rhcloud.com/sites/default/files/inline-images/POST_Node.png" /> </p>
+
+<div> </div>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">As shown in the image on your site /entity/node ( as at the time of this writing Drupal 8  is still on alpha release so this path may change in stable release)  is  REST endpoint to POST a node. Pass credential details with Authorization header. Set Content-Type to be application/hal+json.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">In body part you have to specify value for all mandatory fields for entity type. You have to specify “type” of node with “_links” in JSON body. This “type” will be /rest/type/node/{bundle name}  or in case of user entity type it will be /rest/type/user/user. A successful POST will result in 201 http status code.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">Now lets try to update a node with PATCH request.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"> </p>
+<img alt="" data-editor-file-uuid="2c38bca4-b308-4a50-b500-0f4f2803663c" height="452" src="http://tntfoss-vivekvpandya.rhcloud.com/sites/default/files/inline-images/PATCH_1.png" width="1012" /><p> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">As you can see in the image URL for node it self works as PATCH end point other headers and body section will be same as POST request. If PATCH request done successfully you will get 204 http status code.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">At last let’s see how to DELETE a node.</span></p>
+
+<div> </div>
+
+<p><img data-editor-file-uuid="ec9cf9d3-044b-4a26-8019-25e81300581d" src="http://tntfoss-vivekvpandya.rhcloud.com/sites/default/files/inline-images/DELETE_1.png" /></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">Deleting a node is simple. Set request type to DELETE and pass credential information with Authorization header. A successful deletion will result in 204 http status code.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">By similar way you can manipulate user entity type.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">You can find more about what other details we can specify in JSON body for POST and PATCH request by GET a node with JSON as Accept type.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica;"><span style="letter-spacing: 0.0px">I am open to discuss this topic. You can mail me at <a href="mailto:vivekvpandya@gmail.com"><span style="letter-spacing: 0px;">vivekvpandya@gmail.com</span></a>.</span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"><span style="letter-spacing: 0.0px"> </span></p>
+
+<p style="margin: 0px; font-size: 11px; font-family: Helvetica; min-height: 13px;"> </p>
+
+<p> </p>
+</div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix" data-quickedit-field-id="node/40/field_tags/en/rss">
+  <h3 class="field-label">Tags: </h3>
+  <ul class="links">
+          <li class="taxonomy-term-reference-0"><a href="/taxonomy/term/3" property="schema:about">Drupal Planet</a></li>
+      </ul>
+</div>
+<div class="field field-node--comment field-name-comment field-type-comment field-label-hidden" data-quickedit-field-id="node/40/comment/en/rss">
+    <div class="field-items">
+          <div class="field-item" rel="schema:comment"><section id="comments" class="comment-wrapper">
+  
+  
+
+  
+</section>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

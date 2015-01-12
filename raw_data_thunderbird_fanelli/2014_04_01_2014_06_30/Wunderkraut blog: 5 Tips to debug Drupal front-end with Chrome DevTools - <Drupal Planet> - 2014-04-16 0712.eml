@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Apr 2014 05:12:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Apr 2014 05:12:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: 5 Tips to debug Drupal front-end with Chrome DevTools
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.wunderkraut.com/blog/5-tips-to-debug-drupal-front-end-with-chrome-devtools/2014-04-16
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: 5 Tips to debug Drupal front-end with Chrome DevTools</title>
+    <base href="http://www.wunderkraut.com/blog/5-tips-to-debug-drupal-front-end-with-chrome-devtools/2014-04-16">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    5 of my favourite keyboard shortcuts in Chrome DevTools. I used them all the time to find bugs in JS, HTML and CSS  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p><strong>1. CMD + ALT + F</strong><br />A global search. Search in every asset HTML,CSS and JS.  Useful when you want to check if the browser is loading the changes you are doing, or to find something in the JavaScript code to place a breakpoint. Specially useful in production, when JavaScript files are aggregated, don't try to find the code manually. Use the global search.</p><p><img alt="alt_cmd.gif" class="media-image" height="292" title="alt_cmd.gif" width="612" src="http://www.wunderkraut.com/sites/wunderkraut.com/files/alt_cmd_0.gif" /></p><p> </p><p><strong>2. CMD + Z</strong><br />Yes, the traditional 'undo' command. Did you know you can undo the CSS changes in DevTools?</p><p><img alt="ctrl_z.gif" class="media-image" height="292" title="ctrl_z.gif" width="498" src="http://www.wunderkraut.com/sites/wunderkraut.com/files/ctrl_z.gif" /></p><div> </div><div><strong>3. CMD + S</strong></div><div>Edit the JavaScript files inside DevTools (Source Tab). Then save the changes (CMD + S) . You will see in the console "<span>Recompilation and update succeeded.</span><span>" and the background color will change.  This trick is not very useful alone. But you can use it while debugging with breakpoints.  This tip is really useful to debug on-the-fly in production sites.</span></div><div> </div><div><img alt="breakpoint.gif" class="media-image" height="292" title="breakpoint.gif" width="498" src="http://www.wunderkraut.com/sites/wunderkraut.com/files/breakpoint.gif" /></div><div> </div><p> </p><p><strong>4. ALT + Click</strong><br />This trick is awesome for severe cases of HTML divitis. Press <strong>ALT</strong> and click at the same time on the arrow, it will expand all the HTML elements under it.</p><p><img alt="alt_expand.gif" class="media-image" height="292" title="alt_expand.gif" width="612" src="http://www.wunderkraut.com/sites/wunderkraut.com/files/alt_expand.gif" /></p><p><strong>5. debugger</strong><br />This is not a keyboard shortcut. Place the string <em>debugger</em> in your JavaScript code, reload the page, and it will have the same effect than a breakpoint.</p> </div>
+    </div>
+  </body>
+</html>
+

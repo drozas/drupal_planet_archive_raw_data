@@ -1,0 +1,122 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 06 Nov 2013 09:55:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 06 Nov 2013 09:55:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Miles Carter: Entity Reference Fields in Rules – Updating reference fields based on the value of other reference fields
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.milesjcarter.co.uk/blog/web-design-development/entity-reference-fields-rules-updating-reference-fields-based-reference-fields/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Miles Carter: Entity Reference Fields in Rules – Updating reference fields based on the value of other reference fields</title>
+    <base href="http://www.milesjcarter.co.uk/blog/web-design-development/entity-reference-fields-rules-updating-reference-fields-based-reference-fields/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Courtesy of - <a href="http://www.milesjcarter.co.uk/blog">Miles J Carter Photos on the Web Blog</a><br/>
+Source URL : <a href="http://www.milesjcarter.co.uk/blog/web-design-development/entity-reference-fields-rules-updating-reference-fields-based-reference-fields/">Entity Reference Fields in Rules &#8211; Updating reference fields based on the value of other reference fields</a>
+<br/></p><h1>Drupal 7 tutorial: Working with entity reference fields in rules</h1>
+<p>While there are a couple of modules that can be used to easily set up entity reference field relationships, in particular the <a href="https://drupal.org/project/cer">corresponding entity references</a> module, it&#8217;s also possible to do create these kinds of relationships with rules. While initially more complicated to set up (though not requiring a dedicated module), the result is a more powerful setup that can be easily cloned and extended with additional actions and conditions &#8211; for example, sending e-mails, displaying messages on the site, or changing the value of a third field.</p>
+<div class="aside">
+<h2>Entities and Entity References</h2>
+<p>Drupal 7 is built around entities and entity bundles. To understand this concept, it&#8217;s necessary to look back to how things were in Drupal 6. D6 used a system of nodes, expanded by the CCK module to provide configurable content types. Content types have to be types of node by definition, and come with comments, revisions etc that may not be relevant in many use cases and cause an overhead.</p>
+<p>With entities, there is no longer anything special about nodes. In Drupal 7, nodes, comments and users are all examples of entities, configured from the same base entity system. It&#8217;s now possible to create new entity types and many Drupal 7 modules take advantage of this to provide enhanced functionality and performance &#8211; for example, the Commerce module with its <i>line item</i> entity type and profile2 module&#8217;s profile types.</p>
+<p>Entity references replace the role of the user and node reference fields from CCK. These field types allow the definition of relationships between two things (e.g. a user and a node). There are two modules commonly used to enable entity references in Drupal 7:</p>
+<h3>References</h3>
+<p><a href="https://drupal.org/project/References">References</a> is a simple module which emulates the node and user reference fields from Drupal 6. It is easy to configure and use.</p>
+<h3>Entity reference</h3>
+<p><a href="https://drupal.org/project/entityreference">Entity reference</a> is a powerful module which is not restricted to any predefined entities like the References module. It is possible to create references to any entity type, including custom entities. The module is a little more complicated to set up and use, particularly for anyone previously unfamiliar with reference fields. There is a module to migrate from references to this module should referencing other entity types become a requirement.</p>
+<p>Both modules work with rules in the same way, but if you wish to work with more than just user, node and taxonomy term entities you will need entity_reference.</p>
+</div>
+<h2>Creating a synced client / manager relationship in rules</h2>
+<p>In this example, the user entity can have an attached customer profile or a manager profile, containing different fields, using the profile2 module.</p>
+<p>The client has a user reference field called &#8220;manager&#8221;, which can only contain one item, and the manager has a user reference field called &#8220;clients&#8221; which may contain multiple values.</p>
+<p>When a manager is assigned to a client, using the manager field on the client&#8217;s profile, the objective is to update the &#8220;clients&#8221; field on the manager&#8217;s profile to match.</p>
+<p>We are also going to set up a second rule that fires only when a currently assigned manager is removed or changed, and to make things more fun we have a &#8220;past clients&#8221; reference field for the managers which former clients should be prepended to.</p>
+<p>You will need the Rules and token modules installed and enabled</p>
+<h2>The basic rule: Add client to the manager&#8217;s &#8216;clients&#8217; entity reference field when a manager is assigned to a client.</h2>
+<h3>Event and conditions</h3>
+<p><strong>Event</strong>: After updating an existing profile</p>
+<p>To have access to the relevant fields later on and to be sure the rule only fires if the field is not empty:</p>
+<ul>
+<li><strong>Condition:</strong> Entity has field</li>
+<li><strong>Parameter:</strong> Entity: [profile2]</li>
+<li><strong>Field:</strong> field_current_manager</li>
+</ul>
+<p>&nbsp;</p>
+<h3>Actions</h3>
+<ol>
+<li><strong>Add an action</strong> &#8220;Fetch entity by ID&#8221;<br />
+We need to load the entity that will be altered by the other actions. The type of this entity is User &#8211; the user who is being assigned as the client&#8217;s manager.</p>
+<ul>
+<li><strong>Entity type</strong> = User</li>
+<li><strong>Data selector</strong>= profile2:user:profile-client:field-current-manager:uid
+<ul>
+<li><strong>Provides variable</strong> &#8220;manager&#8221;</li>
+<li>note that this is actually accessing data through the entity reference field to get the new manager&#8217;s UID &#8211; pretty cool!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Add an action</strong> &#8220;Add an item to a list&#8221; &#8211; this is needed rather than &#8216;set value&#8217; as the clients field can hold multiple values. We use the &#8216;entity fetched&#8217; variable provided by the previous step to achieve this:
+<ul>
+<li><strong>List to be added to</strong>: manager:profile-manager:field-clients</li>
+<li><strong>Item to be added</strong>: profile2:user (the user of the client profile being updated)</li>
+<li><strong>Check the box</strong> &#8220;enforce uniqueness&#8221; and select &#8220;prepend to the list&#8221; if you wish to have newest clients at the top.</li>
+</ul>
+</li>
+</ol>
+<p>You could choose to add other actions, such as to display a message on the site such as &#8220;Assigned manager is [token value]&#8221; or send an e-mail. These may require the addition of a condition that makes the rule only fire if the client did not have a manager before (use a data comparison) &#8211; as currently the rule fires every time a profile is updated &#8211; but this does not cause any issues if &#8220;enforce uniqueness&#8221; is checked.</p>
+<p>You can also have this rule react to profiles being created if the manager may be delegated when data is first entered into the profile. Otherwise profiles would have to be saved twice in this situation. To do this, add a second event: <strong>After saving a new profile. </strong>You can also clone this rule and change the event for greater power.</p>
+<h2>Rule Two: Adding to a manager&#8217;s past clients list when a manager is changed or removed</h2>
+<p><img class="alignright" alt="" src="http://www.milesjcarter.co.uk/blog/wp-content/uploads/2013/11/entity-reference-fields.png" width="478" height="376" /></p>
+<p>With a second rule we can react in two situations. When a manager is changed or removed from the manager field (the new rule), and when a manager is assigned and the manager field was empty (the first rule &#8211; which will need an extra condition)</p>
+<ol>
+<li><strong>Clone the first rule</strong>. Call it &#8220;Sync fields when manager is changed and update old manager&#8217;s past clients field&#8221;</li>
+<li><strong>New condition:</strong> NOT Data comparison:
+<div class="syhi_block"><code>profile2-unchanged:field-current-manager<br />
+&nbsp;EQUALS <br />
+profile2:user:profile-customer:field-current-manager</code></div>
+<p>This makes sure that the rule only fires if the new manager is different to the old one (to prevent the rule firing when the profile is updated, but this field hasn&#8217;t been changed)</li>
+<li><strong>New condition:</strong> NOT Data value is empty:<br />
+profile2-unchanged:field-current-manager<br />
+So the rule only fires when there was a previous manager assigned. It would otherwise also fire in the same situations as the first rule.</li>
+<li><strong>New action</strong> &#8221;Fetch entity by ID&#8221;<br />
+Load the old manager&#8217;s user entity</p>
+<ul>
+<li><strong>Entity type</strong> = User</li>
+<li><strong>Data selector</strong>= profile2-unchanged:user:profile-client:field-current-manager:uid</li>
+<li><strong>Provides variable</strong> &#8220;old-manager&#8221;</li>
+</ul>
+</li>
+<li><strong>New action:</strong> Add an item to a list:
+<ul>
+<li><strong>List to be added to: </strong>old-manager:profile-manager:field-past-clients</li>
+<li><strong>Item to be added</strong>: profile2:user</li>
+</ul>
+</li>
+<li><strong>New action</strong>: Remove item from a list
+<ul>
+<li><b>List</b>: Selected list: old-manager:profile-manager:field-clients</li>
+<li><b>Item to remove<b>: </b></b>profile2:user</li>
+</ul>
+</li>
+</ol>
+<p>Again, there are plenty of avenues for extending this with new actions. For example, &#8220;Display a message on the site&#8221; &#8211; a message helpful for admins might be:</p>
+<p><em>[profile2:user]&#8216;s manager set to [profile2:field-manager] &#8211; Old manager was [old-manager:name]</em></p>
+<h3>Adjusting the first rule</h3>
+<p>To prevent the first rule from also firing in situations where the second does, add a new condition to the first rule:</p>
+<ul>
+<li><strong>Condition:</strong> Data value is empty</li>
+<li><strong>Data to check:</strong> profile2-unchanged:field-current-manager</li>
+</ul>
+<p>Two way relationships should be set up using another rule with inverse data selectors and if applicable, a different event to react to. Hopefully this article helps illustrate what can be achieved with rules and entity references.</p>
+<p>Source - <a href="http://www.milesjcarter.co.uk/blog">Miles J Carter Photos on the Web Blog</a><br/>
+Read the Original Article : <a href="http://www.milesjcarter.co.uk/blog/web-design-development/entity-reference-fields-rules-updating-reference-fields-based-reference-fields/">Entity Reference Fields in Rules &#8211; Updating reference fields based on the value of other reference fields</a>
+<br/></p>
+  </body>
+</html>
+

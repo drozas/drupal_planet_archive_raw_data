@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 28 Nov 2014 06:40:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 28 Nov 2014 06:40:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Android app integration with Drupal for OAuth
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/selvam/android-app-integration-drupal-oauth
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Android app integration with Drupal for OAuth</title>
+    <base href="http://knackforge.com/blog/selvam/android-app-integration-drupal-oauth">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>When you build Android app for an existing Drupal website which allows it's users to login using their social media account, it is important to include such features in your app as well. Instead of using app specific APIs, we can use WebView to achieve the login mechanism. Let me explain the method that I followed,</p>
+<p>1) Setup Drupal menu paths for social login(s).</p>
+<p>2) From android app, use webview that can call Drupal path for social login.</p>
+<p>3) Drupal side completes the authentication and sends back an identification token to Android.</p>
+<p>4) Android app uses the token to make further calls to Drupal site. Drupal side authenticates user by this token.</p>
+<p><strong>Drupal side </strong></p>
+<p>First we need to define entry point for social login,</p></div></div></div>
+  </body>
+</html>
+

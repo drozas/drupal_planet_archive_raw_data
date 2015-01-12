@@ -1,0 +1,54 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Nov 2014 09:25:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Nov 2014 09:25:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Modules Unraveled: 125 Deploying Drupal Code Using Deployotron with Thomas Fini Hansen and Thomas Gielfeldt - Modules Unraveled Podcast
+Content-Transfer-Encoding: 8bit
+Content-Base: http://modulesunraveled.com/podcast/125-deploying-drupal-code-using-deployotron-thomas-fini-hansen-and-thomas-gielfeldt-modules
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Modules Unraveled: 125 Deploying Drupal Code Using Deployotron with Thomas Fini Hansen and Thomas Gielfeldt - Modules Unraveled Podcast</title>
+    <base href="http://modulesunraveled.com/podcast/125-deploying-drupal-code-using-deployotron-thomas-fini-hansen-and-thomas-gielfeldt-modules">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--name-field-image field--type-image field--label-hidden"><div class="field__items"><div class="field__item even"><img typeof="foaf:Image" src="http://modulesunraveled.com/sites/default/files/styles/podcast_default/public/podcast/image/Photo%20of%20Thomas%20Fini%20Hansen%20and%20Thomas%20Gielfeldt.png?itok=RSDYqSkD" width="350" height="176" alt="Photo of Thomas Fini Hansen and Thomas Gielfeldt" /></div></div></div><span class="submitted-by">Published: Wed, 11/05/14</span><div class="field field--name-field-podcast-file field--type-file field--label-hidden"><div class="field__items"><div class="field__item even"><div class="mediaelement-audio"><audio  src="http://traffic.libsyn.com/modulesunraveled/125_Deploying_Drupal_Code_Using_Deployotron_with_Thomas_Fini_Hansen_and_Thomas_Gielfeldt_-_Modules_Unraveled_Podcast.mp3" class="mediaelement-formatter-identifier-1415189772-0" controls="controls" ></audio><div class="mediaelement-download-link"><a href="http://traffic.libsyn.com/modulesunraveled/125_Deploying_Drupal_Code_Using_Deployotron_with_Thomas_Fini_Hansen_and_Thomas_Gielfeldt_-_Modules_Unraveled_Podcast.mp3">Download this episode</a></div></div></div></div></div><div class="field field--name-body field--type-text-with-summary field--label-hidden"><div class="field__items"><div class="field__item even" property="content:encoded"><h2>Deployotron</h2>
+<ul><li>What is Deployotron?<br />
+It’s a deployment tool.<br />
+A low-key approach to easy and safe deployment.</li>
+<li>When did you start developing it?<br />
+Dec. 2013</li>
+<li>Why did you feel it was necessary to add another layer on top of Drush?<br />
+Needed simple, safe, easy to grok deployment process. Not a Swiss army knife. Other solutions proved to be either too complex/feature-rich or require 3rd party software beyond a simple drush command. </li>
+<li>How does it work?<br />
+Deployotron is implemented as a drush command.<br />
+When deploying it runs a set of “actions” that does the different steps of deploying.</li>
+<li>What kinds of actions can you perform with Deployotron?</li>
+<li>Is this extendable? Can other developers add their own commands to be performed during deployment?</li>
+<li>Is there a way to configure deployment per environment? So that certain commands are always performed on Staging but not on Live.</li>
+<li>What needs to be setup before you can use Deployotron?<br />
+Deployotron requires drush and the appropriate ssh public keys on the target servers.<br />
+And Git.</li>
+<li>How does it improve the deployment workflow?<br />
+Easy and fast deployment to other enviroments from the command line.<br />
+Quick to set up for a new project.</li>
+<li>What if you mess up? Is there a rollback feature?<br />
+There’s an OMG command which will import a dump and reset the codebase to the one that was deployed at the time.</li>
+<li>How does this integrate with other tools like Capistrano, Aegir, etc.<br />
+It doesn’t. Deployotron was meant to be more of an alternative; a simpler one.</li>
+<li>So, is this aimed at people hosting on shared hosts? Or do you need a VPS at minimum?<br />
+Not aimed at shared hosts, as such, but it does support it, given that you have ssh access and drush availability of course.</li>
+</ul><!-- Last chance to send in questions using the hashtag: #MUP125 --><h2>Use Cases</h2>
+<ul><li>How are you guys using it at Reload?<br />
+Very carefully :-)<br />
+With careless abandon.</li>
+<li>Do you know of anyone else using it?<br />
+No, not specificly, but there was some interest at the DrupalHagen DrupalCamp.</li>
+</ul></div></div></div><div class="field field--name-field-items-mentioned field--type-link-field field--label-above"><div class="field__label">Episode Links:&nbsp;</div><div class="field__items"><div class="field__item even"><a href="http://reload.github.io/deployotron/" rel="nofollow" target="_blank">Deployotron</a></div><div class="field__item odd"><a href="https://www.drupal.org/user/366993" rel="nofollow" target="_blank">Gielfeldt on drupal.org</a></div><div class="field__item even"><a href="https://www.drupal.org/user/91385" rel="nofollow" target="_blank">Fini on drupal.org</a></div><div class="field__item odd"><a href="https://twitter.com/xendk" rel="nofollow" target="_blank">Fini on Twitter</a></div><div class="field__item even"><a href="https://twitter.com/gielfeldt" rel="nofollow" target="_blank">Gielfeldt on Twitter</a></div><div class="field__item odd"><a href="http://applitools.com/" rel="nofollow" target="_blank">Visual Testing with Applitools Eyes</a></div><div class="field__item even"><a href="http://reload.dk/" rel="nofollow" target="_blank"> Reload.dk</a></div></div></div><div class="field field--name-field-tags field--type-taxonomy-term-reference field--label-above"><div class="field__label">Tags:&nbsp;</div><div class="field__items"><div class="field__item even"><a href="/tags/deployment" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Deployment</a></div><div class="field__item odd"><a href="/tags/development-workflow" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development Workflow</a></div><div class="field__item even"><a href="/tags/drush" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drush</a></div><div class="field__item odd"><a href="/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet-drupal</a></div></div></div>
+  </body>
+</html>
+

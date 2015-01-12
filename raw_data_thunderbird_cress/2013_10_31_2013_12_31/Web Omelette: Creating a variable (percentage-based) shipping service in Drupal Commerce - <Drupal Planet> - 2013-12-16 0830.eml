@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 16 Dec 2013 08:30:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 16 Dec 2013 08:30:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Creating a variable (percentage-based) shipping service in Drupal Commerce
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-commerce-variable-percentage-shipping-service
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Creating a variable (percentage-based) shipping service in Drupal Commerce</title>
+    <base href="http://www.webomelette.com/drupal-commerce-variable-percentage-shipping-service">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In this tutorial you will learn how to create a variable shipping price with <a href="http://www.drupalcommerce.org/" target="_blank">Drupal Commerce</a> by calculating the price of the shipping service as a percentage of the total amount of the order. And all this without a single line of code.</p>
+<p><a href="http://commerceguys.com/" target="_blank"><img src="/sites/default/files/images/20131312225837.png" alt="" style="float:left" class="push-left" /></a></p>
+<p>So what is the problem? <strong>Drupal Commerce</strong> comes with a cool module called <a href="http://drupal.org/project/commerce_shipping" target="_blank">Commerce Shipping</a> (included in the <a href="https://drupal.org/project/commerce_kickstart" target="_blank">Commerce Kickstart</a> distro) that allows you to create your own flat rate shipping services. </p>
+<p>There is one shipping method available only (flat) but you can create based on that any number of services you want. The problem is that they are all flat. Yes, you can create all sorts of cool calculation rules to use these services depending on the order and stuff, but I had to bang my head against the wall a few times before realizing how to create a service whose price is a percentage of the total order. Not so obvious but I'll guide you through it.</p>
+<p>So the first thing you need to do is create a shipping service. Go to <code>admin/commerce/config/shipping</code> and click on <code>Add flat rate service</code>. Give it a name, description and set the <strong>Base rate</strong> to 0. We will manipulate this value with a Rule in a minute.</p>
+<p>After saving, go to <code>admin/commerce/config/shipping/calculation-rules</code> and add a new calculation rule. You'll notice that it already contains the right event for us: <code>Calculating a shipping rate</code>. This puts us in the right scope of the shipping line item. All we need to do is add a condition and two actions.</p>
+<p><p>So first up, add a condition called <code>Text comparison</code>. In the <strong>Text Data</strong> selector, paste the following: <code>commerce-line-item:line-item-label</code> or navigate until you reach the equivalent. In the <strong>Matching Text Value</strong> field, type in the name of the shipping service you created eariler. And you can leave the rest as is. So what does this condition mean? Well, it will only trigger the actions that follow to the shipping service you created so in case the user is presented with a choice of multiple services, the value manipulation will happen only on the one you want. So lets now see the actions.</p>
+<p>Add an action of the type: <code>Calculate a value</code>. Under <strong>Input value 1</strong> you'll need the following: <code>commerce-line-item:order:commerce-order-total:amount</code>. For the operator select multiplication (<strong>*</strong>) and set the <strong>Input value 2</strong> to 0.something. That is, the number which multiplyed by the total order amount will result in the amount you'd like as the shipping cost. For example, for a shipping price of 20% of the order amount, you'll put 0.2. For 50% it's 0.5. You get it. Then under <strong>Provided Variables</strong> (the variable in which the result gets stored), specify a name and save the rule action.</p>
+<p>Now we can add the second action: <code>Add an amount to the unit price</code>. Under the <strong>Line item data selector</strong>, specify the following: <code>commerce_line_item</code>. This will perform the addition to our shipping line item we have in scope. Then under the <strong>Amount data selector</strong>, find the variable in which you stored the calculation in the action above and specify it there. And under the value of the <strong>Price Component Type</strong>, select the shipping service you created in the beginning. Then it's up to you what you select under <strong>Price Rounding Mode</strong> (it's quite obvious). And that's it. Save the action and the rule and try it out.</p>
+<p>Add some products to the cart, proceed to the checkout and you'll see that the value of this shipping service will be a percentage of the total order amount (percentage that you specified in the rule). And you can even edit the rule further to perform these calculations under all sorts of other conditions - such as if the order value is under/over a particular amount. Or whatever you want.</p>
+<p>Hope this helps.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal-commerce">Drupal Commerce</a></span> | <span class="field-item odd"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-commerce-variable-percentage-shipping-service" st_title="Creating a variable (percentage-based) shipping service in Drupal Commerce" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-commerce-variable-percentage-shipping-service" st_title="Creating a variable (percentage-based) shipping service in Drupal Commerce" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-commerce-variable-percentage-shipping-service" st_title="Creating a variable (percentage-based) shipping service in Drupal Commerce" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

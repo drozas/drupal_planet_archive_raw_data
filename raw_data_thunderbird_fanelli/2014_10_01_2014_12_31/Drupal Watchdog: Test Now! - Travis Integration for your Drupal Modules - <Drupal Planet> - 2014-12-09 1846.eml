@@ -1,0 +1,127 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 09 Dec 2014 17:46:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 09 Dec 2014 17:46:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Test Now! - Travis Integration for your Drupal Modules
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/blog/2014/12/test-now-travis-integration-your-drupal-modules
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Test Now! - Travis Integration for your Drupal Modules</title>
+    <base href="http://drupalwatchdog.com/blog/2014/12/test-now-travis-integration-your-drupal-modules">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--body field-type-text-with-summary field-label-hidden field--rss">
+              <p><a href="https://travis-ci.org/">Travis-CI</a> is a free-for-OSS continuous integration server, which has become very popular in the PHP world. Drush, Symfony, and dreditor all use it for frequently testing their code base and pull requests for regressions and ensuring new functionality has the needed test coverage.</p>
+<p>Compared to the current Drupal testbot, Travis-CI allows testing of not only simpletest on PHP 5.3 (for Drupal 7 projects), but of most everything that you can install on a Debian system, e.g. QUnit for JavaScript, Behat, PHPUnit, but also Ruby based projects, Bash projects, Go projects, etc.</p>
+<p>You can also test various scenarios in a matrix like setup, e.g. different PHP versions to ensure your code runs on both PHP 5.3 and 5.4 or with different versions of a dependent library.</p>
+<p>This flexibility comes with a price however, because you need to setup the whole environment yourself. The selected PHP version (with xdebug) and composer are pre-installed, but that's it. The Drupal base installation, the running of the tests, the parsing of the test output, and ensuring dependencies are there is all your own responsibility.</p>
+<p>And because of that there are many different <span class="geshifilter"><code class="php geshifilter-php">.travis.yml</code></span> files floating around the net for various scenarios of setting up this or that, but in the end everyone re-invents the wheel. Until now…</p>
+<h2>As Easy as it Gets</h2>
+<p>I am proud to announce the <a href="https://github.com/LionsAd/drupal_ti"> drupal_ti project</a>, which allows any module on drupal.org to easily leverage travis-ci.org for testing:</p>
+<ul><li>PHPUnit</li>
+<li>SimpleTest</li>
+<li>Behat</li>
+</ul><p>The process (which I will show in more detail below) is as simple as copying a generic <span class="geshifilter"><code class="php geshifilter-php">.travis.yml.dist</code></span> file as <span class="geshifilter"><code class="php geshifilter-php">.travis.yml</code></span> to your modules root, push your repository to Github, activate the repository at travis-ci.org and you are done.</p>
+<p>Oh, and while you are at it, if you add a <span class="geshifilter"><code class="php geshifilter-php">.coveralls.yml</code></span> file, then code coverage is automatically reported to <a href="http://coveralls.io">coveralls.io</a>, too (for PHPUnit).</p>
+<p>All the hard work of installing drupal, running a web server, setting up Selenium, etc. is done by drupal_ti.</p>
+<p>So you don't have to copy some <span class="geshifilter"><code class="php geshifilter-php">.travis.yml</code></span> you found on the net and spend hours debugging little edge cases (HHVM and sendmail, how to parse the simpletest output, etc.), but can depend on a proven and self-tested code base.</p>
+<h2>Features</h2>
+<ul><li><strong>Drupal 8 ready</strong>: drupal_ti supports both Drupal 7 and 8 modules. Use <span class="geshifilter"><code class="php geshifilter-php">DRUPAL_TI_ENVIRONMENT="drupal-8"</code></span> for your Drupal 8 modules.</li>
+<li><strong>Tested</strong>: drupal_ti tests its own code base for both Drupal 7 and Drupal 8 modules.</li>
+<li><strong>Modular architecture</strong>: drupal_ti has so called 'runners' and you can combine either e.g. "phpunit simpletest" or run them as separate workers by specifying a matrix.</li>
+<li><strong>Environment aware</strong>: drupal_ti has a file for each environment, which makes the code generic for both Drupal 7 and 8.</li>
+<li><strong>Examples provided</strong>: drupal_ti provides easy examples of the needed files in <span class="geshifilter"><code class="php geshifilter-php">tests/drupal-{7,8}/drupal_ti_test</code></span>. So you can get started easily!</li>
+<li><strong>Extensible</strong>: By specifying <span class="geshifilter"><code class="php geshifilter-php">DRUPAL_TI_SCRIPT_DIR_BEFORE</code></span> or <span class="geshifilter"><code class="php geshifilter-php">DRUPAL_TI_SCRIPT_DIR_AFTER</code></span> you can easily create your own runners and environment includes that run before or after the main runners. This could even come from composer.</li>
+<li><strong>Usable for non-travis CI</strong>: Because drupal-ti is just a command and because <span class="geshifilter"><code class="php geshifilter-php">.travis.yml</code></span> just has some environment vars, you can just copy the main declarations to some <span class="geshifilter"><code class="php geshifilter-php">environment.sh</code></span> file, set the <span class="geshifilter"><code class="php geshifilter-php">TRAVIS_BUILD_DIR</code></span> and use it locally, too.</li>
+</ul><h2>An Example Conversion</h2>
+<p>My module registry_autoload uses simpletest on drupal.org to test its features. Now I want to test some advanced trait support, which needs PHP 5.4, so travis-ci.org is an option to do so.</p>
+<h3>Step 1 - Create the GitHub Repository and Push Your Code</h3>
+<ol><li>Sign in to github.com</li>
+<li>Click: + &gt; New repository, enter: registry_autoload</li>
+<li>Click: Create repository</li>
+</ol><p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/github-create-new-repository.png" class="img-responsive" alt="Create a new GitHub repository named like your drupal.org module" /></p>
+<p>Copy the commands displayed by Github to push your code to GitHub. I like to use drupal.org as my upstream and GitHub as my origin remote:</p>
+<pre>
+$ git clone --branch 7.x-1.x Fabianx@git.drupal.org:project/registry_autoload.git
+$ cd registry_autoload
+$ git remote rename origin upstream
+$ git remote add origin git@github.com:LionsAd/registry_autoload.git
+$ git push -u origin 7.x-1.x
+</pre><h3>Step 2 - Activate Travis-ci.org</h3>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/travis-toggle-project-to-on-tools-icon.png" class="img-responsive" alt="Toggle the project to ON to activate travis-ci.org testing" /></p>
+<p>Now head over to travis-ci.org:</p>
+<ol><li>Choose "Sign in with GitHub" and follow instructions</li>
+<li>Click on your name at the top right, "Fabian Franz" for me</li>
+<li>Click: "Sync now" if you don't see the repository, yet</li>
+<li>Simply switch the toggle to "ON" for the project</li>
+<li>Click on the repository settings icon (the "tools icon")</li>
+<li>Toggle "Build only if .travis.yml is present"</li>
+<li>Click on "Build history"</li>
+<li>Leave the browser window open</li>
+</ol><h3>Step 3 - Add drupal_ti .travis.yml</h3>
+<p>Now checkout a new branch, and add the <span class="geshifilter"><code class="php geshifilter-php">.travis.yml</code></span> file:</p>
+<pre>
+$ git checkout -b travis-integration
+$ curl https://raw.githubusercontent.com/LionsAd/drupal_ti/master/.travis.yml.dist -O
+$ mv .travis.yml.dist .travis.yml
+</pre><p>
+Then, customize the following parts of the file:</p>
+<pre>
+    # Configuration vars.
+    - DRUPAL_TI_MODULE_NAME="registry_autoload"
+    - DRUPAL_TI_SIMPLETEST_GROUP="Registry"
+</pre><p>
+And:</p>
+<pre>
+  matrix:
+    # [[[ SELECT ANY OR MORE OPTIONS ]]]
+    - DRUPAL_TI_RUNNERS="simpletest"
+</pre><p>
+The simpletest group is returned from <span class="geshifilter"><code class="php geshifilter-php">getInfo()</code></span> in Drupal 7, but an annotation <span class="geshifilter"><code class="php geshifilter-php">@group x</code></span> in Drupal 8. Despite the name of the variable, you could also put in a class like <span class="geshifilter"><code class="php geshifilter-php">RegistryAutoloadTestCase</code></span>. Basically anything that SimpleTest accepts on the command line as last argument. The clue is that this variable accepts spaces e.g. "DrupalTi Test", which is else very difficult to achieve when passing variables around.</p>
+<p>Now add the file and push to GitHub:</p>
+<pre>
+$ git add .travis.yml
+$ git commit -m "Added travis integration"
+$ git push origin travis-integration
+</pre><h3>Step 4 - Watch the Test Run</h3>
+<p>Now head back over to your browser window and magically there will be a new build, click on it and you will see a matrix like structure, here shown for build #2:</p>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/travis-build-matrix-in-progress.png" class="img-responsive" alt="Travis CI build matrix in progress" /></p>
+<p>Click on PHP 5.4 and click the little button on the far right with "follow", to follow the output.</p>
+<p>After a while the build is finished and all tests passed:</p>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/travis-build-matrix-tests-passed.png" class="img-responsive" alt="Travis CI build passed" /></p>
+<p><strong>Congratulations, your project is now tested on travis-ci.org!</strong></p>
+<p>Now merge, the branch into your mainline and whenever you want to test a change on travis-ci.org just push a branch or make a pull request:</p>
+<pre>
+$ git checkout 7.x-1.x
+$ git merge travis-integration
+$ git push origin 7.x-1.x
+
+# Also push the changes back to drupal.org
+$ git push upstream 7.x-1.x
+</pre><p>
+The easiest way to work with this kind of integration is to push all patches to origin first and once satisfied, push to upstream. That way GitHub and drupal.org are always in sync.</p>
+<h2>To be Continued…</h2>
+<p>In the next part of this series, I will explore how you can get started with unit testing locally and on travis-ci.org (using drupal_ti) and afterwards we will take a look at some easy behat setup.</p>
+<p>If you are curious and want to start now, take a look at the <span class="geshifilter"><code class="php geshifilter-php">run-*</code></span> scripts in:</p>
+<ul><li> <a href="https://github.com/LionsAd/drupal_ti/tree/master/tests/drupal-7/drupal_ti_test/tests">https://github.com/LionsAd/drupal_ti/tree/master/tests/drupal-7/drupal_t...</a></li>
+<li> <a href="https://github.com/LionsAd/drupal_ti/tree/master/tests/drupal-8/drupal_ti_test/tests">https://github.com/LionsAd/drupal_ti/tree/master/tests/drupal-8/drupal_t...</a></li>
+</ul><p>Enjoy and please leave me feedback either in the <a href="http://www.drupal.org/project/drupal_ti">Drupal issue queue </a> or on the <a href="https://github.com/LionsAd/drupal_ti/issues">GitHub project page</a>.</p>
+<h2>About the Author</h2>
+<p>Fabian Franz is a Senior Performance Engineer and Technical Lead at Tag1<br />
+Consulting. He is author of the registry_autoload, service_container and render_cache modules for Drupal 7 and a contributor to Drupal 8 Core in the form of reviews, patches, and co-leader of the Twig initiative.</p>
+        </div>
+<div class="field field--tags field-type-taxonomy-term-reference field-label-above field--rss">
+      <div class="field-label"><span class="icon glyphicon glyphicon-tag" aria-hidden="true"></span>Tags:&nbsp;</div>
+    <div class="field-items">          <a href="/tags/testing" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Testing</a>          <a href="/tags/contributed-modules" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Contributed modules</a>          <a href="/tags/third-party-tools" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Third-party tools</a>        </div></div>
+<div class="field field--images field-type-image field-label-above field--rss">
+      <div class="field-label">Images:&nbsp;</div>
+    <div class="field-items">          <img typeof="foaf:Image" class="img-responsive" src="http://cdn1.drupalwatchdog.com/sites/default/files/github-create-new-repository.png" width="877" height="531" alt="" />          <img typeof="foaf:Image" class="img-responsive" src="http://cdn1.drupalwatchdog.com/sites/default/files/travis-build-matrix-in-progress.png" width="1128" height="485" alt="" />          <img typeof="foaf:Image" class="img-responsive" src="http://cdn1.drupalwatchdog.com/sites/default/files/travis-build-matrix-tests-passed.png" width="1119" height="510" alt="" />          <img typeof="foaf:Image" class="img-responsive" src="http://cdn1.drupalwatchdog.com/sites/default/files/travis-toggle-project-to-on-tools-icon.png" width="893" height="44" alt="" />        </div></div>
+  </body>
+</html>
+

@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 14 Feb 2014 17:15:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 14 Feb 2014 17:15:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Ansible Playbooks for Drupal 8 Testing and Mac Dev
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/ansible-playbooks-mac
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Ansible Playbooks for Drupal 8 Testing and Mac Dev</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/ansible-playbooks-mac">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Lately, I've been working a lot with <a href="http://www.ansible.com/">Ansible</a>, a simple but powerful infrastructure management platform. I now use Ansible playbooks and ad-hoc commands to manage all of Midwestern Mac's infrastructure (this site, <a href="http://hostedapachesolr.com/">Hosted Apache Solr</a>, <a href="https://servercheck.in/">Server Check.in</a>, and many ancillary servers, and as a result, I've started using Ansible for pretty much any kind of work I need to do in development—including configuring my own Mac, and developing with Drupal 8 (among other things).</p>
+<h2>Meet Ansible</h2>
+<p style="text-align: center;"><img src="/sites/midwesternmac.com/files/ansible-logo-black.png" width="400" height="57" alt="Ansible Logo - Black transparent" /></p>
+<p>For those who haven't heard of Ansible before, it's often described as being a little like Puppet or Chef, used for configuration management. You define the configuration of a server, and Ansible makes sure the server is configured as defined. But Ansible goes quite a bit further—it's also great for deploying applications (especially in tandem with tools like Jenkins), running commands on servers, and day-to-day management of a few, hundreds, or even thousands, of servers—it's an end-to-end configuration management tool. Ansible also has a great, and rapidly-growing <a href="https://github.com/ansible/ansible/blob/devel/CONTRIBUTING.md">community</a>, building it up and making it markedly better every release.</p>
+<p>Ansible uses YAML to define configuration (<em>just like Drupal 8!</em>), and is relatively easy to pick up, especially if you already have some experience on the command line. You can read more about it in a book I'm writing, <a href="https://leanpub.com/ansible-for-devops">Ansible for DevOps</a>, and hopefully, I'll be able to tell you more about Ansible <em>in person</em> at DrupalCon Austin—I've submitted a session titled <a href="https://austin2014.drupal.org/session/devops-humans-ansible-drupal-deployment-victory">DevOps for Humans: Ansible for Drupal Deployment Victory!</a> (please leave a comment and let me know what you want to hear!).</p>
+<h2>Drupal development VM (Vagrant + Ansible)</h2>
+<p>I used to use MAMP (a simple-to-install Apache + MySQL + PHP setup for Macs) for all my development, which made adding virtual hosts to Apache relatively simple. However, there are many downsides to developing with MAMP—I could never configure things like drush, APC, the version of PHP, MySQL, or auxiliary tools like XDebug and Solr, <em>exactly</em> how I wanted or needed them.</p>
+</div></div></div>
+  </body>
+</html>
+

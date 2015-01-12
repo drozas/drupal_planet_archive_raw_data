@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 07 Aug 2014 18:07:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 07 Aug 2014 18:07:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Priority TCDrupalaton sprint tasks!
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/437198
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Priority TCDrupalaton sprint tasks!</title>
+    <base href="https://groups.drupal.org/node/437198">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Today is the start of a double dose of sprint awesome at <a href="http://2014.tcdrupal.org/">TCDrupal</a> and <a href="http://2014.drupalaton.hu/">Drupalaton</a>. Here are some important sprint tasks to help get Drupal 8 done.
+</p>
+<ol>
+<li>
+<h3>Beta blockers</h3>
+<p>Our top goal for the sprints is to make significant progress on the <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">three remaining beta blocker</a> issues. These issues aren't the best place to jump in if you're not already following them, but plach, alexpott, effulgentsia, fago, and others are going to do what they can to get these issues done.</p>
+</li>
+<li>
+<h3>Beta deadline issues</h3>
+<p>The next priority for the sprints are the <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+deadline">beta deadline issues</a>, which are non-critical issues that will have to be postponed to either Drupal 8.1.x or Drupal 9 if they are not done by the time the beta is ready. Many of these issues are related to the Entity Field API, so if you're interested in those systems, reach out to entity and field maintainers fago and swentel at Drupalaton to see if there's a beta deadline issue for you.</p>
+</li>
+<li>
+<h3>Twig autoescape followups and double-escaping bugs</h3>
+<p>One of the beta-blocking issues that's already been resolved is <a href="https://www.drupal.org/node/2296163">enabling Twig's autoescape functionality</a>, so that strings that have not already been sanitized by Drupal can be escaped automatically in the theme layer. There are a lot of important followups to this change, which can be grouped into two categories:</p>
+<ul>
+<li>
+<h4>Double-escaping issues (<a href="https://www.drupal.org/node/2297711">#2297711</a>)</h4>
+<p>Since Drupal already does its own sanitization at many different points, there are a number of places where we are unintentionally escaping markup twice, resulting in double-escaping bugs like:<br />
+<code>&amp;lt;em&amp;gt;My double-escaped string&amp;lt;/em&amp;gt;</code></p>
+<p>When code uses the appropriate sanitization functions or the theme and render systems so that the output can can be themed, escaped, and altered properly, double-escaping is not an issue. So, we need to fix these regressions, ideally by removing the markup from the code entirely and converting to a Twig template, or failing that, by using the <a href="https://www.drupal.org/node/2311123">inline templating render element</a>. In some cases these issues might be simple to fix; in others they will require some refactoring.</p>
+</li>
+<li>
+<h4>Improper uses of SafeMarkup::set() (<a href="https://www.drupal.org/node/2297703">#2297703</a>)</h4>
+<p>In order to inform the theme layer about what markup Drupal has already sanitized, strings that have been processed by <a href="https://api.drupal.org/api/drupal/core%21includes%21bootstrap.inc/function/t/8">t()</a>, <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Component%21Utility%21String.php/function/String%3A%3AcheckPlain/8">String::checkPlain()</a> or <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Component%21Utility%21Xss.php/function/Xss%3A%3Afilter/8">Xss::filter()</a> are automatically marked safe, as are markup strings created from render arrays via <a href="https://api.drupal.org/api/drupal/core%21includes%21common.inc/function/drupal_render/8">drupal_render()</a>. This list of sanitized strings is stored by the <a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Component%21Utility%21SafeMarkup.php/class/SafeMarkup/8">SafeMarkup</a> class, which is intended for <strong>internal use only</strong>. However, the initial conversion patch added <code>SafeMarkup::set()</code> calls in many places as an interim fix. We now need to remove as many of these improper uses of SafeMarkup as possible, by converting or refactoring the code in the same way that we would to fix double-escaping bugs.</p>
+</li>
+</ul>
+<p>We will be sprinting on these issues at TCDrupal. Talk to YesCT or mdrummond for help getting started.</p>
+</li>
+<li>
+<h3>Critical issue triage</h3>
+<p>Once Drupal 8 is in beta, the next step will be to resolve the other <a href="https://www.drupal.org/project/issues/drupal?priorities=400&amp;version=8.x">critical issues that block a Drupal 8 release candidate</a>. As a first step, we need to assess all of the critical issues to determine which are most important, which are no longer relevant, etc., as well as what the path to get each done is. In each critical, we should clearly identify:</p>
+<ol>
+<li>Why is it critical?</li>
+<li>What would be the implications of not fixing the issue?</li>
+<li>What would be the implications of fixing the issue between betas? (Code changed for modules, upgrade path, etc.)</li>
+<li>What would be the implications of fixing the issue after the first release candidate?</li>
+<li>What is the next step to make progress? What are the remaining tasks?</li>
+</ol>
+<p>Talk to xjm to help with this essential task.</p>
+</li>
+</ol>
+<p>If you're sprinting at TCDrupal, remember to put the <a href="https://www.drupal.org/project/issues/search?issue_tags=TCDrupal%202014">TCDrupal 2014</a> issue tag on issues you work on at the sprint. Similarly, use the <a href="https://www.drupal.org/project/issues/search?projects=&amp;project_issue_followers=&amp;issue_tags_op=%3D&amp;issue_tags=Drupalaton+2014">Drupalaton 2014</a> tag at Drupalaton. And whether you're sprinting in Minnesota, in Hungary, or remotely, join the #drupal-contribute IRC channel to coordinate with other sprinters.</p>
+  </body>
+</html>
+

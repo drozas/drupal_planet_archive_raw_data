@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 29 Jul 2014 02:00:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 29 Jul 2014 02:00:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: NEWMEDIA: NEWMEDIA's Site Development Process (SDP)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.newmediadenver.com/blog/newmedia-site-development-process
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>NEWMEDIA: NEWMEDIA's Site Development Process (SDP)</title>
+    <base href="http://www.newmediadenver.com/blog/newmedia-site-development-process">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-text field-label-hidden" data-edit-field-id="node/143/title/en/rss">NEWMEDIA&#039;s Site Development Process (SDP)</span><div class="field field-node--field-intro field-name-field-intro field-type-text-long field-label-hidden" data-edit-field-id="node/143/field_intro/en/rss"><div class="field-items"><div class="field-item">At NEWMEDIA we have spent a great deal of time perfecting our site development process. Through many trials and errors we have converged on a SDP that works for us. </div></div></div><div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-field-id="node/143/body/en/rss"><div class="field-items"><div class="field-item"><p>When working in a team or in an environment where your code and systems are going to be used by people other than yourself, it is especially important that your site development process is clear, simple, and easy to understand.&nbsp;This, of course, is easier said than done when developing a complex Drupal site. However, when our developers,&nbsp;site-builders and themers are all on the &quot;same page&quot; with code organization and philosophy we are a more effective and efficient team.</p>
+
+<p>After speaking with members of&nbsp;the Drupal community, we believe it is time to start a discussion on how to have a process in place so as to minimize the friction when developing in a team/cooperative&nbsp;environment. In an effort to deep dive into our process&nbsp;this article will be the&nbsp;first in a series of articles discussing our SDP.</p>
+
+<p>A lot of our SDP revolves around how to organize your code so that a&nbsp;developer or site-builder can quickly on-board to a project and larger teams can work together with minimal down-time. The broad pieces of our SDP are:</p>
+
+<ol>
+	<li>Everything is in code.</li>
+	<li>Sites are built using install profiles and the install profiles have a specific directory structure.</li>
+	<li><a href="node/90">Install profiles use Drush Make to capture dependencies on external modules, themes, and libraries.</a></li>
+	<li>Drupal migrate is used to populate test content during the development phase. (optional)</li>
+	<li>Features are used to capture site configuration. (optional)</li>
+	<li>While a site is in development all functionality must be present after a fresh site install.</li>
+	<li>After a site goes live update hooks can be used to enable new functionality on the production site.</li>
+	<li>Use a virtualized environment which mirrors production. (recommended)</li>
+</ol>
+
+<p>&nbsp;</p>
+
+<h3>What do you think?</h3>
+
+<p>Do you have an process&nbsp;expressed or implied? Leave comments below and lets keep this conversation going.</p>
+</div></div></div>
+  </body>
+</html>
+

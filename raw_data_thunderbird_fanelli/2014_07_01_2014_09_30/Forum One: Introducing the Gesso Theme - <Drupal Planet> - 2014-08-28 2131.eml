@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 28 Aug 2014 19:31:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 28 Aug 2014 19:31:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Introducing the Gesso Theme
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/introducing-the-gesso-theme/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Introducing the Gesso Theme</title>
+    <base href="http://forumone.com/insights/introducing-the-gesso-theme/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a style="display: block; float: right; margin: 0 0 1.22222em 1.22222em; max-width: 40%; border: 0;" href="https://drupal.org/project/gesso" target="_blank"><img style="border: 1px solid #f1f1f1; display: block;" src="http://forumone.com/wp-content/uploads/2014/08/gesso-logo-250x186.jpg" alt="Gesso theme on drupal.org" /></a> For the past year Forum One has been using a Drupal starter theme created in-house to make theming more flexible, consistent, and easier to maintain. This theme is now available on drupal.org! Gesso (pronounced <em>JEH-so</em>) is an art term for the white paint mixture used to prepare a canvas or sculpture for painting. Likewise, the <a href="https://drupal.org/project/gesso" target="_blank">Gesso theme</a> prepares Drupal’s markup and styles to give us a clean starting point.</p>
+<p>Gesso is a responsive, <a href="http://sass-lang.com/">Sass</a>-based theme developed with accessible, standards-compliant HTML5 markup. It follows a mobile-first, future-friendly approach to coding responsive websites. Gesso also removes much of the cruft that we previously tended to override on each project and standardizes common components.</p>
+<p>A word of caution: this theme is geared towards advanced themers. If you want to be able to manipulate the theme’s design, markup, or layout via a nice GUI, Gesso is not the theme for you. We built this theme to make it easy to customize within the Drupal theming layer, without getting in your way.</p>
+<p>Gesso is not a stand-alone product. It depends on several Drupal modules and Sass tools: <a href="https://drupal.org/project/maagic" target="_blank">Magic</a>, <a href="https://drupal.org/project/html5_tools" target="_blank">HTML5 Tools</a>, <a href="http://compass-style.org/" target="_blank">Compass</a>, <a href="http://github.com/Team-Sass/breakpoint" target="_blank">Breakpoint</a>, and <a href="github.com/Team-Sass/Singularity" target="_blank">Singularity.gs</a>. It also integrates well with optional Drupal modules such as <a href="https://drupal.org/project/ds">Display Suite</a>, <a href="https://drupal.org/project/panels">Panels</a>, <a href="https://drupal.org/project/blockify" target="_blank">Blockify</a>, <a href="https://drupal.org/project/clean_markup" target="_blank">Clean Markup</a>, and <a href="https://drupal.org/project/modernizr" target="_blank">Modernizr</a>.</p>
+<p>To be clear, Gesso wasn’t created in a vacuum. We got a ton of great ideas by diving deep into the code of other Drupal themes, such as:</p>
+<ul>
+<li><a href="https://drupal.org/project/adaptivetheme" target="_blank">AdaptiveTheme</a></li>
+<li><a href="https://drupal.org/project/aether" target="_blank">Aether</a></li>
+<li><a href="http://drupal.org/project/aurora" target="_blank">Aurora</a></li>
+<li><a href="https://drupal.org/project/basic" target="_blank">Basic</a></li>
+<li><a href="https://drupal.org/project/center" target="_blank">Center</a></li>
+<li><a href="https://drupal.org/project/mojo" target="_blank">Mojo</a></li>
+<li><a href="https://drupal.org/project/motherhips" target="_blank">Mothership</a></li>
+<li><a href="https://drupal.org/project/omega" target="_blank">Omega 4.x</a></li>
+<li><a href="https://drupal.org/project/prototype" target="_blank">Prototype</a></li>
+<li><a href="https://drupal.org/project/radix" target="_blank">Radix</a></li>
+<li><a href="https://drupal.org/project/zen" target="_blank">Zen</a></li>
+</ul>
+<p>If you want to develop a deeper understanding of Drupal theming, I encourage you to check out the code within these themes.</p>
+<p>The biggest differentiator between Gesso and other themes is the altered Drupal markup, which makes it easier to follow the <a href="https://www.drupal.org/node/1887918" target="_blank">Drupal 8 CSS architecture guidelines</a>. This theme leverages <a href="https://smacss.com/" target="_blank">SMACSS</a> with a modified <a href="http://bem.info/method/" target="_blank">BEM</a> naming convention to organize styles. This encourages a component-based approach to theming through the creation of discrete, reusable UI elements.</p>
+<p>In follow-up articles we’ll cover Gesso in more depth, including Sass organization, site building, and theme settings. Please join us in the <a href="https://www.drupal.org/project/issues/gesso" target="_blank">issue queue</a> if you have questions or ideas on how to improve it.</p>
+  </body>
+</html>
+

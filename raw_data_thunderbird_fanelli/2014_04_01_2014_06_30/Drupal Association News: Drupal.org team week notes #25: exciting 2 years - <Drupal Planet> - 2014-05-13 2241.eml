@@ -1,0 +1,54 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 13 May 2014 20:41:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 13 May 2014 20:41:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Association News: Drupal.org team week notes #25: exciting 2 years
+Content-Transfer-Encoding: 8bit
+Content-Base: https://assoc.drupal.org/blog/tvn/drupalorg-team-week-notes-25-exciting-2-years
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Association News: Drupal.org team week notes #25: exciting 2 years</title>
+    <base href="https://assoc.drupal.org/blog/tvn/drupalorg-team-week-notes-25-exciting-2-years">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><img class="left" src="https://assoc.drupal.org/files/cake_0.png" />Today is a special edition of week notes. Exactly 2 years ago I published <a href="https://assoc.drupal.org/node/16173">the first post</a>. A lot has happened since then, but we are still happy to share our news and updates every couple of weeks. Here is for the next 2 years!</p>
+<p>So... what happened in the past few weeks?</p>
+<h2>Drupal.org improvements</h2>
+<p>A number of small and big things were deployed. We <a href="http://drupal.org/node/2255099">fixed the size</a> of the Drupal Association badges on Drupal.org user profiles, so that you could actually see them. Go take a look, they are new and fancy!</p>
+<p>We've <a href="http://drupal.org/node/2200813">added a new metric on project pages</a>: you can now see average time for an issue to receive a response.</p>
+<p>One of the last issues, fixed during the <a href="https://assoc.drupal.org/content/drupalorg-team-week-notes-23-drupal-dev-days-szeged">Developer Days Szeged sprint</a>, got deployed -- <a href="http://drupal.org/node/2200813">fix for issue sorting in the queues</a> to be by project name instead of project node id.</p>
+<p>The <a href="https://drupal.org/project/metatag">Metatag</a> module got deployed on Drupal.org, which will let us customize meta tags and potentially do things like add Twitter Cards metadata to issue pages.</p>
+<p>We are moving further with improving support for Drupal.org users. As a small step there we deployed <a href="http://drupal.org/project/r4032login">r4032login</a> module in order to improve experience for anonymous users who seek support.</p>
+<p>A new issue queue <a href="https://drupal.org/node/2078807">was created</a> last week: <a href="https://drupal.org/project/projectownership">Drupal.org project ownership queue</a>. This will be a dedicated place for all ownership related requests and issues (e.g. ownership transfer, abandoned projects process, etc). One new addition to this queue is the "Needs maintainers" component. If you are looking for maintainers for your project, open an issue there, announce it in IRC, on Twitter, etc., and hopefully someone from the community will step up and help you. The process and guidelines for this new "Needs maintainers" queue are still being worked on, and you can help flesh them out in <a href="https://drupal.org/node/2078807">this issue</a>.</p>
+<p>There were also lots of not so exciting maintenance fixes, such as:</p>
+<ul><li><a href="https://drupal.org/node/2067651">Fix edge cases</a> regarding comment IDs in issue notification email code.</li>
+<li><a href="https://drupal.org/node/2127029">Use the right variable</a> to find version on a release node.</li>
+<li><a href="https://drupal.org/node/1737022">Handle alternate domains</a> in the local image filter, which would allow us to move to CDN.</li>
+<li><a href="https://drupal.org/node/2255093">Implement Drupal Association badge changes</a>: text update.</li>
+<li><a href="https://drupal.org/node/2190433">Clean up Technology Supporter badges</a> on organization pages.</li>
+<li><a href="https://drupal.org/node/2258411">Accept repository names</a> in addition to project short names for authenticated Git operations.</li>
+<li><a href="https://drupal.org/node/2250059">Remove "bypass bakery" permission</a> on all sites.</li>
+<li><a href="https://drupal.org/node/2255069">Only run attach behavior once</a> (and general cleanup for D3 module used for sparklines on project pages).</li>
+</ul><p>Among the people who helped us to get all of that done were <a href="https://drupal.org/user/501638">MarkCarver</a>, <a href="https://drupal.org/user/771370">gease</a>, <a href="https://drupal.org/user/132175">marvil07</a>.</p>
+<h2>Drupal.org Infrastructure</h2>
+<p>The CDN is now rolled out for all *.drupal.org sites except for Drupal.org, giving us better security and faster response times for static assets.  The web nodes are also 75% rebuilt, and load balancers are in the process of being rebuilt as well.</p>
+<h2>Other news</h2>
+<h3>Drupal.org User Research</h3>
+<p>As we <a href="https://assoc.drupal.org/blog/tvn/whitney-hess-lead-drupalorg-user-research">announced recently</a> Whitney Hess will be helping us with the user research for Drupal.org. We have already started working on the initial steps and preparations to kick off the project around DrupalCon Austin. This is very important initiative for Drupal.org and we are excited to get started. Expect more news as we go. </p>
+<h3>Drupal.org Staffing Update</h3>
+<p>Our team is growing. Oliver Davies (<a href="https://drupal.org/user/381388">opdavies</a>) joined us as a Developer on May 7th. Some of you might have seen him in Drupal.org issue queues already. Welcome Oliver!</p>
+<p>But we are not stopping here. We’ve posted several open positions and are trying to expedite the hiring process.</p>
+<p>---<br />
+As always, we’d like to say thanks to all volunteers who are working with us and to the Drupal Association <a href="https://drupal.org/supporting-partners">Supporting Partners</a> and <a href="https://drupal.org/technology-supporters">Technology Supporters</a>, who made it possible for us to work on these projects. The <a href="https://association.drupal.org/supporting-partners">Supporting Partner Program</a> crowd sources funds that pay for the development team’s time and Drupal.org hosting costs.</p>
+<p>Cross-posting from <a href="https://groups.drupal.org/node/">g.d.o/drupalorg</a></p>
+<p>---<br />
+Flickr photo by <a href="https://secure.flickr.com/photos/95072945@N05/">kelly.sikkema</a></p>
+</div></div></div>
+  </body>
+</html>
+

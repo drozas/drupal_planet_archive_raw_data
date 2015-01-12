@@ -1,0 +1,104 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 13 Dec 2014 00:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 13 Dec 2014 00:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Adding Apple and Android favicons to Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/adding-apple-android-favicons-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Adding Apple and Android favicons to Drupal</title>
+    <base href="http://www.pixelite.co.nz/article/adding-apple-android-favicons-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As you end up building more and more websites that target mobile devices (e.g. iPhone, iPad, Android, Windows), you need to supply an ever increasing amount of favicons. This process can be complex if done by hand, luckily there is an easy way to introduce these into your Drupal site.</p>
+
+<h2 id="what-you-will-need">What you will need</h2>
+
+<p>Before we start you will need a high quality icon to begin with, the icon should be:</p>
+
+<ul>
+  <li>260x260px (i.e. square)</li>
+  <li>a PNG with transparency as needed</li>
+  <li>recognizable when shrunk right done to your browser favicon (so don’t use your entire logo complete with words).</li>
+</ul>
+
+<h2 id="generating-the-favicons">Generating the favicons</h2>
+
+<p>This is where the really handy <a href="http://realfavicongenerator.net/">realfavicongenerator.net</a> website comes into play. I have used many other websites that offer similar functionality, but this seems to be the best, and is dead simple to use.</p>
+
+<p>You will need to upload the 260x260px PNG file, and also select a hex color for the Windows 8 tile, but this should be straight forward.</p>
+
+<p>I also opt for the option “I will place favicon files (favicon.ico, apple-touch-icon.png, etc.) at the root of my web site.” as this seems the most sensible place for them anyway.</p>
+
+<p>When you complete the process, you will be able to download a zip file containing a whole bunch of icons and XML files, this is fine, extract them to your docroot for Drupal.</p>
+
+<h2 id="adding-the-favicons-to-drupal">Adding the favicons to Drupal</h2>
+
+<p>You now will need to edit your <code>html.tpl.php</code> inside your theme, and add the code that the generator provides. The code should resemble something like this:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="lineno"> 1</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;57x57&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-57x57.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 2</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;114x114&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-114x114.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 3</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;72x72&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-72x72.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 4</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;144x144&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-144x144.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 5</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;60x60&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-60x60.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 6</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;120x120&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-120x120.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 7</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;76x76&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-76x76.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 8</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;152x152&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-152x152.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 9</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;apple-touch-icon&quot;</span> <span class="na">sizes=</span><span class="s">&quot;180x180&quot;</span> <span class="na">href=</span><span class="s">&quot;/apple-touch-icon-180x180.png&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">10</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;icon&quot;</span> <span class="na">type=</span><span class="s">&quot;image/png&quot;</span> <span class="na">href=</span><span class="s">&quot;/favicon-192x192.png&quot;</span> <span class="na">sizes=</span><span class="s">&quot;192x192&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">11</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;icon&quot;</span> <span class="na">type=</span><span class="s">&quot;image/png&quot;</span> <span class="na">href=</span><span class="s">&quot;/favicon-160x160.png&quot;</span> <span class="na">sizes=</span><span class="s">&quot;160x160&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">12</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;icon&quot;</span> <span class="na">type=</span><span class="s">&quot;image/png&quot;</span> <span class="na">href=</span><span class="s">&quot;/favicon-96x96.png&quot;</span> <span class="na">sizes=</span><span class="s">&quot;96x96&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">13</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;icon&quot;</span> <span class="na">type=</span><span class="s">&quot;image/png&quot;</span> <span class="na">href=</span><span class="s">&quot;/favicon-16x16.png&quot;</span> <span class="na">sizes=</span><span class="s">&quot;16x16&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">14</span> <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;icon&quot;</span> <span class="na">type=</span><span class="s">&quot;image/png&quot;</span> <span class="na">href=</span><span class="s">&quot;/favicon-32x32.png&quot;</span> <span class="na">sizes=</span><span class="s">&quot;32x32&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">15</span> <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;msapplication-TileColor&quot;</span> <span class="na">content=</span><span class="s">&quot;#b91d47&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">16</span> <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;msapplication-TileImage&quot;</span> <span class="na">content=</span><span class="s">&quot;/mstile-144x144.png&quot;</span><span class="nt">&gt;</span></code></pre></div>
+
+<p>You will notice though that Drupal likes to place it’s default favicon into the <code>&lt;head&gt;</code> section of the page, we need to remove this in order for it not to mess up the above code you inserted.</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;shortcut icon&quot;</span> <span class="na">href=</span><span class="s">&quot;http://[YOURSITE]/misc/favicon.ico&quot;</span> <span class="na">type=</span><span class="s">&quot;image/vnd.microsoft.icon&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+
+<p>The following code below can be inserted into your <code>template.php</code> file for your theme to remove the default favicon from Drupal:</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="lineno"> 1</span> <span class="cp">&lt;?php</span>
+<span class="lineno"> 2</span> <span class="sd">/**</span>
+<span class="lineno"> 3</span> <span class="sd"> * Remove the unneeded favicon from the head section.</span>
+<span class="lineno"> 4</span> <span class="sd"> */</span>
+<span class="lineno"> 5</span> <span class="k">function</span> <span class="nf">YOURTHEME_html_head_alter</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$head_elements</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno"> 6</span>   <span class="k">foreach</span> <span class="p">(</span><span class="nv">$head_elements</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$element</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno"> 7</span>     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">empty</span><span class="p">(</span><span class="nv">$element</span><span class="p">[</span><span class="s1">&#39;#attributes&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<span class="lineno"> 8</span>       <span class="k">if</span> <span class="p">(</span><span class="nb">array_key_exists</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">,</span> <span class="nv">$element</span><span class="p">[</span><span class="s1">&#39;#attributes&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<span class="lineno"> 9</span>         <span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$element</span><span class="p">[</span><span class="s1">&#39;#attributes&#39;</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">],</span> <span class="s1">&#39;misc/favicon.ico&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">10</span>           <span class="nb">unset</span><span class="p">(</span><span class="nv">$head_elements</span><span class="p">[</span><span class="nv">$key</span><span class="p">]);</span>
+<span class="lineno">11</span>         <span class="p">}</span>
+<span class="lineno">12</span>       <span class="p">}</span>
+<span class="lineno">13</span>     <span class="p">}</span>
+<span class="lineno">14</span>   <span class="p">}</span>
+<span class="lineno">15</span> <span class="p">}</span>
+<span class="lineno">16</span> <span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+
+<p>There you have it all done.</p>
+
+<h2 id="extra-for-experts---googles-theme-color-meta-tag">Extra for experts - Google’s theme-color meta tag</h2>
+
+<p><a href="http://updates.html5rocks.com/2014/11/Support-for-theme-color-in-Chrome-39-for-Android">Google recently announced</a> that from Chrome 39 onwards on Android Lollipop (5.0+), a new meta tag will be supported</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;theme-color&quot;</span> <span class="na">content=</span><span class="s">&quot;#b91d47&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+
+<p>This is what your site’s title bar now looks like (instead of boring and grey).</p>
+
+<p><img src="http://www.pixelite.co.nz/img/favicon-theme-color.png" alt="The theme-color meta tag in use on www.maoritelevision.com" class="img-responsive img-thumbnail" style="max-height:600px;" /></p>
+
+<p>This meta tag can be added to your <code>html.tpl.php</code> file as above.</p>
+
+<h2 id="comments">Comments</h2>
+
+<p>Let me know if this has helped you, and also if you have any other tips and tricks when it comes to favicons on your mobile devices.</p>
+  </body>
+</html>
+

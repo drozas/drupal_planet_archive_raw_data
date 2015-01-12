@@ -1,0 +1,180 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 05 Nov 2013 16:36:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 05 Nov 2013 16:36:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Adding JS libraries to a Drupal project with Libraries API
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/adding-js-libraries-drupal-project-libraries-api
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Adding JS libraries to a Drupal project with Libraries API</title>
+    <base href="http://atendesigngroup.com/blog/adding-js-libraries-drupal-project-libraries-api">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image-blog field-type-image field-label-hidden"><div ><div ><img src="http://atendesigngroup.com/sites/default/files/libraries_0.jpg" width="1000" height="600" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div ><div ><p>As a front-end developer, I often need to add JavaScript libraries to a project for front-end interaction. With most things Drupal, there are many different ways to go about adding these libraries, though some can be said to be more stylish than others. An approach that I’ve become particularly fond of utilizes a contributed module called <a href="https://drupal.org/project/libraries">Libraries API</a>, which gives Drupal developers a consistent way to add libraries of all sorts.</p>
+
+<p>To be entirely clear, a library is a bundle of code, often times CSS and JS, though it may be a bundle of PHP, or something else entirely. It's usually agnostic in the sense that the library isn’t targeted to Drupal applications.</p>
+
+<p>In the past, I’ve added JS libraries directly to my theme, and then added the script to a page with <a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_add_js/7">drupal_add_js()</a>. This means that the library is confined to the theme. If I want to use the library in a custom module as well, I have to reliably know the name of the theme, as that’s how <a href="https://api.drupal.org/api/drupal/includes!common.inc/function/drupal_get_path/7">drupal_get_path()</a> works. That’s just straight-up bad practice, as it doesn't lend itself to modularity or reusable code.</p>
+
+<p>Another method for adding JS libraries is the use of contributed modules named for the JS libraries they implement. The downside is that these JS libraries are often configured via the Drupal UI and frequently limit the configuration options of the library, or they are coupled to an outdated version of the library. In most cases, a requirement for these modules is that the library be added via Libraries API anyways.</p>
+
+<p>By contrast, If I take the time to write a few extra lines of code and implement the library myself, I can ensure that it's available to other modules or themes in the project. This allows me to interact with the library the way the original author intended.</p>
+
+<p>Working with Libraries API is fairly straightforward. As with all things, it’s a good idea to read the full documentation, which can be found at <a href="https://drupal.org/node/1342238">https://drupal.org/node/1342238</a>, but you can get rolling with just a few lines of code.</p>
+
+<h2>Quick overview:</h2>
+
+<ol>
+  <li><a href="#install">Install Libraries API</a></li>
+  <li><a href="#add">Add the library to sites/all/libraries/the_name_of_the_library</a></li>
+  <li><a href="#create">Create a very short custom module that tells Libraries API about the library</a></li>
+  <li><a href="#add-again">Add the library to the page where you want it</a></li>
+  <li><a href="#use">Use it!</a></li>
+</ol>
+
+<hr/>
+
+<h2><a name="install"></a>Install Libraries API</h2>
+
+<p>You’re using <a href="https://drupal.org/project/drush">Drush</a>, right? That’s what I thought. To install Libraries API, simply:</p>
+
+<p><span class="geshifilter"><code class="text geshifilter-text">$ drush dl libraries</code></span></p>
+
+<p>Next, create a directory at sites/all/libraries. If you're not using Drush, download the module from <a href="http://drupal.org/project/libraries">drupal.org/project/libraries</a>, and add it to the contrib modules directory.</p>
+
+<hr/>
+
+<h2><a name="add"></a>Add the library to sites/all/libraries/the_name_of_the_library</h2>
+
+<p>Download a library, and add it to the libraries directory at sites/all/libraries. For this example, I'm using a JS library called <a href="http://flexslider.woothemes.com/">FlexSlider</a> to add a carousel to my project. To add the library, I download flexslider, and add it to my Drupal project as sites/all/libraries/flexslider.</p>
+
+<hr/>
+
+<h2><a name="create"></a>Create a very short custom module that tells Libraries API about the library</h2>
+
+<p>In a custom module, use <a href="http://drupalcontrib.org/api/drupal/contributions!libraries!libraries.api.php/function/hook_libraries_info/7">hook_libraries_info()</a> to make the library available to the entire project. Once a library is registered, it can be used in custom modules, themes, whatever.</p>
+
+<div class="geshifilter"><pre class="geshifilter-php"><span style="color: #808080; font-style: italic;">/**
+ * Implements hook_libraries_info().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> MYMODULE_libraries_info<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+  <span style="color: #0000ff;">$libraries</span> = <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+  <span style="color: #0000ff;">$libraries</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'flexslider'</span><span style="color: #66cc66;">&#93;</span> = <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">&#40;</span>
+    <span style="color: #ff0000;">'name'</span> =&gt; <span style="color: #ff0000;">'FlexSlider'</span>,
+    <span style="color: #ff0000;">'vendor url'</span> =&gt; <span style="color: #ff0000;">'http://flexslider.woothemes.com/'</span>,
+    <span style="color: #ff0000;">'download url'</span> =&gt; <span style="color: #ff0000;">'https://github.com/woothemes/FlexSlider/zipball/master'</span>,
+    <span style="color: #ff0000;">'version arguments'</span> =&gt; <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">&#40;</span>
+      <span style="color: #ff0000;">'file'</span> =&gt; <span style="color: #ff0000;">'jquery.flexslider-min.js'</span>,
+      <span style="color: #808080; font-style: italic;">// jQuery FlexSlider v2.1</span>
+      <span style="color: #ff0000;">'pattern'</span> =&gt; <span style="color: #ff0000;">'/jQuery FlexSlider v(<span style="color: #000099; font-weight: bold;">\d</span>+<span style="color: #000099; font-weight: bold;">\.</span>+<span style="color: #000099; font-weight: bold;">\d</span>+)/'</span>,
+      <span style="color: #ff0000;">'lines'</span> =&gt; <span style="color: #cc66cc;">2</span>,
+    <span style="color: #66cc66;">&#41;</span>,
+    <span style="color: #ff0000;">'files'</span> =&gt; <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">&#40;</span>
+      <span style="color: #ff0000;">'js'</span> =&gt; <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">&#40;</span>
+        <span style="color: #ff0000;">'jquery.flexslider-min.js'</span>,
+      <span style="color: #66cc66;">&#41;</span>,
+    <span style="color: #66cc66;">&#41;</span>,
+  <span style="color: #66cc66;">&#41;</span>;
+&nbsp;
+  <span style="color: #b1b100;">return</span> <span style="color: #0000ff;">$libraries</span>;
+<span style="color: #66cc66;">&#125;</span></pre></div>
+
+<p>One gotcha that seriously gotcha'd me is the necessity of providing a value for either version argument or version callback. The documetation for hook_libraries_info() says that both are optional, but if at least one isn't provided, the library isn't available to load. If you're not concerned about the version of the library, you can use a short-circuit function for the version callback:</p>
+
+<div class="geshifilter"><pre class="geshifilter-php"><span style="color: #808080; font-style: italic;">/**
+ * Implements hook_libraries_info().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> MYMODULE_libraries_info<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+  <span style="color: #0000ff;">$libraries</span> = <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span>;
+  <span style="color: #0000ff;">$libraries</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'my_library'</span><span style="color: #66cc66;">&#93;</span> = <a href="http://www.php.net/array"><span style="color: #000066;">array</span></a><span style="color: #66cc66;">&#40;</span>
+    <span style="color: #808080; font-style: italic;">// Etc etc.</span>
+    <span style="color: #ff0000;">'version callback'</span> =&gt; <span style="color: #ff0000;">'short_circuit_version'</span>,
+  <span style="color: #66cc66;">&#41;</span>;
+&nbsp;
+  <span style="color: #b1b100;">return</span> <span style="color: #0000ff;">$libraries</span>;
+<span style="color: #66cc66;">&#125;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">/**
+* Short-circuit the version argument.
+*/</span>
+<span style="color: #000000; font-weight: bold;">function</span> short_circuit_version<span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span> 
+  <span style="color: #b1b100;">return</span> <span style="color: #000000; font-weight: bold;">TRUE</span>;
+<span style="color: #66cc66;">&#125;</span></pre></div>
+
+<hr/>
+
+<h2><a name="add-again"></a>Add the library to the page where it's needed</h2>
+
+<p>In this case, I’d like to load the FlexSlider JavaScript with a specific view. Hence, a views hook is appropriate. Notice the nice trick for hooking specific views.</p>
+
+<div class="geshifilter"><pre class="geshifilter-php"><span style="color: #808080; font-style: italic;">/**
+ * Implements hook_preprocess_views_view().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> MYTHEME_preprocess_views_view<span style="color: #66cc66;">&#40;</span>&amp;<span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+&nbsp;
+  <span style="color: #808080; font-style: italic;">// Uncomment the lines below to see variables you can use to target a view.</span>
+  <span style="color: #808080; font-style: italic;">// This requires http://drupal.org/project/devel to be installed.</span>
+  <span style="color: #808080; font-style: italic;">// dpm($vars['view']-&gt;name, 'view name');</span>
+&nbsp;
+  <span style="color: #808080; font-style: italic;">// Hook view id specific functions.</span>
+  <span style="color: #808080; font-style: italic;">// This is a super neato trick.</span>
+  <span style="color: #b1b100;">if</span> <span style="color: #66cc66;">&#40;</span><a href="http://www.php.net/isset"><span style="color: #000066;">isset</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'view'</span><span style="color: #66cc66;">&#93;</span>-&gt;<span style="color: #006600;">name</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+    <span style="color: #0000ff;">$function</span> = <span style="color: #ff0000;">'preprocess_views_view__'</span> . <span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'view'</span><span style="color: #66cc66;">&#93;</span>-&gt;<span style="color: #006600;">name</span>;
+    <span style="color: #b1b100;">if</span> <span style="color: #66cc66;">&#40;</span><a href="http://www.php.net/function_exists"><span style="color: #000066;">function_exists</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$function</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+      <span style="color: #0000ff;">$function</span><span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#41;</span>;
+    <span style="color: #66cc66;">&#125;</span>
+  <span style="color: #66cc66;">&#125;</span>
+<span style="color: #66cc66;">&#125;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">/**
+ * Implements preprocess_views_view__VIEW().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> preprocess_views_view__YOURHOOK<span style="color: #66cc66;">&#40;</span>&amp;<span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+  <span style="color: #0000ff;">$display_id</span> = <span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'display_id'</span><span style="color: #66cc66;">&#93;</span>;
+  <span style="color: #0000ff;">$classes</span> = &amp;<span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'classes_array'</span><span style="color: #66cc66;">&#93;</span>;
+  <span style="color: #0000ff;">$title_classes</span> = &amp;<span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'title_attributes_array'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'class'</span><span style="color: #66cc66;">&#93;</span>;
+  <span style="color: #0000ff;">$content_classes</span> = &amp;<span style="color: #0000ff;">$vars</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'content_attributes_array'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'class'</span><span style="color: #66cc66;">&#93;</span>;
+&nbsp;
+  <span style="color: #808080; font-style: italic;">// Uncomment the lines below to see variables you can use to target a view.</span>
+  <span style="color: #808080; font-style: italic;">// This requires http://drupal.org/project/devel to be installed.</span>
+  <span style="color: #808080; font-style: italic;">// dpm($vars['view']-&gt;name, 'view name');</span>
+&nbsp;
+  <span style="color: #b1b100;">switch</span> <span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$display_id</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+&nbsp;
+    <span style="color: #808080; font-style: italic;">// Call flexslider scripts.</span>
+    <span style="color: #b1b100;">case</span> <span style="color: #ff0000;">'page'</span>:
+      libraries_load<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">'flexslider'</span><span style="color: #66cc66;">&#41;</span>;
+      <span style="color: #b1b100;">break</span>;
+  <span style="color: #66cc66;">&#125;</span>
+<span style="color: #66cc66;">&#125;</span></pre></div>
+
+<hr/>
+
+<h2><a name="use"></a>Use it!</h2>
+
+<p>Now that FlexSlider is loaded, I can bind it to my view!</p>
+
+<div class="geshifilter"><pre class="geshifilter-javascript"><span style="color: #66cc66;">&#40;</span><span style="color: #003366; font-weight: bold;">function</span> <span style="color: #66cc66;">&#40;</span>$<span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+  $<span style="color: #66cc66;">&#40;</span>window<span style="color: #66cc66;">&#41;</span>.<span style="color: #006600;">load</span><span style="color: #66cc66;">&#40;</span><span style="color: #003366; font-weight: bold;">function</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+&nbsp;
+    $<span style="color: #66cc66;">&#40;</span><span style="color: #3366CC;">'.slideshow'</span><span style="color: #66cc66;">&#41;</span>.<span style="color: #006600;">flexslider</span><span style="color: #66cc66;">&#40;</span><span style="color: #66cc66;">&#123;</span>
+      animation: <span style="color: #3366CC;">&quot;slide&quot;</span>,
+      controlNav: <span style="color: #003366; font-weight: bold;">false</span>,
+      <span style="color: #003366; font-weight: bold;">namespace</span>: <span style="color: #3366CC;">'slide-'</span>,
+      selector: <span style="color: #3366CC;">'.slide-list &gt; .slide-list-item'</span>
+    <span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>;
+&nbsp;
+  <span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span>; <span style="color: #009900; font-style: italic;">// end window.load</span>
+<span style="color: #66cc66;">&#125;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#40;</span>jQuery<span style="color: #66cc66;">&#41;</span>;</pre></div>
+
+<p>As you can see, Libraries API allows for a much more elegant and scaleable way of managing JavaScripts.</p>
+</div></div></div>
+  </body>
+</html>
+

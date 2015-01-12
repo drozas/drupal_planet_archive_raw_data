@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 09 Jun 2014 18:25:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 09 Jun 2014 18:25:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LightSky: 5 Must Have Modules for SEO in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.lightsky.com/blog/5-must-have-modules-seo-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LightSky: 5 Must Have Modules for SEO in Drupal</title>
+    <base href="http://www.lightsky.com/blog/5-must-have-modules-seo-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I have been doing Drupal development for the last four years. During that time, one concern from potential clients has been that Drupal isn’t SEO friendly. While Drupal may not come ready for SEO out of the box, with a few additional modules and some proper configuration, Drupal can be a successful SEO platform. Below are what I consider must have modules for Drupal SEO.</p>
+<p>
+	<strong>1. Pathauto</strong><br /><a href="http://www.google.com/url?q=http%3A%2F%2Fdrupal.org%2Fproject%2Fpathauto&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEgQzOAB__0ZURIpBoErApkEfGguQ" target="_blank" title="Pathauto">Pathauto</a> works by creating automatic URL aliases based upon tokens that you set in the configuration. By default, Drupal’s URL structure looks similar to “/node/75” where 75 is the node id of the page. With Pathauto, your urls will transform into keyword rich URLS such as “blog/five-must-have-modules-drupal-search-engine-optimization”. Each URL pattern can be configured on a per-content type basis, and you can add alias patterns for your taxonomies as well as your users.</p>
+<p>
+	<strong>2. Global Redirect</strong><br />
+	The <a href="http://www.google.com/url?q=http%3A%2F%2Fdrupal.org%2Fproject%2Fglobal_redirect&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNFRYyOh1szME2_N45yXtBZJSVKvng" target="_blank" title="Global Redirect">Global Redirect</a> module works by automatically redirecting visitors from the node/xx URL to the aliased version of the URL. This is important as it prevents duplicate content penalties within Drupal. This module also allows you to add a canonical tag to your pages as well.</p>
+<p>
+	<strong>3. MetaTag</strong><br />
+	The <a href="http://www.google.com/url?q=http%3A%2F%2Fdrupal.org%2Fproject%2Fmetatag&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNEh2indHzRh8A3uj-w0u3rHlGBoLw" target="_blank" title="Metatag">Metatag</a> module allows you the option of configuring metatags for your site at both the individual and global level. As of the time of this writing, the Metatag module has support for the following tags:</p>
+<ul><li>
+		Abstract</li>
+<li>
+		Author</li>
+<li>
+		Canonical URL</li>
+<li>
+		Copyright</li>
+<li>
+		Description</li>
+<li>
+		<a href="http://dublincore.org/documents/dces/" target="_blank" title="Dublin Core">Dublin Core</a> (sub-module)</li>
+<li>
+		Generator</li>
+<li>
+		Image source</li>
+<li>
+		Keywords</li>
+<li>
+		<a href="http://support.google.com/news/publisher/bin/answer.py?hl=en&amp;answer=68297" target="_blank" title="News Keywords">News Keywords</a></li>
+<li>
+		<a href="http://ogp.me/" target="_blank" title="Open Graph Protocol">Open Graph Protocol</a> (sub-module)</li>
+<li>
+		<a href="http://www.google.com/url?q=http%3A%2F%2Fgooglenewsblog.blogspot.com%2F2010%2F11%2Fcredit-where-credit-is-due.html&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNFAPuS14Zx8BlKmuY9viD1lUWluUA" target="_blank" title="Original Source">Original Source</a></li>
+<li>
+		<a href="http://www.google.com/url?q=http%3A%2F%2Fgooglenewsblog.blogspot.com%2F2010%2F11%2Fcredit-where-credit-is-due.html&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNFAPuS14Zx8BlKmuY9viD1lUWluUA" target="_blank" title="Publisher URL">Publisher URL</a></li>
+<li>
+		Robots</li>
+<li>
+		Shortlink URL</li>
+<li>
+		Title (e.g.<a href="http://www.google.com/url?q=http%3A%2F%2Fdrupal.org%2Fproject%2Fpage_title&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNHSksm3zLxS8vp8OcvbBDgMzE7-OA" target="_blank" title="Page Titles"> Page Titles</a>)</li>
+<li>
+		<a href="https://www.google.com/url?q=https%3A%2F%2Fdev.twitter.com%2Fdocs%2Fcards&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNHQVXyulQc1w02Ffpc5DPwOcE37HQ" target="_blank" title="Twitter Cards">Twitter Cards</a> (sub-module)</li>
+</ul><p><strong>4. XML SiteMap</strong><br />
+	The <a href="http://www.google.com/url?q=http%3A%2F%2Fdrupal.org%2Fproject%2Fxmlsitemap&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNHmszOJuGRBUd5ged_cNtFrOY_3Cw" target="_blank" title="XML Sitemap">XML SiteMap</a> module create sitemaps that you can use to submit to Google, Bing and Yahoo’s Webmaster tools. You can indicate which content types you’d like to see included and indicate the priority of those content type pages on your site. The benefit of submitting an XML Sitemap is so that the search engines know about all of the pages on your site. Without it, they will only know about the pages found during their normal crawling process which sometimes misses pages.</p>
+<p>
+	<strong>5. SEO Checklist</strong><br />
+	The <a href="http://www.google.com/url?q=http%3A%2F%2Fdrupal.org%2Fproject%2Fseo_checklist&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNHIHoBv2Vi7O1grTikfwKOOkqk1RQ" target="_blank" title="SEO Checklist">SEO Checklist</a> module doesn’t add any functionality to your site directly, but it does serve as a reminder for SEO related tasks that still need to be completed. It separates items by category and allows you to check off items as they are completed. SEO checklist also saves a timestamp of each completed action so that other site administrators will know when items are completed. This module is updated frequently with the latest SEO techniques and helps ensure that you are maximizing SEO for your site.</p>
+<p> </p>
+<p>LightSky recommends Drupal as a solution to many of our clients who want easy to use and maintain websites that are also flexible and secure. One of the great features of Drupal is that it is so easy to customize. Adding the above modules for SEO is an example of how Drupal can easily be adapted for our clients’ needs. What are some of your favorite modules for SEO in Drupal?</p>
+</div></div></div>
+  </body>
+</html>
+

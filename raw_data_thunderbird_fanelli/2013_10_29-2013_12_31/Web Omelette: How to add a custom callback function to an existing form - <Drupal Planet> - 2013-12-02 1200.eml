@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 02 Dec 2013 11:00:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 02 Dec 2013 11:00:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: How to add a custom callback function to an existing form
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-custom-form-callback-submit-button
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: How to add a custom callback function to an existing form</title>
+    <base href="http://www.webomelette.com/drupal-custom-form-callback-submit-button">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In this article we are going to look at how we can alter a form and insert a custom function to get called when the form gets submitted. In Drupal 7, one or multiple callback functions get called when the user presses the submit button, you know, to process it. In between you can also have validation functions - as you can see best on node add/edit forms - but I invite you to read <a href="http://befused.com/drupal/form-validation">this article</a> for more info on how to add your own validation callback to an existing form. </p>
+<p>So to exemplify how to add a custom callback, let’s debug an existing form and see what’s in there. Let’s use <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_alter/7" target="_blank">hook_form_alter()</a> to do this, so throw the following code into your custom module, making sure you have the <a href="https://drupal.org/project/devel" target="_blank">Devel</a> module installed first:</p>
+<div class="codeblock"><code>function your_module_form_alter(&amp;$form, &amp;$form_state, $form_id) {<br />  dpm($form);<br />}</code></div>
+<p>Clear your caches and go edit a node or add a new one. You’ll notice inside the <code>$form</code> array of the debug information 2 elements (array themselves) called <code>#validate</code> and <code>#submit</code>. </p>
+<p><img src="/sites/default/files/images/20132311230600.jpg" alt="" /></p>
+<p>The first one contains validation callbacks and the second one, you guessed it, the submit callbacks. On this form there is no submit callback because it uses a button level handler and the callback is therefore defined in here: </p>
+<p><code>$form['actions']['submit']['#submit']</code></p>
+<p>You’ll have to navigate in the debug information and you’ll find the <code>node_form_submit()</code> function: </p>
+<p><img src="/sites/default/files/images/20132311231125.jpg" alt="" /></p>
+<p><p>Now let’s look at another example. Edit any existing block on the site and try to locate the <code>#validate</code> and <code>#submit</code> elements of the <code>$form</code> array. You’ll notice that here the callback function is found at the higher level. And yet another good reason why when developing in Drupal, debugging with Devel is such a great help. </p>
+<p>Having set a bit of the context, let’s get back to the job at hand. How do we make sure our own custom functionality gets called when the form is submitted? We have to insert our own callback function somewhere in there. But first, let’s create it:</p>
+<div class="codeblock"><code>function custom_callback() {<br />  drupal_set_message('This is my custom message');<br />}</code></div>
+<p>Above we have a simple function that uses <code>drupal_set_message()</code> to output a string in the usual Drupal place. We’d like therefore this message to be printed after the user presses the submit button on our form. How crazy a?</p>
+<p>As you’ve seen, there are 2 places where you can insert your custom callback function - at the button level or at the higher form level. Let’s go with the node edit form and insert it at the higher level first and see what happens:</p>
+<div class="codeblock"><code>function your_module_form_alter(&amp;$form, &amp;$form_state, $form_id) {<br />  if ($form['#form_id'] == 'article_node_form') {<br />    $form['#submit'][] = 'custom_callback';<br />  }<br />}</code></div>
+<p>Here we target the node edit form of the article content type and insert our custom callback at the higher level. Now if you edit a node, you should see the custom message get printed out onto the page next to the usual node edit message. One thing to notice is that it gets printed out first, before the regular one. That means it gets called before the button level handler. So if we want it to be called after, we’d add it there:</p>
+<div class="codeblock"><code>function your_module_form_alter(&amp;$form, &amp;$form_state, $form_id) {<br />  if ($form['#form_id'] == 'article_node_form') {<br />    $form['actions']['submit']['#submit'][] = 'custom_callback';<br />  }<br />}</code></div>
+<p>Since the function name is the second one in the array of functions, it gets called second and our message gets printed out after the normal node processing takes place. Similarly, on the block configuration form, all you have to do is add your callback in the right order of functions you want called. And that’s pretty much how you can hook into the Drupal Form API and do a bunch of cool stuff. Like redirecting to another page after form submission.</p>
+<p>Hope this helps.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal-hooks">Hooks</a></span> | <span class="field-item odd"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-custom-form-callback-submit-button" st_title="How to add a custom callback function to an existing form" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-custom-form-callback-submit-button" st_title="How to add a custom callback function to an existing form" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-custom-form-callback-submit-button" st_title="How to add a custom callback function to an existing form" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

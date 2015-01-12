@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 24 Nov 2013 03:59:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 24 Nov 2013 03:59:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: R.J.'s Blog: Creating a Field Formatter in Drupal to insert a block directly into a body field
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.robertjtownsend.com/blog/creating-field-formatter-drupal-insert-block-directly-body-field
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>R.J.'s Blog: Creating a Field Formatter in Drupal to insert a block directly into a body field</title>
+    <base href="http://www.robertjtownsend.com/blog/creating-field-formatter-drupal-insert-block-directly-body-field">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div id="comment-wrapper-nid-43"></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded">In my personal blog I wanted to insert a block directly into a node's body field. The block contains an image and I want text to wrap around the image, therefore the block needs to be in the same div as the rest of the content. I could have hacked the tpl.php file and done something like an array_splice but I wanted something a little more elegant and Drupalish. A custom field formatter is exactly what I need, read more to see how I did it.</div></div></div><!-- google_ad_section_end --><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline inline"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

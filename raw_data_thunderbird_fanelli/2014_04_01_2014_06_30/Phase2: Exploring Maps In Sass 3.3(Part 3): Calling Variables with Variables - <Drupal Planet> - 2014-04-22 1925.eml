@@ -1,0 +1,96 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Apr 2014 17:25:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Apr 2014 17:25:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Exploring Maps In Sass 3.3(Part 3): Calling Variables with Variables
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/exploring-maps-in-sass-3-3part-3-calling-variables-with-variables/?utm_source=rss&utm_medium=rss&utm_campaign=exploring-maps-in-sass-3-3part-3-calling-variables-with-variables
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Exploring Maps In Sass 3.3(Part 3): Calling Variables with Variables</title>
+    <base href="http://www.phase2technology.com/blog/exploring-maps-in-sass-3-3part-3-calling-variables-with-variables/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=exploring-maps-in-sass-3-3part-3-calling-variables-with-variables">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">For this blog entry, the third in a <a href="http://www.phase2technology.com/?s=ssseries">series about Sass Maps</a>, I am going to move away from niche application, and introduce some more practical uses of maps.</p>
+<h2 dir="ltr">Living Style Guides</h2>
+<p dir="ltr">In my current project, a large Drupal media site,  I wanted to have a style guide, a single static page where we could see all of the site colors, along with the variable name. I collected all of my color variables, and created some static markup with empty divs. Below is the loop I started to write.</p>
+<p></p><pre class="crayon-plain-tag">&lt;!-- The HTML for our Style Guide --&gt;
+&lt;div class="styleguide"&gt;
+  &lt;div class="primary-color"&gt;&lt;/div&gt;
+  &lt;div class="secondary-color"&gt;&lt;/div&gt;
+  &lt;div class="tertiary-color"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre><p></p><pre class="crayon-plain-tag">// Our site color variables
+$primary-color: #111111;
+$secondary-color: #222222;
+$tertiary-color: #333333;
+
+// Make a list of the colors to display
+$styleguide-colors: primary-color, secondary-color, tertiary-color;
+
+// Loop through each color name, create class name and styles
+@each $color in $styleguide-colors {
+  .styleguide .#{$color} {
+    background-color: $#{$color}; // Spoiler Alert: Does not work!!
+    &amp;:after {
+      content: “variable name is #{$color}”
+    }
+  }
+}</pre><p></p>
+<p dir="ltr">This loop goes through each color in my <pre class="crayon-plain-tag">$styleguide-colors</pre> list and creates a class name based on the color name. It then attempts to set the background-color by calling a variable that matches the name from the list. We also set the content of a pseudo element to the variable name, so that our styleguide automatically prints out the name of the color.</p>
+<p dir="ltr">This is what we <strong>want</strong> the first loop to return:</p>
+<p></p><pre class="crayon-plain-tag">.styleguide .primary-color {
+ background-color: $primary-color; // Nope, we won’t get this variable
+ &amp;:after {
+     content: “variable name is primary-color”
+   }
+}</pre><p>The problem is that we can’t interpolate one variable to call another variable! <pre class="crayon-plain-tag">$#{$color}</pre>  doesn’t actually work in Sass. It won’t interpolate into <pre class="crayon-plain-tag">$ + primary-color</pre> , and then yield <pre class="crayon-plain-tag">#111111</pre>  in the final CSS. This 3 year old github issue points out this exact issue, and hints at how maps is going to be introduced in Sass 3.3 to solve this problem. <a href="https://github.com/nex3/sass/issues/132">https://github.com/nex3/sass/issues/132</a></p>
+<h2 dir="ltr">Make it better with maps</h2>
+<p dir="ltr">So now that we have maps, how can we create this color styleguide? Lets take this a step at a time.</p>
+<p dir="ltr">First we need to wrap all of our colors in a map. Remember, any of these colors can be accessed like this: <pre class="crayon-plain-tag">map-get($site-colors, primary-color)</pre></p>
+<p></p><pre class="crayon-plain-tag">$site-colors: (
+ primary-color: #111111,
+ secondary-color: #222222,
+ tertiary-color: #333333,
+);</pre><p></p>
+<p dir="ltr">Now we can create a list of the colors we want to iterate through and loop through them just like we did before.</p>
+<p></p><pre class="crayon-plain-tag">$styleguide-colors: primary-color, secondary-color, tertiary-color;
+
+@each $color in $styleguide-colors {
+ .styleguide .#{$color} {
+   background-color: map-get($site-colors, $color); // This DOES work!
+   &amp;:after {
+     content: “variable name is #{$color}”
+   }
+ }
+}</pre><p>This time when we loop through our colors we get the same class name and pseudo element content, but lets look at what happens with the background color. Here is the first pass through the loop, using primary-color as <pre class="crayon-plain-tag">$color</pre> :</p><pre class="crayon-plain-tag">.styleguide .primary-color {
+  background-color: map-get($site-colors, primary-color);
+  &amp;:after {
+     content: “variable name is primary-color”
+   }
+}</pre><p></p>
+<p dir="ltr">As you can see in this intermediate step, we are able to use <pre class="crayon-plain-tag">map-get($site-colors, primary-color)</pre>  to programmatically pass our color name into a function, and get a returned value. Without maps we’d be stuck waiting for $#{$color} to be supported (which will probably never happen). Or in the case of my project, write all 20 site color classes out by hand!</p>
+<h2 dir="ltr">Make it awesomer with maps</h2>
+<p dir="ltr">Astute readers might realize that I am still doing things the hard way. I created a map of colors, and then duplicated their names in a list called <pre class="crayon-plain-tag">$styleguide-colors</pre> . We can skip that middle step and greatly simplify our code, if we are wanting to print out every single value in the map.</p>
+<p></p><pre class="crayon-plain-tag">$site-colors: (
+  primary-color: #111111,
+  secondary-color: #222222,
+  tertiary-color: #333333,
+);
+
+@each $color, $value in $site-colors  {
+ .styleguide .#{$color} {
+   background-color: $value;
+   &amp;:after {
+     content: “variable name is #{$color}”
+   }
+ }
+}</pre><p>Now, instead of passing a list into the @each loop, we pass the entire map. We can do this with the following pattern: <pre class="crayon-plain-tag">@each $key, $value in $map</pre> . Each iteration of the loop has access to both the key <pre class="crayon-plain-tag">primary-color</pre>  AND the value <pre class="crayon-plain-tag">#111111</pre> , so we don’t even need the map-get function.</p>
+<p>The ability to &#8216;call variables with variables’ is incredibly useful for creating these programmatic classes, and is a foundational process upon which we start to build more complex systems. Be sure to check out <a href="http://www.phase2technology.com/blog/exploring-maps-in-sass-3-3/?utm_source=website&amp;utm_medium=blog%20post&amp;utm_campaign=Sass%20Maps%20blog%20series">part 1</a> and <a href="http://www.phase2technology.com/blog/sass-maps-memoization/?utm_source=website&amp;utm_medium=blog%20post&amp;utm_campaign=Sass%20Maps%20blog%20series">2</a> of my Sass Maps blog series!</p>
+  </body>
+</html>
+

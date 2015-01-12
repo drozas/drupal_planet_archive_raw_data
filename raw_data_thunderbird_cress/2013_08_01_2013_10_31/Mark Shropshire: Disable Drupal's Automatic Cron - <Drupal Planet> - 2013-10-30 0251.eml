@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 30 Oct 2013 02:51:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 30 Oct 2013 02:51:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mark Shropshire: Disable Drupal's Automatic Cron
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mark.shropshires.net/blog/disable-drupals-automatic-cron
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mark Shropshire: Disable Drupal's Automatic Cron</title>
+    <base href="http://mark.shropshires.net/blog/disable-drupals-automatic-cron">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Drupal 7 was released with an automatic cron option which is handy for those who do not have shell access or a way to enable a Unix type cron with their web host.</p>
+
+<p>At <a href="http://knowclassic.com">Classic</a>, we use Jenkins to trigger cron via Drupal's cron URL. Because we have cron scheduled, we have no need for Drupal's built-in automatic cron which defaults to run every 3 hours. Also, we sometimes have to disable the Jenkins cron during deployments to make sure that that cron doesn't execute until all code has been deployed successfully.</p>
+
+<p>There are a number of ways to disable Drupal 7's automatic cron if you decide you do not need it. I have outlined these options below. You can decide which is the best for your situation.</p>
+
+<h3>Drupal UI</h3>
+
+<p>The Drupal UI is always a great way to go for confirmation settings.</p>
+
+<p>Go to the following path <code>admin/config/system/cron</code>and set the "Run cron every" drop-down to "Never". Next, click the "Save Configuration" button.</p>
+
+<div class="thumbnail"><a href="https://www.evernote.com/shard/s1/sh/65229036-ac2a-438b-bf84-83b620a37ff7/81a16ae98d2c7b5714a073f02bcb91af"><img src="https://www.evernote.com/shard/s1/sh/65229036-ac2a-438b-bf84-83b620a37ff7/81a16ae98d2c7b5714a073f02bcb91af/deep/0/Drupal-7-cron-configraution-screen.png?width=200" alt="Drupal%207%20cron%20configraution%20screen" /></a></div>
+
+<h3>Drush</h3>
+
+<p>Many prefer to use Drush and find it faster and easier than using the Drupal UI for configuration tasks.</p>
+
+<p>Run the following Drush command in your terminal. Make sure to change directory to your Drupal install. 
+<code>drush vset cron_safe_threshold 0</code></p>
+
+<h3>settings.php</h3>
+
+<p>Setting configuration variables in the settings.php is a great way to lock in changes that you don't want someone to change in the Drupal UI.</p>
+
+<p>Add the following to your settings.php:
+<code>$conf['cron_safe_threshold'] = 0;</code></p>
+
+<h3>hook_update_N function</h3>
+
+<p>I often find adding configuration changes to <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_update_N/7">hook_update_N</a> functions a great way to make configuration changes during deployments.</p>
+
+<p>Simply add the following line of code inside your hook_update_N function:
+<code>variable_set('cron_safe_threshold', 0);</code></p>
+
+<h2>Drupal 8</h2>
+
+<p>Drupal 8's automatic cron setting currently defaults to "Never". According to <a href="https://drupal.org/node/1986090">this issue</a>, the intent is to still have Drupal's automatic cron default to run every 3 hours.</p>
+
+<p>It looks like disabling Drupal 8's automatic cron can be done in the Drupal UI or through the <a href="https://drupal.org/node/1928898">configuration override system</a>. I need to dig deeper to test which options will work best for our environment as we move to Drupal 8.</p>
+</div></div></div><section class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above view-mode-rss"><h2 class="field-label">Blog Category:&nbsp;</h2><ul class="field-items"><li class="field-item even"><a href="/taxonomy/term/13" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li></ul></section>
+  </body>
+</html>
+

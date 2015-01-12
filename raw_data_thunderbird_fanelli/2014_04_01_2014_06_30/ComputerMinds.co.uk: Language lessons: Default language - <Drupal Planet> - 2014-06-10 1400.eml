@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 10 Jun 2014 12:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 10 Jun 2014 12:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ComputerMinds.co.uk: Language lessons: Default language
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.computerminds.co.uk/drupal-code/language-lessons-default-language
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ComputerMinds.co.uk: Language lessons: Default language</title>
+    <base href="http://www.computerminds.co.uk/drupal-code/language-lessons-default-language">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="schema:articleBody content:encoded"><p>When you are going to have multiple language set up on your Drupal site, it's important to set the default language appropriately before creating content. Once that is set, content will normally be set to be in that language, and any translations made on the site will be assumed to be from the default language as the source. So changing it is not a good idea, as there's no way to differentiate between translations made before and after the switch in Drupal 6 or 7! (This has been resolved in Drupal 8.)</p>
+
+<p>So, once you've <a href="http://www.computerminds.co.uk/drupal-code/language-lessons-think-first">thought first</a> about what is necessary for your multilingual site, the next step is to pick the right default language, ideally before setting up anything else, as <em>everything</em> is 'in' a language in some way. It's usually an obvious choice, but did you know that the Drupal software itself and associated modules (i.e. the codebase, referred to as the '<em>interface</em>') is all written in U.S. English (as per the <a href="https://drupal.org/coding-standards" target="_blank">coding standards</a>)?</p>
+</div></div></div><span rel="schema:url" resource="/drupal-code/language-lessons-default-language" class="rdf-meta"></span><span property="schema:name" content="Language lessons: Default language" class="rdf-meta"></span>
+  </body>
+</html>
+

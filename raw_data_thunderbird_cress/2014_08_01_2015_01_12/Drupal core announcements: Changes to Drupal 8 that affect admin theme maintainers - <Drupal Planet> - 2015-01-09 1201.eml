@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 09 Jan 2015 12:01:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 09 Jan 2015 12:01:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Changes to Drupal 8 that affect admin theme maintainers
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/454113
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Changes to Drupal 8 that affect admin theme maintainers</title>
+    <base href="https://groups.drupal.org/node/454113">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Happy Friday! I maintain the admin theme in Drupal 8 core: Seven. There have been many changes to Seven in Drupal 8 that affect the relationship between admin themes and modules, and how the admin UI is generated.</p>
+<p>I've always thought that the strategy we've put in place are going to have a positive impact on maintainers of contrib admin themes, but I've never sought out feedback directly. I am now!</p>
+<h2>Object oriented CSS</h2>
+<p>We now have <a href="https://www.drupal.org/node/1886770">CSS standards</a> in Drupal 8. All CSS in core is being rewritten and restructured inline with those standards. They are heavily influencds by the principles of <a href="http://www.smashingmagazine.com/2011/12/12/an-introduction-to-object-oriented-css-oocss/">OOCSS,</a> <a href="http://smacss.com/book/">SMACSS,</a> <a href="https://bem.info/">BEM,</a> and the writings of <a href="http://nicolasgallagher.com/about-html-semantics-front-end-architecture/">Nicolas Gallagher.</a></p>
+<p>The Seven theme, with the introduction and evolution of the <a href="https://groups.drupal.org/node/283223">Seven Style Guide,</a> embraced these principles from design down to implementation. As all modules with administrative UIs are tested against Seven, the architecture and design of Seven influences all contrib admin themes.</p>
+<h2>Reusable admin CSS components</h2>
+<p>Taking influence from frontend frameworks such as <a href="http://getbootstrap.com/">Bootstrap</a>, Seven's design is now split into components, instead of per page overrides and designs.</p>
+<p>This creates a 'visual api' of sorts that modules hook into and reuse to create the admin UI they need without having to write any CSS. It also ensures a greater consistency throughout Drupal's UX.</p>
+<p>One common example are buttons, the classes <code>.button, .button--primary, .button--danger, .buttoner--small</code> can be applied to any element.</p>
+<p>Another is the heading classes. Classes like <code>.heading-a, .heading-b, heading-c&lt;/code mimic the hierarchy of the &lt;code&gt;h1, h2, h3</code> elements. You can pick the font sizes that look right for your page without affecting accessibility or overriding it in CSS.</p>
+<p>We also have reusable classes to control layout. Using classes like <code>.layout-column.half, .layout-column.quarter, .layout-column.three-quarter</code> will layout your page for you. Classes such as <code>.leader, .leader-double, .leader-triple</code> will add spacing above an element that matches the base leading of Seven, while <code>.trailer, .trailer-double, .trailer-triple</code> will add spacing below.</p>
+<p>Another low level component are the color classes, <code>.color-success, .color-warning, .color-error</code> allow you to reuse colors defined in the <a href="https://groups.drupal.org/node/283223#Color">Seven styleguide,</a> without a tool like Sass or CSS variables.</p>
+<h2>Less admin CSS in modules</h2>
+<p>With a full library of reusable CSS components, contrib modules will need to write less CSS. From my point of view, this is a big win for contrib admin theme maintainers, who have to write a lot of custom CSS to override custom CSS in some complex modules, and it's harder to tell if modules are broken because of the changes in the admin theme.</p>
+<p>I'm hoping that admin theme maintainers will be able to override just the reusable components and have better coverage of core and contrib modules.</p>
+<h2>Ongoing work</h2>
+<p>We are still working on converting a lot of custom CSS into reusable components, and will continue to build the library of components after Drupal 8s release.</p>
+<h2>Feedback please!</h2>
+<p>Admin theme maintainers, are there any problems or pitfalls you see with this approach? I would like to know.</p>
+  </body>
+</html>
+

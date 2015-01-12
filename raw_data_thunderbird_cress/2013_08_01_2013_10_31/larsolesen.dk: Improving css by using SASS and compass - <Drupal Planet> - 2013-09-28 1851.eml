@@ -1,0 +1,98 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 28 Sep 2013 17:51:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 28 Sep 2013 17:51:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: larsolesen.dk: Improving css by using SASS and compass
+Content-Transfer-Encoding: 8bit
+Content-Base: http://larsolesen.dk/node/367
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>larsolesen.dk: Improving css by using SASS and compass</title>
+    <base href="http://larsolesen.dk/node/367">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above">
+    <a href="/tags/panels" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">panels</a>  </div>
+  <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above">
+    <a href="/tags/sass" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">sass</a>  </div>
+  <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above">
+    <a href="/tags/compass" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">compass</a>  </div>
+  <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above">
+    <a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above">
+    <a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet drupal</a>  </div>
+
+  <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+    <p>On vih.dk I had a layout which is several years old, and it is mainly suited for viewing on a desktop. I wanted to start the transition to making the layout mobile.</p>
+<p>To make the transition easier, I wanted to start using a preprocessor. I <a href="https://github.com/soc-odder/rose-theme">successfully used LESS</a> on <a href="http://odder2014.dk">odder2014.dk</a> and was very satisfied, but for this transition I eventually wanted to be able to use the power of compass. Therefore, I chose SASS for this project. I've also recently introduced <a href="http://drupal.org/project/navbar">navbar</a> and <a href="http://drupal.org/project/panopoly">panopoly</a> features to the site, and since <a href="http://drupal.org/project/radix">radix</a> also use compass and sass this seemed as a good bet.</p>
+<h3>Rewrite existing css to sass</h3>
+<p>SASS and compass are local development tools, which you do not necessarily need on the server. There is a lot of ressources on the internet on how to install and use the languages. I've just followed them.</p>
+<p>Then on <a href="http://github.com/vih/sport-theme">my project</a>, I started by adding a new branch, so I would not destroy any of the current work. Basically, I created a new folder called <em>scss</em> and copied my existing css-files to that. Now I made sure that sass watched the folder and automatically compiled the css to the css folder. Because css is also valid SASS, it worked automatically.</p>
+<p><code>sass --watch</code></p>
+<p>Then I started reorganising my css, and used the nested properties of SASS, so I got at good structure on my existing css. It took about an hour and you can see the difference <a href="https://github.com/vih/sport-theme/tree/6307dfe129c6d0f74988bbaf0f5b7a184612ed96/css">before</a> and <a href="https://github.com/vih/sport-theme/commit/491d95c2902c6ce6821c561b4eb8845f6e255c5a">after</a>.</p>
+<h3>Enter compass to introduce CSS3 features to the existing theme</h3>
+<p>To make it easier to switch to a more mobile friendly layout, I wanted to switch from the old method of achieving rounded corners using images to the new CSS3 features for generating the same effect using pure css. Compass has a lot of really nice features, which makes this a whole lot easier called @mixins.</p>
+<p>E.g. to generate the highligted box in the top of the page using old style css, I used the following code:</p>
+
+<pre>
+<code>#highlighted { 
+  width: 469px; 
+  height: 85px; 
+  background: url(../images/layout/tel-base.png) no-repeat 0 0; 
+  margin: -100px 0 0 623px; 
+  float: left; 
+  display: inline; 
+  font-size: 1em; 
+  line-height: 1.4; 
+  position: relative; 
+} 
+#highlighted .region-highlighted { 
+  padding: 10px 20px 20px 42px; 
+} 
+#highlighted h2 { 
+  margin-top: 0; 
+  margin-bottom: 0; 
+  font-weight: bold; 
+}</code></pre>
+
+<p>After rewriting this part to using compass, I am no longer using an image, but using the @border-bottom-radius() and @box-shaddow()-mixins I was able to ditch the background image, and only use css for this effect. This makes it much easier to switch e.g. branding colors or whatever, I want to change.</p>
+
+<pre>
+<code>#highlighted { 
+  display: inline; 
+  font-size: 1em; 
+  line-height: 1.4; 
+  background: white; 
+  border-left: 5px solid $branding-color; 
+  border-bottom: 5px solid $branding-color; 
+  border-right: 5px solid $branding-color; 
+  @include border-bottom-radius(10px); 
+  @include box-shadow(black 5px 5px 5px); 
+  width: 469px; 
+  margin-top: -110px; 
+  float: right; 
+  .region-highlighted { 
+    padding: 10px 10px 10px 20px; 
+  } 
+  h2 { 
+    margin-top: 0; 
+    margin-bottom: 0; 
+    font-weight: bold; 
+  } 
+}</code></pre>
+
+<p>So the entire css has been rewritten to compass and next step will be to introduce breakpoint for creating the mobile friendly layout. You can see the <a href="http://github.com/vih/sport-theme">entire code on github.com</a>. </p>
+<h3>Using panels style plugins for commen elements</h3>
+<p>I had some styles which were duplicated several times to make a grey background with rounded corners on some elements on the page. These, I also ditched and <a href="http://github.com/vih/vih_styles">created some panels style plugins</a>, so I only needed to write the code once, and the content editors could change the style for the panel panes themselves from the panels ui.</p>
+<p>There is still a lot of room for improvement, and comments are more than welcome. I am still learning.</p>  </div>
+  </body>
+</html>
+

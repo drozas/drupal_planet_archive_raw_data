@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 01 Jul 2014 15:00:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 01 Jul 2014 15:00:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: OhTheHugeManatee: Bug: Multilingual Auto Label Will Break Your Entity Static Cache
+Content-Transfer-Encoding: 8bit
+Content-Base: https://ohthehugemanatee.org/blog/2014/07/01/bug-multilingual-auto-label-will-break-your-entity-static-cache/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>OhTheHugeManatee: Bug: Multilingual Auto Label Will Break Your Entity Static Cache</title>
+    <base href="https://ohthehugemanatee.org/blog/2014/07/01/bug-multilingual-auto-label-will-break-your-entity-static-cache/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>This is an important one to note: If you use the popular <a href="https://www.drupal.org/project/auto_entitylabel">Automatic Entity Label</a> module on a multilingual site, <a href="https://www.drupal.org/node/2295325">it will break your paths</a> because of an interaction with Drupal&rsquo;s built in object cache. I looked at this briefly a few months ago and ran out of time, but my (badass) colleague <a href="https://www.drupal.org/u/bburg">bburg</a> figured it out this week.</p>
+
+<p>For now, the only solution is a slow one &ndash; we clear static entity caches when we generate multilingual titles. That&rsquo;s not an awesome fix, but it&rsquo;s hard to think of a better one without any of the D8 cache tagging functionality. Massive kudos to bburg for figuring this out!</p>
+
+<p>And for those of you keeping score, this is a good example of how to file a bug report for a really complex issue in a really popular module&hellip; and follow up until you resolve it.</p>
+  </body>
+</html>
+

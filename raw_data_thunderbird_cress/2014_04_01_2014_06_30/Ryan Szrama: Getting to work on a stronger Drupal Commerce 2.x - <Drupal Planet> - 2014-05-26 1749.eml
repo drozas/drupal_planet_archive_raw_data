@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 26 May 2014 16:49:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 26 May 2014 16:49:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Ryan Szrama: Getting to work on a stronger Drupal Commerce 2.x
+Content-Transfer-Encoding: 8bit
+Content-Base: http://ryanszrama.com/blog/05-26-2014/getting-work-stronger-drupal-commerce-2x
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Ryan Szrama: Getting to work on a stronger Drupal Commerce 2.x</title>
+    <base href="http://ryanszrama.com/blog/05-26-2014/getting-work-stronger-drupal-commerce-2x">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I don't like being sandy but I love building sand castles. The potential is high but the stakes are low. You have unlimited raw material to build whatever you can imagine, and if you screw up you can just knock it over (to the delight of your children) and start again.</p>
+<p>When your constant is impermanence, you adjust your expectations accordingly. If the sands shift or the tide rises, you shrug it off and start again or go back to bocce. However, if you were somehow bound by the fruit of your labor, you'd think twice about the when, where, and how of your building.</p>
+<p>Lyle and I started developing Ubercart when Drupal 5 was still in beta, and we put up with the impermanence because we were just two dudes learning a lot and working from a clean slate. Moving that forward to Drupal 6 took even longer because our codebase grew unwieldy, so I decided at Commerce Guys to trim the fat and start over. We didn't learn every lesson moving to Drupal 7, though, as it was still unstable when we began developing Drupal Commerce. With an unstable Views module. And an unstable Rules module. And an incomplete Entity API. <img src="http://ryanszrama.com/sites/all/modules/smiley/packs/example/tongue.png" alt="Tongue" /></p>
+<p>I don't think we would've done any differently, as the flip side of the instability is the opportunity to positively impact the development of the projects you depend on. For Drupal 8 we ended up contributing to core in other ways while tackling a full Drupal Commerce rewrite more slowly than we hoped. Even the code that we did develop against Drupal 8 is now outdated, as we had to juggle managing our existing ecosystem, writing new code, and rewriting that code to track changes in Drupal 8 itself.</p>
+<p>However, we've recently been given the opportunity to host a variety of developers / documenters in Paris from June 30 - July 4 to re-evaluate our <a href="http://www.drupalcommerce.org/roadmap">Commerce 2.x roadmap</a> with the direct help and guidance of key members of the Symfony project. Specifically, we'll be looking to both move our code "upstream" from our Drupal modules into generalized Symfony bundles and take advantage of existing Symfony projects where possible.</p>
+<p>Our target is an even leaner codebase with connections to the broader world of PHP based eCommerce. If you have any insights in this direction, please comment or contact me directly and consider joining us in Paris to learn and contribute.</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 06 Jan 2014 13:10:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 06 Jan 2014 13:10:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: How to create a Promo block using Nodequeue and Views
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-promo-block-nodequeue
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: How to create a Promo block using Nodequeue and Views</title>
+    <base href="http://www.webomelette.com/drupal-promo-block-nodequeue">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Happy New Year everyone!</p>
+<p>In this tutorial I am going to show you how you can use <a href="https://drupal.org/project/nodequeue" target="_blank">Nodequeue</a> to create yourself an awesome Promo content block. If you follow along, by the end of this tutorial you will have a block on the front page listing content that you easily select and sort based on the requirements of the moment. So lets go ahead and see how.</p>
+<p>For this tutorial, my content will consist of 4 images from Article nodes that I want to promote to my Promo block whenever and in whichever position I want. So lets begin.</p>
+<p>First, we'll need a simple View that displays our content. Here you can use whatever type of content you need and style its output however it best fits your design. I'm going with a View listing 4 nodes using fields instead of content and showing only the image field. I remove everything that is in the sorting section and for filtering I make sure only published nodes of the type Article show up. Save the View and you can already position it wherever you want on the homepage to see the 4 images. No biggie.</p>
+<p>But currently, the sorting and filtering is quite unfriendly for something such as a Promo block where you need to be able to quickly change which nodes go there and in what order. And yes you could add a field to the content type and promote it to the Promo block if you need. But for sorting? You'll probably end up editing the authoring date all the time to make sure the sorting is in the way you want at any given moment. So lets use <strong>Nodequeue</strong> instead.</p>
+<p><p>After installing it (<code>drush dl nodequeue &amp;&amp; drush en nodequeue -y</code>), go to <strong>Structure-&gt;Nodequeues-&gt;Add a simple queue</strong>. Give it a title and the number of nodes you'd like this queue to max out with. In my case it will be 4. Then select the content type you are allowed to add to it and save. Now let's go back to edit our View to make sure it displays only content that is in this particular nodequeue we just created.</p>
+<p>First up, add a relationship of the type <code>Nodequeue: Queue</code> and go ahead and limit it to the queue you just created. Now we have access to the nodequeue information in our View. So add a new filter of the type <code>Nodequeue: In queue</code> using this relationship. Set that to <code>true</code> to make sure only nodes present in this queue are listed by the View.</p>
+<p>Now add a sorting criterion of the type <code>Nodequeue: Position</code> and don't mind whether it is ascending or descending. The position will be given by the <em>drag'n'drop</em> functionality of Nodequeue with which you will control manually the position of the nodes.</p>
+<p>OK, now that you have your View you can go check it out on the home page and you'll notice there is nothing in it anymore. Well you have to add some nodes to the queue you created earlier. And this is the part where your life becomes easier. Now whenever you need stuff in the promo block, you'll just go to the queue and add the node in it. And you can easily adjust the position in which they appear with the <em>drag'n'drop</em>. Cool no?</p>
+<p>Hope this helps</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-promo-block-nodequeue" st_title="How to create a Promo block using Nodequeue and Views" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-promo-block-nodequeue" st_title="How to create a Promo block using Nodequeue and Views" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-promo-block-nodequeue" st_title="How to create a Promo block using Nodequeue and Views" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

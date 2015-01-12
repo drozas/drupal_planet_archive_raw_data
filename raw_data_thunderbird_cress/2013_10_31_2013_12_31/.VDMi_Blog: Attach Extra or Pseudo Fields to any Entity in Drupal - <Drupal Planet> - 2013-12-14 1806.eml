@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 14 Dec 2013 18:06:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 14 Dec 2013 18:06:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: .VDMi/Blog: Attach Extra or Pseudo Fields to any Entity in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vdmi.nl/blog/attach-extra-or-pseudo-fields-any-entity-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>.VDMi/Blog: Attach Extra or Pseudo Fields to any Entity in Drupal</title>
+    <base href="http://www.vdmi.nl/blog/attach-extra-or-pseudo-fields-any-entity-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-afbeelding field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/blog/attach-extra-or-pseudo-fields-any-entity-drupal"><img style="max-width: 40%; height: auto; float: left; margin-right: 1em;" align="left" hspace="10" src="http://www.vdmi.nl/sites/vdmisite.s1.aegirhost.nl/files/styles/200_max_width/public/extra-extra-paper.jpg?itok=80pp14jU" width="200" height="115" alt="Attach Extra or Pseudo Fields to any Entity in Drupal" /></a></div></div></div><div class="field field-name-field-samenvatting1 field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">In Drupal 7 you can push extra fields in any fieldable Entity (e.g. node, user). Extra fields can be ordered as a normal field or disabled on the display settings page of the enitity. They are great when you want to push content in your entity, that need some logic to be displayed.</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Start by creating your own <a href="http://www.vdmi.nl/drupal">Drupal 7</a> module. That is beyond the scope of this blog post, you can find a good reference on the <a href="https://drupal.org/developing/modules/7">Drupal site</a>.</p>
+<p>Now you are ready to use two hooks. The first one defines the extra field you want to add.</p>
+<pre><pre><code class="php">/**<br />
+ * Implements hook_field_extra_fields().<br />
+ */<br />
+function HOOK_field_extra_fields() {<br />
+  $extrafield_name = 'my_field';<br />
+  foreach (array('page', 'article') as $node_type) {<br />
+    $extra['node'][$node_type]['display'][$extrafield_name] = array(<br />
+      'label' =&gt; t('Some freaking title'),<br />
+      'description' =&gt; t('A serious description.'),<br />
+      'weight' =&gt; 50, // default weight, can be changed on display form by site-builder.<br />
+    );<br />
+  }<br />
+  return $extra;<br />
+ }</code></pre></pre>
+<p>In this example I've added the pseudo field 'my_field' to the entity node on the bundles 'page' and 'article'. Note: <em>Replace HOOK in the function name with your own module name!</em></p>
+<p>The next hook will add the content.</p>
+<pre><pre><code class="php">/**<br />
+ * Implements hook_node_view().<br />
+ * Also HOOK_entity_view() can be used.<br />
+ */<br />
+function HOOK_node_view($node, $view_mode, $langcode) {<br />
+  $extrafields = field_info_extra_fields('node', $node-&gt;type, 'display');<br />
+  $extrafield_name = 'my_field';<br />
+  if (isset($extrafields[$extrafield_name])<br />
+      &amp;&amp; isset($extrafields[$extrafield_name]['display'][$view_mode]['visible'])<br />
+      &amp;&amp; $extrafields[$extrafield_name]['display'][$view_mode]['visible']) {<br />
+    // Your logic here.<br />
+    $node-&gt;content[$extrafield_name] = 'Build array or string with content';<br />
+  }<br />
+}</code></pre></pre>
+<p>Put in your own logic and enjoy!</p>
+</div></div></div>
+  </body>
+</html>
+

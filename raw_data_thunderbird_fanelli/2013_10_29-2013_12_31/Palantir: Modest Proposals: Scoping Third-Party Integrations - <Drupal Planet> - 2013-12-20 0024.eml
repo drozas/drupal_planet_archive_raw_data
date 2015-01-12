@@ -1,0 +1,93 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 19 Dec 2013 23:24:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 19 Dec 2013 23:24:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Palantir: Modest Proposals: Scoping Third-Party Integrations
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.palantir.net/blog/modest-proposals-scoping-third-party-integrations
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Palantir: Modest Proposals: Scoping Third-Party Integrations</title>
+    <base href="http://www.palantir.net/blog/modest-proposals-scoping-third-party-integrations">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="featured-blog-image">  
+      <img typeof="foaf:Image" src="http://www.palantir.net/sites/default/files/styles/bloglandingpage-thumbnail/public/blog/images/knot-1.jpg?itok=A3rZOZ6E" width="262" height="175" alt="" />  </span>
+            <p>Let me tell you a secret: I read a lot of RFPs and project proposals. A lot. How many? Sometimes friends ask me to proofread their proposals for accuracy. At peak, I read three per day. That many. That is to say: Unless you are a professional proposal writer, I read more RFPs than your team writes. </p>
+<p>If there is one word I dread more than all others when reading RFPs, it's "integrate." By itself, a harmless word. But that's the problem: it is almost always by itself, with little or no context. </p>
+<p>Here's an example:<br /><br /></p>
+<blockquote><p>
+ <strong>SEO strategy</strong><br />
+Integrate with Google Analytics and Chartbeat
+</p></blockquote>
+<p>Here's another:</p>
+<blockquote><p>
+<strong>CRM integration</strong><br />
+We use Salesforce for CRM and need to integrate that to the website.
+</p></blockquote>
+<p><br /><br />
+So, what's the big deal? These are clear feature requests for linking up a website with a well-known service. Right?</p>
+<p>Well, no. An integration is not a one-size-fits-all solution. Integration means a tight coupling of separate services. An integration with Google Analytics isn't the same level of effort as adding Google Analytics tags to your pages.</p>
+<p>Here's a helpful guide to "integration" that illustrates what I mean. Lets think of integration in terms of tiers: increasing levels of complexity (and cost, and time) as we move from tier 1 to tier 4.</p>
+<h2>Tier 1: Push integration</h2>
+<p>At the lowest level -- the typical Google Analytics integration request -- what the feature really means is: build my website to push data to an external service. That external service (like Salesforce or Google Analytics), has a series of tools for tracking, analyzing and managing that data. All we need to do is make sure the data is there.</p>
+<p>This is a typical base integration with a service, and it is most often what people need. It is generally the easiest because these services provide a bit of code that needs to be implemented once and then deployed.</p>
+<p>The key here is that interaction with the data collected by the service is performed through tools external to your web site. (Such as a Google Analytics dashboard.) When architecting a solution, our concern is simply to ensure that the data gets to the service, and that the process of doing so doesn’t slow down the site’s response time.</p>
+<h2>Tier 2: Pull integration</h2>
+<p>At the next level are external data services that we want to pull into the website. Sometimes these are user-facing (such as XML content feeds). Sometimes these are administrative reports (such as an analytics report for each landing page.)  Pull integrations add a layer of complexity because the source data feed may break (for a variety of reasons, including power failures). When that pull breaks, people tend to notice -- as was the case when Twitter changed its API recently and broke pull integrations on thousands of websites.</p>
+<p>Note that pull integration is often coupled with push integration. The service that collects data may also push data back to the site, generally so that administrators and editors may act on the information provided.</p>
+<p>With pull integrations, we have to understand the structure and source of the data. Solutions must handle cases when the data is corrupt, or the service unavailable. Both add complexity to the integration.</p>
+<h2>Tier 3: Active integration</h2>
+<p>An active integration is one in which the site pulls data from an external service and then uses it to change the behavior of the web site for a particular visitor (or class of visitors). Subscriber services are a good example of active integrations: the site may pull in a feed of user newsletters (managed in a service like Exact Target or MailChimp) and display that list to a user based on her email address.</p>
+<p>In another scenario, we may pull analytic data from Google in order to suggest links or place content relevant to the target demographic of the user.</p>
+<p>Some active integrations can be as easy as push integrations -- but those are generally ad networks which handle the complete request cycle. Where the complexity comes in is when feature requests demand new functionality be created around data sets.</p>
+<p>In that second case, we must architect the processing of the data (as in Tier 2) and the actions around that data, such as the assignment of a user role. Event registrations are a good example of this type of integration.</p>
+<p>A typical workflow looks like so:</p>
+<ul><li>Given that a site visitor purchases an event ticket;</li>
+<li>List the events schedule for that user on his account page;</li>
+<li>Link those event listings to a list of other registered attendees.</li>
+</ul><p><br /><br />
+In this case, we must enable the purchase of the event and then reconcile that action back to a user account so that additional actions may take place. </p>
+<p>As the complexity here should indicate, when we get to these higher-order integrations, it becomes crucial that the external service provides a solid. consistent, and well-documented method for interactions, generally in the form of a published API (see <a href="https://en.wikipedia.org/wiki/Api">https://en.wikipedia.org/wiki/Api</a>).</p>
+<h2>Tier 4: Full integration</h2>
+<p>At the highest level of complexity is the creation of a user interface on the website that lets people control their interactions with the external service. The most common example is the management of recurring payments or order histories on ecommerce sites. Here, we must depend on the external service having a robust, well-documented API to support the integration.</p>
+<p>This level of request generally includes research, development, interface design and user testing. Which is why when your RFP says "I want to integrate with Salesforce," we may immediately assume a three to six-month project just to produce that single feature. Additionally, the user interfaces for such interactions need to be designed before they can be implemented.</p>
+<p>Certainly, this level of integration is possible -- with the caveat that the service must support a strong, read-write API -- but it is never trivial. Frequently, it requires support from the vendor. And in many cases, it requires that you pay a license fee to access the API, which needs to be figured into the overall project cost.</p>
+<h2>Costs</h2>
+<p>Speaking of cost: Be aware that the cost (and time) of implementing these four tiers generally increase exponentially, not linearly.</p>
+<p>That is not to say, however,  that you shouldn't integrate with good services. The worst option, in most cases, is to ask a developer to write a custom replication of a service (such as an ad serving network). People pay for services like Salesforce or MailChimp for a reason: they get the job done well and require little to no internal maintenance. Rebuilding such a service from the ground up would commit resources beyond the length of initial development.</p>
+<h2>Advice</h2>
+<p>So what can you do to improve your proposals to clearly state your intentions? The simplest way is to describe the interactions that you expect from the site. A few examples from each tier should help:</p>
+<blockquote><h3>Tier 1</h3>
+<p><strong>Google Analytics</strong><br />
+All site pages will be instrumented with Google Analytics code to provide tracking and analysis.</p>
+<p><strong>Salesforce</strong><br />
+Visitors who sign up for our site will have their name and email address sent to our Salesforce account.</p>
+<h3>Tier 2</h3>
+<p><strong>Google Analytics</strong><br />
+Administrators may view real-time Google Analytics data for any page by pressing a button.</p>
+<p><strong>Salesforce</strong><br />
+Administrators may go to a secure page and see a list of all contacts stored in Salesforce.</p>
+<h3>Tier 3</h3>
+<p><strong>Google Analytics</strong><br />
+Visitors will see a list of suggested links based on their browsing history compared with history patterns of similar visitors (determined by demographics, if available).</p>
+<p><strong>Salesforce</strong><br />
+Site visitors may see a list of all other visitors who have signed up, sorted by state.</p>
+<h3>Tier 4</h3>
+<p><strong>Google Analytics</strong><br />
+Administrators may go to a secure page on the website to view reports about site usage, sorting reports by site section, date, and user demographics.</p>
+<p><strong>Salesforce</strong><br />
+Site visitors may view and update their Salesforce contact information from their account page, and they may choose to opt-out of the service.
+</p></blockquote>
+<h2>Conclusion</h2>
+<p>Remember that development firms must choose which projects to take and which projects to reject. Poorly articulated goals can land your proposal in the rejection pile.</p>
+<p>Clearly communicating your intentions will provide a strong foundation for responding to your proposal. By providing concrete examples of tasks to be done—and the benefits that will be gained—your proposal can help us provide a better estimate for the time and cost of your project.</p>
+<p>Even more than that, the level of detail in a proposal makes us excited to work with you. It shows us how much passion you have for the project.</p>
+  </body>
+</html>
+

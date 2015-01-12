@@ -1,0 +1,103 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 01 Dec 2013 19:56:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 01 Dec 2013 19:56:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Porting a Contrib Theme to Drupal 8: Get Twig-gy With It
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/porting-contrib-theme-drupal-8-get-twiggy-with-it
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Porting a Contrib Theme to Drupal 8: Get Twig-gy With It</title>
+    <base href="http://highrockmedia.com/blog/porting-contrib-theme-drupal-8-get-twiggy-with-it">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/drupal-8-logo-isolated-1318987563.png" width="880" height="226" alt="Drupal 8: getting dialed into theming" title="Drupal 8: getting dialed into theming" class="image-adaptive inline-adaptive" /></p>
+
+<p>I've been pretty busy the past several months in my free time porting my drupal contrib theme, Gratis, to Drupal 8. The port is going well and I've got most things working as they did in the Drupal 7 version but the process has involved a radical reworking of theme's architecture in part for two main reasons:</p>
+
+<ol>
+<li><p>Twig is now the theme engine for Drupal 8, the PHPTemplate theme engine has gone away that's been a staple in Drupal themes for years.</p></li>
+<li><p>As with most recent Drupal major version changes, the API has changed yet again for Drupal 8 and this has a direct impact on how you do things within a theming context.</p></li>
+</ol>
+
+<h2>Theme templates and Twig</h2>
+
+<p>What does all this mean? For one, you can no longer use PHP code in a theme template, it's all about Twig. Twig simplifies the theme layer and is easy to understand. In a Drupal 8 theme, the old <em>template.php</em> file now becomes your theme's <em>.theme</em> file and that holds any special PHP code that's then rendered with Twig variables in twig theme templates. Twig syntax is also easy to understand.</p>
+
+<p>So for example in Drupal 7's <em>page.tpl.php</em>, we have basic code that renders a block region:</p>
+
+<div class="geshifilter">&nbsp;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">!</span><span style="color: #990000;">empty</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$page</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'preface_first'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">?&gt;</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> render<span style="color: #009900;">&#40;</span><span style="color: #000088;">$page</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'preface_first'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span><br />
+&nbsp; <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">endif</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span></div>
+
+<p>With Twig and Drupal 8, in our <em>page.html.twig</em> template, we can do this as:</p>
+
+<div class="geshifilter"><span style="color: #009900;">&#123;</span><span style="color: #339933;">%</span> <span style="color: #b1b100;">if</span> page<span style="color: #339933;">.</span>preface_first <span style="color: #339933;">%</span><span style="color: #009900;">&#125;</span><br />
+&nbsp; &nbsp; <span style="color: #009900;">&#123;</span><span style="color: #009900;">&#123;</span> page<span style="color: #339933;">.</span>preface_first <span style="color: #009900;">&#125;</span><span style="color: #009900;">&#125;</span><br />
+&nbsp;<span style="color: #009900;">&#123;</span><span style="color: #339933;">%</span> <span style="color: #b1b100;">endif</span> <span style="color: #339933;">%</span><span style="color: #009900;">&#125;</span></div>
+
+<p>So as you can see, there's no more "tipple fips" (<em>.tpl.php files</em>) with Twig. The <em>.html.twig</em> naming convention is now consistent throughout for theme templates. In general, Twig greatly simplifies the way variables are rendered. So where you used to have <code>print render($page['some_var'])</code> or <code>print render($content['some_var'])</code>, these now just become  <code>{{ page.some_var }}</code> <code>{{ content.some_var }}</code> or simply <code>{{ some_var }}</code> depending on usage and location.</p>
+
+<p>Here are the key file naming conventions that have changed in Drupal 8:</p>
+
+<p><strong>Drupal 7</strong>  >  <strong>Drupal 8</strong></p>
+
+<blockquote>MYTHEME.info > MYTHEME.info.yml</blockquote>
+
+<blockquote>theme's template.php > MYTHEME.theme</blockquote>
+
+<blockquote>template_name.tpl.php > template_name.html.twig</blockquote>
+
+<p>I was surprised that <em>theme-settings.php</em> did not have a name change either as it works hand in hand with what used to be <em>template.php</em>. Not much has changed for theme-settings.php either, it generally works with Drupal 7 code unchanged though I could not find an API page for <code>function system_theme_settings</code> for Drupal 8.</p>
+
+<p>Another big change in templates is that attributes and classes arrays have been combined together into an attribute object. Before you could render global classes and attributes for body, nodes and comments as:</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php">class=&quot;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$classes</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span>&quot;<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">print</span> <span style="color: #000088;">$attributes</span><span style="color: #339933;">;</span> <span style="color: #000000; font-weight: bold;">?&gt;</span></code></span></p>
+
+<p>… which if converted verbatim to Twig would be:</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php"><span style="color: #000000; font-weight: bold;">class</span><span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;{{ classes }}&quot;</span><span style="color: #009900;">&#123;</span><span style="color: #009900;">&#123;</span> attributes <span style="color: #009900;">&#125;</span><span style="color: #009900;">&#125;</span></code></span></p>
+
+<p>However, that does not quite work, with the new way, it's actually called as:</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php">&nbsp;<span style="color: #000000; font-weight: bold;">class</span><span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;{{ attributes.class }}&quot;</span> <span style="color: #009900;">&#123;</span><span style="color: #009900;">&#123;</span> attributes <span style="color: #009900;">&#125;</span><span style="color: #009900;">&#125;</span></code></span></p>
+
+<p>For shorthand, you can simply do:</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php"><span style="color: #009900;">&#123;</span><span style="color: #009900;">&#123;</span> attributes <span style="color: #009900;">&#125;</span><span style="color: #009900;">&#125;</span></code></span></p>
+
+<p>… without printing classes specifically, this one variable does everything. I prefer the former method as it allows you to tag on your own theme class if you want to such as <code>clearfix</code> or whatever.</p>
+
+<h2>Theme info files</h2>
+
+<p>The other significant change with regard to Drupal 8 themes is the info file. It's now written in YAML and parsed by the Symfony YAML component. Converting Drupal 7's .info file was again fairly trivial. I had a look at Bartik's implementation and used that as a guide to learn enough for Gratis' conversion. For example what used to be:</p>
+
+<div class="geshifilter"><span style="color: #339933;">;</span> Stylesheets<br />
+stylesheets<span style="color: #009900;">&#91;</span>all<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> css<span style="color: #339933;">/</span>style<span style="color: #339933;">.</span>css</div>
+
+<p>would now be:</p>
+
+<div class="geshifilter">stylesheets<span style="color: #339933;">:</span><br />
+&nbsp; all<span style="color: #339933;">:</span><br />
+&nbsp; &nbsp;<span style="color: #339933;">-</span> css<span style="color: #339933;">/</span>style<span style="color: #339933;">.</span>css</div>
+
+<p>One other issue I ran into while porting Gratis is that there seemed to be a lot of class collisions between the new admin toolbar in Drupal 8 and Gratis. It seems that the toolbar uses some very general classes such as <code>ul.menu</code> for theming. In the end, I simply got more specific with the classes in my theme to avoid some of those collisions but I'm still sorting that out a bit.</p>
+
+<p>In general, I did not find a ton of documentation for Drupal 8 themes, there's just not a lot out there yet so I found myself really digging into to Drupal 8's core files and themes to see how things ticked. PHPStorm, my IDE of choice, came in handy for targeted searches of functions and code. This provided me with huge insight and in a way, i'm really glad that was the case.</p>
+
+<h2>API changes</h2>
+
+<p>Where converting your theme templates to Twig is fairly trivial, updating custom code from <em>template.php</em>  to <em>MYTHEME.theme</em> is not. The mainstay of converting these functions are that some are deprecated so they still work but will go away eventually. Other functions just plain will not work and throw errors as the API has changed for those entirely or there's new or different ones you'll need to substitute. PHPStorm has a nice visual indicator of deprecated functions in Drupal 8, that really comes in handy.</p>
+
+<p>For example <code>drupal_add_js</code> and <code>drupal_add_css</code> are deprecated so you'll need to use the <code>#attached</code> method now for adding any custom JS to your theme. Drupal 8 is also very lean which means it does not load a lot of Javascript by default for anonymous users so you'll need to use <code>hook_library_info</code> now to create some dependancies for loading things like jQuery.once or even drupal.js for that matter. <code>hook_library_info</code> my yet morph into being done in a config YML file so if you thought the API freeze for Drupal 8 was supposed to have been set in July, 2013, think again, it still seems to be a moving target. This makes it much trickier for contrib developers. The best bet is to follow any related issues for those types of things.</p>
+
+<p>In the next part of this article, I'll get more into all these API changes and give some example code of how I converted the old functions.</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">Drupal8</li><li class="field-item even">Theming</li><li class="field-item odd">Twig</li><li class="field-item even">Drupal Planet</li><li class="field-item odd last">Architecture</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="https://drupal.org/project/gratis" target="_blank" rel="nofollow">Gratis (Drupal 8 dev version released now)</a></li><li class="field-item even"><a href="https://drupal.org/node/1727592" target="_blank" rel="nofollow">Attributes and classes arrays have been combined together into Attribute object</a></li><li class="field-item odd"><a href="https://drupal.org/node/1996238" target="_blank" rel="nofollow">Replace hook_library_info() by *.library.yml file</a></li><li class="field-item even"><a href="https://drupal.org/node/1541860" target="_blank" rel="nofollow">Reduce dependency on jQuery</a></li><li class="field-item odd"><a href="http://twig.sensiolabs.org/" target="_blank" rel="nofollow">Twig</a></li><li class="field-item even"><a href="https://drupal.org/node/2008464" target="_blank" rel="nofollow">Twig and the new theme layer in Drupal 8</a></li><li class="field-item odd"><a href="https://drupal.org/node/1938044" target="_blank" rel="nofollow">Prefix all toolbar classes to prevent theme clashes</a></li><li class="field-item even last"><a href="https://drupal.org/node/1935708" target="_blank" rel="nofollow">.info files are now .info.yml files</a></li></ul>
+  </body>
+</html>
+

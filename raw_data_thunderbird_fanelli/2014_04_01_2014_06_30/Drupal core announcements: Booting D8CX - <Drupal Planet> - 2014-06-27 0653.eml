@@ -1,0 +1,117 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 27 Jun 2014 04:53:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 27 Jun 2014 04:53:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Booting D8CX
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/430243
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Booting D8CX</title>
+    <base href="https://groups.drupal.org/node/430243">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Background</h2>
+<p>Now that we're nearly down to single figures for beta-blockers a few of us have started organizing around a D8CX initiative similar to that run during the Drupal 6-&gt;7 update. Talk on irc over a month-or-so led to a formal kick-off meeting to set down some goals and get some action items.</p>
+<h3>What is D8CX I hear you say</h3>
+<p>Back in the Drupal 6 -&gt; Drupal 7 cycle the D7CX initiative promoted/assisted contrib modules porting from Drupal 6 to 7.<br />
+The CX stands for 'Contrib experience', ie its about ensuring the best contrib-module experience for building sites with Drupal 8.</p>
+<h2>Kick off meeting</h2>
+<h3>Attendance</h3>
+<p>Present at the meeting were Nick Waring (nickwaring89) (PreviousNext), Dave Reid (davereid) (Lullabot), Tim Plunkett (tim.plunkett) (Acquia) and myself (larowlan) (PreviousNext). Apologies were received from Angela Byron (webchick) (Acquia), Michael Schmid (schnitzel) (Amazee Labs) and Kim Pepper (kim.pepper) (PreviousNext). Although Kim did drop in for the last few minutes.</p>
+<h3>Goals</h3>
+<p>Introductions aside we turned our attention to the group's goals which were agreed as follows:</p>
+<ul>
+<li>
+Promoting the status of Drupal 8 ports of key contrib modules
+</li>
+<li>Establishing a curated list of modules to report on</li>
+<li>Facilitating communication to wider the community of key contrib module maintainers' needs (eg testing, funding, sprinters)</li>
+<li>Providing a centralized location/point of call for those willing to help/sponsor to make first contact</li>
+</ul>
+<h3>Tools/Process</h3>
+<p>We decided that our primary objective should be to reboot a site similar to <a href="http://web.archive.org/web/20130306003344/http://drupalcontribstatus.com/">drupalcontribstatus.com (via wayback machine)</a>. We discussed re-purposing d8cx.org but @webchick kindly offered the drupalupgrade.info domain.<br />
+<img src="https://groups.drupal.org/files/Screenshot 2014-06-27 14.23.17.png" alt="screenshot of drupalcontribstatus.com from March 2013" /><br />
+<caption>Screenshot of drupalcontribstatus.com from Internet Wayback Machine</caption>
+</p>
+<h4>Proposed features</h4>
+<p>We settled on the following feature-set for the site:</p>
+<ul>
+<li>Dashboard on home page showing status/% of modules with links to more detail</li>
+<li>Call to action 'get involved'.</li>
+<li>Possible 'pledge/chip-in/sponsor' links where module maintainers identify a need?</li>
+<li>For each selected module
+<ul>
+<li>Status (none/dev/alpha/beta/rc/full)</li>
+<li>
+Percent complete (manually set)</li>
+<li>
+Status description (text)</li>
+<li>
+Upcoming sprints</li>
+<li>
+Links to crowd-sourcing campaign if applicable</li>
+<li>
+How to help blurb (priority tasks)?</li>
+<li>
+Maintainer details/bio</li>
+<li>
+Port team/sponsor details/acknowledgements/thanks</li>
+<li>
+Latest news/updates</li>
+</ul>
+</li>
+<li>
+News feed (of updates/progress) for syndication (twitter/rss)</li>
+</ul>
+<p>In addition we planned to have regular (fortnightly) meetings to discuss progress.</p>
+<h3>Promotion</h3>
+<p>We discussed proposed ways to promote the work being done and our status as follows:</p>
+<ul>
+<li>groups.drupal.org/core post to announce initiative and goals with details on how to get involved (you're reading it - spooky)</li>
+<li>
+Regular blog article on port status/milestones reached (eg module x reached beta) - see news feed feature above</li>
+<li>
+Regular podcast/lightning talk? (hangouts on air) Regular catch-up with selected maintainer to flag where they're at and where audience can help?</li>
+<li>
+@schnitzel has proposed a session on D8 Contrib Module status for a session at DC Amsterdam</li>
+</ul>
+<h3>Education</h3>
+<p>One of the key items identified is that Drupal 8 might mean some significant refactoring of modules during porting. To this end a Contrib mentoring session similar to core mentoring was proposed, essentially contrib office hours where maintainers/those helping with ports can come to irc and ask questions like 'how should I do this?' 'what happened to y?' 'what's the best way to architect x?'. This is informally happening in #drupal-contribute already but a dedicated Q/A session at regular timeslot(s) via irc made sense. The caveat here would be that the knowledge captured/shared during these sessions be distilled into handbook/documentation pages and/or the examples project. Yes, you must take a blood oath to do so. Seriously.</p>
+<h3>Action items</h3>
+<p>Meeting action items were as follows:</p>
+<ul>
+<li><del>Decide on a domain</del> and organize hosting (@timplunkett).</li>
+<li>
+Start building the site functionality (@larowlan) </li>
+<li>
+@nickwaring89 kindly volunteered to co-ordinate site updates/collaborate with maintainers to gauge their needs/status</li>
+<li>
+<del>Post minutes on g.d.o/core </del>(@larowlan)</li>
+<li>
+<del>Start building a list of candidate modules to report on</del>(@davereid, @kim.pepper)</li>
+<li>
+<del>Assess state of upgrade status for support querying 8.x status </del>(@larowlan, @webchick)</li>
+<li>
+Reach out to other large Drupal shops/service providers to seek their involvement in the initiative (@timplunkett, @kim.pepper)</li>
+<li>
+Reach out to module maintainers of modules identified(@nickwaring89)</li>
+</ul>
+<h3>Next meeting</h3>
+<p>Next meeting 10pm UTC Wednesday 9th of July. This is a rough time-slot for European community members but falls around 8am for Australia and at the end of the working-day for the US. We aim to move to a rolling schedule that would allow the three time-zones of participants (Europe, US, Australia) to be able to reasonably attend two of every three meetings.</p>
+<h3>Want to get involved?</h3>
+<p>Get in touch with <a href="https://www.drupal.org/user/2854081/contact">nickwaring89</a> to register your interest in getting involved.</p>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Attachment</th><th>Size</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="https://groups.drupal.org/files/Screenshot 2014-06-27 14.23.17.png">Screenshot 2014-06-27 14.23.17.png</a></td><td>88.72 KB</td> </tr>
+</tbody>
+</table>
+  </body>
+</html>
+

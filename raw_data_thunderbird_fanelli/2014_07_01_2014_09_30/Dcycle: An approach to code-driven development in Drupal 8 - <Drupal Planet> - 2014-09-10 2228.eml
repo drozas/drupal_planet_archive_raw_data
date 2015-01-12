@@ -1,0 +1,311 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 10 Sep 2014 20:28:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 10 Sep 2014 20:28:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dcycle: An approach to code-driven development in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dcycleproject.org/blog/68/approach-code-driven-development-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dcycle: An approach to code-driven development in Drupal 8</title>
+    <base href="http://dcycleproject.org/blog/68/approach-code-driven-development-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>What is code-driven development and why is it done?</h2>
+
+<p>Code-driven development is the practice of placing all development in code. How can development not be in code?, you ask.</p>
+
+<p>In Drupal, what makes your site unique is often configuration which resides in the database: the current theme, active modules, module-specific configuration, content types, and so on.</p>
+
+<p>For the purpose of this article, our goal will be for all <em>configuration</em> (the current theme, the content types, module-specific config, the active module list...) to be in <em>code</em>, and only <em>content</em> to be in the database. There are several advantages to this approach:</p>
+
+<ul>
+<li>Because all our configuration is in code, we can package all of it into a single module, which we'll call a <a href="http://dcycleproject.org/blog/44/what-site-deployment-module">site deployment module</a>. When enabled, this module should provide a fully workable site without any content.</li>
+<li>When a site deployment module is combined with generated content, it becomes possible to create new instances of a website <a href="http://dcycleproject.org/blog/48/do-not-clone-database">without cloning the database</a>. <a href="https://www.drupal.org/project/devel">Devel</a>'s <code>devel_generate</code> module, and <a href="https://www.drupal.org/project/realistic_dummy_content">Realistic Dummy Content</a> can be used to create realistic dummy content. This makes on-ramping new developers easy and consistent.</li>
+<li>Because unversioned databases are not required to be cloned to set up new environments, your continuous integration server can set up new instances of your site based on a known good starting point, making tests more robust.</li>
+</ul>
+
+<h2>Code-driven development for Drupal 7</h2>
+
+<p>Before moving on to D8, let's look at a typical D7 workflow: The technique I use for developing in Drupal 7 is making sure I have one or more <a href="http://drupal.org/project/features">features</a> with my content types, views, <a href="http://drupal.org/project/context">contexts</a>, and so on; as well as a <a href="http://dcycleproject.org/blog/44/what-site-deployment-module">site deployment module</a> which contains, in its <code>.install</code> file, <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_update_N/7">update hooks</a> which revert my features when needed, enable new modules, and programmatically set configuration which can't be exported via features. That way,</p>
+
+<ul>
+<li>incrementally deploying sites is as simple as calling <code>drush updb -y</code> (to run new update hooks).</li>
+<li>deploying a site for the first time (or redeploying it from scratch) requires creating the database, enabling our site deployment module (which <a href="http://dcycleproject.org/blog/43/run-all-update-hooks-install-hook">runs all or update hooks</a>), and optionally generating dummy content if required. For example: <code>drush si -y &amp;&amp; drush en mysite_deploy -y &amp;&amp; drush en devel_generate &amp;&amp; drush generate-content 50</code>.</li>
+</ul>
+
+<p>I have been using this technique for a few years on all my D7 projects and, in this article, I will explore how something similar can be done in D8.</p>
+
+<h2>New in Drupal 8: configuration management</h2>
+
+<p>If, like me, you are using <a href="http://drupal.org/project/features">features</a> to deploy websites (not to bundle generic functionality), config management will replace features in D8. In D7, <a href="https://www.drupal.org/project/context">context</a> is used to provide the ability to export block placement to features, and <a href="https://www.drupal.org/project/strongarm">strongarm</a> exports variables. In D8, variables no longer exist, and block placement is now exportable. All of these modules are thus no longer needed.</p>
+
+<p>They are replaced by the concept of <a href="https://www.drupal.org/documentation/administer/config">configuration management</a>, a central API for importing and exporting configuration as yml files.</p>
+
+<h2>Configuration management and site UUIDs</h2>
+
+<p>In Drupal 8, <a href="https://www.drupal.org/node/2133325">sites are now assigned a UUID on install</a> and configuration can only be synchronized between sites having the same UUID. This is fine if the site has been cloned at some point from one environment to another, but as mentioned above, we are avoiding database cloning: we want it to be possible to install a brand new instance of a site at any time.</p>
+
+<p>We thus need a mechanism to assign the same UUID to all instances of our site, but still allow us to reinstall it without cloning the database.</p>
+
+<p>The solution I am using is to assign a site UUID in the site deployment module. Thus, in Drupal 8, my site deployment module's <code>.module</code> file looks like this:</p>
+
+<pre><code>/**
+ * @file
+ * site deployment functions
+ */
+use Drupal\Core\Extension\InfoParser;
+
+/**
+ * Updates dependencies based on the site deployment's info file.
+ *
+ * If during the course of development, you add a dependency to your
+ * site deployment module's .info file, increment the update hook
+ * (see the .install module) and this function will be called, making
+ * sure dependencies are enabled.
+ */
+function mysite_deploy_update_dependencies() {
+  $parser = new InfoParser;
+  $info_file = $parser-&gt;parse(drupal_get_path('module', 'mysite_deploy') . '/mysite_deploy.info.yml');
+  if (isset($info_file['dependencies'])) {
+    \Drupal::moduleHandler()-&gt;install($info_file['dependencies'], TRUE);
+  }
+}
+
+/**
+ * Set the UUID of this website.
+ *
+ * By default, reinstalling a site will assign it a new random UUID, making
+ * it impossible to sync configuration with other instances. This function
+ * is called by site deployment module's .install hook.
+ *
+ * @param $uuid
+ *   A uuid string, for example 'e732b460-add4-47a7-8c00-e4dedbb42900'.
+ */
+function mysite_deploy_set_uuid($uuid) {
+  \Drupal::config('system.site')
+    -&gt;set('uuid', $uuid)
+    -&gt;save();
+}    
+</code></pre>
+
+<p>And the site deployment module's .install file looks like this:</p>
+
+<pre><code>/**
+ * @file
+ * site deployment install functions
+ */
+
+/**
+ * Implements hook_install().
+ */
+function mysite_deploy_install() {
+  // This module is designed to be enabled on a brand new instance of
+  // Drupal. Settings its uuid here will tell this instance that it is
+  // in fact the same site as any other instance. Therefore, all local
+  // instances, continuous integration, testing, dev, and production
+  // instances of a codebase will have the same uuid, enabling us to
+  // sync these instances via the config management system.
+  // See also https://www.drupal.org/node/2133325
+  mysite_deploy_set_uuid('e732b460-add4-47a7-8c00-e4dedbb42900');
+  for ($i = 7001; $i &lt; 8000; $i++) {
+    $candidate = 'mysite_deploy_update_' . $i;
+    if (function_exists($candidate)) {
+      $candidate();
+    }
+  }
+}
+
+/**
+ * Update dependencies and revert features
+ */
+function mysite_deploy_update_7003() {
+  // If you add a new dependency during your development:
+  // (1) add your dependency to your .info file
+  // (2) increment the number in this function name (example: change
+  //     change 7003 to 7004)
+  // (3) now, on each target environment, running drush updb -y
+  //     will call the mysite_deploy_update_dependencies() function
+  //     which in turn will enable all new dependencies.
+  mysite_deploy_update_dependencies();
+}
+</code></pre>
+
+<p>The only real difference between a site deployment module for D7 and D8, thus, is that the D8 version must define a UUID common to all instances of a website (local, dev, prod, testing...).</p>
+
+<h2>Configuration management directories: active, staging, deploy</h2>
+
+<p>Out of the box, there are two directories which can contain config management yml files:</p>
+
+<ul>
+<li>The <em>active</em> directory, which is always empty and unused. It used store your active configuration, and it is still possible to do so, but <a href="https://www.drupal.org/node/2323529">I'm not sure how</a>. We can ignore this directory for our purposes.</li>
+<li>The <em>staging</em> directory, which can contain <code>.yml</code> files to be imported into a target site. (For this to work, as mentioned above, the <code>.yml</code> files will need to have been generated by a site having the same UUID as the target site, or else you will get an error message -- on the GUI the error message makes sense, but on the command line you <a href="https://github.com/drush-ops/drush/issues/807">will get the cryptic "There were errors validating the config synchronization."</a>).</li>
+</ul>
+
+<p>I will propose a workflow which ignores the staging directory as well, for the following reasons:</p>
+
+<ul>
+<li>First, the staging directory is placed in <code>sites/default/files/</code>, a directory which contains user data and is explicitly ignored in Drupal's <code>example.gitignore</code> file (which makes sense). In our case, we want this information to reside in our git directory.</li>
+<li>Second, my team has come to rely heavily on reinstalling Drupal and our site deployment module when things get corrupted locally. When you reinstall Drupal using <code>drush si</code>, the staging directory is deleted, so even if we did have the staging directory in git, we would be prevented from running <code>drush si -y &amp;&amp; drush en mysite_deploy -y</code>, which we don't want.</li>
+<li>Finally, you might want your config directory to be outside of your Drupal root, for security reasons.</li>
+</ul>
+
+<p>For all of these reasons, we will add a new "deploy" configuration directory and put it in our git repo, but outside of our Drupal root.</p>
+
+<p>Our directory hierarchy will now look like this:</p>
+
+<pre><code>mysite
+  .git
+  deploy
+    README.txt
+    ...
+  drupal_root
+    CHANGELOG.txt
+    core
+    ...
+</code></pre>
+
+<p>You can also have your deploy directory inside your Drupal root, but keep in mind that certain configuration information are sensitive, containing email addresses and the like. We'll see later on how to tell Drupal how it can find your "deploy" directory.</p>
+
+<h2>Getting started: creating your Drupal instance</h2>
+
+<p>Let's get started. Make sure you have version 7.x of Drush (compatible with Drupal 8), and create your git repo:</p>
+
+<pre><code>mkdir mysite
+cd mysite
+mkdir deploy
+echo "Contains config meant to be deployed, see http://dcycleproject.org/blog/68" &gt;&gt; deploy/README.txt 
+drush dl drupal-8.0.x
+mv drupal* drupal_root
+cp drupal_root/example.gitignore drupal_root/.gitignore
+git init
+git add .
+git commit -am 'initial commit'
+</code></pre>
+
+<p>Now let's install our first instance of the site:</p>
+
+<pre><code>cd drupal_root
+echo 'create database mysite'|mysql -uroot -proot
+drush si --db-url=mysql://root:root@localhost/mysite -y
+</code></pre>
+
+<p>Now create a site deployment module: <a href="http://dcycleproject.org/blog/69/drupal-8-site-deployment-module">here is the code that works for me</a>. We'll set the correct site UUID in <code>mysite_deploy.install</code> later. Add this to git:</p>
+
+<pre><code>git add drupal_root/modules/custom
+git commit -am 'added site deployment module'
+</code></pre>
+
+<p>Now let's tell Drupal where our "deploy" config directory is:</p>
+
+<ul>
+<li>Open sites/default/settings.php</li>
+<li>Find the lines beginning with $config_directories</li>
+<li>Add <code>$config_directories['deploy'] = '../deploy';</code></li>
+</ul>
+
+<p>We can now perform our first export of our site configuration:</p>
+
+<pre><code>cd drupal_root
+drush config-export deploy -y
+</code></pre>
+
+<p>You will now notice that your "deploy" directory is filled with your site's configuration files, and you can add them to git.</p>
+
+<pre><code>git add .
+git commit -am 'added config files'
+</code></pre>
+
+<p>Now we need to sync the site UUID from the database to the code, to make sure all subsequent instances of this site have the same UUID. Open deploy/system.site.yml and find UUID property, for example:</p>
+
+<pre><code>uuid: 03821007-701a-4231-8107-7abac53907b1
+...
+</code></pre>
+
+<p>Now add this same value to your site deployment module's <code>.install</code> file, for example:</p>
+
+<pre><code>...
+function mysite_deploy_install() {
+  mysite_deploy_set_uuid('03821007-701a-4231-8107-7abac53907b1');
+...
+</code></pre>
+
+<h2>Let's create a view! A content type! Position a block!</h2>
+
+<p>To see how to export configuration, create some views and content types, position some blocks, and change the default theme.</p>
+
+<p>Now let's export our changes</p>
+
+<pre><code>cd drupal_root
+drush config-export deploy -y
+</code></pre>
+
+<p>Your git repo will be changed accordingly</p>
+
+<pre><code>cd ..
+git status
+git add .
+git commit -am 'changed theme, blocks, content types, views'
+</code></pre>
+
+<h2>Deploying your Drupal 8 site</h2>
+
+<p>At this point you can push your code to a git server, and clone it to a dev server. For testing purposes, we will simply clone it directly</p>
+
+<pre><code>cd ../
+git clone mysite mysite_destination
+cd mysite_destination/drupal_root
+echo 'create database mysite_destination'|mysql -uroot -proot
+drush si --db-url=mysql://root:root@localhost/mysite_destination -y
+</code></pre>
+
+<p>If you visit mysite_destination/drupal_root with a browser, you will see a plain new Drupal 8 site.</p>
+
+<p>Before continuing, we need to open sites/default/settings.php on mysite_destination and add <code>$config_directories['deploy'] = '../deploy';</code>, as we did on the source site.</p>
+
+<p>Now let the magic happen. Let's enable our site deployment module (to make sure our instance UUID is synched with our source site), and import our configuration from our "deploy" directory:</p>
+
+<pre><code>drush en mysite_deploy -y
+drush config-import deploy -y
+</code></pre>
+
+<p>Now, on your destination site, you will see all your views, content types, block placements, and the default theme.</p>
+
+<p>This deployment technique, which can be combined with generated dummy content, allows one to create new instances very quickly for new developers, testing, demos, continuous integration, and for production.</p>
+
+<h2><em>Incrementally</em> deploying your Drupal 8 site</h2>
+
+<p>What about changes you make to the codebase once everything is already deployed. Let's change a view and run:</p>
+
+<pre><code>cd drupal_root
+drush config-export deploy -y
+cd ..
+git commit -am 'more fields in view'
+</code></pre>
+
+<p>Let's deploy this now:</p>
+
+<pre><code>cd ../mysite_destination
+git pull origin master
+cd drupal_root
+drush config-import deploy -y
+</code></pre>
+
+<p>As you can see, incremental deployments are as easy and standardized as initial deployments, reducing the risk of errors, and allowing incremental deployments to be run automatically by a continuous integration server.</p>
+
+<h2>Next steps and conclusion</h2>
+
+<p>Some aspects of your site's configuration (what makes your site unique) still can't be exported via the config management system, for example enabling new modules; for that we'll use <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_update_N/7">update hooks</a> as in Drupal 7. I'm still having some errors doing this in D8, but I'm working on it!</p>
+
+<p>Also, although a great GUI exists for importing and exporting configuration, I chose to do it on the command line so that I could easily create a Jenkins continuous integration job to deploy code to dev and run tests on each push.</p>
+
+<p>For Drupal projects developed with a dev-stage-prod continuous integration workflow, the new config management system is a great productivity boost.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/blog" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">blog</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

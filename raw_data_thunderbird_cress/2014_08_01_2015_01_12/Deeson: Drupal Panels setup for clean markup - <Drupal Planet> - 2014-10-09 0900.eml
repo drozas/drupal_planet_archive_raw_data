@@ -1,0 +1,128 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 09 Oct 2014 08:00:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 09 Oct 2014 08:00:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson: Drupal Panels setup for clean markup
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.deeson.co.uk/labs/drupal-panels-setup-clean-markup
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson: Drupal Panels setup for clean markup</title>
+    <base href="https://www.deeson.co.uk/labs/drupal-panels-setup-clean-markup">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/imag0267.jpg?itok=ObPHxGtN" width="400" height="377" alt="Whiteboard photo describing the structure of a panel" />
+
+  
+    
+        
+          <p>It’s a fact that you get a hideous amount of markup with the <strong>Panels module</strong> straight out-of-the box, even if you use it to create a single column page without changing any of the options.</p>
+<p>This is because each layer of the rendering process brings its own markup to the party. </p>
+        
+    
+  
+
+
+
+  
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/imag0267.jpg?itok=xy393b1r" width="220" height="208" alt="Whiteboard photo describing the structure of a panel" />        
+        
+          <h4>Panels and layers</h4>
+<p>Panels are structured in layers, which is what makes them so flexible for any given requirement. Within a layout sit the regions and inside these are panes.</p>
+<p>Each of these panes are configurable by providing <strong>CTools plugins</strong>. You can render panes and regions with <strong>style plugins</strong> and the layout with a <strong>layout plugin</strong>.</p>
+        
+      
+      
+
+
+  
+    
+        
+          <p>Each of these layers have their own wrapping markup and things can get excessive quickly. </p>
+<h4>Help is at hand</h4>
+<p>Luckily for us, there’s quite a lot of help for Panels straight out-of the-box. Firstly, there’s a ‘naked’ style plugin which drops all the wrapping markup and can be applied to your panes and regions. While this is a good start, the layout will still need markup specific to the site’s theme.</p>
+<p>You can override each Panels layout as it’s presented by a theme hook. It’s literally as simple as copying a template to your site. </p>
+<p>For most simple panels, it’s just a case of copying the <strong>panels-onecol.tpl.php</strong> file into the theme and customising it. </p>
+<p>If you’re using a CSS framework or grid system (we use <a href="http://getbootstrap.com/">Bootstrap</a> at Deeson) then this file is where you can re-work the markup to be specific to the system you are using.</p>
+        
+    
+  
+
+
+
+  
+          
+        
+          <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/medium/public/udfbc0ovswmuuam6jcq7ru2bv0x1dznxefysmrw_4swkp_gbczm-dt9lqagjtd7rdgdjoj6u838gdihhur-hzdlrhgpfkf2imdhip295onrvost9eo4festpvxroogwxzw.png?itok=OjBw_zKn" width="220" height="118" alt="Sample screenshot for the configuration of a panels page listing recent content" />        
+        
+          <h4>My Panels page</h4>
+<p>Keeping all this in mind, I’ve created a simple <strong>Panels page</strong> which lists recent content to authenticated users. It’s built from a bean, a view (with an access rule) and some custom markup. It uses the one col layout.</p>
+        
+      
+      
+
+
+  
+    
+        
+          <p>Here’s my oh-so-simple <strong>panels-onecol.tpl.php</strong> file in my theme:</p>
+        
+    
+  
+
+
+
+  
+      <pre class="syntax">
+                  
+&lt;div class=&quot;panel-display panel-1col clearfix&quot; &lt;?php if (!empty($css_id)) { print &quot;id=\&quot;$css_id\&quot;&quot;; } ?&gt;&gt;
+  &lt;?php print $content[&#039;middle&#039;]; ?&gt;
+&lt;/div&gt;        </pre>
+      </pre>
+  
+
+
+
+  
+    
+        
+          <p>And here’s the markup you’ll get when viewed as an <strong>unauthenticated user</strong>:</p>
+        
+    
+  
+
+
+
+  
+      <pre class="syntax">
+                  
+&lt;section id=&quot;block-system-main&quot;&gt;
+  &lt;div class=&quot;panel-display panel-1col clearfix&quot;&gt;
+    &lt;div class=&quot;panel-pane pane-block pane-bean-recent-content-header&quot;&gt;
+      &lt;h2 class=&quot;pane-title&quot;&gt;Recent content&lt;/h2&gt;
+      &lt;div typeof=&quot;&quot; about=&quot;/block/recent-content-header&quot; class=&quot;entity entity-bean bean-editable clearfix&quot;&gt;[...]&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;panel-pane pane-custom pane-1&quot;&gt;
+      &lt;p&gt;Login or create an account to view this content...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;        </pre>
+      </pre>
+  
+
+
+
+  
+    
+        
+          <p>Let me know what you think!</p>
+  </body>
+</html>
+

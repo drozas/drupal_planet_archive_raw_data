@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys: $label4                                                                        
+Date: Tue, 27 Aug 2013 06:38:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 27 Aug 2013 06:38:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #22
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/375
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #22</title>
+    <base href="http://www.drupal4hu.com/node/375">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>The biggest news (literally) is the entity storage patch finally nearing completion -- after yched and me have worked on this a lot, now is carrying the half megabyte monster home. The reason for this size is fields no longer will be shareable between entity types (but they still be shareable between bundles). Meanwhile, berdir is finishing the Entity NG conversion (go berdir!) and moves baseFieldDefinitions from storage to entity classes. The smaller the storage classes the better for us, quite obviously. Once the Entity BC layer is gone, we can move load code from storage to entity classes as I have done with every operation other before and that will mark the end of most storage classes in core and hopefully in contrib. I have begun an entity query fix sprint and some important fixup / cleanup is already in. Everything plays into my hands: even PhpStorm have joined in the bug hunt and found a nasty one. Exceptionally good IDE. </p>
+<p>plach filed an issue to convert the remaining SQL queries to entity queries where possible, marcingy and I will work on them. When I started, I stumbled on the fact we do not have any documentation on whether comparisons are case sensitive or not. Well, we have a decision now: unless marked as <code>&#039;binary&#039; =&gt; TRUE</code> in <code>hook_schema</code> they are not. We will require citext for PostgreSQL and do what little we can for SQLite. MongoDB will resort to storing lowercased versions of everything that is not lowercase already, the flexible schema will allow us to keep a 'raw' key when necessary and fold on load.</p>
+  </body>
+</html>
+

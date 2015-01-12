@@ -1,0 +1,111 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 Aug 2013 11:09:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 Aug 2013 11:09:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: Thresholds, Code Freeze, Getting Features into Drupal 8, Criticals and Majors in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/thresholds-code-freeze-getting-features-drupal-8-criticals-and-majors-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: Thresholds, Code Freeze, Getting Features into Drupal 8, Criticals and Majors in Drupal</title>
+    <base href="http://comm-press.de/en/blog/thresholds-code-freeze-getting-features-drupal-8-criticals-and-majors-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Can we do one little part?</h2>
+By Cathy Theys
+<p>Instead of doing 2 things myself, I'm doing one and trying to make it possible for X others to do the same.</p>
+
+<p>(OK, I might be doing more than one thing, but the sentiment is the same. <em>grin</em>)</p>
+
+<p>I've been making a little noise about change records; posting instructions and encouraging people to take a stab at drafting the first versions for some change records. Why?</p>
+
+<p>For many reasons, but one big reason is there are a few features I want to see get into Drupal 8 still.</p>
+
+<p>Features?! Yep. There is still some hope of getting features in. I'm hoping for <a href="https://drupal.org/node/1952394">Add configuration translation user interface module in core</a>, some issues from <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&version%5B%5D=8.x&version%5B%5D=7.x&issue_tags=refactor+account+workflow">Refactor account workflow</a>, ... and I'm sure other cool things.</p>
+
+<blockquote>
+...there are a lot of small, non-destabilizing features that would make Drupal 8 better. Especially for the kinds of iterative improvements that we would allow into 8.1 or 8.2, it doesn't make sense to hold those up until then, if we're able to get them into 8.0 without it delaying the 8.0 release date.
+
+To help with this goal, catch and I have discussed a plan for allowing some features to continue to be committed to core up until RC1, providing we are under thresholds.
+</blockquote>
+
+<p>-Dries from <a href="http://buytaert.net/code-freeze-and-thresholds">Code Freeze and Thresholds</a></p>
+
+<p>More up-to-date information on where we are in the release cycle is in the <a href="https://drupal.org/core/release-cycle">Drupal.org release cycle page</a>. The code freeze (API freeze) date for Drupal 8 is July 1, 2013... July 1 is quickly approaching.</p>
+
+<h3>What are the threshold numbers? We want to be below 15 critical bugs, 100 major bugs, 15 critical tasks, 100 major tasks</h3>
+
+<p>There is the possibility for new features, when issues are under these counts:</p>
+
+<ul>
+<li><a href="https://drupal.org/project/issues/search/drupal?status[]=1&status[]=13&status[]=8&status[]=14&status[]=15&priorities[]=1&categories[]=bug&version[]=8.x&version[]=7.x">Critical bugs, across D7 and D8</a>: no more than 15 [We have 35, 0 RTBC]</li>
+<li><a href="https://drupal.org/project/issues/search/drupal?status[]=1&status[]=13&status[]=8&status[]=14&status[]=15&priorities[]=4&categories[]=bug&version[]=8.x&version[]=7.x">Major bugs, across D7 and D8</a>: no more than 100 [We have 156, 8 RTBC]</li>
+<li><a href="https://drupal.org/project/issues/search/drupal?status[]=1&status[]=13&status[]=8&status[]=14&status[]=15&priorities[]=1&categories[]=task&version[]=8.x&version[]=7.x">Critical tasks, across D7 and D8</a>: no more than 15 [We have 39, 0 RTBC, <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&status%5B%5D=13&status%5B%5D=8&status%5B%5D=14&priorities%5B%5D=1&categories%5B%5D=task&version%5B%5D=8.x&version%5B%5D=7.x&issue_tags=Needs+change+notification">12 need change notification</a>]</li>
+<li><a href="https://drupal.org/project/issues/search/drupal?status[]=1&status[]=13&status[]=8&status[]=14&status[]=15&priorities[]=4&categories[]=task&version[]=8.x&version[]=7.x">Major tasks, across D7 and D8</a>: no more than 100 [We have 156, 5 RTBC]</li>
+</ul>
+
+<p>(Taken from <a href="https://drupal.org/core/thresholds#polish-phase">Drupal core issue count thresholds</a> docs page on d.o.)</p>
+
+<h3>What can people do?</h3>
+
+<p>We have a support system in place to help people and make that experience rewarding for the project and for the individual. Contributor task document pages help people figure out how to do what needs to be done.</p>
+
+<p>You don't have to do a bunch, just picking one thing will really help. It is not hopeless!</p>
+
+<p>Take for example change notifications. We really are making a dent in them already. Just in the last week, people have made 21 <a href="https://drupal.org/list-changes/drupal">change records</a>. Thanks ParisLiakos, larowlan, Gábor Hojtsy, Shyamala, tim.plunkett, fago, Wim Leers, patrickd, swentel, andypost, chx, Berdir!</p>
+
+<ul>
+<li>
+<h4>needs change notification</h4>
+12 critical tasks <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&status%5B%5D=13&status%5B%5D=8&status%5B%5D=14&priorities%5B%5D=1&categories%5B%5D=task&version%5B%5D=8.x&version%5B%5D=7.x&issue_tags=Needs+change+notification">need change notification</a> and the <a href="https://drupal.org/contributor-tasks/draft-change-notification">Contributor task: Write up a change record for a Drupal core issue</a> document helps anyone who has not make a change record figure out how to go through the process of helping make a change record.
+</li>
+<li>
+<h4>needs review</h4>
+77 of the <a href="https://drupal.org/project/issues/search/drupal?status[0]=8&priorities[0]=1&priorities[1]=4&categories[0]=bug&categories[1]=task&version[0]=8.x&version[1]=7.x">threshold issues need review</a> and the <a href="https://drupal.org/contributor-tasks/review">Contributor task: Review a Drupal core patch</a> document helps people get started reviewing, has a link to more detail on <a href="https://drupal.org/patch/review">how to do reviews</a> and <a href="http://xjm.drupalgardens.com/review-guide#checklist">xjm's review guide</a> has tips too.
+</li>
+<li>
+<h4>needs manual testing</h4>
+9 <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=13&status%5B%5D=8&priorities%5B%5D=1&priorities%5B%5D=4&categories%5B%5D=bug&categories%5B%5D=task&version%5B%5D=8.x&version%5B%5D=7.x&issue_tags=Needs+manual+testing">need manual testing</a> and the <a href="https://drupal.org/contributor-tasks/manual-testing">Contributor task: Manually test a patch for a Drupal issue</a> document helps figure out how to test, and also how to write up the results for posting back to the issue queue.
+</li>
+<li>
+<h4>needs accessibility review</h4>
+4 <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=13&status%5B%5D=8&priorities%5B%5D=1&priorities%5B%5D=4&categories%5B%5D=bug&categories%5B%5D=task&version%5B%5D=8.x&version%5B%5D=7.x&issue_tags=needs+accessibility+review">need accessibility review</a> and the <a href="https://drupal.org/contributor-tasks/accessibility-review">Contributor task: Manually do accessibility testing of a patch for a Drupal issue</a> document includes tools to help people get set up for accessibility reviews.
+</li>
+<li>
+<h4>needs issue summary update</h4>
+84 <a href="https://drupal.org/project/issues/search/drupal?status[0]=1&status[1]=13&status[2]=8&status[3]=14&priorities[0]=1&priorities[1]=4&categories[0]=bug&categories[1]=task&version[0]=8.x&version[1]=7.x&issue_tags=Needs%20issue%20summary%20update">need issue summary update</a> and the <a href="https://drupal.org/contributor-tasks/write-issue-summary">Contributor task: Write an issue summary for an existing Drupal Core issue</a> document gives a strategy for tackling issue summaries. Anyone can edit the issue summaries and it is more than just pasting in the html from the template, it is also making sure the information is there regarding the motivation, remaining tasks, etc. Another thing that helps issues, is adding a <a href="https://drupal.org/node/1468198">steps to reproduce</a>, related issues and follow-up issues section to the issue summary.
+
+Issue summary updates are an investment, and take a bit of time, but they are worth it and are <a href="https://groups.drupal.org/node/294403">key to getting things moving in Drupal 8 (See: xjm's Help!)</a>.
+</li>
+<li>
+<h4>needs tests</h4>
+49 <a href="https://drupal.org/project/issues/search/drupal?status[0]=1&status[1]=13&status[2]=8&status[3]=14&priorities[0]=1&priorities[1]=4&categories[0]=bug&categories[1]=task&version[0]=8.x&version[1]=7.x&issue_tags=Needs%20issue%20summary%20update">need tests</a> and the <a href="https://drupal.org/contributor-tasks/write-tests">Contributor task: Write an automated test for a Drupal core bug</a> document is a good starting point. Also helpful are: <a href="http://drupal.org/simpletest">simpletest documentation for a start on using SimpleTest</a> and <a href="http://bit.ly/mwds-testing-video">xjm's presentation from MWDS on tests</a>.
+</ul>
+
+<h3>Coordination. So many people starting to work on so many tasks.</h3>
+
+<p>Pick an issue you want to work on, then add a comment on the issue saying what task you are about to start doing. (Typically the assigned field is only used when someone is actively making a new patch for an issue. For other tasks, like reviews, drafting change notices, issue summary updates, etc, making a comment on the issue is fine.)</p>
+
+<h3>Have questions?</h3>
+
+<p>It's ok to ask questions in a comment on the issue. It works well because people "following" the issue will see your question and can help you out.</p>
+
+<h4>Want real live support, from humans?!</h4>
+
+<p>From the irc bot factoid: core mentoring?</p>
+
+<div class="codeblock"><code>Want to contribute to Drupal core? Come to core contribution mentoring!&nbsp; Two timeslots, (Tuesdays 02:00 UTC and Wednesdays 16:00 UTC) in #drupal. More info: http://drupal.org/core-mentoring, http://modulesunraveled.com/podcast/003-jess-and-core-office-hours-modules-unraveled-podcast. | Twitter: @drupalmentoring | Create an account at http://drupalmentoring.org</code></div>
+
+<p>Or try the #drupal-contribute <a href="http://drupal.org/irc">irc</a> channel any hour of the day.</p>
+
+<p>Don't wait for <a href="https://groups.drupal.org/node/296483">Dublin</a>; let us see what we can do over the next week.</p>
+
+<p><div class="inline-entity"><div class="field field-name-field-picture field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://comm-press.de/sites/default/files/articles/images/20130610/thresholds.png" rel="lightbox[field_picture][]" title=""><img src="http://comm-press.de/sites/default/files/styles/article_image/public/articles/images/20130610/thresholds.png?itok=oqTtdQpM" width="800" height="784" alt="" /></a></div></div></div></div></p>
+  </body>
+</html>
+

@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 18 Oct 2013 13:39:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 18 Oct 2013 13:39:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: EchoDitto Tech Blog: What's the deal with Pressflow 7?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.echoditto.com/blog/whats-the-deal-with-pressflow-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>EchoDitto Tech Blog: What's the deal with Pressflow 7?</title>
+    <base href="http://www.echoditto.com/blog/whats-the-deal-with-pressflow-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://www.echoditto.com/sites/default/files/styles/medium/public/blog/front-pressflow2.jpg?itok=bU-kkNqs" width="220" height="116" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Anyone who used Drupal 6 at scale knew that <a href="http://fourkitchens.com/pressflow-makes-drupal-scale">Pressflow 6</a> was pretty great. It forked Drupal and added several performance enhancements, including the ability to use external caches. Since <a href="https://pressflow.atlassian.net/wiki/display/PF/Comparison+-+Pressflow+versus+Drupal">Drupal 7 incorporated lots of the Pressflow 6 features</a>, what's the deal with Pressflow 7?</p>
+
+<p>After Drupal 7 launched, <a href="http://developmentseed.org/blog/2010/jan/07/pressflow-7-continuing-push-performance-and-scalability-drupal/">it seemed like Pressflow 7 would continue the momentum from Pressflow 6 and greatly enhance Drupal 7</a>. But, here we are in 2013, and you don't hear about Pressflow 7 very often, and searching for differences does not yield much more than some diffs between baseline Drupal core 7 and <a href="https://github.com/pressflow/7">the Pressflow 7 repository on GitHub</a>. Since there are clearly some differences, let's dive in and see what they are exactly.</p>
+
+<ul>
+<li><em>Pressflow Smart Start</em> will forward you to the install page if the database is set up in settings.php but the database is empty, disabled by default. 
+
+<ul>
+<li>Files: <a href="https://github.com/pressflow/7/blob/d1e3c87ab8edc207b1adbf88c6484218bcc0fa70/includes/bootstrap.inc#L2428-L2437">includes/bootstrap.inc</a> and <a href="https://github.com/pressflow/7/blob/d1e3c87ab8edc207b1adbf88c6484218bcc0fa70/sites/default/default.settings.php#L555-L562">sites/default/default.settings.php</a></li>
+<li>Commit: <a href="https://github.com/pressflow/7/commit/fa91b2fc80741cb8c42c2db618f0ef0ad890f4cc">https://github.com/pressflow/7/commit/fa91b2fc80741cb8c42c2db618f0ef0ad890f4cc</a></li>
+</ul></li>
+<li>Allow for environmental PRESSFLOW_SETTINGS to override settings.php; settings must be entered as a JSON array.
+
+<ul>
+<li>File: <a href="https://github.com/pressflow/7/blob/d1e3c87ab8edc207b1adbf88c6484218bcc0fa70/includes/bootstrap.inc#L716-L730">includes/bootstrap.inc</a></li>
+<li>Commits: <a href="https://github.com/pressflow/7/commit/673fb0bdab618f8989365012149c76b8397f95d6">https://github.com/pressflow/7/commit/673fb0bdab618f8989365012149c76b8397f95d6</a> (Pull request: <a href="https://github.com/pressflow/7/pull/7">https://github.com/pressflow/7/pull/7</a>), and <a href="https://github.com/pressflow/7/commit/953e6608b34975eaa0c8abed8a90f80d22f1b967">https://github.com/pressflow/7/commit/953e6608b34975eaa0c8abed8a90f80d22f1b967</a></li>
+</ul></li>
+<li>APC CSS and JS check; to prevent Drupal from constantly checking the file system for core-aggregated CSS and JS files, use APC as a key:value store instead. This is very helpful improving performance for networked file systems by reducing the frequency Drupal hits the file system.
+
+<ul>
+<li>File: <a href="https://github.com/pressflow/7/blob/d1e3c87ab8edc207b1adbf88c6484218bcc0fa70/includes/common.inc#L4896-L4908">includes/common.inc</a> (also see lines <a href="https://github.com/pressflow/7/blob/d1e3c87ab8edc207b1adbf88c6484218bcc0fa70/includes/common.inc#L3558">3558</a> and <a href="https://github.com/pressflow/7/blob/d1e3c87ab8edc207b1adbf88c6484218bcc0fa70/includes/common.inc#L4949">4949</a>)</li>
+<li>Commit: <a href="https://github.com/pressflow/7/commit/e2f9d2b10b4f0c5f61f120be145621913c6794a4">https://github.com/pressflow/7/commit/e2f9d2b10b4f0c5f61f120be145621913c6794a4</a> (Pull request: <a href="https://github.com/pressflow/7/pull/16/files">https://github.com/pressflow/7/pull/16/files</a>, original pull request: <a href="https://github.com/pantheon-systems/drops-7/pull/4">https://github.com/pantheon-systems/drops-7/pull/4</a>)</li>
+</ul></li>
+<li>Allow modules to act on the js_cache before writing to disk, and add a note to the aggregated JavaScript that it was built with PressFlow. This won't yield an immediate impact on anything, but adds additional functionality to modules.
+
+<ul>
+<li>Files: <a href="https://github.com/pressflow/7/blob/d1e3c87ab8edc207b1adbf88c6484218bcc0fa70/includes/common.inc#L4958-L4959">includes/common.inc</a> and <a href="https://github.com/pressflow/7/blob/d1e3c87ab8edc207b1adbf88c6484218bcc0fa70/modules/system/system.api.php#L750-L768">modules/system/system.api.php</a></li>
+<li>Commit: <a href="https://github.com/pressflow/7/commit/53098cf059236110716ca97c18565a178c458b43">https://github.com/pressflow/7/commit/53098cf059236110716ca97c18565a178c458b43</a></li>
+</ul></li>
+<li>Allow sub-second delays for lock_wait(). The calculation Drupal currently does will allow a value of 0 for the lock wait time, effectively skipping it. When PHP converts to an integer, a float will always round down. For example, as Drupal performs the operation: <strong><code>php -r "echo (int) 0.25 * 20;"</code></strong> would return <strong><code>0</code></strong>. The Pressflow change corrects the order of operations and returns the correct value, for example: <strong><code>php -r "echo (int) (0.25 * 20);"</code></strong> would return <strong><code>5</code></strong>, allowing for sub-second delays to be used as an input to the function. 
+
+<ul>
+<li>File: <a href="https://github.com/pressflow/7/blob/2cd4323946987608a660694df2c02f3cb4cce6c3/includes/lock.inc#L217">includes/lock.inc</a></li>
+<li>Commit: <a href="https://github.com/pressflow/7/commit/2cd4323946987608a660694df2c02f3cb4cce6c3">https://github.com/pressflow/7/commit/2cd4323946987608a660694df2c02f3cb4cce6c3</a></li>
+</ul></li>
+</ul>
+
+<p>A full diff as of October 2013 can be found at <a href="https://gist.github.com/alanthing/6064500">https://gist.github.com/alanthing/6064500</a> for further reading. Original post at <a href="http://drupal.stackexchange.com/a/80138/10865">drupal.stackexchange.com</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

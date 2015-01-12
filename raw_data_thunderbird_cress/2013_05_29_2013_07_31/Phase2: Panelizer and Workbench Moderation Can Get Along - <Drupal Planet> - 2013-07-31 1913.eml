@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 31 Jul 2013 18:13:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 31 Jul 2013 18:13:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Panelizer and Workbench Moderation Can Get Along
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/panelizer-and-workbench-moderation-can-get-along/?utm_source=rss&utm_medium=rss&utm_campaign=panelizer-and-workbench-moderation-can-get-along
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Panelizer and Workbench Moderation Can Get Along</title>
+    <base href="http://www.phase2technology.com/blog/panelizer-and-workbench-moderation-can-get-along/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=panelizer-and-workbench-moderation-can-get-along">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As frequent users of <a href="https://drupal.org/project/workbench_moderation">Workbench Moderation</a> are aware working with other contrib modules and node revisions can be troublesome (to say the least). Many modules were never intended to have revisioning play any sort of role in their functionality, and few things expose that fact more than Workbench Moderation. However, the inherent benefits of using Workbench Moderation as a mainstay of workflow and editorial process far out weigh the work needed to make other modules cooperate.</p>
+<p>Another useful and ubiquitous module is <a href="https://drupal.org/project/panelizer">Panelizer</a>. Panelizer lets you attach panels to any content type in your content management system (CMS) (it doesn&#8217;t have to be exclusively the Panel content type anymore), and you can even go so far as setting default layouts and configurations per content type (or vocabulary or term or entity&#8230;). However, frequent users of Panelizer know that revisioning and moderation is not this module&#8217;s strong suit. What Panelizer offers in the way of customization without code changes is so useful, that most site developers are willing to overcome that downside for the benefits Panelizer brings to the table.</p>
+<h2>It&#8217;s not going to work out of the box</h2>
+<p>For starters, these two modules are at odds in terms of editorial and site management workflow. To quote <a href="https://drupal.org/user/26979">Earl Miles</a>, &#8220;I&#8217;m not really sure there&#8217;s a clean way to make these two modules work together.&#8221;[1] There has been some work done in the past few months to help, including:</p>
+<ul>
+<li><a href="https://drupal.org/node/1402860">Panelizer is incompatible with moderation</a> &#8211; an issue with loads of discussion and patches, but no complete resolution yet</li>
+<li><a href="https://drupal.org/sandbox/stevector/2031031">Workbench Moderation Panelizer</a> &#8211; a sandbox module to act as a bridge, but not a full-fledged contrib release yet</li>
+</ul>
+<h2>Here&#8217;s what we did to make it work</h2>
+<p>To create an effective workflow and content management experience for the <a href="http://techcrunch.com/2013/07/11/pac-12-revamps-network-websites-around-unique-sports-events-to-connect-more-fans/">recently launched</a> <a href="http://pac-12.com/">Pac-12 Conference</a> Drupal CMS platform, we needed to make these modules work together. To get close to a resolution, we applied a number of patches to Panelizer and Workbench Moderation. These include:</p>
+<ul>
+<li>Panelizer: <a href="https://drupal.org/node/2039025">Workbench Moderation creates a new revision, which immediately makes the panelizer layout outdated</a> - <a href="https://drupal.org/files/panelizer-workbench-moderation-2039025-1.patch">Patch</a></li>
+<li>Workbench Moderation: <a href="https://drupal.org/node/1402860">Panelizer is incompatible with moderation</a> - <a href="https://drupal.org/files/workbench_moderation-panelizer_revisions-1402860-29.patch">Patch</a></li>
+</ul>
+<p>However, there was still one more problem. When using Panelizer to create default layouts, and then edting a given node&#8217;s layout with the Inline Panel Editor, then editing the node iteself (as in, creating a new draft), the layout changes previously made via IPE will vanish. I could write a whole blog post surrounding the fact that in your editorial workflow for a given Node, you may have the current revision, the published revision, and the revision you&#8217;re working from (and starting a draft from), and these may not all be the same thing. I don&#8217;t want to go into the nightmare of describing all the possible scenarios and edge-cases, but I wanted to at least mention that said nightmares exist.</p>
+<h2>Where&#8217;s my layout changes?</h2>
+<p>Internally, each Panelizer layout change is associated with a revision (in part) by it&#8217;s Display ID (DID). When using the IPE to change the Node&#8217;s layout, a new DID is assigned in the {panelizer_defaults} table. When creating a new draft from an unpublished Node revision, the DID value was getting reset back to 0, which represents the default layout state. This is what causes the Panelizer customizations to disappear.</p>
+<p>The trick becomes making sure the value of DID is the same as the DID of the revision from which you are creating the new draft. Luckily, in <a href="https://api.drupal.org/api/drupal/modules!node!node.api.php/function/hook_node_update/7">hook_node_update()</a>, the revision ID of the revision your new draft is created from is available as <em>$node-&gt;old_vid</em>. This makes it very easy to find the Panel&#8217;s DID from the previous revision so that it can be applied to the new draft revision.</p>
+<p>This can be done with the following code:</p><pre class="crayon-plain-tag">&lt;?php
+function MYMODULE_node_update($node) {
+  if (!empty($node-&gt;old_vid)) {
+    // fetch the did from the old revision
+    $old_did = db_query("SELECT did FROM {panelizer_entity} WHERE entity_id = :nid AND revision_id = :oldvid ORDER BY revision_id DESC",
+        array(":nid" =&gt; $node-&gt;nid, ":oldvid" =&gt; $node-&gt;old_vid))
+      -&gt;fetchField();
+    if (!empty($old_did) &amp;&amp; !empty($node-&gt;panelizer['page_manager']) &amp;&amp; empty($node-&gt;panelizer['page_manager']-&gt;did)) {
+      $node-&gt;panelizer['page_manager']-&gt;did = $old_did;
+    }
+  }
+}
+?&gt;</pre><p>&nbsp;</p>
+<p>An interesting side-note about this is that the new draft can be created from any previous revision, and the layout changes <em>as of that particular revision</em> will be used, instead of the latest revision&#8217;s layout or the currently published revision&#8217;s layout.</p>
+<h2>Footnotes.</h2>
+<p>1. https://drupal.org/node/1402860#comment-5546622 &#8211; He actually says a lot more than that, but what&#8217;s a blog post without a little hyperbole?</p>
+  </body>
+</html>
+

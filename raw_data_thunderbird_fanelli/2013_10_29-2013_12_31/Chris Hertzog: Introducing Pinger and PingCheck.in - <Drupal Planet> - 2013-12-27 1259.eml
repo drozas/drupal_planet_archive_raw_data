@@ -1,0 +1,52 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 27 Dec 2013 11:59:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 27 Dec 2013 11:59:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hertzog: Introducing Pinger and PingCheck.in
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chertzog.com/post/pinger
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hertzog: Introducing Pinger and PingCheck.in</title>
+    <base href="http://chertzog.com/post/pinger">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>As the owner of a <a href="http://codeworkdesigns.com" target="_blank">small development shop</a>, I deal one on one with all of my clients. Most of the time these are happy/pleasant exchanges. But then on occasion, (usually when I'm on vacation, in the middle of an 8 hour meeting, or somewhere that my access to the internet is severely hindered), I get an email/text/call from a client whose site is down. No matter which form of communication, these exchanges are always written with caps lock.</p>
+<p>Any website developer can give you a laundry list of why a site may be down or is not responding. Traffic spikes, server malfunctions, power outages, hacking attempts, etc. But most website owners don't care why the site isn't responding. They just want it fixed. An hour ago.</p>
+<p>So in an effort to minimize these unpleasant events, I looked for some website monitoring tools. There are many out there with lots of options. But none really fit my use case. Plus, none were built in Drupal :).</p>
+<p>I have a client dashboard system where my clients manage their account. They can view site analytics, submit support tickets, pay invoices, etc. I wanted to be able to track website downtime and have it available to them. Not only would it be a plus for them, but it could help me identify if issues were isolated to their site, or affecting our entire infrastructure.</p>
+<h3>Step In Pinger</h3>
+<p><a href="https://drupal.org/project/pinger" target="_blank">Pinger</a> is a simple module that leverages the Drupal Queue API, Cron, and <code class="prettyprint">drupal_http_request</code>. In a nutshell, you tell pinger to monitor a handful of urls, and it will check each url when cron runs. Over and over again.</p>
+<p><a href="https://drupal.org/project/elysia_cron" target="_blank">Elysia Cron</a> is recommended to help manage cron settings, so you can have pinger_cron() running more frequently than other modules (plus it helps run the Queue).</p>
+<p>Pinger saves each response as an entity (so the entity API can be leveraged). It records the http status code, the duration of the request, and the timestamp. Additionally, the information is exposed to views, so you can generate reports of outages, slow responses, etc.</p>
+<h3><a href="https://pingcheck.in" target="_blank">PingCheck.in</a></h3>
+<p>I decided to launch <a href="https://pingcheck.in" target="_blank">PingCheck.in</a> as a hosted version of Pinger. The service will check your website (perform a HTTP GET request) every 5 or 10 minutes (depending on subscription), and send a message to up to 5 different email addresses when it received something other than a 200 OK status.</p>
+<p>We have different size plans for different needs. The personal website plan is free. Forever. Additionally, we are offering a 6 month free trial of any paid plan with coupon code <strong>"drupal6"</strong>.</p>
+<p>Please test out and review the module yourselves, or signup for the service. Comments and feedback on both are greatly appreciated.</p>
+</div></div></div><div class="field field-node--field-category field-name-field-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Category</div><div class="field-items"><div class="field-item even"><a href="/category/drupal-planet">Drupal Planet</a></div></div></div><div class="field field-node--field-comments field-name-field-comments field-type-comment field-label-above"><div class="field-label">Comments</div><div class="field-items"><div class="field-item even"><section id="comments" class="comment-wrapper">
+  
+  
+
+      <h2 class="title comment-form">Add new comment</h2>
+    <form class="node__field-comments-comment-form comment-form" action="/comment/reply/node/7/field_comments" method="post" id="comment-form" accept-charset="UTF-8"><div><div class="form-item form-type-textfield form-item-name">
+ <label for="edit-name">Your name</label> <input type="text" id="edit-name" name="name" value="" size="30" maxlength="60" class="form-text" />
+</div>
+<div class="field-type-text-long field-name-comment-body field-widget-text-textarea form-wrapper" id="edit-comment-body-wrapper"><div id="comment-body-add-more-wrapper"><div class="text-format-wrapper form-item"><div class="form-item form-type-textarea form-item-comment-body-0-value">
+ <label for="edit-comment-body-0-value">Comment<abbr class="form-required" title="This field is required.">*</abbr></label> <div class="form-textarea-wrapper"><textarea class="text-full form-textarea required resize-vertical" aria-describedby="edit-comment-body-0--description" id="edit-comment-body-0-value" name="comment_body[0][value]" rows="10" cols="60" placeholder="" required="required" aria-required="true"></textarea></div>
+</div>
+<div class="filter-wrapper form-wrapper" id="edit-comment-body-0-format"><div class="filter-help form-wrapper" id="edit-comment-body-0-format-help"><a href="/filter/tips" target="_blank">About text formats</a></div><div class="filter-guidelines form-wrapper" id="edit-comment-body-0-format-guidelines"><div class="filter-guidelines-item filter-guidelines-plain_text"><h4 class="label">Plain text</h4><ul class="tips"><li>Web page addresses and e-mail addresses turn into links automatically.</li><li>Lines and paragraphs break automatically.</li><li>Allowed HTML tags: &lt;a&gt; &lt;em&gt; &lt;strong&gt; &lt;cite&gt; &lt;blockquote&gt; &lt;code&gt; &lt;ul&gt; &lt;ol&gt; &lt;li&gt; &lt;dl&gt; &lt;dt&gt; &lt;dd&gt; &lt;h4&gt; &lt;h5&gt; &lt;h6&gt;</li></ul></div></div></div><div class="description"> Supported tags: &lt;a&gt; &lt;em&gt; &lt;strong&gt; &lt;cite&gt; &lt;blockquote&gt; &lt;code&gt; &lt;ul&gt; &lt;ol&gt; &lt;li&gt; &lt;dl&gt; &lt;dt&gt; &lt;dd&gt; &lt;h4&gt; &lt;h5&gt; &lt;h6&gt;</div></div>
+</div></div><input type="hidden" name="form_build_id" value="form-gtG6DGdNIdgnV6eQ9TN-Tx4eXZB-lTQ5I92pC7ZaWeU" /><input type="hidden" name="form_id" value="node__field_comments_comment_form" /><div class="url-textfield"><div class="form-item form-type-textfield form-item-url">
+ <label for="edit-url">Leave this field blank</label> <input autocomplete="off" type="text" id="edit-url" name="url" value="" size="20" maxlength="128" class="form-text" />
+</div>
+</div><div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Post Comment" class="button button-primary form-submit" /></div></div></form>
+  
+</section>
+</div></div></div>
+  </body>
+</html>
+

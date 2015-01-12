@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 20 Oct 2014 11:14:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 20 Oct 2014 11:14:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bluespark Labs: Uninstalling and purging field modules all at once
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.bluespark.com/blog/uninstalling-and-purging-field-modules-all-once
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bluespark Labs: Uninstalling and purging field modules all at once</title>
+    <base href="http://www.bluespark.com/blog/uninstalling-and-purging-field-modules-all-once">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>Sometimes we want to uninstall a module from our Drupal site but we can't do it because we get this dependency: <em>"Required by: Drupal (Field type(s) in use - see Field list)"</em>. Even if you delete the fields provided by the module via the UI or programmatically by executing <strong>field_delete_field() </strong>function you will get a new dependency <em>"Required by: Drupal (Fields pending deletion)"</em>.</p>
+
+<p>These dependencies are created by Drupal core to avoid that a module is uninstalled until all the data related to its fields is removed from the database, in order to maintain consistency.</p>
+
+<p>This has several drawbacks, the first one being that you can't uninstall your module when you want, and you have to wait until all the field data values are removed from the database (The rather strangely named <strong>field_deleted_data_XX</strong> and <strong>field_deleted_revision_XX</strong> tables) and the meta-information stored in field_config and field_config_instance tables is removed. And most importantly, nobody actually knows when this is going to happen! These database rows are removed in batches on each cron task execution. So depending on our cron regularity and the amount of data stored in our field tables, this tasks can last for minutes to weeks.</p>
+
+<p>This is a problem because, naturally, we want to uninstall our module now and not be forced to check periodically our production database to see if we are allowed to uninstall the module once all that information has been removed from the database.</p>
+
+<p>To avoid such situations and regain control, you can perform all these tasks in a <strong>hook_update_N()</strong> function, forcing the deletion of all the information and finally uninstalling the module. You can check the code in the gist below:</p>
+
+<p><script src="https://gist.github.com/plopesc/c55add7b3ad1d37341ec.js"></script></p>
+
+<p>The job is divided in three parts: The data definition, field data purge and module list clean.</p>
+
+<p>In the data definition task we provide all the required data we need to perform the task, the name of the field to delete, and given that information, we get the field_info array and the name of the module to be uninstalled. Finally, field_delete_field() is executed.</p>
+
+<p>After that the field data is purged in the batch body, and since we don't know how much data we will have to purge, we remove just 100 database rows per batch execution. After each purge we check if all the data has been removed to decide if we have to remove more data from the database or continue to the final part.</p>
+
+<p>Once all the data and metadata related to the module is removed from the database, the Drupal field types dependency is gone and we are granted the ability to disable and uninstall our module cleanly. Finally, we can drop the empty field_deleted_data_XX and field_deleted_revision_XX tables to keep clean our database.</p>
+
+<p>Using this approach, we have two key benefits: <strong>a.</strong> we are sure that the module is disabled and our database is clean, and <strong>b.</strong> we are confident that we can remove the module from our repository, given that in the next deploy we won't get any dependency conflict with that module.</p>
+ </div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

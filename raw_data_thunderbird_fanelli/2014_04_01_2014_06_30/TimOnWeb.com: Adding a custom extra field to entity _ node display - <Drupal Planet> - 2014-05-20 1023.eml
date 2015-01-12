@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 20 May 2014 08:23:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 20 May 2014 08:23:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: TimOnWeb.com: Adding a custom extra field to entity / node display
+Content-Transfer-Encoding: 8bit
+Content-Base: http://timonweb.com/adding-a-custom-extra-field-to-entity-node-display
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>TimOnWeb.com: Adding a custom extra field to entity / node display</title>
+    <base href="http://timonweb.com/adding-a-custom-extra-field-to-entity-node-display">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><a href="http://timonweb.com/adding-a-custom-extra-field-to-entity-node-display"><img typeof="foaf:Image" src="http://timonweb.com/sites/default/files/styles/post-images/public/post-images/extra-field_0.png?itok=pK8mzHYY" width="150" height="150" alt="" /></a></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><p>I had a case recently, where I needed to add custom data to the node display and wanted this data to behave like a field, however the data itself didn't belong to a field. By "behaving like a field" I mean you can that field at node display settings and able to control it's visibility, label and weight by dragging and dropping that field.</p>
+<p>So, as you may have undestood, <b>hook_preprocess_node / node_view_alter</b> approach alone wasn't enough.</p></div><div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden">
+    <span class="field-items">
+                  <a href="http://timonweb.com/categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>            </span>
+</div>
+<div class="field field-name-taxonomy-vocabulary-2 field-type-taxonomy-term-reference field-label-above">
+      <h3 class="field-label">Tags&nbsp;</h3>
+    <span class="field-items">
+                  <a href="http://timonweb.com/tags/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a>,                 <a href="http://timonweb.com/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a>            </span>
+</div>
+ Read on about <a href="http://timonweb.com/adding-a-custom-extra-field-to-entity-node-display">Adding a custom extra field to entity / node display</a>
+  </body>
+</html>
+

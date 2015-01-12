@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 29 Nov 2014 18:57:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 29 Nov 2014 18:57:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Liran Tal's Enginx: Drupal Performance Tip – replace views blocks with vanilla blocks
+Content-Transfer-Encoding: 8bit
+Content-Base: http://enginx.com/blog/drupal-performance-tip-replace-views-blocks-vanilla-blocks/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Liran Tal's Enginx: Drupal Performance Tip – replace views blocks with vanilla blocks</title>
+    <base href="http://enginx.com/blog/drupal-performance-tip-replace-views-blocks-vanilla-blocks/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="seriesmeta">This entry is part 2 of 2 in the series <a href="http://enginx.com/series/drupal-performance-tuning-for-better-database-utilization/" class="series-54" title="Drupal Performance Tuning for Better Database Utilization">Drupal Performance Tuning for Better Database Utilization</a></div><p>In the spirit of the computer video game <a href="http://doom.wikia.com/wiki/Doom" target="_blank">Doom </a>and its <a href="http://doom.wikia.com/wiki/Skill_level" target="_blank">skill levels</a>, we&#8217;ll review a few ways you can improve your <a href="http://drupal.org" target="_blank">Drupal </a>speed performance and optimize for better results and server response time. These tips that we&#8217;ll cover may be at times specific to Drupal 6 versions, although you can always learn the best practices from these examples and apply them on your own code base. <img class="alignleft" src="http://adamatomic.com/pics/blog/doom/doom2.jpg" alt="Doom" width="298" height="212" /> Doom skill  levels: (easiest first) 1.<strong> I&#8217;m too young to die</strong> 2. Hey, not too rough 3. Hurt me plenty 4. Ultra-violence 5. Nightmare! <strong>  This post is rated &#8220;I&#8217;m too young too die&#8221; difficulty level</strong>.   When we start out building <a href="https://www.drupal.org/" target="_blank">Drupal </a>websites, we gradually build functionality and a common use case is creating a view, then you might want to create some blocks, very much related to the view, so you create a block view using the <a href="https://www.drupal.org/project/views" target="_blank">Views </a>module. Then you maybe combine it with <a href="https://www.drupal.org/project/panels" target="_blank">Panels </a>or <a href="https://www.drupal.org/project/context" target="_blank">Context</a>, it doesn&#8217;t really matter, but essentially you&#8217;ve been using the UI tools which are for ease of use, and the overhead for that lies in quite a bit of abstraction layer which later may cost in performance. Replacing the quicklinks and help and support blocks that were used in our theme&#8217;s sidebar from being a view based block to a simple programmatiaclly created block implementation proved to reduce a sizzling amount of ~200ms to ~2ms of server time spent on doing the same operation. That accounted for about ~200ms of page load time redduction for each page load, as this item was featured in many pages consistently on our theme.</p>
+<pre class="commit_message" style="color: black;"></pre>
+<p><a href="http://enginx.com/wp-content/uploads/2014/11/drupal_perf-3.png"><img class="aligncenter size-full wp-image-506" src="http://enginx.com/wp-content/uploads/2014/11/drupal_perf-3.png" alt="drupal_perf-3" width="420" height="113" /></a></p>
+
+<!-- Easy AdSense V7.43 -->
+<!-- [leadout: 1 urCount: 1 urMax: 0] -->
+<div class="ezAdsense adsense adsense-leadout" style="text-align:center;margin:12px;">  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- enginx-blog-wide-post -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-9677997565991773"
+     data-ad-slot="6746030703"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<!-- Easy AdSense V7.43 -->
+<p>The post <a rel="nofollow" href="http://enginx.com/blog/drupal-performance-tip-replace-views-blocks-vanilla-blocks/">Drupal Performance Tip &#8211; replace views blocks with vanilla blocks</a> appeared first on <a rel="nofollow" href="http://enginx.com">Liran Tal&#039;s Enginx</a>.</p>
+  </body>
+</html>
+

@@ -1,0 +1,143 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 09 May 2014 01:24:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 09 May 2014 01:24:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: VM(doh): How We Test Drupal 7 Modules on Travis CI
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vmdoh.com//blog/how-we-test-drupal-7-modules-travis-ci
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>VM(doh): How We Test Drupal 7 Modules on Travis CI</title>
+    <base href="http://www.vmdoh.com//blog/how-we-test-drupal-7-modules-travis-ci">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>If you've been working much in open source software recently - especially PHP - there's little doubt that you have likely heard of <a href="https://travis-ci.org/">Travis CI</a>. For those don't know about Travis CI, it's a free hosted continuous integration solution for public open source projects (they do have a <a href="https://travis-ci.com/plans">paid version</a> for private projects, too). Travis CI is a great tool for running your automated tests on each commit and pull request for your project's Github repository.</p>
+<p>At VM(doh), we believe that if it's not tested it's broken. We use Travis CI for testing the libraries and Drupal modules that we build. In the past, we've used our own Jenkins server for that task, but we decided that moving to Travis CI meant one less thing to maintain.</p>
+<p>Why don't we just use Drupal.org's testing infrastructure? Simply put, the infrastructure that we need is not in place there. We tend to deal with third-party applications, and testing things like <a href="http://drupal.org/project/search_api_elasticsearch">integration with Elasticsearch</a> or <a href="https://github.com/VeggieMeat/marconi">cloud queues</a> just isn't possible on Drupal.org.</p>
+<p>Running tests for Drupal 7 modules is easy on Travis CI. You just have to be willing to do a little work in the .travis.yml file so that Drupal's Simpletest tests will run. Yes, Drupal 7 uses Simpletest instead of PHPUnit, and thankfully Drupal 8 will be getting more sane and using PHPUnit.</p>
+<p>Below is the current (as of today, at least) .travis.yml file for the Search API Elasticsearch module.</p>
+
+<pre class="brush: plain; auto-links: false; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 4; toolbar: true; codetag" title="Search API Elasticsearch .travis.yml">language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+
+matrix:
+  allow-failures:
+    - php: 5.5
+
+  env:
+    global:
+      - ES_VER=1.0.1
+      - ES_MAPPER_ATTACHMENTS_VER=2.0.0.RC1
+      - ES_TRANSPORT_THRIFT_VER=2.0.0.RC1
+      - ES_GEOCLUSTER_FACET_VER=0.0.10
+      - ES_WAIT_ON_MAPPING_CHANGE=true
+      - DATABASE='drupal'
+      - DB_USERNAME='root'
+      - DB_ENCODE='utf8'
+      - MODULE_PATH='build/sites/all/modules'
+      - ES_REQUIRE='no-dev'
+    matrix:
+      - DRUPAL_3RD_PARTY='composer_manager'
+      - DRUPAL_3RD_PARTY='libraries'
+
+mysql:
+  database: $DATABASE
+  username: $DB_USERNAME
+  encoding: $DB_ENCODE
+
+before_install:
+  - composer self-update
+  - pear channel-discover pear.drush.org
+
+install:
+  - pear install drush/drush
+  - phpenv rehash
+  - ./tests/bin/run_elasticsearch.sh
+
+before_script:
+  - echo 'sendmail_path = /bin/true' &gt;&gt; ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - drush --yes make tests/includes/search_api_elasticsearch.make build
+  - mkdir -p $MODULE_PATH
+  - git archive $(git rev-parse --abbrev-ref HEAD) | tar -x -C $MODULE_PATH
+  - cd build
+  - drush --yes site-install minimal --db-url="mysql://$DB_USERNAME@127.0.0.1/$DATABASE"
+  - drush --yes dis search
+  - drush --yes en $DRUPAL_3RD_PARTY
+  - drush --yes en search_api_elasticsearch
+  - drush --yes en simpletest
+
+script:
+  - drush test-run 'Search API Elasticsearch' --debug
+
+notifications:
+  irc: irc.freenode.org#vmdoh</pre>
+
+<p>That might look a little overwhelming at first, but it's really rather simple especially for what it does. For this module, we're actually running six test builds. We support both the Libraries API and Composer Manager for using the Elastica dependency, plus we test on 5.3 (Drupal 7 minimum), 5.4 (widely deployed), and 5.5 (failures allowed, but we do want to see if we need to make changes for compatibility).</p>
+<p>Before installing Drupal, we install Drush to make our lives easier. These days, installing Drush from it's PEAR repository installs a 6.x version by default, and that's great because "drush test-run" now only uses an exit status of "0" on success. In the past, you had to grep the test results to check for errors and then manually return an exit status of "1" to mark a failure. (Drupal's run-tests.sh script also returns an exit status of "0" whether or not it succeeds.) By the way, we also use a shell script to configure and install multiple instances of Elasticsearch for testing.</p>
+<p>There is a very important PHP configuration change that you'll want to make before actually installing Drupal. When you install Drupal, it tries to send an email to the admin email. To trick Drupal, we tell PHP to use /bin/true as the sendmail_path on line 43.</p>
+<p>The rest of the script is essentially going through the steps you'd use for a Drupal installation and using Drush to run the tests. We run the tests in debug mode so that we can see what Drush was doing every step of the way.</p>
+<p>The last section you'll notice is the notifications. Travis CI allows you to send notifications of build failures and fixes to many destinations. We typically send public notifications to our public IRC channel.</p>
+<p>Now what about external APIs where you need credentials? Travis CI supports this, too. Let's look at the .travis.yml file for Marconi:</p>
+
+<pre class="brush: plain; auto-links: false; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 4; toolbar: true; codetag" title="Search API Elasticsearch .travis.yml">language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+
+env:
+  global:
+    - secure: "YwRjLD4i/nDLsNSThxJMu4l0cjMQYN/MfVAkIL6qKlxieBdlWcD9XwcBkNgf5aHsdu/9O/oEmsjCw4LJwxMCKKTqr7kkRA5u+PZ4v82DkPcixFAox/Mmxs1EUhP0YBD3uWXH3qCVpcWL6OVxUTfcfNRO8xgT4o9lXT7ZkDs7j1k="
+    - secure: "gmU2uAQXNk/GOe/HcVOlf4HdtzqCa4OxLU3HVynZBPWHcHXsoIcpjzD/p8XmWbuujnHcwZWC0w3+VwRtRc1RIyMKpMWhElsuG5JxHY9Djd6QMoJ/Zz2A0cI7V8JXb6p8269y+HCDvfX4X8A27vhsl72udvQTgv6cwVXPadvFEVA="
+    - secure: "XUG2/FgdfKHlcPwQOPVW7zQ9VqHauXKsjQXDvo+Q3HL7ko6DzOX5BdS4BL4B6x6485Mx/Sen8bKQULQkPAZeGelpIgBCjTYeclY4N/92N9au2hQ6ibIa7me5TsYhPR0unpGZhtIYrNvWqzMUMtZTigKCvmmCdt889DIzErCX3xA="
+    - secure: "NMo4U85i0edUtRIrI77lyRs4eyWcsnEZbRqi/qvrPtvtPHBZxU0ovu7rXjijI6DHyzBIwH6nkmJrfE8kWX3G/xxqN2EQpXEdJZSdhgL09mA5PewPe9gW27WVG4Z1PzEFZJQp8kJM3mYmcX3gy3xuL89DZ7ZDYlZMNoSG/R1hlEY="
+    - DATABASE='drupal'
+    - DB_USERNAME='root'
+    - DB_ENCODE='utf8'
+    - MODULE_PATH='build/sites/all/modules/marconi'
+
+mysql:
+  database: $DATABASE
+  username: $DB_USERNAME
+  encoding: $DB_ENCODE
+
+before_install:
+  - composer self-update
+  - pear channel-discover pear.drush.org
+
+install:
+  - pear install drush/drush
+  - phpenv rehash
+
+before_script:
+  - echo 'variables_order = "EGPCS"' &gt;&gt; ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - echo 'sendmail_path = /bin/true' &gt;&gt; ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - drush --yes make tests/includes/marconi.make build
+  - mkdir -p $MODULE_PATH
+  - git archive $(git rev-parse --abbrev-ref HEAD) | tar -x -C $MODULE_PATH
+  - cd build
+  - drush --yes site-install minimal --db-url="mysql://$DB_USERNAME@127.0.0.1/$DATABASE"
+  - drush --yes en marconi
+  - drush --yes en simpletest
+
+script:
+  - drush test-run Marconi --debug
+</pre>
+
+<p>For the most part, the .travis.yml file is the same as the one for Search API Elasticsearch. However, there are a few things you need to do to get tests to run when using a third-party API.</p>
+<p>In the Marconi module, we call environment variables for credentials during testing. Travis CI presents two easy to overcome problems for this situation. The first is how to include API credentials without exposing API credentials. Fortunately, Travis CI has a way to <a href="http://docs.travis-ci.com/user/build-configuration/#Secure-environment-variables">encrypt your environment variables</a>, and we do that on lines 10-13 to setup the API credentials we need for testing.</p>
+<p>The second problem is telling PHP to use environment variables. The default configuration for variables on Travis CI is "GPCS" which means that Travis CI won't use environment variables. That's why we change the variables_order setting to "EGPCS" on line 33.</p>
+<p>Obviously, if you don't need to install or use a thid-party application, you can skip those parts of running an extra build script or setting secure environment variables, but the rest remains the same.</p>
+  </body>
+</html>
+

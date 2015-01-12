@@ -1,0 +1,71 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 21 Oct 2014 15:31:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 21 Oct 2014 15:31:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: blog.studio.gd: Inline Entity Display
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.studio.gd/blog/id/25
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>blog.studio.gd: Inline Entity Display</title>
+    <base href="http://blog.studio.gd/blog/id/25">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>
+At Studio.gd we love the Drupal ecosystem and it became very important to us to give back and participate.<br>
+Today we're proud to announce a new module that we hope will help you !
+</p>
+<p>
+Inline Entity Display module will help you handle the display of referenced entity fields directly in the parent entity. <br>
+For exemple if you reference a taxomony "Tags" to an Article node, you will be able directly in the manage display of the article to display tags' fields. It can become very usefull with more complex referenced entity like field collection for exemple.
+</p>
+<quote>VOIR LE MODULE : <a href="https://www.drupal.org/project/inline_entity_display" target="_blank">https://www.drupal.org/project/inline_entity_display</a></quote>
+<br><br>
+<img style="max-width:100%" src="https://www.drupal.org/files/project-images/IED---manage-display.png">
+<br><br>
+<p>
+<b>Features</b>
+<br><br>
+- You can control, for each compatible reference field instances, if the fields from the referenced entities would be available as extra fields. Disabled by default.
+<br><br>
+- You can manage the visibility of the referenced entities fields on the manage display form. Hidden by default.
+<br><br>
+- View modes are added to represent this context and manage custom display settings for the referenced entities fields in this context {entity_type}_{view_mode}
+Example: "Node: Teaser" is used to render referenced entities fields, when you reference an entity into a node, and you view this node as a teaser
+if there are no custom settings for this view mode, fields are rendered using the default view mode settings.
+<br><br>
+- Extra data attributes are added on the default fields markup, so the field of the same entity can be identified.
+<br><br>
+<b>
+Compatible with Field group on manage display form.
+<br><br>
+Compatible with Display Suite layouts on manage display form.
+</b>
+<br><br>
+</p>
+<p>
+<b>Requirements</b>
+<br><br>
+- Entity API<br>
+- One of the compatible reference fields module.
+</p>
+<br>
+<p>
+<b>Tutorials</b>
+<br><br>
+<a href="http://simplytest.me/project/inline_entity_display/7.x-1.x">simplytest.me/project/inline_entity_display/7.x-1.x</a>
+<br>
+The simplytest.me install of this module will come automatically with these modules: entity_reference, field_collection, field_group, display suite.
+</p>
+<br>
+<quote>VOIR LE MODULE : <a href="https://www.drupal.org/project/inline_entity_display" target="_blank">https://www.drupal.org/project/inline_entity_display</a></quote>
+<br><br><br>
+<p><b>We are currently developping a similar module for Drupal 8 but more powerful and more flexible, Stay tuned !</b></p>
+  </body>
+</html>
+

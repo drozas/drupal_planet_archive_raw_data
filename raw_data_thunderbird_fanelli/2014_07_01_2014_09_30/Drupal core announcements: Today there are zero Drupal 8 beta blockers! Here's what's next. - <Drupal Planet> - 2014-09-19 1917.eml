@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 19 Sep 2014 17:17:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 19 Sep 2014 17:17:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Today there are zero Drupal 8 beta blockers! Here's what's next.
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/443118
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Today there are zero Drupal 8 beta blockers! Here's what's next.</title>
+    <base href="https://groups.drupal.org/node/443118">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As of 06:58 UTC today, September 19, there are <strong>zero Drupal 8 beta blockers</strong>. This means that, after more than nine months of focused effort, we are almost ready to release the first Drupal 8 beta!</p>
+<h3>When will Drupal 8.0.0-beta 1 be released?</h3>
+<p>Today (September 19), we have released one more Drupal 8 alpha, <a href="https://www.drupal.org/node/2341513">Drupal 8.0.0-alpha15</a>. This alpha can be treated as a "beta release candidate". If no additional beta blockers are identified in the next 10-14 days, we will then tag the first beta! (If we do discover <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">additional beta blockers</a>, then we will evaluate them and adjust our timeline.)</p>
+<h3>What does beta mean?</h3>
+<p>Betas are good testing targets for developers and site builders who are comfortable reporting (and where possible, fixing) their own bugs, and who are prepared to rebuild their test sites from scratch if necessary. Beta releases are <em>not</em> recommended for non-technical users, nor for production websites.</p>
+<p>See <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">Dries' original announcement about the beta</a> for more information on the beta and the criteria for beta blockers. The  <a href="https://groups.drupal.org/node/424518"> explanation of the Drupal 8 release management tags</a> explains the differences between critical beta blockers and other issues impacted by the beta phase.
+</p>
+<h3>How can I help?</h3>
+<h4>Help stabilize the beta</h4>
+<p>The beta is an important milestone for Drupal 8. Help test the <a href="https://www.drupal.org/node/2341513">final alpha</a> for critical and potentially beta-blocking bugs, and take extra care to avoid introducing regressions during this pre-beta window.</p>
+<h4>Beta deadline issues (complete by September 28)</h4>
+<p>This final pre-beta window is our <strong>final chance</strong> to complete <a href="https://groups.drupal.org/node/424518#beta-deadline">beta deadline issues</a>. As a reminder, changes to the following have a beta deadline:</p>
+<ol>
+<li>Non-critical changes to the core data model. (See  the <a href="https://www.drupal.org/node/2272713">beta-to-beta upgrade path and data model stability policy</a>  and the <a href="https://www.drupal.org/node/2341575">beta-to-beta-upgrade path critical task</a> for ongoing discussion of what is included in the Drupal 8 data model, how we will handle small data model additions, and when we will support a beta-to-beta upgrade path). </li>
+<li>Non-critical, backward-compatibility-breaking changes to the public APIs of the following critical subsystems:
+<ul>
+<li>The Configuration system</li>
+<li>The Entity Field API</li>
+<li>The Plugin API</li>
+<li>The Menu and Routing APIs</li>
+</ul>
+</li><li>Other broad, non-critical changes that significantly break backward compatibility, at core maintainer discretion.</li>
+</ol>
+<p>Beta deadline issues can be committed up until <strong>Sunday, September 28</strong>, after which there will be a freeze to ensure stability. If you have questions or concerns about completing a particular change, speak to a core maintainer about it soon.</p>
+<p>If you know of issues that would introduce any of these changes, add the <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+deadline">"beta deadline" issue tag</a> so that contributors can find and help complete them before the beta. The following issues are particular priorities:</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2002138">#2002138: Use adapters for supporting typed data</a></li>
+<li><a href="https://www.drupal.org/node/2305397">#2305397: Field type (item) classes implementing AllowedValuesInterface::getPossible(Values|Options)() is incompatible with Views and possibly other use cases</a></li>
+<li><a href="https://www.drupal.org/node/2312093">#2312093: Rename FieldInstanceConfig to FieldConfig</a></li>
+</ul>
+<p>(Also see the <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+deadline">full queue of known beta deadline issues</a>.)</p>
+<p>Keep in mind that API and schema <em>additions</em> may still be made during the beta phase, at core maintainer discretion. Limited API and data model changes will also happen during the beta phase, though core maintainers will try to isolate these changes to non-fundamental APIs or critical bug fixes. (See the <a href="https://www.drupal.org/node/2341575">ongoing beta-to-beta-upgrade path discussion</a>.)</p>
+<h4>Beta target issues</h4>
+<p><a href="https://groups.drupal.org/node/424518#beta-target">"Beta target" issues</a> are issues that we hope to complete early during the beta phase, but can still be added to Beta 2 or later. These are the next priority after important beta deadline issues. We especially need to work on:</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2341323">#2341323: Figure out what to do in Views when entity schema changes</a></li>
+<li><a href="https://www.drupal.org/node/2140511">#2140511: Configuration file name collisions silently ignored for default configuration</a></li>
+</ul>
+<p>(Also see the <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+target">full queue of known beta target issues</a>).</p>
+<h3>Thank you!</h3>
+<p>Many thanks to the 234 contributors who have helped resolve our 177 beta blockers in Drupal 8, and to the incredibly dedicated Drupal 8 branch maintainers. Your focus and effort is helping us build a solid Drupal 8 beta and, going forward, a better release.</p>
+  </body>
+</html>
+

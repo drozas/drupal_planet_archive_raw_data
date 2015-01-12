@@ -1,0 +1,266 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 11 Dec 2014 00:38:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 11 Dec 2014 00:38:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Metal Toad: Drupal 8 Migrations, part 3: Migrating Taxonomies from Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.metaltoad.com/blog/migrating-taxonomy-drupal-7-to-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Metal Toad: Drupal 8 Migrations, part 3: Migrating Taxonomies from Drupal 7</title>
+    <base href="http://www.metaltoad.com/blog/migrating-taxonomy-drupal-7-to-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/914/title/en/rss">Drupal 8 Migrations, part 3: Migrating Taxonomies from Drupal 7</span>
+<span class="field field-node--created field-name-created field-type-created field-label-hidden" data-quickedit-field-id="node/914/created/en/rss">December 10th, 2014</span>
+<span class="field field-node--uid field-name-uid field-type-entity-reference field-label-hidden" data-quickedit-field-id="node/914/uid/en/rss"><a title="View user profile." href="/people/keithdechant" lang="" about="/people/keithdechant" typeof="schema:Person" property="schema:name" datatype="" class="username">Keith Dechant </a></span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/914/body/en/rss">
+    <div class="field-items">
+          <div class="field-item"><p>Drupal 8 provides a flexible, plugin-based architecture for migrating data into a site. In <a href="/blog/migrating-users-drupal-7-to-drupal-8">Part 2 of this series</a>, we explored how to migrate users from a Drupal 7 site. We will now expand on this by migrating Taxonomy vocabularies and terms from a Drupal 7 site into Drupal 8.</p>
+<p>This article continues our work from <a href="/blog/migrating-users-drupal-7-to-drupal-8">Part 2</a>. The code examples pick up where that post left off. If you are trying this code out yourself, it is recommended to start building your custom migration module according to the examples in that post.</p>
+<h3>Migrating Taxonomy Vocabularies</h3>
+<p>The Migrate Drupal module (in Drupal 8 core) already contains a migration definition and source plugins to migrate taxonomy data from Drupal 6 to Drupal 8. All we need to do is to adapt the existing code to work with Drupal 7.</p>
+<p>The migration definition:</p>
+<p>Starting with the "Migrate Custom" module we created in Part 2, we now add the following configuration file.</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">modules/migrate_custom/config/install/migrate.migration.custom_taxonomy_vocabulary.yml</code></span></p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">id: custom_taxonomy_vocabulary
+label: Drupal 7 taxonomy vocabularies
+migration_groups:
+  - Drupal 7
+source:
+  plugin: custom_taxonomy_vocabulary
+process:
+  vid:
+    -
+      plugin: machine_name
+      source: machine_name
+    -
+      plugin: dedupe_entity
+      entity_type: taxonomy_vocabulary
+      field: vid
+      length: 32
+  label: name
+  name: name
+  description: description
+  hierarchy: hierarchy
+  module: module
+  weight: weight
+destination:
+  plugin: entity:taxonomy_vocabulary</pre></div>
+</div>
+<p>Here we have examples of a few plugins not seen in the previous post:</p>
+<ul><li><span class="geshifilter"><code class="text geshifilter-text">machine_name</code></span> converts the string into a valid machine name.</li>
+<li><span class="geshifilter"><code class="text geshifilter-text">dedupe_entity</code></span> prevents machine name conflicts, which would cause imported data to overwrite existing data. For example, a machine name "foo" would be renamed to "foo_2" if name "foo" already existed.</li>
+</ul><p>The source plugin</p>
+<p>To define the source of our vocabulary data, we create a new file <span class="geshifilter"><code class="text geshifilter-text">modules/migrate_custom/src/Plugin/migrate/source/Vocabulary.php</code></span> with the following contents:</p>
+<div class="geshifilter">
+<div class="php geshifilter-php" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+ 
+<span style="color: #009933; font-style: italic;">/**
+ * @file
+ * Contains \Drupal\migrate_custom\Plugin\migrate\source\Vocabulary.
+ */</span>
+ 
+<span style="color: #000000; font-weight: bold;">namespace</span> Drupal\migrate_custom\Plugin\migrate\source<span style="color: #339933;">;</span>
+ 
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\migrate\Row<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\migrate_drupal\Plugin\migrate\source\DrupalSqlBase<span style="color: #339933;">;</span>
+ 
+<span style="color: #009933; font-style: italic;">/**
+ * Drupal 7 vocabularies source from database.
+ *
+ * @MigrateSource(
+ *   id = "custom_taxonomy_vocabulary",
+ *   source_provider = "taxonomy"
+ * )
+ */</span>
+<span style="color: #000000; font-weight: bold;">class</span> Vocabulary <span style="color: #000000; font-weight: bold;">extends</span> DrupalSqlBase <span style="color: #009900;">{</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> query<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$query</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">select</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'taxonomy_vocabulary'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'v'</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">fields</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'v'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+        <span style="color: #0000ff;">'vid'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'name'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'description'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'hierarchy'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'module'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'weight'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'machine_name'</span>
+      <span style="color: #009900;">)</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$query</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> fields<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #b1b100;">return</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+      <span style="color: #0000ff;">'vid'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The vocabulary ID.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The name of the vocabulary.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The description of the vocabulary.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'help'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Help text to display for the vocabulary.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'relations'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Whether or not related terms are enabled within the vocabulary. (0 = disabled, 1 = enabled)'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'hierarchy'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The type of hierarchy allowed within the vocabulary. (0 = disabled, 1 = single, 2 = multiple)'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'weight'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The weight of the vocabulary in relation to other vocabularies.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'parents'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">"The Drupal term IDs of the term's parents."</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'node_types'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The names of the node types the vocabulary may be used with.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> getIds<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$ids</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'vid'</span><span style="color: #009900;">]</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'type'</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'integer'</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$ids</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+<span style="color: #009900;">}</span></pre></div>
+</div>
+<p>Note: this file was adapted from the Drupal 6 version in Drupal 8 core. For the original file, see <span class="geshifilter"><code class="text geshifilter-text">core/modules/migrate_drupal/src/Plugin/migrate/source/d6/Vocabulary.php</code></span></p>
+<p>The structure of this file is similar to the User source plugin in the previous article. However, because all the data we need is stored in the `taxonomy_vocabulary` table in the source database, we do not need to define the <span class="geshifilter"><code class="text geshifilter-text">prepareRow()</code></span> method.</p>
+<h3>Migrating Taxonomy Terms</h3>
+<p>We can use a second migration definition to migrate our taxonomy terms. Create the following file:</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">modules/migrate_custom/config/install/migrate.migration.custom_taxonomy_term.yml</code></span></p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">id: custom_taxonomy_term
+label: Drupal 7 taxonomy terms
+migration_groups:
+  - Drupal 7
+source:
+  plugin: custom_taxonomy_term
+process:
+  tid: tid
+  vid:
+    plugin: migration
+    migration: custom_taxonomy_vocabulary
+    source: vid
+  name: name
+  description: description
+  weight: weight
+  parent:
+    -
+      plugin: skip_process_on_empty
+      source: parent
+    -
+      plugin: migration
+      migration: custom_taxonomy_term
+  changed: timestamp
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies:
+  required:
+    - custom_taxonomy_vocabulary</pre></div>
+</div>
+<p>In this migration, we make use of the <span class="geshifilter"><code class="text geshifilter-text">migration</code></span> process plugin for two of our properties, the vocabulary ID and the parent term ID. This preserves these references in case the referenced entity's ID or machine name changed during the import.</p>
+<p>Some machine names and/or IDs will likely change when running your import. This is to be expected, especially because Drupal 8 stores taxonomy vocabularies in the 'config' table, where they are accessed by their machine names instead of by the numeric IDs used in Drupal 7. Fortunately for us, the Migrate module records a map of the old and new IDs in the database. We can then use the <span class="geshifilter"><code class="text geshifilter-text">migration</code></span> source plugin to easily look up the old ID or machine name.</p>
+<p>The source plugin</p>
+<p>To define the source of our term data, we create a new file <span class="geshifilter"><code class="text geshifilter-text">modules/migrate_custom/src/Plugin/migrate/source/Term.php</code></span> with the following contents:</p>
+<div class="geshifilter">
+<div class="php geshifilter-php" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+ 
+<span style="color: #009933; font-style: italic;">/**
+ * @file
+ * Contains \Drupal\migrate_custom\Plugin\migrate\source\Term.
+ */</span>
+ 
+<span style="color: #000000; font-weight: bold;">namespace</span> Drupal\migrate_custom\Plugin\migrate\source<span style="color: #339933;">;</span>
+ 
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\migrate\Row<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\migrate_drupal\Plugin\migrate\source\DrupalSqlBase<span style="color: #339933;">;</span>
+ 
+<span style="color: #009933; font-style: italic;">/**
+ * Drupal 7 taxonomy terms source from database.
+ *
+ * @todo Support term_relation, term_synonym table if possible.
+ *
+ * @MigrateSource(
+ *   id = "custom_taxonomy_term",
+ *   source_provider = "taxonomy"
+ * )
+ */</span>
+<span style="color: #000000; font-weight: bold;">class</span> Term <span style="color: #000000; font-weight: bold;">extends</span> DrupalSqlBase <span style="color: #009900;">{</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> query<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$query</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">select</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'taxonomy_term_data'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'td'</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">fields</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'td'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span><span style="color: #0000ff;">'tid'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'vid'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'name'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'description'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'weight'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'format'</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">distinct</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$query</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> fields<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #b1b100;">return</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+      <span style="color: #0000ff;">'tid'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The term ID.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'vid'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Existing term VID'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The name of the term.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'The term description.'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'weight'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Weight'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'parent'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">"The Drupal term IDs of the term's parents."</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> prepareRow<span style="color: #009900;">(</span>Row <span style="color: #000088;">$row</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #666666; font-style: italic;">// Find parents for this row.</span>
+    <span style="color: #000088;">$parents</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">select</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'taxonomy_term_hierarchy'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'th'</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">fields</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'th'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span><span style="color: #0000ff;">'parent'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'tid'</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">condition</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'tid'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getSourceProperty</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'tid'</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">execute</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">fetchCol</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">setSourceProperty</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'parent'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$parents</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> parent<span style="color: #339933;">::</span><span style="color: #004000;">prepareRow</span><span style="color: #009900;">(</span><span style="color: #000088;">$row</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> getIds<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$ids</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'tid'</span><span style="color: #009900;">]</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'type'</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'integer'</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$ids</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+<span style="color: #009900;">}</span></pre></div>
+</div>
+<h3 id="reloading_configuration">Reloading the configuration</h3>
+<p>Remember that migrations are configuration entities. To reload the configuration, we need to uninstall and reinstall our module. Here's a handy Drush command to do this:</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">drush pm-uninstall migrate_custom -y &amp;&amp; drush en migrate_custom</code></span></p>
+<h3>Running the migration</h3>
+<p>We need to add some new lines to our manifest.yml file:</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal"># A D7 user and taxonomy migration, with dependencies.
+- custom_user
+- custom_taxonomy_vocabulary
+- custom_taxonomy_term</pre></div>
+</div>
+<p>As we did with our user migration, we now run the migration using Drush.</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">drush migrate-manifest manifest.yml --legacy-db-url=mysql://{dbuser}:{dbpass}@localhost/{dbname}</code></span></p>
+<p>When including multiple migrations in a single manifest, be aware that <span class="geshifilter"><code class="text geshifilter-text">drush migrate-manifest</code></span> doesn't always run them in the order you specified. If, for example, your taxonomy migrations are being run before your user migration, and your taxonomy terms end up missing their UIDs, you might need to create two separate manifest files, to give yourself better control over the order.</p>
+<p>Next post: <a href="/blog/migrating-nodes-drupal-7-to-drupal-8">Migrating Nodes from Drupal 7</a>.</p>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

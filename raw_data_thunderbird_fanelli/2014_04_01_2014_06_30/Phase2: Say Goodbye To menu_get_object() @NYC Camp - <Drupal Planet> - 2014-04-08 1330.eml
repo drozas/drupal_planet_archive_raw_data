@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 08 Apr 2014 11:30:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 08 Apr 2014 11:30:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Say Goodbye To menu_get_object() @NYC Camp
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/goodbye-menu-get-object/?utm_source=rss&utm_medium=rss&utm_campaign=goodbye-menu-get-object
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Say Goodbye To menu_get_object() @NYC Camp</title>
+    <base href="http://www.phase2technology.com/blog/goodbye-menu-get-object/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=goodbye-menu-get-object">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Drupal 8 is bringing some great new features in addition to some fun DX changes. One of the ways I like to learn about these changes is to deconstruct the API.</p>
+<p>The best way to deconstruct the API is to dive into code that has a certain purpose, like looking at the Breadcrumb API.</p>
+<p>Since we know we&#8217;re focusing on Drupal 7 to Drupal 8 changes, we can also use the excellent documentation in <a title="Drupal change records" href="https://drupal.org/list-changes/published/drupal">the change records</a> to help us.</p>
+<p>In <a title="30 Drupal 8 API Functions You Should Already Know" href="http://www.nyccamp.org/session/30-drupal-8-api-functions-you-should-already-know">my upcoming <a href="http://www.nyccamp.org">NYCCamp</a> presentation</a>, I&#8217;ll review some of the common API functions we used in Drupal 7 and how they&#8217;ve changed in Drupal 8.</p>
+<h2>What Node Am I On?</h2>
+<p>A lot of custom blocks that show related content, connected taxonomy, or any other relationship to currently viewed page typically depend on <a title="menu_get_object()" href="https://api.drupal.org/api/drupal/includes%21menu.inc/function/menu_get_object/7">menu_get_object()</a>. I&#8217;m sad to say that our old friend is gone.</p>
+<p>In Drupal 8, the way to get details about nodes are through the attributes of the request object in the global <code>\Drupal</code> namespace.</p>
+<p>While <a href="https://drupal.org/node/2124749">the DX of this implementation is currently being discussed</a>, as of this writing, to get details about the current node:</p>
+<p></p><pre class="crayon-plain-tag">&lt;?php
+$node = \Drupal::request()-&gt;attributes-&gt;get('node');
+?&gt;</pre><p></p>
+<h2>drupal_render() is EVERYTHING!</h2>
+<p>Consistency is a big theme (no pun intended) in Drupal 8. Render arrays are the main driver to staging content to be passed to the theme layer.</p>
+<p>As such, the theme() function is now gone.</p>
+<p>Instead, a new #theme array key is passed to build a piece of content programmatically. </p>
+<p>For old core theme functions, like theme_table() or theme_link(), you can pass in the &#8216;table&#8217; or &#8216;link&#8217; keyword, respectively, to the #type array key.</p>
+<p>As noted <a href="https://drupal.org/node/2195739">in the change record</a>, to create a table of data with a pager, set the various keys, then pass it to drupal_render():</p><pre class="crayon-plain-tag">&lt;?php
+// Theme is available as an element type (may have additional processing in rendering).
+$table = array(
+  '#type' =&gt; 'table',
+  '#header' =&gt; $header,
+  '#rows' =&gt; $rows,
+  '#attributes' =&gt; array(
+    'id' =&gt; 'my-module-table',
+  ),
+);
+$markup = drupal_render($table);
+// Pager is not an element type, use #theme directly.
+$pager = array('#theme' =&gt; 'pager');
+$markup = drupal_render($pager);
+?&gt;</pre><p></p>
+<h2>Want More?</h2>
+<p>If you can&#8217;t make it out to NYC, definitely look for me at either the upcoming <a href="http://www.meetup.com/drupal-1/events/173391062/">Chicago Meetup</a> or <a href="https://austin2014.drupal.org/session/30-drupal-8-api-functions-you-should-already-know">Drupalcon Austin</a>!</p>
+<p>I hope to you see in you in NYC this weekend!</p>
+  </body>
+</html>
+

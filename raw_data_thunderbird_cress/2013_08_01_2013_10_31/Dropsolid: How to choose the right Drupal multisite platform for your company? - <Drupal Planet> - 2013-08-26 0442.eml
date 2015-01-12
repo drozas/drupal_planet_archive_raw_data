@@ -1,0 +1,130 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 26 Aug 2013 03:42:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 26 Aug 2013 03:42:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dropsolid: How to choose the right Drupal multisite platform for your company?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dropsolid.com/en/blog/how-choose-right-drupal-multisite-platform-your-company
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dropsolid: How to choose the right Drupal multisite platform for your company?</title>
+    <base href="http://dropsolid.com/en/blog/how-choose-right-drupal-multisite-platform-your-company">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img rel="og:image rdfs:seeAlso" src="http://dropsolid.com/sites/default/files/styles/blog_image/public/field/image/multisite-drupal.png?itok=rNFGm2ZM" width="600" height="400" alt="" /></div></div></div><div class="field field-name-submitted-by field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">Submitted by <a href="/en/users/dominique-de-cooman" title="View user profile." class="username" xml:lang="" about="/en/users/dominique-de-cooman" typeof="sioc:UserAccount" property="foaf:name" datatype="">dominique de cooman</a> on Monday, August 26, 2013 - 05:42.</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>Why a multisite platform?</h2>
+<p>When your organization has multiple websites online, it might be worth considering a multisite platform.</p>
+<p>What do you gain from a multisite platform? You can group the efforts of different projects.</p>
+<ul><li>This enables you to reuse the custom development from one site on others.</li>
+<li>You can also shorten the startup process of analyses and the project by working with one party instead of many different ones.</li>
+<li>Your people can use a fixed system for content management instead of a jumble of different systems.</li>
+<li>You can also reuse styles &amp; templating on all your sites.</li>
+<li>Maintenance of all these websites doesn't need to be hosted on different systems either. </li>
+<li>They no longer need to be hosted by different teams.</li>
+<li>On an oraganizational level you can move workloads within your organization by having different services deal with the maintenance of your complete web representation.</li>
+</ul><p> <span style="text-indent: -0.5in;">In short: you can save a lot of money when you see the long term value of a multisite platform. The more websites you have, the more you can profit of a cost reduction.</span> <span style="text-indent: -0.5in;"> <br /></span> </p>
+<h2>Who Preceded You?</h2>
+<p>There are famous examples in Belgium regarding the use of multisite platforms.</p>
+<p><a href="http://cooldrops.be">http://cooldrops.be</a>, a KMO website provider who uses a multisite platform in order to service the websites of all its customers. Customers benefit form an integrated approach whereby all the sites are centrally maintained, and of updates that are made for the entire system.</p>
+<p><a href="http://stedelijkonderwijs.be">http://stedelijkonderwijs.be</a> ensured that roughly 200 schools got their own website within one platform, which is maintained by one party. They eliminated the individual costs for schools to build their own websites by building one platform on which the functionality only needed to get build once and was reused 200 times. In the past the functionality was developed per site, over and over again. The team that maintains the site can let the schools do their own content management.</p>
+<p class="MsoNormal" style="margin-bottom: 9.0pt; mso-pagination: none; mso-layout-grid-align: none; text-autospace: none;">Why drupal For A multisite platform?</p>
+<p>Drupal is extremely suitable fo ra series of multisite platforms. Because Drupal is Open Source software, you don't have to pay for the amount of installations. There are no license fees. Therefore you don't have to calculate how many sites you would like to generate. The brilliance of Drupal is that you only have the code developed once and you can keep reusing it as many times as you like.</p>
+<p>Drupal has a modular structure that enables it to upgrade all sites simultaneously on the platform. It's also possible to simultaneously upgrade seperate components.</p>
+<p>Drupal has a tradition to be installed as a multisite. Ever since early versions of Durpal had a multisite installer that enabled people to run multiple sites on shared hosting using only one Drupal codebase. <br /> </p>
+<h2>What to look For When Choosing a multisite platform?</h2>
+<p>There are 5 criteria for choosing a multisite platform.</p>
+<ul><li>Maintenance of code base</li>
+<li>Maintenance of the database</li>
+<li>Sharing content and users on sites</li>
+<li>Adminstration per site</li>
+<li>Custom coding possibities per site</li>
+</ul><p>Each of these five criteria has a different solution. </p>
+<h3>Domain access</h3>
+<p>Domain access is a solution based on the use of the domain access module. It's an approach whereby you host multiple sites form one code base, one database and which requires one admin. It's the most basic form of multisite that's available. </p>
+<h4>
+<!--EndFragment--></h4><p>Who uses domain access for multisite?
+</p><p>It's mainly used for multisites that don't differ a great deal from each other.<br />An example would be a firm that sells wine and would like a separate site for every type of wine, e.g.: </p>
+<p class="MsoNormal" style="margin-bottom: 7.0pt; mso-pagination: none; mso-layout-grid-align: none; text-autospace: none;"><a href="http://cabernet-sauvignon.wijnhandel.be ">http://cabernet-sauvignon.wijnhandel.be </a><br /><a href="http://bordeaux.wijnhandel.be">http://bordeaux.wijnhandel.be</a></p>
+<p>These sites contain a lot of the same functionality and content.<br />These sites are managed by one admin. </p>
+<h4>Features</h4>
+<ul><li>Ability to have one admin maintain all content of all websites.</li>
+<li>There's a pretty tight limit on how much you can customize per subsite. This is partly because it has one codebase and one database.</li>
+<li>Custom design and theming is possible.</li>
+<li>One database and one codebase = easy maintenance.</li>
+<li>Users and content can be shared between subsites.</li>
+<li>You can have more than one URL.</li>
+<li>Single Sign On is possible.</li>
+</ul><h3>Organic groups spaces features</h3>
+<p>This setup is slightly more complex but also more powerful. Similar to domain access you have one code base and one database, but you can have a multisite system that enables every site to have its own role and permission system. This enables you to have the content of the different websites maintained by different services or divisions within your company or organization.</p>
+<h4>Who uses this?</h4>
+<p>For example an educational insitution, that has 200 school websites, but wants to enable each school to maintain their own website. </p>
+<p>An organization that has several services all of which want to represent themselves independently online. Every service can use the common functionality to create own content and manage users.</p>
+<!--EndFragment--><h4>Features</h4>
+<ul><li>Ability to configure an administrator and a role/permission system per subsite.</li>
+<li>Custom code per site possible within limits, because it still only contains one codebase.</li>
+<li>Custom theming and design per subsite is possible.</li>
+<li>There is only one database and codebase, so maintenance is easy.</li>
+<li>Users and content are shared when necessary.</li>
+<li>It can carry more than one URL.</li>
+<li>Single Sign on is possible.</li>
+</ul><h3>Multisite drupal</h3>
+<p>In this case we're talking about a common code base, but seperate Drupal installations (different databases).</p>
+<h4>Who uses this?</h4>
+<p>This is used when people want to be able to control every installation, and the configuration is very different form other subsites. A central installation profile is used whereby a couple standard functionalities can be enabled. This setup requires much more maintenance and is only possible when the differences between subsites are significant enough.</p>
+<h4>Features</h4>
+<ul><li>Different databases.</li>
+<li>One code base.</li>
+<li>Possibility for meerdere URLs.</li>
+<li>Different accounts per site.</li>
+<li>Users and content are not shared by default. There are possibilities to share anyways.</li>
+<li>SSO possible.</li>
+<li>Custom code is possible per site but there are limits regarding development setup and maintenance, and it's not recommended.</li>
+<li>Maintenance is harder due to the many databases and a system for automation is advisable.</li>
+<li>Custom theming/design possible.</li>
+<li>It's hard to setup Dev-Staging-Live during development on each website.</li>
+</ul><h3 class="MsoNormal" style="margin-left: .5in; text-indent: -.5in; mso-pagination: none; mso-list: l0 level1 lfo1; tab-stops: 11.0pt .5in; mso-layout-grid-align: none; text-autospace: none;">Aegir (advanced multi site)</h3>
+<p>This offers the same regarding multisite as above, but there's a system available to automate all the maintenance and installation. You can use multiple installation profiles. Additionally it's possible to start maintaining multiple platforms spread over multiple servers (multiserver).</p>
+<h4>Who uses this?</h4>
+<p>Parties that run one or more different multisite setups. It usually involves more than 10 different websites.</p>
+<p>An example is an organization that has a multisite aegir for all its products. Every product gets its own installation but the layout and functionality afterwards might be slightly different. Moreover this same organization can also have a platform to showcase all its services.</p>
+<h4>Features surplus to multisite</h4>
+<p>Very difficult setup of staging workflow, because the platform contains all the code of all the projects.</p>
+<p>This system automates a lot of tasks: migrating, updating, backups, ...</p>
+<p>An aegir can deploy multiple install profiles.</p>
+<p>Multiserver support</p>
+<h3>Dropsolid platform</h3>
+<p>By working with platforms for many years, Dropsolid has also created its own platform with the big advantage, on top of all the other platforms, that you can custom develop on each site seperately without interfering with other sites.</p>
+<h4>
+<!--EndFragment--></h4><p>Who uses this?
+</p><p>Organizations that have their own development team that can develop on their Drupal sites and that wants to reuse functionality. They can get access to the Dropsolid Shared platform where they can develop and deploy code for each site. They have everything under control. Every letter code, every deploy, every commit and every data transfer.</p>
+<p>Since every site has its own setup, you can deploy very similar code, but when necessary also custom build everything. And everything can still be maintained by a central system. You can work independently from other sites in the multisite.</p>
+<p>You learn to work on Drupal standards and learn to deploy code driven. You control your projects and reuse code to it's fullest extent.</p>
+<h4>Features</h4>
+<ul><li>Different database per site. The maintenance is eliminated by the automated system.</li>
+<li>Different codebase per site. The maintenance is eliminated by the automated system.</li>
+<li>Different repository per site. The maintenance is eliminated by the automated system.</li>
+<li>Different deployment pipeline per site. However, the maintenance is eliminated by the automated system. It's possible to develop independently from the repository code driven on each site.</li>
+<li>Custom code unlimited freedom.</li>
+<li>Multiple environments possible per site. So dev, staging, live and more are possible on each site in the multisite structure.</li>
+<li>All maintenance related tasks taken like cron, backups, updates, monitoring are executed by the central system.</li>
+<li>SSO possible.</li>
+<li>More than one URL possible.</li>
+<li>No shared content. Web services for data exchange are possible.</li>
+<li>No users content. Web services for data exchange are possible.</li>
+<li>Multiserver support</li>
+</ul><h2><span style="text-indent: -0.5in;">What to look for when choosing a multisite platform provider?</span></h2>
+<p>A multisite provider needs to comply with a number of things.</p>
+<ul><li>The have to be able to prove that they've build several platforms. This is not easy to do. It all looks very simple, but the complexity of a multisite project should not be underestimated.</li>
+<li>Make sure the provider knows how his platform should be hosted. People usually have several servers and it's not always easy to set this up.</li>
+<li>Make sure the provider has sufficient Durpal knowledge for further development on your platform.</li>
+</ul><h2>Conclusion</h2>
+<p>Multisite systems are the cost-effective solution for companies with lots of sites. When you're not already using it, you should start considering doing so. Thing about it can't hurt and it doesn't need to get complicated. Hopefully this post taught you something about the possibilities regarding multisite and are you aware of what your organization could gain by its use.</p>
+<!--EndFragment--><p> </p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/en/tags/multisite" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">multisite</a></div><div class="field-item odd" rel="dc:subject"><a href="/en/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item even" rel="dc:subject"><a href="/en/tags/besparen" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">besparen</a></div></div></div><div class="field field-name-field-article-drupal-taxonomy field-type-taxonomy-term-reference field-label-above"><div class="field-label">drupal_taxonomy:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/drupal/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

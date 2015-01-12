@@ -1,0 +1,173 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 03 Oct 2014 16:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 03 Oct 2014 16:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ThinkShout: Getting Started with Behat
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thinkshout.com/blog/2014/10/getting-started-with-behat
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ThinkShout: Getting Started with Behat</title>
+    <base href="http://thinkshout.com/blog/2014/10/getting-started-with-behat">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Situation</h2>
+
+<p>Suppose you build a site, it works great, the client loves it, you launch it, and the client still loves it. Yay! Now life goes on, and six months later, the client comes back to you saying they see a red box when they are logged in, with a message about security updates. You look and see that Drupal core, ctools, rules, views, commerce, date, and a handful of other modules have updates availalbe. Some are security updates, and others are bugfix/feature updates.</p>
+
+<p>So you want to update this code to resolve security issues and improve the functionality of the site. But how can you be sure that these code updates will not hurt or break any of the existing functionality? You could revisit all of your feature work from six months to a year ago and confirm that those features still work as intended. But that can be time consuming and disrupt your other work.</p>
+
+<p>So how do you make updates, whether updating contrib code or doing new custom work, with confidence that you&#39;re not breaking essential funcionality and without wasting countless hours doing a bunch of manual testing?</p>
+
+<h2>A Better Solution: Automated Testing</h2>
+
+<p>Let a machine do it for you. There are several categories of automated testing:</p>
+
+<ul>
+<li>Unit testing. This tests that a small piece of code, a function, behaves as expected.</li>
+<li>Integration testing. These combine several Unit tests in logical groups, to ensure that they work together properly.</li>
+<li>System testing. This tests the system as a whole, and is mainly code oriented, but starts to touch how real people would use the system.</li>
+<li>Behavioral testing. Acceptance testing. Customer testing. This involves clickthroughs, user behavior. This is what we are mainly interested in, and what I am talking about today. You will also hear this referred to as BDD or Behavior Driven Development.</li>
+</ul>
+
+<h2>Enter Behat</h2>
+
+<p><a href="http://behat.org">Behat</a> is an automated testing system. Its strength is in behavioral testing, so it fits perfectly in our use case.</p>
+
+<p>Behat tests are written in plain English phrases which are then combined into human readable scenarios. This was inspired by Ruby&#39;s <a href="http://cukes.info/">Cucumber</a> project and <a href="https://github.com/cucumber/gherkin">Gherkin</a> syntax. This is probably the most appealing aspect of Behat. Most tests are understandable by anyone, whether you&#39;re a developer, project manager, or business owner.</p>
+
+<p>Behat is the core framework used for running tests. It is capabable of testing several types of systems: terminal commands, REST APIs, etc. To enable Behat to test web pages, you need to add <a href="http://mink.behat.org">Mink</a> and a browser emulator to the mix. Mink functions as the connector between Behat and browser emulators, and provides a consistent testing API.</p>
+
+<p>There are several commonly used browser emulators. Some, like <a href="https://github.com/fabpot/goutte">Goutte</a>, are very fast, but don&#39;t support JavaScript. Others, like <a href="http://www.seleniumhq.org/">Selenium</a> and <a href="http://www.firefox.com">Firefox</a>, are full-featured browsers, but will run more slowly.</p>
+
+<p>So when you hear people talking about Behat, they&#39;re usually talking about all three components: Behat, Mink, and browser emulators.</p>
+
+<h2>Why Behat Versus Others?</h2>
+
+<p>Mainly becuase of popularity, which comes mainly from its human readability. There are certainly other contenders with other strengths, but we&#39;re focusing on Behat today because it is a popular PHP-based testing framework. Its tests are written as human readable scenarios, can be easily extended by writing additional PHP methods, and, as you&#39;ll see soon, getting set up is not too difficult.</p>
+
+<h2>Business Use</h2>
+
+<p>Even though this all seems like a good thing, it does take some time to write tests, set up a testing environment, and determine what the best tests are. We need to allocate time to do this, and it shouldn&#39;t just be a surprise at the end of the project. Automated testing should be considered in several phases of a web project. When writing custom code, it&#39;s a good practice to write unit tests, and time should be allocated for that. When developing custom features for a site, behavioral tests should be written to accompany them, and again, time should be allocated. It&#39;s good if clients know at the beginning of a project that test writing is part of the development process, and test running is part of deployment.</p>
+
+<p>Things that are measured always get more attention than things that just happen. Clients should have a large say in what is measured and tested. As a result, project managers can gain a better insight into priorities of the client and project. By making behavior tests something that is intentionally done, project stakeholders must clarify and prioritize the most important aspects of the site.</p>
+
+<h2>Run Tests</h2>
+
+<p>Let&#39;s use the scenario where we&#39;re ensuring that the user login experience is correct. This will verify that the site is up &amp; running, that valid users can log in, and that invalid credentials will not work. Here&#39;s a test run, using a local development site:</p>
+
+<p><img src="/assets/images/blog/behat-test-run.png" alt="behat test run"></p>
+
+<p>And it only takes a few seconds to run.</p>
+
+<p>If you run this test after a code update and find that the test fails, you know immediately that something must be fixed before it can be deployed to the production environment.</p>
+
+<h2>Write Tests</h2>
+
+<p>Behat tests are written in &quot;Feature&quot; files. They&#39;re just text files with a .feature extension on the name, instead of .txt or .php. They are usually placed in a &quot;features&quot; directory inside your Behat directory. More on that in the next section.</p>
+
+<p>In the test run above, I was in my project&#39;s Behat directory, and ran <code>bin/behat features/loginout.feature</code>. That launches Behat and tells it to run the tests that are in loginout.feature. Here are the entire contents of that file:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Feature: Log in and out of the site.
+  In order to maintain an account
+    As a site visitor
+    I need to log in and out of the site.
+
+Scenario: Logs in to the site
+  Given I am on &quot;/&quot;
+  When I follow &quot;Log In&quot;
+    And I fill in &quot;Username&quot; with &quot;admin&quot;
+    And I fill in &quot;Password&quot; with &quot;test&quot;
+    And I press &quot;Log in&quot;
+  Then I should see &quot;Log out&quot;
+    And I should see &quot;My account&quot;
+
+Scenario: Logs out of the site
+  Given I am on &quot;/&quot;
+  When I follow &quot;Log In&quot;
+    And I fill in &quot;Username&quot; with &quot;admin&quot;
+    And I fill in &quot;Password&quot; with &quot;test&quot;
+    And I press &quot;Log in&quot;
+    And I follow &quot;Log out&quot;
+  Then I should see &quot;Log in&quot;
+    And I should not see &quot;My account&quot;
+
+Scenario: Attempts login with wrong credentials.
+  Given I am on &quot;/&quot;
+  When I follow &quot;Log In&quot;
+    And I fill in &quot;Username&quot; with &quot;badusername&quot;
+    And I fill in &quot;Password&quot; with &quot;boguspass&quot;
+    And I press &quot;Log in&quot;
+  Then I should see &quot;Sorry, unrecognized username or password.&quot;
+    And I should not see &quot;My account&quot;
+</code></pre></div>
+<p>Indentation is only for readability, and has no impact on how the tests are run.</p>
+
+<p>Now let&#39;s look at each line and see what each is doing. The first few lines are essentially comments.</p>
+
+<p><code>Feature: Log in and out of the site.</code></p>
+
+<p>^ Name of the feature.</p>
+
+<p><code>In order to maintain an account</code></p>
+
+<p>^ Benefit.</p>
+
+<p><code>As a site visitor</code></p>
+
+<p>^ Role.</p>
+
+<p><code>I need to log in and out of the site.</code></p>
+
+<p>^ Feature itself.</p>
+
+<p>Behat tests are written in the form of scenarios, and they comprise the rest of the feature file.</p>
+
+<p><code>Scenario: Logs in to the site</code></p>
+
+<p>^ Description of the first scenario.</p>
+
+<p><code>Given I am on &quot;/&quot;</code></p>
+
+<p>^ The context. This is the first line that is actually executed. In this case, it will load &quot;/&quot; (the home page) in a browser.</p>
+
+<p>This (a &quot;Given&quot;) as well as the next things (&quot;When&quot; and &quot;Then&quot;) are each called a &quot;Step.&quot;</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">When I follow &quot;Log In&quot;
+  And I fill in &quot;Username&quot; with &quot;admin&quot;
+  And I fill in &quot;Password&quot; with &quot;test&quot;
+  And I press &quot;Log in&quot;
+</code></pre></div>
+<p>^ The events that need to happen. <code>When</code> kicks it off. <code>And</code> adds more events. If Behat is unable to do any of these events, the test will fail. <code>I follow &quot;Log In&quot;</code> looks for a link with the text &quot;Log In&quot; and clicks it. <code>I fill in &quot;Username&quot; with &quot;admin&quot;</code> looks for a field with the label of &quot;Username&quot; and types &quot;admin&quot; into it. <code>I press &quot;Log in&quot;</code> looks for button with the text &quot;Log in&quot; and presses it. Pro tip: <code>follow</code> is for clicking links, and <code>press</code> is for buttons on forms.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Then I should see &quot;Log out&quot;
+  And I should see &quot;My account&quot;
+</code></pre></div>
+<p>^ The desired outcome. <code>Then</code> starts it, and <code>And</code> adds more outcomes. These are the actual tests that need to pass. Other testing frameworks often call these &quot;assertions&quot;. <code>I should see &quot;Log out&quot;</code> looks for the text &quot;Log out&quot; anywhere on the page.</p>
+
+<p>The other two scenarios follow the same format, as well as using <code>not</code> to ensure that certain things do not happen.</p>
+
+<p>That&#39;s the quick walkthrough of writing scenarios, but you can dig deeper at <a href="http://docs.behat.org/en/v2.5/quick_intro.html#define-your-feature">http://docs.behat.org/en/v2.5/quick_intro.html#define-your-feature</a> and <a href="http://docs.behat.org/en/v2.5/guides/1.gherkin.html">http://docs.behat.org/en/v2.5/guides/1.gherkin.html</a> and find out about other aspects like <a href="http://docs.behat.org/en/v2.5/guides/1.gherkin.html#scenario-outlines">Scenario Outlines</a>, <a href="http://docs.behat.org/en/v2.5/guides/1.gherkin.html#backgrounds">Backgrounds</a> and Multiline Arguments.</p>
+
+<h2>Get Set Up</h2>
+
+<p>I&#39;ve looked at several resources from behat.org and elsewhere, and ended up just having to piece things together to get something that will work. I&#39;ve consolidated those notes to ease the setup in the future. <a href="https://github.com/thinkshout/ts_recipes/blob/master/behat/README.md">Behat Installation and Use</a>.</p>
+
+<p>There are a number of dependencies, so the easiest way to handle them all is to let composer do it for you. So install composer if you haven&#39;t already. On a mac, using homebrew works great: <code>brew install composer</code>.</p>
+
+<p>Make a Behat directory, either for a project you&#39;re working on, or in a generic location. Copy this <a href="https://github.com/thinkshout/ts_recipes/blob/master/behat/composer.json">composer.json</a> file into it. Run <code>composer install</code>, which might take a while. It&#39;s installing Behat, Mink, several Mink extensions, and webdriver, which is for Selenium. Then run <code>bin/behat</code> to make sure that Behat is actually available and doing something. You should see something like <code>No scenarios</code>.</p>
+
+<p>Install selenium. This part is optional, if you don&#39;t need to test Javascript. Download the latest version of <a href="http://selenium-release.storage.googleapis.com/index.html">selenium-server-standalone</a>. You&#39;ll also need Firefox and a Java runtime installed. If you get output from <code>java -version</code> you should be good.</p>
+
+<p>In your Behat directory, add a features folder if there&#39;s not one already, and add a something.feature file to it. You can use this <a href="https://github.com/thinkshout/ts_recipes/blob/master/behat/features/loginout.feature">loginout.feature</a> as an example.</p>
+
+<p>The last thing you need is a behat.yml file in your Behat directory. Use this <a href="https://github.com/thinkshout/ts_recipes/blob/master/behat/behat.yml">behat.yml</a> as an example, replacing the domain with the site you want to test. Also remove the selenium2 line if you&#39;re not using it.</p>
+
+<p>At this point, running <code>bin/behat</code> in your Behat directory should run any tests located in the features directory.</p>
+
+<p>Hopefully, that gets you started on your road to readable automated testing. The best resources I&#39;ve found are on the <a href="http://behat.org">behat site</a>. You&#39;ll probably be redirected to something like <a href="http://docs.behat.org/en/v2.5/">http://docs.behat.org/en/v2.5/</a>. Please leave a comment with your successes or other suggestions. Thanks for reading, and good luck!</p>
+  </body>
+</html>
+

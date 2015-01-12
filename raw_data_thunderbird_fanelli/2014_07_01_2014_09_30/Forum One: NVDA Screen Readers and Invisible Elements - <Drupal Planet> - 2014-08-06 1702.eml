@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 06 Aug 2014 15:02:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 06 Aug 2014 15:02:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: NVDA Screen Readers and Invisible Elements
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/nvda-screen-readers-and-invisible-elements/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: NVDA Screen Readers and Invisible Elements</title>
+    <base href="http://forumone.com/insights/nvda-screen-readers-and-invisible-elements/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Here&#8217;s an interesting bug&#8230;</p>
+<p>It is a pretty common practice to hide from view text that is meant for visually impaired users to read via a screen reader. In Drupal, required fields will get a value that is hidden in this way via CSS in the field&#8217;s label elements. By default, this text reads &#8220;This field is required&#8221; however the text is translated, so it may vary depending on the language of the page. Visually, this text is hidden; sighted users will still see a red star character next to these fields, but it is only meant as a cue for users utilizing screen readers.</p>
+<p>A common method of hiding these &#8216;Cur&#8217; elements is to set the element&#8217;s width and height to 1px and use the the clip property. This method can be seen <a href="https://developer.yahoo.com/blogs/ydn/clip-hidden-content-better-accessibility-53456.html">in this blog post</a> and is briefly hit upon in <a href="http://webaim.org/techniques/css/invisiblecontent/">this WebAIM article</a>.</p>
+<blockquote><p>.element-invisible {</p>
+<p>position: absolute !important;</p>
+<p>height: 1px;</p>
+<p>width: 1px;</p>
+<p>overflow: hidden;</p>
+<p>clip: rect(1px 1px 1px 1px); /* IE6, IE7 */</p>
+<p>clip: rect(1px, 1px, 1px, 1px);</p>
+<p>}</p></blockquote>
+<h2>The Problem</h2>
+<p>I&#8217;ve come across an issue that can hamper accessibility. Users employing the NVDA Screen Reader with Firefox and using the screen reader viewer will see elements styled like this with the spaces removed, e.g., &#8220;Thisfieldisrequired.&#8221; This does not appear to be an issue in Chrome, and I have not tested in other browsers. The screen reader view renders as:</p>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/06/NVDA-Screen-Reader-1.png"><img class="aligncenter wp-image-3700 size-large" src="http://forumone.com/wp-content/uploads/2014/06/NVDA-Screen-Reader-1-700x368.png" alt="" width="700" height="368" /><br />
+</a></p>
+<h2>The Solution</h2>
+<p>It seems that this spacing is caused by how Firefox is interpreting the width property. Using a larger width here seems to resolve the issue, and a good threshold for this seems to be 9px. I tried it with 8, but oddly, that width leaves some words still missing spaces while correcting others. This may cause some layout issues, however. (I spend more of my time in back-end development, so I am not a CSS expert by any means.) Here is the result of changing the element’s width to 9px:</p>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/06/NVDA-Screen-Readers-2.png"><img class="aligncenter wp-image-3703 size-large" src="http://forumone.com/wp-content/uploads/2014/06/NVDA-Screen-Readers-2-700x369.png" alt="" width="700" height="369" /></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #000000;">Thus, it seems changing the pixel size of these invisible elements could be one small step towards improving accessibility of this screen reader in Firefox.</span></p>
+  </body>
+</html>
+

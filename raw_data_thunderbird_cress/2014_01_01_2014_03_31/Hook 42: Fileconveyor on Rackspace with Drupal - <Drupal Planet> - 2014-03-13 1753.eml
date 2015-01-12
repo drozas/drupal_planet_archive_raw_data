@@ -1,0 +1,52 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 13 Mar 2014 17:53:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 13 Mar 2014 17:53:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Hook 42: Fileconveyor on Rackspace with Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.hook42.com/blog/fileconveyor-rackspace-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Hook 42: Fileconveyor on Rackspace with Drupal</title>
+    <base href="http://www.hook42.com/blog/fileconveyor-rackspace-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="image">
+    <div class="field-items" class="field-items">
+          <div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://www.hook42.com/sites/default/files/styles/image_style_blog_detail/public/field/image/rackspace-logo.jpeg?itok=sN_G3Yu4" class="field-item even"><img typeof="foaf:Image" src="http://www.hook42.com/sites/default/files/styles/image_style_blog_detail/public/field/image/rackspace-logo.jpeg?itok=sN_G3Yu4" width="151" height="151" alt="Rackspace Hosting Logo" title="Rackspace Hosting Logo" /></div>
+      </div>
+</div>
+
+<div class="field field-name-field-display-date field-type-date field-label-hidden field-wrapper">
+    <div class="field-items" class="field-items">
+          <div class="field-item even" class="field-item even"><span class="date-display-single" property="dc:date" datatype="xsd:dateTime" content="2014-03-13T00:00:00-07:00">Thursday, March 13, 2014</span></div>
+      </div>
+</div>
+
+<div class="body field">
+    <div class="field-items" class="field-items">
+          <div class="field-item even" property="content:encoded" class="field-item even"><p>Thank you to our guest author, <a href="http://www.linkedin.com/in/4degs" target="_blank">Brian Degnan, PhD.</a> for contributing his experience after a battle with Rackspace, Fileconveyor, Drupal, Linux, and inodes. :)</p><h2>Fileconveyor on Rackspace</h2><p>I recently was tasked with debugging a deployment issue with the CDN on Rackspace. If you use Drupal, Magento, Wordpress, etc on Rackspace and want a CDN, they will suggest to you to use <a href="http://www.rackspace.com/knowledge_center/article/syncing-to-cloud-files-with-fileconveyor" target="_blank">Fileconveyor</a>. Fileconveyor either works great or it does not work based on how the application writes files to the directory.</p><p>If you write a single file, we had no issues at all with Fileconveyor; however, we found that we had issue when applications wrote to a file that was embedded in a new directory structure.</p><p><span style="line-height: 1.538em;"><strong>The issue:</strong>&nbsp;Fileconveyor uses inode-notify and the "link" call to the file system would not give the whole inode chain, or as least not in Python2.6 as of Linux Kernel:</span></p><p><code>2.6.32-358.23.2.el6.x86_64 #1 SMP Wed Oct 16 18:37:12 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux</code></p><p><strong>The symptom:</strong> files were not being written to the filesystem! Aack!</p><p>I still suggest that you try Fileconveyor as it works well with the <a href="https://drupal.org/project/cdn" target="_blank">Drupal CDN module</a>; however, you must be mindful that certain modules might affect the behavior between the filesystem and Drupal.</p><p><span style="line-height: 1.538em;">Also, all servers leveraging fileconveyor </span><strong style="line-height: 1.538em;">must</strong><span style="line-height: 1.538em;"> be set up the same for proper functionality. &nbsp;</span><span style="line-height: 1.538em;">In order to setup Fileconveyor the same way across all of the servers, we made a script: </span><strong style="line-height: 1.538em;">setup.fileconveyor.sh.</strong></p><p>This script made a standard layout for all of the servers with the Fileconveyor code in <code>/var/fileconveyor</code>. <code>/var/fileconveyor</code> is also where all of the database files for Fileconveyor are stored. The setup.fileconveyor.sh script also copies fileconveyor.sh into <code>/var/fileconveyor</code>, where fileconveyor.sh has its modes changed so that it runs as apache.</p><h2>setup.fileconveyor.sh</h2><p>1. The subset of the script, setup.fileconveyor.sh, is explained below, that can be run as standalone commands.</p><p style="margin-left: 40px;"><code>mkdir -p /tmp/fileconveyor cd /tmp/fileconveyor pip install -e git+https://github.com/wimleers/fileconveyor@master#egg=fileconveyor </code></p><p><strong>If you do not have pip installed, this will fail.</strong> Install pip.</p><p>2. Next we make the infrastructure for the Fileconveyor application. I assume the user for the web server is "apache".</p><p style="margin-left: 40px;"><code>mkdir -p /var/run/fileconveyor chown apache /var/run/fileconveyor chmod 700 /var/run/fileconveyor </code></p><p>3. Next, you make the location for the application.</p><p style="margin-left: 40px;"><code>mkdir -p /var/fileconveyor chmod 700 /var/fileconveyor mv /tmp/fileconveyor/src/fileconveyor/fileconveyor /var/fileconveyor chown -R apache /var/fileconveyor </code></p><p>4. Finally, you copy fileconveyor.sh into <code>/var/fileconveyor</code>, and set the modes that it runs as "<strong>apache</strong>".</p><p style="margin-left: 40px;"><code>chown apache:apache /var/fileconveyor/fileconveyor.sh chmod 4755 /var/fileconveyor/fileconveyor.sh </code></p></div>
+      </div>
+</div>
+
+<div class="field field-name-field-display-author field-type-entityreference field-label-hidden field-wrapper">
+    <div class="field-items" class="field-items">
+          <div class="field-item even" class="field-item even">Brian Degnan</div>
+      </div>
+</div>
+
+<div class="field field-name-field-attachments field-type-file field-label-above field-wrapper">
+      <div class="field-label" class="field-label">Attachments&nbsp;</div>
+    <div class="field-items" class="field-items">
+          <div class="field-item even" class="field-item even"><span class="file"><img class="file-icon" alt="" title="application/zip" src="/modules/file/icons/package-x-generic.png" /> <a href="http://www.hook42.com/sites/default/files/attachments/fileconveyor-rackspace-inode-management.zip" type="application/zip; length=2353">fileconveyor-rackspace-inode-management.zip</a></span></div>
+      </div>
+</div>
+<div class="field field-name-field-topics-tr field-type-taxonomy-term-reference field-label-inline clearfix field-wrapper"><h2 class="field-label">Topics: </h2><ul class="links inline"><li class="taxonomy-term-reference-0" class="field-item even"><a href="/blog/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></li><li class="taxonomy-term-reference-1" class="field-item even odd"><a href="/blog/howto" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Howto</a></li></ul></div><div class="field field-name-field-service-tr field-type-taxonomy-term-reference field-label-inline clearfix field-wrapper"><h2 class="field-label">Services: </h2><ul class="links inline"><li class="taxonomy-term-reference-0" class="field-item even"><a href="/service/complex-environments" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Complex Environments</a></li><li class="taxonomy-term-reference-1" class="field-item even odd"><a href="/service/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></li><li class="taxonomy-term-reference-2" class="field-item even odd even"><a href="/service/devops" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">DevOps</a></li><li class="taxonomy-term-reference-3" class="field-item even odd even odd"><a href="/service/integration" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Integration</a></li></ul></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix field-wrapper"><h2 class="field-label">Tags: </h2><ul class="links inline"><li class="taxonomy-term-reference-0" rel="dc:subject" class="field-item even"><a href="/tags/rackspace" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Rackspace</a></li><li class="taxonomy-term-reference-1" rel="dc:subject" class="field-item even odd"><a href="/tags/cdn" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CDN</a></li><li class="taxonomy-term-reference-2" rel="dc:subject" class="field-item even odd even"><a href="/tags/file-management" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">File Management</a></li></ul></div>
+  </body>
+</html>
+

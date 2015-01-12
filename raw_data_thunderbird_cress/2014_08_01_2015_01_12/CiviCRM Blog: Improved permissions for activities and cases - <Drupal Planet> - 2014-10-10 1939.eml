@@ -1,0 +1,56 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 10 Oct 2014 18:39:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 10 Oct 2014 18:39:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: Improved permissions for activities and cases
+Content-Transfer-Encoding: 8bit
+Content-Base: https://civicrm.org/blogs/pmoseychscorporg/improved-permissions-activities-and-cases
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: Improved permissions for activities and cases</title>
+    <base href="https://civicrm.org/blogs/pmoseychscorporg/improved-permissions-activities-and-cases">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><h1>
+	A little background.</h1>
+<p>Established in 1972, we are a non-profit human services organization that serves many diverse populations in the Greater Pittsburgh area.</p>
+<p>A large part of our focus is on homeless services, but we also do some mental and physical health programming, early childhood development, community integration and host a large food pantry near the University of Pittsburgh campus. </p>
+<p>Because of our disparate clientele and locations, we have been using multiple Access databases to track participant information.  For many years we wanted to move it online so staff in people's homes, could enter updates from the field.  However, the cost to implement was prohibitive to say the least.</p>
+<h2>
+	Our Drupal and CiviCRM experience</h2>
+<p>When we rebuilt our website using Drupal, I stumbled upon CiviCRM as an alternate to Constant Contact.  For two years, we have used Civi on the backend of our site to register for events, make online contributions and send out bulk mails.</p>
+<p>Civi has helped us raise a lot of dough.</p>
+<p>After working in Civi and Drupal, we realized the combination could effectively be used to consolidate our program and human resources data as well as make it available online.</p>
+<p>So we set off on the challenge of implementing a database to track all of our program's data, but repeatedly were having to reinvent the wheel to avoid staff seeing information that had nothing to do with their program.  Since the site was not for the public, we wanted to limit all work in Drupal (i.e: creating views and webforms), and instead focus on streamlining the database.  In essence, Drupal became the backend and Civi the front.</p>
+<p>However, the Drupal permissions for CiviCRM were too general to control access to Activities and Cases and while the ACLs in Civi do provide more granular security, they don't cover Activities and Cases.</p>
+<h2>
+	Make it Happen</h2>
+<p>We began rolling out our shiny new database in July 2014.</p>
+<p>During the roll-out, I began investigating the cost of adding security to Activities and Cases and stumbled upon some threads discussing it.</p>
+<p><a href="http://forum.civicrm.org/index.php?topic=10347.0">This one</a> that started in 2009 got me going and we haven't looked back since.</p>
+<p>With these changes, it becomes dramatically easier for non-profits like us to implement CiviCRM as a total solution.</p>
+<p>Thanks to Donald Lobo and Michael McAndrew for their guidance.</p>
+<p>Please share your thoughts.</p>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/civicrm" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviCRM</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/civicase" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviCase</a>      </li>
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+          <li class="field-item odd">
+        <a href="/civicrm-blog-categories/make-it-happen" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Make it happen</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

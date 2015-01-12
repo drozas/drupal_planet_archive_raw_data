@@ -1,0 +1,62 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Apr 2014 17:34:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Apr 2014 17:34:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Drupal & Bootstrap
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/drupal-bootstrap
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Drupal & Bootstrap</title>
+    <base href="http://www.aglobalway.com/content/drupal-bootstrap">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <div>Here at AGLOBALWAY, we are constantly learning to take advantage of the myriad of tools available to us whether for communication, productivity, or development. As a company dedicated to all things open source, one of the tools we employ is Twitter’s Bootstrap framework. Thanks to the industriousness and generosity of companies like Twitter, (or Zurb for its own Foundation framework, among others), the web community has a tremendous amount of resources from which to draw upon.</div>
+
+<div> </div>
+
+<div>Drupal has been a key content management framework for us ever since the inception of our company for its flexibility, power, and configurability. Bootstrap has made an excellent companion for Drupal in several of our projects so far, so I will highlight just a few of the many ways that a Bootstrap-based theme can compliment your Drupal website.</div>
+
+<div> </div>
+
+<div><strong>Bootstrapped Style</strong></div>
+
+<div> </div>
+
+<div>While some decry the design style and “look” that is quintessentially Bootstrap, there really is no need to. Yes, it has been a major influence on modern web design trends. Bootstrap has prepackaged layouts and default styles for nearly all UI elements, taking away the need to create styles for everything. But, building a unique site that doesn’t follow that typical Bootstrap style own doesn’t have to be difficult. The real undertaking is in learning the ins and outs of the preprocessor system employed by Bootstrap (Less, in this case), and how they have laid everything out.</div>
+
+<div> </div>
+
+<div>Once familiar with the system, one will quickly realize that it’s relatively straightforward to take advantage of all of the mixins and variables already given in order to generate the styles you have designed. In one .less file, we can quickly define colours, sizes, and other default settings that will appear throughout your site. Again, like the JavaScript libraries above, this is not unique to Drupal. However, being able to take advantage of these tools helps immensely to speed up the development cycle of building Drupal sites.</div>
+
+<div> </div>
+
+<div><strong>JavaScript Libraries</strong></div>
+
+<div> </div>
+
+<div>Having access to a number of common functions used throughout the web is a huge time saver. Already bundled with jQuery, a Drupal Bootstrap-based theme allows for easy integration of accordions, image carousels and more, without having to write your own JavaScript. While these libraries are certainly not exclusive to Drupal, there can be unique ways of making use of them with Drupal. For example, rendering a block inside of a modal for a login form is a snap, and css is all you really need to customize it once you initialize it with the proper JavaScript.</div>
+
+<div> </div>
+
+<div>Another example would be to pair Bootstrap with the popular CKEditor module to generate templates, using Bootstrap’s markup. Users may want to place an accordion inside their own managed content, so we can create a template with CKEditor’s default.js file (even better, create a separate file and use that one instead), following the pattern of the templates already given. Add the Bootstrap markup with the appropriate classes, and voila! Your users now have an accordion they can insert using only the WYSIWYG editor.</div>
+
+<div> </div>
+
+<div><strong>Bootstrap Views</strong></div>
+
+<div> </div>
+
+<div>This is a Drupal module I have yet to really play around with personally, but a cursory look tells me just how easy it can be to display content using Bootstrap elements without even getting into template files or writing code. While I generally prefer to separate markup from data output, I can see the potential here for a lot of time saving, while avoiding some head-scratching at the same time. This is the whole point of views in the first place - making it easy to display the content you want without having to dive too deep.</div>
+
+<div> </div>
+
+<div>As we can see, integrating Drupal with Twitter Bootstrap has considerable advantages. While its heaviness is a fair criticism, I believe those advantages justify the use of Bootstrap, particularly in an Agile development environment. Besides, we can always eliminate the JavaScript or CSS we don’t use once we’re done developing our site. Whether it’s Bootstrap, Foundation, or your framework of choice, having such front-end tools to integrate with Drupal can only be a good thing. Many thanks to all who are dedicated to creating and maintaining these resources for the benefit of us all.</div> </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/bootstrap" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Bootstrap</a></div></div></div>
+  </body>
+</html>
+

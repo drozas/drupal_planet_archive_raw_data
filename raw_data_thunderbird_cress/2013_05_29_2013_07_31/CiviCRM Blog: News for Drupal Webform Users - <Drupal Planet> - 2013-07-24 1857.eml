@@ -1,0 +1,70 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 24 Jul 2013 17:57:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 24 Jul 2013 17:57:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: News for Drupal Webform Users
+Content-Transfer-Encoding: 8bit
+Content-Base: http://civicrm.org/blogs/colemanw/news-drupal-webform-users
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: News for Drupal Webform Users</title>
+    <base href="http://civicrm.org/blogs/colemanw/news-drupal-webform-users">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><p>If you use the Drupal <a href="http://drupal.org/project/webform_civicrm">Webform-CiviCRM Integration</a> module, pay attention for a sec, you're going to want to know this:</p>
+<p>In order to keep up with the evolution of CiviCRM and the Webform module, I've forked the Webform-CiviCRM Integration project and started work on version 4. It will be compatible with the upcoming Webform 4 and CiviCRM 4.4 (a nice convergence of the number 4). Version 3 of this module will <em>not</em> work with those, so when you upgrade one of those modules, you'll need to upgrade the other 2 as well.  If that's not making sense, here it is in a table:</p>
+<table border="1" cellpadding="1" cellspacing="1"><thead><tr><th scope="col">
+				Webform-CiviCRM Integration</th>
+<th scope="col">
+				Drupal</th>
+<th scope="col">
+				Webform</th>
+<th scope="col">
+				CiviCRM</th>
+</tr></thead><tbody><tr><td>
+				Version 2 works with:</td>
+<td>
+				6</td>
+<td>
+				3</td>
+<td>
+				4.1-4.3</td>
+</tr><tr><td>
+				Version 3 works with:</td>
+<td>
+				7</td>
+<td>
+				3</td>
+<td>
+				4.1-4.3</td>
+</tr><tr><td>
+				Version 4 works with:</td>
+<td>
+				7</td>
+<td>
+				4</td>
+<td>
+				4.4</td>
+</tr></tbody></table><h4>
+	What if you're already using Webform 4?</h4>
+<p>Some people have already started using Webform version 4. It's still in Alpha, and the early 4.x-alpha versions weren't too different from version 3 so they actually did work with Webform-CiviCRM. My advice for you early adopers would be to <em>stop upgrading</em>. Because as of alpha-7 it has finally diverged enough that it's just not going to work nicely with Webform-CiviCRM 3 anymore. But if you stay on Webform 4-alpha6, you're good. Just hang in there for a little while until CiviCRM 4.4 and Webform-CiviCRM 4 are released, and then you can keep on upgrading to the latest version of Webform.</p>
+<h4>
+	Coming Soon: Payment Integration</h4>
+<p>What's new in Webform-CiviCRM 4? The big news is payment integration with CiviContribute, CiviMember, and CiviEvent. You'll be able to set up a webform that can actually collect money for those things, along with all the other great benefits of a Webform like multiple event/membership regestration. You can read more about it here: <a href="http://wiki.civicrm.org/confluence/display/CRM/Drupal+Webform+Payment+Integration">http://wiki.civicrm.org/confluence/display/CRM/Drupal+Webform+Payment+Integration</a></p>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

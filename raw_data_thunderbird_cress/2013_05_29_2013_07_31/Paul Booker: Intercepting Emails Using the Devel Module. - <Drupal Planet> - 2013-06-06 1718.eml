@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Jun 2013 16:18:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Jun 2013 16:18:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Intercepting Emails Using the Devel Module.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-support/code-snippet/intercepting-emails-using-devel-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Intercepting Emails Using the Devel Module.</title>
+    <base href="http://www.paulbooker.co.uk/drupal-support/code-snippet/intercepting-emails-using-devel-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php">
+$conf['mail_system'] = array(
+'default-system' =&gt; 'DevelMailLog',
+);
+</pre><p>
+Adding the above to settings.php will tell Drupal to use the DevelMailLog class as the default mail system. Once you have fired off a few emails go to the temporary directory, and you should see a folder called devel-mails full of logged emails.</p>
+<p>Flush the site cache after modifying settings.php.</p>
+<p>Other potential solutions for intercepting mail might involve using the Reroute Email module or the hook_mail_alter() hook in your own module.</p>
+<pre class="brush: php">
+ function mymodule_mail_alter(&amp;$message) { dpm($message); }
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal-support/tags/email" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">email</a></div><div class="field-item odd"><a href="/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix vertical easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-support/code-snippet/intercepting-emails-using-devel-module"
+data-count="vertical"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Intercepting Emails Using the Devel Module.">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="tall" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-support/code-snippet/intercepting-emails-using-devel-module"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

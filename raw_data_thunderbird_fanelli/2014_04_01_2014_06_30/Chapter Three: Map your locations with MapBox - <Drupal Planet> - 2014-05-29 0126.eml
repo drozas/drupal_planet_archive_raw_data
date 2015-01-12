@@ -1,0 +1,114 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: Map your locations with MapBox
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/map-your-locations-mapbox%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: Map your locations with MapBox</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/map-your-locations-mapbox%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>On a recent project, I was tasked with getting a MapBox map integrated with one or more "Locations." For this project, a "location" is the physical location of one of the client's office buildings.</p><br />
+<br />
+<p>So I did a quick search to see if there were any existing modules that would provide my needed functionality. I found the <a href="https://drupal.org/project/mapbox">MapBox module</a>, which claims to provide a layer type to <a href="https://drupal.org/project/openlayers/">OpenLayers</a>. Unfortunately, it doesn't seem to be compatible with the latest recommended release of OpenLayers.</p><br />
+<br />
+<p>My next stop was to see what MapBox provides in the way of an API. I found that they have a good <a href="http://www.mapbox.com/mapbox.js/api/v1.2.0/">JavaScript API</a> that I could use.</p><br />
+<br />
+<p>So this post will show you how to use MapBox's JavaScript API to show "locations" on a map.</p><br />
+<br />
+<h2>Prerequisites</h2><br />
+<br />
+<p>The following modules are required:</p><br />
+<br />
+<ol><br />
+	<li><a href="https://drupal.org/project/views_datasource">Views Datasource</a> (tested with 7.x-1.x-dev) (and obviously Views itself)</li><br />
+	<li><a href="https://drupal.org/project/gmap">GMap</a> (tested with 7.x-2.7)</li><br />
+	<li><a href="https://drupal.org/project/location">Location</a> (tested with 7.x-3.0-rc2)</li><br />
+</ol><br />
+<br />
+<p>The first thing you'll need to do is download and install the required modules. On <em>admin/modules</em>, enable the following: <strong>GMap</strong>, <strong>Gmap Location</strong>, <strong>Location</strong>, <strong>Node Locations</strong>, and <strong>Views JSON</strong>.</p><br />
+<br />
+<p>Next, go to <em>admin/config/content/location</em> and check the box next to <strong>Use a Google Map to set latitude and longitude</strong> so your admins can set the longitude/latitude by clicking on a map.</p><br />
+<br />
+<p><img border="0" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/gmap-location.jpg"></p><br />
+<br />
+<p>You'll also want a location enabled content type. To do this, navigate to the edit screen of your content type (mine was called Location, but yours will vary) or create a new one.</p><br />
+<br />
+<p><img border="0" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/content-type-location-settings.jpg"></p><br />
+<br />
+<p>Open up the <strong>Locative information</strong> tab. You'll need to set the <strong>minimum number of locations</strong> to <strong>1</strong> and the <strong>maximum number of locations</strong> to <strong>1</strong>. Now on your node/add form, you should have a handy point &amp; click map to set the longitude and latitude.</p><br />
+<br />
+<p><img border="0" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/node-location-settings.jpg"></p><br />
+<br />
+<h2>Create a basic map at MapBox</h2><br />
+<br />
+<p>Even though we're going to use the API to place our markers, we still need a map to place them on. So, jump on over to mapbox.com and create an account. Once you've created an account, create a map to your liking, but don't add any markers. We'll do that from the Drupal side below. Once you're satisfied, click the publish button in the upper left corner of the window so we can get the map ID we need.</p><br />
+<br />
+<p>When you click the publish button, you'll get a popup that looks similar to this:</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/mapbox-map-id.jpg"></p><br />
+<br />
+<p>You can get the unique map ID on the mapbox.js tab. We'll need this ID in a bit.</p><br />
+<br />
+<h2>Create a simple JSON web service using Views Datasource</h2><br />
+<br />
+<p>The javascript (below) will use an AJAX call to fetch the location data. While it would be perfectly doable to implement to appropriate hooks in code, I chose to go the UI route on this.</p><br />
+<br />
+<p>Create a new View, and then create a <strong>Page</strong> display from the <strong>+ Add</strong> button at the top. With this new page display selected, first set the page's path (under <strong>page settings</strong>). I set mine to <em>/data/locations-json</em>. You'll also want to set the <strong>pager</strong> to <strong>display all items</strong>. Now, configure the output format. Click <strong>Unformatted list</strong> in the <strong>Format</strong> section of the Views UI. Select <strong>JSON data document</strong> from the resulting popup.</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/views-ui-original.png"></p><br />
+<br />
+<p>Once you click OK to close the popup box, the corresponding settings popup will open. Set the form items as follows:</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/json-settings.png"></p><br />
+<br />
+<p>Next, we need to add some fields. At the bare minimum, you'll need <strong>Content: Title</strong>, <strong>Location: Latitude</strong>, and <strong>Location: Longitude</strong>. I also added <strong>Content: Image</strong> since I needed to display the location's image in the map's tooltip. Be sure to set the <strong>filter criteria</strong> appropriately. The Views UI should look similar to the following:</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/views-ui-final.png"></p><br />
+<br />
+<p>If everything is working correctly, you can browse to <em>/data/locations-json</em> to see your JSON formatted location data.</p><br />
+<br />
+<h2>Create the map block in a custom module</h2><br />
+<br />
+<p>The block we're creating is going to be a simple stub in a custom module. So in your custom module, add the following:</p><br />
+<br />
+<p><code>/** * Implements hook_block_info(). */ function mymodule_block_info() { $blocks = array(); $blocks['mymodule_location_map'] = array( 'info' =&gt; t('Location Map'), ); return $blocks; } /** * Implements hook_block_view(). */ function mymodule_block_view($delta = '') { $block = array(); global $user; switch ($delta) { case 'mymodule_location_map': $block['subject'] = t(''); $block['content'] = mymodule_location_map(); break; } return $block; } function mymodule_location_map() { drupal_add_css('http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.css', 'external'); drupal_add_js('http://api.tiles.mapbox.com/mapbox.js/v1.2.0/mapbox.js', 'external'); drupal_add_js(drupal_get_path('module', 'mymodule') . '/js/map.js', 'file'); return '</code></p><br />
+<br />
+<div id="locations-map">&nbsp;</div><br />
+<br />
+<p><code>'; } </code></p><br />
+<br />
+<p>The first two functions just declare to Drupal that we one or more blocks. The third function, mymodule_location_map(), is where we'll put our map info.</p><br />
+<br />
+<p>The first two lines just link to MapBox's API library. We'll grab the javascript and some default styling. The third line loads our custom javascript (below), and the fourth lines gives us a container to load our map into.</p><br />
+<br />
+<h2>Use the MapBox JavaScript API</h2><br />
+<br />
+<p>The javascript to drive the map:</p><br />
+<br />
+<p><code>(function ($) { Drupal.behaviors.locationMap = { attach: function (context) { var map = L.mapbox.map('locations-map', 'rob-chapterthree.map-5dupgsfx', { scrollWheelZoom: false, zoomControl: false, minZoom: 2, maxZoom: 2 }).setView({ lat: 40.00, lon: 0.00 }, 2); $.ajax({ url: '/data/locations-json', dataType: 'json' }).done(function(data) { // We need a GeoJSON object.type var gj = []; $(data.locations).each(function(idx, location) { if (location.latitude &amp;&amp; location.longitude) { var item = { type: 'Feature', geometry: { type: 'Point', coordinates: [location.longitude, location.latitude] }, properties: { title: location.title, image: location.image, } }; gj.push(item); } }); L.geoJson(gj, { pointToLayer: function(feature, latlng) { var marker = new L.Marker(latlng, { icon: L.divIcon({ className: 'map-marker', html: '' }), iconSize: [15, 15] }); // Create custom popup content var popupContent = '<img src="' + feature.properties.image + '">' + '</code></p><br />
+<br />
+<h5><code>' + feature.properties.title + '</code></h5><br />
+<br />
+<p><code>'; marker.bindPopup(popupContent, { closeButton: false }); return marker; } }).addTo(map); }); } }; })(jQuery); </code></p><br />
+<br />
+<p>The first part of this javascript creates the map object, and sets some initial properties. There are two really important parts. The 'locations-map' corresponds to the HTML ID of the DIV container we created up in the mymodule_location_map() function of the module. The 'rob-chapterthree.map-5dupgsfx' is the ID of our map that we created over on mapbox.com. The other settings you can read up on mapbox.com.</p><br />
+<br />
+<p>The next chunk of javascript goes and gets our JSON data we created earlier. The main thing to understand from this section is that in order for the MapBox API to correctly parse the data, it needs to be in the GeoJSON format. So we convert our data into the proper format.</p><br />
+<br />
+<p>The remaining code just utilizes the MapBox API to create the markers for out locations. Here's the map in all it's glory:</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/completed-map.jpg"></p><br />
+<br />
+<p>Sweet!</p><br />
+  </body>
+</html>
+

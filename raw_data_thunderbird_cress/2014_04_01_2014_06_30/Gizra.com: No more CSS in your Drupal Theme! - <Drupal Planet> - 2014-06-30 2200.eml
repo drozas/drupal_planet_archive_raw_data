@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Jun 2014 21:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Jun 2014 21:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gizra.com: No more CSS in your Drupal Theme!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.gizra.com/content/custom-css-as-contrib-with-jekyll
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gizra.com: No more CSS in your Drupal Theme!</title>
+    <base href="http://www.gizra.com/content/custom-css-as-contrib-with-jekyll">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Treat your custom CSS as contrib</h2>
+
+<p>Getting your Drupal to be pixel perfect is hard. In fact, it&#39;s probably four times faster to write the logic
+of a page, in comparison to the time it takes to get it&#39;s markup right. Not to talk about making it responsive.</p>
+
+<p>If you&#39;ve seen my presentation about <a href="http://goo.gl/hJhZb8">The Gizra Way</a> you noticed we take pixel perfect very seriously.</p>
+
+<p>One of the tools that helps us getting the markup fast, correct and in a way that would allow us to communicate with the client is Jekyll - the static site generator. Here&#39;s the idea in a nutshell:</p>
+
+<ul>
+<li>Using Jekyll we can concentrate on a clean markup</li>
+<li>Using Grunt we compile the SASS, and are able to push the the HTML into Github pages - where the client can easily see and interact with the final markup</li>
+<li>The CSS produced by Jekyll is treated by our Drupal application as contrib. This means we have zero custom CSS in our theme. Seriously, <strong>absolutely no custom CSS in your Drupal theme!</strong></li>
+<li>Any change to the CSS can be done only in a <em>single</em> place, which is Jekyll</li>
+</ul>
+
+          <p><a href="http://www.gizra.com/content/custom-css-as-contrib-with-jekyll/">Continue reading…</a></p>
+  </body>
+</html>
+

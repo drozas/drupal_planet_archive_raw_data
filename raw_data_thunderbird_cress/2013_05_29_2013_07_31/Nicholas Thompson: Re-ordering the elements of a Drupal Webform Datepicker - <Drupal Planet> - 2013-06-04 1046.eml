@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 04 Jun 2013 09:46:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 04 Jun 2013 09:46:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Nicholas Thompson: Re-ordering the elements of a Drupal Webform Datepicker
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.thingy-ma-jig.co.uk/blog/04-06-2013/re-ordering-the-elements-of-a-drupal-webform-datepicker
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Nicholas Thompson: Re-ordering the elements of a Drupal Webform Datepicker</title>
+    <base href="http://www.thingy-ma-jig.co.uk/blog/04-06-2013/re-ordering-the-elements-of-a-drupal-webform-datepicker">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><span class="textformatter-list"><a href="/tags/drupal">Drupal</a> and <a href="/tags/howto">howto</a></span></div></div></div><div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img src="http://i.thingy-ma-jig.com/sites/thingy-ma-jig.co.uk/files/styles/medium/public/field_image_files/webform-date-picker-widget.png?itok=_lIGN7a4" alt="Date Picker" title="Date Picker" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>The Date Picker widget, when using webforms, defaultly appears in American form (Month, Day, Year). For UK sites this isn't often desirable. Doing a quick google and I stumbled upon <a href="https://twitter.com/davidsonj" rel="author">James Davidson</a>'s <a href="http://davidsonj.com/blog/how-reorder-date-format-webform-date-picker">blog post on how to re-theme the element</a> from earlier this year. I thought it was certainly one approach, but felt there must have been a neater alternative. So here is my approach:</p>
+<!--break-->
+<div class="geshifilter"><pre class="php geshifilter-php"><span class="co4">/**
+ * Implements hook_webform_component_render_alter().
+ */</span>
+<span class="kw2">function</span> THEMENAME_webform_component_render_alter<span class="br0">&#40;</span><span class="sy0">&amp;</span><span class="re0">$element</span><span class="sy0">,</span> <span class="sy0">&amp;</span><span class="re0">$component</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$element</span><span class="br0">&#91;</span><span class="st_h">'#type'</span><span class="br0">&#93;</span> <span class="sy0">==</span> <span class="st_h">'date'</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <span class="re0">$element</span><span class="br0">&#91;</span><span class="st_h">'#process'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st_h">'THEMENAME_webform_expand_date'</span><span class="sy0">;</span>
+  <span class="br0">&#125;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="co4">/**
+ * Process function to re-order the elements in the date widget.
+ */</span>
+<span class="kw2">function</span> THEMENAME_webform_expand_date<span class="br0">&#40;</span><span class="re0">$element</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+  <span class="re0">$element</span><span class="br0">&#91;</span><span class="st_h">'day'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'#weight'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="re0">$element</span><span class="br0">&#91;</span><span class="st_h">'month'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'#weight'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">1</span><span class="sy0">;</span>
+  <span class="re0">$element</span><span class="br0">&#91;</span><span class="st_h">'year'</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st_h">'#weight'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">2</span><span class="sy0">;</span>
+  <span class="kw1">return</span> <span class="re0">$element</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre></div>
+<p>Obviously you can replace <span class="geshifilter"><code class="text geshifilter-text">THEMENAME</code></span> with what ever theme or module name you like; in my case I put this in the <span class="geshifilter"><code class="text geshifilter-text">template.php</code></span> file.</p></div></div></div>
+  </body>
+</html>
+

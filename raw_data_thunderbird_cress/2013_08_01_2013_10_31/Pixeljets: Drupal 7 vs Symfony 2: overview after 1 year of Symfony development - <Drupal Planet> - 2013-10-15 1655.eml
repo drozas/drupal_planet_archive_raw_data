@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 15 Oct 2013 15:55:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 15 Oct 2013 15:55:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixeljets: Drupal 7 vs Symfony 2: overview after 1 year of Symfony development
+Content-Transfer-Encoding: 8bit
+Content-Base: http://pixeljets.com/blog/drupal-7-vs-symfony-2-overview-after-1-year-symfony-development
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixeljets: Drupal 7 vs Symfony 2: overview after 1 year of Symfony development</title>
+    <base href="http://pixeljets.com/blog/drupal-7-vs-symfony-2-overview-after-1-year-symfony-development">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>We&#8217;ve decided to switch to Symfony2 development in July 2012, if I&#8217;m not mistaken - after 7 years of (mostly) Drupal development.<br />
+There were reasons to do&nbsp;that:</p>
+<h3>1. Not-too-great experience with high load projects, powered by Drupal&nbsp;7</h3>
+<p>Okay, Drupal is good enough until you get a project with big expectations in terms of response time for authenticated users. Nginx proxy, boost and memcached help a lot with anonymous page hits, but things are sometimes not good enough when we talk about authenticated user saving some nodes (1 field = 2 inserts to fields and revisions table, 40 fields - and you get super-slow node saving, at least on non-ssd hosting), using ajax stuff like dynamic forms (Drupal form ajax is not bad, it&#8217;s just not&nbsp;super-blazing-fast).</p>
+<p><a href="http://pixeljets.com/blog/drupal-7-vs-symfony-2-overview-after-1-year-symfony-development" target="_blank">read more</a></p>
+  </body>
+</html>
+

@@ -1,0 +1,142 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 27 Aug 2014 14:01:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 27 Aug 2014 14:01:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Zivtech: Web Accessibility and Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.zivtech.com/blog/web-accessibility-and-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Zivtech: Web Accessibility and Drupal</title>
+    <base href="http://www.zivtech.com/blog/web-accessibility-and-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <h2>Web Accessibility and Drupal</h2>
+<p>With the advent of screen readers, many web users imagined web accessibility to be complete, but there is more to using the web than simply browsing. Whether users require audio assistance in the form of subtitles or visual assistance in the form of screen readers, it is the responsibility of developers and designers to make accessibility integration a key component of their work, thus allowing all users to have the best experience possible.</p>
+<p>In this post, we will attempt to gather accessibility information when working with Drupal. While there is a variety of content available on the web, it is important to see how Drupal specifically allows accessibility integration through its many features.</p>
+<p>The following is an excerpt from Web AIM's Introduction to Web Accessibility page <a href="http://webaim.org/intro/">http://webaim.org/intro/</a> that neatly outlines some basic accessibility principles.</p>
+<h2>What is Web Accessibility?</h2>
+<p><span style="font-size: 13px; font-weight: normal; line-height: 1.538em;">As defined by </span><a href="http://www.w3.org/" style="font-size: 13px; font-weight: normal; line-height: 1.538em;">http://www.w3.org/</a><span style="font-size: 13px; font-weight: normal; line-height: 1.538em;">:</span></p>
+<blockquote><p>"Web accessibility means that people with disabilities can use the Web. More specifically, Web accessibility means that people with disabilities can perceive, understand, navigate, and interact with the Web, and that they can contribute to the Web. Web accessibility also benefits others, including older people with changing abilities due to aging. Web accessibility encompasses all disabilities that affect access to the Web, including visual, auditory, physical, speech, cognitive, and neurological disabilities. Web accessibility is an aspect of corporate social responsibility. Another important consideration for organizations is that Web accessibility is required by laws and policies in some cases."</p>
+</blockquote>
+<h2>Principles of Accessible Design</h2>
+<p>Below you will find a list of some key principles of accessible design. Most accessibility principles can be implemented very easily and will not impact the overall "look and feel" of your web site.</p>
+<h3><a href="http://webaim.org/techniques/alttext/">Provide appropriate alternative text</a></h3>
+<p>Alternative text provides a textual alternative to non-text content in web pages. It is especially helpful for people who are blind and rely on a screen reader to have the content of the website read to them.</p>
+<h3><a href="http://webaim.org/techniques/semanticstructure/">Provide appropriate document structure</a></h3>
+<p>Headings, lists, and other structural elements provide meaning and structure to web pages. They can also facilitate keyboard navigation within the page.</p>
+<h3><a href="http://webaim.org/techniques/tables">Provide headers for data tables</a></h3>
+<p>Tables are used online for layouts and to organize data. Tables that are used to organize tabular data should have appropriate table headers (the element). Data cells should be associated with their appropriate headers, making it easier for screen reader users to navigate and understand the data table.</p>
+<h3><a href="http://webaim.org/techniques/forms">Ensure users can complete and submit all forms</a></h3>
+<p>Ensure that every form element (text field, checkbox, dropdown list, etc.) has a label and make sure that label is associated to the correct form element using the &lt;label&gt; element. Also make sure the user can <a href="http://webaim.org/techniques/formvalidation/">submit the form and recover from any errors</a>, such as the failure to fill in all required fields.</p>
+<h3><a href="http://webaim.org/techniques/hypertext">Ensure links make sense out of context</a></h3>
+<p>Every link should make sense if the link text is read by itself. Screen reader users may choose to read only the links on a web page. Certain phrases like "click here" and "more" must be avoided.</p>
+<h3><a href="http://webaim.org/techniques/captions/">Caption and/or provide transcripts for media</a></h3>
+<p>Videos and live audio must have captions and a transcript. With archived audio, a transcription may be sufficient.<br><br />
+    Ensure accessibility of non-HTML content, including <a href="http://webaim.org/techniques/acrobat/">PDF files</a>, <a href="http://webaim.org/techniques/word/">Microsoft Word documents</a>, <a href="http://webaim.org/techniques/powerpoint/">PowerPoint presentations</a> and <a href="http://webaim.org/techniques/flash">Adobe Flash content</a>.<br><br />
+    In addition to all of the other principles listed here, PDF documents and other non-HTML content must be as accessible as possible. If you cannot make it accessible, consider using HTML instead or, at the very least, provide an accessible alternative. PDF documents should also include a series of tags to make it more accessible. A tagged PDF file looks the same, but it is almost always more accessible to a person using a screen reader.</p>
+<h3><a href="http://webaim.org/techniques/skipnav/">Allow users to skip repetitive elements on the page</a></h3>
+<p>You should provide a method that allows users to skip navigation or other elements that repeat on every page. This is usually accomplished by providing a "Skip to Main Content," or "Skip Navigation" link at the top of the page which jumps to the main content of the page.</p>
+<h3><a href="http://webaim.org/articles/visual/colorblind">Do not rely on color alone to convey meaning</a></h3>
+<p>The use of color can enhance comprehension, but do not use color alone to convey information. That information may not be available to a person who is colorblind and will be unavailable to screen reader users.</p>
+<h3><a href="http://webaim.org/techniques/writing/">Make sure content is clearly written and easy to read</a></h3>
+<p>There are many ways to make your content easier to understand. Write clearly, <a href="http://webaim.org/techniques/fonts/">use clear fonts</a>, and <a href="http://webaim.org/techniques/semanticstructure/">use headings and lists appropriately</a>.</p>
+<h3><a href="http://webaim.org/techniques/javascript/">Make JavaScript accessible</a></h3>
+<p>Ensure that <a href="http://webaim.org/techniques/javascript/eventhandlers">JavaScript event handlers</a> are device independent (e.g., they do not require the use of a mouse) and make sure that your page does not rely on JavaScript to function.</p>
+<h3>Design to Standards</h3>
+<p>HTML compliant and accessible pages are more robust and provide better search engine optimization. <a href="http://webaim.org/techniques/css/">Cascading Style Sheets</a> (CSS) allow you to separate content from presentation. This provides more flexibility and accessibility of your content.</p>
+<h2>How Does Drupal Support Accessible Design?</h2>
+<p>Drupal supports web accessibility standards in a number of ways, both through contributed modules and in core. In fact, the Drupal community has made accessibility for visitors, developers, and community members an explicit priority for the Drupal platform, as discussed on <a href="https://www.drupal.org/about/accessibility">Drupal.org</a>. A contributor ensures they have adhered to accessibility standards while developing their modules by appending the D8AX tag <a href="https://groups.drupal.org/node/66323">https://groups.drupal.org/node/66323</a> to their project page.This <a href="http://webaim.org/projects/screenreadersurvey4/">survey</a> shows the importance of such practices as well as providing insightful data from disabled users.</p>
+<p>The author of Zen, a Drupal start theme, wrote : “Zen was also one of the first themes to make the D7 Accessibility Pledge. And we stand behind it! #D7AX/#DAX - I <a href="http://groups.drupal.org/node/66323">pledge</a> to make this theme as <a href="http://drupal.org/node/394094">accessible as it can be</a>.”</p>
+<p><strong>At Zivtech, so do we.</strong></p>
+<p>Here we use Bear Skin, which is a starter theme based on Zen. Zen pioneered the navigation “skip link” now found in Drupal 7 core, and it now includes a full compliment of ARIA roles and Sass mixins for the element-invisible (hidden, but accessible) styling.</p>
+<p>It is our mission at Zivtech to provide the best, most accessible web experiences to our clients and their customers. Here are ways that you too, can help ensure accessibility is at the forefront of your projects as well.</p>
+<h2>Tips and Resources</h2>
+<h4>General</h4>
+<ul>
+<li>Coming up with an Accessibility Policy (achieving consistency through good habits, as well as selling point to clients)</li>
+<li><a href="https://groups.drupal.org/node/66323">https://groups.drupal.org/node/66323</a> (pledge of accessibility)</li>
+<li>Prevent client from getting lawsuit (especially when working with higher education)</li>
+<li><a href="http://webaim.org/articles/laws/usa/rehab">http://webaim.org/articles/laws/usa/rehab</a></li>
+<li><a href="https://sites.temple.edu/a11ylawsuits/tag/websites/">https://sites.temple.edu/a11ylawsuits/tag/websites/</a></li>
+</ul>
+<h4>Site Building</h4>
+<ul>
+<li>Source Order</li>
+<li><alt> tags for images (possibility to tokenize these tags)</alt></li>
+<li><alt>ARIA Tags (Check ARIA roles - view w3c page - other known as page landmarks)</alt></li>
+<li><alt>Accessibility tools and best practices for site builders</alt></li>
+<li><alt><a href="https://drupal.org/node/394094">https://drupal.org/node/394094</a></alt></li>
+</ul>
+<h4>Theming</h4>
+<ul>
+<li>Color Contrast (<a href="http://webaim.org/resources/contrastchecker contrastchecker.com">webaim.org/resources/contrastchecker</a></li>
+<li><a href="http://webaim.org/resources/contrastchecker contrastchecker.com">contrastchecker.com</a>)</li>
+<li>Avoid too many floats and hidden elements (esp titles)</li>
+<li>Look for browser tools to test</li>
+<li>More use of :focus, since :hover is for pointer devices only</li>
+<li>Text size switcher</li>
+</ul>
+<h4>JS</h4>
+<ul>
+<li>onSubmit, not onClick</li>
+<li>Focus instead of Hover for functions</li>
+</ul>
+<h4>Resources</h4>
+<ul>
+<li><a href="http://www.w3.org/TR/UNDERSTANDING-WCAG20/intro.html#introduction-fourprincs-head">http://www.w3.org/TR/UNDERSTANDING-WCAG20/intro.html#introduction-fourprincs-head</a></li>
+<li><a href="http://www.w3.org/TR/WCAG">W3C Web Content Accessibility Guidelines (WCAG) 1.0</a></li>
+<li><a href="http://www.w3.org/TR/WCAG20/">W3C Web Content Accessibility Guidelines (WCAG) 2.0</a></li>
+<li><a href="https://webaccessibility.withgoogle.com/course">https://webaccessibility.withgoogle.com/course</a></li>
+<li><a href="http://warc.calpoly.edu/accessibility/compliance_process_guide.html">http://warc.calpoly.edu/accessibility/compliance_process_guide.html</a></li>
+<li><a href="http://webstyleguide.com/wsg3/1-process/7-development-process.html">http://webstyleguide.com/wsg3/1-process/7-development-process.html</a></li>
+<li><a href="http://www.w3.org/WAI/policy-res">WAI Web Accessibility Policy Resources</a> links to resources for addressing legal and policy factors within organizations, including a list of relevant <a href="http://www.w3.org/WAI/Policy/">laws and policies around the world</a>.</li>
+</ul>
+<h4>Helpful Modules</h4>
+<p>(Some of these modules are still in development versions, but are relevant to be listed here as production ready versions are in the work)</p>
+<ul>
+<li><a href="https://drupal.org/project/a11y_titles">A11y Titles</a>&nbsp;-&nbsp;This module allows site builders to visually hide titles while still allowing “open access” to their web sites by making the titles accessible</li>
+<li><a href="https://drupal.org/project/a11y_checklist">a11y_checklist</a> -&nbsp;Similar to the <a href="https://drupal.org/project/seo_checklist">SEO Checklist</a> and <a href="https://drupal.org/project/qa_checklist">QA Checklist</a> modules, this module provides a checklist of accessibility-related modules and tasks to perform on a Drupal site.</li>
+<li><a href="https://drupal.org/project/textsize">textsize</a> -&nbsp;This module display a adjustable text size changer or a zoom function on the page for a better web accessibility.</li>
+<li><a href="https://drupal.org/project/accessibility">accessibility</a> -&nbsp;The Accessibility module is a suite of tools for content authors and theme developers to ensure their website is as accessible as possible.</li>
+<li><a href="https://drupal.org/project/semantic_fields">semantic fields</a> -&nbsp;Semantic Fields was created to give users the ability of customizing and enhancing the HTML output of a field. With Semantic Fields enabled, users can specify the HTML wrapper element and classes for various elements.</li>
+<li><a href="https://drupal.org/project/semanticviews">semantic views</a> -&nbsp;This Views plugin makes unformatted styles, field row styles and other output more readily configurable without needing to override template files. Instead of overriding row style templates for views where you want to specify different HTML elements (tags) and class attributes, you can specify these inside the Views UI and avoid overriding templates for each view.</li>
+<li><a href="https://drupal.org/project/switchtheme">switch themes</a> -&nbsp;Adds a block to allow users to switch between enabled themes (useful to provide an alternative theme with more contrast for disabled users).</li>
+<li><a href="https://drupal.org/project/pagestyle">pagestyle</a> -&nbsp;This module display a style changer on the page and in the browser menu for a better web accessibility.</li>
+<li><a href="https://drupal.org/project/eim">eim</a> -&nbsp;Extend the image module.<br><br />
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Extended functionalities<br><br />
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Adds checkboxes for the fields of image editing forms by content type.<br><br />
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Alt field required<br><br />
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; - Title field required<br><br />
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- Sets the Alt field maxlength value to 128 for editing forms of nodes.</li>
+<li><a href="https://drupal.org/project/youtube_player_accessibility">youtube player accessibility controls</a> -&nbsp;This module integrate <a href="http://wac.osu.edu/examples/youtube-player-controls">YouTube Video Player Accessible Controls</a> library which add buttons to control YouTube videos</li>
+<li><a href="https://drupal.org/project/media_universalsubtitles">universal subtitles</a> -&nbsp;This module adds support for subtitled videos by the <a href="http://universalsubtitles.org/">Universal Subtitles provider</a></li>
+</ul>
+<h4>Screen readers and emulators (testing and troubleshooting)</h4>
+<ul>
+<li><a href="http://www.tiresias.org">www.tiresias.org</a> – a site with information on many assistive devices for vision impaired users</li>
+<li><a href="http://en.wikipedia.org/wiki/Screen_reader">Wikipedia screen reader capabilities</a></li>
+<li><a href="http://en.wikipedia.org/wiki/List_of_screen_readers">Wikipedia list of screen readers</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Job_Access_With_Speech">JAWS</a></li>
+<li><a href="http://www.gwmicro.com/Window-Eyes/">Window-Eyes</a></li>
+<li><a href="http://www.every-quote.com/">computer quotes</a></li>
+<li><a href="http://live.gnome.org/Orca">Gnome's Orca</a></li>
+<li><a href="http://www.dolphinuk.co.uk/productdetail.asp?pg=1&amp;id=5">Hal</a></li>
+<li><a href="http://www.microsoft.com/enable/training/windowsxp/usingnarrator.aspx">Narrator (free in Microsoft Windows)</a></li>
+<li><a href="http://www.aisquared.com/">ZoomText from Ai Squared</a></li>
+<li><a href="http://www.standards-schmandards.com/projects/fangs/">Fangs - the screen reader emulator</a> (Firefox extension)</li>
+<li><a href="http://www.nvda-project.org/">NVDA (NonVisual Desktop Access)</a> - free and open source screen reader for the Microsoft Windows</li>
+<li><a href="http://www.redish.net/content/papers/interactions.html">Guidelines for Accessible and Usable Web Sites: Observing Users Who Work With Screen Readers</a></li>
+<li><a href="http://webanywhere.cs.washington.edu/wa.php">Web Anywhere</a></li>
+</ul>
+<p><a href="http://warc.calpoly.edu/accessibility/compliance_process_guide.html">http://warc.calpoly.edu/accessibility/compliance_process_guide.html</a><br><br />
+    <a href="http://webstyleguide.com/wsg3/1-process/7-development-process.html">http://webstyleguide.com/wsg3/1-process/7-development-process.html</a></p>
+ </div></div></div><div class="field field-name-taxonomy-vocabulary-2 field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Terms:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/terms/drupal-planet">Drupal Planet</a></div><div class="field-item odd"><a href="/terms/web-accessibility">web accessibility</a></div><div class="field-item even"><a href="/terms/accessibility">accessibility</a></div></div></div>
+  </body>
+</html>
+

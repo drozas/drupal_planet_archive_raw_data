@@ -1,0 +1,84 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 18 Sep 2014 01:10:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 18 Sep 2014 01:10:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Using Acquia Dev Desktop to Set Up a Drupal 8 Code Sprint Environment
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/using-acquia-dev-desktop-to-set-up-a-drupal-8-code-sprint-environment/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Using Acquia Dev Desktop to Set Up a Drupal 8 Code Sprint Environment</title>
+    <base href="http://forumone.com/insights/using-acquia-dev-desktop-to-set-up-a-drupal-8-code-sprint-environment/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>With Drupal 8 looming on the horizon, everyone is talking about doing their part to contribute. In fact — shameless plug alert — Forum One is running a Drupal 8 Code Sprint tomorrow night! <a href="https://www.eventbrite.com/e/drupal-8-code-sprint-with-forum-one-tickets-12619085023" target="_blank">Come on out and code with us. </a></p>
+<p>Wanting to get involved but new to Drupal development, I wasn’t really sure where to start. Through a Drupal DC meetup, I was introduced to the <a href="http://drupalladder.org" target="_blank">Drupal Ladder</a>. Following the Drupal Core Ladder, I got a practice Drupal environment set up, got familiar with the issue queue, and tested some patches! Of course, all the issues and patches written and tested for the LEARN portion of the ladder only affect the sandbox version of D8 used in the tutorials, but it gives you a great idea of what to expect.</p>
+<p>After working through the Ladder, I felt ready to attend some Drupal code sprints. However, one of the biggest problems new people have at code sprints is setting up their Drupal environment. As a newbie, I found the quickest way to set up a test environment on my Mac was through the <a href="http://www.acquia.com/products-services/dev-desktop" target="_blank">Acquia Dev Desktop</a>. This is a stack built specifically for Drupal (it&#8217;s pre-loaded with Apache, MySQL, PHP, etc.), so no downloads other than Drupal itself should be necessary. For this tutorial, we’ll be using Acquia Dev Desktop 2 Beta.</p>
+<p><em>Note: although I am using the Mac version, the Windows instructions should be the same.</em></p>
+<h2>Installing Acquia Dev Desktop 2 Beta</h2>
+<p>From the <a href="http://www.acquia.com/downloads" target="_blank">downloads page</a>, click on Mac / Win Download within the, “Get the Acquia Dev Desktop 2 Beta” box at the top of the page. Locate your download file and double click the file to launch the installer.</p>
+<ul>
+<li>Click <i>Next</i> on the initial screen. The following screen will give you an overview of what is included in the Dev Desktop package: Apache, MySQL, PHP, etc. Review these and click <i>Next</i>.</li>
+<li>Review the license agreement, click <i>Yes</i> if you accept the terms, and then click <i>Next</i>.</li>
+<li>Make note of this next screen. This lets you choose the install locations of your stack and Sites folder. I would recommend leaving these as the default selections.</li>
+</ul>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/09/install-one.png" target="_blank"><img class="alignnone size-full wp-image-4229" src="http://forumone.com/wp-content/uploads/2014/09/install-one.png" alt="install-one" /></a></p>
+<ul>
+<li>The next screen displays the port settings that will be used by Dev Desktop. Do not change these. Simply make note of them and click <i>Next</i>.</li>
+</ul>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/09/install-two.png" target="_blank"><img class="alignnone size-full wp-image-4228" src="http://forumone.com/wp-content/uploads/2014/09/install-two.png" alt="install-two" /></a></p>
+<ul>
+<li>Review your information, then click <i>Next</i>, then <i>Next</i> again to begin the installation.</li>
+<li>Once the installation has completed, click on <i>Finish</i>. If the program pops up, minimize it. We must first download a copy of Drupal 8.</li>
+</ul>
+<h2>Downloading and Setting Up Your Drupal 8 Environment</h2>
+<p>After installing Dev Desktop, we can now get our Drupal 8 environment running:</p>
+<ul>
+<li>Download your <a href="https://www.drupal.org/node/3060/release?api_version%5B%5D=7234" target="_blank">desired version of Drupal 8</a> (use <a href="https://www.drupal.org/node/2311847" target="_blank">Drupal 8.0.x-dev</a> if you are going to help test and develop D8) by clicking on the .tar file for Mac or .zip for PC in the <strong>Download</strong> column. Be sure to extract the tar/zip folder if your system does not automatically do it!</li>
+</ul>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/09/install-three.png" target="_blank"><img class="alignnone size-full wp-image-4226" src="http://forumone.com/wp-content/uploads/2014/09/install-three.png" alt="install-three" /></a></p>
+<ul>
+<li>You can place the files inside your Sites folder, or simply leave it where it downloaded. It is advisable to change the name of the directory from “drupalx.x-x.x” to something simpler (e.g. drupal8, drupaltest, d8dev, etc.).</li>
+<li>Bring back up Acquia Dev Desktop, or launch it. Click on <i>Start with an existing Drupal site located on my computer</i>.</li>
+</ul>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/09/install-four.png" target="_blank"><img class="alignnone size-full wp-image-4231" src="http://forumone.com/wp-content/uploads/2014/09/install-four.png" alt="install-four" /></a></p>
+<ul>
+<li>For <i>Local codebase folder</i>, select the Drupal root folder you just downloaded and click on <i>Open</i>. You can leave <i>Local site name</i> as is, or change it up.</li>
+</ul>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/09/install-five.png" target="_blank"><img class="alignnone size-full wp-image-4230" src="http://forumone.com/wp-content/uploads/2014/09/install-five.png" alt="install-five" /></a></p>
+<ul>
+<li>Drupal 8 requires at least PHP 5.4, so select the PHP version 5.4 your Dev Desktop came with.</li>
+<li>For Database, select <i>Create a new database</i>. You can leave <i>New database name</i> as is, or alter as you like.</li>
+</ul>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/09/install-six.png" target="_blank"><img class="alignnone size-full wp-image-4233" src="http://forumone.com/wp-content/uploads/2014/09/install-six.png" alt="install-six" /></a></p>
+<ul>
+<li>Click <i>OK</i>, and your site will be imported into Dev Desktop.</li>
+<li>Select your site from the left, if it is not already selected. At the top of Dev Desktop, click on your <i>Local site</i> URL and it will come up in your default browser.</li>
+</ul>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/09/install-seven.png" target="_blank"><img class="alignnone size-full wp-image-4227" src="http://forumone.com/wp-content/uploads/2014/09/install-seven.png" alt="install-seven" /></a></p>
+<ul>
+<li>On initial launch, your site should go to /install.php. If not, manually enter /install.php to the end of your site URL (e.g. <a href="http://drupal8.local:8083/install.php" target="_blank">http://drupal8.local:8083/install.php</a>). Select your language, and click on <i>Save and continue</i>.</li>
+<li>Leave <i>Standard</i> selected as your installation profile. Click <i>Save and continue</i>.</li>
+<li>The database info <i>should</i> transfer and auto-fill into the fields, but just in case, enter the following info:</li>
+</ul>
+<ol>
+<ul>
+<li>Database name: name you created during the import (<i>New database name</i>)</li>
+<li>Database username: drupaluser or root</li>
+<li>Leave the password blank</li>
+<li>Under the <em>Advanced Options</em>: Host: 127.0.0.1 &amp; Port number: 33067</li>
+</ul>
+</ol>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/09/install-eight.png" target="_blank"><img class="alignnone size-full wp-image-4232" src="http://forumone.com/wp-content/uploads/2014/09/install-eight.png" alt="install-eight" /></a></p>
+<p>Click on <i>Save and continue</i> once the information has been filled out.</p>
+<p>Drupal will now install your site. Once finished, enter whatever you’d like for the site name, email, and user configuration, and your Drupal site should be up and running! Be sure to remember the username and password for the account you created, as this is your main administrator account (user 1).</p>
+<h2>That&#8217;s All, Folks</h2>
+<p>Installing Acquia Dev Desktop is fairly quick simple if you follow these steps. Don&#8217;t let not having a dev environment stop you from participating in Drupal 8 code sprints, as there are plenty of other AMP stacks available to install, making sure you&#8217;re comfortable with one goes a long way. With my development environment setup all that&#8217;s left to do now is to actually write a patch…Maybe I&#8217;ll take care of that during <a href="https://www.eventbrite.com/e/drupal-8-code-sprint-with-forum-one-tickets-12619085023" target="_blank">Forum One&#8217;s code sprint tomorrow night</a>!</p>
+  </body>
+</html>
+

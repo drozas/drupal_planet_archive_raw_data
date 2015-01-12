@@ -1,0 +1,97 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 21 Nov 2013 19:13:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 21 Nov 2013 19:13:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Form Altering Node Add/Edit Forms
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/form-altering-node-addedit-forms
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Form Altering Node Add/Edit Forms</title>
+    <base href="http://atendesigngroup.com/blog/form-altering-node-addedit-forms">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>One advantage of not coding directly in binary is the ability to express computational intention in a human-readable form. Just as there are words and gestures that communicate intentionality to others in conversation, there are many expressions that communicate intention in code, though not all expressions are as elegant and functional as they could be. Such is the case for altering certain forms in Drupal.</p>
+
+<p>On most form alters in Drupal, you target a specific form based on the form ID.
+Node forms are weird because the content type is included in the form ID. If
+you have a content type named <span class="geshifilter"><code class="text geshifilter-text">example</code></span>, the form ID would be
+<span class="geshifilter"><code class="text geshifilter-text">example_node_form</code></span>.</p>
+
+<p>In order to only alter a specific content type's node form, you can use
+<a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_FORM_ID_alter/7">hook_form_FORM_ID_alter()</a>.
+But what if you want to affect all node forms, perhaps in the case where you want to
+affect a few content types' node add forms? For that, you can use
+<a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_form_BASE_FORM_ID_alter/7">hook_form_BASE_FORM_ID_alter()</a>.</p>
+
+<p>Why use these alternative methods of form altering? Well, there are a few
+reasons:</p>
+
+<ol>
+<li>It reduces the amount of code processed when rendering a given form.</li>
+<li>It reduces the cyclomatic complexity of a single hook_form_alter() implementation.</li>
+<li>It allows us to target certain forms in a cleaner matter.</li>
+</ol>
+
+<p>To elaborate on the first two points, consider the following code. Lets imagine
+we have an example.module where we're altering forms. We might have some code
+that looks like this:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">&lt;?php
+&nbsp;
+function example_form_alter(&amp;$form, &amp;$form_state, $form_id) {
+  if ($form_id == 'search_form') {
+    // do some stuff
+  }
+&nbsp;
+  if ($form_id == 'user_register') {
+    // do some other stuff
+  }
+&nbsp;
+  // Using regex to match form_id. Nasty.
+  if (preg_match('/node_form$/')) {
+    // alter some node forms.
+  }
+&nbsp;
+  // Even nastier way to target node forms. Yikes.
+  if (strpos(strrev($form_id), 'mrof_edon') == 0 ) {
+    // alter some more node forms.
+  }
+}</pre></div>
+
+<p>In general terms, this function is doing too much. Each form alter should alter
+a form or group of forms. This function is quantitatively complex as well,
+having a <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">Cyclomatic
+Complexity</a> of 5 (because there are 5 potential paths through this code), and an
+<a href="http://www.codingswag.com/2013/05/cyclomatic-and-npath-complexity-explained/">NPath Complexity</a> of 16 (as those 5 paths could be combined in 16 different ways). This makes writing tests more difficult, and it also
+leaves the code in a less than ideal state for ongoing maintenance. Let's refactor this function using the <a href="http://www.refactoring.com/catalog/extractMethod.html">Extract Method</a> refactoring pattern!</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">&lt;?php
+&nbsp;
+function example_form_search_form_alter(&amp;$form, &amp;$form_state, $form_id) {
+  // do stuff
+}
+&nbsp;
+function example_form_user_register_alter(&amp;$form, &amp;$form_state, $form_id) {
+  // do stuff
+}
+&nbsp;
+function example_form_node_form_alter(&amp;$form, &amp;$form_state, $form_id) {
+  // do stuff
+}</pre></div>
+
+<p>Giving every distinct alter it's own function name is much more elegant and maintainable, and really easy to do with Drupal node forms.</p>
+
+<p>When using hook_form_BASE_FORM_ID_alter() to alter node forms, node information
+can be gathered from <span class="geshifilter"><code class="text geshifilter-text">$form['#node']</code></span>, so if you'd like to affect a few different content
+type's node forms, you can also do a conditional on <span class="geshifilter"><code class="text geshifilter-text">$form['#node']-&gt;type</code></span>.</p>
+
+<p>This is a simple example of a much broader process of analyzing and reducing code complexity, which you can apply throughout your code in Drupal, and beyond.</p>
+  </body>
+</html>
+

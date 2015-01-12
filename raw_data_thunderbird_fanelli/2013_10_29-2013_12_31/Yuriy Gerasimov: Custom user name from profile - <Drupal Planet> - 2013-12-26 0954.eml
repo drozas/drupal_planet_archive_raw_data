@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 26 Dec 2013 08:54:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 26 Dec 2013 08:54:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Yuriy Gerasimov: Custom user name from profile
+Content-Transfer-Encoding: 8bit
+Content-Base: http://ygerasimov.com/custom-username-profile2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Yuriy Gerasimov: Custom user name from profile</title>
+    <base href="http://ygerasimov.com/custom-username-profile2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Current project I am working on has user profiles using profile2 module. So it is pretty common task to replace all links/references on the site with user's proper name from Profile instead of his drupal username.</p>
+<p>This is really easy to achieve using <a href="https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_username_alter/7">hook_username_alter()</a></p>
+<p></p><div class="geshifilter">
+<pre class="drupal6 geshifilter-drupal6" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<span style="color: #808080; font-style: italic;">/**
+ * Implements hook_username_alter().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> mymodule_username_alter<span style="color: #66cc66;">(</span><span style="color: #66cc66;">&amp;</span><span style="color: #0000ff;">$name</span>, <span style="color: #0000ff;">$account</span><span style="color: #66cc66;">)</span> <span style="color: #66cc66;">{</span>
+  <span style="color: #0000ff;">$contact_profile</span> = profile2_load_by_user<span style="color: #66cc66;">(</span><span style="color: #0000ff;">$account</span>, MYMODULE_PROFILE_CONTACT_TYPE<span style="color: #66cc66;">)</span>;
+  <span style="color: #b1b100;">if</span> <span style="color: #66cc66;">(</span><a href="http://www.php.net/isset"><span style="color: #000066;">isset</span></a><span style="color: #66cc66;">(</span><span style="color: #0000ff;">$contact_profile</span>-<span style="color: #66cc66;">&gt;</span><span style="color: #006600;">field_name</span><span style="color: #66cc66;">[</span>LANGUAGE_NONE<span style="color: #66cc66;">]</span><span style="color: #66cc66;">[</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">]</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'value'</span><span style="color: #66cc66;">]</span><span style="color: #66cc66;">)</span><span style="color: #66cc66;">)</span> <span style="color: #66cc66;">{</span>
+    <span style="color: #0000ff;">$name</span> = <span style="color: #0000ff;">$contact_profile</span>-<span style="color: #66cc66;">&gt;</span><span style="color: #006600;">field_name</span><span style="color: #66cc66;">[</span>LANGUAGE_NONE<span style="color: #66cc66;">]</span><span style="color: #66cc66;">[</span><span style="color: #cc66cc;">0</span><span style="color: #66cc66;">]</span><span style="color: #66cc66;">[</span><span style="color: #ff0000;">'value'</span><span style="color: #66cc66;">]</span>;
+  <span style="color: #66cc66;">}</span>
+<span style="color: #66cc66;">}</span>
+<span style="color: #000000; font-weight: bold;">?&gt;</span></pre></div>
+
+<p>And if you will want somewhere in the code display user's name do this using function format_username().</p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel">drupal planet</a></div></div></div>
+  </body>
+</html>
+

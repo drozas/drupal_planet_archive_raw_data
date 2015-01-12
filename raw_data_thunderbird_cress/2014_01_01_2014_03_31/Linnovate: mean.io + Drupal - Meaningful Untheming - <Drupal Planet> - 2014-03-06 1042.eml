@@ -1,0 +1,104 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Mar 2014 10:42:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Mar 2014 10:42:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Linnovate: mean.io + Drupal - Meaningful Untheming
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.linnovate.net/blog/mean-io-and-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Linnovate: mean.io + Drupal - Meaningful Untheming</title>
+    <base href="http://www.linnovate.net/blog/mean-io-and-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><div style="float:right;">
+<img src="http://www.linnovate.net/sites/default/files/meanlogo.png"/>
+</div>
+<p>Maybe it's just me.. But I see more and more DG's (Drupal Geezers) find themselves introspecting and thinking about the technology they have invested their past 7-8 years in.</p>
+<p>The web is exploding with tons of amazing javascript mvc platforms, crazy socket madness and stunning widgetry all running client-side (in the browser) with amazing sub-second speeds.</p>
+<p>Our reality is that we still live in a world where 10% of the functions we use frequently in drupal end with <strong>.+_alter</strong> - Drupal typically will output whatever markup you want and then you find yourself wrestling with it and altering it to fit the semantic html you want.
+To actually get Drupal to come close to sub-second performance means to wrap it with so many caches it looks like an Egyptian mummy.</p>
+<h3> Unthemeing </h3>
+The main challenge I see with Drupal revolves around theming, because Drupal is a great CMS for beginners it bundles every layer of markup possible so it can be tweakable from the admin UI, but in the process if you want clean, simple semantic markup of blocks, menus, views, panels etc... - you really need to know what you're doing.
+Thus you see more and more Drupal shops experiment with decoupling the front and back side of Drupal. Drupal is awesome in managing content, users, groups and processes but when it renders that information it's sometimes heavy, bloated and inflexible.
+The way we approach this is through building the interface with angular.js an awesome MVC javascript framework and connecting through web services to the Drupal containing the data.
+In the past 2 years we have started to experiment with technologies <strong>augmenting Drupal</strong> - building apis powered by node.js and mongoDB for scalable mobile endpoints, and building angularjs based widgets that we've inserted in to existing Drupal sites.
+I talked about this in a <a href="https://www.youtube.com/watch?v=AfjuNRjzZnE">webinar by acquia</a> 2 years ago but as we reimplemented these fullstack javascript implementations we felt we needed to standardise around a common solution for our internal needs.
+<h3>Mean.io</h3>
+We've merged all of the best practices for fullstack javascript development within the <a href="http://mean.io">mean.io</a> project.
+MEAN is an acronym <a href="http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and">coined by Valery Koltarov</a> from MongoDB and is used to describe applications built by MongoDB, Express, Angular.js and Node.js.
+We and over 3200 developers which stared the project in <a href="http://github.com/linnovate/mean">github</a> are awed in the speed and quality that comes when you're actual building what you need and not constantly altering what you got from Drupal.
+So we have this awesome js framework that knows how to serve content very well but lacks a CMS, and we have a CMS (that we still love) which does an awesome job of managing content but can do a better job serving it.
+We combined both worlds with the <a href="http://drupal.org/project/mean">mean module</a> providing a standard way to bi-directionly communicate between mean.io instances and Drupal.
+<h3> The mean module </h3>
+Although Drupal 8 is coming up there are tons of Drupal 6 sites out there that want to spice up the look and feel yet maintain the content, ccks and views involved. We thought how to expose the data within drupal to rich widgets or single page applications which either feed information in to drupal or use information fro within to provide a dynamic experience.
+The mean module (at http://drupal.org/project/mean) provides the means to export blocks,menus views and variables to one big json file which is accessed by an angular.js service which reads it and makes it available to the mean application.
+<h3> Integration Strategies</h3>
+<div style="float:right;">
+<img src="http://www.linnovate.net/sites/default/files/mean-in-front.png"/>
+</div>
+There are two types of patterns that can be implemented using the mean module.
+<h4>Mean in front</h4>
+<p>mean.io is used in many places as an engine for SPA (single page applications) now we can create applications that are built from information which is held in drupal.
+Mean provides an interface to load various pieces of data from a Drupal sites and to render a single-page application which uses Drupal as an additional data source.
+We implemented this approach lately with Strauss an established enterprise customer which had an <a href="https://drupal.org/project/idea">OpenIdeal</a> - Drupal 6 site which they wanted to face lift.
+You can browse <a href="http://mystrauss.strauss-group.com/">here to see the result</a> and here to peek in to <a href="http://mystrauss.strauss-group.com/community/forum.">the drupal</a> in the backend which powers it.
+</p>
+After enabling the mean module you can browse <strong>/mean/json/help/me</strong> and see the following possabilities...
+<pre style="border:3px #666 dashed;padding:10px;">
+URL stucture: /mean/json/[TYPE]/[NAME]/[ARG1]/[ARG2]/[ARG3]
+currently supported TYPE values and their arguments:
+- view - returns results for requested Drupal view object, arguments:
+  - NAME - view's name
+  - ARG1 - (optional) display_name
+  - ARG2 - (optional) items per page value (-1 for unlimited, 0 - skip arg)
+  - ARG3 - (optional) arguments divided by '+' sign without whitespaces
+- menu - output from menu_tree_all_data() function
+- load - looks for load_[NAME_mandatory] function and returns its output
+(node_load([ARG1]), user_load([ARG1]), menu_load([ARG1]) ...), arguments:
+  - ARG1 - ID or name to pass to load function
+- help - /mean/json/help/me will output current instruction
+- user - /mean/json/user/logout - Logging current user out
+  - /mean/json/user/login (along with name and pass values passed as post
+  will log user in and return its object)
+  - /mean/json/user/session - returns $_SESSION
+  - /mean/json/user/me - returns global user object
+- get-mean-packet
+  - returns set of JSON objects, set at admin/build/mean-packets
+  - NAME - packet's name
+-------------------------------------------------------------------------
+To skip any optional ARG, use 0, (example: /mean/json/forum_search/0/5)
+</pre>
+
+<h4>Angular apps in blocks/panel panes</h4>
+<div style="float:right;"><img src="http://www.linnovate.net/sites/default/files/angular-apps.png">
+</div>
+<p>In many cases we have to continue hosting with Drupal - for instance if you have a governmental site that has been security cleared to run Drupal there is a very slim chance you could change that.
+With the next approach you can still get the "single page" behaviour or implement a complex widget that you'd rather implement on a client-side MVC rather then in a bunch of spaghetti code in jquery.</p>
+<p>We have been working with a financial client from new-york for the past year which has a huge antiquated drupal-5 site and the ability to insert rich angular.js driven application that connect to the data within the drupal site - can create a modern feel even if you're stuck in the past, it also can provide a clear path to fix sites that can't be upgraded because their core has been altered.</a>
+ 
+<h3 > Drush support </h3>
+<p>One of the concepts and tools we've built to help with both types of integrations - has to do in how to swiftly enter the Drupal data in to a mongodb based db so it can be served effectively to mobile devices, widgets and single page applications.
+We have bundled the <strong>mean shadow</strong> module with the the mean module which provides a standard way to sending drupal information upon content update to the Mongo/Node based service.
+To make the initial import of the data in to the mean easy we provide the <strong>drupal shanties (shadow entities)</strong> command...</p>
+Here are some examples of the possible usage..
+<pre style="border:3px #666 dashed;padding:10px;">
+<strong>Examples:</strong>
+ Standard example (all the user entities)  drush shadow-entities              
+ Type example (all the node entities)      drush shadow-entities node         
+ Id example (specific user)                drush shadow-entities user 42      
+ Id example 2 (specific node)              drush shadow-entities node 42      
+ Bundle example (all the entites of        drush shadow-entities node article 
+ bundle article)                                                              
+</pre>
+
+To summarize - mean.io is an amazing way to develop cool and modern applications but the mean module integration lets us start building mean apps now and helps them co-exist and augment Drupal.
+</div></div></div>
+  </body>
+</html>
+

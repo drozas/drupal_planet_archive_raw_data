@@ -1,0 +1,64 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: How I customized my Drupal Slideshow
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/how-i-customized-my-drupal-slideshow%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: How I customized my Drupal Slideshow</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/how-i-customized-my-drupal-slideshow%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>How I customized my Drupal Slideshow</h2><br />
+<br />
+<p>So a client wants a slideshow. No problem! Oh, they want full WYSIWYG for the captions. No problem. What about an option to let a user grab embed code? Easy. It must be responsive, full screen option, attach to nodes, hide and show captions, add branding logo, and make sure you can attach AND embed on the same page. Sure, done deal. Right?</p><br />
+<br />
+<p><img alt="A Drupal Slideshow" border="0" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/slideshow.jpg" style="float: right;"></p><br />
+<br />
+<p>Turns out it was a bit larger of a project than I first expected. After researching various slideshow modules I was unable to find a drop-in solution that fit every requirement, so I decided to go start with the basic <span style="text-decoration: underline;"><a href="http://drupal.org/project/views_slideshow">Views Slideshow</a></span> and extend from there. From a previous project I knew that it was possible to make a standard Views Slideshow responsive, and with some jQuery / JavaScript I could make the necessary updates to the styling.</p><br />
+<br />
+<h2>Creating the Content Type</h2><br />
+<br />
+<p>I started out with a new content type using field collections in order to streamline the user interface. With field collections the user would be able to manage all the images from one location. The wrinkle came with the “attach to node” requirement. This was accomplished using a node reference, however this made it much more difficult to use field collections.</p><br />
+<br />
+<p>After asking around I was pointed towards using the standard one node per slideshow item, but this made management much more difficult and would rely on Nodequeues, or something similar to manage the display order. Thankfully Phil, a very knowledgeable member of our team, suggested <span style="text-decoration: underline;"><a href="http://drupal.org/project/inline_entity_form">Inline Entity Form</a></span>. If you have not heard of this module, check it out. It is great for content management!</p><br />
+<br />
+<p><img alt="Inline entity form screen example" border="0" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/inline-entity-form.jpg" style="float: right;"></p><br />
+<br />
+<p>So now I could create a single node to house all the fields for images and WYSIWYG captions, and users could create and attach new slide items from the node edit interface. That still leaves a lot of nodes, but management of each slideshow remains simple.</p><br />
+<br />
+<h2>Building the View</h2><br />
+<br />
+<p>Once the content type was in place I could begin creating the actual slideshow. The end result was a standard Views Slideshow using <span style="text-decoration: underline;"><a href="http://sorgalla.com/jcarousel/">jCarousel for the pager</a></span>, and some custom jQuery for extended functionality. The View had two displays:</p><br />
+<br />
+<ol><br />
+	<li>A Block display that attaches a slideshow to a regular content node via node reference.</li><br />
+	<li>A Page display that uses a blank template to embed the slideshow without any of the original site theme.</li><br />
+</ol><br />
+<br />
+<p>From here it was a matter of custom CSS and jQuery to build out the rest of the functionality.<br><br />
+	<img alt="Slideshow with embed code displayed" border="0" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/slideshow-w-embed-code.jpg" style="float: right;"></p><br />
+<br />
+<h2>Responsive Layout</h2><br />
+<br />
+<p>From a previous project I had learned that with styling updates a regular Views Slideshow could be made responsive. There was one tricky issue that occurs with images any time you want to have them responsive. Do you use the height or the width to 100%? You can't do both, or your image will skew according to the container size. If you choose width 100%, then any portrait type images will become taller than their landscape counterparts, and either get chopped off or bump the page content all over the place. Custom jQuery to the rescue!</p><br />
+<br />
+<p>After some fiddling around it also became clear that jQuery could apply CSS changes to not only handle the width/height issue, but to create the full window effect and handle simple buttons to show/hide captions. By processing the aspect ratio of each image and comparing it to the average I determined which images should be width: 100%, and which should be height: 100%.</p><br />
+<br />
+<p>Finally, using the slideshow node ID I was able to create a URL for the Page display of my View, and thus create the iframe embed code for a user to copy. Some small customizations and styling fixes here, some debugging there, and I had a working slideshow!</p><br />
+<br />
+<p>What customized slideshow have you put together?</p><br />
+<br />
+<p><img alt="Slideshow in fullscreen" border="0" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/slideshow-fullscreen.jpg"></p><br />
+<br />
+<p>&nbsp;</p><br />
+  </body>
+</html>
+

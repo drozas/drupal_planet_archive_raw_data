@@ -1,0 +1,138 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 11 Oct 2013 12:58:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 11 Oct 2013 12:58:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: .VDMi/Blog: Writing a custom contenttype pane (ctools plugin).
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.vdmi.nl/blog/writing-custom-contenttype-pane-ctools-plugin
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>.VDMi/Blog: Writing a custom contenttype pane (ctools plugin).</title>
+    <base href="http://www.vdmi.nl/blog/writing-custom-contenttype-pane-ctools-plugin">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-afbeelding field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/blog/writing-custom-contenttype-pane-ctools-plugin"><img style="max-width: 40%; height: auto; float: left; margin-right: 1em;" align="left" hspace="10" typeof="foaf:Image" src="http://www.vdmi.nl/sites/vdmi.nl/files/styles/200_max_width/public/light_dispersion_conceptual_waves.gif?itok=LVgZdRNc" width="200" height="150" alt="Writing a custom contenttype pane (ctools plugin)." /></a></div></div></div><div class="field field-name-field-samenvatting1 field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">In this little &#039;how-to&#039; we will build a youtube-embed contentpane with some basic configuration options. Although working with panels and panelizer is not common practice for everyone, this tutorial asumes you know what they are and how to use them (at least a little bit, like myself  :-) ). </div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If you don't, look here: <a href="https://groups.drupal.org/node/195888">https://groups.drupal.org/node/195888</a> and read this <a href="http://drupalwatchdog.com/2/1/panelizer-layouts">http://drupalwatchdog.com/2/1/panelizer-layouts</a></p>
+<p>We'll start off with a regular custom module to serve our 'plugins'.<br />
+'MYMODULE_plugins'.<br />
+Since we are writing ctools / panels plugins, ctools and panels are required and therefor we need to set them as a dependency, so the .info looks something like this:</p>
+<pre><code>name =  MYMODULE_plugins<br />
+description = Custom contenttype panes<br />
+core = 7.x<br />
+package = Custom<br />
+dependencies[] = ctools<br />
+dependencies[] = panels</code></pre><p>
+In order to keep things organised we will create a directory inside our module folder called 'plugins'. Inside it lets also create a directory called 'contentypes', since that's what we're making. This folder will contain our plugin files (the files where the actual plugin functionality is defined).</p>
+<p>The .module file is very basic. The only thing we need to do is tell ctools where to look for our plugin files. Ctools gives us a hook for this: hook_ctools_plugin_directory();<br />
+So the .module file looks something like this:</p>
+<pre><code>&lt;?php <br /><br />
+/**<br />
+ * Implements hook_ctools_plugin_directory().<br />
+**/<br /><br />
+function MYMODULE_plugins_ctools_plugin_directory($owner, $plugin_type) {<br />
+  if ($owner == 'ctools' &amp;&amp; $plugin_type == 'content_types') {<br />
+    return 'plugins/' . $plugin_type;<br />
+  }<br />
+}</code></pre><p>
+Next, in the above defined directory, we'll create our plugin file.<br />
+PLUGIN_NAME.inc<br />
+In this tutorial we want to embed a youtube video, so we'll name our file:<br />
+youtube_embed.inc</p>
+<p>What we'll need , in short, for this plugin to work is:<br />
+– a plugin definition; an array with settings.<br />
+– an edit form; a form.<br />
+– a submit handler; a form_state processor.<br />
+– a view (render); the html content.<br />
+– some administrators information; title and description (some help?)</p>
+<pre><code>&lt;?php<br /><br />
+/**<br />
+ * Plugins are described by creating a $plugin array which will be used<br />
+ * by the system that includes this file.<br />
+ */<br />
+$plugin = array(<br />
+  'title' =&gt; t('Youtube embed'),<br />
+  'description' =&gt; t('Shows a youtube video.'),<br />
+  'category' =&gt; t('Custom'),<br />
+  'edit form' =&gt; 'youtube_embed_edit_form',<br />
+  'render callback' =&gt; 'youtube_embed_render',<br />
+  'admin info' =&gt; 'youtube_embed_admin_info',<br />
+  'defaults' =&gt; array(<br />
+      'description' =&gt; 'some working tunes.. ',<br />
+      'youtube_url' =&gt; '<a href="http://www.youtube.com/watch?v=bTMZDr9RGBo',&lt;br /&gt;&#10;">http://www.youtube.com/watch?v=bTMZDr9RGBo',<br /></a>    )<br />
+);<br /><br /><br />
+/**<br />
+ * 'Edit form' callback for the content type.<br />
+ */<br />
+function youtube_embed_edit_form($form, &amp;$form_state) {<br />
+  $conf = $form_state['conf'];<br /><br />
+  $form['description'] = array(<br />
+    '#title' =&gt; t('Description'),<br />
+    '#description' =&gt; t('Description (administrative)'),<br />
+    '#type' =&gt; 'textfield',<br />
+    '#required' =&gt; FALSE,<br />
+    '#default_value' =&gt; $conf['description'],<br />
+  );<br /><br />
+  $form['youtube_url'] = array(<br />
+    '#title' =&gt; t('Youtube url'),<br />
+    '#description' =&gt; t('The url of the youtube video you want to show'),<br />
+    '#type' =&gt; 'textfield',<br />
+    '#required' =&gt; TRUE,<br />
+    '#default_value' =&gt; $conf['youtube_url'],<br />
+  );<br /><br />
+  return $form;<br />
+}<br /><br />
+/**<br />
+ * The submit form stores the data in $conf.<br />
+ */<br />
+function youtube_embed_edit_form_submit($form, &amp;$form_state) {<br />
+  foreach (array_keys($form_state['plugin']['defaults']) as $key) {<br />
+    if (isset($form_state['values'][$key])) {<br />
+      $form_state['conf'][$key] = $form_state['values'][$key];<br />
+    }<br />
+  }<br />
+}<br /><br />
+/**<br />
+* implements <br />
+**/<br /><br />
+function youtube_embed_render($subtype, $conf, $panel_args) {<br /><br />
+  $url = (!empty($conf['youtube_url'])) ? $conf['youtube_url'] : '';<br />
+  $description = (!empty($conf['description'])) ? $conf['description'] : '';<br />
+  $title = 'Youtube: ('.$description.')';<br /><br />
+  $output = "&lt;iframe src='".$url."'&gt;&lt;/iframe&gt;";//lalala<br /><br />
+  $block = new stdClass();<br />
+  $block-&gt;module = 'youtube_embed';<br />
+  $block-&gt;delta = $sub_type;<br />
+  $block-&gt;title = $title;<br />
+  $block-&gt;content = $output;<br /><br />
+  return $block;<br />
+}<br />
+?&gt;</code></pre><p>
+With only a little bit of extra effort we can add some descriptive information for site-administrators. This gives quick info on what the settings are of our particular pane-instance. </p>
+<pre><code>&lt;?php<br /><br />
+/**<br />
+* add some info to the administrators view. <br />
+**/<br />
+function youtube_embed_admin_info($subtype, $conf, $context = NULL) {<br /><br />
+  $block = youtube_embed_render($subtype, $conf, array("youtube") );//, $context);<br />
+  $block-&gt;content = t('&lt;strong&gt;Showing:&lt;/strong&gt;&lt;br&gt; @description &lt;br&gt;@youtube_url', array(<br />
+      '@description' =&gt; $conf['description'],<br />
+      '@youtube_url' =&gt; $conf['youtube_url'],<br />
+    ));<br />
+  return $block;<br />
+}<br /><br />
+function youtube_embed_admin_title($subtype, $conf, $context = NULL) {<br />
+  $output = t('Youtube embed');<br />
+  if ($conf['override_title'] &amp;&amp; !empty($conf['override_title_text'])) {<br />
+    $output = filter_xss_admin($conf['override_title_text']);<br />
+  }<br />
+  return $output;<br />
+}</code></pre><p>That's it! This should work nicely.<br />
+Hopefully this is usefull to anyone.</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,52 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 28 Jan 2014 07:21:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 28 Jan 2014 07:21:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LookAlive: Drupal & Entity reference - How to make a custom entity reference selection handler
+Content-Transfer-Encoding: 8bit
+Content-Base: http://lookalive.co.uk/blog/drupal-entity-reference-how-make-custom-entity-reference-selection-handler
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LookAlive: Drupal & Entity reference - How to make a custom entity reference selection handler</title>
+    <base href="http://lookalive.co.uk/blog/drupal-entity-reference-how-make-custom-entity-reference-selection-handler">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>There are some good examples out there on how to create a custom Entity reference Behaviour plugin, but not so much for Selection handlers.</p>
+<p>Why would you want to do this? A number of reasons. For me in <a href="http://getharmony.io">Harmony Forum</a> it was because the base Entity reference selection handler wasn't returning correct results on an autocomplete field and I've got custom access rules to consider, and due to future expansion it makes sense. An alternative to making our own would be to use Views, but this idea doesn't appeal due to the performance overhead compared to EntityField Query.</p>
+<p>Behaviour handler examples can be found in the Entity reference module itself, Entityreference Prepopulate and Organic Groups.</p>
+<p>Before we jump in, if the base generic Entity reference selection handler does most of what you want, and you only have a custom entity to integrate, all you need to do is name your class in a particular way and it'll be automatically used.</p>
+<p>Let's have a look in <code>entityreference/plugins/selection/EntityReference_SelectionHandler_Generic.class.php</code>.</p>
+<div class="codeblock"><code>class EntityReference_SelectionHandler_Generic implements EntityReference_SelectionHandler {</p>
+<p>&nbsp; /**<br />&nbsp;&nbsp; * Implements EntityReferenceHandler::getInstance().<br />&nbsp;&nbsp; */<br />&nbsp; public static function getInstance($field, $instance = NULL, $entity_type = NULL, $entity = NULL) {<br />&nbsp;&nbsp;&nbsp; $target_entity_type = $field[&#039;settings&#039;][&#039;target_type&#039;];</p>
+<p>&nbsp;&nbsp;&nbsp; // Check if the entity type does exist and has a base table.<br />&nbsp;&nbsp;&nbsp; $entity_info = entity_get_info($target_entity_type);<br />&nbsp;&nbsp;&nbsp; if (empty($entity_info[&#039;base table&#039;])) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return EntityReference_SelectionHandler_Broken::getInstance($field, $instance);<br />&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp; if (class_exists($class_name = &#039;EntityReference_SelectionHandler_Generic_&#039; . $target_entity_type)) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return new $class_name($field, $instance, $entity_type, $entity);<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp; else {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return new EntityReference_SelectionHandler_Generic($field, $instance, $entity_type, $entity);<br />&nbsp;&nbsp;&nbsp; }<br />&nbsp; }<br />...</code></div>
+<p>Note the <code>if (class_exists($class_name = &#039;EntityReference_SelectionHandler_Generic_&#039; . $target_entity_type)) {</code> chunk, this is your in if you don't want your own totally custom selection handler.</p>
+<p>Right, still want to do this? Great!</p>
+<p>We'll work with the assumption that this will be the structure of our module when we're done:</p>
+<p><div class="codeblock"><code>example.info<br />example.module<br />plugins/entityreference/selection/example_selection_handler.inc<br />plugins/entityreference/selection/ExampleSelectionHandler.class.php</code></div>
+</p>
+<p>We'll be creating "ExampleSelectionHandler" which extends "EntityReference_SelectionHandler_Generic".</p>
+<p>First things first, add "plugins/entityreference/selection/ExampleSelectionHandler.class.php" to "files[]" in the module .info so it can be autoloaded (though I don't believe it's necessary).</p>
+<p><div class="codeblock"><code>files[] = plugins/entityreference/selection/ExampleSelectionHandler.class.php</code></div>
+</p>
+<p>Next in your module (for our purposes "Example") implement hook_ctools_plugin_directory to point to where your plugins are.</p>
+<p><div class="codeblock"><code>/**<br /> * Implements hook_ctools_plugin_directory().<br /> */<br />function example_ctools_plugin_directory($module, $plugin) {<br />&nbsp; if ($module == &#039;entityreference&#039;) {<br />&nbsp;&nbsp;&nbsp; return &#039;plugins/entityreference/&#039; . $plugin;<br />&nbsp; }<br />} </code></div>
+</p>
+<p>Now we need to create an unusually basic definition file for the Selection handler "example_selection_handler.inc". All this file needs is an array with two items:</p>
+<p><div class="codeblock"><code>&lt;?php</p>
+<p>$plugin = array(<br />&nbsp; &#039;title&#039; =&gt; t(‘Example Selection handler&#039;),<br />&nbsp; &#039;class&#039; =&gt; &#039;ExampleSelectionHandler&#039;,<br />);</code></div>
+</p>
+<p>Finally we define the class file which should be named as per the value of $plugin[‘class'] with ".class.php" appended. The best example to look at is probably the "base" or default Selection handler within Entity reference which can be found at "entityreference/plugins/selection/EntityReference_SelectionHandler_Generic.class.php".</p>
+<p>What should go in your implementation depends on what you want to do, the only requirement of your custom Selection handler is that it has the method "getInstance". Here's an example.</p>
+<p><div class="codeblock"><code>&lt;?php</p>
+<p>/**<br /> * Harmony Thread selection handler.<br /> */<br />class ExampleSelectionHandler extends EntityReference_SelectionHandler_Generic {<br />&nbsp; /**<br />&nbsp;&nbsp; * Implements EntityReferenceHandler::getInstance().<br />&nbsp;&nbsp; */<br />&nbsp; public static function getInstance($field, $instance = NULL, $entity_type = NULL, $entity = NULL) {<br />&nbsp;&nbsp;&nbsp; return new ExampleSelectionHandler($field, $instance, $entity_type, $entity);<br />&nbsp; }</p>
+<p>&nbsp; /**<br />&nbsp;&nbsp; * Build an EntityFieldQuery to get referenceable entities.<br />&nbsp;&nbsp; */<br />&nbsp; public function buildEntityFieldQuery($match = NULL, $match_operator = &#039;CONTAINS&#039;) {<br />&nbsp;&nbsp;&nbsp; // Function which builds the EntityFieldQuery which searches the database for results<br />&nbsp;&nbsp;&nbsp; // to supply to the field as options (e.g. Select or Autocomplete).<br />&nbsp; }<br />} </code></div>
+</p>
+  </body>
+</html>
+

@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Jun 2013 17:09:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Jun 2013 17:09:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 3: simple language setup, optional English
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-jun-17/drupal-8-multilingual-tidbits-3-simple-language-setup-optional-english
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 3: simple language setup, optional English</title>
+    <base href="http://hojtsy.hu/blog/2013-jun-17/drupal-8-multilingual-tidbits-3-simple-language-setup-optional-english">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>As I've <a href="http://hojtsy.hu/blog/2013-jun-12/drupal-8-multilingual-tidbits-2-more-core-modules">outlined in the previous post</a> Drupal 8 core now has 3 core modules (+1 proposed, +1 hidden) to deal with language support. This tidbit will be about the simple language setup features provided by Language module, which is the base for every other language feature.</p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8LanguageList.png" /></div>
+<p>Language module provides a simple language overview screen. You can reorder existing languages, remove languages (except the site default language, which on the screenshot is Hungarian) and add new languages. It is not anymore possible to have enabled and disabled languages on your site. This feature resulted in a confusing mess where some places and permission combinations allowed for the use of disabled languages and it was used a means to stage certain new content. Just use proven content staging techniques (or unpublished posts) for new language content.</p>
+</div></div></div>
+  </body>
+</html>
+

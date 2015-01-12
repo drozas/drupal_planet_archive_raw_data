@@ -1,0 +1,142 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 07 Aug 2013 07:15:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 07 Aug 2013 07:15:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gordon Heydon: Sass/Compass & Acquia
+Content-Transfer-Encoding: 8bit
+Content-Base: http://heydon.com.au/blogs/gordon/sasscompass-acquia
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gordon Heydon: Sass/Compass & Acquia</title>
+    <base href="http://heydon.com.au/blogs/gordon/sasscompass-acquia">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>Compass makes CSS so much easier and and also makes it very easy to make sure your CSS is complete. With embedding and the CSS3 plugings taking advantage of newer CSS3 features and have them fallback in much nicer ways.</p>
+<p>I have liked it so much that I have started using it on all of my projects. For my bigger clients I use Acquia's cloud hosting which I really like and also fits my work flow much better with git. However they do not support the native sass/compass plugins to be able to compile my css on the server.</p>
+<p>Yes I could use scssphp and sassy to compile on the server, but I don't think that it compiles the css as well as the ruby version, and also I will always know that it will behave correctly. This is mostly personal choice, so I need to compile all the SCSS locally and commit it to my git repository.</p>
+<p>Since git is so good allowing you to hook into different phases of the commit process, all I needed was to build a pre-commit script to build and commit the CSS. But I had a couple of requirements.</p>
+<ol><li>I only wanted the compile process to run only when changes to the SCSS are going to be commited.</li>
+<li>Sometimes I will do a number of changes and commit the changes over a couple of commits. So any CSS has to match the changes to the SCSS that I make.</li>
+<li>When I do development I compile the SCSS in development mode and use FireSASS which creates extremely verbose CSS, which is great for development, but hopeless for production. so it needs to recompile everything in production mode.</li>
+</ol><p>So we will start with the last issue. Compiling from the command line is easy.</p>
+<p></p><div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">compass compile <span style="color: #339933;">--</span>force</pre></div>
+<p>this will recompile all your SCSS correctly, but it will just recompile everything as your settings in the config.rb file. So with a minor change to your config.rb (see <a href="https://drupal.org/node/2049245">#2049245</a> for the patch to Zen.</p>
+<p></p><div class="geshifilter"><pre class="ruby geshifilter-ruby" style="font-family:monospace;"><span style="color:#008000; font-style:italic;"># Default to development if environment is not set.</span>
+saved = environment
+<span style="color:#9966CC; font-weight:bold;">if</span> <span style="color:#006600; font-weight:bold;">(</span>environment.<span style="color:#0000FF; font-weight:bold;">nil</span>?<span style="color:#006600; font-weight:bold;">)</span>
+  environment = <span style="color:#ff3333; font-weight:bold;">:development</span>
+<span style="color:#9966CC; font-weight:bold;">else</span>
+  environment = saved
+<span style="color:#9966CC; font-weight:bold;">end</span></pre></div>
+<p>now I can use the following command. Basically this checks to see if the -e option is set and if not sets it to development.</p>
+<p></p><div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">compass compile <span style="color: #339933;">-</span>e production <span style="color: #339933;">--</span>force</pre></div>
+<p>So now all the CSS will be compiled down to as small as it can. things like using colours like #000000 will be changed to #000, so it will take a little space as possible,</p>
+<p>Now the changes to the pre-commit hook. Since I only want to compile if I have changed SCSS I need to find the SCSS that has changed, and have been staged in git. The following will check this out for me.</p>
+<p></p><div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">git diff <span style="color: #339933;">--</span>cached <span style="color: #339933;">--</span>exit<span style="color: #339933;">-</span>code <span style="color: #000088;">$theme_dir</span><span style="color: #339933;">/</span>sass<span style="color: #666666; font-style: italic;">/*.scss &gt; /dev/null</span></pre></div>
+<p>This command will set an exit code equal to 1 when any of this has changed. Also since I want this to work with any site, I can start off with the following</p>
+<p></p><div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #666666; font-style: italic;">#!/bin/sh
+</span>
+themes_altered<span style="color: #339933;">=</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span>
+ 
+<span style="color: #b1b100;">for</span> config in docroot<span style="color: #339933;">/</span>sites<span style="color: #666666; font-style: italic;">/*/themes/*/</span>config<span style="color: #339933;">.</span>rb
+<span style="color: #b1b100;">do</span>
+  theme_dir<span style="color: #339933;">=</span>`<a href="http://www.php.net/dirname"><span style="color: #990000;">dirname</span></a> <span style="color: #000088;">$config</span>`
+ 
+  git diff <span style="color: #339933;">--</span>cached <span style="color: #339933;">--</span>exit<span style="color: #339933;">-</span>code <span style="color: #000088;">$theme_dir</span><span style="color: #339933;">/</span>sass<span style="color: #666666; font-style: italic;">/*.scss &gt; /dev/null
+  if [ "$?" -eq 1 ]; then
+    themes_altered+=($theme_dir)
+ 
+    # the css is going to be blown away anyway so lets revert it to HEAD
+    git checkout HEAD -- $theme_dir/css
+  fi
+done</span></pre></div>
+<p>Basically what this will do, loop around every theme with a config.rb, check for any staged SCSS changes and then revert the CSS back to the current HEAD (the last commit), and add it to the array of themes changed.</p>
+<p>So now we have a list of themes with SCSS changes that have been staged to be commited.</p>
+<p>Next I sometimes commit changes over a couple of commits. So there maybe changes I do not have staged which I need to get out of the way before I compile. So basically any changes I have not staged I want to stash.</p>
+<p></p><div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">git stash save <span style="color: #339933;">--</span>keep<span style="color: #339933;">-</span>index <span style="color: #0000ff;">"Compass recompile"</span></pre></div>
+<p>Now this will stash any changes which have not been staged. Next I compile the SCSS and add this to be commited.</p>
+<p></p><div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #b1b100;">if</span> <span style="color: #009900;">[</span> <span style="color: #0000ff;">"${#themes_altered[@]}"</span> <span style="color: #339933;">-</span>gt <span style="color: #0000ff;">"0"</span> <span style="color: #009900;">]</span><span style="color: #339933;">;</span> then
+  git stash save <span style="color: #339933;">--</span>keep<span style="color: #339933;">-</span>index <span style="color: #0000ff;">"Compass recompile"</span>
+ 
+  <span style="color: #b1b100;">for</span> <a href="http://www.php.net/dir"><span style="color: #990000;">dir</span></a> in <span style="color: #0000ff;">"${themes_altered[@]}"</span>
+  <span style="color: #b1b100;">do</span>
+    <span style="color: #339933;">/</span>usr<span style="color: #339933;">/</span>bin<span style="color: #339933;">/</span>compass compile <span style="color: #000088;">$dir</span> <span style="color: #339933;">-</span>e production <span style="color: #339933;">--</span>boring <span style="color: #339933;">--</span>force
+ 
+    git add <span style="color: #000088;">$dir</span><span style="color: #339933;">/</span>css<span style="color: #666666; font-style: italic;">/*.css $dir/css/*/</span><span style="color: #339933;">*.</span>css
+  done
+ 
+  git stash pop
+fi</pre></div>
+<p>So this last part will loop thougth the list of changed themes and recompile the SCSS and add it ready to be commited, and lastly all the stashed changed will be written back down.</p>
+<p>This has been working very well for quite a while. however I have found a couple of minor issues.</p>
+<p>Like most people while they are developing, they will have the following command running.</p>
+<p></p><div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">compass watch</pre></div>
+<p>Which will watch your SCSS and compile it when ever there are changes. However if you commit parts of a file, and there is a stash done, it will try to recompile the SCSS, then you will get 1 of 2 problems. Either you will commit the development version of the CSS, or there will be problems with the SCSS when you pop the changes from the stash. So generally I just kill the watch process before I start commiting.</p>
+<p>See the Gist Below to get the full script</p>
+<p><noscript><div class="drupal-gist-file"><pre type="">#!/bin/sh
+
+themes_altered=()
+
+for config in docroot/sites/*/themes/*/config.rb
+do
+  theme_dir=`dirname $config`
+
+  git diff --cached --exit-code $theme_dir/sass/*.scss &gt; /dev/null
+  if [ &quot;$?&quot; -eq 1 ]; then
+    themes_altered+=($theme_dir)
+    
+    # the css is going to be blown away anyway so lets revert it to HEAD
+    git checkout HEAD -- $theme_dir/css
+  fi
+done
+
+
+if [ &quot;${#themes_altered[@]}&quot; -gt &quot;0&quot; ]; then
+  git stash save --keep-index &quot;Compass recompile&quot;
+
+  for dir in &quot;${themes_altered[@]}&quot;
+  do
+    /usr/bin/compass compile $dir -e production --boring --force
+
+    git add $dir/css/*.css $dir/css/*/*.css
+  done
+
+  git stash pop
+fi
+</pre></div></noscript><script src="http://gist.github.com/6171813.js"></script></p>
+</div></div></div><!-- google_ad_section_end --><section class="field field-name-taxonomy-vocabulary-7 field-type-taxonomy-term-reference field-label-inline clearfix view-mode-rss clearfix">
+
+      <h2 class="field-label">Tags:&nbsp;</h2>
+  
+  <ul class="field-items">
+
+    
+      <li class="field-item even">
+        <a href="/taxonomy/term/41">Drupal Planet</a>      </li>
+
+    
+  </ul>
+
+</section>
+<section class="field field-name-taxonomy-vocabulary-2 field-type-taxonomy-term-reference field-label-above view-mode-rss clearfix">
+
+      <h2 class="field-label">my projects:&nbsp;</h2>
+  
+  <ul class="field-items">
+
+    
+      <li class="field-item even">
+        <a href="/taxonomy/term/10">drupal</a>      </li>
+
+    
+  </ul>
+
+</section>
+  </body>
+</html>
+

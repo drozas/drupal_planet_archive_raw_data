@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 Aug 2013 15:02:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 Aug 2013 15:02:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dries Buytaert: Drupal 8 APIs are freezing but not frozen
+Content-Transfer-Encoding: 8bit
+Content-Base: http://buytaert.net/drupal-8-apis-are-freezing-but-not-frozen
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dries Buytaert: Drupal 8 APIs are freezing but not frozen</title>
+    <base href="http://buytaert.net/drupal-8-apis-are-freezing-but-not-frozen">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above"><div class="field-label">Topic:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Since Drupal 8's <a href="http://buytaert.net/drupal-8-api-freeze">API freeze was announced</a> on July 1, there has been some confusion about what API freeze means, from core developers as well as module and theme developers starting Drupal 8 upgrades of their projects. This post clarifies the API completion process, and documents what different audiences can expect from Drupal 8's development cycle and when.</p>
+
+<h3>API freezing is a process, not a point in time</h3>
+
+<p>As noted in the original API freeze announcement, as well as <a href="https://drupal.org/core/release-cycle">the Drupal core release cycle page</a>, API freeze marks the point at which API changes are only allowed when needed to fix a major or critical issue. The process of completing the necessary remaining changes, however, will take time, and while that is happening, <a href="https://groups.drupal.org/node/313408">many important APIs are still changing</a>.</p>
+
+<p>The chart below illustrates the API freezing process, as well as what various groups of people affected by Drupal 8 development can expect during the rest of the release cycle:</p>
+
+<div class="figure">
+ <a href="http://buytaert.net/album/drupal/drupal-8-api-freezing"><img src="http://buytaert.net/sites/buytaert.net/files/cache/drupal-drupal-8-api-freezing-500x500.jpg" alt="Drupal api freezing" style="border: 1px solid #ccc; padding: 4px;"/></a>
+
+</div>
+
+<p>For core developers, July 1 marked the point at which core maintainers began to postpone API changes not necessary for solving critical and major issues to Drupal 9, so that module and theme developers who've already started porting their projects only need to keep up with changes that are sufficiently important to a healthy Drupal 8 release. We've labeled this part of the release cycle the "API completion" to clarify this process. During this phase, any proposed API changes must go through <a href="https://drupal.org/core/release-cycle/api-freeze">a process involving core committer approval</a>. Core committers will increasingly restrict what sorts of changes are allowed as time goes on.</p>
+
+<h3>I'd like to start porting my module or theme now. What can I expect?</h3>
+
+<p>Module and theme developers are encouraged to <em>start</em> porting now so they can uncover critical and major API problems while they can still be fixed. But if you are hoping to go through the process of porting your module or theme only once, the best time for that is after the first <em>release candidate</em> (see "What can I expect for beta?" below). At that point, the number of critical issues should be at or just above zero, meaning API changes should be extremely rare and only occur if there's no other way to resolve a severe problem.</p>
+
+<p>You can read a summary of the <a href="https://groups.drupal.org/node/313408">most important outstanding API changes</a>, or view the ongoing list of <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&version%5B%5D=8.x&issue_tags=Approved+API+change">approved API change issues</a> to see if your module is affected by changes that are still in progress. The list currently includes many issues related to the routing system, the entity field API, and the theme system/markup. If your project touches these systems, you may want to hold off porting a while longer, or at least be aware that these elements (as well as others) are still in flux and might change significantly before Drupal 8 is released.</p>
+
+<h3>What can I expect from beta releases?</h3>
+
+<p>Beta 1 will still be the point at which we encourage any interested site builders to try out the beta and provide feedback on it, so it will include an upgrade path from Drupal 7 for testing. It's a great time for site builders to set up test sites in order to take Drupal 8 for a spin and provide feedback while things are still somewhat malleable. Just know that because Drupal 8 is still in development, critical upgrade path issues <em>may</em> arise that cause data loss, so make sure you're backed up!</p>
+
+<p>Previously, we also identified beta as the point at which we'd have a stable API against which module and theme developers could port code. However, after evaluating the list of major and critical API changes still outstanding, we realize that those changes will take more time to complete than we would like to wait to release our first beta. Therefore, we now recommend that developers who are not interested in providing early API feedback on Drupal 8 wait until the first release candidate.</p>
+
+<h3>Closing thoughts</h3>
+
+<p>Release management is difficult, especially in a large distributed Open Source community like Drupal. Getting Drupal 8 released involves many people, many processes, and even technology challenges.  The quality of the Drupal 8 release is really important so as a result, there are no hard-and-fast rules and we'll continue to adjust in the best interest of the Drupal project.  I hope this update proves that point, and that it clarifies how and when we would like you to get involved. Let's make Drupal 8 our best release to date - in a timely manner!</p></div></div></div>
+  </body>
+</html>
+

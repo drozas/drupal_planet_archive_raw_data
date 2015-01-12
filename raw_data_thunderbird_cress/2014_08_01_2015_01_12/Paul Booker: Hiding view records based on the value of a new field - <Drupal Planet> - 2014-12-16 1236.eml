@@ -1,0 +1,110 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 16 Dec 2014 12:36:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 16 Dec 2014 12:36:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Hiding view records based on the value of a new field
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/code-snippet/hiding-view-records-based-value-new-field
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Hiding view records based on the value of a new field</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/hiding-view-records-based-value-new-field">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php">
+function mymodule_views_query_alter(&$view, &$query) {
+
+  global $user;
+	
+  if (($view->name === 'coaches') || ($view->name === 'trainers')) { 
+   
+    if (!in_array('trainer', $user->roles) && !in_array('admin', $user->roles)) {
+  
+      $view->query->fields['field_data_field_profile_hidden'] = array(
+        'field' => 'field_profile_hidden_value',
+        'table' => 'field_data_field_profile_hidden',
+        'alias' => 'field_data_field_profile_hidden'
+      );
+      
+      $join = new views_join;
+      $join->table ='field_data_field_profile_hidden';
+      $join->left_table = 'users';
+      $join->left_field = 'uid';
+      $join->field = 'entity_id';
+      $join->extra = array(
+        0 => array('field' => 'entity_type', 'value' => 'user'),
+      );
+      $join->type = "LEFT";
+      $join->extra_type = 'AND';
+      $join->adjusted = 'TRUE';
+      
+      // add the join
+      $view->query->table_queue['field_data_field_profile_hidden'] = array(
+        'table' => 'field_data_field_profile_hidden',
+        'num' => 1,
+        'alias' => 'field_data_field_profile_hidden',
+        'join' => $join,
+        'relationship' => 'users'
+      );
+  
+      $view->query->tables['node']['field_data_field_profile_hidden'] = array(
+        'count' => 1,
+        'alias' => 'field_data_field_profile_hidden'
+      );
+  
+      $view->query->where[2]['conditions'][] = array(
+        'field' => 'field_profile_hidden_value',
+        'value' => 0,
+        'operator' => '='
+      );
+  
+    }
+  }
+}
+</pre><pre class="brush: php">
+/**
+ * Implements hook_update_N().
+ */
+function mymodule_update_7001(&$sandbox) {
+
+  $uids = db_select('users', 'u')
+    ->fields('u', array('uid'))
+		->execute()
+		->fetchCol();
+		
+  foreach ($uids as $uid) {
+  
+    db_insert('field_data_field_profile_hidden')
+      ->fields(array(
+        'entity_type' => 'user',
+        'bundle' => 'user',
+        'entity_id' => $uid,
+        'revision_id' => $uid,
+        'language' => 'und',
+        'delta' => 0,
+        'field_profile_hidden_value' => 0,
+    ))
+    ->execute();
+  
+  }		
+}
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/hookviewsqueryalter" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_views_query_alter</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/views" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">views</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/field" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">field</a></li><li class="taxonomy-term-reference-3"><a href="/drupal-developer/tags/hookupdaten" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hook_update_N</a></li><li class="taxonomy-term-reference-4"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/hiding-view-records-based-value-new-field"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Hiding view records based on the value of a new field ">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/code-snippet/hiding-view-records-based-value-new-field&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/hiding-view-records-based-value-new-field"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/hiding-view-records-based-value-new-field" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

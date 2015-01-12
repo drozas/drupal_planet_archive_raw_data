@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 08 Apr 2014 16:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 08 Apr 2014 16:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Julian Granger-Bevan: Improving SEO using Drupal Similar by Terms
+Content-Transfer-Encoding: 8bit
+Content-Base: http://julian.granger-bevan.me/blog/improving-seo-using-drupal-similar-by-terms
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Julian Granger-Bevan: Improving SEO using Drupal Similar by Terms</title>
+    <base href="http://julian.granger-bevan.me/blog/improving-seo-using-drupal-similar-by-terms">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-field-image2 field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://julian.granger-bevan.me/sites/julian.granger-bevan.me/files/styles/medium/public/related_articles.gif?itok=LjMZ_ztN" width="150" height="199" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><strong>Search Engine Optimisation (SEO) is the process of altering your website to maximise the exposure of your website via search engines such as <a href="http://google.com">Google</a> and <a href="http://bing.com">Bing</a>.</strong></p>
+<p>The aim is to bring more visitors to your website.</p>
+<p>If your website is built using the <a href="http://drupal.org">Drupal CMS</a>, this article will give you an easy tip that will both improve the experience for your visitors when they are on your site and help boost your search engine rankings.</p>
+<p>The method is made easy using the <a href="https://drupal.org/project/similarterms">Similar by Terms module for Drupal</a>, and exploits the need for visitors to be able to find other relevant content when they are on your website.</p>
+<p><!--break--></p>
+<h2>Why use Similar by Terms?</h2>
+<p><strong>Search engines such as Google are looking at <a href="http://www.google.co.uk/insidesearch/howsearchworks/thestory/">hundreds of factors</a> when they decide which pages to display prominently in search engine results pages (SERPs).</strong></p>
+<p><em>These factors include content, quality and context.</em></p>
+<p>Your site is more likely to be placed highly in SERPS (leading to more traffic) if Google identifies that it is authoritative on a particular subject. Links around between pages on your website will help Google recognise the topic that each page on your website covers, and means that it is more likely to rank highly for that searches on that topic.</p>
+<p>Do not get confused, this is not the same as link building from other websites (for which care needs to be taken as search engines will penalise you if these are unnatural).</p>
+<p>Similar by Terms provides an automated means of displaying related content links on your website. It does this by comparing the taxonomy terms that each node is tagged with, and creating a simple ranking based on the overlapping terms  from which it can draw the top few nodes to show to your visitors as links.</p>
+<p><span style="line-height: 1.538em;">Links to relevant content also improve the experience for your visitors, by giving them suggestions for what to read next. A visitor is much more likely to find links useful (and continue to browse your website) if the links are relevant to the page that they are already on.</span></p>
+<h2>How to install Similar by Terms</h2>
+<p><strong>To install Similar by Terms, download the code from <a href="http://drupal.org/project/similarterms">http://drupal.org/project/similarterms</a> and enable on your website by visiting the /admin/modules page.</strong></p>
+<p>You will need to have also installed two dependencies: <a href="http://drupal.org/project/ctools">Chaos Tools Suite</a> and <a href="http://drupal.org/project/views">Views</a>.</p>
+<p>Similar by Terms exposes a view to your website, and the next thing you will want to do is edit this to suit your needs. The view can be found at the page /admin/structure/views.</p>
+<p><img alt="" class="media-image" height="98" width="620" typeof="foaf:Image" src="http://julian.granger-bevan.me/sites/julian.granger-bevan.me/files/styles/large/public/SimilarByTerms_View2.PNG?itok=wX6V8ckR" /></p>
+<p><span style="line-height: 1.538em;">The default view is quite basic, and simply returns a list of the titles of the related nodes. You will likely want to edit this (perhaps to also show a teaser or image from the node). These edits can be made just like any other view.</span></p>
+<p>One setting that is unique to Similar by Terms is the taxonomy vocabularies that are considered when ranking nodes for similarity. You can opt to include just one, or all of your vocabularies in the comparison.</p>
+<p>To do this, click "Advanced" on the right hand side of the edit screen, then click on "Similar By Terms: Nid" in the contextual filters section.</p>
+<p><img alt="" class="media-image" height="114" width="490" typeof="foaf:Image" src="http://julian.granger-bevan.me/sites/julian.granger-bevan.me/files/styles/large/public/SimilarByTerms_ContextualLink.PNG?itok=mUOLEvem" /></p>
+<p style="clear:both;">Now a dialog appears where you can choose which vocabularies to use.</p>
+<p><img alt="" class="media-image" height="174" width="620" typeof="foaf:Image" src="http://julian.granger-bevan.me/sites/julian.granger-bevan.me/files/styles/large/public/SimilarByTerms_Argument.PNG?itok=wS-dCpkR" /></p>
+<p>You can also create your own views utilising the functionality provided by Similar by Terms. Simply copy the relationships and sorting rules that exist in the default view that Similar by Terms provided.</p>
+<h2>One last hint</h2>
+<p><strong>The default behaviour of Similar By Terms will only show nodes in the list that share one or more taxonomy terms with the node being viewed.</strong></p>
+<p>This means, that you might only see one related node, or even none at all.</p>
+<p>For the styling of your website you're likely to want to always show the same number of nodes in the list. Whilst there is a <a href="https://drupal.org/node/1319114">feature request in the issues queue</a> for this, there is a simple method that will solve this for you straight away.</p>
+<p>The answer is to create a new taxonomy vocabulary called "Included in Similar By Terms", with a single term called "Included". Let that term default on all nodes on your website. This way, all nodes will have at least one taxonomy term in common, and the real similar nodes will rise to the top of the list above those that aren't really related.</p>
+ </div></div></div><!-- google_ad_section_end --><div class="field field-name-field-category field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/websites" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Websites</a></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/similar-by-terms" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Similar by Terms</a></div><div class="field-item even"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item odd"><a href="/tags/related-content" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">related content</a></div><div class="field-item even"><a href="/tags/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">tutorial</a></div><div class="field-item odd"><a href="/tags/how-to-0" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">how to</a></div></div></div>
+  </body>
+</html>
+

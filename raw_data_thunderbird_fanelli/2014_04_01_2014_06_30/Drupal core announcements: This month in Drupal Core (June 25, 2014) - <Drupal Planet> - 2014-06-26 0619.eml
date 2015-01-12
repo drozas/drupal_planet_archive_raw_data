@@ -1,0 +1,139 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 26 Jun 2014 04:19:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 26 Jun 2014 04:19:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This month in Drupal Core (June 25, 2014)
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/430073
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This month in Drupal Core (June 25, 2014)</title>
+    <base href="https://groups.drupal.org/node/430073">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Note: We've renamed this post series to <a href="https://groups.drupal.org/core/updates">Drupal Core Updates</a> since, well, you know, they weren't exactly weekly to begin with. (As always, <a href="https://drupal.org/user/65776/contact">contact xjm</a> if you'd like to help write them!)</p>
+<h2 id="new">What's new with Drupal 8?</h2>
+<p>We may have been quiet for the past month as we prepared for -- and then recovered from -- <a href="https://austin2014.drupal.org/">DrupalCon Austin</a>, but core development has been sizzling! (And not just because of the Texas climate.)</p>
+<p><img src="https://groups.drupal.org/files/14359056731_ea022ea716_z.jpg" /><br />
+<em>Photo credit: <a href="https://www.flickr.com/photos/68158920@N08/14359056731/in/pool-drupalconaustin/">pdjohnson</a></em></p>
+<h3>DrupalCon Austin sprints</h3>
+<p>In addition to all the great sessions (<a href="#planet">videos below</a>), summits, BOFs, and trainings, Austin included <em>six full days</em> of sprints on everything from Drupal 8 release blockers, frontend, and APIs, to D8 contrib initiatives like <a href="http://d8rules.org/">#d8rules</a>, the <a href="https://www.drupal.org/project/examples">Examples</a> D8 port, and <a href="https://austin2014.drupal.org/session/double-header-file-entity-and-media-modules-lets-fix-file-and-media-handling">D8 Media</a>, to Drupal.org itself. Nearly 500 sprinters and mentors got involved on the main Friday sprint day, and over 100 sprinters participated in the extended sprints before and after the Con.</p>
+<p>If you were at the sprints, you might have noticed a few goofy sprinters decked in rabbit ears. :) These indefatigable contributors were working on some of the very last <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">Drupal 8 beta blockers</a>. During Austin, we managed to resolve six of these issues, but more importantly, we identified the path forward in all the beta blockers we <em>didn't</em> fix as well.</p>
+<h3>Done &gt; Perfect</h3>
+<p>The past month also showed a shift in the community's outlook: It's time to get Drupal 8 done. We need to stop making large, non-essential changes, because every time we make more work for ourselves, we delay the release of 8.0.0 for hundreds of thousands of people. When we have a choice between doing something quickly and imperfectly, or slowly and perfectly, it's time to pick the quick, imperfect fix. A couple examples:</p>
+<ul>
+<li>Last month, we discovered that <a href="https://www.drupal.org/node/2276183">Drupal 8's new support for PHP INTL dates was badly broken</a>. Instead of spending dozens of hours trying to resolve this issue before releasing a beta, we removed the feature. It did not exist in D7, and it can be added back for 8.1.0, or provided by a contributed module.</li>
+<li>In Drupal 8, comment fields can now be attached to any entity type, instead of just nodes; however, they <a href="https://www.drupal.org/node/2205215">don't work on entity types with non-numeric ID keys</a> (contact forms are the only example in Drupal 8 core). Instead of holding up the release on making <em>every</em> fieldable entity type commentable, we settled for <em>almost</em> every entity type being commentable -- which is still a big improvement from D7.</li>
+</ul>
+<p>Drupal 8.0.0 will not be perfect, but it <em>will</em> be powerful. And we have the chance to <a href="https://www.drupal.org/node/2135189">make it even better in 8.1.0</a> six months later. Think about which issues in the core queue might make sense as <a href="https://groups.drupal.org/node/424518#minor-version-target">minor version targets</a>, and help us work on Drupal 8 efficiently.</p>
+<p><img src="https://groups.drupal.org/files/14343941152_0f1d7df879_z.jpg" /><br />
+<em>Photo credit: <a href="https://www.flickr.com/photos/x-foto/14343941152/in/pool-drupalconaustin/">Michael Schmid</a>. Help us battle <a href="https://austin2014.drupal.org/welcome-to-drupalcon">Lord Over-Engineering</a>!</em></p>
+<h3>Drupal 8 documentation updates on API.drupal.org</h3>
+<p>Lots of comprehensive API documentation has been added to the <a href="https://api.drupal.org/api/drupal/8">API.Drupal.org handbook page</a> over the past month, thanks especially to API documentation maintainer jhodgdon and review efforts from core component maintainers. This overview page (and the detailed documentation linked from it) should provide a much better starting point for learning about Drupal 8. (<a href="#more-help">See below for how you can help document the remaining API topics.</a>) API.drupal.org has also recently added an automatic <a href="https://api.drupal.org/api/drupal/services/8">list of services provided in Drupal 8</a> core. For updates on Drupal documentation work, see <a href="https://groups.drupal.org/node/425068">This Month in Drupal Documentation</a>.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>Last week, we fixed 9 critical issues and 10 major issues, and opened 4 criticals and 6 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">92 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">595 major issues</a>.</p>
+<p>2 beta-blocking issues were fixed last week. There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">11 of 172 beta blockers</a> that must be resolved before we can <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">release a Drupal 8 beta</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>.</p>
+<ul>
+<li>
+<h4><a href="https://www.drupal.org/node/2238217">#2238217: [Change record] Introduce a RouteMatch class</a></h4>
+<p>The one reasonably approachable task in this week's top beta blockers is to complete the needed change record documentation for the recently added RouteMatch class. Help by writing a <a href="https://www.drupal.org/contributor-tasks/draft-change-record">draft change record</a> for the issue, and then update existing change records to also include an issue reference to #2238217 and to use the new API. (See <a href="https://www.drupal.org/node/2238217#comment-8913865">comment  #143</a> on the issue for a start.) Post links to the revision diffs for your change record updates so they can be reviewed by other contributors.</p>
+</li>
+<li>
+<h4><a href="https://www.drupal.org/node/2256521">#2256521: New plan, Phase 2: Implement menu links as plugins, including static admin links and views, and custom links with menu_link_content entity, all managed via menu_ui module</a></h4>
+<p>This massive (nearly 600 K) improvement to the Drupal 8 menu link API resolves or unblocks numerous critical issues while also supporting performance, DX, and multilingual improvements. The patch is developed from a sandbox:<br />
+<code>git clone --branch 2256521 http://git.drupal.org/sandbox/dereine/2031809.git</code><br />
+Help this issue by:</p>
+<ul>
+<li>Providing code additional reviews, since the patch is way too big for any one contributor to review in one sitting.</li>
+<li>Proactively identifying things in the patch (or from others' reviews) that could be resolved in followup issues, filing those followup issues, and adding the appropriate code @todo and links to the followup issues.</li>
+<li>Looking through the patch and issue to identify the complete, specific API changes it introduces, and adding these changes to the issue summary.</li>
+<li>Checking for existing change records that will need to be updated for these API changes, listing the updates that will be needed in the issue summary, and editing the change records to add a reference to #2256521.</li>
+<li>Drafting a new change record for the change.</li>
+</ul>
+<p>Check with Wim Leers, pwolanin, or dawehner so that you can align your efforts with their work on this patch.</p>
+</li>
+<li>
+<h4><a href="https://www.drupal.org/node/2144263">#2144263: Decouple entity field storage from configurable fields</a></h4>
+<p>This issue is key to completing the Drupal 8 Entity Field API and is the culmination of work done across DrupalCons Portland, Prague, and Austin. The patch needs test failures resolved, architectural review, and (as above) identification of any needed change record updates. Coordinate with Berdir, plach, or yched to help further with this issue.</p>
+</li>
+<li>
+<h4><a href="https://www.drupal.org/node/1825952">#1825952: Turn on twig autoescape by default.</a></h4>
+<p>Enabling Twig's built-in autoescaping of HTML-unsafe code will security-harden Drupal 8, and should eventually allow us to reduce complexity and improve perfomance in the theme layer. The patch introduces a SafeMarkup class that can be used to identify sanitized strings for use in templates, and all other strings are automatically escaped. Help with this patch by providing feedback to points raised in recent reviews (see <a href="https://www.drupal.org/node/1825952">comment #185</a>), helping write thorough API documentation for the SafeMarkup class, or starting a draft change record. Contact xjm to help out with this issue.</p>
+</li>
+</ul>
+<p><img src="https://groups.drupal.org/files/14360268472_5482a7aafd_z.jpg" /><br />
+<em>Photo credit: <a href="https://www.flickr.com/photos/x-foto/14360268472/">Michael Schmid</a></em></p>
+<h3 id="more-help">More ways to help</h3>
+<ul>
+<li>
+<h4>We're closing in on Beta 1!</h4>
+<p> Only <a href="https://www.drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">11 beta-blocking issues remain</a>, and we will probably be in the single digits by the end of the week. This means now is a good time to start looking at all the <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+target">beta targets</a> and especially issues with a <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+deadline">beta deadline</a>. (See <a href="https://groups.drupal.org/node/424518">Beta blocker deadline target what?</a> for an explanation of these issue categories.) Keep an eye out for other issues that should have a beta deadline as well.</p>
+</li>
+<li>
+<h4><a href="https://www.drupal.org/node/2148255">#2148255: [meta] Make better D8 api.d.o landing page, linked to high-level overview topics, and put it in Core api.php files</a></h4>
+<p>Help improve our Drupal 8 API documentation! The <a href="https://www.drupal.org/node/2290129">menu and routing topic</a> needs review, and we also need first drafts for the  <a href="https://www.drupal.org/node/2216523">REST</a>, <a>Migration</a>, and <a>Ajax</a> documentation topic updates.</p>
+</li>
+<li>
+<h4><a href="https://www.drupal.org/node/1971384">#1971384: [META] Convert page callbacks to controllers</a></h4>
+<p>We converted all of core to use our new routing system last fall, but eighteen different form and page controllers still need to be <a href="https://groups.drupal.org/node/315498">cleaned up to conform to our best practices</a>. Currently, almost all of these patches need to be <a href="https://groups.drupal.org/node/424758">rerolled for PSR-4</a> and for other core changes. Note, however, that many of these patches have gone through multiple rerolls (mostly by novice contributors) over the course of more than a year, without sufficient review before the patches become stale. So, what these issues need most is 1-2 experienced contributors with an understanding of Drupal 8 architectural concepts who can manage the meta issue and its children, and provide thorough code review when new patches are submitted. If you can help out, start by reviewing those child issues still at "Needs review".</p>
+</li>
+<li>
+<h4><a href="https://drupal.org/node/2016679">#2016679: [Meta] Expand Entity Type interfaces to provide methods</a></h4>
+<p>Drupal 8 core provides numerous entity types, but the full public API for each type is not easily documented or discoverable. To improve the developer experience, each entity type interface is being expanded with relevant methods for the specific entity. Most issues have a submitted patch, and what is most needed is <strong>architectural review</strong> of the proposed interface methods, including recommending which properties should instead be protected. If you have experience with one of the subsystems that still has an open child issue, or if you have a sound grasp on OO design generally, we could use your help to <strong>thoroughly review these patches</strong> so that the completed APIs are available for contributed module developers in a beta release.</p>
+</li>
+</ul>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+<p>You can also help by <a href="https://www.gittip.com/DrupalCoreGittipTeam/">sponsoring Drupal core development</a>.
+</p>
+<h2 id="commits">Notable Commits</h2>
+<p>There have been a remarkable <strong>360 commits</strong> since our last post in May! Far too much great work has been done across D8 core to summarize it all, but here are a handful of the more "epic" beta-blocking issues that were recently resolved:</p>
+<ul>
+<li><a href="http://www.drupal.org/node/2224887">Issue #2224887</a> by alexpott, Berdir, Gábor Hojtsy, Jalandhar: Language configuration overrides should have their own storage.</li>
+<li><a href="http://www.drupal.org/node/2247991">Issue #2247991</a> by xjm, typhonius, donquixote: [May 27] Move all module code to PSR-4.</li>
+<li><a href="http://www.drupal.org/node/2183231">Issue #2183231</a> by tstoeckler, plach, jessebeach, fago, Berdir, xjm, mauzeh: Make ContentEntityDatabaseStorage generate static database schemas for content entities.</li>
+<li><a href="http://www.drupal.org/node/2143291">Issue #2143291</a> by plach, alexpott, xjm, effulgentsia, pwolanin, swentel | yched: Clarify handling of field translatability.</li>
+<li><a href="http://www.drupal.org/node/2167167">Issue #2167167</a> by Berdir: Remove field_info_*().</li>
+<li><a href="http://www.drupal.org/node/2238217">Issue #2238217</a> by effulgentsia, neclimdul, martin107, tim.plunkett, cweagans, kim.pepper, xjm: Introduce a RouteMatch class.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>If you didn't make DrupalCon Austin -- or even if you did -- be sure to check out all the <a href="https://austin2014.drupal.org/sessions/accepted?field_experience_value=All&amp;field_track_value=All&amp;field_drupal_version_value=2&amp;combine=">Drupal 8 session recordings</a>. Some highlights:</p>
+<ul>
+<li><a href="https://austin2014.drupal.org/session/building-full-site-drupal-8-alpha">Building a full site in Drupal 8 Alpha</a> by Schnitzel</li>
+<li><a href="https://austin2014.drupal.org/session/drupal-8-nutshell">Drupal 8 In a Nutshell</a> by kim.pepper and boztek</li>
+<li><a href="https://austin2014.drupal.org/session/30-drupal-8-api-functions-you-should-already-know">30 Drupal 8 API Functions You Should Already Know</a> by fmitchell</li>
+<li><a href="https://austin2014.drupal.org/session/drupal-8-theme-system-hooktheme-twig-template">Drupal 8 Theme System: hook_theme() to Twig template</a> by Cottser and joelpittet</li>
+<li><a href="https://austin2014.drupal.org/session/dependency-injection">Dependency Injection</a> by fabpot</li>
+<li><a href="https://austin2014.drupal.org/session/drupal-8-entity-api">Drupal 8 Entity API</a> by fago</li>
+<li><a href="https://austin2014.drupal.org/session/understanding-drupal-8-plugin-system">Understanding the Drupal 8 Plugin System</a> by helior</li>
+<li><a href="https://austin2014.drupal.org/session/status-migrate-8">Status of Migrate in 8</a> by mikeryan, Ryan Weal, ultimike, chx, bdone</li>
+<li><a href="https://austin2014.drupal.org/session/road-81">The road to 8.1</a> by Crell</li>
+<li><a href="https://austin2014.drupal.org/session/qa-dries">Q&amp;A with Dries</a></li>
+</ul>
+<p>Seen enough videos now? Looking for something to read instead? webchick's ongoing blog series, the <a href="https://www.acquia.com/tags/ultimate-guide-drupal-8">Ultimate Guide to Drupal 8</a>, is a great resource for everything you might want to know about D8 improvements.</p>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<p>It's a sprint-filled summer!</p>
+<ul>
+<li><strong>July 1</strong>: <a href="https://groups.drupal.org/node/429353">Drupal Gold Coast July Sprint</a> in <strong>Brisbane Australia</strong> is a 3-hour sprint focused on new Drupal 8 contributors.</li>
+<li><strong>July 5</strong>: <a href="https://groups.drupal.org/node/428723">Sprint Day Zaragoza</a> in <strong>Madrid Spain</strong> is an all-day Drupal 8 sprint. <a href="https://twitter.com/drupal_zgz">@drupal_zgz</a></li>
+<li><strong>July 5</strong>: <a href="https://groups.drupal.org/node/429068">Summer Drupal Code Sprint Novosibirsk 2014 #1</a> in <strong>Novosibirsk Russia</strong> is a 3-hour sprint focused on porting Drupal 7 modules to Drupal 8.</li>
+<li><strong>July 6</strong>: <a href="http://www.meetup.com/vopdug/events/182106822/">Oak Park Sprint</a> in <strong>Illinois, USA</strong> is a 4-hour Drupal 8 sprint.</li>
+<li><strong>July 12-13</strong>: <a href="http://jerseyshoredrupal.github.io/">Drupal 8 at the Jersey Shore</a> in <strong>New Jersey, USA</strong>, has room for 40 Drupal 8 sprinters. <a href="https://twitter.com/drupalcampnj">@drupalcampnj</a></li>
+<li><strong>July 17-20</strong>: <a href="http://2014.drupalcorn.org/sprint">DrupalCorn</a> in <strong>Iowa, USA</strong> will have a Drupal 8 contributed module sprint. <a href="https://twitter.com/drupalcorn">@drupalcorn</a></li>
+<li><strong>Aug 7-10</strong>: <a href="http://2014.tcdrupal.org/">Twin Cities DrupalCamp</a> in <strong>Minnesota, USA</strong> will have a sprint room for all four days and has a <a href="https://docs.google.com/spreadsheet/ccc?key=0AtDYnjV5l0uydGFjekZSM1ROR040eldUeEU4OU1JNFE&amp;usp=drive_web#gid=0">sprint sign-up</a>. <a href="https://twitter.com/TCDrupal">@TCDrupal</a></li>
+<li><strong>Aug 7-10</strong>: <a href="http://2014.drupalaton.hu/">Drupalaton<br />
+</a> in <strong>Lake Balaton, Hungary</strong> has Drupal 8 sessions and sprints. <a href="https://twitter.com/drupalaton">@drupalaton</a></li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

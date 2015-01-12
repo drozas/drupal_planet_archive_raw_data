@@ -1,0 +1,86 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 Aug 2013 15:54:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 Aug 2013 15:54:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: 4Sitestudios.com Drupal Blog: Using Salsa With Drupal, Part 2: The Salsa API Module and Custom Code
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.4sitestudios.com/blog/aug-08-2013/using-salsa-drupal-part-2-salsa-api-module-and-custom-code
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>4Sitestudios.com Drupal Blog: Using Salsa With Drupal, Part 2: The Salsa API Module and Custom Code</title>
+    <base href="http://www.4sitestudios.com/blog/aug-08-2013/using-salsa-drupal-part-2-salsa-api-module-and-custom-code">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://www.4sitestudios.com/sites/default/files/styles/blog_featured_image/public/salsa-assortment-table.png?itok=dbWchXpr" width="600" height="175" alt="Salsa assortment table" title="Salsa assortment table" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>In my <a href="/blog/aug-05-2013/using-salsa-drupal">last blog post</a> I talked about ways you can integrate the <a href="http://www.salsalabs.com/">Salsa</a> CRM system with your Drupal site using the Salsa API and Salsa Entity modules. In part 2, I'll dive into using <a href="http://drupal.org/project/salsa_api">Salsa API</a> with your own custom code.</p>
+<p>The Salsa API module creates a class with several methods, corresponding to the calls in Salsa's external API. There are three main methods that you'll use.</p>
+<h2 class="block-title" style="text-transform: none !important;"><span>salsa_api()-&gt;getObject</span></h2>
+<blockquote><pre>$supporter_key = 33333266;
+$supporter = salsa_api()-&gt;getObject ('supporter',
+  $supporter_key);
+</pre></blockquote>
+<p>In this code snippet we're asking Salsa to give us one object of the 'supporter' type, which is uniquely identified by <span style="font-family: fixed-width;">$supporter_key</span>. The call returns an associative array, corresponding to field names and values for every field in the supporter object, including any custom fields you've added:</p>
+<blockquote><pre>array(
+  'supporter_KEY' =&gt; 33333266,
+  'organization_KEY' =&gt; 17594,
+  'Last_Modified' =&gt; 'Tue Feb 19 2013 18:30:52 GMT-0500 (EST)',
+  'Date_Created' =&gt; 'Tue Feb 05 2013 17:41:42 GMT-0500 (EST)',
+  'Title' =&gt; '',
+  'First_Name' =&gt; 'John',
+  'MI' =&gt; 'Q',
+  'Last_Name' =&gt; 'Public',
+  'Suffix' =&gt; 'Jr.',
+  'Email' = 'john@test.null',
+  'Receive_Email' =&gt; 1,
+  'Email_Status' =&gt; 1,
+  'Email_Preference' =&gt; 'html',
+  etc.
+  .
+  .
+  .
+);
+</pre></blockquote>
+<h2 class="block-title" style="text-transform: none !important;"><span>salsa_api()-&gt;getObjects</span></h2>
+<p>Frequently, you don't know the unique key for the supporter or other Salsa object you want, or you want to retrieve more than one. The getObject method comes to the rescue, which lets you query by condition.</p>
+<blockquote><pre>$include = array('supporter_KEY', 'Last_Modified',<br>  'First_Name', 'Last_Name', 'Email', 'City', 'State', 'Zip');
+$conditions = array(
+  'Last_Modified' =&gt; array(
+    '#operator' =&gt; '&gt;’,
+    '#value' =&gt; date("Y-m-d H:i:s", $lastrun)
+   ),
+);
+$orderBy = array('Last_Modified DESC');
+$limit = $offset . ",500";
+$supporters = salsa_api()-&gt;getObjects('supporter',<br>  $conditions, $limit, $include, $orderBy);
+</pre></blockquote>
+<p>Here, we're retrieving supporters that have been modified since the timestamp contained in the <span style="font-family: fixed-width;">$lastrun</span> variable, in reverse chronological order. Since Salsa's external API will only return a maximum of 500 records per request, we're asking for them in batches of 500 (presumably we're iterating through and incrementing <span style="font-family: fixed-width;">$offset</span> just outside of this code snippet). We can also specify the fields that are returned, since we probably don't need the entire supporter record. This will return an array of objects, each containing one supporter, indexed by supporter key.</p>
+<h2 class="block-title" style="text-transform: none !important;"><span>salsa_api()-&gt;save</span></h2>
+<p>We can also save information to Salsa, using the save method:</p>
+<blockquote><pre>$fields = array(
+&nbsp; 'First_Name' =&gt; 'John',
+&nbsp; 'Last_Name' =&gt; 'Doe',
+&nbsp; 'Email =&gt; 'john@zoom.com',
+&nbsp; 'Zip' =&gt; '01234',
+);
+$links = array(
+&nbsp; array(
+&nbsp; &nbsp; 'link' =&gt; 'supporter_groups',
+&nbsp; &nbsp; 'linkkey' =&gt; 10000,
+&nbsp; ),
+&nbsp; array(
+&nbsp; &nbsp;'link' =&gt; 'supporter_groups',
+&nbsp; &nbsp; 'linkkey' =&gt; 10001,
+&nbsp; );
+);
+$new_key = salsa_api()-&gt;save('supporter', $fields, $links);
+</pre></blockquote>
+<p>At minimum, we just need to give the method the name of the Salsa object we're saving to (here it's 'supporter'), and an asssociative array of field names and values. If the <span style="font-family: fixed-width;">$fields</span> array includes the unique key for an existing record (e.g., <span style="font-family: fixed-width;">'supporter_KEY' => 12345678,</span>), it will update that record, otherwise it will create a new record. The <span style="font-family: fixed-width;">$links</span> array lets us save across multiple Salsa objects at the same time. This is most commonly used to create or update a supporter, while simultaneously adding the supporter to one or more Salsa groups. In the code snippet above, we're creating a new supporter, and adding him to groups 10000 and 10001 at the same time.</p>
+<p>Several other methods exist, allowing you to perform count queries and joins, or retrieve canned queries stored in Salsa. For details, see the in-code documentation. If you have questions about using the Salsa API module, or have an improvement or bugfix to contribute, just <a href="https://drupal.org/project/issues/salsa_api">post an issue</a> in the issue queue.</p>
+</div></div></div>
+  </body>
+</html>
+

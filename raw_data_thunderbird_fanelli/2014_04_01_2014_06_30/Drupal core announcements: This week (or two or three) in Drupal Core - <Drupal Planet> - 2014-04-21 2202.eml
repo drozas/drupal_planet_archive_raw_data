@@ -1,0 +1,134 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Apr 2014 20:02:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Apr 2014 20:02:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This week (or two or three) in Drupal Core
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/419473
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This week (or two or three) in Drupal Core</title>
+    <base href="https://groups.drupal.org/node/419473">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<h3>Configuration system changes</h3>
+<p>Over the past month, a lot of work has gone into the configuration system. With the addition of <a href="http://drupal.org/node/1808248">a separate module install/uninstall step for the config import process</a>, it's finally possible to properly synchronize configuration changes with module installations or uninstallations. You can now transform a site installed with the Minimum install profile into a site using the Standard install profile by importing configuration (the case we've long said will be our indicator that CMI "works"). (<a href="http://www.screencast.com/t/NXI1Xu5VQ3">Watch this screencast to see it in action!</a>)</p>
+<p>Additionally, after thorough discussion, the active storage for the configuration management system has been <a href="https://drupal.org/node/2161591">moved into the database by default</a>. This means existing Drupal 8 sites will likely need to be reinstalled (or otherwise migrate the active configuration). Read the <a href="https://drupal.org/node/2241059">change record on active configuration in the database</a> for details on why this decision was made.</p>
+<p>Now is the time to start <em>really</em> testing CMI deployments. Spin up a dev site, make a copy of it, and test synchronizing complex configuration system changes between the two. See if the system behaves as you expect (and report the problems you find!) For an overview of the outstanding work being done on the configuration system, see <a href="https://drupal.org/node/2187339">#2187339: [meta] CMI path to beta</a>.</p>
+<h3>NYC Camp at the United Nations</h3>
+<p><img src="https://groups.drupal.org/files/un_sized.jpg" alt="Camp attendees line up outside the UN, under the flags of many nations." /><br />
+The third annual <a href="http://www.nyccamp.org/">NYC Camp</a> was held at the United Nations. (Yes, <em>that</em> United Nations, with the flags.) In addition to numerous sessions about Drupal 8 (check out fmitchell's session on <a href="http://www.nyccamp.org/session/30-drupal-8-api-functions-you-should-already-know">30 Drupal 8 API functions you should already know</a>), we held several days of Drupal 8 core sprints. Media contributors also sprinted on Media for Drupal 8; check out their <a href="https://groups.drupal.org/node/418803">sprint status report</a> for more information. Finally, Drupal Association executive director Holly Ross worked on a Drupal 8 patch <a href="http://www.nyccamp.org/news/holly-ross-2014-nyc-camp-2014">got her first Drupal core commit credit</a>! Are you next? :)</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>We're in the last stretch of Drupal 8's alpha phase. We've fixed over 130 beta-blocking issues, including 9 in the last week, plus written more than 70 missing change records. The <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">last 28 beta blockers</a> include some difficult issues, but consider some of what we've already accomplished since the beginning of 2014:</p>
+<ul>
+<li>The removal of the variable subsystem after 18 months.</li>
+<li>The rearchitecture of configuration synchronization to support the minimum viable usecase after 16 months.</li>
+<li>The removal of the legacy menu router after nearly a year.</li>
+<li>The removal of widely used cache-breaking functions including drupal_set_title(), drupal_add_css(), drupal_add_js(), and theme().</li>
+<li>The removal of all stale hook_update_N() implementations and the modification of update.php to require Migrate for major version upgrades instead.</li>
+</ul>
+<p>(And of course so much more.)</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>.</p>
+<ul>
+<li>
+<p><a href="https://drupal.org/node/2116363">#2116363: Unified repository of field definitions (cache + API)</a> converts remaining usages of the deprecated field info API to use methods from the entity manager, and is therefore critical to stabilizing the Entity Field API for the beta release. This significant (~150 KB) patch needs thorough code review from contributors familiar with Drupal 8's entity and field systems.</p>
+</li>
+<li>
+<p><a href="https://drupal.org/node/2183231">#2183231: Make ContentEntityDatabaseStorage generate static database schemas for content entities</a> is an even larger (~250 KB) beta-blocking patch for the entity system that allows the entity system to automatically create the necessary database tables for entities, resolving numerous different issues. This is another significant change and needs <em>lots</em> of thorough review from as many people as possible.</p>
+</li>
+<li>
+<p><a href="https://drupal.org/node/2198429">#2198429: Make deleted fields work with config synch</a> needs review of the patch's architecture and functionality. Deleting a field is a significant operation, because the site has to go on to purge all the field instance data for entities that have the field while leaving those entities intact. Drupal 7 includes a lot of code to support this functionality, and in Drupal 8, there's additional complexity since this purge needs to happen when a deleted field is staged and synchronized to another environment.
+</p></li>
+<li>
+<p><a href="https://drupal.org/node/2124749">#2124749: [meta] Stop using request attributes as a storage mechanism for other services</a> covers a collection of issues to improve the developer experience around Drupal 8's use of Symfony's request attributes (a public property on the request object that can be used for context-specific information about the request). This context information is not easily discoverable for contributed module developers, and, in some cases, using it adds to the apparent verbosity and complexity (e.g. in the replacements for the common D7 functions <code>menu_get_object()</code> and <code>menu_get_item()</code>). The numerous sub-issues for this meta issue are intended to weed out misuses of the request attributes and provide clear public APIs for others. Help discuss the developer experience and architecture in the numerous child issues for this meta.</p>
+</li>
+</ul>
+<h3>More ways to help</h3>
+<ul>
+<li>
+<p>We've put together a list of <a href="https://groups.drupal.org/node/419403">approchable beta blocker and beta target issues</a> from the tasks remaining after our two back-to-back sprints on the beta at Szeged and NYC Camp.</p>
+</li>
+<li>
+<p><a href="https://drupal.org/node/2216437">#2216437: Entity labels are not in-place editable on "full entity page" (prime example: node title)</a> is a critical regression in Drupal 8's new in-place editing feature. The patch to resolve the issue needs JavaScript code review.</p>
+</li>
+<li>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+</li>
+</ul>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code>git log --after=2014-04-02 --pretty=oneline</code> (207 commits in total):</p>
+<h3>Configuration management</h3>
+<p>As we described above, it's been another couple weeks of fantastic progress in getting the configuration management system solid for beta. Notably:</p>
+<ul>
+<li>Issue #2161591 by pwolanin, beejeebus, sun: Change default active config from file storage to DB storage.</li>
+<li>Issue #1808248 by alexpott, beejeebus, tayzlor, Nitesh Sethia: Add a separate module install/uninstall step to the config import process.</li>
+<li>Issue #2124535 by Berdir, alexpott, Désiré, xjm | yched: Prevent secondary configuration creates and deletes from breaking the ConfigImporter.</li>
+<li>Issue #1740378 by xjm, Désiré, alexpott | heyrocker: Implement renames in the import cycle.</li>
+</ul>
+<p>There is still plenty to help out on in the <a href="https://drupal.org/node/2187339">CMI path to beta</a> meta issue if you want to help keep the excellent momentum of the last few weeks going.</p>
+<h3>Entities and fields</h3>
+<p>One of the many accomplishments from Drupal DevDays a few weeks ago, was <a href="https://drupal.org/node/2227327">a cute and colorful visualization</a> of the long dependency chain of issues remaining to stabilize the Entity and Field APIs for beta. Two of them were committed in the last two weeks:</p>
+<ul>
+<li>Issue #2225739 by killua99, Berdir, andypost, pfrenssen: Remove usage of field_info_instances(), use EntityManager::getFieldDefinitions() instead.</li>
+<li>Issue #2226197 by fago, jessebeach: Introduce FieldStorageDefinitionInterface in the Entity Field API.</li>
+</ul>
+<p>That has unblocked <a href="https://drupal.org/node/2116363">Unified repository of field definitions</a>, which is now making good progress, and when committed, will unblock the next level of the dependency chain.</p>
+<h3>Migration</h3>
+<p>With a Drupal 8 beta approaching, how exciting will it be to start testing it out with content and configuration from an existing Drupal 6 site?! Several issues were committed that pave the way for that, including:</p>
+<ul>
+<li>Issue #2211949 by chx, Berdir, fago, benjy: Support keeping new revision id for migrate.</li>
+<li>Issue #2190561 by chx, pcambra, benjy: Migrate in core: Add a load system for migrate plugins.</li>
+</ul>
+<p>And now, there's <a href="https://drupal.org/node/2121299">a 600KB patch containing 82 actual migrations</a> ready for review.</p>
+<h3>A meta for everyone</h3>
+<p>No matter what part of Drupal you're interested in, there's probably a meta issue available for you to chip away at. Here's just some of the ones that had a commit in the last two weeks.</p>
+<h4>Front-end</h4>
+<ul>
+<li>When creating a theme, just when you thought you overrode everything you needed to to get all your markup exactly how you like it, do you hate having to discover yet another obscure theme function that inserts an unwanted <code>&lt;div&gt;</code>? Well, the Twig team is cleaning that up as part of <a href="https://drupal.org/node/1757550">converting theme functions to Twig</a>. Congratulations to them for removing a function entirely in: Issue #2151123 by joelpittet | Cottser: Remove theme_system_modules_incompatible().</li>
+<li>What's even better than fewer one-off theme functions to override? How about default markup that's perfect to begin with? There's a <a href="https://drupal.org/node/1980004">meta issue</a> and an <a href="https://drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=dreammarkup">issue tag</a> for that. Yay for progress on that with: Issue #2226923 by pakmanlh, mandar.harkare, mortendk, galooph: Views: remove wrapper around more link - add class to the link.</li>
+<li>Great default markup is only half the battle. We need <a href="https://drupal.org/node/1190252">great default CSS</a> to go along with it. Nice to see another issue completed on that: Issue #1662954 by balis_m, mjonesdinero, kalpaitch, IshaDakota, kerasai, ckrina, BarisW | ZenDoodles: Use less-specific tabledrag selectors.</li>
+<li>And let's not forget about Javascript. In Drupal 8, we've incorporated some fantastic JS libraries. It's important that we <a href="https://drupal.org/node/2203431">keep up with their updates</a>, including: Issue #2192383 by tstoeckler: Update jQuery to 2.1.0.</li>
+</ul>
+<h4>Back-end</h4>
+<ul>
+<li>Issue #2209145 by slashrsm, fgm, chx: Move all path alias SQL queries to a single storage controller: gets us another step closer to making <a href="https://drupal.org/node/2068325">all of Drupal's data storage swappable</a>.</li>
+<li>Issue #2223631 by znerol: Use request stack in database flood backend.: gets us another step closer to <a href="https://drupal.org/node/2223189">aligning Drupal's request management with the improvements made in Symfony 2.4</a>.</li>
+<li>Issue #2228341 by sun, znerol, skipyT, ParisLiakos: Objectify session management functions + remove session.inc.: gets us a large step closer to a fully modern <a href="https://drupal.org/node/1858196">Session API</a>.</li>
+<li>Issue #1987848 by disasm, ocsilalala, kim.pepper, pwieck, Cottser, pratik60, h3rj4n, pfrenssen, InternetDevels, ParisLiakos, rgoodine, tlyngej, vijaycs85, robeano: Convert system_theme_default() to a new style controller.: chips away at <a href="https://drupal.org/node/1971384">modernizing every single Drupal controller</a>.</li>
+<li>Issue #2225399 by marcvangend, yanniboi, mr.baileys, Wim Leers, visabhishek: Apply formatters and widgets to Feed base fields: only a few more issues left to go before every field of every content entity <a href="https://drupal.org/node/2010930">has a swappable formatter and widget and is in-place editable</a>.</li>
+<li>Issue #2217749 by Wim Leers, Jalandhar, visabhishek, damiankloip: Entity base class should provide standardized cache tags and built-in invalidation.: another great step towards making sure <a href="https://drupal.org/node/2124957">everything in Drupal 8 is cacheable and correctly invalidated</a>.</li>
+<li>Issue #1399846 by slashrsm, Gábor Hojtsy, Berdir, brantwynn, visabhishek, David_Rothstein, cweagans, martin107, SteffenR, Dave Reid: Make unused file 'cleanup' configurable.: part of <a href="https://drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=Open&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Media+Initiative">clearing the path for media management modules</a> in contrib to do everything they need to do without having to fight core to do it.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>With Drupal 8 embracing modern PHP patterns and libraries, we have a great opportunity to welcome developers from other frameworks, and even languages, into our community. Larry Garfield writes about <a href="http://www.palantir.net/blog/d8ftw-rolling-out-welcome-mat">teaching Drupal 8 to a C# developer</a> and Jeffrey McGuire interviews developers with Symfony and Java backgrounds about <a href="https://www.acquia.com/resources/podcasts/acquia-podcast-132-drupal-symfony-what-open-source-is-about">their thoughts on modern PHP</a> and <a href="https://www.acquia.com/resources/podcasts/acquia-podcast-133-drupal-8-early-adoption">early Drupal 8 adoption</a>, while DrupalCon Austin extends <a href="https://austin2014.drupal.org/news/symfony-community-special-invitation-drupalcon-austin">a special invitation to the Symfony community</a>.</li>
+<li>At the same time, we already have a strong community that learned Drupal prior to PHP 5.3 and all the changes to the PHP world that came with that. While we decided to not let that stop us from modernizing, we can at least help each other make the transition. Which is why it's so great to see Chris Eastwood's post on <a href="http://fuseinteractive.ca/blog/watch-i-try-upgrade-module-drupal-8-what-happens-next-you-wont-believe">upgrading his Simple Dialog module</a> and Danny Englander's post on <a href="http://highrockmedia.com/blog/drupal-8-attaching-core-libraries-and-other-scripts-your-theme">upgrading his Gratis theme</a>.</li>
+<li>Of course, some people don't want to wait until Drupal 8 to get the benefits of PHP modernization. Christopher Skene published <a href="http://www.previousnext.com.au/blog/object-oriented-page-callbacks-drupal-7">Object-oriented page callbacks for Drupal 7</a>, the next installment of <a href="http://www.previousnext.com.au/blog/drupal-8-now-writing-drupal-7-code-eye-towards-drupal-8">Writing Drupal 7 code with an eye towards Drupal 8</a>, and Chris Pliakas wrote about <a href="https://www.acquia.com/blog/using-composer-manager-get-island-now">Using Composer Manager to get off the Island Now</a>.</li>
+<li>Speaking of modernizing, now that <a href="http://www.microsoft.com/en-us/windows/enterprise/end-of-support.aspx">Windows XP is officially end of life</a>, how long will it take for everyone still using IE8 to upgrade? Who knows, but David Corbacho summarizes <a href="http://www.wunderkraut.com/blog/drupal-8-and-the-slow-death-of-ie8/2014-04-07">the current situation in relation to Drupal 8</a>.</li>
+<li>And for the site builders out there, Joe Fender explains how to <a href="http://drupalize.me/blog/201404/hiding-form-fields-drupal-8">hide form fields using Drupal 8's Field UI</a>.</li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<ul>
+<li>First off, there are numerous upcoming sprints in <a href="https://groups.drupal.org/node/419433">Washington, DC</a> (April 22), <a href="https://groups.drupal.org/node/418318">Brisbane</a> (April 23), <a href="https://groups.drupal.org/node/416908">London</a> (April 26-27), and <a href="https://groups.drupal.org/node/417348">Stockholm</a> (May 4), plus a <a href="https://groups.drupal.org/node/416338">Drupal 8 Search API sprint in Zurich</a> (April 28-May 2). Try working on a Drupal 8 core or contrib issue at one of these sprints!</li>
+<li><strong>April 23-25: <a href="http://drupalcamp.mx/">DrupalCamp Mexico</a></strong> has several Drupal 8-related sessions and a whole "SymfonyDay" track!</li>
+<li><strong>April 25-27: <a href="http://camp2014.drupal.dn.ua/en/">DrupalCamp Donetsk</a></strong> will include a presentation on Drupal 8 from webchick.</li>
+<li><strong>April 26: <a href="https://2014.drupalstl.org">DrupalCamp St. Louis</a></strong> also includes a Drupal 8 introduction.</li>
+<li><strong>May 2: <a href="http://www.drupaljam.nl/">DrupalJam</a></strong> in the Netherlands has a session on Drupal 8 patterns (plus maybe a streamed Q&amp;A with Dries!)</li>
+<li><strong>May 2-4: <a href="http://2014.drupalcamptoronto.org/">DrupalCamp Toronto</a></strong> doesn't have a set schedule yet, but there are numerous Drupal 8 session proposals.</li>
+<li><strong>May 31-June 8: <a href="https://austin2014.drupal.org">DrupalCon Austin</a> and extended sprints.</strong> This year's North American DrupalCon will include many Drupal 8 sessions, trainings, and sprints. The conference is June 2-6 with the community sprint on Jun 7, and there are plans extended sprints the weekends before and after the conference. See the <a href="https://docs.google.com/spreadsheet/ccc?key=0AlRKD0XsivA1dEYzMVl1cERvYUpXWDNscm8zNlpZeEE&amp;usp=drive_web#gid=0">signup sheet for Austin's extended sprints</a>. Austin will be critical to make progress toward Drupal 8's release, so please plan to participate in the sprints if you can!</li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

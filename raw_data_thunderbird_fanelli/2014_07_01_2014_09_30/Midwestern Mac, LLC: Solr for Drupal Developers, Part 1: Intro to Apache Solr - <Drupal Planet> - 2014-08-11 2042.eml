@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 11 Aug 2014 18:42:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 11 Aug 2014 18:42:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Solr for Drupal Developers, Part 1: Intro to Apache Solr
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/solr-drupal-developers-part-1
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Solr for Drupal Developers, Part 1: Intro to Apache Solr</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/solr-drupal-developers-part-1">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It's common knowledge in the Drupal community that <a href="http://lucene.apache.org/solr/">Apache Solr</a> (and other text-optimized search engines like <a href="http://www.elasticsearch.org/">Elasticsearch</a>) blow database-backed search out of the water in terms of speed, relevance, and functionality. But most developers don't really know <em>why</em>, or just <em>how much</em> an engine like Solr can help them.</p>
+<p>I'm going to be writing a series of blog posts on Apache Solr and Drupal, and while some parts of the series will be very Drupal-centric, I hope I'll be able to illuminate why Solr itself (and other search engines like it) are so effective, and why you should be using them instead of simple database-backed search (like Drupal core's Search module uses by default), even for small sites where search isn't a primary feature.</p>
+<blockquote><p>As an aside, I am writing this series of blog posts from the perspective of a Drupal developer who has worked with large-scale, highly customized Solr search for Mercy (<a href="http://www.mercy.net/search/doctor/John?address=St.%20Louis%2C%20MO&amp;distance=50&amp;latlon%5Blat%5D=38.6270025&amp;latlon%5Blon%5D=-90.1994042">example</a>), and with a variety of small-to-medium sites who are using <a href="https://hostedapachesolr.com/">Hosted Apache Solr</a>, a service I've been running as part of Midwestern Mac since early 2011.</p>
+</blockquote>
+<h2>
+<a name="user-content-why-not-database" class="anchor" href="#why-not-database" aria-hidden="true" id="user-content-why-not-database"><span class="octicon octicon-link"></span></a>Why not Database?</h2>
+<p>Apache Solr's wiki leads off it's <a href="http://wiki.apache.org/solr/WhyUseSolr">Why Use Solr</a> page with the following:</p>
+<blockquote><p>If your use case requires a person to type words into a search box, you want a text search engine like Solr.</p>
+</blockquote>
+<p>At a basic level, databases are optimized for storing and retrieiving bits of data, usually either a record at a time, or in batches. And <em>relational</em> databases like MySQL, MariaDB, PostgreSQL, and SQLite are set up in such a way that data is stored in various tables and fields, rather than in one large bucket per record.</p>
+<p>In Drupal, a typical node entity will have a title in the <code>node</code> table, a body in the <code>field_data_body</code> table, maybe an image with a description in another table, an author whose name is in the <code>users</code> table, etc. Usually, you want to allow users of your site to enter a keyword in a search box and search through all the data stored across <em>all</em> those fields.</p>
+<p>Drupal's Search module avoids making ugly and slow search queries by building an <em>index</em> of all the search terms on the site, and storing that index inside a <em>separate</em> database table, which is then used to map keywords to entities that match those keywords. Drupal's venerable <em>Views</em> module will even enable you to bypass the search indexing and search directly in multiple tables for a certain keyword. So what's the downside?</p>
+<p>Mainly, performance. Databases are built to be efficient query engines—provide a specific set of parameters, and the database returns a specific set of data. Most databases are not optimized for arbitrary string-based search. Queries where you use <code>LIKE '%keyword%'</code> are not that well optimized, and will be slow—especially if the query is being used across multiple <code>JOIN</code>ed tables! And even if you use the Search module or some other method of pre-indexing all the keyword data, relational databases will still be less efficient (and require much more work on a developer's part) for arbitrary text searches.</p>
+<p>If you're simply building lists of data based on very specific parameters (especially where the conditions for your query all utilize speedy indexes in the database), a relational database like MySQL will be highly effective. But usually, for search, you don't just have a couple options and maybe a custom sort—you have a keyword field (primarily), and end users have high expectations that they'll find what they're looking for by simply entering a few keywords and clicking 'Search'.</p>
+</div></div></div>
+  </body>
+</html>
+

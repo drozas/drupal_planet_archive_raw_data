@@ -1,0 +1,75 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Nov 2014 19:26:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Nov 2014 19:26:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: BADCamp Sprinting Success Story : Drush make files support YAML
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/drush-make-yaml/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: BADCamp Sprinting Success Story : Drush make files support YAML</title>
+    <base href="http://www.phase2technology.com/blog/drush-make-yaml/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>After a very successful drush code-sprint at BADCamp 2014, <a title="drush make" href="https://github.com/drush-ops/drush">drush make</a> now supports YAML format!</p>
+<p>Instead of the old INI format</p><pre class="crayon-plain-tag">api = 2
+
+; Set contrib directory.
+defaults[projects][subdir] = "contrib"
+
+core = "7.x"
+projects[drupal][type] = "core"
+projects[drupal][version] = "7.32"
+; Remove scary ajax error when autocomplete terminates: https://www.drupal.org/node/1232416#comment-8748879
+projects[drupal][patch][] = "https://www.drupal.org/files/issues/D7-fix_autocomplete_terminated_error-1232416-179-do-not-test.patch"
+; Ensure plain text fields evaluate line breaks.
+projects[drupal][patch][] = "http://drupal.org/files/text-plain-1152216-24.patch"
+
+projects[addressfield][version] = "1.0-beta5"
+
+projects[addressfield_tokens][version] = "1.4"
+
+projects[admin_views][version] = "1.3"
+
+projects[field_collection][version] = "1.0-beta7"
+; Field collections are ownerless https://drupal.org/node/1954124
+projects[field_collection][patch][] = "https://drupal.org/files/issues/field_collection-ownerless_fields-1954124-23.patch"
+; Fixes fatal error in migrate code: https://www.drupal.org/node/2315921#comment-9028779
+projects[field_collection][patch][] = "https://www.drupal.org/files/issues/migrate-fatal-error-2315921-01.patch"</pre><p>YAML can be used with the latest version of Drush 7:</p><pre class="crayon-plain-tag">api: 2
+
+# Set contrib directory.
+defaults:
+  projects:
+    subdir: "contrib"
+core: "7.x"
+projects:
+  drupal:
+    type: "core"
+    version: "7.33"
+    patch:
+        # Remove scary ajax error when autocomplete terminates: https://www.drupal.org/node/1232416#comment-8748879
+      - "https://www.drupal.org/files/issues/D7-fix_autocomplete_terminated_error-1232416-179-do-not-test.patch"
+        # Ensure plain text fields evaluate line breaks.
+      - "http://drupal.org/files/text-plain-1152216-24.patch"
+
+  addressfield: "1.0-beta5"
+  addressfield_tokens: "1.4"
+  admin_views: "1.3"
+  field_collection:
+    version: "1.0-beta7"
+    patch:
+        # Field collections are ownerless https://drupal.org/node/1954124
+      - "https://drupal.org/files/issues/field_collection-ownerless_fields-1954124-23.patch"
+        # Fixes fatal error in migrate code: https://www.drupal.org/node/2315921#comment-9028779
+      - "https://www.drupal.org/files/issues/migrate-fatal-error-2315921-01.patch"</pre><p>Included <code>.make</code> files whether local, or discovered recursively within downloaded projects, can be in either YAML of INI format.</p>
+<p>In order to use the newly-supported YAML format, simply name files with a <code>.yml</code> extension, such as <code>my_project.make.yml</code>.</p>
+<p>The best part? This can be used now! Even though YAML files are mostly a new concept for Drupal 8, drush make will parse YAML make files for Drupal 7, and even Drupal 6. Want to learn more about DRUSH make files? Check out Joe Turgeon&#8217;s &#8220;<a href="http://phase2technology.com/blog/getting-started-with-grunt-drupal-tasks/">Getting Started With Grunt Drupal Tasks</a>&#8220;</p>
+<img src="http://track.hubspot.com/__ptq.gif?a=457100&k=14&bu=http%3A%2F%2Fwww.phase2technology.com&r=http%3A%2F%2Fwww.phase2technology.com%2Fblog%2Fdrush-make-yaml%2F&bvt=rss&p=wordpress" style="float:left;" xml:base="http://www.phase2technology.com/feed/" width="1" height="1" border="0" align="right"/>
+  </body>
+</html>
+

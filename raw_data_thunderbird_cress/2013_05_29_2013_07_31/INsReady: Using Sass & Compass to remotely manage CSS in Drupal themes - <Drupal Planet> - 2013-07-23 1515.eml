@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 23 Jul 2013 14:15:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 23 Jul 2013 14:15:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: INsReady: Using Sass & Compass to remotely manage CSS in Drupal themes
+Content-Transfer-Encoding: 8bit
+Content-Base: https://insready.com/en/blog/using-sass-compass-remotely-manage-css-drupal-themes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>INsReady: Using Sass & Compass to remotely manage CSS in Drupal themes</title>
+    <base href="https://insready.com/en/blog/using-sass-compass-remotely-manage-css-drupal-themes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>At INsReady Inc., we have been practising the theming workflow below for more than a year. Therefore, it's good to write down the documentation for sharing and future training purposes. </p>
+<p>Background information: for Drupal theming, we do the development work on a dev server (see <a href="https://insready.com/en/blog/building-nginx-microcaching-mariadbmysql-php-fpm-debian-6-apc-memcache-drupal-7-server">Building Nginx (Microcaching) + MariaDB/MySQL + PHP-FPM + Debian 6 + APC + Memcache + Drupal 7 server</a>), instead of theming on a local laptop. In other words, we only edit the CSS/Sass files locally, and upload them to a remote server for previewing. I know many people have their own different workflows. But, having a central dev server for theming is great for us; because once you use a base theme like <a href="http://drupal.org/project/zen">Zen</a>, MOST of Drupal theming work is probably within two files: custom CSS/SASS file and custom jQuery file. So, theming on one server is easier for development, collaboration among themers (other people can test on many screens as well as many browsers) and collaboration with clients (they can see the staged changes right away). If you are wondering how this method could connect with the rest of Dev/Staging/Production infrastructure (and even with mobile development), then please find me at a Drupal meetup or Drupal Happy Hour event.</p>
+<p>Anyway, some people will have the method of Drupal theming similar to us, therefore, I hope the documentation below is useful.</p>
+<ol><li>You should already know Sass and Compass, or at least you are going to try it out, following this blog. So, let's simply install them. First, install Ruby:
+<p>sudo aptitude install ruby-full rubygems1.8
+</p></li>
+<li>Install Sass and Compass
+<p>sudo gem install sass<br />
+sudo gem install compass
+</p></li>
+<li>Install two new gems – the Net::SSH and Net::SFTP gems for pushing changes to the remote server
+<p>sudo gem install net-ssh<br />
+sudo gem install net-sftp
+</p></li>
+<li>Create a Compass project and using the configuration file <a href="https://insready.com/sites/default/files/config.rb">attached</a>
+<p>compass create test<br />
+cd test<br />
+rm config.rb sass/* stylesheets -r  # Remove the standard files. Your sub-theme will contain all other files you need.<br />
+# Download our <a href="https://insready.com/sites/default/files/config.rb">config.rb</a> file (which will have the ability to push changes to the remote server) to the folder
+</p></li>
+<li>Edit the downloaded config.rb file, fill the section below with your server login information
+<p># SFTP Connection Details - Does not support alternate ports os SSHKeys, but could with mods<br />
+remote_theme_dir_absolute = '/srv/www/insready.com/public_html/sites/all/themes/sub-theme/css' # Put your Drupal sub theme CSS folder path here<br />
+sftp_host = 'example.com' # Can be an IP<br />
+sftp_user = 'username' # SFTP Username </p>
+<p>Please notice that we don't have sftp_pass = 'password' in this file; It is because we use SSH Key authentication. If you need to use password authentication, you can add </p>
+<p>sftp_pass = 'password' # SFTP Password</p>
+<p>then change the next line to </p>
+<p>Net::SFTP.start( sftp_host, sftp_user, :password =sftp_pass ) do |sftp|</p>
+</li>
+<li>All you have to manage locally on your laptop is the configuration file config.rb and a custom Sass file such as custom.scss. Any change you make to the custom.scss will be compiled first as custom.css, then automatically upload to your remote site's sub-theme folder. Now, start working
+<p>Compass watch<br />
+# Save the change .... then refresh your browser to see the effect
+</p></li>
+</ol><p>*Please notice that the configuration ONLY push the change after the compilation, which means the custom.css file, to the remote server. Therefore, you need once a while to upload the original custom.scss file to your remote sub theme folder and you should do so everyday after you done working just like committing the code to a repository. (If anyone has an idea to automate this part of the process, please share with us.)</p>
+</div></div></div><div class="field field-name-field-files field-type-file field-label-above"><div class="field-label">Files:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="file"><img class="file-icon" alt="" title="application/octet-stream" src="/modules/file/icons/application-octet-stream.png" /> <a href="https://insready.com/sites/default/files/config.rb" type="application/octet-stream; length=2732">config.rb</a></span></div></div></div><div class="field field-name-field-tag field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tag:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/taxonomy/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

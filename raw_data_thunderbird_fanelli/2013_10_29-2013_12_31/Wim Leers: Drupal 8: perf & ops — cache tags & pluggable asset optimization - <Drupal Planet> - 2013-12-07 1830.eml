@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 07 Dec 2013 17:30:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 07 Dec 2013 17:30:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wim Leers: Drupal 8: perf & ops — cache tags & pluggable asset optimization
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wimleers.com/talk/drupal-8-perf-ops
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wim Leers: Drupal 8: perf & ops — cache tags & pluggable asset optimization</title>
+    <base href="http://wimleers.com/talk/drupal-8-perf-ops">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>For this short talk, I chose two particular improvements in Drupal 8 that will make a big difference for future Drupal sites’ performance and ops (infrastructure&nbsp;requirements).</p>
+
+<p>The addition of <strong>cache tags</strong> is the most important new feature to have a huge impact on back-end performance: it allows for much smarter/better cache invalidation, and hence through better cache hit ratios help increase performance and reduce infrastructure&nbsp;requirements.</p>
+
+<p>On the other hand, the move towards a <strong>pluggable asset optimization</strong> system (instead of the non-pluggable one in Drupal 7) allows for much greater flexibility in adjusting the asset optimization pipeline to suit a specific site&#8217;s needs. Changing the <span class="caps">JS</span> minifier or even the complete asset optimization pipeline will become easy, whereas in Drupal 7 you&#8217;d need incredibly intricate knowledge of other Drupal internals — making such front-end performance changes much more expensive than they should&nbsp;be.</p>
+
+<p>Neither helps current production sites on Drupal 7 since they&#8217;re major improvements in Drupal 8, but <em>both solve fundamental flaws</em> in previous versions, so they will probably make you (even more) excited about Drupal&nbsp;8!</p>
+
+<p><small>Note: these slides are a shortened version of my <a href="/talk/really-fast-drupal-8">Building really fast websites with Drupal 8</a> talk — but presented from a different angle and with a different focus.</small></p>
+<div class="field field-name-field-slideshare-link field-type-link-field field-label-inline clearfix"><div class="field-label">Slides:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="http://wimleers.com/talk-drupal-8-perf-ops/">Drupal 8: perf &amp; ops — cache tags &amp; pluggable asset optimization</a></div></div></div><div class="field field-name-field-conference field-type-text field-label-above"><div class="field-label">Conference:&nbsp;</div><div class="field-items"><div class="field-item even">Drupagora 2013</div></div></div><div class="field field-name-field-location field-type-text field-label-above"><div class="field-label">Location:&nbsp;</div><div class="field-items"><div class="field-item even">Paris, France</div></div></div><div class="field field-name-field-date field-type-date field-label-above"><div class="field-label">Date:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="date-display-single" property="dc:date" datatype="xsd:dateTime" content="2013-12-05T15:00:00+01:00">Dec 5 2013 - 15:00</span></div></div></div><div class="field field-name-field-duration field-type-number-integer field-label-above"><div class="field-label">Duration:&nbsp;</div><div class="field-items"><div class="field-item even">25&nbsp;minutes</div></div></div><div class="field field-name-field-extra-info field-type-text-long field-label-above"><div class="field-label">Extra information:&nbsp;</div><div class="field-items"><div class="field-item even"><p>See <a href="http://www.drupagora.com/2013/programme-drupagora#La%20performance%20de%20vos%20applications%20Drupal">La performance de vos applications Drupal</a>.</p>
+</div></div></div><ul class="tags">
+    <li><a href="/tags/wpo" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">WPO</a></li>
+    <li><a href="/tags/performance" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">performance</a></li>
+    <li><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li>
+</ul>
+  </body>
+</html>
+

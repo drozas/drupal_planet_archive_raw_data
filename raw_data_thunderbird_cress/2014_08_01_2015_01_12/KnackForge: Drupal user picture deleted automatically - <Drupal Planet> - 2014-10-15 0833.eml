@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 15 Oct 2014 07:33:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 15 Oct 2014 07:33:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Drupal user picture deleted automatically
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/selvam/drupal-user-picture-deleted-automatically
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Drupal user picture deleted automatically</title>
+    <base href="http://knackforge.com/blog/selvam/drupal-user-picture-deleted-automatically">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><div>Sometimes you could be in a fury when user picture gets deleted automatically with nothing being noticed as strange. Even this thread <a href="https://www.drupal.org/node/93559">935592</a> might not help you. Then you have come to right place. Ofcourse the culprit could be your call to user_save() somewhere. The actual issue might be, you are passing global user object instead of full account object. The first param of user_save() should be a full account object, while global <a href="https://api.drupal.org/api/drupal/developer!globals.php/global/user/7">user</a> does not have all the data of account object. In this case $account-&gt;picture is an object while $user-&gt;picture is just an integer, fid (File id) of the image file. So while trying to save, your picture association with the user account gets broken. The reason can be understood by looking at the user_save() source code. The method checks for </div>
+<div>
+<pre class="brush: php; auto-links: true; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 4; toolbar: true; codetag">empty($account-&gt;picture-&gt;fid)</pre></div>
+<div>While using $user, this condition becomes false (we only have $account-&gt;picture not $account-&gt;picture-&gt;fid) and user picuter is removed.</div>
+<div>So make sure you call like this,</div>
+<div>
+<pre class="brush: php; auto-links: true; collapse: false; first-line: 1; html-script: false; smart-tabs: true; tab-size: 4; toolbar: true; codetag">global $user
+$account = account_load($user-&gt;uid);
+/*Some operations with $account object*/
+user_save($account, $edit); /*NOT user_save($user, $edit)*/</pre></div></div></div></div>
+  </body>
+</html>
+

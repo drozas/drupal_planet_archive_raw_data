@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Jun 2013 08:38:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Jun 2013 08:38:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Clemens Tolboom: A Drupal 8 git bisect exercise
+Content-Transfer-Encoding: 8bit
+Content-Base: http://build2be.com/content/drupal-8-git-bisect-exercise
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Clemens Tolboom: A Drupal 8 git bisect exercise</title>
+    <base href="http://build2be.com/content/drupal-8-git-bisect-exercise">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-images field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://build2be.com/sites/build2be.com/files/git-bisect.png"><img src="http://build2be.com/sites/build2be.com/files/styles/medium/public/git-bisect.png?itok=VCs--1En" width="220" height="132" alt="git-bisect.png" title="http://gitmap.files.wordpress.com/2010/12/git-bisect.png" /></a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Having a Drupal 8 site under development with a customer aware of the risk of loosing data I took the risk of fixing a broken Drupal 8 site. Today I did an code update and got the following welcome screen on <a href="http://drupal.dev">http://drupal.dev</a></p>
+<div class="codeblock"><code>If you have just changed code (for example deployed a new module or moved an existing one) read http://drupal.org/documentation/rebuild<br />Additional uncaught exception thrown while handling exception.<br />Original
+<p>Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException: You have requested a non-existent service &amp;quot;url_generator&amp;quot;. in ...</p></code></div>
+<p>The development site was synchronised using the usual drush commands</p>
+<div class="codeblock"><code>drush rsync @drupal.tst:%files @drupal.dev:%files<br />drush sql-sync @drupal.tst @drupal.dev</code></div>
+<h3>Test site</h3>
+<p>So where's the test site standing?</p>
+<div class="codeblock"><code>$git log -n 1<br />commit e99a83e54d99cb5111585a37b954b62886b7c65b<br />Author: Alex Pott &lt;alex.a.pott@googlemail.com&gt;<br />Date:   Fri May 31 11:16:37 2013 +0100</code></div>
+<p>So we are 12 days behind.</p>
+<h3>Dev site</h3>
+<p>Let's check what happened and can we fix it?</p>
+<div class="codeblock"><code>$ git pull<br />$ git log --oneline  e99a83e54d99cb5111585a37b954b62886b7c65b.. | wc -l<br />     235</code></div>
+<p>Wow ... 12 days 235 commits ... that's too much. We know it worked once so let's start with that good version. First we tell git we want to find code where it went wrong and which version was right.</p>
+<div class="codeblock"><code>$ git bisect start<br />$ git bisect good e99a83e54d99cb5111585a37b954b62886b7c65b</code></div>
+<p>Now git takes the middle between HEAD and the good version. Checking the front page now shows it's</p>
+<div class="codeblock"><code>$ git bisect bad<br /># check front page again<br />$ git bisect bad<br /># now my site is alive a little (menu doesn't look good enough)<br />$ drush cc all<br /># still not good enough</code></div>
+<p>Hmmm ... I made a mistake. That version is probably good enough.</p>
+<div class="codeblock"><code>$ git bisect good 3fdf6a1c139fd2a36ff8bf12f1b29f31bced8973<br />You need to start by "git bisect start"<br />-n Do you want me to do it for you [Y/n]?</code></div>
+<p>So this continues for a while</p>
+<div class="codeblock"><code>  583  git bisect bad<br />  584  git bisect bad<br />  585  git bisect good<br />  586  git bisect good<br />  587  git bisect bad<br />  588  git bisect good<br />  589  git bisect bad<br />  590  git bisect bad</code></div>
+<p>Now the site is working and no more bisect commits left.</p>
+<div class="codeblock"><code>$ git log -n 1<br />commit 9d73599020c282ed79294dcb4121212bb03b782c<br />Author: Alex Pott &lt;alex.a.pott@googlemail.com&gt;<br />Date:   Thu Jun 6 09:08:39 2013 +0100
+<p>    Issue #2001310 by chx, effulgentsia, Berdir, YesCT: Disallow firing hooks during update.</p></code></div>
+<p>So the current commit is OK. What happened with the next one?</p>
+<div class="codeblock"><code>$ git log origin/8.x<br /># now search for the good commit 9d73599020c282ed79294dcb4121212bb03b782c<br /># this is the bad one?<br />commit b21943922d94261dfa8de34995d206d5e8e9c3d7<br />Author: Alex Pott &lt;alex.a.pott@googlemail.com&gt;<br />Date:   Thu Jun 6 09:14:16 2013 +0100
+<p>    Issue #1888424 by katbailey, steveoliver, twistor, beejeebus, effulgentsia: Change notice: Make Drupal's URL generation logic available to HttpKernel, and minimize code repetition/divergence.</p></code></div>
+<p>Well that matches with the error. And the diff shows an interesting change on the core.services.yml</p>
+<div class="codeblock"><code>git checkout b21943922d94261dfa8de34995d206d5e8e9c3d7<br />git show</code></div>
+<p>Now the puzzle is to solve this upgrade path.</p>
+</div></div></div><div class="field field-name-taxonomy-vocabulary-4 field-type-taxonomy-term-reference field-label-hidden clearfix"><ul class="links"><li class="taxonomy-term-reference-0"><a href="/category/planet">planet</a></li><li class="taxonomy-term-reference-1"><a href="/category/planet-drupal">planet drupal</a></li><li class="taxonomy-term-reference-2"><a href="/category/git">git</a></li><li class="taxonomy-term-reference-3"><a href="/category/drupal-8">drupal-8</a></li></ul></div>
+  </body>
+</html>
+

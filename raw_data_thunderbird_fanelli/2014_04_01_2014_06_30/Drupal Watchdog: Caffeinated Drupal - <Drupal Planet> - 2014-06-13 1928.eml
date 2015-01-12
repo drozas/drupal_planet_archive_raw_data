@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 13 Jun 2014 17:28:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 13 Jun 2014 17:28:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Caffeinated Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/4/2/caffeinated-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Caffeinated Drupal</title>
+    <base href="http://drupalwatchdog.com/4/2/caffeinated-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p>Over our last cup of coffee <a href="http://drupalwatchdog.com/3/1/drupal-cdn">we discussed content delivery networks</a> (CDNs) and how they can dramatically speed up websites. This issue, we’ll take a look at how to swap out the backend storage used by Drupal’s Cache API. So, let’s grab a nice iced latte to toast the end of summer, and we’ll dive right in!</p>
+<p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/coffee.jpg" class="img-responsive img-thumbnail" alt="Pretty espresso machine" /></p>
+<p>First of all, we should discuss the reasons why one might want to move Drupal’s cache storage out of MySQL. As Drupal sites grow, the amount of cache data will greatly increase. When this happens, the frequent querying of cache items, along with database updates to invalidate caches, can cause a heavy load on your database server. By moving cache data out of the database and into a key-value store such as Memcached or Redis, not only can we reduce load on the database, but we gain the ability to easily scale out the caching layer horizontally (adding more servers) as the need arises. This type of scaling is not something that’s easily accomplished with MySQL.</p>
+<p>Memcached is by far the most popular alternate cache storage for Drupal, although Redis – a newer technology with some features not found in Memcached – has been growing in popularity. Both are what are referred to as “key value stores”, meaning when you store a piece of data (the value), you assign it a key so that you can easily retrieve it later. The design of these key value stores is such that they maintain a constant performance no matter how large the dataset grows. Imagine a coffee shop that always had a hot cup of coffee waiting for you in less than five seconds, no matter how much other coffee they were serving at the time.</p>
+<p>It is a common misconception that retrieving a single cache item from Memcached or Redis should be faster than retrieving the same cache item from MySQL. This is typically not the case. However, both Memcached and Redis scale much better with large data sets, and moving caches out of MySQL speeds up the database for other queries. For these reasons, swapping the cache backend can still be a great performance win even though the speed for serving a single page to a single client may not improve at all.</p>        </div>
+  </body>
+</html>
+

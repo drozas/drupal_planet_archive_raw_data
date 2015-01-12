@@ -1,0 +1,65 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 27 Jul 2013 23:27:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 27 Jul 2013 23:27:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mark Shropshire: Saving and Updating Nodes with the $node->language Property
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mark.shropshires.net/blog/saving-and-updating-nodes-node-language-property
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mark Shropshire: Saving and Updating Nodes with the $node->language Property</title>
+    <base href="http://mark.shropshires.net/blog/saving-and-updating-nodes-node-language-property">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Well, you can certainly learn something new about Drupal everyday. I spent a good bit of time trying to figure out why I couldn't perform a simple field value update to a few nodes in an application. So, node_save() was running without error, and nothing I attempted to update in the node object or related fields would save.</p>
+
+<p>After some investigation, I noticed these problem nodes were originally created without a defined language property (<code>$node-&gt;language</code>). I just happened to see this by looking at the "node" table and sorting by the language field in the Drupal database. While Drupal allowed the application create the original nodes without setting the language property, it led to issues when performing an update to the node. My conclusion is that the language property should always be set.</p>
+
+<p>Below I have some examples which illustrate saving a new node and updating an existing node with <code>$node-&gt;language</code> set properly.</p>
+
+<h3>Create a node object and save it (Drupal 7)</h3>
+
+<p><noscript><div class="drupal-gist-file"><pre type="php">&lt;?php
+$node = new stdClass();
+$node-&gt;type = &#039;content_type&#039;;
+$node-&gt;title = &#039;Node Title&#039;;
+
+// Set the language.
+$node-&gt;lanaguage = LANGUAGE_NONE;
+
+// Custom field.
+$node-&gt;field_custom[$order-&gt;$language][0][&#039;value&#039;] = &#039;Custom field data&#039;;
+
+// Prepare and save the node.
+node_object_prepare($node);
+$node = node_submit($node);
+$node-&gt;revision = TRUE;
+node_save($node);</pre></div></noscript><script src="http://gist.github.com/6096689.js"></script></p>
+
+<h3>Update a node object and save it (Drupal 7)</h3>
+
+<p><noscript><div class="drupal-gist-file"><pre type="php">&lt;?php
+// Load a node with nid = 1000.
+$node_nid = 1000;
+$node = node_load($node_nid);
+
+// Change the title of the node.
+$node-&gt;title = &quot;New title&quot;;
+
+// Update the value of a field with the language property of the node object.
+$node-&gt;field_custom[$order-&gt;$language][0][&#039;value&#039;] = &#039;New custom field data&#039;;
+
+// Set the revions property and save the updated node.
+$node-&gt;revision = TRUE;
+node_save($node);</pre></div></noscript><script src="http://gist.github.com/6096753.js"></script></p>
+
+<p>Note that <code>LANGUAGE_NONE</code> is a constant that can be used when no particular language is specified (See: <a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/constant/LANGUAGE_NONE/7">Drupal API documentation</a>). If you need to set a language, you can with the <a href="https://api.drupal.org/api/drupal/modules%21locale%21locale.module/7">locale module</a>.</p>
+</div></div></div><section class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above view-mode-rss"><h2 class="field-label">Blog Category:&nbsp;</h2><ul class="field-items"><li class="field-item even"><a href="/taxonomy/term/13" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li><li class="field-item odd"><a href="/taxonomy/term/14" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></li></ul></section>
+  </body>
+</html>
+

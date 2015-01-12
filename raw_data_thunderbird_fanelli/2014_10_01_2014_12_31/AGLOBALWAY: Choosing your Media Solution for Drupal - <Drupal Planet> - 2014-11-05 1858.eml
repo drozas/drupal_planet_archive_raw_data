@@ -1,0 +1,50 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Nov 2014 17:58:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Nov 2014 17:58:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Choosing your Media Solution for Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/choosing-your-media-solution-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Choosing your Media Solution for Drupal</title>
+    <base href="http://www.aglobalway.com/content/choosing-your-media-solution-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Often we will encounter something in our Drupal project where we have to make a decision: do I install a module to solve my problem (because let's be honest, it's probably out there), or can I achieve it some other way on my own?</p>
+<p>As an example, say qw have the need to embed a YouTube video, or some other form of embedded media like Vimeo, etc., but it needs to be responsive. CSS can't make those elements responsive in the same way it works with images:</p>
+<pre style="display: inline-block;"><code>
+img {
+ max-width: 100%;
+ height: auto;
+}
+</code></pre><p></p>
+<p>So we need another solution. The thing is, we only need to do this once. So the thoughtful developer will ask him or herself, "do I really need another module to accomplish this?" </p>
+<h2>Let's look at some of our options.</h2>
+<h4>FitVids</h4>
+<p>If you're going the module route, you should know about <a href="https://www.drupal.org/project/fitvids" target="_blank">FitVids</a>. The advantage here is that FitVids is a simple module to configure - it provides an interface where you can indicate the HTML element you wish to apply the responsive effect to. We can select </p>
+<pre style="display: inline-block;"><code>&lt;body&gt;</code></pre><p> to apply it to every instance of embedded media in our document. Alternatively, we can be more selective if we have performance concerns, or if for some reason we wish it to not apply to certain instances of our embedded media.</p>
+<h4>Bootstrap
+</h4><p>If you happen to be using <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> as a Front-End framework, you may or may not have discovered <a href="http://getbootstrap.com/components/#responsive-embed" target="_blank">this little gem</a>. Somewhat recently added, it allows us to use embedded media in the same way we might make a carousel, by wrapping it in some markup with classes that Bootstrap hooks into to make it work:</p>
+<pre><code>
+&lt;!-- 16:9 aspect ratio --&gt;
+&lt;div class="embed-responsive embed-responsive-16by9"&gt;
+  &lt;iframe class="embed-responsive-item" src="..."&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;!-- 4:3 aspect ratio --&gt;
+&lt;div class="embed-responsive embed-responsive-4by3"&gt;
+  &lt;iframe class="embed-responsive-item" src="..."&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+</code></pre><p>Both of the above options accomplish the same thing - it's up to you to decide which approach to take. Remember, even if you're not using Bootstrap as a base theme or as a front-end framework, you can always <a href="http://getbootstrap.com/customize/#less" target="_blank">download individual components</a> to include in your own theme. </p>
+    
+
+         <a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a>         <a href="/tags/bootstrap" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">bootstrap</a>         <a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>
+  </body>
+</html>
+

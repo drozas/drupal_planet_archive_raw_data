@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 11 Dec 2013 17:58:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 11 Dec 2013 17:58:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Google Code-In student blog: How to setting up authentication via Facebook in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://codein-stdent.at/?q=node/9
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Google Code-In student blog: How to setting up authentication via Facebook in Drupal 7</title>
+    <base href="http://codein-stdent.at/?q=node/9">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://codein-stdent.at/sites/default/files/styles/large/public/field/image/drupal.jpg?itok=Nga0dTqi"><img typeof="foaf:Image" src="http://codein-stdent.at/sites/default/files/styles/large/public/field/image/drupal.jpg?itok=Nga0dTqi" width="480" height="155" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Hello dear reader! Its not sicret, that many people now regiter in Facebook. Facebook most popular social network in the world. Many websites have Facebook authentication. Now i will tell you how to make its in Drupal 7.  Lets start!</p>
+<!--break--><h5>How its work</h5>
+<p><img alt="" data-align="center" data-editor-file-uuid="b3ed69a1-9018-4377-9100-bfed025f4af2" height="384" src="http://dropi.ru/YSC.png" width="829" /></p>
+<p>In this scheme you can see, that Drupal module send request to Facebook app, facebook app ask user and return date.</p>
+<p> </p>
+<p><strong>How to create Facebook app</strong></p>
+<p>We need FB application to get date about user. For one website tou need one FB app. Lets start!</p>
+<p>Firts step - visit <a href="developers.facebook.com/apps" target="_blank">developers.facebook.com/apps</a>. Click 'create new app' button</p>
+<p><img data-editor-file-uuid="24c310d7-2cb8-471c-be40-645bc5e713dd" height="242" src="http://dropi.ru/dTC.jpg" width="420" /> </p>
+<p>You will see popup window with Facebook rules. Accept it. You will see new window with 2 fields. Write app name and select category like this:</p>
+<p><img alt="" data-editor-file-uuid="1ad7a426-13a5-474b-a604-04eba98fe2c7" height="224" src="http://dropi.ru/gTC.png" width="647" /></p>
+<p>If neme has been valid, you will redirect to your new app page. There is your app name, ID, Secret and other information.</p>
+<p><img alt="" data-align="center" data-editor-file-uuid="ed51deeb-2501-4d29-8b07-7d4a4c6b3279" height="895" src="http://dropi.ru/hTC.png" width="775" /></p>
+<p>Paste your site url in 'Website with Facebook login' and click 'save changes'. Yes! apllicanion has been created! </p>
+<p> </p>
+<p><strong>Install and configure FBOAuth module.</strong></p>
+<p> </p>
+<p>For FB auth we need to use <a href="https://drupal.org/project/fboauth">FBOAuth</a>. Download and install this module to your drupal site. Go to Configuration-&gt;people-&gt;Facebook OAuth settings. Here you will see 2 fields: <strong>App ID </strong>and <strong>App Secret, </strong>fill them your app ID and Secret like this:</p>
+<p><img alt="" data-align="center" data-editor-file-uuid="b9f7006b-a825-4ded-ac00-bb3d502400a2" height="610" src="http://dropi.ru/fTC.png" width="1233" /></p>
+<p>Click 'Save'. </p>
+<p>Just add FBOAuth module to some place on your site. Now we can login with Facebook. Excellent!</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/?q=taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/?q=taxonomy/term/2" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal-planet</a></li><li class="taxonomy-term-reference-2" rel="dc:subject"><a href="/?q=taxonomy/term/5" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Facebook</a></li></ul></div>
+  </body>
+</html>
+

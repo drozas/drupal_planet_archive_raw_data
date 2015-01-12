@@ -1,0 +1,84 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 25 Aug 2013 09:35:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 25 Aug 2013 09:35:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: thedavidmeister.info: Using Context to keep your development modules disabled on your production sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.thedavidmeister.info/post/using-context-keep-your-development-modules-disabled-your-production-sites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>thedavidmeister.info: Using Context to keep your development modules disabled on your production sites</title>
+    <base href="http://www.thedavidmeister.info/post/using-context-keep-your-development-modules-disabled-your-production-sites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-title field-type-text field-label-hidden"><div class="field-items"><div class="field-item even">Using Context to keep your development modules disabled on your production sites</div></div></div><div class="field field-name-post-date field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">Sunday, 25th Aug 2013</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Keeping separate instances of your Drupal sites for local development, deployment testing and production is a really good idea. If nothing else, it's liberating to be able to make mistakes and try new things out in a safe environment.</p>
+
+<p>These days there's a lot of tools available to Drupal developers that make version controlling, hosting and deploying code and configuration relatively straightforward.</p>
+
+<p>The important question for each developer now is how to tie all these tools together in an effective workflow that minimises risk, technical debt and development time while still meeting the client's needs.</p>
+
+<p>One question is how to make sure that the development modules you rely on for debugging and site building are always enabled on your development environments and disabled on your productions environment. "Development modules" could be as simple and ubiquitous as the Field UI module that allows you to manage core Fields or more advanced/niche like Devel or XHProf.</p>
+
+<p>Development modules pose a few hazards to your productions sites:</p>
+
+<ol>
+<li>Each enabled module on your site will incur some CPU and memory overhead which is wasted on dev modules.</li>
+<li>Development modules routinely expose UIs that allow users to perform catastrophically damaging operations on a site.</li>
+<li>Development modules can add or modify the functionality of a site in potentially risky ways such as modifying database or file system structure.</li>
+<li>Development modules can expose debugging information that could contain sensitive data. Consider the core Update module that throws alerts whenever a security vulnerability in a contrib module is detected.</li>
+</ol>
+
+<p>We can mitigate a lot of these risks by correctly configuring our permissions to prevent "non administrator" users from accessing dev modules but one incorrect configuration or compromised user account can lead to disaster. To be 100% sure that our useful debugging tool doesn't become our production site's downfall we can enforce a simple "no tolerance" policy and disable all dev modules completely on our production environment.</p>
+
+<p>Of course, we will need to periodically pull our production database and files down to our local development environment, which will have the effect of disabling all our dev modules. Re-enabling them manually can be tedious and frustrating if forgotten.</p>
+
+<p>There are various ways to automatically ensure the correct enabled/disabled status of your dev modules in settings.php, drush scripts, Drupal hooks, dedicated modules, module dependencies, etc... If you have something that works for you already, by all means keep using it :)</p>
+
+<p>One tool that I discovered recently was the <a href="http://drupal.org/project/context_module">Contextual modules</a> module that provides a <a href="http://drupal.org/project/context">Context</a> reaction to enable or disable a list of modules based on a Context condition. This provides an easy and relatively foolproof way to setup a whitelist and/or blacklist through the Context UI, the reaction itself uses <code>hook_init()</code> so if a module should be enabled or disabled it will simply "be there" (or not) as of the very next page load - no need to clear caches, run update.php or run an external script.</p>
+
+<p>I'm rather new to this approach but so far it scores highly for me in terms of DX, simplicity, portability and maintainability so I recommend at least trying it out if you're already a fan of Context.</p>
+
+<p>So, what kind of conditions would we use with Contextual modules?</p>
+
+<p>Well, there's a few contrib modules around, hopefully enough to suit whatever your current deployment and QA workflow looks like.</p>
+
+<h3>Context URL</h3>
+
+<p><a href="http://drupal.org/project/contexturl">Context URL</a> provides a condition that allows you to match the current URL as a simple pattern with * wildcards or a regex.</p>
+
+<p>We can use this to do something simple like match a production domain or, as the module page says, perform more fine-grained matching across <a href="http://drupal.org/project/domain">Domain access</a> based multi-site setups.</p>
+
+<h3>Context: Variable</h3>
+
+<p><a href="http://drupal.org/project/context_var">Context Variable</a> provides a condition to allow us to react to the value of a system variable. Anything that can be stored/retrieved using <code>variable_get()</code>/<code>variable_set()</code>, ie. exported with <a href="http://drupal.org/project/strongarm">Strongarm</a> or found in the <code>variable</code> database table.</p>
+
+<p>This can provide a lot of flexibility and can potentially be more robust/portable than the Context URL approach above, but you'll need to create and manage a variable that signifies "Production-ness" or at least find something that is a good enough proxy for your production environment.</p>
+
+<h3>Domain Context</h3>
+
+<p><a href="http://drupal.org/project/domaincontext">Domain Context</a> provides a condition to allow us to react to a domain in a multi-site setup from Domain access. This implies and requires a considerably more complex setup than the above options. If you need this, you already know who you are and about this module.</p>
+
+<h3>Context Acquia/Pantheon</h3>
+
+<p><a href="http://drupal.org/project/context_acquia">Context Acquia</a> and <a href="http://drupal.org/project/context_pantheon">Context Pantheon</a> provide conditions to react directly to the server environment variables provided by the <a href="https://www.acquia.com/">Acquia</a> and <a href="https://www.getpantheon.com/">Pantheon</a> Drupal hosting providers. These modules are super simple, I whipped them up in about an hour last night by copying and pasting each hosting provider's own documentation into a <a href="http://dtek.net/blog/extending-drupals-context-module-custom-condition-based-field-value">Context condition plugin</a>, so they're not exactly "extensively battle tested" yet so your mileage may vary. Feel free to open issues and/or file patches if you have any troubles and I'll try to work through them as quickly as I can.</p>
+
+<p>Both of these hosting providers' servers have native concepts of what "local dev", "remote dev", "testing" and "production" environments look like, so hooking into the server's API directly could (fingers crossed) end up being the simplest and most robust approach to detecting "Production-ness" - assuming of course that your project is actually hosted with one of these providers.</p>
+
+<p>On a side note, Acquia have extra boolean environment variables indicating "is production" and "is not production" but I didn't end up exposing them to Context because they seemed redundant with the existing dev/stage/prod indicator.</p>
+
+<h2>Important!</h2>
+
+<p>Given that <a href="https://drupal.org/node/1199946">disabling modules is critically broken in core and the functionality is being removed in Drupal 8</a> I would strongly recommend that you don't use Context or any other automated process to enable/disable any module that provides "real" functionality, especially if that module directly manages data in your site. Enabling and disabling modules that simply provide a UI for site building, debug tools or provide reports/dashboards for your site is generally safe as they're designed to be enabled/disabled as required. Disabling modules that you would normally <em>want</em> running on a Production site, without uninstalling the stale data before reinstalling the module, is not safe and a bad idea in general - leaving this in the hands of an automated process is probably asking for trouble.</p>
+
+<p>Many contrib modules (especially those built upon ctools) will provide the ability to enable/disable individual components of their configuration without causing the module's data to go stale - if you need to toggle functionality, leverage this wherever possible instead of disabling/enabling the whole module.</p>
+
+<p>If you don't know what I'm talking about, I recommend that you at least read over the summary of the issue I linked above as it's certainly an eye-opener.</p>
+</div></div></div><div class="field field-name-field-syndicate field-type-taxonomy-term-reference field-label-above"><div class="field-label">Syndicate:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/syndicate/planet-drupal">planet drupal</a></div></div></div>
+  </body>
+</html>
+

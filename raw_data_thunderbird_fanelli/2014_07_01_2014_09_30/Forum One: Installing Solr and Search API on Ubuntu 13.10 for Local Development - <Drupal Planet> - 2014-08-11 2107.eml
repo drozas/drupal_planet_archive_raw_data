@@ -1,0 +1,89 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 11 Aug 2014 19:07:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 11 Aug 2014 19:07:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Installing Solr and Search API on Ubuntu 13.10 for Local Development
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/installing-solr-and-search-api-on-ubuntu-13-10-for-local-development/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Installing Solr and Search API on Ubuntu 13.10 for Local Development</title>
+    <base href="http://forumone.com/insights/installing-solr-and-search-api-on-ubuntu-13-10-for-local-development/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>At Forum One, we standardize our local development environments using virtual machines provided by Vagrant, but a local dev environment native to a host OS is sometimes also useful. I recently found myself adding Apache Solr to my Ubuntu host&#8217;s web server stack for a Drupal project, and I wanted to share my experience.</p>
+<p>I was running Ubuntu 13.10 (saucy) and, for my sanity and system integrity, I always try to manage as many packages as I can through the actual Ubuntu/Debian package management system, APT. There are many great references out there <span style="color: #393318;">–</span> <a href="https://www.lullabot.com/blog/article/installing-solr-use-drupal" target="_blank">Ben Chavet&#8217;s article from Lullabot</a> got me most of the way there <span style="color: #393318;">–</span> but I want to rehash it here quickly, with specific instructions for my software stack.</p>
+<p>Unfortunately, as most installation guides note, the packages in many Linux distribution package archives tend to have older versions of Solr;<span style="color: #393318;"> </span>Ubuntu&#8217;s saucy package archive has Solr 3.6. So in order to take advantage of the last couple of years of Solr development <span style="color: #393318;">–</span> as recommended by most Drupal-related references <span style="color: #393318;">–</span> Solr was the one exception where I installed the software manually outside of the package manager.</p>
+<h2>Reviewing the Software Stack</h2>
+<ul>
+<li>Ubuntu 13.10 (saucy)</li>
+<li>Java 7 (openjdk-7 package)</li>
+<li>Tomcat 7 (tomcat7 package)</li>
+<li>Solr 4.8.1 (manual download/installation)</li>
+<li>Drupal 7.25</li>
+<li>Search API 7.x-1.11</li>
+<li>Search API Solr 7.x-1.4</li>
+</ul>
+<h2>Installing Java</h2>
+<p>We begin by installing Java from the command line.</p>
+<pre class="brush: bash; title: ; notranslate">sudo apt-get install openjdk-7</pre>
+<h2>Installing Tomcat</h2>
+<p>Now we can install Tomcat from the command line.</p>
+<pre class="brush: bash; title: ; notranslate">sudo apt-get install tomcat7</pre>
+<p>Once Tomcat is installed, we can verify that the Tomcat default web page is present by opening up a browser window and navigating to <strong>http://localhost:8080/.</strong></p>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-http-tomcat.png"><img class="alignnone size-large wp-image-3592" src="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-http-tomcat-700x465.png" alt="Tomcat default web page" /></a></p>
+<h2>Installing Solr</h2>
+<p>Download the latest version of Solr 4.8.1 from <a title="Solr" href="http://lucene.apache.org/solr/" target="_blank">http://lucene.apache.org/solr/</a>, expand the archive, and copy Solr&#8217;s Java libraries to the Tomcat library directory.</p>
+<pre class="brush: bash; title: ; notranslate">sudo cp solr-4.8.1/dist/solrj-lib/* /usr/share/tomcat7/lib/</pre>
+<p>Next, copy Solr&#8217;s logging configuration file to the Tomcat configuration directory.</p>
+<pre class="brush: bash; title: ; notranslate">sudo cp solr-4.8.1/example/resources/log4j.properties /var/lib/tomcat7/conf/</pre>
+<p>We will also need to copy the Solr webapp to the Tomcat webapps directory.</p>
+<pre class="brush: bash; title: ; notranslate">sudo cp solr-4.8.1/dist/solr-4.8.1.war /var/lib/tomcat7/webapps/solr.war</pre>
+<p>Then, define the Solr context by modifying the solr.xml file.</p>
+<pre class="brush: bash; title: ; notranslate">sudo vim /var/lib/tomcat7/conf/Catalina/localhost/solr.xml</pre>
+<p>We just need a <a href="https://wiki.apache.org/solr/SolrTomcat#Configuring_Solr_Home_with_JNDI">context fragment</a> pointing to the webapp file from above and to the Solr home directory.</p>
+<pre class="brush: xml; title: ; notranslate">
+&lt;Context docBase=&quot;/var/lib/tomcat7/webapps/solr.war&quot; debug=&quot;0&quot; crossContext=&quot;true&quot;&gt;
+  &lt;Environment name=&quot;solr/home&quot; type=&quot;java.lang.String&quot; value=&quot;/usr/share/tomcat7/solr&quot; override=&quot;true&quot; /&gt;
+&lt;/Context&gt;
+</pre>
+<h2>Configuring Solr</h2>
+<p>To configure Solr, first create the Solr home directory.</p>
+<pre class="brush: bash; title: ; notranslate">sudo mkdir /usr/share/tomcat7/solr</pre>
+<p>Next, copy the Solr configuration files to the Solr home directory.</p>
+<pre class="brush: bash; title: ; notranslate">sudo cp -r solr-4.8.1/example/solr/collection1/conf /usr/share/tomcat7/solr/</pre>
+<p>Now we can verify that Solr is working by pointing our browser to <strong>http://localhost:8080/solr.</strong></p>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-http-solr.png"><img class="alignnone wp-image-3590 size-large" src="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-http-solr-700x465.png" alt="Solr web-based admin" width="700" height="465" /></a></p>
+<p>Finally, we&#8217;ll copy the Drupal Search API Solr Search module configuration files to the Solr home directory.</p>
+<pre class="brush: bash; title: ; notranslate">sudo cp sites/all/modules/contrib/search_api_solr/solr-conf/4.x/* /usr/share/tomcat7/solr/conf/</pre>
+<h2>Defining the Solr Core</h2>
+<p>First, we&#8217;ll need to define our Solr core by editing solr.xml (the name of &#8216;drupal&#8217; is arbitrary).</p>
+<pre class="brush: bash; title: ; notranslate">sudo vim /usr/share/tomcat7/solr/solr.xml</pre>
+<pre class="brush: xml; title: ; notranslate">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;solr persistent=&quot;false&quot;&gt;
+  &lt;cores adminPath=&quot;/admin/cores&quot;&gt;
+      &lt;core name=&quot;drupal&quot; instanceDir=&quot;drupal&quot; /&gt;
+ &lt;/cores&gt;
+&lt;/solr&gt;
+</pre>
+<p>Next, we&#8217;ll create the Solr core directory.</p>
+<pre class="brush: bash; title: ; notranslate">sudo mkdir /usr/share/tomcat7/solr/drupal</pre>
+<p>Then, we&#8217;ll copy our base Solr configuration files to the core directory.</p>
+<pre class="brush: bash; title: ; notranslate">sudo cp -r /usr/share/tomcat7/solr/conf /usr/share/tomcat7/solr/drupal/</pre>
+<p>Finally, we can verify the Solr core is available by browsing to <strong>http://localhost:8080/solr/#/~cores/drupal:</strong><br />
+<a class="image-link" href="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-http-solr-core.png"><img class="alignnone wp-image-3591 size-large" src="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-http-solr-core-700x465.png" alt="Solr core web-based admin" width="700" height="465" /></a></p>
+<h2>Configuring Search API</h2>
+<p>Now that Solr is up and running, add a Solr server within Drupal: use a &#8220;Solr Service&#8221; class on localhost with port 8080 and a path of: /solr/drupal:</p>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-search-api-add-server.png"><img class="alignnone size-large wp-image-3594" src="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-search-api-add-server-700x465.png" alt="Drupal Search API add Solr server screen" /></a></p>
+<p>Next, add an index, selecting the previously created server and other settings of your choice:</p>
+<p><a class="image-link" href="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-search-api-add-index.png"><img class="alignnone size-large wp-image-3593" src="http://forumone.com/wp-content/uploads/2014/07/ubuntu-solr-search-api-add-index-700x465.png" alt="Drupal Search API add Solr index screen" /></a></p>
+<p>Head over to the <a href="https://www.drupal.org/node/1251246" target="_blank">Search API documentation</a> and <a href="https://www.drupal.org/node/1999280" target="_blank">Search API Solr search documentation </a>for more details.</p>
+  </body>
+</html>
+

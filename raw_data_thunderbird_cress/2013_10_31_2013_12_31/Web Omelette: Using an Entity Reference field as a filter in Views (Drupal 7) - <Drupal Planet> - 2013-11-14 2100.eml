@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 14 Nov 2013 21:00:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 14 Nov 2013 21:00:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Using an Entity Reference field as a filter in Views (Drupal 7)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/using-entity-reference-field-filter-views-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Using an Entity Reference field as a filter in Views (Drupal 7)</title>
+    <base href="http://www.webomelette.com/using-entity-reference-field-filter-views-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Have you ever wondered how you can use the <a href="https://drupal.org/project/entityreference" target="_blank">Entity Reference</a> (ER) field as a View filter (properly) in Drupal 7? In this article I am going to show you a little tip for turning the ER field into a nice select list as a filter in Views (either for the admin or exposed to users).</p>
+<p>Let’s say you have 2 content types: <strong>Articles</strong> and <strong>Basic Pages</strong>. On the Article nodes you have an ER field that references to Basic Pages. If you create a View of Articles that you want to filter by I don’t know what Basic Page, you may find yourself adding the ER field as a filter only to find you need to provide a number as the Basic Page you want the Articles to be filtered by. Whaaat? Well yes, you need to provide the ID of the Basic Page referenced on the Article node. </p>
+<p>If your View filters only from the admin and this is enough, that’s all good and well. But what if you want to expose this filter to your visitors and let them select the name of the Basic Pages by which the Articles should get filtered? Like with taxonomy terms for instance. The answer to this problem is hidden somewhere in the field attributes on the content type. All you have to do is tick a box and the ER field becomes much more useful in Views.</p>
+<p><p>So let’s get it going. Edit the ER field on the content type it is used (in our case Article: <code>admin/structure/types/manage/article/fields/[your-field]</code>) and all the way down under <strong>Additional Behaviours</strong>, tick the box <code>Render Views filters as select list</code>. Save the field and go back to your View. Now if you choose the same field for the filter, you will get a select list of the node titles referenced with that field. And now you can also expose it to your visitors to use it for filtering the results of your View.</p>
+<p>Please take note though of the message you get below that checkbox. If you have more that 100 entities referenced with that field, it’s not a good idea to use it like this. Nor I assume is a size you’d like a select list (either for the Views admin or for your users) to be. </p>
+<p>Hope this helps.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/using-entity-reference-field-filter-views-drupal-7" st_title="Using an Entity Reference field as a filter in Views (Drupal 7)" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/using-entity-reference-field-filter-views-drupal-7" st_title="Using an Entity Reference field as a filter in Views (Drupal 7)" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/using-entity-reference-field-filter-views-drupal-7" st_title="Using an Entity Reference field as a filter in Views (Drupal 7)" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

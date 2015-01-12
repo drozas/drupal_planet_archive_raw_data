@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 11 Oct 2013 17:19:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 11 Oct 2013 17:19:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Jonathan Brown: Let's make Drupal 8 support SVGZ (IIS tester required)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://jonathanpatrick.me/node/5
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Jonathan Brown: Let's make Drupal 8 support SVGZ (IIS tester required)</title>
+    <base href="http://jonathanpatrick.me/node/5">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>SVGZ is just SVG compressed with gzip. Any web browser that supports SVG supports SVGZ as the files are just served with a gzip encoding.</p>
+<p>It is part of the SVG standard:</p>
+<blockquote><p>
+SVG images, being XML, contain many repeated fragments of text, so they are well suited for lossless data compression algorithms. When an SVG image has been compressed with the industry standard gzip algorithm, it is referred to as an "SVGZ" image and uses the corresponding .svgz filename extension. Conforming SVG 1.1 viewers will display compressed images.[8] An SVGZ file is typically 20 to 50 percent of the original size.[9] W3C provides SVGZ files to test for conformance.[10]
+</p></blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Scalable_Vector_Graphics#Compression">https://en.wikipedia.org/wiki/Scalable_Vector_Graphics#Compression</a></p>
+<p>It would be really amazing if it could be assumed that every Drupal 8 site is capable of serving SVGZ.</p>
+<p>For Drupal 8 to support SVGZ all that is required is for a couple of lines to be inserted into .htaccess for Apache to serve the files correctly. nginx can also be configured to serve SVGZ. At my request, <a href="https://www.getpantheon.com/">Pantheon</a> have already updated their nginx configuration to support it and I have confirmed that it works.</p>
+<p>The issue for this is <a href="https://drupal.org/node/2092245">https://drupal.org/node/2092245</a>. The patch makes the required changes to .htaccess, adds SVGZ versions of all the shipped SVG files and updates the CSS to serve the smaller SVGZ files.</p>
+<p>The patch also adds SVGZ support to IIS. The only outstanding task is to check that this works. If you have access to IIS please, please test this patch!</p>
+</div></div></div>
+  </body>
+</html>
+

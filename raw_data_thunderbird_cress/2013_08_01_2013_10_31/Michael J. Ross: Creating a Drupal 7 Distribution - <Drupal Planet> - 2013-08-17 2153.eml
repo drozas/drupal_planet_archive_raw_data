@@ -1,0 +1,86 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 17 Aug 2013 20:53:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 17 Aug 2013 20:53:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Michael J. Ross: Creating a Drupal 7 Distribution
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.ross.ws/content/creating-drupal-7-distribution
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Michael J. Ross: Creating a Drupal 7 Distribution</title>
+    <base href="http://www.ross.ws/content/creating-drupal-7-distribution">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>Creating a Drupal 7 Distribution</h2>
+<h3>Capturing Your Own Installation Profile and Settings</h3>
+<p class="author_citation">By <span class="proper_name">Michael J. Ross</span><br /><span class="date">2012-11-11</span></p>
+<p class="publication_info">This article was published in the print magazine <a href="http://drupalwatchdog.com/"><cite>Drupal Watchdog</cite></a>, Volume 3 Issue 1, <span class="date">2013-04</span>, on pages 28-29, by <a href="http://www.tag1publishing.com/">Tag1 Publishing</a>. The magazine was distributed at <a href="http://portland2013.drupal.org/">Drupalcon Portland</a>, <span class="date">2013-05-20</span>. The article was also <a href="">published on their website</a>.</p>
+<p>Prior to version 7, most Drupal users — and even administrators — had little need to be familiar with the inner workings of distributions and installation profiles. For versions 6 and earlier, when installing a fresh copy of Drupal core, one naturally would specify the minimum required information: database connection, website name, and superuser account. Yet one had no opportunity to affect the list of modules and themes initially enabled, the default content types, or any other configuration details. However, anyone installing Drupal 7 is presented with a choice of installation profiles: "Standard" (the default) and "Minimal".</p>
+<p><a href="http://www.ross.ws/sites/default/files/articles/Creating%20a%20Drupal%207%20Distribution/Default%20installation%20profiles.png"><img src="http://www.ross.ws/sites/default/files/articles/Creating%20a%20Drupal%207%20Distribution/Default%20installation%20profiles.jpg" alt="Default installation profiles" /></a><br /><em>Figure 1. Default installation profiles</em></p>
+<p>An installation profile comprises a set of files that completely describe how to configure a new installation of Drupal core, and can be made part of a distribution. The Drupal 7 installation screen mentions that the Standard profile offers "commonly used features pre-configured". These include longstanding modules such as Color, Comment, and Search — as well as new ones such as Dashboard, Overlay, and Shortcut. The Standard profile includes the pre-built content types Article and Basic page, an administrator role, and even a taxonomy vocabulary (Tags).</p>
+<h3>DIY Distro</h3>
+<p>But what if you don't want most, or even any, of these preliminary settings chosen for you? You could instead opt for the Minimal profile, and add all your customizations on top of it each time you build a website. This could entail a lot of effort and time, clicking your way through GUI screens — downloading and enabling modules, and making numerous configuration changes. Instead, it would be convenient to be able to capture all of these actions and settings in your own distribution. In this article, we will learn how to do that.</p>
+<p>This topic is best explored through example, and so we will build a distribution containing settings I have found to be valuable as a starting point for most new client websites. Aside from a Drupal core and its usual technical requirements, the only other web technology you need installed on the server is <a href="https://drupal.org/project/drush">Drush</a>.</p>
+<h3>A Solid Foundation</h3>
+<p>The first step is to create and configure the Drupal website to be exactly the way you want it in your distribution. In our example, we download and install the latest version (7.17, as of this writing), and use the Minimal installation profile, in order to minimize the amount of subsequent changes that need to be made. For performance reasons, I typically use database logging only when appropriate for the project; so I disable the core module "Database logging". I enable nine must-have core modules: Contextual links, Field UI, File, Image, List, Menu, Number, Options, and Path.</p>
+<p>Every designer and developer has his or her list of favorite contrib modules with which to begin every new project. Mine currently are: Add another; Administration menu, Administration menu Toolbar style; Chaos Tool Suite; Date, Date All Day, Date API, Date Popup, Date Repeat API, Date Tools, Date Views; Devel; Email Field; Entity API, Entity tokens; Fast Permissions Administration; Global Redirect; Login Destination; Module Filter; Page Title; Pathauto; Redirect 403 to User Login; Remove Generator META tag; Token; Transliteration; Views, Views UI; XML sitemap, XML sitemap engines, XML sitemap menu, XML sitemap node. All of these can be downloaded and easily enabled using just two Drush commands:</p>
+<code>
+$ drush dl addanother admin_menu ctools date devel email entity fpa globalredirect login_destination module_filter page_title pathauto r4032login remove_generator token transliteration views xmlsitemap<br />
+$ drush en --yes addanother admin_menu* ctools date date_all_day date_popup date_repeat date_repeat_field date_tools date_views devel email entity entity_token fpa globalredirect login_destination module_filter page_title pathauto r4032login remove_generator token transliteration views views_ui xmlsitemap xmlsitemap_engines xmlsitemap_menu xmlsitemap_node<br /></code>
+<h3>Make a Makefile</h3>
+<p>The next step in the process is to create a makefile, which is a manifest file formatted in the standard Drupal ".info" syntax. The makefile starts with a Drupal core version number, which can optionally start with a specific release number; otherwise, the most recent stable release is automatically chosen. It then specifies the Drush Make API version (in our case, 2). The bulk of the makefile specifies all of the contrib and custom modules used in the installation, as well as contrib libraries. Each contrib module entry can have a version number, if desired. (We will exclude all version numbers.) It can also have a path to a Git repository, local or remote; otherwise, Drupal.org is used as the source for downloading. Similarly, each custom module must have a Git path (e.g., on GitHub). Our distribution is intended to serve as a foundation upon which to build new websites, so let's call it "Base".</p>
+<p>In the root directory, perform this Drush command: <code>drush generate-makefile base.make --exclude-versions</code> (The undocumented alias "make-generate" will also work.)</p>
+<p>The generated makefile, when stripped of the (unnecessary) comments, comprises:</p>
+<code>
+core = 7.x<br />
+api = 2<br />
+projects[] = "drupal"<br />
+projects[] = "addanother"<br />
+projects[] = "admin_menu"<br />
+projects[] = "ctools"<br />
+projects[] = "date"<br />
+projects[] = "devel"<br />
+projects[] = "email"<br />
+projects[] = "entity"<br />
+projects[] = "fpa"<br />
+projects[] = "globalredirect"<br />
+projects[] = "login_destination"<br />
+projects[] = "module_filter"<br />
+projects[] = "page_title"<br />
+projects[] = "pathauto"<br />
+projects[] = "r4032login"<br />
+projects[] = "remove_generator"<br />
+projects[] = "token"<br />
+projects[] = "transliteration"<br />
+projects[] = "views"<br />
+projects[] = "xmlsitemap"<br /></code>
+<p>If any needed information is missing — typically an unresolved Git path — then Drush will replace the item with a placeholder, which will need to be updated with the correct value prior to finalizing the distribution.</p>
+<h3>Saving Choices</h3>
+<p>You will also want to include any configuration changes. Drush does not include them in the generated makefile; rather, they must be captured in an installation profile file. There are over a dozen such changes that I have found to be quite helpful, but due to the limited space for this article, we cannot detail all of them. Here is an example of one setting, which we would put in base.install, since it is modifying the database and not the options in the profile's installation process (in which case it would be put in the hook function base_form_install_configure_form_alter(), in base.profile). Without the usual comments, our base.install consists of:</p>
+<code>
+&lt;?php<br />
+function base_install() {<br />
+  // Set the administration theme to Seven, instead of the default theme.<br />
+  variable_set('admin_theme', 'seven');<br />
+}<br /></code>
+<h3>Wrapping It Up</h3>
+<p>Be sure to include the required files base.info and base.profile (which can be empty). In our case, base.info could be:</p>
+<code>
+name = Base<br />
+description = Essential core and contrib modules, with configuration settings, and none of the annoying core modules.<br />
+core = 7.x<br /></code>
+<p>Test the installation profile, to verify that it is now an option when re-installing the website.</p>
+<p><a href="http://www.ross.ws/sites/default/files/articles/Creating%20a%20Drupal%207%20Distribution/New%20installation%20profile.png"><img src="http://www.ross.ws/sites/default/files/articles/Creating%20a%20Drupal%207%20Distribution/New%20installation%20profile.jpg" alt="New installation profile" /></a><br /><em>Figure 2. New installation profile</em></p>
+<p>The final step in creating the distribution is as follows: <code>drush make --prepare-install --tar base.make base</code> This command generates a tarball, base.tar.gz, in the root directory. It also creates a settings.php file with secure permissions, and a files/ directory.</p>
+<p>This overview illustrates that it is not difficult to craft your own distribution, which you might decide to share with the rest of the Drupal community, on Drupal.org or GitHub.</p>
+<p class="article_copyright">Copyright © 2012 <span class="proper_name">Michael J. Ross</span>. All rights reserved.</p>
+
+</div></div></div>
+  </body>
+</html>
+

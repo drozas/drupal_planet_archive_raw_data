@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 30 Jul 2013 18:55:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 30 Jul 2013 18:55:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Heine Deelstra: Lazy loading: hook_hook_info is for hook owners only.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://heine.familiedeelstra.com/hook-groups-are-for-hook-owners-only
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Heine Deelstra: Lazy loading: hook_hook_info is for hook owners only.</title>
+    <base href="http://heine.familiedeelstra.com/hook-groups-are-for-hook-owners-only">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>I've recently seen some recommendations to use <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_hook_info/7">hook_hook_info</a> to provide "groups" to core-provided hooks so you can move your module's implementations of those hooks to $module.$group.inc. A poor-mans autoloader if you will.</p>
+
+<p>Doing this can lead to unexpected results.</p></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Nov 2014 18:51:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Nov 2014 18:51:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Preventing yourself from accidentally breaking production with Drush
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/preventing-yourself-breaking
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Preventing yourself from accidentally breaking production with Drush</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/preventing-yourself-breaking">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>For all the sites I maintain, I have at least a local and production environment. Some projects warrant a dev, qa, etc. as well, but for the purposes of this post, let's just assume you often run drush commands on local or development environments during development, and eventually run a similar command on production during a deployment.</p>
+<p>What happens if, at some point, you are churning through some Drush commands, using aliases (e.g. <code>drush @site.local break-all-the-things</code> to break things for testing), and you accidentally enter <code>@site.prod</code> instead of <code>@site.local</code>? Or what if you were doing something potentially disastrous, like deleting a database table locally so you can test a module install file, using <code>drush sqlq</code> to run a query?</p></div></div></div>
+  </body>
+</html>
+

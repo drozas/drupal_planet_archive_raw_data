@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 14 Aug 2013 10:26:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 14 Aug 2013 10:26:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Janez Urevc: Debug drush requests in PHPStrom
+Content-Transfer-Encoding: 8bit
+Content-Base: http://janezurevc.name/debug-drush-requests-phpstrom
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Janez Urevc: Debug drush requests in PHPStrom</title>
+    <base href="http://janezurevc.name/debug-drush-requests-phpstrom">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Today I needed to debug <a href="http://drupal.org/project/drush">Drush</a> request. Since I've been using <a href="http://www.jetbrains.com/phpstorm/">PHPStorm</a> for last few weeks I wanted to use it for that. After a bit of research I found this way to achieve what I needed:</p>
+<ol><li>Install and configure Xdebug. There are plenty <a href="http://lmgtfy.com/?q=xdebug+installation">posts about this all over the internet</a>.</li>
+<li>Start normal web debug session in PHPStorm. Look for <em>"Waiting for incoming connection with ide key '17862'."</em> in PHPStorm's debug window. 17862 will be something else in your case. Remember this number as we're going to need it in next steps.</li>
+<li>Open terminal and set new variable<br /><pre>
+export XDEBUG_CONFIG="idekey=17862"</pre><p>Remember to replace "17862" with the number you remembered in the previous step.</p></li>
+<li>Run your drush command and PHPStorm should stop on first breakpoint that you've set.</li>
+</ol><p>Tadaaaa! :) That was easy. I'm not sure if there is any even more convenient way to do this. If you're aware about it, please feel free to leave a comment. </p>
+</div></div></div>
+  </body>
+</html>
+

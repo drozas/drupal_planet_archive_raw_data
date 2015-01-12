@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 16 Feb 2014 17:31:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 16 Feb 2014 17:31:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: groups.drupal.org frontpage posts: Modernizing Testbot: Introduction
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/408603
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>groups.drupal.org frontpage posts: Modernizing Testbot: Introduction</title>
+    <base href="https://groups.drupal.org/node/408603">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>A couple months ago, at the BADCamp devops summit, we held a workshop to discuss the architecture and operation of the current Drupal.org Automated Testing infrastructure, as well as to review a proposed future state architecture for the platform.</p>
+<p>This post is an attempt to summarize the discussion, outline the proposed architecture as presented, and discuss some next steps.
+</p>
+<h2>Existing Infrastructure</h2>
+<p>To begin, I provided an overview of the existing PIFT/PIFR architecture and operation.  Rather than re-hash those details here, I'll refer readers to the existing drupal.org documentation on the topic, located at <a href="https://drupal.org/node/1222652" title="https://drupal.org/node/1222652">https://drupal.org/node/1222652</a>.</p>
+<h2>Current Gaps</h2>
+<p>One of the items which came out of this discussion was a request to explain the existing gaps with our current infrastructure.  At a high level, but without getting into too much detail, these include:</p>
+<dl>
+<dt>i) Multiple environments</dt>
+<dd>need to support multiple testing environments (different PHP/Database versions)<br />
+<dd>
+<dd>need to distinguish (i.e. decouple) testing environments from new testing plugins</dd>
+<dd>faster per-environment results (currently, all environments must complete before any one result is returned)</dd>
+<dt>ii) Quicker response times</dt>
+<dd>We have an ever-growing test run duration, having exceeded 2 hours in the recent past</dd>
+<dd>To meet developer expectations, we need to move to support parallel batch processing</dd>
+<dt>iii) Realtime feedback for in progress tests</dt>
+<dd>Allowing developers to monitor their tests, and better understand when they can expect a result.</dd>
+<dt>iv) New features</dt>
+<dd>'Fast fail' option, which exits on the first failure</dd>
+<dd>Test prioritization ('Run x, y, and z first' testing option)</dd>
+<dd>Patch Conflict Detection</dd>
+<dd>Blacklisting tests</dd>
+<dd>Support private tests for security team</dd>
+<dd>Historical test results (instead of current 'last build only' capabilities)</dd>
+<dd>Associating tests with a specific core commit id</dd>
+<dd>Ability to write settings into settings.php</dd>
+<dd>Drush and Composer support</dd>
+<dt>v) Move away from a single purpose stack</dt>
+<dd>Move towards a generic job dispatcher instead of ‘simpletest-only’</dd>
+<dd>Support PHPUnit testing</dd>
+<dd>Add future flexibility as our toolsets change and evolve in the future</dd>
+<dt>vi) Separate environment setup from testing phase</dt>
+<dd>Currently, testbot environmental failures show up as failed tests</dd>
+<dt>vii) Cancel/Requeue capabilities to address false/random failures</dt>
+</dd></dd></dl>
+<p>The above list outlines the motivations behind a desire to modernize the current infrastructure ... the rest of this post outlines the proposed solution which was presented as a potential end-state for this evolution.</p>
+<h2>Proposed Architecture</h2>
+<p>Key to the proposal is a move away from a single-purpose testing stack towards more of a flexible generic job dispatcher which supports a wide range of automation functions, and is able to evolve with the future changing needs of the community.</p>
+<h3>Dispatcher</h3>
+<p>The proposal leverages the use of a Jenkins distributed build implementation as the primary job router/dispatcher.  A master/slave architecture is used to support scalability of the platform over the long term, as well as the ability to meet the temporary short-term test capacity requirements of DrupalCons, conferences, and other sprint events.</p>
+<h3>Slaves</h3>
+<p>Each of the jenkins slaves is also configured as a Docker host, capable of spinning up individual on-demand containers to provide the actual testbot/job workers.  Each Docker host stores multiple container snapshots, and spins up the appropriate snapshot based on the testing type and desired environmental attributes (such as PHP/DB versions) specified within a test request.</p>
+<h3>Job Results</h3>
+<p>Because we'd also like to support historical test results for every job run, it is anticipated that the storage requirements for the jenkins environment will be quite high.  To help ensure that this doesn't affect operation of the jenkins master, the proposal suggests the use of a 'build publisher' server to host the results and job artifacts off of the main dispatcher.  This may be another jenkins machine, or a purpose-built database server.</p>
+<p>This approach also allows the hosting of the jenkins master on a private network segment, while providing the test results on a public server (increasing security of the testing backend while potentially exposing API-based access or hooks to the greater community on the front-end).</p>
+<h3>Results Display</h3>
+<p>This 'build publisher' server becomes the canonical storage for job results, serving as the back-end for qa.drupal.org, which becomes little more than a presentation layer for the results data.  As with the current environment, drupal.org would still provide summarized test results, with qa.drupal.org being the public interface for detailed results.</p>
+<h2>Next Steps</h2>
+<p>With support for this proposal, it was decided that we would make use of the “Drupal.org Testing Infrastructure” group on groups.drupal.org as a collection point for self-organization and sharing our findings.  The first phase will focus on ‘research’, as we investigate individual pieces of the architecture at a ‘proof of concept’ level, validating the smaller components of the proposal before coming together in a larger, more coordinated assembly.  I will be following up this post with a planned roadmap for these activities, looking for feedback and volunteers.</p>
+<p>To get involved, please take a moment to join the g.d.o group at <a href="https://groups.drupal.org/drupal-org-testing-infrastructure" title="https://groups.drupal.org/drupal-org-testing-infrastructure">https://groups.drupal.org/drupal-org-testing-infrastructure</a>, and add your name to the ‘Volunteers and Roles’ contact list, add a comment below, or email me via my drupal.org contact form (<a href="https://drupal.org/user/148199/contact" title="https://drupal.org/user/148199/contact">https://drupal.org/user/148199/contact</a>).</p>
+  </body>
+</html>
+

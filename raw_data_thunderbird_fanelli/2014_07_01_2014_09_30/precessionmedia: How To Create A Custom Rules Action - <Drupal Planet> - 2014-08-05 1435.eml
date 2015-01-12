@@ -1,0 +1,109 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 05 Aug 2014 12:35:01 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 05 Aug 2014 12:35:01 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: precessionmedia: How To Create A Custom Rules Action
+Content-Transfer-Encoding: 8bit
+Content-Base: http://precessionmedia.com/blog/how-create-custom-rules-action
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>precessionmedia: How To Create A Custom Rules Action</title>
+    <base href="http://precessionmedia.com/blog/how-create-custom-rules-action">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>This post should give a quick example on how to write the code to create your own custom actions for Drupals' Rules module. Writing your own plugins for rules (events, conditions or actions) can give you enormous benefits later, when you start to reuse them throughout the site or even port them on other Drupal sites.</p>
+
+<p>We will be creating an action, which will provide a hashed string. In order to create this string we need to pass some parameters to php's hash function like a source string, a list with possible algorithms to choose and an output length. These parameters will be configurable through Rules' backend. So let's dive in.</p>
+
+<p>First you need to <a href="https://www.drupal.org/node/1074362" target="_blank">create a basic custom module</a> in your Drupal installation. The one I have in my custom environment is called "my_module".</p>
+
+<p>You don't need anything special in your "my_module.info" or "my_module.module" files, but there has to be a file called "my_module.rules.inc", which will hold the code for your rules' action. Create it and add following code to it:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+&nbsp;
+<span style="color: #009933; font-style: italic;">/**
+ * Implement hook_rules_action_info().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> my_module_rules_action_info<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #b1b100;">return</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'my_module_rules_action_create_hashed_string'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'label'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Create hashed string'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'group'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Custom'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'parameter'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'string'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+          <span style="color: #0000ff;">'type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'text'</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'label'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'String to be hashed'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Enter a value for a string that will be hashed using the md5 hash-algorithm.'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'length'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+          <span style="color: #0000ff;">'type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'integer'</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'label'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'The length of the returned string'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Enter a number for the length of the hashed string that will be created.'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'algorithm'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+          <span style="color: #0000ff;">'type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'text'</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'label'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Algorithm'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Select a hash algorithm.'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'options list'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'my_module_algorithm_options'</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'restriction'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'input'</span><span style="color: #339933;">,</span>
+        <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'provides'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'hashed_string'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+          <span style="color: #0000ff;">'type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'text'</span><span style="color: #339933;">,</span>
+          <span style="color: #0000ff;">'label'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Hashed string'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// A helper function to provide us with a list of algorithms</span>
+<span style="color: #000000; font-weight: bold;">function</span> my_module_algorithm_options<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #000088;">$bundles</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000088;">$bundles</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'md4'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'md4'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000088;">$bundles</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'md5'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'md5'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">return</span> <span style="color: #000088;">$bundles</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// This callback creates the hashed string by using the parameters provided through rules' UI</span>
+<span style="color: #000000; font-weight: bold;">function</span> my_module_rules_action_create_hashed_string<span style="color: #009900;">&#40;</span><span style="color: #000088;">$string</span><span style="color: #339933;">,</span> <span style="color: #000088;">$length</span><span style="color: #339933;">,</span> <span style="color: #000088;">$algorithm</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$length</span> <span style="color: #339933;">&lt;=</span> <span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #666666; font-style: italic;">// For anything below or equal zero lets return the default value.</span>
+    <span style="color: #000088;">$string</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/hash"><span style="color: #990000;">hash</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'md5'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$string</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$string</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/substr"><span style="color: #990000;">substr</span></a><span style="color: #009900;">&#40;</span><a href="http://www.php.net/hash"><span style="color: #990000;">hash</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$algorithm</span><span style="color: #339933;">,</span> <span style="color: #000088;">$string</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">0</span><span style="color: #339933;">,</span> <span style="color: #000088;">$length</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+  <span style="color: #b1b100;">return</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'hashed_string'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$string</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+
+<p>Here we implement initially "hook_rules_action_info" and add our own action to it. Our action is an associative array keyed with the name of the callback that will return our value (in this case a hashed string). Inside it we give our action a label and put it in a group ("Custom"). The next part of this array is an associative array itself, keyed with "parameter". Inside it we describe our 3 parameters, which will be passed to the action callback. Note that the "algorithm" parameter has an entry with the key "options list" which points to a helper function ("my_module_algorithm_options") to keep the code more lean.</p>
+
+<p>The last part of the array is another associative array keyed with "provides". This key tells Rules what the machine name of the provided variable is, among with giving it some additional data like type or label. You can use this provided variable in latter actions of your rule now!</p>
+
+<p>The last part of the code is the action callback. Only thing to note here is that we return the whole string returned by the hash-function, when the value of $length is below or equal to 0.</p>
+
+<p>Clear your cache in order for Drupal to register the code you added and the new action should appear now:</p>
+
+<p><img src="http://precessionmedia.com/sites/default/files/pictures/custom_action_form.jpg" width="620" height="673" alt="custom_action_form.jpg" /></p>
+
+<p>In order to see it's working I've added a "Show a message on the site"-action which shows the provided hashed string when we're looking at a node page:</p>
+
+<p><img src="http://precessionmedia.com/sites/default/files/pictures/show_hashed_string_message.jpg" width="620" height="340" alt="show_hashed_string_message.jpg" /></p>
+
+<p>That's it with this simple example! Please leave a comment if there is anything more that comes to mind. Thanks!</p>
+</div></div></div><div class="field field-name-submitted-author field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><p>By dimitar on 05.08.2014</p>
+</div></div></div><div class="field field-name-service-links-displays-group field-type-ds field-label-above"><div class="field-label">Share this:&nbsp;</div><div class="field-items"><div class="field-item even"><div class="service-links"><a href="http://twitter.com/share?url=http%3A//tinyurl.com/mwxhaxp&amp;text=How%20To%20Create%20A%20Custom%20Rules%20Action%20by%20precessionmedia.com" title="Share this on Twitter" class="service-links-twitter" rel="nofollow" target="_blank"><img typeof="foaf:Image" data-src="http://precessionmedia.com/sites/all/modules/service_links/images/twitter.png" src="/sites/all/modules/lazyloader/image_placeholder.gif" alt="Twitter logo" /><noscript><img typeof="foaf:Image" src="http://precessionmedia.com/sites/all/modules/service_links/images/twitter.png" alt="Twitter logo" /></noscript></a> <a href="http://www.facebook.com/sharer.php?u=http%3A//tinyurl.com/mwxhaxp&amp;t=How%20To%20Create%20A%20Custom%20Rules%20Action%20by%20precessionmedia.com" title="Share on Facebook" class="service-links-facebook" rel="nofollow" target="_blank"><img typeof="foaf:Image" data-src="http://precessionmedia.com/sites/all/modules/service_links/images/facebook.png" src="/sites/all/modules/lazyloader/image_placeholder.gif" alt="Facebook logo" /><noscript><img typeof="foaf:Image" src="http://precessionmedia.com/sites/all/modules/service_links/images/facebook.png" alt="Facebook logo" /></noscript></a></div></div></div></div>
+  </body>
+</html>
+

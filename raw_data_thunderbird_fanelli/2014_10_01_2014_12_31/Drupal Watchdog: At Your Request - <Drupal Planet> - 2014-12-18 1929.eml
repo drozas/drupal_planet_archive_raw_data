@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 18 Dec 2014 18:29:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 18 Dec 2014 18:29:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: At Your Request
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/drupal8-symfony-request-object
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: At Your Request</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/drupal8-symfony-request-object">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Feature        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/4.1-AtYourRequest.jpg" alt="Photo" class="img-responsive img-thumbnail" width="45%" align="right" />In the beginning there was the Common Gateway Interface, commonly known as CGI – a standard approach used to dynamically generate web pages. Originally devised in 1993 by the NCSA team and formally defined by <em>RFC 3875</em> in 2004, CGI 1.1 took seven years to go from the original RFC to an endorsed standard.</p>
+<p>In 1994, not long after the original CGI standard was documented by NCSA, Rasmus Lerdorf created Personal Home Page tools (PHP Tools), an implementation of the Common Gateway Interface written in C. After going through a number of iterations and name-changes this grew to be the PHP language we know and love.</p>
+<p>One of PHP's strengths was the way in which it made many of the request and server specific variables, as defined by the CGI standard, easy to access – through the use of superglobals, namely <span class="geshifilter"><code class="php geshifilter-php">$_POST</code></span>, <span class="geshifilter"><code class="php geshifilter-php">$_GET</code></span>, and <span class="geshifilter"><code class="php geshifilter-php">$_SERVER</code></span>. Each of these is an associative array. In the case of <span class="geshifilter"><code class="php geshifilter-php">$_POST</code></span>, the request body is parsed for you and turned into an array of user-submitted values, keyed by field name, and conveniently supporting nested arrays. Similarly for <span class="geshifilter"><code class="php geshifilter-php">$_GET</code></span>, the query string is parsed by PHP and turned into a keyed array. In the case of <span class="geshifilter"><code class="php geshifilter-php">$_SERVER</code></span>, the gamut of server-specific variables are available for your script to interrogate.</p>        </div>
+  </body>
+</html>
+

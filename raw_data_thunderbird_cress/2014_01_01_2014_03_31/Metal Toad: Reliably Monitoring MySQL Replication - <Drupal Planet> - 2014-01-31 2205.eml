@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 31 Jan 2014 22:05:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 31 Jan 2014 22:05:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Metal Toad: Reliably Monitoring MySQL Replication
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.metaltoad.com/blog/monitoring-mysql-replication
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Metal Toad: Reliably Monitoring MySQL Replication</title>
+    <base href="http://www.metaltoad.com/blog/monitoring-mysql-replication">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Replication is a wonderful thing for your clients. Having a 'hot spare' of their database(s) for redundancy, or being able to off-load read operations from the main database to increase performance, giving your client peace-of-mind about their data and application. I won't go into setting up MySQL Replication; there are more than a few guides on that already out there (here's the <a href="http://dev.mysql.com/doc/refman/5.1/en/replication-howto.html" target="blank">official documentation</a>). Once you do have Replication running, you need to make sure that it remains running, reliably, all the time. How best to accomplish this?</p>
+<h3>The Way Monitoring Had Been</h3>
+<p>The typical method is to use SLAVE STATUS to look at information about the setup.</p><ul class="links inline"><li class="0 first last"><a href="http://www.metaltoad.com/blog/monitoring-mysql-replication" rel="tag" title="Reliably Monitoring MySQL Replication">Read more</a></li>
+</ul>
+  </body>
+</html>
+

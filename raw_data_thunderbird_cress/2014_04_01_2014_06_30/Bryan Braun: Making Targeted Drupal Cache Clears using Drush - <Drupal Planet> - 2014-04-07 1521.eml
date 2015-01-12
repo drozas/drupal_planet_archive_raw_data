@@ -1,0 +1,65 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 07 Apr 2014 14:21:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 07 Apr 2014 14:21:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bryan Braun: Making Targeted Drupal Cache Clears using Drush
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.bryanbraun.com/2014/04/07/making-targeted-drupal-cache-clears-using-drush
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bryan Braun: Making Targeted Drupal Cache Clears using Drush</title>
+    <base href="http://www.bryanbraun.com/2014/04/07/making-targeted-drupal-cache-clears-using-drush">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The standard Drush command for clearing Drupal's cache looks like this:</p>
+<pre>
+	drush cache-clear all</pre><p>(You can also use the shortened alias <code>cc</code> like this: <code>drush cc all</code>)</p>
+<p>These commands give you the same result as when you click that cache clear button in the UI <span style="color: rgb(84, 84, 84); font-family: arial, sans-serif; font-size: small; line-height: 18.200000762939453px;">—</span> it clears all of Drupal's internal caches.</p>
+<p>But clearing all of Drupal's caches at once can be overkill. You usually don't need to clear everything, and doing so can put heavy load on your servers (especially if your site is large or gets a lot of traffic). Beneath the surface, Drupal's caching is actually pretty granular, and tools like Drush give us the ability to target and clear caches on the subsystem level.</p>
+<p>Using Drush, you can see your caching options with:</p>
+<pre>
+	# Using the shortened alias from this point on.
+	drush cc</pre><p>Which returns something like this:</p>
+<pre>
+[0] : cancel
+[1] : all
+[2] : drush
+[3] : theme registry
+[4] : menu
+[5] : css+js
+[6] : block
+[7] : module list
+[8] : theme list
+[9] : registry
+...</pre><p>Let's look at what each of these does (as a quick note, I'm specifically looking at Drush 6, which is the major version at this time):</p>
+<p><code>drush cc all</code><br />
+	Remember how I said that this does the same thing as the cache clear button in the UI? Well, that's technically false. Yes, <code>drush cc all</code> will clear all your Drupal caches (as long as it can bootstrap Drupal), but it will also clear its own internal Drush cache. That's why when Drush cannot bootstrap Drupal, you will still see a success command saying <code>'drush' cache was cleared</code>.</p>
+<p><code>drush cc drush</code><br />
+	This only clears Drush's internal cache (the same one I just mentioned). You don't need a Drupal site available to clear this cache.</p>
+<p><code>drush cc theme registry</code><br />
+	This command simply calls <code>drupal_theme_rebuild()</code> to rebuild the theming system. This is needed whenever new ".tpl.php" files or theme hooks are added to the system. This specific cache clear only applies for Drupal 7 and up.</p>
+<p><code>drush cc menu</code><br />
+	This runs a menu rebuild, which refreshes the database tables used by various menu functions. For example, any new router items (like those defined in <code>hook_menu</code>) are added to the <code>menu_links</code> table, and stale ones are removed. This also clears the page and block caches, to prevent the display of stale menu links.</p>
+<p><code>drush cc css+js</code><br />
+	If you have CSS or JS aggregation enabled, this will rebuild the aggregated files. It also increments the query string on CSS &amp; JS links, forcing clients that have cached an old copy to download a fresh one.</p>
+<p><code>drush cc block</code><br />
+	Block caching exists so Drupal doesn't have to look up the locations and visibility of blocks with each page load. This command refreshes that cache.</p>
+<p><code>drush cc module list</code><br />
+	This re-scans the module directories in your codebase and refreshes Drupal's internal list of which modules are available.</p>
+<p><code>drush cc theme list</code><br />
+	This re-scans the theme directories in your codebase and refreshes Drupal's internal list of which themes are available.</p>
+<p><code>drush cc registry</code><br />
+	Drupal maintains an internal registry of all functions or classes in the system, allowing it to lazy-load code files as needed (reducing the amount of code that must be parsed on each request). The list of these files is known as the "code registry" and it is stored in the <code>system</code> table in your Drupal database. This cache clear will look at this list of files and update the contents of any files that have been changed. Note: it will not rebuild the registry from scratch. For more information, see <code><a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/registry_update/7">registry_update</a></code>.</p>
+<p><code>drush cc ?????</code><br />
+	You may see other options in this list, because contributed modules (like views and advanced aggregation) can add their own kinds of cache clears. In each case, you'll see a file in the contrib module named something like <code>mymodule.drush.inc</code> that contains the code which defines what the cache clear does.</p>
+<p> </p>
+<p>If you want to see what each of these options does on a code level, you can download Drush and inspect the file found at <code>Drush/commands/core/cache.drush.inc</code>.</p>
+</div></div></div>
+  </body>
+</html>
+

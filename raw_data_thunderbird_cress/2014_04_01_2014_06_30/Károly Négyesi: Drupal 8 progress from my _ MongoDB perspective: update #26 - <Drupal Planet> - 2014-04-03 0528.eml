@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 03 Apr 2014 04:28:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 03 Apr 2014 04:28:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #26
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/393
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #26</title>
+    <base href="http://www.drupal4hu.com/node/393">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>At DrupalDevDays Szeged, skipyT, fgm and myself made tremendous progress with writing the MongoDB drivers. All the override mechanisms work as expected and things in general, work. Most importantly, we have an entity storage backend and a significant percentage of the entity storage query tests pass (it is not expected all ever would pass, for example relationships are not supported). I have also managed to get the "add aggregator feed" test pass (going in ABC order among entities), this hit a snag where a recent rewrite of the testing framework broke overriding services during testing and I am not allowed to fix this so automated testing will require a small core patch. Otherwise we would need to create a mostly empty testing class for every test, this is clearly not desirable. Also at DDD, Ricardo Amaro and Jeremy Thorson have made significant strides in creating a more modern testbot based on Docker, I intend to run an instance at home and see how MongoDB fares with all the tests. I am reasonably confident by the time the beta happens, you will be able to run it solely on MongoDB.</p>
+<p>Meanwhile, migration got stalled by an unrelated core issue, it's close to a resolution now. Other core changes broke many migrations but by now we should be back on track and again, I am reasonably sure by beta time the Drupal 6 to Drupal 8 path will be there to test. Will Drupal 7? I hope too but nothing is certain.</p>
+  </body>
+</html>
+

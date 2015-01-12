@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 18 Nov 2013 14:30:27 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 18 Nov 2013 14:30:27 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Taxonomy terms from the same vocabulary filtered by the topics and referenced on multiple content types
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-filter-taxonomy-terms-multiple-content-types-entity-reference
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Taxonomy terms from the same vocabulary filtered by the topics and referenced on multiple content types</title>
+    <base href="http://www.webomelette.com/drupal-filter-taxonomy-terms-multiple-content-types-entity-reference">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In this tutorial I am going to show you how to reference one taxonomy vocabulary on multiple content types with the possibility to restrict the availability of the terms per content type. What do I mean? Well, <strong>you’ll be able to have some terms in the vocabulary available in a select list of content type A and other terms of the same vocabulary in a select list for the content type B</strong>. Why not use two different vocabularies for this? Because you may need some terms available for referencing in both content types. </p>
+<p>To do this you’ll need to have the <a href="https://drupal.org/project/entityreference" target="_blank">Entity Reference</a> module installed. So get that out of the way quickly with <code>drush dl entityreference -y</code> and <code>drush en entityreference -y</code> if you haven't already. So let’s get started. </p>
+<p>First up, we need the taxonomy set up. I have my <strong>Tags</strong> vocabulary containing the following terms:</p>
+<p><img src="/sites/default/files/images/20131711152047.jpg" alt="" /></p>
+<p>You’ll notice that these terms could be more or less grouped into two categories: <code>Transport</code> and <code>Sleeping</code>. One term (<code>couchette</code>) kinda fits both criteria and is there to exemplify the reason for not using 2 different vocabularies to handle the issue. Now we need to technically make the distinction between these terms as well and since they are entities, we can use a field for that.</p>
+<p>So we can now go ahead and add a new field to this vocabulary of the type <code>List (text)</code> with whatever widget you’d like (and let’s call the field <code>Type</code>). You should make the allowed number of values unlimited and put the following in the allowed values list: </p>
+<p><img src="/sites/default/files/images/20131711152212.jpg" alt="" /></p>
+<p>Now edit each term and select the appropriate type. As expected, for the term <code>chouchette</code>, you should select both options. </p>
+<p><p>So now that we have our taxonomy squared away, it’s time to create a View that will handle the filtering of these terms. Because if we now add the <strong>Tags</strong> taxonomy term reference field to our content types in the normal fashion (as it is already present in the Article content type) we’ll be able to select all the terms in the vocabulary for all the content types. So that's not what we want now. </p>
+<p>So create a View that shows taxonomy terms of the <strong>Tags</strong> vocabulary - let’s call it <code>Tags Filter</code>. Add 2 displays of the type <code>Entity Reference</code> and a filter of the field we added to our terms earlier. So for instance the first display can show the terms which have <code>Sleeping</code> selected and the other one can show terms which have <code>Transport</code>. Save the View and you can close it. </p>
+<p>Now finally we can edit our content types and add to each a new field of the type <code>Entity Reference</code> with a select list widget. For the target type select <code>Taxonomy term</code> and under <strong>Entity Selection</strong> choose the following: for <strong>Mode</strong>, go with <code>Views: filter by entity reference view</code> and then select the View in question - one of the two displays which we created earlier. In the picture below, I named one of the displays <code>Tags for Articles</code>:</p>
+<p><img src="/sites/default/files/images/20131711153012.jpg" alt="" /></p>
+<p>Repeat this step for the other content type where you will select the other View display. </p>
+<p>Now when you add a new node of the first type, you’ll have a select list containing only some of the terms in the vocabulary. When you add a node of the other type, you’ll have the other terms available. And, you’ll have <code>couchette</code> available for both. </p>
+<p>Why not use 2 vocabularies? Well there are obviously cases in which you can and you should because it’s simpler. But that’s when you know the content types are very different from each other and you don’t have one term that categorizes 2 nodes of these different content types. But anyhow, this technique is not limited to taxonomy. With the <strong>Entity Reference</strong> module you can reproduce the same thing with referencing content instead of terms - or any other entity. </p>
+<p>Hope this helps. </p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-filter-taxonomy-terms-multiple-content-types-entity-reference" st_title="Taxonomy terms from the same vocabulary filtered by the topics and referenced on multiple content types" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-filter-taxonomy-terms-multiple-content-types-entity-reference" st_title="Taxonomy terms from the same vocabulary filtered by the topics and referenced on multiple content types" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-filter-taxonomy-terms-multiple-content-types-entity-reference" st_title="Taxonomy terms from the same vocabulary filtered by the topics and referenced on multiple content types" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

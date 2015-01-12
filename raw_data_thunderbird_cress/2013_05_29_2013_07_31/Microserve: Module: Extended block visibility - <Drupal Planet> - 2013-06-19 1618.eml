@@ -1,0 +1,34 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 19 Jun 2013 15:18:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 19 Jun 2013 15:18:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Microserve: Module: Extended block visibility
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.microserveltd.co.uk/blogs/drupal-development/extended-block-visibility
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Microserve: Module: Extended block visibility</title>
+    <base href="http://www.microserveltd.co.uk/blogs/drupal-development/extended-block-visibility">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>As a purely Drupal development agency, we are always looking for ways to improve our experience with Drupal.</p>
+<p>One of the most common scenarios we experience is getting developers to keep track of block settings during deployment.</p>
+<p>On all but the most basic of sites there can be hundreds of blocks, and when a team of developers are working together on a big project some of these changes can be forgotten or overlooked.</p>
+<p>Issues vary from an 'oops!' because a bit of content dissapeared for a moment, to problematic when a block's PHP visibility snippet has been copied incorrectly or missed, resulting in a WSOD and a hasty database roll-back. (At least it's only on staging!)</p>
+<p>In keeping with the Drupal community spirit, our solution comes in the form of a contrib module which everyone can benefit from:</p>
+<p> </p>
+<h2>Introducing <a href="https://drupal.org/project/extended_block_visibility">Extended block visibility</a></h2>
+<p><a href="https://drupal.org/project/extended_block_visibility">Extended block visibility</a> pulls Drupal's block settings out of your database and plants them firmly in your custom module.</p>
+<p>Each block is allocated a list of candidate functions, any of which can be used to determine whether or not the block should be shown.</p>
+<p>This means we can edit block visibility settings in our editor of choice (rather than inline on the site) and we can keep track of it all in git, which makes for really easy deployments.</p>
+<p> </p>
+<p>You can download <a href="https://drupal.org/project/extended_block_visibility">Extended block visibility</a> from <a href="https://drupal.org/project/extended_block_visibility">Drupal.org</a>. Alternatively, please <a href="http://www.microserveltd.co.uk/drupal-development-bristol-uk">get in touch</a> if you would like <a href="http://www.microserveltd.co.uk/drupal-services/drupal-training">Drupal training</a> or <a href="http://www.microserveltd.co.uk/drupal-services/drupal-peer-reviews">developer support</a>.</p>
+ </div></div></div>
+  </body>
+</html>
+

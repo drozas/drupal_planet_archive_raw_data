@@ -1,0 +1,190 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 07 Jan 2014 19:07:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 07 Jan 2014 19:07:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Dcycle: Do not clone the database
+Content-Transfer-Encoding: 8bit
+Content-Base: http://dcycleproject.org/blog/48/do-not-clone-database
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Dcycle: Do not clone the database</title>
+    <base href="http://dcycleproject.org/blog/48/do-not-clone-database">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It is generally agreed that cloning the database downstream (that is, from development toward production) is a bad idea, if only because by doing so all production content is lost; most developers use <a href="http://drupal.org/project/features">Features</a>, <a href="http://drupal.org/project/context">Context</a>, some variation on a <a href="http://dcycleproject.org/blog/44">site deployment module</a>, or a rudimentary written procedure to move new configuration downstream.</p>
+
+<p>However, in a dev-stage-production workflow, the database is often still periodically cloned back upstream:</p>
+
+<p><img src="http://dcycleproject.org/sites/dcycleproject.org/files/environment_flow.png" style="width:100%"/></p>
+
+<p>In such an approach, anything not in <a href="http://drupal.org/project/features">Features</a> or a <a href="http://dcycleproject.org/blog/44">site deployment module</a> exists solely in the database. For example: any content, your default theme, and other information (such as variables not exported with <a href="http://drupal.org/project/strongarm">Strongarm</a> or block placement information not exported with <a href="http://drupal.org/project/context">Context</a>) are defined only in your database and not in code. Therefore, to create a realistic development environment, it is tempting to clone your database.</p>
+
+<p>I'll explain why I think database cloning is the wrong approach, and then look at other ways to achieve the same goals. Finally, I'll look at some situations where cloning the database is a good idea.</p>
+
+<h2>Why is cloning the database the wrong approach?</h2>
+
+<p>Cloning the database is wrong for the following reasons:</p>
+
+<ul>
+<li>The database is not under version control.</li>
+<li>The database is not in a known-good starting point.</li>
+<li>Database cloning makes automated testing harder.</li>
+<li>Database cloning makes continuous integration harder.</li>
+<li>What if there is more than one "production" site?</li>
+<li>Your production database may be very large.</li>
+<li>Your production database may contain sensitive data.</li>
+<li>Fixes to a cloned database will "work on my machine", but not elsewhere.</li>
+</ul>
+
+<h3>The database is not under version control</h3>
+
+<p>In Drupal, the database contains all configuration, content types, variables, views, and content; and none of this is under version control.</p>
+
+<p>A good development practice is to put everything <em>except content</em> into code, and into version control, via Features, Context, Strongarm, and a site deployment module. These are code and can be kept under version control.</p>
+
+<h3>The database is not in a known-good starting point</h3>
+
+<p>One important aspect of writing modern software is the importance of automated testing, and the importance of <em>knowing that our test will always yield the same result</em>. This is the concept of a known good starting point, discussed in the book <a href="http://www.amazon.com/Continuous-Delivery-Deployment-Automation-Addison-Wesley/dp/0321601912">Continuous Delivery</a>. The production database changes continually, for example when new comments or content are added. If your tests, either manual or automated, depend on a cloned production database, there is always a chance that different versions of the database will be yield different test results.</p>
+
+<h3>Database cloning makes automated testing harder</h3>
+
+<p>Because of the importance of having a known-good starting point, Drupal automated tests which require the database always work in the following manner:</p>
+
+<ul>
+<li>Build a brand-new temporary (throw-away) database <em>from scratch</em>.</li>
+<li>Perform a plain installation.</li>
+<li>Create the required content and set the required configuration.</li>
+<li>Perform the test.</li>
+<li>Discard the throw-away database.</li>
+</ul>
+
+<p>For example, let's say you have a block appear when there are more than 20 registered users on your site. The only way to accurately test this is to have your test control the number of users, and test the presence or absence of your block. If the only way to deploy a new environment with your site is to clone the database, the test has no real way of creating the conditions (active theme, block placement, active modules) to run this test.</p>
+
+<p>However, if you are using Features and a <a href="http://dcycleproject.org/blog/44">site deployment module</a>, all your tests needs to do for the above example is to:</p>
+
+<ul>
+<li>(1) Enable your site deployment module.</li>
+<li>(2) Make sure the special block does not appear.</li>
+<li>(3) Create the 20 users.</li>
+<li>(4) Make sure the block does appear.</li>
+</ul>
+
+<h3>Database cloning makes continuous integration harder</h3>
+
+<p>Continuous integration (CI) and continuous deployment are quite popular these days, with good reason, because without CI, automated testing is not that useful (because developers tend to ignore tests).</p>
+
+<p>Basically, CI runs a script on every push to version control. So: every time there is a change to the code base, the tests can be run and either pass or fail.</p>
+
+<p>I have seen many shops experiment with continuous integration, and in many cases the Drupal site is recreated by cloning the production database. Therefore, the CI server's test site is always in an unknown, unversioned state. So when a test fails, it is impossible to say whether a change to the database caused the fail, or a change to the code did.</p>
+
+<p>In my experience this causes frustration and confusion, and eventually will cause your CI server to be worthless, and hence abandoned.</p>
+
+<h3>What if there is more than one "production" site?</h3>
+
+<p>When we are cloning the production site's database, what do we mean exactly? Take the following example: we are developing a code base for a university with dozens of faculties. Each faculty uses the same code base but a different theme, and some slightly different settings.</p>
+
+<p>It doesn't make sense for new developers to clone one production database rather than another for development, so often a random choice is made, leading to uncertainty.</p>
+
+<p>Consider your codebase to be a software product which can be deployed on any number of sites, just as any software. Would it make sense for developers of a word processor to clone the computer of one of their clients during routine development?</p>
+
+<h3>Your production database may be very large</h3>
+
+<p>Beyond the logical considerations, cloning production databases can be unwieldy, requiring one to remove cache tables, finding a mechanism to either copy all files and images, ignore them, or use placeholder files and images (that does not feel right, no?). Still, you can quickly find yourself with very large databases.</p>
+
+<h3>Your production database may contain sensitive data</h3>
+
+<p>Once your production site actually starts being used, you end up with much sensitive data there: email addresses, hashed passwords, order history, addresses, or worse. Consider the consequences if you dump this database on a developer's laptop (which will eventually be stolen or lost).</p>
+
+<h3>Fixes to a cloned database will "work on my machine", but not elsewhere</h3>
+
+<p>So you've cloned a database on your laptop, and you changed some configuration on administration pages, and now the problem seems fixed, you've made a demo for your team and your client. The next part is messy though: a list of admin screens to click through on the production site to reproduce the fix (ugh!), or, as I've already seen, cloning the development database <em>downstream</em> (double-ugh!). Both methods are error-prone and do not record the fix in version control, so a month from now you'll forget how it was done. In fact, you will find yourself in a sysyphian effort of repeatedly fixing the same problem over and over, and explaining to your clients and your team, with the help of out-of-date wiki pages, email exchanges and undecipherable comments on issue queues, that you are not an incompetent oaf.</p>
+
+<h2>What are the alternatives to database cloning?</h2>
+
+<p>We generally clone the database to have a realistic development environment. Among other things, during development, we need to have:</p>
+
+<ul>
+<li>The same configuration and features.</li>
+<li>Realistic content.</li>
+<li>Some exact problem-causing content.</li>
+</ul>
+
+<p>This is possible without cloning the database. Here are some tips and techniques.</p>
+
+<h3>Getting the same configuration and features as production</h3>
+
+<p>In an ideal world any Drupal site should be deployable without cloning the database, by getting the code from git and enabling the <a href="http://dcycleproject.org/blog/44">site deployment module</a>.</p>
+
+<p>You are most likely, however, to inherit a site which is a mess: no site deployment module, no tests, with <a href="http://drupal.org/project/features">Features</a>, if they exist at all, likely to be overridden on the production site. On some projects you'd be lucky to even have a git repo.</p>
+
+<p>One might think that for such sites, which we'll call legacy sites for the purpose of this article, cloning the production database is the only viable option. Unfortunately, that is true, but it should only be a temporary solution, to give you time to extract the important configuration into code, and to create a <a href="http://dcycleproject.org/blog/44">site deployment module</a>.</p>
+
+<p>Let's say, for example, I get a work request to "fix a little bug on a site which is almost ready". The first thing I do is to clone the entire site to my laptop, with the database and all, and and determine which configurations, features, and variables are affected by the bug. Let's say the site in question has 20 content types, 20 views, 50 enabled modules, three languages and a custom theme.</p>
+
+<p>But the bug in question only affects 2 content types, one view, 3 modules and does not require the custom theme or i18n. I would start by generating a feature (if one does not exist) with the required views and content types, and a site deployment module with the feature as a dependency and a <a href="http://dcycleproject.org/blog/30">basic automated test</a>. Now I can use test-driven development to fix my bug, push everything back to version control and to my continuous integration server, and deploy to production using drush.</p>
+
+<p>Thus, every time an issue is being worked on, a site gradually moves from being a legacy site to a modern, tested site with continuous integration (don't do it all at once as you will get discouraged).</p>
+
+<h3>Realistic content</h3>
+
+<p>For developers, <a href="https://drupal.org/project/devel">Devel</a>'s <code>devel_generate</code> module is great for generating <code>lorem ipsum</code> content with dummy images, so even if you don't clone your database, you can still get, say, 50 (or 1000) blog posts with 5 (or 50) comments each.</p>
+
+<p>During automated testing, several <a href="https://api.drupal.org/api/drupal/modules%21simpletest%21drupal_web_test_case.php/class/DrupalWebTestCase/7">DrupalWebTestCase API functions</a> allow you to create as much dummy content as you want, being as specific as you want.</p>
+
+<h3>Some exact problem-causing content</h3>
+
+<p>I have recently had to deal with a bug where the a site's "layout was periodically going berserk". That was the exact issue title, and I was lucky because my client was thoughtful enough to provide a screenshot and even the source code.</p>
+
+<p>This problem could be tracked down to a often-seen misconfiguration of views and marked-up content: views would <em>trim</em> all body fields to 100 characters, which works fine with standard lorem ipsum, but in the real world the client was using markup in the content, so if a &lt;div&gt; tag would appear before the 100 character mark, but end after it, the ending tag would be omitted, screwing up the html.</p>
+
+<p>Several colleagues who are used to cloning the database concluded that this a limitation of generated content.</p>
+
+<p>I see this situation as more of an opportunity, and have come up with <a href="https://drupal.org/comment/7834865#comment-7834865">a way of altering generated lorum ipsum</a> to suit your needs. So, when starting to work on such an issue, first make sure that your generated content better reflects real content, both for developers and for the automated tests.</p>
+
+<h2>When is it OK to clone the database?</h2>
+
+<p>"<em>Don't clone the database</em>" is a good rule of thumb, but in some cases <a href="http://dcycleproject.org/blog/33">cloning the database</a> is good idea, for example in the following cases:</p>
+
+<ul>
+<li>For backups and restores.</li>
+<li>For hard-to-debug "production-only" problems.</li>
+<li>As a temporary measure to update a legacy site.</li>
+<li>For proproduction environments.</li>
+</ul>
+
+<h3>For backups and restores</h3>
+
+<p>Code is not everything. The database contains your content, so you need to have a strategy to clone your database somewhere nightly, test it often, and make sure you can restore it. This is mot easily done by cloning the database.</p>
+
+<h3>For hard-to-debug "production-only" problems</h3>
+
+<p>Once in a while, you will have a problem which only manifests itself on a production site. Reproducing this type of problem systematically can be best achieved by cloning your production database to figure out what the problem is (never work directly on production, of course).</p>
+
+<h3>As a temporary measure to update a legacy site</h3>
+
+<p>As mentioned in <em>"Getting the same configuration and features as production"</em>, above, most projects are a complete mess once you get your hands on them. We'll call these legacy sites. The only way to move important configuration information into code is often to clone these sites temporarily until you have working <a href="http://drupal.org/project/features">Features</a> and a <a href="http://dcycleproject.org/blog/44">site deployment module</a>.</p>
+
+<h3>For proproduction environments</h3>
+
+<p>For some critical projects, you might decide to <a href="http://dcycleproject.org/blog/46">continually deploy</a>, but not directly to production. In such circumstances, you might have your Jenkins projects continually deploy to a preproduction site (cloned from production before each deployment), to give the team, and the client, a few hours or a day to walk through the changes before approving them for deployment to production.</p>
+
+<h2>Conclusion</h2>
+
+<p>Since being interested in Drupal dev-stage-prod, deployment and testing, I have often come across colleagues who systematically cloned the database, and have always felt uneasy about it, and in writing this post I have set out to explain why. The post turned out <em>a lot</em> longer than I thought, and the main take-away is that we should all consider our sites as software products, not single-use sites.</p>
+
+<p>As software products, we need standardized deployment methods, both initial and incremental, via a <a href="http://dcycleproject.org/blog/44">site deployment module</a>.</p>
+
+<p>As software products, we also need to implement modern testing and continuous integration techniques.</p>
+
+<p>As software products, we need to be able to deploy anywhere, with no environment dependant on any other.</p>
+
+<p>Such a focus on reproducibility will hopefully pave the way to more dependable tests, a better understanding of what is content and what is configuration, and faster, more efficient and more consistent development.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/blog" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">blog</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,53 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 03 Nov 2013 12:55:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 03 Nov 2013 12:55:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Notes: Panels Style Plugins: Use 'get children' to provide substyles
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalnotes.com/post/65884403176
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Notes: Panels Style Plugins: Use 'get children' to provide substyles</title>
+    <base href="http://drupalnotes.com/post/65884403176">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I&#8217;m in the process of creating a style plugin module for the <a href="http://getbootstrap.com">Bootstrap</a> framework, specifically using the <a href="https://drupal.org/project/bootstrap">Bootstrap theme.</a></p>
+<p>There are quite a number of similarly coded bootstrap styles available such as &#8216;panel&#8217;, &#8216;jumbotron&#8217;, &#8216;well&#8217; which I want to have available as configurable styles.</p>
+<p>I was in two minds whether to have one master style plugin that allows configuring all bootstrap styles, or multiple plugins each controlling their own.</p>
+<p>The first has the benefit of less code duplication, but the number of configuration options in the UI could be overwhelming, and there would either be redundant options for some styles. The second option means lots of duplicate code that needs to be kept in sync.</p>
+<p>Then, I remembered from another project I did using ctools that I could use the elusive &#8216;get children&#8217; &amp; &#8216;get child&#8217; methods to create one master style and then lots of substyles that share some of the same code. I didn&#8217;t find many other style plugins using substyles, but one I did find is located in the panels/ctools modules - <a href="http://drupalcode.org/project/panels.git/blob/refs/heads/7.x-3.x:/plugins/styles/stylizer.inc">stylizer</a>.</p>
+<p>Here is what my style plugin declaration looks like.</p>
+<blockquote>
+<p>$plugin = array(<br/>  &#8216;title&#8217; =&gt; t(&#8216;Parent Style&#8217;),<br/>  &#8216;description&#8217; =&gt; t(&#8216;Example style providing substyles&#8217;),<br/>  // We offer substyles so provide callbacks to do so.<br/>  &#8216;get child&#8217; =&gt; example_style_get_substyle&#8217;,<br/>  &#8216;get children&#8217; =&gt; &#8216;example_style_get_substyles&#8217;,<br/>  &#8216;settings form&#8217; =&gt; &#8216;example_style_settings_form&#8217;,<br/>);</p>
+</blockquote>
+<p>In this case, i have decided that the parent style should not be selectable on it&#8217;s own, so i have omitted the &#8216;render pane&#8217; and &#8216;render region&#8217; options. I have however added the settings form, which i intend to share between the style plugins.</p>
+
+<blockquote>
+<p>/**<br/> * Provides List of substyles.<br/> */<br/>function example_style_load_substyles($substyle_name = NULL) {<br/>  $substyles = array(<br/>    &#8216;first&#8217; =&gt; array(<br/>      &#8216;name&#8217; =&gt; &#8216;first&#8217;,<br/>      &#8216;title&#8217; =&gt; &#8216;First Substyle&#8217;,<br/>      &#8216;panes&#8217; =&gt; TRUE,<br/>      &#8216;regions&#8217; =&gt; TRUE,<br/>    ),<br/>    &#8216;second&#8217; =&gt; array(<br/>      &#8216;name&#8217; =&gt; &#8216;second&#8217;,<br/>      &#8216;title&#8217; =&gt; &#8216;Second Substyle&#8217;,<br/>      &#8216;panes&#8217; =&gt; TRUE,<br/>      &#8216;regions&#8217; =&gt; FALSE,<br/>    ),<br/>  );<br/>  if ($substyle_name) {<br/>    return $substyles[$substyle_name];<br/>  }<br/>  return $substyles;<br/>}</p>
+</blockquote>
+<p>First step is to provide a list of substyles, this is a very simple array that could be provided by invoking a hook, or retrieving from a datasource. The structure of the array is completely up to you, and will depend on your requirements and what differences each style has.</p>
+
+<blockquote>
+<p>/**<br/> * Callback to provide a single substyle.<br/> */<br/>function example_style_get_substyle($plugin, $style_name, $substyle_name) {<br/>  $substyle = example_style_load_substyles($substyle_name);<br/>  return example_style_merge_plugin($plugin, $substyle);<br/>}<br/><br/>/**<br/> * Callback to provide all substyles.<br/> */<br/>function example_style_get_substyles($plugin, $style_name) {<br/>  $data = example_style_load_substyles();<br/>  foreach ($data as $id =&gt; $substyle) {<br/>    $substyles[$style_name . &#8216;:&#8217; . $id] = example_style_merge_plugin($plugin, $substyle);<br/>  }<br/>  return $substyles;<br/>}<br/><br/></p>
+</blockquote>
+<p>Now it&#8217;s time to provide the callbacks for the style plugin - these load the substyles from the above function and pass it into a merge function:</p>
+<blockquote>
+<div>/**<br/> * Merge the main style plugin with a substyle to create a sub plugin.<br/> */<br/>function example_style_merge_plugin($plugin, $style_name, $substyle) {<br/>  $plugin[&#8216;name&#8217;] = $style_name . &#8216;:&#8217; . $substyle[&#8216;name&#8217;];<br/>  $plugin[&#8216;title&#8217;] = &#8216;Example: &#8217; . check_plain($substyle[&#8216;title&#8217;]);<br/>  $plugin[&#8216;substyle&#8217;] = $substyle;<br/>  if (!empty($substyle[&#8216;panes&#8217;])) {<br/>    // Make this substyle show up as a pane style.<br/>    $plugin[&#8216;render pane&#8217;] = &#8216;example_style_render_pane&#8217;;<br/>  }<br/>  if (!empty($substyle[&#8216;regions&#8217;])) {<br/>    // Make this substyle show up as a region style.<br/>    $plugin[&#8216;render region&#8217;] = &#8216;example_style_render_region&#8217;;<br/>  }<br/>  $plugin[&#8216;weight&#8217;] = 0;<br/>  return $plugin;<br/>}</div>
+</blockquote>
+
+<p></p>
+<p>Finally its a case of providing the render functions and the settings form. These are just like the regular style plugin ones, except you can retrieve the substyle information and there for with some logic you can adapt to suit your needs.</p>
+<blockquote>
+<div><br/>/**<br/> * Theme function for the pane style.<br/> */<br/>function theme_example_style_render_pane(&amp;$variables) {<br/>  $output = &#8221;;<br/>  $settings = $variables[&#8216;settings&#8217;];<br/>  $content = $variables[&#8216;content&#8217;];<br/>  $style = $variables[&#8216;style&#8217;];<br/>  $substyle = $style[&#8216;substyle&#8217;];<br/><br/>  switch ($substyle[&#8216;name&#8217;]) {<br/>    case &#8216;first&#8217;:<br/>      // Here you could call your own theme function.<br/>      $output .= &#8216;First Style&#8217;<br/>      break;<br/><br/>    case &#8216;second&#8217;:<br/>      // Here you could call your own theme function.<br/>      $output .= &#8216;Second Style&#8217;<br/>      break; <br/>  }<br/><br/>  return $output;<br/>}<br/><br/></div>
+</blockquote>
+
+<p>The full style plugin code is available as a gist here:</p>
+<p><a href="https://gist.github.com/smoothify/7289790">https://gist.github.com/smoothify/7289790</a></p>
+  </body>
+</html>
+

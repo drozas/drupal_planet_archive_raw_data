@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 10 Feb 2014 08:05:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 10 Feb 2014 08:05:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: How to alter the Webform submission information before being saved into the database
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-webform-submission-presave-hook
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: How to alter the Webform submission information before being saved into the database</title>
+    <base href="http://www.webomelette.com/drupal-webform-submission-presave-hook">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In this article we are going to look at a cool <a href="http://drupal.org/project/webform" target="_blank">Webform</a> api function that allows us to interfere with the submissions being saved to the database. <em>Interfere</em> sounds like a negative thing but because the Webform module is so awesome, we can perform all sorts of operations on the submitted data before saving it.</p>
+<p>Among the many API functions the Webform module comes with, a cool one is <a href="http://api.drupalize.me/api/drupal/function/hook_webform_submission_presave/7" target="_blank">hook_webform_submission_presave()</a> and that's what we will look at in this article. This function gets called whenever a user submits a form but before the submission gets saved. And we have available as parameters the <code>$node</code> object and the <code>$submission</code> object that contains the data and that can be altered (passed by reference).</p>
+<h2>Use case</h2>
+<p>Why would you need it? To illustrate how you can use it, I am going to show you what I needed, followed by how I implemented it with <code>hook_webform_submission_presave()</code>.</p>
+<p>My user accounts had some fields on it (first and last name) and all users on the site were invited to submit once a particular webform. And since I already have their first and last names in the <code>$user</code> object, I wasn't going to ask them to provide them again in the webform. And yes, I needed the webform submission to contain the names.</p>
+<h2>Implementation</h2>
+<p>The first thing I did was create 2 hidden fields on the webform for the first and last names. Users filling in the info wouldn't even realize they are there. Next, I implemented the hook:</p>
+<pre><div class="codeblock"><code>/**<br /> * Implements hook_webform_submission_presave().<br /> */<br /><br />function my_module_webform_submission_presave($node, &amp;$submission) {<br />  // Get the submission user object.<br />  $user = user_load($submission-&gt;uid);<br /><br />  // Check if $user does have the first name filled.<br />  if (!empty($user-&gt;field_first_name)) {<br />    $first_name = $user-&gt;field_first_name['und'][0]['value'];<br />    // Add the $user first name to the submission data.<br />    $submission-&gt;data[4]['value'][0] = $first_name;<br />  }<br /><br />  // Same as above but for the last name.<br />  if (!empty($user-&gt;field_last_name)) {<br />    $last_name = $user-&gt;field_last_name['und'][0]['value'];<br />    $submission-&gt;data[5]['value'][0] = $last_name;<br />  }<br /><br />}</code></div></pre><p><p>As you can see from my comments, the first thing I do is retrieve the <code>$user</code> object of the submission author. Next, I check if the relevant fields are set (to make sure no errors are thrown if there is a user without any names), and assign them to the <code>data</code> array in the <code>$submission</code> object. However, as you can see, I hardcoded the webform component id when doing this assignment:</p>
+<pre><div class="codeblock"><code>$submission-&amp;gt;data[4]['value'][0] = $first_name;<br />$submission-&amp;gt;data[5]['value'][0] = $last_name;</code></div></pre><p>This means I looked them up before and am sure they will not change (i.e. get deleted and/or recreated). It's probably not the bestest of solutions but if you are certain of the webform you created, you can do it like this. Another approach would be to iterate through all the components in the <code>data</code> array and check for the machine name of the field and do the assignment based on that. So you have plenty of options.</p>
+<p>Additionally, you'll notice that I do not use the <code>$node</code> object at all which means that this hook will do its job on all webforms. This is because I only have one webform on the site (and I'm certain I'll only have one). But that's why the <code>$node</code> object is there, so you can check against and condition your logic to certain nodes that meet various criteria. The choices are many.</p>
+<h2>Conclusion</h2>
+<p>In this article we've looked at using this awesome hook provided by the Webform module: <code>hook_webform_submission_presave()</code>. You can do a lot of stuff with it. We've seen only how to add aditional information to the submission but you can also alter the passing submission values. So keep in mind there's this nifty function you can use when you're building your webforms.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal-hooks">Hooks</a></span> | <span class="field-item odd"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-webform-submission-presave-hook" st_title="How to alter the Webform submission information before being saved into the database" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-webform-submission-presave-hook" st_title="How to alter the Webform submission information before being saved into the database" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-webform-submission-presave-hook" st_title="How to alter the Webform submission information before being saved into the database" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 20 Aug 2013 11:35:12 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 20 Aug 2013 11:35:12 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 13: much improved software translation UI
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-aug-20/drupal-8-multilingual-tidbits-13-much-improved-software-translation-ui
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 13: much improved software translation UI</title>
+    <base href="http://hojtsy.hu/blog/2013-aug-20/drupal-8-multilingual-tidbits-13-much-improved-software-translation-ui">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>Although the basic underlying building block of the interface translation system in Drupal 8 that is used to translate the software itself uses the same concepts as in Drupal 7 and before, most user facing features changed. We covered how it <a href="http://hojtsy.hu/blog/2013-jul-23/drupal-8-multilingual-tidbits-9-deployment-friendly-automated-downloads">downloads translations automatically</a> now from the community and how you can <a href="http://hojtsy.hu/blog/2013-aug-13/drupal-8-multilingual-tidbits-11-string-customizations-tracked">deviate from the source with customised translations</a> as needed. We also discussed how <a href="http://hojtsy.hu/blog/2013-aug-20/drupal-8-multilingual-tidbits-12-english-can-now-be-translated">English can be a translation target as well</a>. We did not yet look at the user interface to actually make these customisations on your site, but you can bet that was improved a great deal too!</p>
+<p>In Drupal 7 and before, the built-in user interface to translate Drupal is pretty awkward. First you need to go through an intermediary page that shows you the list of languages with their status, then the translation page itself is a filtered list with source strings and status information. </p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal7FilterForm.jpg" /></div>
+<p>You cannot actually translate anything on this screen, you need to go in and edit translations for particular strings one by one. Then you get a list of big textareas for each language. If your target language is down on the page, you need to scroll down so much you cannot see the source string anymore.</p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal7TranslationForm.jpg" /></div>
+<p>We believe this model of translating one string to multiple languages at once is not very realistic. The more common workflow instead is for one translator to go through multiple strings for one language.</p>
+<p>So what did we do in Drupal 8 about this? First of all, we removed the intermediary page. If you are interested in translation status for your software translations, that is <a href="http://hojtsy.hu/blog/2013-aug-20/drupal-8-multilingual-tidbits-12-english-can-now-be-translated">now built into the main language list table</a> (screenshot in previous tidbit). The separate intermediary page is gone. Second, we made the source string table much more useful by making the target string editable for one specific language on the form. This makes us loose the overview of which languages each string is translated to, but is way quicker for the actual translation job. Finally, we also integrated singular/plural translation support (and this of course works with languages with any number of plural variants as well). In Drupal 7, the translation interface cannot even display the singular/plural pairings due to how the data is stored in the database.</p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8TranslationForm.jpg" /></div>
+<p>In summary, we cut out two unnecessary steps and brought in a very quick translation experience instead which even shows you which translations you changed as you go along (depicted with asterisk and yellow colouring). If you did not even know about this translation user interface in Drupal 7, there is a very good chance that was due to how hard it was to use. Drupal 8 gets you a much better solution in core! And finally, with good Drupal 8 tradition this administration interface is also responsive (adapts to varying screen sizes, even small mobile screens) and is also accessible.</p>
+<h3>Issues to work on</h3>
+<ul><li>All strings entered on this user interface are now recorded as customised translations. Maybe you want to fix missing strings in community translations without needing to protect those additions from possibly better updates from the community later. Discuss this in <a href="https://drupal.org/node/2069867">https://drupal.org/node/2069867</a></li>
+</ul></div></div></div>
+  </body>
+</html>
+

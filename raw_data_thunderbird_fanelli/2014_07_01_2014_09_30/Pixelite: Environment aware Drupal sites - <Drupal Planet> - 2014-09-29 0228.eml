@@ -1,0 +1,227 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 29 Sep 2014 00:28:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 29 Sep 2014 00:28:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Environment aware Drupal sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/environment-aware-drupal-sites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Environment aware Drupal sites</title>
+    <base href="http://www.pixelite.co.nz/article/environment-aware-drupal-sites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/environment-aware-drupal-sites&amp;count=horizontal&amp;via=&amp;text=Environment%20aware%20Drupal%20sites&amp;counturl=http%3A//www.pixelite.co.nz/article/environment-aware-drupal-sites" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/environment-aware-drupal-sites&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/environment-aware-drupal-sites" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/environment-aware-drupal-sites" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-body">
+    <p>As a course of developing for larger Drupal sites, you typically find yourself having multiple environments, one for development, one or more for staging or user acceptance testing, and another for production (and perhaps disaster recovery).</p>
+
+<p>One thing that always comes up is making Drupal "environment" aware, so it knows how it should behave, what modules should be turned on (or off) and what servers it should be talking to for instance.</p>
+
+<h2>Environment module</h2>
+
+<p>The <a href="https://www.drupal.org/project/environment">environment module</a> allows you to define arbitrary environments (it also comes with some out of the box) in code. Example hook</p>
+
+<pre><code>/**
+ * Implements hook_environment().
+ */
+function HOOK_config_environment() {
+  return array(
+    'prod' =&gt; array(
+      'label' =&gt; t('Production'),
+      'description' =&gt; t('Live sites are in full production and browsable on the web.'),
+      'allowed' =&gt; array(
+        'default' =&gt; TRUE,
+      ),
+    ),
+    'dev' =&gt; array(
+      'label' =&gt; t('Development'),
+      'description' =&gt; t('Developer machines.'),
+      'allowed' =&gt; array(
+        'default' =&gt; FALSE,
+      ),
+    ),
+    'staging' =&gt; array(
+      'label' =&gt; t('Staging'),
+      'description' =&gt; t('Bug fixes and testing are done here.'),
+      'allowed' =&gt; array(
+        'default' =&gt; FALSE,
+      ),
+    ),
+  );
+}
+</code></pre>
+
+<p>You also may want to remove the default environments that come with the environment module</p>
+
+<pre><code>/**
+ * Implements hook_environment_alter().
+ */
+function HOOK_config_environment_alter(&amp;$environments) {
+  // Remove default environments.
+  unset($environments['production']);
+  unset($environments['development']);
+}
+</code></pre>
+
+<p>Using this code, and some magic in settings.php, you can effectively tell Drupal which environment it is by switching on the HTTP_HOST. A stripped back example is:</p>
+
+<pre><code>// Include environment-specific config by parsing the URL.
+// To override this, set $environment in settings.php
+// BEFORE including this file.
+if (!isset($environment)) {
+  if (strpos($_SERVER['SERVER_NAME'], '.demo.net.nz') !== FALSE) {
+    $environment = 'staging';
+  }
+  elseif (strpos($_SERVER['SERVER_NAME'], 'local') !== FALSE) {
+    $environment = 'dev';
+  }
+  else {
+    // Default to production.
+    $environment = 'prod';
+  }
+}
+// The environment module uses a lowercase variable.
+$conf['environment']['default'] = $environment;
+define('ENVIRONMENT', $environment);
+
+// Load the environment config file, followed by host-specific
+// over-rides (if any) in non-production environments.
+$conf_path = DRUPAL_ROOT . "/sites/default/";
+require $conf_path . "settings.$environment.php";
+</code></pre>
+
+<p>Note this also lets you include a separate PHP file called "settings.dev.php" for development, where variable overrides (using global $conf) can be done on a per-environment basis.</p>
+
+<h3>Environment switching</h3>
+
+<p>A natural extension of the environment module is to allow pulling a production database back to development, and then "switching" it into a development state. This switching is already a hook you can implement, allowing you to react on both the current and target environments.</p>
+
+<p>An example of this is from the module's homepage:</p>
+
+<pre><code>/**
+ * Implementation of hook_environment_switch().
+ */
+function HOOK_environment_switch($target_env, $current_env) {
+  // Declare each optional development-related module
+  $devel_modules = array(
+    'context_ui',
+    'devel',
+    'devel_generate',
+    'devel_node_access',
+    'update',
+    'views_ui',
+  );
+  switch ($target_env) {
+    case 'production':
+      module_disable($devel_modules);
+      drupal_set_message('Disabled development modules');
+      return;
+    case 'development':
+      module_enable($devel_modules);
+      drupal_set_message('Enabled development modules');
+      return;
+  }
+}
+</code></pre>
+
+<p>Other common things we do in our environment switch to development include:</p>
+
+<p><strong>Removing JS and CSS aggregation</strong></p>
+
+<pre><code>variable_set('preprocess_css', 0);
+variable_set('preprocess_js', 0);
+drupal_set_message(t('Removed aggregation from CSS and JS.'));
+</code></pre>
+
+<p><strong>Changing the Apache Solr environment to point at localhost</strong></p>
+
+<pre><code>if (module_exists('apachesolr')) {
+  $solr_env = array(
+    'url' =&gt; 'http://127.0.0.1:8983/solr/dev',
+    'make_default' =&gt; TRUE,
+    'name' =&gt; 'DEV',
+    'env_id' =&gt; 'solr',
+    'service_class' =&gt; '',
+    'conf' =&gt; array(
+      'apachesolr_read_only' =&gt; '0',
+    ),
+  );
+  apachesolr_environment_save($solr_env);
+  drupal_set_message(t('Set solr environment to @name at @url', array(
+    '@name' =&gt; $solr_env['name'],
+    '@url' =&gt; $solr_env['url'],
+  )));
+}
+</code></pre>
+
+<p><strong>Preventing API writes to production systems</strong></p>
+
+<pre><code>variable_set('brightcove_api_write_enabled', 0);
+drupal_set_message(t('Stopped the Brightcove write API sync.'));
+</code></pre>
+
+<p><strong>Granting helpful debugging permissions to certain roles</strong></p>
+
+<pre><code>if (module_exists('devel')) {
+  $dev_perms = array(
+    'access devel information',
+    'switch users',
+  );
+  user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, $dev_perms);
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, $dev_perms);
+}
+</code></pre>
+
+<p>The list goes on here.</p>
+
+<h2>Environment indicator module</h2>
+
+<p>Now that Drupal is environment aware, it is really helpful if Drupal can inform the user what environment they are currently looking at. Out of the box the environment module has no UI, so enter the module <a href="https://www.drupal.org/project/environment_indicator">environment indicator</a> to come save the day.</p>
+
+<p>The new 7.x-2.x branch of environment indicator contains a lot of improvements over the 7.x-1.x branch, one of which is the integration with the core toolbar and shortcut modules.</p>
+
+<p>To illustrate this, here is a screenshot of our toolbar in development (some links were stripped)</p>
+
+<p><a href="/sites/default/files/article_images/toolbar.png" >
+<img src="/sites/default/files/article_images/toolbar.png" alt="Environment indicator and the toolbar module working together"  class="image-large" />
+</a></p>
+
+<p>The module also alters the favicon to include a tiny letter and coloured background to match the colour you chose</p>
+
+<p><img src="/sites/default/files/article_images/toolbar-icon.png" width="181" height="38" alt="Environment indicator and the favicon working together"  /></p>
+
+<p>This way you will never again forget which environment you are using, as the colours will be right there at the top of every page.</p>
+
+<h2>Comments</h2>
+
+<p>I am keen to hear how other people solve the issue of environment aware Drupal applications, and how this is communicated to the end users of the application. What other modules are out there? What experiences have you had?</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/environment" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">environment</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/hosting" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">hosting</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="https://www.drupal.org/project/environment_indicator">Environment Indicator</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

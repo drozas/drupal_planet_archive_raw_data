@@ -1,0 +1,85 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 21 Feb 2014 22:41:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 21 Feb 2014 22:41:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This fortnight in Drupal Core - February 21st 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/410198
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This fortnight in Drupal Core - February 21st 2014</title>
+    <base href="https://groups.drupal.org/node/410198">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="new">What's new with Drupal 8?</h2>
+<p>This week (fortnight) saw the release of Drupal 8 alpha 9. Each release brings us that little bit closer to a beta. Some of the highlights from this fortnight include:</p>
+<ul>
+<li>Remove all Simpletest overrides and rely on native multi-site functionality instead - <a href="https://drupal.org/node/2171683">issue 2171683</a>. With this, each test run creates its own site inside sites/simpletest - eg sites/simpletest/13455678 - with its own settings.php and some apache files for security sake. This means that our testing is running in a real site, instead of a psuedo site with overloaded globals and various other workarounds.</li>
+<li>The direct callability of theme() was removed in favor of building render arrays consistently. It has been renamed to _theme() and is for internal use only. Build render arrays instead of using _theme() in your code so you don't break caching, assets and JavaScript states, amongst other things. For more information see the <a href="https://drupal.org/node/2195739">change record</a>.</li>
+</ul>
+<p>And speaking of change records, just a reminder to check your patches for API changes and be sure to write your change record, these are now required before the issue is committed.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>Last week, we fixed 11 critical issues and 14 major issues, and opened 4 criticals and 9 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">116 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">484 major issues</a>.</p>
+<p>5 beta-blocking issues were fixed last week. There are still <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">51 of 124 beta blockers</a> that must be resolved and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Missing+change+record">14 change records</a> that must be written before we can <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">release a Drupal 8 beta</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>.</p>
+<ul>
+<li><a href="https://drupal.org/node/2198429">#2198429: Remove deleted fields concept</a> blocks critical work on dependency management and configuration synchronization. If you have expertise on the configurable field system, the configuration system, the batch API, or large deployments and data deletions in general, please weigh in on this issue.</li>
+<li><a href="https://drupal.org/node/2114707">#2114707: Allow per-bundle overrides of field definitions</a> This is a current key blocker for entity API work, and needs review.</li>
+<li>Anything that helps us unblock testbot testing on php 5.4 -- <a href="https://drupal.org/project/issues/search/drupal?issue_tags=phpfpm-testbot">see this issue list of php-fpm issues</a>.
+</li></ul>
+<h3>More ways to help</h3>
+<ul>
+<li>If you use PostgreSQL, please help with <a href="https://drupal.org/node/2157455">#2157455: [Meta] Make Drupal 8 work with PostgreSQL</a>. These issues are critical to make Drupal 8 shippable for postgres, and they block adding automated test coverage on postgres that will help prevent further regressions.</li>
+<li><a href="https://drupal.org/node/1938068">#1938068: [Meta] Convert UnitTestBase to PHPUnit</a>. These issues are a great chance to familiarize yourself with PHPUnit and make Drupal 8's test suite cleaner and faster. Help with reviews on the child issues!</li>
+<li>We REALLY need <a href="https://drupal.org/node/2188771">documentation help for the Block API</a>.</li>
+<li>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</li>
+</ul>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code> git log --since=2014-02-09 --pretty=oneline</code> (159 commits in total):</p>
+<ul>
+<li><a href="https://drupal.org/node/2171683">Issue #2171683</a> by sun, tstoeckler, larowlan: Remove all Simpletest overrides and rely on native multi-site functionality instead.
+</li>
+<li><a href="https://drupal.org/node/2147153">Issue #2147153</a> by dawehner, alexpott, Xano: Replace the last instance of $_GET/$_POST; Create a special exception listener / exception controller which allows to use POST requests - brings us closer to complete use of the Symfony Request instead of Super globals.
+</li>
+<li><a href="https://drupal.org/node/2188595"> Issue #2188595</a> by alexpott, jibran: Create a ConfigManager to be able to remove config.inc - one less inc file..
+</li>
+<li><a href="https://drupal.org/node/2190643">Issue #2190643</a> by Berdir, amateescu, Xano, yched: Serializing the container is a very very bad idea, let's prevent it?.
+</li>
+<li><a href="https://drupal.org/node/2176065">Issue #2176065</a> by EclipseGc: Introduce a composer.json for Drupal\Component\Utility. Drupal being a good PHP Citizen.
+</li>
+<li><a href="https://drupal.org/node/2028025">Issue #2028025</a> by David Hernández, Berdir, larowlan, ceng, YesCT, a_thakur: Expand CommentInterface to provide methods - provides a much better DX
+</li>
+<li><a href="https://drupal.org/node/2193521">Issue #2193521</a> by sun, alexpott: Simpletest suffixes are not guaranteed to be unique. Finally, all those annoying "base table or view not found" random testbot failures will go away.
+</li></ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li><a href="http://ithomas.name/2014/lets-get-frozen">Lets get frozen</a> by Ian Thomas on the future of our legacy apis.</li>
+<li>A nice Drupalize.me podcast on <a href="http://drupalize.me/blog/201402/your-first-restful-view-drupal-8">setting up Restful views in Drupal 8</a></li>
+<li>A summary of what Drupal 8 holds for CiviCrm integration from <a href="https://civicrm.org/blogs/eileen/drupal-8-just-around-next-53-corners">The CiviCrm blog</a></li>
+<li>A call to action to <a href="https://groups.drupal.org/node/408603">help us modernize testbot</a>, relates to Drupal 8 because we need a modern testbot to enable php 5.4</li>
+<li>A great piece on <a href="http://www.appnovation.com/blog/creating-drupal-8-theme-sasssingularity-breakpoint">creating a Drupal 8 theme</a> by Appnovation Technologies</li>
+<li><a href="http://drupaleasy.com/podcast/2014/02/drupaleasy-podcast-123-its-got-berdir">DrupalEasy podcast 123: It's got Berdir</a>. YesCT and alexpott talk with the DrupalEasy folks about how they're funding their work on Drupal 8 through the community.
+</li></ul>
+<h2 id="events">Drupal 8 in "Real Life"</h2>
+<ul>
+<li><strong>Feb. 28 - Mar 2</strong>: Two events happening simultaneously, <a href="http://www.drupalcampphoenix.com/">DrupalCamp Phoenix</a> and <a href="http://2014.drupalcamplondon.co.uk/">DrupalCamp London</a> have some nice Drupal 8 session proposals, including CMI, multilingual, and more!
+</li>
+<li><strong>March 8-9</strong>:<a href="https://fldrupalcamp.org/">Florida Drupal camp</a> is aiming to shine a spotlight on Drupal 8. Including several sessions on Drupal 8 and a Drupal 8 code sprint, should be lots of fun in a sunny location.</li>
+<li><strong>Mar. 24 - 30</strong>: <a href="http://szeged2014.drupaldays.org/">Drupal Developer Days Szeged</a> is going to be the Drupal 8 event of the next months, with a full week of sprinting awesomeness and lots of D8 content. See <a href="http://hojtsy.hu/blog/2014-jan-03/five-good-reasons-register-drupal-dev-days-szeged-now">Five good reasons to register for Drupal Dev Days Szeged now</a> by Gábor Hojtsy for more details.</li>
+<li>
+<strong>Mar. 28 - 30</strong>: If you'd like to collaborate with DevDays Szeged sprinters, but are looking for something in the western hemisphere, check out <a href="http://midcamp.org/">MidCamp</a>. MidCamp is March 28-30, and there may also be a pre-sprint March 26-27. Contact <a href="https://drupal.org/user/226976">ZenDoodles</a> for more information.</li>
+</ul>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

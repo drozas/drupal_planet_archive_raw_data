@@ -1,0 +1,49 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 18 Oct 2013 05:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 18 Oct 2013 05:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Palantir: How I Learned to Stop Worrying and Love Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.palantir.net/blog/how-i-learned-stop-worrying-and-love-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Palantir: How I Learned to Stop Worrying and Love Drupal 8</title>
+    <base href="http://www.palantir.net/blog/how-i-learned-stop-worrying-and-love-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="featured-blog-image">  
+      <img typeof="foaf:Image" src="http://www.palantir.net/sites/default/files/styles/bloglandingpage-thumbnail/public/blog/images/strangelove-war-room.jpg?itok=zRJ-YlLx" width="262" height="175" alt="" />  </span>
+            <p>This month, I’m speaking at both Drupal Camp Atlanta and BADCamp (Berkeley, CA). The  topic, “How I Learned to Stop Worrying and Love Drupal 8,” is intended to demonstrate how developers can get up to speed on some of the code-level changes to Drupal 8 and quit sweating uncertainty.</p>
+<p>In this post, I single out a few features which I talk about in my sessions and Palantir includes in the on-site training we offer throughout the year. These, I think, show developers and decision makers the direction that Drupal is heading and why we at Palantir love that direction. Mind you, this short-list is a bit developer-centric; we’ll look at cool tools for site builders and designers in later posts. </p>
+<p></p>
+<h2>Unified Entity APIs</h2>
+<p>Drupal data used to be spread across various arrays and (non-classed) objects. Nodes, Terms, and Users all had specific, different and complex techniques for loading, viewing, and saving data.</p>
+<p>In Drupal 8, the core system relies on a standard Entity API that is more robust and -- more critically -- more consistent. Working with the new API makes it easier to understand existing entity types and to create new ones.</p>
+<p>And it’s not just the Entity API; the Field API has seen similar revision and standardization, largely because fields are now entities, which gives us a common mechanism for defining, storing and retrieving field definitions.</p>
+<h2>Configuration Management</h2>
+<p>One of the biggest challenges in Drupal, where so much system information is stored in the database, is deployment and consistency across environments. The new Configuration system in Drupal 8 makes that process more consistent and reliable. The Configuration system generates YAML files that can be checked into version control and deployed across multiple environments. </p>
+<p>There is also a nifty context system for loading configurations, which makes customization for multilingual sites (and similar use-cases) much easier.</p>
+<h2>Unit Testing</h2>
+<p>If you haven’t been following the progress of PHPUnit in the broader PHP community, now is the time to take a look.  It’s well-documented, clean, and fast, fast, fast. Replacing SimpleTests with PHPUnit tests is a challenge, but it’s also one that encourages decoupling code and provides greater speed, flexibility and interoperability in our test suite.</p>
+<h2>Cross-project Code</h2>
+<p>One of the big themes in the PHP community recently has been collaboration. New tools such as Composer and standards such as PSR-0 give developers ways to share code across projects. The most famous part of this in Drupal 8 is the adoption of Symfony components as part of the core foundation. </p>
+<p>We’ve also introduced elements from Doctrine, EasyRDF, Guzzle and Twig. Like the switch in Drupal 6 to using jQuery for advanced JavaScript, the inclusion of external code libraries decreases the technical debt of the Drupal project while also providing entry points for new developers to join the project.</p>
+<h2>An On-Ramp to OO</h2>
+<p>For people -- like me -- who started writing PHP without formal training, the changes in Drupal 8 are, I’ll be honest, pretty drastic. The switch to an Object Oriented (OO) codebase introduces new paradigms and requires us to adopt new ways of solving problems.</p>
+<p>However, the structure and organization of Drupal 8 actually make it a good point for diving in to OO code. For instance, the plugin system, where blocks are now classes instead of procedural code, is clearly defined, logical, and leverages the strengths of OO. </p>
+<h2>Still Worrying? Dive In!</h2>
+<p>It was in preparing for my Drupal 8-oriented talks that I really started to understand and get excited about the foundation Drupal 8 will build. Drupal 8 is reducing the technical debt of a ten-year-old project. No small task. And, at the same time, it’s modernizing our approach to common problems like configuration management, Web services integration, and mobile accessibility.</p>
+<p>Naturally, because we at Palantir are so deeply involved in contributing to the ongoing success of the project, we clearly see the value that Drupal 8 will bring. The hard part is sharing what we know and motivating timely adoption and/or migration. We’ll continue to do this via talks at camps, cons and such and also via blog posts. Where we provide the most useful and intensive learning is via on-site training which we’ll offer next in December and again in spring. Expect topics including, but not limited to:</p>
+<ul><li>OO patterns for module developers</li>
+<li>The use of plugin classes</li>
+<li>Working with Symfony components in Drupal core</li>
+</ul><p></p>
+<p>We’re also planning projects that will allow us to leverage the strengths of the system, so that we can continue offering the best experience for our clients. The improvements introduced in Drupal 8 promise to make it the most customizable and adaptable release of Drupal ever, and we’re looking forward to its release next year.</p>
+  </body>
+</html>
+

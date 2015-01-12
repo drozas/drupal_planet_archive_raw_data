@@ -1,0 +1,107 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 19 Dec 2013 17:10:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 19 Dec 2013 17:10:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Propeople Blog: The algorithm behind jQuery slideshows in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wearepropeople.com/blog/the-algorithm-behind-jquery-slideshows-in-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Propeople Blog: The algorithm behind jQuery slideshows in Drupal</title>
+    <base href="http://wearepropeople.com/blog/the-algorithm-behind-jquery-slideshows-in-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>All <a href="/clients">Drupal projects</a> that I have worked in the last time, are using large images on their home pages inside slideshows. This trend remains actual as these large images make an impact and rests one of the most essential part of a website.
+</p>
+
+<p>To create slideshows in <a href="http://drupal.org/marketplace/propeople" target="_blank">Drupal</a> I needed to write only the css code for  the slideshows from Views Slideshow module,  in most of our Drupal themes.</p>
+
+<p>The need for jQuery code completion occurred in a project that has a slideshow on front page, and using the same module it was necessary to implement an image gallery with a thumbnail carousel on other pages.</p>
+
+<p>Adding <a href="http://galleria.aino.se/" target="_blank">Galleria</a>, a JavaScript image gallery framework, was improper, because the needed design and functionality wasn’t compatible  with the Galleria theme, but creating my own custom theme in this framework, adding custom theme functionality and css take also time. It's easier and faster to write a specific code for a concrete specification. So, I need to make this slider’s transformation:
+</p>
+
+<p><img typeof="foaf:Image" src="http://d3gda9raw7t781.cloudfront.net/sites/default/files/styles/services_full/public/jquery-slides.png?itok=LwFOY_hI" alt="jQuery Slideshow Algorithms" title="jQuery Slideshow Algorithms" /></p>
+
+<p>The slideshow pager items are used to display 4 thumbnail images, clicking on the arrows displays next/previous 4 images. If the first/last image is displayed then click on the left/right arrow does nothing.
+</p>
+
+<p>There is the initial html structure: <br /><code>
+&lt;div class=”gallery”&gt;...
+&lt;div class="views-slideshow-controls-bottom&gt;
+&lt;div class=”views-slideshow-pager-fields”&gt;
+&lt;div class="views-slideshow-pager-field-item”&gt;...&lt;/div&gt;
+...
+&lt;div class="views-slideshow-pager-field-item”&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</p>
+
+<p>
+The main steps of the algorithm are: 
+</p><ol><li>Wrapping all pager items in a div in order to move it to the left/right.</li>
+<li>Grouping each 4 pager items.</li>
+<li>Making active the first group of the 4 items.</li>
+<li>Adding 2 new DOM elements, for the left/right arrow.</li>
+<li>Clicking on the left arrow: if the first group is not active, then move the whole wrapper to the right, make active the previous group.</li>
+<li>Clicking on the right arrow: if the last group is not active, then move the whole wrapper to the left, make active the next group. </li>
+</ol><p>
+Here are the code steps: <br /><code>
+//1
+ $('.gallery')
+                .find('.views-slideshow-pager-field-item')
+                .wrapAll('&lt;div class="slider-group-wrapper" /&gt;');
+
+            var $sliderWrapper = $('.slider-group-wrapper'),
+                $items = $sliderWrapper.find('.views-slideshow-pager-field-item');
+//2
+            for (var i = 0, len = $items.length; i ');
+            }
+//3
+            var $slides = $sliderWrapper.find('.slider-group'),
+                $gallery=$('.gallery .views-slideshow-controls-bottom');
+            $slides.eq(0).addClass('is-active');
+//4
+            $('&lt;div&gt;&lt;/div&gt;', {
+                class:'arrow-left'
+            }).appendTo($gallery);
+            $('&lt;div&gt;&lt;/div&gt;', {
+                class:'arrow-right'
+            }).appendTo($gallery);
+//5
+            $('.arrow-left').click(function () {
+                if ($('.is-active ').index()) {
+                    $sliderWrapper.animate({
+                        left:"+=640"
+                    });
+                    $('.is-active').removeClass('is-active').prev().addClass('is-active');
+                }
+            });
+//6
+            $('.arrow-right').click(function () {
+
+                if (!$('.slider-group:last-child').hasClass('is-active')) {
+                    $sliderWrapper.animate({
+                        left:"-=640"
+                    });
+                    $('.is-active').removeClass('is-active').next().addClass('is-active');
+                }
+            });
+</code>
+</p>
+
+<p>Use the comment section bellow to share your experience. Would love to find out about your challenges and solutions.</p></div></div></div><div class="form-item form-type-item">
+  <label>Language </label>
+ English
+</div>
+<div id="comment-wrapper-nid-1391"></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div></div></div><div class="field field-name-field-drupal-planet field-type-taxonomy-term-reference field-label-above"><div class="field-label">Check this option to include this post in Planet Drupal aggregator:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

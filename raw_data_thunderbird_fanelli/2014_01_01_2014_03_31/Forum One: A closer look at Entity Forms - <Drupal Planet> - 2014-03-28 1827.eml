@@ -1,0 +1,284 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 28 Mar 2014 17:27:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 28 Mar 2014 17:27:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: A closer look at Entity Forms
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/blogs/post/closer-look-entity-forms
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: A closer look at Entity Forms</title>
+    <base href="http://forumone.com/blogs/post/closer-look-entity-forms">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-type-filefield field-field-feature-image">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <img  class="imagefield imagefield-field_feature_image" width="943" height="278" title="A Closer Look at Entity Forms" alt="A Closer Look at Entity Forms" src="http://forumone.com/sites/default/files/ef01-01.png?1395328242" />        </div>
+        </div>
+</div>
+<p><span style="color: rgb(0, 0, 0); font-family: Arial; white-space: pre-wrap;">Almost every project we work on requires a method for capturing user information.&nbsp;In most cases we have a Contact form and in more general purposes the client requires additional forms for various reasons. In the past our go to for creating forms was the Webforms module.&nbsp;As requirements have changed, so has the need for a web form solution that is exportable using Features.</span></p>
+<p><span id="docs-internal-guid-8fa455eb-e00c-09e1-f163-d006d5bf936d"> </span></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">In this series I will be walking you through an introduction to Entity Forms, including installing, configuring and creating an Entity Form from scratch.&nbsp;Later we will explore Exporting Entity Forms using Features and then follow up with integrating Entity Forms with Panels. </span></p>
+<h2 dir="ltr" style="line-height:1.15;margin-top:10pt;margin-bottom:0pt;"><span style="font-size: 17px; font-family: 'Trebuchet MS'; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Why not Webforms?</span></h2>
+<p><span style="color: rgb(0, 0, 0); font-family: Arial; white-space: pre-wrap; vertical-align: baseline;">The drawback of using the Webform module ((</span><a href="https://drupal.org/project/webform" style="font-family: Arial; white-space: pre-wrap;"><span style="color: rgb(17, 85, 204); text-decoration: underline; vertical-align: baseline;">https://drupal.org/project/webform</span></a><span style="color: rgb(0, 0, 0); font-family: Arial; white-space: pre-wrap; vertical-align: baseline;">) is that there is no consistent port of this module to Drupal 8 and from an exportable solution you cannot use Features and Webform to easily migrate changes into code an on to a development or staging environment as Webforms are node based.&nbsp;While you could choose to use Webform Share (</span><a href="https://drupal.org/project/webform_share" style="font-family: Arial; white-space: pre-wrap;"><span style="color: rgb(17, 85, 204); text-decoration: underline; vertical-align: baseline;">https://drupal.org/project/webform_share</span></a><span style="color: rgb(0, 0, 0); font-family: Arial; white-space: pre-wrap; vertical-align: baseline;">) to import and export Webform changes, this is not ideal for our development lfe cycle.</span></p>
+<h2 dir="ltr" style="line-height:1.15;margin-top:10pt;margin-bottom:0pt;"><span style="font-size: 17px; font-family: 'Trebuchet MS'; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Advantages of using Entity Forms</span></h2>
+<p><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">This is where Entity Forms is starting to look like a more viable solution. Entity Forms if you are not familiar with them, enables the end user or developer to create front-end forms in a similar manner as Webforms. However, Entity Forms provide what I think is a more rich feature set.</span></span></p>
+<ul style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: disc; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.2272723371332341;margin-top:0pt;margin-bottom:8pt;"><span style="vertical-align: baseline; white-space: pre-wrap;">Ability to attach any </span><a href="http://drupal.org/project/modules?filters=tid%3A20224%20drupal_core%3A103%20bs_project_sandbox%3A0&amp;solrsort=sis_project_release_usage%20desc"><span style="color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Drupal Field</span></a><span style="vertical-align: baseline; white-space: pre-wrap;"> to the Forms</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: disc; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.2272723371332341;margin-top:0pt;margin-bottom:8pt;"><span style="vertical-align: baseline; white-space: pre-wrap;">Ability to use most field based and entity aware modules.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: disc; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.2272723371332341;margin-top:0pt;margin-bottom:8pt;"><span style="vertical-align: baseline; white-space: pre-wrap;">You can download submitted data to XML and / or CSV data files using </span><a href="http://drupal.org/project/views_data_export/"><span style="color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">View Data Export</span></a><span style="color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: disc; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.2272723371332341;margin-top:0pt;margin-bottom:8pt;"><a href="http://drupal.org/project/rules/"><span style="color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Rules</span></a><span style="vertical-align: baseline; white-space: pre-wrap;"> based form submission notifications. Allows for complex notifications logic.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: disc; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.2272723371332341;margin-top:0pt;margin-bottom:8pt;"><a href="http://drupal.org/project/rules/"><span style="color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Rules</span></a><span style="vertical-align: baseline; white-space: pre-wrap;"> based form access control. Allows for complex access logic.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: disc; font-family: Arial; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.2272723371332341;margin-top:0pt;margin-bottom:8pt;"><span style="vertical-align: baseline; white-space: pre-wrap;">Use </span><a href="http://drupal.org/project/views/"><span style="color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Views</span></a><span style="vertical-align: baseline; white-space: pre-wrap;"> to create to an administrative listing of each Entityform type Submissions for fine grain control.</span></p>
+    </li>
+</ul>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">The Entity form module takes advantage of the Entity API, allowing for use of the Field UI and some consistency with how we are already developing.&nbsp;Oh, and they are exportable as well using Features, which make placing them in code advantageous for continuous integration.</span></p>
+<p>&nbsp;</p>
+<h2 dir="ltr" style="line-height:1.15;margin-top:10pt;margin-bottom:0pt;"><span style="font-size: 17px; font-family: 'Trebuchet MS'; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Installing Entity Forms</span></h2>
+<p><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Like most modules, Entity Forms can be found at Drupal.org and downloaded by browsing to (</span><a href="https://drupal.org/project/entityform"><span style="font-family: Arial; color: rgb(17, 85, 204); text-decoration: underline; vertical-align: baseline; white-space: pre-wrap;">https://drupal.org/project/entityform</span></a><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">).&nbsp;Feel free to choose the download version that is right for you. For sake of demonstration I will be using the 7.x-2.0-beta2 version along with Drush to download the module into my &ldquo;sites/all/modules/contrib&rdquo; folder.</span></span></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 13px; font-family: Arial; color: rgb(0, 0, 0); font-weight: bold; font-style: italic; vertical-align: baseline; white-space: pre-wrap;">Note:</span><span style="font-size: 13px; font-family: Arial; color: rgb(0, 0, 0); font-style: italic; vertical-align: baseline; white-space: pre-wrap;"> If you do not have a &ldquo;contrib&rdquo; folder under your &ldquo;modules&rdquo; directory, you can create one or simply place the downloaded module directly into the &ldquo;modules&rdquo; folder.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">One we have the module downloaded we need to navigate to &ldquo;</span><span style="font-family: Arial; color: rgb(0, 0, 0); font-style: italic; vertical-align: baseline; white-space: pre-wrap;">admin/modules</span><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">&rdquo; and enable the &ldquo;Entityforms&rdquo; module. Keep in mind that Entityforms has dependencies of &ldquo;Entity API, Views, Chaos tools, Field UI, Field and Field SQL storage&rdquo;, so you will also need to download and install the dependencies. If you want to have Forms send email to users you will also need to download and install the Rules module and finally since Entityforms uses the Fields UI, you may want to download and configure the &ldquo;Email Field&rdquo; module.</span></p>
+<h2 dir="ltr" style="line-height:1.15;margin-top:10pt;margin-bottom:0pt;"><span style="font-size: 17px; font-family: 'Trebuchet MS'; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Configuring Entity Forms</span></h2>
+<p><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Entityforms work much like that of a Content type in that you can configure them by creating an entityform type and add fields to it. If we navigate to &ldquo;</span><span style="font-family: Arial; color: rgb(0, 0, 0); font-style: italic; vertical-align: baseline; white-space: pre-wrap;">admin/structure/entityform_types</span><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">&rdquo; we can begin to create a new Entityform as shown in the following image.</span></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-01.png" alt="Configuring Entityforms" width="943" height="278" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e00e-c12f-95b4-933d4cdeda67"> </span></p>
+<h2 dir="ltr" style="line-height:1.15;margin-top:10pt;margin-bottom:0pt;"><span style="font-size: 17px; font-family: 'Trebuchet MS'; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Creating an Entity Form</span></h2>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">For demonstration purposes we will create a new &ldquo;Contact&rdquo; form. To begin creating an Entityform click on &ldquo;Add entityform type&rdquo; and fill out the fields as shown in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-02.png" alt="Creating an Entityform" width="847" height="562" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e00f-8108-0fa8-7d6ab8ef879f"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Name</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Human readable name of our form.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Redirect path</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Relative path that a user is redirected to upon submission..</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Intro form instructions</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - User instructions you want to display.</span></p>
+    </li>
+</ol>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">We now are presented with multiple settings on how our new form will function.&nbsp;We will need to complete some or all of these sections so let&rsquo;s review those now.</span></p>
+<h3 dir="ltr" style="line-height:1.15;margin-top:8pt;margin-bottom:0pt;"><span style="font-size: 16px; font-family: 'Trebuchet MS'; color: rgb(102, 102, 102); vertical-align: baseline; white-space: pre-wrap;">Access settings</span></h3>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Access settings control who can submit a form, whether a form is open for submissions and whether a form can be resubmitted by the same user.&nbsp;The controls contain the following fields and you can view the defaults I have selected in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-03.png" alt="Access settings" width="854" height="396" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e010-2fd0-561e-3627576dcab7"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Form status</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Can users submit the form. Value allows for form submission to be open or closed.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Roles</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Roles that can submit our new form.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Resubmit action</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Action to take if logged in user has already submitted our form.</span></p>
+    </li>
+</ol>
+<h3 dir="ltr" style="line-height:1.15;margin-top:8pt;margin-bottom:0pt;"><span style="font-size: 16px; font-family: 'Trebuchet MS'; color: rgb(102, 102, 102); vertical-align: baseline; white-space: pre-wrap;">Submission page settings</span></h3>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Submission settings control the page title and response that a user will see upon successfully submitting a form.&nbsp;The controls contain the following fields and you can view the defaults I have selected in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-04.png" alt="Submission page settings" width="839" height="782" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e011-148d-aea4-7f5ff8ccb0d7"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Preview Page </span><span style="vertical-align: baseline; white-space: pre-wrap;">- Boolean value to show a preview page to user when they are about to submit a form.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Submission page title</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Page title displayed after form is submitted.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Submission reply</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - The text that will be displayed to user upon form submission.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Show submission information</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Boolean value to show user submission form data.</span></p>
+    </li>
+</ol>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 16px; font-family: 'Trebuchet MS'; color: rgb(102, 102, 102); font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Submission views</span></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Submission views allow you to specify the view used to display submission reports to both the admin and end user. The controls contain the following fields and you can view the defaults I have selected in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-05.png" alt="Submission views" width="840" height="281" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e011-f093-8233-b3655220924b"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">View for submission reports </span><span style="vertical-align: baseline; white-space: pre-wrap;">- Select the view that should be used for Submission reports. These views are customizable.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">View for current user&rsquo;s submissions</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Select the view that should be used to show users their previous submissions.</span></p>
+    </li>
+</ol>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 16px; font-family: 'Trebuchet MS'; color: rgb(102, 102, 102); font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Draft settings</span></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Draft settings control whether a form can have multiple drafts prior to actually submitting it. The controls contain the following fields and you can view the defaults I have selected in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-06.png" alt="Draft settings" width="837" height="734" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e012-92b4-0758-f20c9b0c97b8"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Draftable </span><span style="vertical-align: baseline; white-space: pre-wrap;">- Boolean value to specify whether a user can save a draft of the form.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Override drat button text</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Text to use for draft save button.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Draft save text</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Text to be displayed to user when the form is saved as a draft.</span></p>
+    </li>
+</ol>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 16px; font-family: 'Trebuchet MS'; color: rgb(102, 102, 102); font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Menu settings</span></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Menu settings control whether a form has a link on a specific menu for user to navigate to. The controls contain the following fields and you can view the defaults I have selected in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-07.png" alt="Menu settings" width="841" height="411" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e013-224b-e9b4-7cb651fc1f41"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Provide a menu link </span><span style="vertical-align: baseline; white-space: pre-wrap;">- Boolean value to provide a menu link for form.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Menu link title</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Title of menu link that will be displayed.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Description</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Alt or Title attribute that will display when hovering over menu link.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Parent item</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Menu that men link will belong to.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Weight</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Specified order of menu link within menu.</span></p>
+    </li>
+</ol>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 16px; font-family: 'Trebuchet MS'; color: rgb(102, 102, 102); font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">URL path settings</span></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">URL path settings control the url alias for both submitting the form and the confirmation page once a form has been submitted. The controls contain the following fields and you can view the defaults I have selected in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-08.png" alt="URL path settings" width="840" height="280" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e013-cbed-4385-775042782335"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Submit URL alias </span><span style="vertical-align: baseline; white-space: pre-wrap;">- URL where user can find the form.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Confirm URL alias</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - URL user is taken to upon submitting the form.&nbsp;This will display a page with the settings from the &ldquo;</span><span style="font-style: italic; vertical-align: baseline; white-space: pre-wrap;">Submission page settings</span><span style="vertical-align: baseline; white-space: pre-wrap;">&rdquo;.</span></p>
+    </li>
+</ol>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-size: 16px; font-family: 'Trebuchet MS'; color: rgb(102, 102, 102); font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Form overrides</span></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Form overrides allows you to change some of the default values of the form including the submit button text, confirmation text and titles.&nbsp;The controls contain the following fields and you can view the defaults I have selected in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-09.png" alt="Form overrides" width="841" height="668" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e014-87d5-5b88-40a700a26ba8"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Submit Button Text &ndash;</span><span style="vertical-align: baseline; white-space: pre-wrap;"> Text to use for submit button</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Submission confirmation Text</span><span style="vertical-align: baseline; white-space: pre-wrap;"> &ndash; Text to use for Submission Confirmation</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Your Submissions Text &ndash;</span><span style="vertical-align: baseline; white-space: pre-wrap;"> Text to use for &ldquo;Your Submissions&rdquo; page</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Form Disallow Resubmit Text &ndash;</span><span style="vertical-align: baseline; white-space: pre-wrap;"> Text to use for &ldquo;You already submitted this form&rdquo;</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Submission Delete Text &ndash;</span><span style="vertical-align: baseline; white-space: pre-wrap;">Text to use for &ldquo;Delete Confirmation&rdquo;</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Submission View Title &ndash;</span><span style="vertical-align: baseline; white-space: pre-wrap;"> Text to use for page title of submission view</span></p>
+    </li>
+</ol>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Now that we have configured our Contact form we need to add fields to it for the user to be able to input information that will be submitted. Since Entityforms utilizes the Fields UI, we should be pretty comfortable in adding fields.</span></p>
+<h2 dir="ltr" style="line-height:1.15;margin-top:10pt;margin-bottom:0pt;"><span style="font-size: 17px; font-family: 'Trebuchet MS'; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Managing fields</span></h2>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">To manage fields we need to simply navigate to the &ldquo;Manage Fields&rdquo; tab and add our fields as shown in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-10.png" alt="Managing fields" width="885" height="437" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="color: rgb(0, 0, 0); font-family: Arial; white-space: pre-wrap; line-height: 1.15;">For our particular Contact form we added the following fields.</span></p>
+<p><span id="docs-internal-guid-8fa455eb-e015-6270-4991-443a2a047dab"> </span></p>
+<ol style="margin-top:0pt;margin-bottom:0pt;">
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Name</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Text field with the default settings.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Email</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Email field with the default settings.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Subject</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Text field with the default settings.</span></p>
+    </li>
+    <li dir="ltr" style="list-style-type: decimal; font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline;">
+    <p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">Message</span><span style="vertical-align: baseline; white-space: pre-wrap;"> - Long text field with the default settings.</span></p>
+    </li>
+</ol>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Finally let&rsquo;s preview what our form look like by browsing to the Contact link we provided earlier in our settings as shown in the following image.</span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;"><img src="/sites/default/files/u/ef01-11.png" alt="Contact form" width="715" height="463" /></p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p><span id="docs-internal-guid-8fa455eb-e015-ffa4-7163-6cc3996a80c0"> </span></p>
+<h2 dir="ltr" style="line-height:1.15;margin-top:10pt;margin-bottom:0pt;"><span style="font-size: 17px; font-family: 'Trebuchet MS'; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">Summary</span></h2>
+<p><br />
+<span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: Arial; color: rgb(0, 0, 0); vertical-align: baseline; white-space: pre-wrap;">We covered a lot of information in a short period of time. Including how to download and install the Entityforms module and the dependencies it has to configure properly. We looked at configuring a new Entityform with proper settings and finished off by adding the fields through the Fields UI and previewing our new form. Next time we will look at configuring the Rules module for allowing Entityforms to notify uses by emailing them that a form has been submitted.</span></span></p>
+<p>&nbsp;</p>
+<p dir="ltr" style="line-height:1.15;margin-top:0pt;margin-bottom:0pt;">&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p><div class="field field-type-text field-field-short-description">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <p><span style="color: rgb(0, 0, 0); font-family: Arial; white-space: pre-wrap;">Almost every project we work on requires a method for capturing user information.&nbsp;In most cases we have a Contact form and in more general purposes the client requires additional forms for various reasons. In the past our go to for creating forms was the Webforms module. As requirements have changed, so has the need for a web form solution that is exportable using Features. In this series we will be walking taking a closer look at Entityforms.</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>        </div>
+        </div>
+</div>
+  </body>
+</html>
+

@@ -1,0 +1,109 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Jun 2013 16:06:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Jun 2013 16:06:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Propeople Blog: Reduce visual complexity of your code with return value early
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wearepropeople.com/blog/reduce-visual-complexity-of-your-code-with-return-value-early
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Propeople Blog: Reduce visual complexity of your code with return value early</title>
+    <base href="http://wearepropeople.com/blog/reduce-visual-complexity-of-your-code-with-return-value-early">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>In most of the cases, there are several developers working at the same project, each of the have its own manner of writing the code, but anyway at the end, the code must be simple, testable and reliable. This article describes how to reduce the visual complexity of the code with return value early in “if” statements, which can lead to a higher code quality.</p>
+
+<p>Usually we write code with many “if” statements:</p>
+
+<code>
+&lt;?php
+if (something) {
+  // do scenario 1
+}
+else {
+  // do scenario 2
+}
+?&gt;
+</code>
+ <br /><p>There are a lot of cases when “scenario 2” looks way shorter than “scenario 1” in terms of number of lines. For better readability it is way better to switch order of scenarios for such cases. Specially when you have “return” statement somewhere in scenario 2. Lets take a look at examples:</p>
+ 
+<code>
+&lt;?php
+  $node = menu_get_object();
+  if (isset($node)) {
+	ctools_include('plugins');
+    $output = '&lt;div class="invite_event_btn"&gt; ' . ctools_modal_text_button(t('INVITE'), 'invite/nojs/invite/form/' . $node-&gt;nid, t('Send Invitation'), 'ctools-modal-modal_invite-style') . '';
+    $output .= '&lt;div id="modal-message"&gt;&amp;nbsp';
+    return $output;
+  }
+  return FALSE;
+?&gt;
+</code>
+ <br /><p>We can see that in both scenarios that we have the 'return' statement and scenario 2 is way shorter. So it is really would be nicer to write this piece of code in the following way:</p>
+
+<code>
+&lt;?php
+  $node = menu_get_object();
+  if (!isset($node)) {
+	return FALSE;
+  }
+  ctools_include('plugins');
+  $output = '&lt;div class="invite_event_btn"&gt; ' . ctools_modal_text_button(t('INVITE'), 'invite/nojs/invite/form/' . $node-&gt;nid, t('Send Invitation'), 'ctools-modal-modal_invite-style') . '';
+  $output .= '&lt;div id="modal-message"&gt;&amp;nbsp';
+  return $output;
+?&gt;
+</code>
+ <br /><p>Less code we have in curly brackets – the better.</p>
+ 
+<p>Let's take a look at another example:</p>
+
+<code>
+&lt;?php
+function module_modal_invite_form_validate($form, &amp;$form_state) {
+  if ($form_state['values']['text'] != '') {
+	$emails = explode(",", $form_state['values']['text']);
+	$valid_emails = email_validate($emails);
+	if (!$valid_emails) {
+      form_set_error('', "Please enter a valid email address.");
+	}
+  }
+  else {
+	form_set_error('', "Please enter at least one email");
+  }
+}
+?&gt;
+</code>
+ <br /><p>It can be rewritten in the following way to make it more readable.</p>
+ 
+<code>
+&lt;?php
+function module_modal_invite_form_validate($form, &amp;$form_state) {
+  if ($form_state['values']['text'] == '') {
+	form_set_error('', "Please enter at least one email");
+	return;
+  }
+ 
+  $emails = explode(",", $form_state['values']['text']);
+  $valid_emails = module_email_validate($emails);
+  if (!$valid_emails) {
+	form_set_error('', "Please enter a valid email address.");
+  }
+}
+?&gt;
+</code>
+ <br /><p>As you can see, with returning value early in “if” statements can reduce visual complexity of your code so other developers will get its idea easier. Even this small improvement can lead to higher code quality and easier maintenance in the future.</p>
+ 
+<p>Do you have any similar “small” recepies you use every day coding? Please share your experience in the below comment form or on our social profiles, <a href="http://twitter.com/propeople" target="_blank">Twitter</a>, <a href="http://facebook.com/propeople" target="_blank">Facebook</a> and <a href="http://linkedin.com/company/propeople" target="_blank">Linkedin</a>.</p>
+ </div></div></div><div class="control-group form-type-item form-item">
+  <label class="control-label">Language </label>
+<div class="controls"> English
+</div></div>
+<div id="comment-wrapper"></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div><div class="field-item even"><a href="/tags/tutorials" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorials</a></div></div></div><div class="field field-name-field-drupal-planet field-type-taxonomy-term-reference field-label-above"><div class="field-label">Check this option to include this post in Planet Drupal aggregator:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

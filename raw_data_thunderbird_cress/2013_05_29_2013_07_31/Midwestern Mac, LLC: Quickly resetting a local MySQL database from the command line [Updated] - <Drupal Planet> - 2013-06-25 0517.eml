@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 25 Jun 2013 04:17:01 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 25 Jun 2013 04:17:01 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Quickly resetting a local MySQL database from the command line [Updated]
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/quickly-resetting-local-mysql
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Quickly resetting a local MySQL database from the command line [Updated]</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/quickly-resetting-local-mysql">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>[<strong>Update</strong>: And, as quickly as I finished writing this post, I thought to myself, "surely, this would be a good thing to have drush do out-of-the-box. And... it already does, making my work on this shell script null and void. I present to you: <a href="http://drush.ws/#sql-drop"><code>drush sql-drop</code></a>! Oh, well.]</p>
+<p>When I'm creating or updating an installation profile/distribution for Drupal, I need to reinstall Drupal over and over again. Doing this requires a few simple steps: drop/recreate the database (or drop all db tables), then <a href="https://drupal.org/documentation/install/developers"><code>drush site-install</code></a> (shortcut: <code>si</code>) with the proper arguments to install the site again.</p></div></div></div>
+  </body>
+</html>
+

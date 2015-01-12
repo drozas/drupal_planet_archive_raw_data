@@ -1,0 +1,108 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 31 Mar 2014 07:10:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 31 Mar 2014 07:10:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: 10 things you should be doing on your Drupal site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/10-things-you-should-be-doing-your-drupal-site
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: 10 things you should be doing on your Drupal site</title>
+    <base href="http://www.webomelette.com/10-things-you-should-be-doing-your-drupal-site">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>This article comes as a continuation to the <a href="/5-things-you-should-not-do-in-drupal">previous one</a> in which I exemplified 5 things you should not do on or with your Drupal site. Today, however, I'll double up, take a more positive approach and go with 10 things you definitely should be doing. So let's begin.</p>
+
+<h2>Turn on caching and aggregation on production</h2>
+
+<p>When you develop locally you'll most likely disable css/js aggregation and turn off the caches. This makes it easier to quickly see changes as you make them and allows for a more efficient development. However, you have to make sure that these are turned back on when you move to the live site.</p>
+
+<p>Drupal comes with a few powerful performance related settings that greatly improve the speed of your site. Page caching and compression for anonymous users is one of them. CSS/JS aggregation is another. And there are a bunch of contrib modules that enhance performance and I recommend you also look into those.</p>
+
+<h2>Disable development modules and functionality on production</h2>
+
+<p>If the previous point was about performance, this one is about security. There are various things you'll use locally while you develop or debug your Drupal site. The <a href="http://drupal.org/project/devel">Devel</a> module is something you'll probably enable and the error reporting will most likely be turned on so you can see what's going on.</p>
+
+<p>This is all good and well but make sure that when you push your changes to the production site, these get turned off. Keeping the Devel module enabled on a live site is a big security risk. And although it constitutes <em>security by obscurity</em>, disabling the printing of errors to the screen is also important. Not to mention user friendly.</p>
+
+<p>So either you create a checklist of things to do or automate these processes however you want. Drush will be a very good friend with this.</p>
+
+<h2>Use Drush for shell tasks like updating and installing modules</h2>
+
+<p>Speaking of Drush, any respectable Drupal developer will know how to use and <strong>will use</strong> Drush for one thing or another. It is a very helpful tool to run tasks related to Drupal from the command line. A Drupal shell basically.</p>
+
+<p>I'm not even going to enumerate all the cool things you can do with it but I will refer you to a couple of articles I wrote before on <a href="https://www.digitalocean.com/community/articles/how-to-install-drush-on-a-cloud-server-running-ubuntu-12-04">how you can begin with Drush</a> and some of the <a href="https://www.digitalocean.com/community/articles/a-beginner-s-guide-to-drush-the-drupal-shell">basic things you can use it</a> for.</p>
+
+<h2>Keep regular backups of your production environment</h2>
+
+<p>The best backups are the ones you don't ever need. That being said, you'll need to keep regular backups of your site and server in order to revert if the worst should happen. There are many tools you can use for this (both manual and automated) but I'm not going to go into that right now. I will however share a story to scare you straight into opening your MySQL interface of choice and taking a database dump.</p>
+
+<p>A while ago, I hosted a site for someone on a shared server from a random hosting company. One day I notice the site is down and in about 24 hours (of the site being down) I get an email. Someone hacked into their datacenter and deleted everything (both live servers and backup server). Apparently both were kept in the same place and their access was solely protected by the act of sending an email to the datacenter from the hosting company's email address asking for access...</p>
+
+<p>The resolution was the following: no more data, ever, retrieved. Nobody got anything back. Luckily, I had backups and so should you. The moral of the story is obvious I think.</p>
+
+<h2>Find a good balance between contrib and custom</h2>
+
+<p>In the previous article I strongly advised against using too many contrib modules. I mean if the site is huge and needs them, it's fine. As long as they are accompanied with performance related enhancements to compensate for the load.</p>
+
+<p>In this point I would like to stress the importance of finding a good balance between using contrib modules vs your own custom code. The rule of thumb is to use contrib modules as much as you can. This means do not write custom code that is already present in a module. This is because there are multiple people looking at that module and can spot problems, make updates and you'll be also better off.</p>
+
+<p>That being said, you also have to be careful of (1) what modules you use and (2) what problem they solve. First of all, the module can be of bad quality or not performant, so you'll need to investigate a bit (how many people use it, how does the issue queue looks like, etc). Second of all, it can be an overkill. If you need a tiny piece of functionality offered by a module that does a bunch of other stuff you don't need, it's maybe time to think about whether or not you can implement that yourself. It's a judgement call depending on the case.</p>
+
+<h2>If you don't expect users to create accounts, disable this functionality</h2>
+
+<p>One of the things I kept forgetting and paid the price later was to disable the right for anonymous users to create user accounts on the site. By default on a fresh Drupal install, anonymous users can create accounts and you as an admin need to approve them. The problem is that if you forget, you can wake up in 6 months with a huge spam user list that you need to take care of.</p>
+
+<p>This piece of advice concerns those who create new websites that don't need people creating accounts of course. If you require users to be able to create them themselves, make sure you implement some anti-spam techniques like Captcha, Mollom or Honeypot.</p>
+
+<h2>Employ Drupal coding and security standards</h2>
+
+<p><p>One of the important things that <a href="/6-tips-new-drupal-developers">beginner Drupal developers</a> need to learn is how to respect the Drupal coding and security standards in place.</p>
+
+<p>The coding standards represent a particular way of writing, formatting and structuring code. Aside from syntactical rules, you also have readability rules and implementation rules (<em>where and how should I use this function or hook</em>).</p>
+
+<p>The security standards represent the rules the respect of which ensures that you will write secure code. This means using helper functions and techniques that actually make Drupal a pretty secure system.</p>
+
+<p>So make sure you got these down before attempting to write enterprise code for Drupal production sites.</p>
+
+<h2>Keep your code in Git</h2>
+
+<p>Using version control is a must with any web application. In this day and age you cannot write code without keeping it in some sort of versioning system like Git, Mercurial, or SVN. The Drupal community adopted Git and it's awesome. It's also one of the most popular ones out there.</p>
+
+<p>If you want to develop Drupal modules, themes or contribute to existing ones or even core, you can't get around using Git. So make sure you start using it for all your projects if you don't already.</p>
+
+<p>You can also use Git to deploy your code between environments. Keeping a central repository from which you can pull provides a fast and easy way to deploy code. This is of course if you're not already using some automated tool like Jenkins (that also integrates with Git by the way).</p>
+
+<h2>Update core regularly</h2>
+
+<p>It's recommended that you update your site when there are updates issued by the core maintainers, especially when they are security updates. Yes, it can take some time to perform these updates, but it's worth it.</p>
+
+<p>Why? There is no getting around the fact that security updates need to be done. Once they are public, the vulnerabilities are as well. So if you haven't deleted the CHANGELOG.TXT file from your Drupal root (which you can do), potential attackers can find out the version of Drupal you are running. And the risk of exploiting those vulnerabilities increases. This is not to say that deleting the CHANGELOG.TXT file is enough and you shouldn't update.</p>
+
+<p>Additionally, if you leave it for later, you'll end up having to do a big update across many version numbers which makes it much more difficult. It'll take much more time to do and the risk of breaking some functionality will increase as well.</p>
+
+<p>So take the time regularly to do the updates, look at what is affected by them and test your site to make sure it won't break (locally!). If it does, fix the custom code (or update contrib) that no longer functions due to this. The problems should however be minimal with incremental updates.</p>
+
+<h2>Keep the modules in the right folders</h2>
+
+<p>There is a best practice in Drupal regarding the way you organise the modules on your site. We know that they must be kept in the <code>sites/all/</code> folder but we can better organise them inside that as well.</p>
+
+<p>Contrib modules need to go in a folder called <code>contrib/</code> and custom modules in a folder <code>custom/</code>. Trust me, when you will have plenty of modules (of both types), finding them will be much easier.</p>
+
+<p>Additionally, if you use the <a href="http://drupal.org/project/features">Features</a> module, you should put all your features into a <code>features/</code> folder. And if you patch any of the contrib modules, it's best if you move them from <code>contrib/</code> to a folder called <code>patched/</code>. This way you have an overview of which modules you need to pay extra attention to when doing updates. After moving the module make sure you run a registry rebuild to update Drupal as well that the location has changed. With Drush this is easy: <code>drush rr</code>.</p>
+
+<h2>Conclusion</h2>
+
+<p>There you have them: 10 things I recommend you do on your Drupal site. Again, there are more of course, but here are 10 of my most important ones. By the way, do you know that saying: <code>do as I say not as I do</code>? :)</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/10-things-you-should-be-doing-your-drupal-site" st_title="10 things you should be doing on your Drupal site" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/10-things-you-should-be-doing-your-drupal-site" st_title="10 things you should be doing on your Drupal site" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/10-things-you-should-be-doing-your-drupal-site" st_title="10 things you should be doing on your Drupal site" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

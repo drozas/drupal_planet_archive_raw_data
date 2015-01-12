@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 25 Jan 2014 19:29:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 25 Jan 2014 19:29:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bryan Braun: Template Picker Now Supports Entities
+Content-Transfer-Encoding: 8bit
+Content-Base: http://bryanbraun.com/2014/01/25/template-picker-now-supports-entities
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bryan Braun: Template Picker Now Supports Entities</title>
+    <base href="http://bryanbraun.com/2014/01/25/template-picker-now-supports-entities">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Several months back, I released a module to drupal.org, called <a href="https://drupal.org/project/template_picker">Template Picker</a>. The idea was that it was too difficult to set up a workflow where content creators could pick how they want their content to be displayed. It either required heavy site building using tools like <a href="https://drupal.org/project/panelizer">Panelizer</a> (outside version control), or one-off custom development.</p>
+<p>The way Template Picker works, you drop node templates into your theme for each way you'd like to display your content, and, as long as the file name matches the naming convention, it will be available as an option on the corresponding node-edit page. If that's too much Drupal lingo for you, <a href="http://www.youtube.com/watch?v=nv_WouvjrK8">you can see a video demo here</a>.</p>
+<p style="text-align: center;"><img alt="" src="/sites/default/files/template-picker-2.png" /></p>
+<p>But what I really wanted was to think outside the node and see if we could allow template picking for all sorts of entities. This way, a user could choose a style for their user profile, or a content admin could assign taxonomy term listings to predefined displays. It took some digging into the entity API, but I finally got it coded up and <a href="https://drupal.org/node/2163781">released</a> over the Christmas holiday. I also depricated the old project on Drupal.org to fix <a href="https://drupal.org/node/2008024">a renaming issue</a> (kind of a pain, but that's the price of learning).</p>
+<p>If you think something like this could be useful for your next project, you can <a href="https://drupal.org/project/template_picker">check it out on Drupal.org</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

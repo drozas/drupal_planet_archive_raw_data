@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 10 Jul 2013 07:12:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 10 Jul 2013 07:12:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: How to Display Tweets using Embedded Timelines in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/how-display-tweets-using-embedded-timelines-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: How to Display Tweets using Embedded Timelines in Drupal 7</title>
+    <base href="http://webwash.net/tutorials/how-display-tweets-using-embedded-timelines-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>Twitter seems to be making it harder and harder to pull your own content out of their ecosystem.</p>
+
+<p>They recently changed their API over to v1.1, and now require all requests to be authenticated using <a href="https://dev.twitter.com/docs/auth/oauth">OAuth</a>. Even simple GET requests need <a href="https://dev.twitter.com/docs/auth/oauth">OAuth</a>. Setting up <a href="https://dev.twitter.com/docs/auth/oauth">OAuth</a> is a pain, if all you want to do is display a list of tweets.</p>
+
+<p>The simplest way to display a list of tweets is to use Twitter's <a href="https://dev.twitter.com/docs/embedded-timelines">embedded timelines</a>. Not only can you use them to display tweets, but you can also use them to display search results, favorites and lists.</p>
+
+<p>To create a timeline log in to Twitter and go to Settings -> <a href="https://twitter.com/settings/widgets">Widgets</a>, click on "Create new" and define your timeline.</p>
+
+<p>You can add a timeline in two ways: copy the generated HTML code into a block or use the <a href="https://drupal.org/project/twitter_block">Twitter Block</a> module.</p>
+</div></div></div>
+  </body>
+</html>
+

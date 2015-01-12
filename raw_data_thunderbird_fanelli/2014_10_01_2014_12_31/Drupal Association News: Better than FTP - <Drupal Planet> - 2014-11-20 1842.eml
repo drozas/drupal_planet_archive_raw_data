@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Nov 2014 17:42:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Nov 2014 17:42:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Association News: Better than FTP
+Content-Transfer-Encoding: 8bit
+Content-Base: https://assoc.drupal.org/blog/basic/better-ftp
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Association News: Better than FTP</title>
+    <base href="https://assoc.drupal.org/blog/basic/better-ftp">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>As things stand today, Drupal.org's mirror network is an essential part of the Drupal.org infrastructure. The ftp.drupal.org infrastructure hosts millions of files, serving everything from Drupal Core to contributed modules and themes, but it's beginning to show its age.</p>
+<p>Our current FTP mirrors (co-located, in Oregon, Illinois, and New York) have been behaving erratically: projects have been failing to sync to the mirrors, being deleted before update, and sometimes disappearing from the mirrors for hours or days at a time. Even when working properly, the replication from the primary to additional mirrors can take as much as 45 minutes.</p>
+<p>Compounding these issues is the fact that we do not have robust control or access to the existing architecture when problems arise.</p>
+<p>So we've taken a step back to ask:</p>
+<p><strong>How can we deliver these files in a more reliable way?</strong><br />
+On the modern web, the key elements of file delivery are:</p>
+<ul><li>High availability</li>
+<li>Peering capacity designed for <strong>global</strong> delivery</li>
+<li>Fast replication</li>
+<li>HTTPS/TLS support</li>
+</ul><p>A Content Delivery Network is the answer to these problems, which is why we're evaluating MaxCDN to replace the ftp.drupal.org infrastructure.</p>
+<p><strong>But wait - does this mean the ftp:// protocol will no longer work?</strong><br />
+Yes. The FTP protocol is aging as well...</p>
+<ul><li>In the month of October 2014, ftp:// had 96 unique visitors. Of those 96 unique visitors, only 33 of them made over 10 requests.</li>
+<li>The ftp pathing differs from http, making the experience of using ftp:// confusing and inconsistent.</li>
+<li>Replacing the ftp:// protocol with http will enable us to secure Drupal.org with HTTPS across all domains.</li>
+</ul><p><strong>How you can help</strong><br />
+We need users to help us test MaxCDN as an alternative for file delivery. <a href="https://www.drupal.org/node/2357551">You can track the issue here</a>, and help us by testing the MaxCDN based downloads. Please report back your findings (good or bad) and let us know if there are any showstoppers.</p>
+<p>To test, add this line to your /etc/hosts file:</p>
+<blockquote><p>
+~$ sudo vim /etc/hosts<br />
+198.232.124.192 ftp.drupal.org
+</p></blockquote>
+<p>And continue using ftp.drupal.org as you normally would through Drupal.org project pages, drush dl, etc.</p>
+</div></div></div>
+  </body>
+</html>
+

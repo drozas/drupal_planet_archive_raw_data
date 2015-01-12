@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 02 Sep 2014 16:52:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 02 Sep 2014 16:52:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Composer: Sharing Wider
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-3/issue-2/composer-sharing-wider
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Composer: Sharing Wider</title>
+    <base href="http://drupalwatchdog.com/volume-3/issue-2/composer-sharing-wider">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Feature        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/046_044-047%20DW3_02%20-Composer_HRZ_r2.png" class="img-responsive img-thumbnail" alt="Musical notes" align="right" width="50%" /><br />
+Drupal has long had a strong collaborative culture. We share modules, we share development tasks on core and modules, and we share infrastructure on Drupal.org. That's a critical part of the health of our community: Sharing is how Open Source works.</p>
+<p>The broader PHP world, however, has long sucked at sharing. Every project is its own island; sharing code between projects has been difficult, and managing third party libraries a pain. Just about the only option was PEAR, but unless you had root access on every server you needed, and were running only a single application per server, it wasn't really useful.</p>
+<p>That was then, this is now. Enter Composer, a PHP dependency management tool that works. Composer began life in late 2011 in the Symfony community but was deliberately built to be project-agnostic, and today is being used by thousands of projects large and small, including Drupal.</p>
+<h3>Composer Basics</h3>
+<p>Composer consists of two parts. One is <a href="http://packagist.org">Packagist.org</a>, which is a central clearinghouse of Composer-compatible packages. As of July 2013, Packagist offers over 13,000 packages, ranging from simple libraries to complete frameworks. The other part is Composer itself, a command line PHP application that is dead simple to install. By default, Composer will download packages from Packagist.org but you can also set up your own package server, or even just one-off Git repositories, to host Composer-capable code. All you need to make it work is a simple JSON file.</p>
+<p>Let's start off with a trivial example. We’ll write a super-simple script that uses the Guzzle HTTP client (now bundled with Drupal 8). To start off, create your project folder. Inside it, create a directory called <span class="geshifilter"><code class="php geshifilter-php">src</code></span>. That's where we'll put all of our code. Now create a file called <span class="geshifilter"><code class="php geshifilter-php">composer.json</code></span> with the following contents:</p>        </div>
+  </body>
+</html>
+

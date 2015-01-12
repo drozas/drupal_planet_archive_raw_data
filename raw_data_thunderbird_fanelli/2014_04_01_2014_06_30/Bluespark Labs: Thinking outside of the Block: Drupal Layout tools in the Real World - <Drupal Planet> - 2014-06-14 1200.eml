@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 14 Jun 2014 10:00:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 14 Jun 2014 10:00:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Bluespark Labs: Thinking outside of the Block: Drupal Layout tools in the Real World
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.bluespark.com/blog/thinking-outside-block-drupal-layout-tools-real-world
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Bluespark Labs: Thinking outside of the Block: Drupal Layout tools in the Real World</title>
+    <base href="http://www.bluespark.com/blog/thinking-outside-block-drupal-layout-tools-real-world">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>&nbsp;This blog post is an introduction to what will be a multipart series. &nbsp;Although there is&nbsp;<a href="http://www.lullabot.com/blog/article/assembling-pages-drupal">no</a>&nbsp;<a href="http://groups.drupal.org/node/59378">shortage</a> of <a href="http://swsblog.stanford.edu/blog/why-not-panels">posts</a> and <a href="http://www.reddit.com/r/drupal/comments/1kc1lb/display_suite_vs_panels_whats_your_preference">discussions</a> of&nbsp;layout solutions for Drupal, there is a lack of a comprehensive overview of the available module options for layouts in Drupal, and we are aiming to remedy that. &nbsp;We will both outline what the current state of the art is, and discuss what approaches might provide an easier migration path to Drupal 8. In this series, we will draw on our real-world experience building and maintaining sites using each of the major solutions available. We want to present this content in bite-sized chunks, highlighting what you need to know about each system, and discussing how to meet common use cases.&nbsp;</p>
+
+<p>We have an audience in mind, specifically, Drupal site builders that want to get beyond blocks and regions, and start doing really awesome things with their layouts. This of course, should be without having to ever get into code.</p>
+
+<p>At this point in the Drupal 7 life cycle, there are at least three really solid layout module options available to a site builder. &nbsp;The three Drupal modules that we will address, with one post per module, are <a href="http://drupal.org/project/context">Context</a>, <a href="http://drupal.org/project/ds">Display Suite</a>, and <a href="http://drupal.org/project/panels">Panels</a>. &nbsp;Given that we are focusing this series on site builders, and specifically avoiding solutions that require writing code, we will not get into php templating. &nbsp;We will also talk about some of the available extra goodies that are out there for panels, such as panels everywhere and panalizer, and wrap up with an overview post that points us forward to Drupal 8, and future proofing your layout choices.</p>
+
+<p>The difficulty that one encounters when embarking on a series like this is the sheer quantity of information that surrounds every level of the topic. &nbsp;It would not be difficult to come up with a ten part blog series that discussed only panels, in fact the difficulty would lie in keeping it to only ten posts! It can also be really difficult to compare Drupal modules that do similar things, without actually downloading them and learning them all. &nbsp;Ain't nobody got time for that. &nbsp;So we've decided to structure the posts as follows:</p>
+
+<p>Part 1. Give as broad an overview as possible of the strengths and weaknesses of the module in question. &nbsp;Specifically, talk about how easy/difficult it is to get started with, and how flexible/powerful it is with an eye towards meeting more and more complicated use cases.</p>
+
+<p>Part 2. Introduce the module, with some screenshots of how the UI works. &nbsp;We will use two specific examples of common client requirements, (the same examples for each module), and step through how to fulfill the requirements, with screenshots.</p>
+
+<p>The Examples:</p>
+
+<ol>
+	<li>An extremely common requirement is to have a two column layout for the node display of a given content type, with individual fields in separate columns. (screenshot example here) &nbsp;Seems like a simple request, yes? &nbsp;It's not possible with regions and blocks. &nbsp;This is simple enough to do with a node template, but in order to preserve flexibility for site builders and even content editors, we've decided that we don't want a solution that requires writing PHP. &nbsp;This is something that is (dare I say it) simple to achieve with any of the three modules we are highlighting, and we will step through how to do it.</li>
+	<li>A more advanced (but still common) use-case is to have layouts that react to various conditions. For instance, you may need to have different layouts for public and private events. The “out of the box” solution might be to make separate content types for each. However, this is not semantically accurate, and creates difficulties when a content editor wishes to turn one into the other. These systems all have the flexibility to meet this requirement.</li>
+</ol>
+
+<p>These two use examples hardly scratch the surface of what can be done with these modules However, we hope that they will get you interested in the possibilities, and an idea of which system will best meet your needs.</p> </div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/blog/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

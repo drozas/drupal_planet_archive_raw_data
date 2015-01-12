@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 26 Jul 2013 14:31:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 26 Jul 2013 14:31:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: drunken monkey: Search API Location overhauled
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drunkenmonkey.at/blog/search-api-location-overhaul
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>drunken monkey: Search API Location overhauled</title>
+    <base href="http://drunkenmonkey.at/blog/search-api-location-overhaul">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://drunkenmonkey.at/sites/default/files/styles/medium/public/field_image/map.jpg?itok=z48BInIy" width="320" height="216" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>TL; DR:</h2>
+<p>One of the most sought-after features for the Search API has now finally been completely integrated. After <a href="https://drupal.org/user/785804">Mattias Michaux</a> implemented proximity searches almost two years ago, I was recently sponsored to polish his code and finally integrate it properly with all related modules, especially <a href="https://drupal.org/project/search_api_solr">Solr search</a>. So now, location support for the Search API is finally the just-enable feature it should be, with the <a href="https://drupal.org/project/search_api_location">Search API Location</a> module and its new <a href="https://drupal.org/node/2050793">Beta 1</a> release.</p>
+<h2>Short history (or: Credit where credit is due)</h2>
+<p>I vividly remember the <a href="http://london2011.drupal.org/bofsession/search-api">Search API BoF in London 2011</a>, when Mattias announced he had integrated the Search API with <a href="https://drupal.org/project/geofield">Geofield</a>, and showed us a demo (which can still be viewed <a href="http://spatial.mollux.be/spatialsearchpage">here</a>) where you could filter a search using a Google map. I (along with, I think, most others) was quite impressed. Soon afterwards he released the code in a <a href="https://drupal.org/sandbox/mollux/1269950">sandbox</a>, which later became the 2.x branch of <a href="https://drupal.org/user/257311">Yuriy Gerasimov's</a> Search API Location module (which really integrates with <a href="https://drupal.org/project/location">Location</a>, making it sadly a bit of a misnomer for Mattias' module).</p>
+<p>However, while it already worked very well, support for this in the Solr module had to be added manually with a patch, an additional processor was required and there were a few other problems. I resolved to fix at least the Solr module, but then never really found the time. Until this January, that is, when I was sponsored by <a href="http://coefficient.ca/">CoEfficient</a> to incorporate location support directly into the Solr module, and generally re-haul the module as well. This was based on an existing <a href="https://drupal.org/sandbox/madmatter23/1799850">sandbox fork of the module</a>, where <a href="https://drupal.org/user/455714">Matt Grasmick</a> had already implemented several features and bug fixes for the module.</p>
+<p>After reviewing what I'd come up with, Mattias agreed to make me co-maintainer of the 2.x branch and I committed my module overhaul to the offical Search API Location project. I also created a <a href="https://drupal.org/node/2050793">first Beta release</a> so people knew this was at least ready to be considered for production.</p>
+<h2>What's hot and new</h2>
+<p>So, to cut to the chase, what can you expect with the module's new version?</p>
+<h3>No more patching</h3>
+<p>Not really an improvement of the Search API Location module itself, but since RC 3 the Search API Solr Search module has built-in support for indexing and searching location data. Therefore, no more patching or replacing of config files is required. Just enable the Search API Location module and it's working.</p>
+<h3>Support for geocoding</h3>
+<p>The module now separates location searches from the Google maps integration and allows specifying the location through other means as well – the most popular one being the <a href="https://drupal.org/project/geocoder">Geocoder</a> integration, which allows users to use any of that module's methods for geocoding entered data into a location. This supports the simpler and probably also more common use case of providing a text field for entering the location and (optionally) a distance select box for proximity filtering of search results.</p>
+<h3>Plugin system for location parsing</h3>
+<p>Though not really visible to users, the system by which user input is parsed into a location is now completely pluggable, with Geocoder only being one of the default options. Thus, other implementations can easily be added for custom site requirements or different general use cases.</p>
+<h3>Proper facet support</h3>
+<p>When a location filter is applied to a search, facets for the same field will automatically switch to allow filtering by distance. The support sadly isn't very flexible yet, but the basic functionality is there and working, and should already be handy for some sites. Sorting by distance is supported in the same way as well. (All of this is specific to Solr, though, so this might not be true for other service classes supporting location searches.)</p>
+<h3>Sub-modules for Pages and Views support</h3>
+<p>The primary methods of searching with the Search API, <a href="https://drupal.org/project/search_api_page">search pages</a> and <a href="https://drupal.org/project/views">Views</a>, are both supported by enabling the respective sub-module in the Search API Location project. This avoids overhead when only using one the methods, cleanly separates the code and makes it easier to integrate this with other search methods.</p>
+<h3>Other stuff</h3>
+<p>In the course of this project, I also created the <a href="https://drupal.org/sandbox/drunkenmonkey/1935088">Geocoder custom locations</a> module, which allows you to specify custom locations for geocoding (currently requires patching, though) and add autocompletion with this location to arbitrary text input fields. It's not very pretty and rather specialized, but might still be useful to a few others.</p>
+<h2>Conclusion</h2>
+<p>In summary, the Search API Location module is now new and shiny, and if you have any use for adding location support to your searches you should definitely give it a try.<br />
+One thing we should definitely aim to support better in the future, though, is the <a href="https://drupal.org/project/location">Location</a> module, which I think currently isn't working out-of-the-box with this module. Gather in <a href="https://drupal.org/node/1723762">this issue</a> if you'd like to see the Location module supported, too.</p>
+<p><small>Image credit: map <a href="http://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>, modified image <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> by Thomas Seidl</small></p>
+</div></div></div>
+  </body>
+</html>
+

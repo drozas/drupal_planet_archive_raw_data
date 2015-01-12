@@ -1,0 +1,66 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 05 Dec 2014 22:32:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 05 Dec 2014 22:32:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Priorities for the upcoming Drupal 8 critical issue sprint (Dec. 10-14 in Ghent, Belgium)
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/451513
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Priorities for the upcoming Drupal 8 critical issue sprint (Dec. 10-14 in Ghent, Belgium)</title>
+    <base href="https://groups.drupal.org/node/451513">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>It's just a few days now until our <a href="https://groups.drupal.org/node/447123">Drupal 8 criticals sprint in Ghent</a>! The sprint will be held December 10-14, 2014 and hosted at the <a href="https://www.google.com/maps/place/Dendermondsesteenweg+48B,+9000+Gent,+Belgium/@51.0555953,3.7421952,17z/data=!3m1!4b1!4m2!3m1!1s0x47c376b50d395771:0x3aec4b7a2274d949">Wunderkraut offices</a>.</p>
+<h3>Upgrade path blockers</h3>
+<p>Our top priority for the sprint will be to make progress on D8 upgrade path blockers (<a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D&amp;issue_tags=D8+upgrade+path"><em>critical</em> issues with the 'D8 upgrade path' tag</a>) that affect the Entity Field API, Views, and the Configuration System. Here are the specific issues we have targeted:</p>
+<dl>
+<dt><a href="https://www.drupal.org/node/2372855">#2372855: Add content &amp; config entity dependencies to views</a></dt>
+<dt><a href="https://www.drupal.org/node/2341357">#2341357: Allow the entity area to use UUIDs instead of IDs and provide autocompletion</a></dt>
+<dd>
+<p>Discuss and plan our approach.  (The second issue, #2341357, is a soft blocker that covers part of the scope of the first, #2372855.)<br />
+&nbsp;</p>
+</dd>
+<dt><a href="https://www.drupal.org/node/2341323">[PP-1] Figure out what to do in Views when entity schema changes</a></dt>
+<dd>
+<p>Discuss and plan our approach.<br />
+&nbsp;</p>
+</dd>
+<dt><a href="https://www.drupal.org/node/1934152">#1934152: Figure the out if we want global config overrides to stick (settings.php overrides don't work on all pages)</a></dt>
+<dd>
+<p>Discuss, make a decision, and move forward.<br />
+&nbsp;</p>
+</dd>
+<dt><a href="https://www.drupal.org/node/2278017">#2278017: [PP-1] When a content entity type providing module is uninstalled, the entities are not fully deleted, leaving broken references</a></dt>
+<dt><a href="https://www.drupal.org/node/2338873">#2338873: [PP-2] Modules providing non-configurable field storage definitions can be uninstalled, leaving orphaned unpurged data</a></dt>
+<dd>
+<p>These issues are postponed on <a href="https://www.drupal.org/node/2335879">#2335879: Change SqlContentEntityStorageSchema::requiresEntityDataMigration() to ask the old storage handler if it has data rather than assuming yes unless NULL storage</a>, but that will hopefully land before the sprint. The first issue (#2278017) is proceeding well and can hopefully be wrapped up in the sprint, and then the second (#2338873) will hopefully be a straightforward application of the same pattern. In addition to these issues, we may also want to create a new issue to add a config validator that does the same validation check during a config deployment.<br />
+&nbsp;</p>
+</dd>
+<dt><a href="https://www.drupal.org/node/2183983">#2183983: Find hidden configuration schema issues</a></dt>
+<dt><a href="https://www.drupal.org/node/2387149">#2387149: Display extenders are not possible to describe with config schema</a></dt>
+<dt><a href="https://www.drupal.org/node/2387157">#2387157: Cloning display into another display also stores options that are not supported by the new display type</a></dt>
+<dd>
+<p>Agree on the API needed for the Views child issues. Then, continue to resolve outstanding failures in the main issue. It would be great to either finish these by the end of the sprint or get far enough to know the reason for each remaining failure to have confidence there's no lingering huge problem! (<a href="https://www.drupal.org/node/2387141">#2387141: Missing field configuration schemas across core tests</a> should be hopefully done before the sprint starts.)<br />
+&nbsp;</p>
+</dd>
+<dt><a href="https://www.drupal.org/node/2232477">#2232477: Fatal when adding new fields with NOT NULL constraints in a base table that contains existing entities</a></dt>
+<dd>
+<p>This issue was discussed in Amsterdam, committed, and then reverted. yched has been working on the patch since; we could probably focus on this issue together and discuss the issues with the previous patch to move this forward.<br />
+&nbsp;</p>
+</dd>
+</dl>
+<h3>Critical issue triage</h3>
+<p>Another goal of the sprint is to triage critical issues in the core queue to assess their relevance and priority. (You can help by making sure any <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D">open critical issues</a> you are following have up-to-date issue summaries.)</p>
+<h3>Sponsors</h3>
+<p>Thanks to the <a href="https://assoc.drupal.org/home">Drupal Association</a> and <a href="http://www.wunderkraut.com/">Wunderkraut</a> for sponsoring this event!</p>
+<h3>More information</h3>
+<p>If you have any questions about the upcoming sprint, <a href="https://www.drupal.org/user/65776/contact">contact xjm</a>.</p>
+  </body>
+</html>
+

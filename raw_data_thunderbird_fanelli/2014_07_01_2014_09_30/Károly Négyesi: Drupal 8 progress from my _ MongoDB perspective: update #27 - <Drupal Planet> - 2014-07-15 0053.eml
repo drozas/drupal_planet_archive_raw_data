@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 14 Jul 2014 22:53:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 14 Jul 2014 22:53:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #27
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/402
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #27</title>
+    <base href="http://www.drupal4hu.com/node/402">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>There hasn't been an update for some time now; things have quieted down a bit, I am mostly just  writing drivers now (and coach people on migrate). MongoDB module caught up with the latest config changes and so the module works again. Migrate bugfixing moves along steadily with more and more people actually trying it and fixing bugs, hurray! Blocks now get placed more sensibly, there's steady progress on <a href="https://www.drupal.org/node/2262275">D6->D8 CCK Single On/Off Checkbox, Checkboxes/Radio buttons, and Select formatters</a>, also node authors in more interesting cases are broken (In Drupal 6, the node.uid and the node_revision.uid can be different). The first step for <a href="https://www.drupal.org/node/2202511">migration groups</a> is ready. This is the stepping stone for Drupal 7 migrations because quite a few migration will need to be in both the Drupal 6 and the Drupal 7 group. It is also quite important for contrib -- now contrib will be able to just add in a migration YAML that this migration belongs to the Drupal 6 group and it'll run along with core, as easy as that.</p>
+<p>Our favorite meta issue <a href="https://drupal.org/node/2068325">convert SQL queries to entitity queries</a> issue is almost finished, opens the door for multilingual / performance enhancements and of course MongoDB :) </p>
+<p>I have discussed with Crell how to <a href="https://www.drupal.org/node/2302617">define a standard mechanism for backend-aware service overrides</a>. As usual, this is good for core because it allows MySQL and PostgreSQL specific drivers but also at the same time it will help MongoDB as well: currently the MongoDB module handles the service overrides but it's an all-or-nothing thing. With this issue, you'll be able to mix various storage backends as you want in a standard fashion.</p>
+<p>Finally, even if it's not directly MongoDB related, the issue to switch on twig autoescape is almost done too -- this will make Drupal 8 more secure, even custom modules and custom themes will be easier to write in a secure fashion. Hopefully this will make Drupal 8 an even more appealing offer.</p>
+  </body>
+</html>
+

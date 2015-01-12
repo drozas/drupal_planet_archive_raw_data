@@ -1,0 +1,69 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 26 Jul 2014 18:56:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 26 Jul 2014 18:56:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Berliners blog: Showcase: Art market
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.dev030.com/posts/showcase-art-market
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Berliners blog: Showcase: Art market</title>
+    <base href="http://blog.dev030.com/posts/showcase-art-market">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The last months I was busy with a friends art project. Today I'm very happy to announce that it <a href="https://www.port-of-art.com">went public</a> on july 15th and is doing good so far.</p>
+<p>Jule, the founder of <a href="https://www.port-of-art.com">Port of Art</a>, approached me last summer, asking if I could help her building an online market place for artworks. Working primarily as a freelance Drupal developer, knowing that her budget is tight and that she is certainly not the first one with this idea, I hesitated. But I gave it a thought and after several meetings I agreed. I liked the idea and I liked Jules approach, that is very trusting and positive without being naive. I like good people ;) She also gave me the impression of being able to value constructive input, even if it means to change previous ideas. That is a good feature in clients!</p>
+<h3>Basic ideas with a special flavor</h3>
+<p>The basic requirements were pretty simple:</p>
+<ul><li>Content management for static content pages as well as for special content like the artworks that are sold on the site</li>
+<li>Search artworks by different filters</li>
+<li>Legal compliant checkout process</li>
+<li>Integration of external payment providers (limited to paypal for the moment being)</li>
+<li>Contact forms</li>
+<li>Multilingual content and communication</li>
+<li>Integration of social media</li>
+<li>Some map views for geo visualization</li>
+<li>SEO, customizability, ...</li>
+</ul><p>So far that was relatively straight forward and we all love Drupal for that.<br />
+But there were some special requirements too, that had a huge impact on my choice of modules to realize this with.</p>
+<ul><li>Artworks don't integrate with a basic warehouse approach. Each one should be unique and can be bought only once. Therefor there was no need for a shopping cart either.</li>
+<li>Artworks can be bought for a fixed price or as an auction.</li>
+<li>Artworks under a certain price are not sold via the site, but instead the customer and the artist are put in touch directly and have to figure out the details independently of the platform.</li>
+<li>Artists should be able to upload their artworks, pay a fee to get them published and than manage the selling and delivery on their own.</li>
+<li>Artworks expire after a certain time that depends on the publishing fee that the artist is willing to pay.</li>
+<li>Once an artwork has been sold on the site, an additional fee has to be paid.</li>
+<li>Fully customizable e-mails</li>
+</ul><p>The main content is obviously the artwork. This is a node type with additional fields to represent attributes of an artwork. Then there are static pages, artschools, faqs and webforms. On the user side we have two frontend user roles for customers and artists that get enhanced using the <a href="https://www.drupal.org/project/profile2">Profile 2</a> module.</p>
+<h3>Additional considerations</h3>
+<p>The situation that our development team was faced with: Small budget, tiny team (only 2 people), the project's concept still a little in the flux. The founder had no technical background or previous experience using Drupal but needed a customized shop system that she could actually manage after we finished the project and went on to other things. So one of the goals during development has always been to make things configurable. Special text at a certain page? Build a setting for that. A special criterion that controls logic during checkout? Don't hardcode it somewhere! Build a setting for that as it might change later and you don't want to change code for simple things. I love drupal for it's easy variable management and quick form building capabilities. Building an admin form to control certain behaviors takes rarely more then 10 minutes. Obviously there are things that you can't build that way, but when you can, do it. I feel much butter with it and the client loves it too because it gives him control.</p>
+<h3>Conception and development process</h3>
+<p>One of the things I knew before, but that got confirmed again: Communication is the key. The client has never did a web project before. That meant that certain good practices and workflow, concerning the development process as well as the final product, were not clear to her. So we (the designer and me) spend a good amount of time helping her figure out what was realistic and which compromises needed to be done in order to deliver the product without cost explosion or an exagerated time frame. Being honest and communicating potential problems early on, as well as the clients openness towards constructive input, was something that attributed a lot to the perceived quality of the development process. Including the client in the development and design decisions also allowed us to educate her on the technical aspects of the product and raise awarness about technical implications, making her see advantages and restrictions in different areas that she didn't consider in the beginning.<br />
+We didn't formalize the process, but we ended up with some kind of agile development with three distinct roles: Conception and design by the client, frontend by the designer and backend logic and architecural design by me. That worked very good for us.</p>
+<h3>Obvious modules that we still didn't use</h3>
+<p>First, there is <a href="https://www.drupal.org/project/rules">Rules</a>. A crazy wonderland for workflow configuration that amazes me every time I look at it. But I've almost never used it. Call me old fashioned, but when business logic or complex relations must be build, I prefer to build them on my own. I want as much logic as possible in the code, not in the database. So for all the power Rules provide, I still prefer not to use it.</p>
+<p>Then there is <a href="https://www.drupal.org/project/commerce">Commerce</a>. We have never build a real-world website with it, so our experience was very limited. We thought about it. Very seriously. Then we decided against it. From todays perspective that was probably an error. But given the special requirements we were afraid of having to spent too much time customizing and altering the workflow that commerce proposes. This was more of a gut feeling. And at the end I'm not sure it was the right decision. We ended up with conceiving and building a full fledged product management incuding the purchase logic and payment. The obvious advantage when you write something like this on your own, is that you have a lot of fine grained control about flow and design. But the price is pretty high considering the amount of time necessary. At the end we have a considerable code base that needs to be maintained. So next time, I hope I'll remember this an give commerce a more in depth examination regarding the potential for the problem at hand.</p>
+<h3>Crucial contrib modules / add ons</h3>
+<p>It's hardly necessary to mention, but we couldn't have build the site so easily without the usual candidates: Views, Webform, Better Exposed Filters, Address Field, CTools, i18n, References, Profile 2, Geofield, Global Redirect, Libraries, ...</p>
+<p>The fantastic <a href="http://www.wookmark.com/jquery-plugin">wookmark jquery plugin</a> is responsible for the display of the central search component of the site. Our designer loves it!</p>
+<h3>Some modules that got born or advanced</h3>
+<p><a href="/sites/default/files/search_filter.png"><img src="/sites/default/files/search_filter.png" style="float:left; margin: 0px; padding: 0px; margin-right:10px; margin-bottom: 5px; width: 30%;" /></a>I build <a href="https://www.drupal.org/project/mefibs">MEFIBS</a> for this site. I had a need for that functionality before, but never quite as strong as this time, so I decided to solve it as a self contained module instead of hacking things together. Though there are <a href="https://www.drupal.org/node/2293855">some problems</a> currently with a few new features that I added recently, it is already in production and doing pretty well. Have a look at the filter and sorting blocks on the artwork search page: <a href="https://www.port-of-art.com/search"></a>. Two independant blocks without duplicating a views display or intensive custom form altering. That's pretty neat.</p>
+<p>Hopefully the <a href="">jQuery Update</a> module will also profit. During development I ran into issues with the admin version feature introduced here: <a href="https://www.drupal.org/node/1524944">https://www.drupal.org/node/1524944</a>. I wrote about it in <a href="http://blog.dev030.com/posts/jquery-version-theme">jQuery version per theme</a>. This resulted in a feature patch that is currently on a good way to get committed soon.</p>
+<p>I also found a bug in the <a href="https://www.drupal.org/project/paypal_payment">PayPal for Payment</a> module: <a href="https://www.drupal.org/node/2052361">https://www.drupal.org/node/2052361</a> that will hopefully get fixed soon.</p>
+<p><a href="/sites/default/files/mailer_module.png"><img src="/sites/default/files/mailer_module.png" style="float:right; margin: 0px; padding: 0px; margin-left:10px; margin-bottom: 5px; width: 30%;" /></a>Another module I find myself using often is my sandbox module <a href="https://www.drupal.org/sandbox/berliner/1146634">Mailer API</a>. It's a bit cumbersome to use as a developer, but for the client it's perfect. She can customize practically every mail that will be send by the system. It's all on a single configuration page and supports multilingual setups. A test mail feature is also included to see what mails will look like. And a batch mailer that the client often uses to address a bunch of people. It's like very easy home made promotional mails in a consistent look and feel. Made the client happy.</p>
+<p>For frontend eye candy we have build <a href="https://github.com/berliner/jQuery-UI-reduceOptions-Plugin">a jQuery plugin</a> that is responsible for the collapsible checkbox filter elements in the left side bar.</p>
+<h3>Some module discoveries</h3>
+<p>During the work on <a href="http://port-of-art.com/">www.port-of-art.com</a> I found some modules that I didn't know before.</p>
+<p>The <a href="https://www.drupal.org/project/fapi_validation">Form API Validation</a> module allows you to simplify validation rules in custom forms, using predefined validation rules. And you can also add your own rules which we used for the price entry validation needed when artists publish their artworks.</p>
+<p>The <a href="https://www.drupal.org/project/physical">Physical Fields</a> module provides fields for physical dimensions and for weight attributes. That was exactly what we needed for physical goods. It saved us the time to configure fields in field collections.</p>
+<h3>Conclusion</h3>
+<p>At the end of the project I can say, that everyone involved has had a good and productive time and enjoyed the process and the result. The client is happy for all the things she can do with the site. Now she can concentrate on managing business and extending marketing. The designer was happy. Even if some of the design decisions might not have been the best ones looking at the requirements profile from today. I feel positive though that the system fully matches the clients expectations and that it'll be a valuable tool for developing her business. If the site manages to establish itself, it's more than probable that we would rebuild the system, at least some substantial pieces like the shop component.</p>
+<p>We as the site builders are happy too. We feel that we have done a good job and that we managed to keep resources and expectations in balance. I would do it again, which always feels like a good measure.</p>
+</div></div></div><div class="field field-name-field-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/category/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div><div class="field field-name-field-version field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/drupal-core-version/7x" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">7.x</a></div></div></div>
+  </body>
+</html>
+

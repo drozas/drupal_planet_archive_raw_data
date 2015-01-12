@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 23 Apr 2014 06:14:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 23 Apr 2014 06:14:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: How to crash your site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/395
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: How to crash your site</title>
+    <base href="http://www.drupal4hu.com/node/395">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I got a desperate call about a site being down, this is ordinary for me (advertisment: you can <a href="https://drupal.org/chx">contact me</a> if it happens to you). But the error I saw was new to me. This is surprising -- I have thought I have seen it all and then some. The modules/views/includes/plugins.inc was fataling about the function views_include not existing. At first I thought opcache went south cos how on earth could an include be loaded when the module isn't?? But it wasn't opcache. Next step was adding a debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) before the offending views_include call and behold... what?? variable_initialize?? o_O OH! Obviously the poor thing is trying to unserialize a views object but it's superb early in the bootstrap and so modules aren't loaded. So while unserializing the classloader loads plugins.inc which leads to this fatal. Neat. Moral of the story: don't ever try to store a views object in variables. Or an array containing a views object. </p>
+  </body>
+</html>
+

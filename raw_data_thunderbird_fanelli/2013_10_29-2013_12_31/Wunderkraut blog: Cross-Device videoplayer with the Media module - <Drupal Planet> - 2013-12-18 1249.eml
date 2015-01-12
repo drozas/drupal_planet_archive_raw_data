@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 18 Dec 2013 11:49:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 18 Dec 2013 11:49:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Cross-Device videoplayer with the Media module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wunderkraut.com/blog/cross-device-videoplayer-with-the-media-module/2013-12-18
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Cross-Device videoplayer with the Media module</title>
+    <base href="http://wunderkraut.com/blog/cross-device-videoplayer-with-the-media-module/2013-12-18">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    Everyone is talking about HTML5 videos. The &lt;video&gt;-tag is one of the best improvements of the HTML standard. However, to show videos on your website which will play on every device and browser is a little bit complicated. I want to give an introduction how we implemented a cross-device videoplayer with Drupal.  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p>For an intranet solution we had to implement a video player with multi device and browser support. Another requirement was full Internet Explorer 7+ support.</p><p>The intranet website has around 650 videoclips and 50000 pictures which are organized, managed and edited by the Drupal <a href="https://drupal.org/project/media">Media module</a>. The HTML output is completely managed by <a href="https://drupal.org/project/DS">Display Suite</a>.</p><p>Our first approach was to use the <a href="https://drupal.org/project/mediaelement">MediaElement module</a>. MediaElement is a handy HTML5 player with Flash fallback. Unfortunately the IE7 and IE8 support is deficient. For fullscreen video playback you have to click twice and the Drupal module does not implement the <a href="http://camendesign.com/code/video_for_everybody">video-for-everybody</a> HTML structure. Also some employees of the customer had problems playing videos with their iPad.</p><h2>Our first approach: MediaElement.js</h2><p>I will skip the details, but want to give you a short introduction how to get a similar setup like ours.</p><ul><li>Add a filefield to a nodetype<ul><li>/admin/structure/types/manage/page/fields</li></ul></li><li>Set up the node field display, by selecting <em>"rendered file"</em> as format.<ul><li>/admin/structure/types/manage/page/display</li></ul></li><li>Set up the (display suite) display of the video filetype. Make sure that the file display is enabled.<ul><li>/admin/structure/file-types/manage/video/display</li></ul></li><li>Configure the file display and select "MediaElement" as display<ul><li>/admin/structure/file-types/manage/video/file-display</li></ul></li></ul><h2>The alternative: video.js</h2><p>After a lot of research and also plenty of tests, we gave <a href="http://videojs.com">video.js</a> a try.</p><p>Video.js is a nice alternative to the <a href="http://mediaelementjs.com/">MediaElement.js</a> library and the Drupal module integrates well into the Media module and the Field-API just like MediaElement.</p><p>Basically, video.js is able to run mp4 videos on almost every device and browser. The downsides are, what a suprise, that there are some problems with Internet Explorer 7 and 8. I will document in this blogpost, what we did to fix these problems.</p><h2>Configuring video.js</h2><p>That is really simple! It works like our MediaElement approach.</p><ul><li><a href="https://drupal.org/project/videojs">Download the module</a></li><li>Disable the MediaElement display at the file display page and enable the videojs display. The available settings are allmost the same.</li><li>Configure videojs location.<ul><li>/admin/config/media/videojs</li></ul></li><li>Don't forget to <a href="http://www.videojs.com/">download the videojs library</a> and unpack the files into your libraries directory.</li></ul><h2>Fixing the IE7+ problems of video.js</h2><p>Especially in IE7, videojs has real css troubles. The icons of the control buttons are not visible at all. This relies on the <a href="http://caniuse.com/content">missing support of the content css property</a>.</p><p><a href="https://github.com/dominic-p/">Dominic P</a> was so kind to commit a stylesheet for these problems to github. These extra styles fix most of the problems.</p><p>You can find it here: <a href="https://github.com/dominic-p/video.js/blob/4d071a5ee3c99751a8265ccf0b69811744d735f6/src/css/video-js-ie.css">https://github.com/dominic-p/video.js/blob/4d071a5ee3c99751a8265ccf0b69811744d735f6/src/css/video-js-ie.css</a></p><p>Well, we also had to change some of the styles for our customer, the most obvious one was the time being displayed in Times New Roman. So lets change this:</p>
+<pre>
+/* Append this style to the video-js-ie.css */
+
+/* Time */
+.vjs-default-skin .vjs-time-controls {
+    font-family: Verdana, Arial, sans-serif;
+}</pre>
+<h3>Video.js overlay problems</h3><p>You may also experience some z-index problems while viewing a video in fullscreen with Internet Explorer 7. Some elements of the website overlapped the video while watching it in fullscreen.</p><p>Here's our jQuery based fix for this. We fixed the issue by hiding the areas who contain overlapping elements via applying the css style "<em>visibility: hidden</em>"</p><p>Do not forget to replace the [PLACEHOLDER] with an list of elements that are overlapping the videoplayer. Most useful selector is .video-js, because some video.js players may overlap others.</p><p>For example: <strong>'aside,header,.video-js'</strong></p><p>The IE7 detection relies on conditional html classes. You can read more about this in the <a href="https://github.com/h5bp/html5-boilerplate/blob/master/doc/html.md#conditional-html-classes">HTML5 boilerplate documentation</a>.</p>
+<pre>
+</pre>
+<div>Drupal.behaviors.videojsFix = {</div><div>  attach: function (context, settings) {</div><div>    if ($("html").hasClass("lt-ie8")) {</div><div> </div><div>      $(".video-js", context).each(function () {</div><div> </div><div>        videojs($(this).attr("id")).ready(function() {</div><div>          this.on("fullscreenchange", function (e) {</div><div>            var myPlayer = this;</div><div>            var elementsToHide = $([PLACEHOLDER]).not("#" + myPlayer.Q);</div><div> </div><div>            if ($(e.target).hasClass("vjs-fullscreen")) {</div><div>              elementsToHide.css({"visibility": "hidden"});</div><div>            } else {</div><div>              elementsToHide.css({"visibility": "visible"});</div><div>            }</div><div>          });</div><div>        });</div><div>      });</div><div>    }</div><div>  }</div><div>};</div> </div>
+    </div>
+  </body>
+</html>
+

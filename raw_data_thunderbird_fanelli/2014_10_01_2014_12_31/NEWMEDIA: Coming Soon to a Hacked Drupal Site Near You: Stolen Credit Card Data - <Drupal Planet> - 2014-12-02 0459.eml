@@ -1,0 +1,76 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 02 Dec 2014 03:59:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 02 Dec 2014 03:59:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: NEWMEDIA: Coming Soon to a Hacked Drupal Site Near You: Stolen Credit Card Data
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.newmediadenver.com/blog/coming-soon-hacked-drupal-site-near-you-stolen-credit-card-data
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>NEWMEDIA: Coming Soon to a Hacked Drupal Site Near You: Stolen Credit Card Data</title>
+    <base href="http://www.newmediadenver.com/blog/coming-soon-hacked-drupal-site-near-you-stolen-credit-card-data">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-text field-label-hidden" data-edit-field-id="node/169/title/en/rss">Coming Soon to a Hacked Drupal Site Near You: Stolen Credit Card Data</span><div class="field field-node--field-intro field-name-field-intro field-type-text-long field-label-hidden" data-edit-field-id="node/169/field_intro/en/rss"><div class="field-items"><div class="field-item">Six weeks ago, the Drupal Security Team disclosed one of the most critical vulnerabilities in the history of the project. Today we&#039;re still seeing usage statistics that indicate tens of (if not hundreds of) thousands of Drupal sites are still at risk. Given that approximately 10% of all reported Drupal installations have an eCommerce component enabled, it&#039;s only a matter of time before we start seeing reports of stolen credit card data.</div></div></div><div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-edit-field-id="node/169/body/en/rss"><div class="field-items"><div class="field-item"><p>I&rsquo;ve been closely watching the fallout of the <a href="https://www.drupal.org/SA-CORE-2014-005">SA-CORE-2014-005</a> Drupal core security advisory, which is sometimes referred to as &ldquo;Drupageddon&rdquo; to emphasize the severity of this security issue. If this is the first time you&rsquo;ve heard of this, then I highly encourage you to read <a href="http://flocondetoile.fr/blog/drupal-sa-core-2014-005-perspective-and-lessons">this comprehensive overview</a> before continuing below. My goal is not to rehash what has already been stated in this and the many other recap articles out there. As a member of the Drupal security team and co-author of the <em><a href="http://drupalpcicompliance.org/">Drupal PCI Compliance White Paper</a></em>, I&rsquo;m much more interested in the repercussions of SA-CORE-2014-005 on the eCommerce community, which (in my honest opinion) hasn&rsquo;t been sufficiently addressed.</p>
+
+<p>It&rsquo;s important to state for the record that it&rsquo;s not my intention to spread FUD or come off as an alarmist. Had that been the goal, I would have published this article immediately after the disclosure and the numbers I would have had to report at the time would have been purely speculative. Six weeks later, we can have an honest and open discussion about what is left in front of us.</p>
+
+<h3 id="the-good-news">The Good News</h3>
+
+<p>The exploit was responsibly disclosed to the Drupal security team rather than keeping it a secret, selling this information to the highest bidder, or leveraging it as a zero-day exploit. Any one of these alternative scenarios would have given the community zero preparation in what could have been a catastrophic attack against every known Drupal site. While clearly not everyone was spared, the damage was significantly reduced (see below).</p>
+
+<p>In terms of preparation, I&rsquo;m very impressed with <a href="https://www.acquia.com/blog/shields">Acquia</a>, <a href="https://www.getpantheon.com/blog/drupal-732-security-psa">Pantheon</a>, and <a href="https://platform.sh/blog/2014/10/21/protecting-your-apps/">Platform.sh</a>, each of which deployed system wide protections that significantly reduced (and in some cases outright eliminated) the vulnerability for any Drupal 7 site hosted within their infrastructure. This was huge win for the community as a whole because large, high visibility websites tend to gravitate towards hosting with these companies and as a result (due to the protection that these services offered for this specific vulnerability) the damage was further mitigated.</p>
+
+<p>For others in the community, there are many anecdotal reports of individuals immediately applying the one line patch on all of the websites they manage. I believe this rapid roll out was in large part due to the quantity of announcements to the community letting them know that something big was about to happen.</p>
+
+<h3 id="the-bad-news">The Bad News</h3>
+
+<p>Unfortunately&hellip;</p>
+
+<ul>
+	<li>Not every site was hosted with Acquia, Pantheon, and/or Platform.sh (due to cost, preference, requirements, etc).</li>
+	<li>Not everyone has the ability or capacity to roll out patches within X hours of every security release.</li>
+	<li>Penetration tests across all known Drupal sites began within 7 hours of the vulnerability (see <a href="http://flocondetoile.fr/blog/drupal-sa-core-2014-005-perspective-and-lessons">the recap</a> for more details).</li>
+	<li>Anecdotal evidence within the community indicates that backdoor exploits have been added to virtually all sites that were not patched.</li>
+	<li>Hundreds of thousands of Drupal websites are reporting that <a href="https://www.drupal.org/project/usage/drupal">they are still running an older</a> (and therefore vulnerable) version of Drupal core.</li>
+	<li>Thousands of eCommerce websites are still reporting that <a href="https://www.drupal.org/project/usage/commerce_kickstart">they are still running an older</a> (and therefore vulnerable) version of Drupal core.</li>
+	<li>I&rsquo;ve personally seen two Drupal eCommerce sites that were already hacked by the time I was asked to review them within days of the disclosure.</li>
+</ul>
+
+<p>Anyone exploiting this vulnerability is essentially able to gain admin access to the Drupal application. With admin access, stealing credit card data is a fairly straightforward process for most payment gateway configurations. One of the most obvious attack vectors is to enable the php module in order to drop a keylogger within a custom block on the payment page. Beyond that, there are several other creative ways to access, log, and extract customer information from a hacked Drupal site.</p>
+
+<h3 id="tempering-the-bad-news">Tempering the Bad News</h3>
+
+<p>It&rsquo;s important to note that the usage numbers are not a 100% accurate representation of what&rsquo;s out in the wild. Many websites were updated using a hotfix patch versus upgrading Drupal core to 7.32, which results in an underestimation of the percentage of sites that are protected. However this is countered by the fact that not all Drupal sites report their usage statistics back to Drupal.org. Also, there are sites that may simply have an eCommerce module enabled, but they are not setup to the point where they can accept payment.</p>
+
+<p>Here are some other factors that may reduce the damage to the Drupal eCommerce community:</p>
+
+<ul>
+	<li>Not all sites containing a backdoor haven&rsquo;t been exploited further in any obvious way. This means that merchants still have time to cleanup the mess.</li>
+	<li>Not all payment solutions are easy to attack. If a website is configured to use a hosted payment page, one has to either swap out the payment gateway completely or create a man in the middle attack. Both of these attacks are more likely to get caught quickly instead of going undetected for days/weeks/months.</li>
+	<li>Not all sites are large enough to make the headlines. A breached website that only manages a couple transactions a month will still get caught, but will not make the front page of any major tech news site. However, the merchant itself will have to deal with the fallout (including fines and the cost of a forensic analysis of the breach).</li>
+</ul>
+
+<p>While this does reduce the overall pain caused by this vulnerability, we cannot ignore the reality that it&rsquo;s only a matter of time before at least one Drupal website (and possibly many more) will report that they had credit card numbers stolen. And when this happens, it will be a black eye for the community regardless of how many of the 100,000+ other eCommerce sites were protected. All it will take is one significant breach and merchants evaluating Drupal against alternatives may think twice due to a perception that it&rsquo;s not as secure (regardless of whether or not that determination is true or not).</p>
+
+<h3 id="the-silver-linings">The Silver Lining(s)</h3>
+
+<p>What&rsquo;s done is done and it won&rsquo;t do the community any good to dwell on the past. Rather, we should focus on the positive as well as what we can do in the future to make the most out of this experience. I know is easier said than done because there are segments of the community that are still feeling the sting. That said, here&rsquo;s my list of silver linings to this experience:</p>
+
+<ul>
+	<li>This vulnerability is now fixed and all future Drupal installations will no longer be subject to this exact attack. This is one of the many benefits of open source software&mdash;we all reap the benefits from code contributions from the community.</li>
+	<li>This vulnerability was so severe that it has sparked many conversations within the community on how to further harden Drupal and even roll out critical patches automatically. While this attention may wane, the fact is that this will have a permanent impact in how much importance we place on security as a community.</li>
+	<li>For being a volunteer organization, I would argue that the Drupal security team handled the situation as best as it could. The exploit could have been leaked, the disclosure botched, etc. While there are areas that can be improved moving forward, it was a privilege to work with the other members of the team to mitigate the damage as much as possible.</li>
+	<li>It&rsquo;s possible (although highly improbable) that we may not see any reports of credit card data stolen as a direct result of this vulnerability. Only time will tell&hellip;</li>
+</ul>
+
+<p>My final advice to anyone building, maintaining, or operating a Drupal eCommerce site: read the <em><a href="http://drupalpcicompliance.org/">Drupal PCI Compliance White Paper</a></em> (to learn more about ways to reduce risk) as well as read <a href="https://github.com/greggles/cracking-drupal/blob/master/after-an-exploit.md">this article</a> by Greg Knaddison to learn what to do in case you ever discover that a Drupal site&rsquo;s been hacked.</p>
+</div></div></div>
+  </body>
+</html>
+

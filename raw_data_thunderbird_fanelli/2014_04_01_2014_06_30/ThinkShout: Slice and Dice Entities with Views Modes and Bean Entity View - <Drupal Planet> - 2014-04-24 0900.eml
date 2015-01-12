@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 24 Apr 2014 07:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 24 Apr 2014 07:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ThinkShout: Slice and Dice Entities with Views Modes and Bean Entity View
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thinkshout.com/blog/2014/04/slice-dice-entities-view-modes-beans
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ThinkShout: Slice and Dice Entities with Views Modes and Bean Entity View</title>
+    <base href="http://thinkshout.com/blog/2014/04/slice-dice-entities-view-modes-beans">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Want to use a node as a block without creating a View or a block in custom code? Or maybe display a few fields of a node in a different region, but don&#39;t want to add the overhead and complexity of Panels or Display Suite?</p>
+
+<h3>Introducing <a href="https://drupal.org/project/bean_entity_view">Bean Entity View</a>!</h3>
+
+<p>This freshly-minted module builds on <a href="https://drupal.org/project/bean">Bean</a> to provide a bean type for displaying an entity using a particular view mode. To start, there are only three basic configuration options:</p>
+
+<ol>
+<li>Type of entity to display</li>
+<li>View mode of that entity to render</li>
+<li>Specific entity to render</li>
+</ol>
+
+<p><img src="/assets/images/blog/bean_entity_view-screenshot.png" alt="Bean entity view creation screenshot"></p>
+
+<p>The first two options are straightforward while the third option provides two main choices: enter a specific entity ID or leave the field blank to attempt to render the entity that the current page is displaying. To help the plugin determine which entity you are currently viewing, you may set which position in the url the entity id should be located in. For nodes (node/1234) the position would be 1, while for RedHen contacts (redhen/contact/1234) the position would be 2.</p>
+
+<p>Using the option to display a view mode of the current entity allows for displaying different displays of an entity across several page regions. In addition to the default/full page view of the node, Bean Entity View beans are used to render a header view mode in the header region and a sidebar view mode in the sidebar region.</p>
+
+<p><img src="/assets/images/blog/bean_entity_view_fusa_screenshot.jpg" alt="Example of using multiple view modes and the contextual option"></p>
+
+<p>A <a href="https://drupal.org/node/2247283">beta release</a> is available on drupal.org and this module is already used on <a href="http://familiesusa.org/issues/affordable-care-act">several</a> <a href="http://publichealthlawresearch.org/product/alcohol-drugs-and-tobacco-%E2%80%93-effects-dram-shop-liability">projects</a>, so the code is stable and ready for use. Patches to support block caching or other improvements are welcome!</p>
+  </body>
+</html>
+

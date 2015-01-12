@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 20 Oct 2014 16:00:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 20 Oct 2014 16:00:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: SitePoint PHP Drupal: Drupal 8 Hooks and the Symfony Event Dispatcher
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.sitepoint.com/drupal-8-hooks-symfony-event-dispatcher/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>SitePoint PHP Drupal: Drupal 8 Hooks and the Symfony Event Dispatcher</title>
+    <base href="http://www.sitepoint.com/drupal-8-hooks-symfony-event-dispatcher/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><p>With the incorporation of <a href="http://www.sitepoint.com/symfony-drupal-8/">many Symfony components into Drupal</a> in its 8th version, we are seeing a shift away from many <em>Drupalisms</em> towards more modern PHP architectural decisions. For example, the both loved and hated hook system is getting slowly replaced. Plugins and annotations are taking away much of the need for <code>info</code> hooks and the Symfony Event Dispatcher component is replacing some of the <em>invoked</em> hooks. Although they remain strong in Drupal 8, it’s very possible that with Drupal 9 (or maybe 10) hooks will be <a href="https://www.drupal.org/node/1509164">completely removed</a>. </p>
+
+<p><img src="http://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2014/10/1412889376drupal8wide.png" alt="" title=""/></p>
+
+<p>In this article we are going to primarily look at how the Symfony Event Dispatcher component works in Drupal. Additionally, we will see also how to invoke and then implement a hook in Drupal 8 to achieve similar goals as with the former. </p>
+
+<p>To follow along or to get quickly started, you can find all the code we work with here in <a href="https://github.com/sitepoint-examples/d8-event-dispatcher">this repository</a>. You can just install the module and you are good to go. The version of Drupal 8 used is the first BETA release so it’s preferable to use that one to ensure compatibility. Alpha 15 should also work just fine. Let’s dive in.</p>
+
+<h3 id="what-is-the-event-dispatcher-component">What is the Event Dispatcher component?</h3>
+
+<p>A very good definition of the Event Dispatcher component can be found on the <a href="http://symfony.com/doc/current/components/event_dispatcher/introduction.html">Symfony website</a>:</p>
+
+<blockquote>
+  <p>The EventDispatcher component provides tools that allow your application components to communicate with each other by dispatching events and listening to them.</p>
+</blockquote>
+
+<p>I recommend reading up on that documentation to better understand the principles behind the event dispatcher. You will get a good introduction to how it works in Symfony so we will not cover that here. Rather, we will see an example of how you can use it in Drupal 8.</p></p><p><em>Continue reading %<a rel="nofollow" href="http://www.sitepoint.com/drupal-8-hooks-symfony-event-dispatcher/">Drupal 8 Hooks and the Symfony Event Dispatcher</a>%</em></p>
+  </body>
+</html>
+

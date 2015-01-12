@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 10 Dec 2014 04:30:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 10 Dec 2014 04:30:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Code Drop: Drupal Security Tips for Developers
+Content-Transfer-Encoding: 8bit
+Content-Base: https://codedrop.com.au/blog/drupal-security-tips-developers
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Code Drop: Drupal Security Tips for Developers</title>
+    <base href="https://codedrop.com.au/blog/drupal-security-tips-developers">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I’ve recently been reviewing a few security related patches and it soon became apparent that many developers make the same mistakes over and over in regards to best practices for security in <a href="https://codedrop.com.au/drupal">Drupal</a>. So below, a very short post on the common mistakes and solutions.</p>
+<h2>Correct usage of t()</h2>
+<p>Use the right placeholder for <a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/t/7">t()</a>. You should be using "% and @" which are both escaped to protect against Cross Site Scripting vulnerabilities. Whenever you use "!" as a placeholder, double check the content has already been escaped.</p>
+<h2>Escaping Output in #markup</h2>
+<p>If you’re providing a custom field, widget and formatter you need to make sure that any content coming from the admin is correctly escaped. For example, you’re implementing hook_field_formatter_view() and doing something like:</p>
+<p>
+</p></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 05 Dec 2013 04:17:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 05 Dec 2013 04:17:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: MikeKeran.com: Making sql-sync Safer
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mikekeran.com/other/making-sql-sync-safer
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>MikeKeran.com: Making sql-sync Safer</title>
+    <base href="http://mikekeran.com/other/making-sql-sync-safer">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Drush aliases can be a huge timesaver when you’re working back-and-forth between your local dev environment and a remote server. You can clear caches remotely as easily as adding <code>@remote</code> to your usual <code>drush cc all</code> command. Or use the sql-cli command to log into the remote server’s MySQL instance without leaving the comfort of your local command prompt. My favorite is updating my local database to what’s on the remote server: <code>drush sql-sync @remote @local</code> (followed by a coffee break).</p><p><a href="http://mikekeran.com/other/making-sql-sync-safer" target="_blank">read more</a></p>
+  </body>
+</html>
+

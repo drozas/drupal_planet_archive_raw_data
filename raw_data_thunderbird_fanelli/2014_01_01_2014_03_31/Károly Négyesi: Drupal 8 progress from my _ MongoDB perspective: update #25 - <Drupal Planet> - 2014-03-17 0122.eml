@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Mar 2014 00:22:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Mar 2014 00:22:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #25
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/392
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #25</title>
+    <base href="http://www.drupal4hu.com/node/392">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>A version of the migration API which is adequate to migrate Drupal 6 has been submitted for core inclusion. The sandbox contains the complete Drupal 6 to 8 migration, with more complete functionality and testing coverage than the upgrade path ever had. Every migration has its own test where the test sets up a Drupal 8 as if the required migrations already ran and then runs the migration over a very small partial Drupal 6 dump. Then there is a test which loads all the Drupal 6 dumps, runs every migration and then runs all the asserts from the tests. The first approach allows development / debugging of the migrations while the latter makes sure they actually work in a more realistic scenario. Debugging and getting this big test to pass was really hard time consuming. Even so, manual testing shows that our Drupal 6 dumps do not always reflect reality so manual testing already revealed more problems and these are fixed as well. Drupal 7 work has started, I am still confident Drupal 7 will be peanuts after D6 -- the data storage didn't change much. Our D6 work included CCK, after all. Future work still includes D8 sources and when we get really bored we will circle back to D6 and D7 and write userreference / nodereference / entityreference / references migrations as entityreference is now in core.</p>
+<p>Meanwhile the multilingual initative continues removing SQL queries against entity tables from core. There are issues to remove those from the path system completely and forum as well. I will spend Szeged Dev Days mostly on writing the entity drivers for MongoDB.</p>
+  </body>
+</html>
+

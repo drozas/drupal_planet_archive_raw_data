@@ -1,0 +1,138 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 07 Apr 2014 07:10:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 07 Apr 2014 07:10:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Adding Facebook Open Graph tags to your Drupal site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-open-graph-meta-tags
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Adding Facebook Open Graph tags to your Drupal site</title>
+    <base href="http://www.webomelette.com/drupal-open-graph-meta-tags">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In this article we are going to look at implementing the Facebook Open Graph (OG) tags on a Drupal site. It involves a bit of coding but nothing too major so bear with me. All the code we are going to write goes into the theme's <code>template.php</code> file so no need to to create a module for it. And if your theme does not yet have this file, go ahead and create it.</p>
+
+<h2>Why use Open Graph tags?</h2>
+
+<p>I'm sure by now you know that people share pages on Facebook and you want your site to be shared as much as possible. You also know that a little teaser information is made available on Facebook when you share these pages (title, image, short description).</p>
+
+<p>But have you ever noticed that with some sites, when you share pages on Facebook, or like/recommend them, some random, unintented image gets used in this teaser. Or the description is not correct, or even the title is not right. Facebook is quite good at picking the right elements to show there but sometimes it doesn't manage by default. And you can't expect the random user who shares your page to make adjustments to the text or title. So what do you do? You use Open Graph meta tags.</p>
+
+<h2>What are the Open Graph meta tags?</h2>
+
+<p>These are simple <code>&lt;meta&gt;</code> tags that you put in the head of your site to specify which elements should be used by Facebook for various purposes. For instance, you specify a link to an image and then Facebook knows exactly which image to use when building the teasers. The same goes with the title, description and many others.</p>
+
+<p>The tag is quite simply structured. It contains a <code>property</code> attribute in which you specify what this tag is for and a <code>content</code> attribute where you specify what should be used for this property. Let's see an example for the title:</p>
+
+<pre><code>&lt;meta property="og:title" content="This is the article title" /&gt;
+</code></pre>
+
+<p>Simple. You'll also notice that the <code>property</code> attribute value is preceeded by <code>og:</code>. This stands for Open Graph and Facebook will recognize it as such. Here are some examples for other more common OG tags:</p>
+
+<pre><code>&lt;meta property="og:url" content="http://webomelette.com/article-url" /&gt;
+&lt;meta property="og:site_name" content="Web Omelette" /&gt;
+&lt;meta property="og:type" content="blog" /&gt;
+</code></pre>
+
+<p>The first one is the canonical URL for the page, the second is the site title and the third is the type of site.</p>
+
+<h2>But how do we add them to Drupal?</h2>
+
+<p>I wrote a while back <a href="/drupal-add-html-tag-head-meta-link">an article</a> on this site in which I looked at how you can add your own custom tags into the <code>&lt;head&gt;</code> of the site. And there we learned that we use the <a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_add_html_head/7">drupal_add_html_head()</a> function inside of a preprocess one to achieve this.</p>
+
+<p>So let's say that our Article nodes don't show up properly in the Facebook teasers and we would like to specify OG tags for the title, image and description. We will do this in the theme's <code>template.php</code> file inside of the <code>template_preprocess_node()</code> function:</p>
+
+<pre><code>function theme_name_preprocess_node(&amp;$vars) {
+
+}
+</code></pre>
+
+<p>Inside this function we get access to the node information being loaded and we can test to make sure we are adding our OG tags only to the pages that load these nodes:</p>
+
+<pre><code>// If the node is of type "article", add the OG tags
+if ($vars['type'] == 'article') {
+  // Inside this conditional, we define and add our OG tags
+}
+</code></pre>
+
+<p><p>First, let's create the title tag, the simplest of them all. It will be represented by the node title:</p>
+
+<pre><code>$og_title = array(
+  '#tag' =&gt; 'meta',
+  '#attributes' =&gt; array(
+    'property' =&gt; 'og:title',
+    'content' =&gt; $vars['title'],
+  ),
+);
+
+drupal_add_html_head($og_title, 'og_title');
+</code></pre>
+
+<p>If you remember from the other article, this is how we create a new meta tag in the site header. We define a renderable array that describes the tag (type and attributes) and we use the <code>drupal_add_html_head()</code> function to set it. Simple. Now if you clear the cache and go to an article page you'll notice in its source a new tag:</p>
+
+<pre><code>&lt;meta property="og:title" content="The title of the article" /&gt;
+</code></pre>
+
+<p>This was simple. Let's see how we can extract the image URL and specify it inside a new tag for the image Facebook will use:</p>
+
+<pre><code>$img = field_get_items('node', $vars['node'], 'field_image');
+$img_url = file_create_url($img[0]['uri']);
+
+$og_image = array(
+  '#tag' =&gt; 'meta',
+  '#attributes' =&gt; array(
+    'property' =&gt; 'og:image',
+    'content' =&gt; $img_url,
+  ),
+);
+
+drupal_add_html_head($og_image, 'og_image');
+</code></pre>
+
+<p>So what happens here? First, we use the <a href="https://api.drupal.org/api/drupal/modules%21field%21field.module/function/field_get_items/7">field_get_items()</a> function to retrieve the field called <code>field_image</code> from the loaded node. This will return an array of one or more images (depending on how the field is set up and how many images are in it).</p>
+
+<p>Next, we use the image file URI inside the <a href="https://api.drupal.org/api/drupal/includes%21file.inc/function/file_create_url/7">file_create_url()</a> function to turn it into an absolute URL. Then, just like above, we create the renderable array with the <code>og:image</code> property and the image URL as the <code>content</code>. The result will be:</p>
+
+<pre><code>&lt;meta property="og:image" content="http://your-site.com/sites/all/files/your-image.jpg" /&gt;
+</code></pre>
+
+<p>Finally, let's see how we can get a small chunk of our body field and use that as a description for Facebook:</p>
+
+<pre><code>$body_field  = field_view_field('node', $vars['node'], 'body', array('type' =&gt; 'text_plain'));
+
+$og_description = array(
+ '#tag' =&gt; 'meta',
+ '#attributes' =&gt; array(
+   'property' =&gt; 'og:description',
+   'content' =&gt; text_summary($body_field[0]['#markup']),
+ ),
+);
+
+drupal_add_html_head($og_description, 'og_description');    
+</code></pre>
+
+<p>Instead of using the same function as when we retrieved the image field earlier, we use <a href="https://api.drupal.org/api/drupal/modules%21field%21field.module/function/field_view_field/7">field_view_field()</a> in this case. The reason is that it already prepares the body for output and we can specify a text format to use. We want to use plain text to avoid printing all the HTML markup that is usually found in the body field.</p>
+
+<p>Next, like above, we create our renderable array. Only this time, we also use the <a href="https://api.drupal.org/api/drupal/modules%21field%21modules%21text%21text.module/function/text_summary/7">text_summary()</a> function to trim the text down to a reasonable default of 600 words (the defaul teaser length on the site). If you want to specify a different length, you could pass it as the <strong>third</strong> argument, like so:</p>
+
+<pre><code>text_summary($body_field[0]['#markup'], NULL, 100),
+</code></pre>
+
+<p>This will trim it to 100 words. One thing I noticed about this function however is that it doesn't trim nicely. It will end the chunk in the middle of the sentence even if its API says it will try to find a sensible place. For this purpose it doesn't really matter because Facebook will trim it down anyway to a shorter version.</p>
+
+<h2>Conclusion</h2>
+
+<p>So there you have it. Now you can use the Open Graph meta tags on your Drupal site to let Facebook know about your content. It's a handy social helper that can greatly improve your social presence by making your site more appealing on Facebook.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal-theming">Theming</a></span> | <span class="field-item odd"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-open-graph-meta-tags" st_title="Adding Facebook Open Graph tags to your Drupal site" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-open-graph-meta-tags" st_title="Adding Facebook Open Graph tags to your Drupal site" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-open-graph-meta-tags" st_title="Adding Facebook Open Graph tags to your Drupal site" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

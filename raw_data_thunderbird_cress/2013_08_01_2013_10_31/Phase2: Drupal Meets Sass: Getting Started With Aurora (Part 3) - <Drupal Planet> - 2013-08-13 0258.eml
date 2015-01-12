@@ -1,0 +1,243 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 13 Aug 2013 01:58:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 13 Aug 2013 01:58:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Drupal Meets Sass: Getting Started With Aurora (Part 3)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-3/?utm_source=rss&utm_medium=rss&utm_campaign=drupal-meets-sass-getting-started-with-aurora-part-3
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Drupal Meets Sass: Getting Started With Aurora (Part 3)</title>
+    <base href="http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-3/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=drupal-meets-sass-getting-started-with-aurora-part-3">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>If you&#8217;re just now joining us, you might want to breeze through <a title="Drupal Meets Sass: Getting Started With Aurora (Part 1)" onclick="_gaq.push(['_trackPageview', '/internal-links/sass#1']);" href="http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-1/">Part 1</a> and <a title="Drupal Meets Sass: Getting Started With Aurora (Part 2)" onclick="_gaq.push(['_trackPageview', '/internal-links/sass#2']);" href="http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-2/">Part 2</a> of my Series on Sass, to catch up. And away we go&#8230;</em></p>
+<p>Our friend Oliver has a serious problem&#8211;his organic olive oil oatmeal business is exploding and his phone is ringing off the hook. So he decided to put together an online order form so that he&#8217;s not on the phone taking orders at all hours, and he asks you to theme it for him. The catch is that he needs it done yesterday. And the second catch is that it needs to be responsive.</p>
+<p>So naturally you turn to <a href="https://drupal.org/project/aurora">Aurora</a>, the only base theme that comes with time travel built in. But where to start?</p>
+<h2>What we&#8217;re working with</h2>
+<p>I always find it helpful to build the basic layout before anything else, so that as you style things, they&#8217;re already in kinda-sorta the right position instead of one super wide ugly column.</p>
+<p>So we need to build a grid that matches the wireframes that Oliver gave to us. Here&#8217;s how the layout should behave on the desktop:</p><pre class="crayon-plain-tag">=================================================
+| &nbsp;SIDEBAR &nbsp;| &nbsp; &nbsp; &nbsp; &nbsp;CONTENT &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp;SIDEBAR &nbsp;|
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+=================================================</pre><p>And on tablets, we get two columns over one.:</p><pre class="crayon-plain-tag">=====================================
+| &nbsp; &nbsp; SIDEBAR &nbsp; &nbsp; | &nbsp; &nbsp; CONTENT &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+=====================================
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SIDEBAR &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+=====================================</pre><p>And on mobile, we drop down to a single column layout:</p><pre class="crayon-plain-tag">=========================
+| &nbsp; &nbsp; &nbsp; &nbsp;SIDEBAR &nbsp; &nbsp; &nbsp; &nbsp;|
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+=========================
+| &nbsp; &nbsp; &nbsp; &nbsp;CONTENT &nbsp; &nbsp; &nbsp; &nbsp;|
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+=========================
+| &nbsp; &nbsp; &nbsp; &nbsp;SIDEBAR &nbsp; &nbsp; &nbsp; &nbsp;|
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+=========================</pre><p></p>
+<h2>Grid it together!</h2>
+<p>To build this layout, we&#8217;ll make use of two things, both of which are bundled with Aurora.</p>
+<ul>
+<li><a href="https://github.com/team-sass/singularity"><strong>Singularity</strong></a>, the Sassy grid system that Aurora prefers.</li>
+<li><a href="https://github.com/team-sass/breakpoint"><strong>Breakpoint</strong>,</a> a mixin which lets you include media queries without breaking a sweat.</li>
+</ul>
+<p>Breakpoint is the easiest to understand so we&#8217;ll take a look at that first. Here&#8217;s a generic looking bit of CSS (NOT Sass) that we&#8217;ll use as an example:</p><pre class="crayon-plain-tag">.sidebar {
+&nbsp; width: 100%; /* Full width on mobile */
+}
+@media (min-width : 768px) and (max-width : 1024px) {
+&nbsp; .sidebar {
+&nbsp; &nbsp; width: 400px; /* Fixed width for tablets */
+&nbsp; }
+}
+@media (min-width : 1025px) {
+&nbsp; .sidebar {
+&nbsp; &nbsp; width: 25%; /* Fluid width for desktop */
+&nbsp; }
+}</pre><p>So here we have a basic mobile-first CSS snippet that tells the browser what width the sidebar should be at different resolutions. Specifically, full width on mobile, fixed width on tablets, and fluid width on desktop.</p>
+<p>Now, when we convert this to Sass and make use of the Breakpoint mixin, it looks like this:</p><pre class="crayon-plain-tag">// Set up our variables in _variables.css.
+$tablet: 768px 1024px;
+$desktop: 1025px;
+
+// Set up your layout where you like layout rules.
+// I prefer separate files under a custom sass/partials/_layout folder.
+.sidebar {
+&nbsp; width: 100%;
+&nbsp; @include breakpoint($tablet) {
+&nbsp; &nbsp; width: 400px;
+&nbsp; }
+&nbsp; @include breakpoint($desktop) {
+&nbsp; &nbsp; width: 25%;
+&nbsp; }
+}</pre><p>Not only is this a lot cleaner and more easily readable, but it&#8217;s also a lot more maintainable since you&#8217;re not hardcoding media query resolutions all over the place.</p>
+<p>So that handles media queries. Now how about the grid? This is where things get a little interesting.</p>
+<p>Using the wireframes above, we first need to tell Singularity how many columns we want per-layout, like so:</p><pre class="crayon-plain-tag">$grids: 1; &nbsp;// Mobile&nbsp;
+$grids: add-grid(2 at 768px); // Tablet
+$grids: add-grid(1 3 1 at 1024px); // Desktop</pre><p>As you can (maybe not) see, the $grids property tells Singularity how to set up our grids. If you give it a single number, it just creates that many equal width columns. If you give it multiple numbers, it creates one column per number, and uses the numbers to determine the relational size between them.</p>
+<p>Confused yet? Basically, this just means that if you want a symmetric grid, just tell it how many columns you want. If you want an asymmetric grid, you give it one number per column, where the number is the same as the width of that column compared to the others. So in our desktop example, we said &#8220;1 3 1&#8243; which means create 3 columns, where the first and third are 1/5 of the total width, and the middle one is 3/5 of the total width.</p>
+<p>Also of note is the fact that we default to the mobile layout and then add in grids for tablet and desktop resolutions since we&#8217;re going with mobile first. If you want bonus points, you can use the $tablet and $desktop variables created earlier in the &#8220;Breakpoint&#8221; example here instead of hardcoding widths.</p>
+<p>So now that Singularity knows about our columns, what about the gutters? This part&#8217;s easy. Just tell it how big the gutter should be in relation to a single column. So if you want the gutter to be 1/4 the size of a single column, you just need to say:</p><pre class="crayon-plain-tag">$gutters: 1/4;</pre><p>That gives us the foundation for our grid. Now how about actually putting content into it? This is where the &#8220;grid-span&#8221; mixin comes into play.</p>
+<p>Let&#8217;s say that the markup for our page is just a basic 3-div setup (realistically, it will match whatever you set up in page.tpl.php), then to get our desktop layout, all we&#8217;d have to do is this:</p><pre class="crayon-plain-tag">@include breakpoint($desktop) {
+&nbsp; .sidebar-first {
+&nbsp; &nbsp; @include grid-span (1, 1);
+&nbsp; }
+&nbsp; .content {
+&nbsp; &nbsp; @include grid-span (3, 2);
+&nbsp; }
+&nbsp; .sidebar-last {
+&nbsp; &nbsp; @include grid-span (1, 5);
+&nbsp; }
+}</pre><p>The first number you pass into <code>grid-span()</code> tells it how many columns you&#8217;d like that element to span, and the second number tells it which column you want it to start on. So since we&#8217;re basically working with a 5-column 1-3-1 layout on the desktop, we tell Singularity to let the sidebars span the first and last column, and that the content should fill in the space between them.</p>
+<p>And of course, since we&#8217;re interested in responsiveness, we&#8217;ll need to add rules for tablet and mobile. Here&#8217;s what the whole shabang looks like when you smush it together.</p><pre class="crayon-plain-tag">// _variables.scss
+$grids: 1 &nbsp;// Mobile&nbsp;
+$grids: add-grid(2 at 768px) // Tablet
+$grids: add-grid(1 3 1 at 1024px) // Desktop
+$gutters: 1/4;
+
+// _layout.scss (or something like it)
+.sidebar-first {
+&nbsp; @include grid-span (1, 1); /* Mobile/Desktop/Tablet */
+}
+.content {
+&nbsp; @include grid-span (1, 1); /* Mobile */
+&nbsp; @include breakpoint($tablet) {
+&nbsp; &nbsp; @include grid-span (1, 2); /* Tablet */
+&nbsp; }
+&nbsp; @include breakpoint($desktop) {
+&nbsp; &nbsp; @include grid-span (3, 2); /* Desktop */
+&nbsp; }
+}
+.sidebar-last {
+&nbsp; @include grid-span (1, 1); /* Mobile */
+&nbsp; @include breakpoint($tablet) {
+&nbsp; &nbsp; @include grid-span (2, 1); /* Tablet */
+&nbsp; }
+&nbsp; @include breakpoint($desktop) {
+&nbsp; &nbsp; @include grid-span (1, 5); /* Desktop */
+&nbsp; }
+}</pre><p>And there you have it. A responsive, custom (even asymmetric!) grid with three breakpoints and we still have all our hair!</p>
+<h2>Very Vicious Variables</h2>
+<p>With the grid set up, let&#8217;s throw in some variables so that we can reuse them when we&#8217;re coding the actual design.</p>
+<p>So open up <code>sass/partials/_variables.scss</code>. In our case, since Oliver&#8217;s one page signup form is pretty simple, we basically only need to store the font stacks and colors we&#8217;re using so that we can reference them later without hardcoding anything. Luckily, Aurora already comes with some nice font stacks by default in _variables.scss:</p><pre class="crayon-plain-tag">$times-new-roman: &quot;Times New Roman&quot;, Times, Georgia, &quot;DejaVu Serif&quot;, serif;
+$times:           Times, &quot;Times New Roman&quot;, Georgia, &quot;DejaVu Serif&quot;, serif;
+$georgia:         Georgia, &quot;Times New Roman&quot;, &quot;DejaVu Serif&quot;, serif;
+$verdana:         Verdana, Tahoma, &quot;DejaVu Sans&quot;, sans-serif;
+$tahoma:          Tahoma, Verdana, &quot;DejaVu Sans&quot;, sans-serif;
+$helvetica:       Helvetica, Arial, &quot;Nimbus Sans L&quot;, sans-serif;
+$arial:           Arial, Helvetica, &quot;Nimbus Sans L&quot;, sans-serif;</pre><p>So all we need to do is tell Aurora that we want to default to the $georgia stack (a web-serif that matches Oliver&#8217;s earthy brand), and we can do that a little farther down by changing the $font-body property to $georgia. While we&#8217;re at it, let&#8217;s make sure that forms use a nice Arial based stack so that they stand out a bit.</p><pre class="crayon-plain-tag">$font-body: $georgia;
+$form-font-family: $arial;</pre><p>So that gets our fonts in order. Let&#8217;s add some color. Oliver&#8217;s brand only has three colors:</p>
+<ul>
+<li>Light gray (#AAA)</li>
+<li>Dark gray (#333)</li>
+<li>Earthy tan (#F2ECCC)</li>
+</ul>
+<p>A few lines below the font variables we can see some color variables which hold default branding colors for some popular sites (YouTube, Facebook, etc.) and we can add our colors there like so:</p><pre class="crayon-plain-tag">$color-tan: #F2ECCC;
+$color-lightgray: #AAA;
+$color-darkgray: #333;</pre><p></p>
+<h2>Devilish Defaults</h2>
+<p>That does it for the variables, so we can move on to some default styles for actual elements. For example, we have a form, so let&#8217;s set up some default form styles. Open up <code>sass/partials/global/_forms.scss</code> and add some basic input styling.</p><pre class="crayon-plain-tag">input,
+button,
+select,
+label,
+textarea {
+  font-family: $form-font-family;
+}
+textarea {
+  height: 10em;
+}
+label {
+  display: block;
+  margin-top: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+input[type=&quot;text&quot;],
+input[type=&quot;password&quot;],
+input[type=&quot;email&quot;],
+textarea,
+select {
+  border: 1px solid $color-tan;  
+  outline: none;
+  font-size: 16px;
+  margin-top: 10px;
+  padding: 5px;
+  &amp;amp;:focus {
+    border: 1px solid $color-darkgray;
+  }
+}</pre><p>Rinse and repeat for any other default elements that need styling. For example, set up some default heading styles (in the <code>&lt;h1&gt;</code> through <code>&lt;/h6&gt;</code> sense of the word) in <code>sass/partials/globals/_type.scss</code>, or style tables in <code>sass/partials/globals/_defaults.scss</code>. You may also want to set up some reusable utility classes  like &#8220;pull-right&#8221; or &#8220;no-pad&#8221; in <code>sass/partials/globals/_extendables.scss</code>, according to your preferences.</p>
+<h2>Section Directions</h2>
+<p>So you have your grid, you have your default styles, and you have variables set up to re-use elsewhere. Now you can finally style the individual site sections and make everything look pretty.</p>
+<p>Starting with the header, let&#8217;s go with a full width black bar with the logo text on the left and a nav menu on the right. So after putting the site name&#8217;s &lt;h1&gt; and the nav menu&#8217;s block in the header region, like you would with any other theme, you&#8217;ll want to create a new file for this section&#8217;s styles.</p>
+<p>Remember that designey section-specific styles go into the <code>sass/partials/design</code> directory, so open up <code>sass/partials/design/_design.scss</code> and you&#8217;ll find yourself staring at an empty file. Rather than adding code right there, let&#8217;s split it up a bit. Add a line to <code>_design.scss</code> which tells it to include a new header design file.</p><pre class="crayon-plain-tag">@import 'header';</pre><p>Now let&#8217;s create <code>sass/partials/design/_header.scss</code>. Try this on for size:</p><pre class="crayon-plain-tag">#header {
+  background: $color-darkgray;
+  width: 100%;
+  overflow: hidden;
+  h2 {
+    margin: 0;. 
+    padding: 0;
+    float: left;
+    font-size: 30px;
+    color: white;
+    font-weight: normal;
+    margin: 10px;
+  }
+  ul {
+    float: right;
+    margin: 17px 10px 10px;
+    li {
+      display: inline;
+      padding: 0 10px;
+      a { 
+        color: $color-lightgray;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 16px;
+        font-family: $form-font-family; // Use sans-serif for the nav, and match the form fonts.
+        &amp;amp;:hover {
+          color: $color-tan;
+        }
+      }   
+    }   
+  }
+}</pre><p>And there&#8217;s our header. I won&#8217;t bore you with the gritty details of doing this for the other sections, but the process is always the same:</p>
+<ol>
+<li>Create a new file inside <code>sass/partials/design/</code> named after your section</li>
+<li>Add the new file&#8217;s name to <code>sass/partials/design/_design.scss</code> as an include</li>
+<li>Put your super sweet section-specific styles into your new file</li>
+</ol>
+<h2>Committin&#8217; And Quittin&#8217; Time</h2>
+<p>So you&#8217;ve done a solid day&#8217;s theming and you have a newfound love of Aurora. Oh joy! Now you&#8217;re ready to commit your changes to version control so that Oliver can check them out. (You are <a title="Why switch from Subversion to Git more done on the cheap?" href="http://www.phase2technology.com/blog/why-switch-from-subversion-to-git-more-done-on-the-cheap/">using version control</a>, right?)</p>
+<p>There&#8217;s a bit of a debate on whether you should commit the compiled CSS into your repository or have it auto-generate on the server instead. In fact, heavyweights Sam Richard (Aurora&#8217;s creator) and John Albin (Zen&#8217;s creator) <a href="https://drupal.org/node/1821780">don&#8217;t even see eye to eye on it</a>. Both approaches have their pros and cons, so it&#8217;s really a personal decision.</p>
+<p>If you decide to commit your generated CSS then you don&#8217;t have to worry about adding a server-side build to compile it for you&#8211;it&#8217;s one less thing to worry about, especially if you&#8217;re dealing with multiple environments. On the other hand, if you only commit your Sass and let the server compile the CSS, then you can rest assured that there is one final source of truth in the CSS (i.e., whatever the server itself compiles) rather than whatever everyone&#8217;s Compass versions/configs decide to spit out, and this avoids some would-be merge conflicts and keeps your repo clean and tidy.</p>
+<p>Whatever you decide, make sure that your entire team is on the same page about it.</p>
+<h2>Wrapping up</h2>
+<p>You rock! Oliver&#8217;s new site looks great and you knocked out the theme in an afternoon. Plus, since you kept everything neatly organized with Aurora&#8217;s standards and made use of variables, it&#8217;ll be easy to add to or alter stuff whenever Oliver comes along asking for a new and different order form for his new &#8220;Oliver&#8217;s Organic Olive Oil Oatmeal On Ostrich (Or Owl)&#8221; line of products, and if the &#8220;O&#8217;s OOOOOO(OO)&#8221; request is like most client requests, then it&#8217;ll need to be quick!  If you missed my first two blog posts about <a href="http://www.phase2technology.com/blog/drupal-meets-sass-getting-started-with-aurora-part-1/">Sass</a>, check them out!</p>
+  </body>
+</html>
+

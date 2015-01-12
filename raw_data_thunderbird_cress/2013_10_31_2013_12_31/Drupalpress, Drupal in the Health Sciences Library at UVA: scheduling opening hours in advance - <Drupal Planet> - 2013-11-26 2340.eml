@@ -1,0 +1,45 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 26 Nov 2013 23:40:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 26 Nov 2013 23:40:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupalpress, Drupal in the Health Sciences Library at UVA: scheduling opening hours in advance
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.hsl.virginia.edu/drupalpress/scheduling-opening-hours-in-advance/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupalpress, Drupal in the Health Sciences Library at UVA: scheduling opening hours in advance</title>
+    <base href="http://blog.hsl.virginia.edu/drupalpress/scheduling-opening-hours-in-advance/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Our library is always open&#8230;*almost always.  Things happen (like Thanksgiving, Christmas, New Years) and sometimes we even have extended hours and we stay open even longer. Altogether, we have ~ 14 weeks/year that have &#8220;non-standard&#8221; hours.</p>
+<p>In the past, we had to manually managed our weekly hours by updating a single, static piece of panel content.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/wysywighours.png"><img class="alignnone size-medium wp-image-839" alt="wysywighours" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/wysywighours-300x141.png" width="300" height="141" /></a></p>
+<p>You can probably imagine the problems we had trying to maintain this accurately &#8211; every week that we had deviated hours the desk supervisor had to submit a request for us to change them. We might be busy with other projects, might not get to it right away, the hours on the home page might be wrong, the desk supervisor might have to submit another request, and then pretty soon they might have to ask us to change it back to the regular hours&#8230;</p>
+<p>Too much hassle.</p>
+<p>We knew we needed dynamic content, and because our homepage was built as panel page, we were ready to pump a view into the hours pane. The question was how to set up the content so that we wouldn&#8217;t have to touch it&#8230;at all.</p>
+<p>We landed on a combination of the <a title="drupal office hours module" href="https://drupal.org/project/office_hours">office hours</a> and <a title="drupal scheduler module" href="https://drupal.org/project/scheduler">scheduler</a> modules.</p>
+<p>Office hours gives us an &#8220;Office hours&#8221; field type. Since we want to display hours on our home page in weekly chunks, we create a &#8220;Weekly Hours&#8221; content type and add that field.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/weeklyhourscontenttype.png"><img class="alignnone size-medium wp-image-838" alt="weekly hours content type" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/weeklyhourscontenttype-300x72.png" width="300" height="72" /></a></p>
+<p>And we set the default values for this field to the library&#8217;s standard opening hours &#8211; usually when we have a week with weird hours, it&#8217;s only going to affect a couple of days so this helps cut down on data entry.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/fiedldefaultsettings.png"><img class="alignnone size-medium wp-image-837" alt="default office hours field settings" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/fiedldefaultsettings-300x154.png" width="300" height="154" /></a></p>
+<p>Then the scheduler module kicks in &#8211; the content type must be configured to allow nodes to be scheduled for publication. Check a couple boxes and start adding content.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/schedulerconfig.png"><img class="alignnone size-medium wp-image-836" alt="scheduler options of content type" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/schedulerconfig-300x131.png" width="300" height="131" /></a></p>
+<p>Since the goal here is for us not have to touch the hours (at all) we enlisted the desk supervisor to enter the data &#8211; with a couple of tweaks to the permissions table and a 5 minute demo (add node &gt;&gt; toggle hours &gt;&gt; set publish date for sunday evening before given week &gt;&gt; set unpublish date for sunday evening of given week &gt;&gt; click save) he was good to go. In all, he added 10 &#8220;Weekly Hours&#8221; nodes, including one with the library&#8217;s standard opening hours, because that was as far in advance as the library had planned its opening hours.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/schedulerscreenshot.png"><img class="alignnone size-medium wp-image-834" alt="scheduling data" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/schedulerscreenshot-300x116.png" width="300" height="116" /></a></p>
+<p>With the content added, we were able to start manipulating views so that we could display it on the homepage. Since all the nodes (except for the one with standard hours) had an unpublish date, we could configure a view to output only nodes of the type &#8220;Weekly Hours&#8221; that are published, sorted by the post date descending, displaying one at a time. That way, when a week of non-standard hours is published, it&#8217;s displayed in place of the standard hours, which were published previously but are never unpublished.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/currenthoursview.png"><img class="alignnone size-medium wp-image-835" alt="view for current hours" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/currenthoursview-300x150.png" width="300" height="150" /></a></p>
+<p>By creating a block display and setting it to only output the &#8220;Office hours&#8221; field, we should be all set. If there&#8217;s any simple formatting, re-ordering, etc. that you want to do to the hours, you should check in the field settings in the view. The office hours module has substantial integration with views, and gives you a lot of flexibility in how you want to display the hours.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/officehoursfieldsettings.png"><img class="alignnone size-medium wp-image-833" alt="highly flexible field settings for office hours" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/officehoursfieldsettings-300x136.png" width="300" height="136" /></a></p>
+<p>After that, we view block into a panel and it takes care of itself &#8211; here&#8217;s the final result on our homepage:</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/finalhours.png"><img class="alignnone size-medium wp-image-840" alt="finalhours" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/finalhours-300x156.png" width="300" height="156" /></a></p>
+<p>One cool feature that we may implement for mobile is the current hours display. In the view configuration for the office hours field we can set the number of days to show &#8211; by setting only the next open day to be displayed, you&#8217;ll get a view that can be formatted something like, &#8220;The library is open today from: [*]&#8221;</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/currenthourstodayscreenshot.png"><img class="alignnone size-medium wp-image-832" alt="current hours today display office hours module" src="http://blog.hsl.virginia.edu/drupalpress/wp-content/uploads/sites/13/2013/11/currenthourstodayscreenshot-300x59.png" width="300" height="59" /></a></p>
+<p>&nbsp;</p>
+  </body>
+</html>
+

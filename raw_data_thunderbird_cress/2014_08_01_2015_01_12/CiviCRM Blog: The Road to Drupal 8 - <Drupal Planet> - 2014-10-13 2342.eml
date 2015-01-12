@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 13 Oct 2014 22:42:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 13 Oct 2014 22:42:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: The Road to Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: https://civicrm.org/blogs/torrance/road-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: The Road to Drupal 8</title>
+    <base href="https://civicrm.org/blogs/torrance/road-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><p>As part of the Google Summer of Code, I began work on getting CiviCRM and the upcoming Drupal 8 working together nicely. I made an <a href="https://civicrm.org/blogs/torrance/drupal-8-integration">update about midway through</a> and it's time for another update.</p>
+<p>I had separated the project into a number of milestones. Phases 1, 2 and 3 dealt with varying aspects of the core CiviCRM module functionality. This work has largely been completed and there are pull requests pending into CiviCRM core, though the front end user experience is still a bit rough (for example, the CiviCRM menu bar doesn’t sit well alongside the Drupal menu).</p>
+<p>The installation process is quite different with Drupal 8: civicrm now installs as if it were any other Drupal module — simply by clicking enable. It's no longer necessary to use the CiviCRM installer before enabling the module. This handles the most common use case where CiviCRM is installed in the same database as Drupal itself. Custom options can be configured by adding configuration settings to Drupal's settings.php. For example, if Drupal is configured with a second database named 'civicrm', it will install civicrm there instead. </p>
+<p>The next big milestone was Views integration. This went ahead quite smoothly, and I managed to reduce the code count from approximately 15,000 lines of code to under 2,000 by automating a lot of the discovery of the CiviCRM database. In general, when new fields appear in CiviCRM it should only be necessary to explicitly declare how the field is related to other data types (eg. as joins or relationships).</p>
+<p>One quick nice-to-have was integrating Drupal's entity reference field with CiviCRM Contacts — mostly by creating a bare-bones Drupal entity. A similar technique may prove to work with Drupal's Rules module, but unfortunately time did not allow this yet.</p>
+<p>Finally, for the first time, the module comes with a few simple integration tests (using Drupal's SimpleTest module) which will hopefully become more fully fleshed out with time. With a judicious set of tests, this should allow a more stable experience as future versions of CiviCRM are released.</p>
+<p>Drupal 8 has finally released its first beta just over a week ago. Now that it has stabilised somewhat, we need to update the CiviCRM module to resolve breaking changes and we can then release an alpha version that the community can test, experiment with and help get into a stable state.</p>
+<p>Drupal 8 repo: <a href="https://github.com/torrance/civicrm-drupal">https://github.com/torrance/civicrm-drupal</a></p>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/civicrm-blog-categories/gsoc" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">GSoC</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

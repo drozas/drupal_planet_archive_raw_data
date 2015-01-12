@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 May 2013 19:28:25 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 May 2013 19:28:25 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Fabian Franz: Twig is in Core! - But there is lots to do left
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fabianx.drupalgardens.com/blog/twig-core-there-lots-do-left
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Fabian Franz: Twig is in Core! - But there is lots to do left</title>
+    <base href="http://fabianx.drupalgardens.com/blog/twig-core-there-lots-do-left">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><strong>TL;DR: After an extensive 5-day sprint during DrupalCon, Twig finally has landed in Drupal 8 Core and <a href="http://drupal.org/node/1987510">http://drupal.org/node/1987510</a> has been committed by the one and only alexpott in the single issues and then pushed as a whole. We still want to get lots done as part of <a href="https://drupal.org/node/1757550">https://drupal.org/node/1757550</a>.</strong></p>
+<p>After Dries' post about <a href="http://buytaert.net/reducing-risk-in-the-drupal-8-release-schedule">"Reducing risk in the Drupal 8 release shedule."</a> there was a concern in the Twig community how we can effectlively get the Twig initiative done. Single incremental patches were not possible anymore. So should we revert to the "Blocks" initiative approach and create one really really big mega patch that is hard to review and difficult to patch? Or working again in a sandbox, which in the past had given us too less core coverage and such led to inefficient review.</p>
+<h3>Focusing</h3>
+<p>The first thing we did was to focus again on what we need to achieve to be in core and no longer pose a release risk. While our goal is to convert every single theme_ function to a template - or if that is not possible, make it at least possible to implement a template for them (like field.html.twig or views-view-field.html.twig are working already now), it was very inefficient for getting Twig done. This would have meant getting 97 issues RTBC, verified and merged into one big patch, which was a major undertaking, we have been working on for months.</p>
+<p>However to pass the "risk-reduction" we only would need to make sure that "every commit puts us closer to release". So we changed strategy and focused only on the tpl.php conversions as Drupal 8 cannot ship with two theme engines. After a 5-day long sprint and lots of profiling (with <a href="https://github.com/LionsAd/xhprof-kit">XHProf-Kit</a>) we finally made it in and are secured in core.</p>
+<p>Thank you to all the contributors that helped make this possible!</p>
+<h3>Next Steps?</h3>
+<p>We (Jenlampton, John Albin and me) also had an enthusiastic session about Twig, where we outlined some of the next steps. In the twig initiative we kinda all have our personal wishlists and we also have our <a href="https://drupal.org/node/1757550">big meta issue</a> with lots of things to help with.</p>
+<p>There is still time to code freeze date, so lets sing the twig song: "One-Seventy-Five-Seventy-Five-Five-Zero - Come review a patch, be a Drupal 8 Hero!". In this case writing patches is also appreciated.</p>
+<p>Our wish- and worklists:</p>
+<ul><li>jenlampton wants to <a href="https://drupal.org/node/1843650">"kill" the process layer</a> and implement <a href="https://drupal.org/node/2004872">a nice and easy to understand new theme system architecture</a> designed during DrupalCon portland.</li>
+<li>joelpittet works to remove the process layer by <a href="https://drupal.org/node/2004286">wrapping drupal_get_{css,js,html_head} as render arrays that are rendered lazily</a> and is also hoping to </li>
+<li>c4rl really wants to <a href="https://drupal.org/node/1843798">revolutionize the Render API</a> and a first step is to <a href="https://drupal.org/node/2006152">remove all theme() calls from core, but use drupal_render instead</a>.</li>
+<li>thedavidmeister is almost everywhere to be found, but is also helping with Render API refactoring and <a href="https://drupal.org/node/2005970">wishing that there was a clearer distinction between #type and #theme</a>.</li>
+<li>geoffreyr is working on <a href="https://drupal.org/node/1964156">making it easier for contrib to add Twig extensions</a> (Symphony style service definition!) and is also giving us <a href="https://drupal.org/node/1927584">the very nice trans extension from Twig, but using internally t() and format_plural</a>.</li>
+<li>100s of contributors are still <a href="https://drupal.org/node/1757550">working to convert all theme_ functions in core to Twig.</a></li>
+<li>And I myself wish that the Twig initiative is a great success in not only adding Twig to core, but make the life of themers overall easier. In addition I work on <a href="https://drupal.org/node/1818266">enabling autoescacpe for Drupal Core</a>.</li>
+</ul><p>If you want to have a great theme system, join us now in our efforts to make the theme system of Drupal 8 consistent, easy to use and flexible!</p>
+<p>You can join us in IRC on FreeNode in #drupal-twig channel or jump right into the issue queue!</p>
+<p>Thanks a lot!</p>
+ </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/twig" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">twig</a></div><div class="field-item odd"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div></div></div>
+  </body>
+</html>
+

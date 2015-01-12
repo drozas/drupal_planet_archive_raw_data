@@ -1,0 +1,75 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Oct 2013 21:30:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Oct 2013 21:30:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This week in Drupal Core: October 16th 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/350013
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This week in Drupal Core: October 16th 2013</title>
+    <base href="https://groups.drupal.org/node/350013">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Welcome to the fourth edition of <a href="https://groups.drupal.org/taxonomy/term/98113">this week in Drupal core!</a></p>
+<h2>What's new in Drupal 8?</h2>
+<p>This week saw a large number of bug fixes and cleanup task as we work hard cleaning up our API’s and codebase towards a beta release. The next alpha (alpha4) is <a href="https://groups.drupal.org/node/342698">slated for October 18th</a> since it has been a while since alpha3 was released and also in order to have something stable to port modules from during the various sprints/sessions at BadCamp. There are <a href="https://drupal.org/project/issues/search/drupal?issue_tags=8.x-alpha4">still some remaining issues</a> we’d like to see in the alpha4 so help is always appreciated.</p>
+<h2>Notable Commits</h2>
+<p>The best of <code> git log --since &quot;1 week ago&quot; --pretty=oneline</code> (123 commits in total):</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/2109601">#2109601</a> by tim.plunkett, benjy: Update MAINTAINERS.txt for block.module - great to have more maintainers come on board. Trivia Question - benjy brings the total number of Australian based core maintainers to four. Can you name them?</li>
+<li>Issue <a href="http://drupal.org/node/1757452">#1757452</a> by amateescu, Xano, chx: Support config entities in entity reference fields. This opens up more data-modelling opportunities for Drupal.</li>
+</ul>
+<h3>Important API and data model changes</h3>
+<p>Commits that stabilize our API and data model, moving us closer to a Drupal 8 beta.</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/1589176">#1589176</a> by nod_: Fixed Use data-* to store #states api informations</li>
+<li>Issue <a href="http://drupal.org/node/2101709">#2101709</a> by tstoeckler: Remove the bundle_prefix concept from the entity </li>
+<li>Issue <a href="http://drupal.org/node/2095399">#2095399</a> by Berdir: Merge DatabaseStorageController and DatabaseStorageControllerNGsystem.</li>
+</ul>
+<h3>Hardening our APIs</h3>
+<p>One of the primary use cases for the CMI initiative is to allow export and import of configuration. Until recently we were testing these in isolation or for a single site but now thanks to some lateral thinking by chx we have test coverage for exporting and importing between two distinct installs. Also we now have UUIDs on all default configuration which means the migrate initiative (IMP) is now unblocked.</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/2106171">#2106171</a> by chx, webchick: Write tests for configuration deployment scenarios.</li>
+<li>Issue <a href="http://drupal.org/node/1969800">#1969800</a> by swentel, mtift, tayzlor, chx, xjm, herom: Add UUIDs to default configuration.</li>
+<li>Issue <a href="http://drupal.org/node/2023563">#2023563</a> by Berdir, smiletrl, fago: Convert entity field types to the field_type plugin.</li>
+</ul>
+<h3>User experience (UX) improvements</h3>
+<p>Drupal 8 makes great strides in improving the user experience for administrators, site builders, content authors, and end users. Here's a sampling of some of the small fixes that are adding up to a big UX boost:</p>
+<ul>
+<li>Issue <a href="http://drupal.org/node/2072533">#2072533</a> by swentel: Group together 'Decimal', 'Float' and 'Integer' in the field type drop-down menu.</li>
+<li>Issue <a href="http://drupal.org/node/1851414">#1851414</a> by nod_, quicksketch, frega, dawehner, damiankloip: Convert Views to use the abstracted dialog modal. A big win, now all of our dialogs use the same API so any a11y or otherwise issues only need to be fixed in one place.
+</li></ul>
+<h2>Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and other related lint.</p>
+<ul>
+<li>Slightly old but still relevant @socketwench details some things to be aware of that were discovered whilst <a href="http://deninet.com/blog/1394/porting-flag-drupal-8-psr-0">porting Flag module to PSR-0</a></li>
+<li>ServerGrove hosting present an <a href="http://blog.servergrove.com/2013/10/08/symfony2-components-overview-routing/">overview of the symfony routing component</a> giving a detailed breakdown of what’s under the hood of Drupal 8 (via <a href="http://feeds.feedburner.com/symfony/planet">Symfony Planet</a>)</li>
+<li>Liran Tal’s part 4 in Drupal 8 module development dealing <a href="http://www.enginx.com/content/drupal-8-module-development-4-creating-settings-file">with creating a settings file</a></li>
+<li>Drupal 8 Won’t kill your kittens - part <a href="https://www.acquia.com/resources/podcasts/acquia-podcast-103-drupal-8-kittens-1-of-4">one</a>, <a href="https://www.acquia.com/resources/podcasts/acquia-podcast-104-drupal-8-kittens-2-of-4">two</a> and <a href="https://www.acquia.com/resources/podcasts/acquia-podcast-105-drupal-8-kittens-3-of-4">three</a> of a four part series on DX wins in Drupal 8 by Jeffrey McGuire</li>
+<li>Kat Bailey’s post on <a href="https://www.acquia.com/blog/writing-loosely-coupled-code-path-great-dx-drupal-8">why writing loosely coupled code equals a better DX</a></li>
+<li>Pixeljet talk about why <a href="http://pixeljets.com/blog/drupal-7-vs-symfony-2-overview-after-1-year-symfony-development">they often favour Symfony2 over Drupal 7</a>, relevant for Drupal 8</li>
+<li>Cathy Theys has started compiling a <a href="http://yesct.net/d8-sites">list of live D8 sites</a></li>
+</ul>
+<h2>Drupal 8 in "Real Life"</h2>
+<ul>
+<li><strong>October 24-27: </strong><a href="http://2013.badcamp.net/">BADCamp 2013</a> is <strong>next week</strong>! The four-day event includes lots of great Drupal 8 content for site builders, module authors, and core contributors, plus a full-day <a href="http://2013.badcamp.net/events/core-developer-summit">core summit</a> on October 27. Also don't miss the extended <a href="http://2013.badcamp.net/sprints">sprints</a> which run from October 21 all the way through to October 29. The teams for Views, Configuration, Multilingual, Web Services, Documentation, Usability, Media, and Twig all need your help to make Drupal 8 awesome! Sign up now.
+    </li>
+</ul>
+<h3>Other important dates in the next couple of weeks :</h3>
+<ul>
+<li><strong>October 19</strong> <a href="https://www.drupalcampatlanta.com/program/schedule">DrupalCamp Atlanta</a> includes sessions on <a href="https://www.drupalcampatlanta.com/session/twig-core-basics-drupal-8s-new-theming-engine">Twig in core</a>, <a href="https://www.drupalcampatlanta.com/session/drupal-8-creating-blog-drupal-8-configuration-api">Creating a Blog in Drupal 8 &amp; the Configuration API</a>, and <a href="https://drupal.org/user/20975">agentrickard's</a> great Drupal 8 overview, <a href="https://www.drupalcampatlanta.com/session/how-i-learned-stop-worrying-and-love-drupal-8">How I Learned to Stop Worrying and Love Drupal 8</a>.</li>
+<li><strong>November 1</strong> Session submissions close for <a href="http://drupalsouth2014.drupal.org.nz/">DrupalSouth</a>, Asia Pacific's biggest Drupal conference, <a href="http://drupalsouth2014.drupal.org.nz/news/call-for-sessions">get your sessions in</a>.
+    </li>
+<li><strong>November 7th 6-9pm (GMT+11)</strong> Drupal 8 Tour Writing sprint in Sydney Australia. See <a href="https://groups.drupal.org/node/348728">the event page</a> for more details.
+    </li>
+</ul>
+<p><strong>Keep watching the queues!</strong></p>
+  </body>
+</html>
+

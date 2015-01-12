@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 01 Oct 2013 17:35:52 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 01 Oct 2013 17:35:52 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Migrating style and script tags from node bodies into Code per Node
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/migrating-style-and-script
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Migrating style and script tags from node bodies into Code per Node</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/migrating-style-and-script">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>For a recent project, I needed to migrate anything inside <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> tags that were embedded with other content inside the body field of Drupal 6 nodes into separate Code per Node-provided fields for Javascript and CSS. (<a href="https://drupal.org/project/cpn">Code per Node</a> is a handy module that lets content authors easily manage CSS/JS per node/block, and saves the styles and scripts to the filesystem for inclusion when the node is rendered—<a href="http://www.lullabot.com/blog/article/module-monday-code-node">read more about CPN goodness here</a>).</p>
+<p>The key is to get all the styles and scripts into a string (separately), then pass that data into an array in the format:</p></div></div></div>
+  </body>
+</html>
+

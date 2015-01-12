@@ -1,0 +1,108 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 18 Aug 2014 13:15:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 18 Aug 2014 13:15:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: godel.com.au: Use Behat to track down PHP notices before they take over your Drupal site forever
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.godel.com.au/blog/use-behat-track-down-php-notices-they-take-over-your-drupal-site-forever
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>godel.com.au: Use Behat to track down PHP notices before they take over your Drupal site forever</title>
+    <base href="https://www.godel.com.au/blog/use-behat-track-down-php-notices-they-take-over-your-drupal-site-forever">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-blog-header-image-display">
+    <div class="blog-header-image-inner" data-backstretch-image-url="https://www.godel.com.au/sites/default/files/styles/darken_and_desaturated/public/8310058192_6df7d4d5f5_k_0.jpg?itok=2xEJy9X7"></div>  </div>
+
+  <div class="field-post-date">
+    Mon August 18, 2014  </div>
+
+  <div class="field-title">
+    <h2>Use Behat to track down PHP notices before they take over your Drupal site forever</h2>  </div>
+
+  <div class="field-body">
+    <p><a href="http://docs.behat.org/en/v2.5/">Behat</a> is one of the more popular testing frameworks in the Drupal community at the moment, for various reasons. One of these reasons is the useful <a href="https://www.drupal.org/project/drupalextension">Behat Drupal Extension</a> that provides a <code>DrupalContext</code> class that can be extended to get a lot of Drupal specific functionality in your <code>FeatureContext</code> right off the bat.</p>
+<p>In this post, I'm going to show you how to make Behat aware of any PHP errors that are logged to the <code>watchdog</code> table during each scenario that it runs. In Behat's default setup, a notice or warning level PHP error will not usually break site functionality and so won't fail any tests. Generally though, we want to squash every bug we know about during our QA phase so it would be great to fail any tests that incidentally throw errors along the way.</p>
+<p>The main benefits of this technique are:</p>
+<ul><li>No need to write extra step definitions or modify existing steps, but you'll get some small degree of coverage for all functionality that just happens to be on the same page as whatever you are writing tests for</li>
+<li>Very simple to implement once you have a working Behat setup with the <code>DrupalContext</code> class and Drupal <a title="API is an acronym for &quot;Application Programming Interface&quot;. Technically, pretty much every piece of modern software written with internal APIs, as it simply refers to the low level set of &quot;functions&quot; or &quot;methods&quot; that a program can run to achieve a task. Most commonly, this term refers to a &quot;public&quot; API though, which allows external software to directly run functions as though they were run by the current program. This is how integrations between two different websites are usually achieved and there are various standards and conventions that exist to guide how APIs should be constructed by programmers in order to ensure security and interoperability between systems." class="glossify-link" href="/content/api">API<img src="/sites/all/themes/custom/gt/glossify.png" class="glossify-img" /></a> driver</li>
+<li>PHP errors are usually very easy to cleanup if you notice them immediately after introducing them, but not necessarily 6 months later. This is probably the easiest way I've found to nip them in the bud, especially when upgrading contrib modules between minor versions (where it's quite common to find new PHP notices being introduced).</li>
+</ul><h2>The setup</h2>
+<p>Once you've configured the Drupal extension for Behat, and set the <code>api_driver</code> to <code>drupal</code> in your <code>behat.yml</code> file, you can use Drupal API functions directly inside your <code>FeatureContext.php</code> file (inside your step definitions).</p>
+<p>Conceptually, what we're trying to achieve is pretty straightforward. We want to flush the <code>watchdog</code> table before we run any tests and then fail any scenario that has resulted in one or more PHP messages logged by the end of it. It's also important that we give ourselves enough debugging information to track down errors that we detect. Luckily, <code>watchdog</code> already keeps serlialized PHP error debug information serialized by default, so we can unserlialize what we need and print it straight to the console as required.</p>
+<p>You will need to write a custom <code>FeatureContext</code> class extending <code>DrupalContext</code> with hooks for <code>@BeforeSuite</code> and <code>@AfterScenario</code>.</p>
+<p>Your <code>@BeforeSuite</code> should look something like this:</p>
+<pre class="prettyprint">
+&lt;?php
+  /**
+   * @BeforeSuite
+   */
+  public static function prepare(SuiteEvent $event) {
+    // Clear out anything that might be in the watchdog table from god knows
+    // where.
+    db_truncate('watchdog')-&gt;execute();
+  }
+</pre><p>And your corresponding <code>@AfterScenario</code> would look like this:</p>
+<pre class="prettyprint">
+&lt;?php
+  /**
+   * Run after every scenario.
+   */
+  public function afterScenario($event) {
+    $log = db_select('watchdog', 'w')
+      -&gt;fields('w')
+      -&gt;condition('w.type', 'php', '=')
+      -&gt;execute()
+      -&gt;fetchAll();
+    if (!empty($log)) {
+      foreach ($log as $error) {
+        // Make the substitutions easier to read in the log.
+        $error-&gt;variables = unserialize($error-&gt;variables);
+        print_r($error);
+      }
+      throw new \Exception('PHP errors logged to watchdog in this scenario.');
+    }
+  }
+</pre><p>My apologies, I know this code is a little rough, I'm just using <code>print_r()</code> to spit out the data I'm interested in without even bothering to process the Drupal variable substitutions through <code>format_string()</code>, but hey, it's still legible enough for the average PHP developer and it totally works! Maybe someone else will see this, be inspired, and share a nicer version back here...</p>  </div>
+
+  <div class="field-author-info">
+    <div class="group-left"><div class="field-profile-picture">  <div class="user-picture">
+    <a href="/users/david-meister" title="View user profile."><img src="https://secure.gravatar.com/avatar/23515b947aa5c46da2f113d264d99834.jpg?d=mm&amp;s=160&amp;r=G" alt="David Meister&#039;s picture" title="David Meister&#039;s picture" /></a>  </div>
+</div></div><div class="group-right"><div class="field_name"><h3><a href="/users/david-meister" title="View user profile." class="username">David Meister</a></h3></div><div class="field-position-title">Director &amp; lead developer</div></div><div class="group-footer"><div class="field-position-description">Dave is one of the two directors of Godel. He is also our best developer. Dave spends his time improving processes, researching new and shiny techniques and generally working on making Godel the best it can be.</div></div>  </div>
+
+  <div class="field-blog-social">
+    <a class="facebook-share icon-facebook" href="javascript:window.open('https%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php%3Fu%3Dhttps%3A%2F%2Fwww.godel.com.au%2Frss%2Fplanet-drupal', '_blank', 'width=500,height=300');void(0);" target="_blank">f</a><a class="twitter-share icon-twitter" href="javascript:window.open('https%3A%2F%2Ftwitter.com%2Fshare', '_blank', 'width=500,height=300');void(0);" target="_blank">t</a>  </div>
+
+  <div class="field-call-to-action">
+    <div id="block-calltoaction" class="block block--">
+
+    
+  <div class="content">
+    <h3>Want to work with us?</h3><p>If you have a project that requires a creative but practical approach...</p><a href="mailto:josh@godel.com.au" class="button">Get in touch</a>  </div>
+</div>
+  </div>
+
+  <div class="field-custom-pager">
+    <div  role="article" class="ds-1col node node-blog-entry view-mode-custom_pager clearfix">
+
+  
+  
+  <div class="field-title">
+    <h3><a href="/blog/turn-your-emails-actions-activeinbox">Turn your emails in to actions with ActiveInbox</a></h3>  </div>
+
+  <div class="field-post-date">
+    Thu July 31, 2014  </div>
+
+  <div class="field-body">
+    Harness email hell with ActiveInbox, which turns your Gmail in to actionable tasks and helps you remind yourself to do the things you said you would.  </div>
+</div>
+
+<div class="next no-result node-blog-entry"></div>  </div>
+  </body>
+</html>
+

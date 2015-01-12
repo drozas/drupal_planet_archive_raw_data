@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 26 Apr 2014 09:24:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 26 Apr 2014 09:24:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Debugging with XDebug, Acquia Dev Desktop and PHP Storm
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/debugging-xdebug-acquia-dev-desktop-and-php-storm
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Debugging with XDebug, Acquia Dev Desktop and PHP Storm</title>
+    <base href="http://deeson-online.co.uk/labs/debugging-xdebug-acquia-dev-desktop-and-php-storm">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If you want to be able to debug your PHP code like some kind of software professional from the Java world, then this tutorial is for you.</p>
+<h3>Tools</h3>
+<ul>
+<li><a href="http://xdebug.org/">XDebug</a> is an extension for PHP which allows an IDE with the right tools to pause and step through PHP code as it runs allowing you to inspect the values of variables as they are set</li>
+<li><a href="https://www.acquia.com/products-services/dev-desktop">Acquia Dev Dekstop</a> is an AMP stack from Acquia</li>
+<li><a href="http://www.jetbrains.com/phpstorm/">PHP Storm</a> is a nice IDE for writing PHP code in</li>
+</ul>
+<h3>Add XDebug to Acquia Dev Desktop PHP ini</h3>
+<ol>
+<li>Open Acquia dev desktop control panel</li>
+<li>Go to settings -&gt; Config</li>
+<li>Click edit next to your PHP ini config</li>
+<li>Uncomment the line which says: zend_extension="/Applications/Dev Desktop/php5_3/ext/xdebug.so"</li>
+<li>Add the following to the end of the file, save the file and restart apache and mysql ...</li>
+</ol>
+<p>[debug]<br />xdebug.remote_autostart=off<br />xdebug.remote_enable=1<br />xdebug.remote_handler=dbgp<br />xdebug.remote_mode=req<br />xdebug.remote_host=localhost<br />xdebug.remote_port=9000</p>
+<h3>Add PHPStorm bookmarklets to your browser</h3>
+<ol>
+<li>Goto the following URL <a href="http://www.jetbrains.com/phpstorm/marklets/">http://www.jetbrains.com/phpstorm/marklets/</a></li>
+<li>Click Generate on the XDebug panel</li>
+<li>Drag the Start Debugger and Stop Debugger links to your browser bookmark toolbar</li>
+</ol>
+<h3>Try it out</h3>
+<ol>
+<li>Open PHP Storm and open a local project</li>
+<li>Open index.php and set a breakpoint (click in the space between a line number and line of code)</li>
+<li>Press the telephone button in the PHP Storm toolbar to make PHP Storm listen for PHP debug connections</li>
+<li>Goto the site in the browser</li>
+<li>Click the "Start Debugger" bookmarklet and reload the page</li>
+<li>PHP Storm should popup and ask your permission then you can start using the debugger</li>
+</ol>
+<h3>The PHP Storm debugger in detail</h3>
+<p>In the debugger pane which opens in PHP Storm you will see three panels.</p>
+<ol>
+<li><strong>Frames</strong> shows you the stack listing the files and functions which you are currently in</li>
+<li><strong>Variables</strong> lists the variables which are currently in scope. You can click on them to expore them and discover their present values</li>
+<li><strong>Watches</strong> lets you set watches on variables - drag one from the variables list into the watches list and you can see how its value changes over time. In the top of the debugger window are several buttons. The main two are:
+<ul>
+<li><strong>Step over</strong> which moves execution of the program along by one line in the present file. This will execute all functions in that line and what ever lies beneath them</li>
+<li><strong>Step into</strong> will go into the function being called on the line and move execution to the first line of that function.</li>
+</ul>
+</li>
+</ol>
+<p>Step over lets you quickly step over every line of a specific function, step into lets you follow every action of the code where ever it leads.</p>
+<p>If you spend too long enjoying yourself in the debugger, your web server will eventually think execution has stalled and send a 500 back to the web browser which made the page request.</p>
+<p>The green <strong>Resume program execution</strong> button lets you skip to the next breakpoint. If there are no more breakpoints set in the code it will run to the end.</p>
+<h3>In Summary</h3>
+<p>Debugging step by step is an invaluable tool for any software developers.</p>
+<p>It has been difficult to setup in the past but the modern tools described here make it very simple and well worth any initial effort in learning to use it.</p>
+<p>Let me know how you get on in the comments below.</p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/debugging-xdebug-acquia-dev-desktop-and-php-storm">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Debugging with XDebug, Acquia Dev Desktop and PHP Storm</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/john-ennew">John Ennew</a> | 26th April 2014</div></div></div>
+  </body>
+</html>
+

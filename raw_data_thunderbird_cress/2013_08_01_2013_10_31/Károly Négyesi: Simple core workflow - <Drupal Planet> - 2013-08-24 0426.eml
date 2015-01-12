@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 24 Aug 2013 03:26:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 24 Aug 2013 03:26:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Simple core workflow
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/374
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Simple core workflow</title>
+    <base href="http://www.drupal4hu.com/node/374">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Based on a discussion on IRC this is not apparent to everyone so let me write down quick my core workflow:<br />
+<div class="codeblock"><code>wget http://drupal.org/something.patch<br />git apply --index something.patch<br />... hack<br />git diff &gt; interdiff.txt<br />git diff HEAD &gt; new.patch</code></div><br />
+Should the patch not apply then<br />
+<div class="codeblock"><code>patch -p1 &lt; something.patch<br />... resolve conflicts<br />... stage the new files<br />git add `grep -A1 /dev/null something.patch |grep b/|cut -c 7-`<br />... hack<br />git diff HEAD &gt; new.patch</code></div></p>
+  </body>
+</html>
+

@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 27 Nov 2013 00:09:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 27 Nov 2013 00:09:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Change record issue field data loss
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/381018
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Change record issue field data loss</title>
+    <base href="https://groups.drupal.org/node/381018">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Following the Drupal.org upgrade to Drupal 7, the change record "Issues" field was inadvertently converted to a single-value field. This means that change records that previously were associated with multiple issues now only reference one of those issues. <a href="https://drupal.org/node/2135759">A critical issue has been filed to restore the field and its data</a>.</p>
+<p>Until this issue is resolved, please update existing change records where appropriate, but leave the Drupal core issue open until the Drupal.org bug is resolved and the core issue can again be associated with the correct change record.</p>
+  </body>
+</html>
+

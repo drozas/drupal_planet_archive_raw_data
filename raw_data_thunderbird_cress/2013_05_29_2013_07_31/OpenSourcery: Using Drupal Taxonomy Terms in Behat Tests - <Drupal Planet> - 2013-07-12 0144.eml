@@ -1,0 +1,47 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 12 Jul 2013 00:44:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 12 Jul 2013 00:44:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: OpenSourcery: Using Drupal Taxonomy Terms in Behat Tests
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.opensourcery.com/blog/sheldon-kreger/using-drupal-taxonomy-terms-behat-tests
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>OpenSourcery: Using Drupal Taxonomy Terms in Behat Tests</title>
+    <base href="http://www.opensourcery.com/blog/sheldon-kreger/using-drupal-taxonomy-terms-behat-tests">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>It is sometimes necessary to test a piece of functionality which involves a taxonomy term. For example, we often use taxonomy terms to classify content. Thankfully, it is possible to attach taxonomy terms to nodes in Behat, if we are careful.</p>
+<h3>A Simple Use Case</h3>
+<p>Let's assume a simple example, with a content type called "Document". This content type has a file field to attach a downloadable document, and it also has a taxonomy term reference field, which is used to classify the document. For example, we may mark this document as a "Brochure", or an "Ebook". These two taxonomy terms are part of the same vocabulary called "document_type."</p>
+<p>Now, it is useful for our users to visit a page with a view listing all of the document nodes, with an exposed filter on the taxonomy term. This way, users can click to sort the document nodes, and see only nodes tagged with "Ebook" or "Brochure".</p>
+<h3>Implementing the Test</h3>
+<p>The trick lies in explicitly creating the taxonomy terms before we create the nodes in our tests. If we try to create the taxonomy terms by simply populating the field with the term value on the node, it will not effectively be attached. We must do both:</p>
+<!-- HTML generated using hilite.me --><!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+<pre style="margin: 0; line-height: 125%">Background:
+  Given "document_type" terms:
+    | name     |   
+    | eBook    |   
+    | Brochure |
+
+  Given "document" nodes:
+    | title                   | body                     | field_document_type |
+    | An Interesting eBook    | This is a great book!    | eBook               |   
+    | An Interesting Brochure | This is a nice brochure! | Brochure            |   
+
+Scenario: Filter resources on documents
+    Given I am on "document-view-page"
+    When I select "Brochure" from "Select the Type of Document"
+    And I press "Search"
+    Then I should see the link "An Interesting Brochure"
+    And I should not see the link "An Interesting eBook"
+</pre></div>
+<p>If we were to only create the document nodes, the test would throw no error, but our taxonomy terms would not actually be created. Therefore, when we try to use our filters, the term will not be in place, and the test will fail.</p>
+  </body>
+</html>
+

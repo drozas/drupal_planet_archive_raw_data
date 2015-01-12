@@ -1,0 +1,139 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 13 Feb 2014 16:46:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 13 Feb 2014 16:46:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mike Crittenden: Lean Drupal breadcrumbs
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mikecr.it/ramblings/lean-drupal-breadcrumbs
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mike Crittenden: Lean Drupal breadcrumbs</title>
+    <base href="http://mikecr.it/ramblings/lean-drupal-breadcrumbs">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-images field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img src="http://mikecr.it/sites/default/files/styles/fullwidth/public/bc2.jpg?itok=iYIhxqlG" width="700" height="300" alt="" /></div></div></div><div class="field field-name-field-subtitle field-type-text field-label-hidden"><div class="field-items"><div class="field-item even">In which GUI and breadcrumbs don&#039;t get along</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Ah, breadcrumbs, how I hate you. Such a tiny little piece of a site, yet so much complexity and time spent. For some clients, you would think this is their number one must have feature based on how much time they spend checking and critiquing them page-by-page.</p>
+
+<h2>Existing solutions</h2>
+
+<p>In typical Drupal fashion, "there's a module for that!" Or more truthfully, "there are 17 modules for that!" Let's run down a few.</p>
+
+<p><strong>Please note that I am NOT hating on these modules because they're bad. Most of them are actually quite good for the tough problem they're trying to solve.</strong></p>
+
+<h3>Custom Breadcrumbs</h3>
+
+<p><a href="https://drupal.org/project/custom_breadcrumbs">Custom Breadcrumbs</a> is perhaps one of the earliest modules for this, dating all the way back to 2006. It has a bunch of submodules and a fancy interface that looks like this:</p>
+
+<p><img src="http://i.imgur.com/5hwWUPW.png" alt="Custom Breadcrumbs UI" /></p>
+
+<p>And that's just nodes. There are also interfaces for Views, Panels, Taxonomy, and Paths. Now, I'm not saying this interface is bad--it's not. But I bet you couldn't understand it at first glance. That's because <strong>breadcrumbs are just a hard thing to configure visually.</strong> (I'm going to say that again so be ready).</p>
+
+<p>How much code does Custom Breadcrumbs ship with?</p>
+
+<script src="https://gist.github.com/mikecrittenden/8977193.js"></script>
+
+<p>That's 6258 lines, counting a few text files and comments and blank lines. For Breadcrumbs. Debugging when things don't work as they should is obviously no picnic.</p>
+
+<h3>Crumbs</h3>
+
+<p><a href="https://drupal.org/project/crumbs">Crumbs</a> is less than 4 years old so it's just a toddler compared to Custom Breadcrumbs. Let's take a look at a few of its admin pages.</p>
+
+<p>Here's how you specify a breadcrumb pattern for content:</p>
+
+<p><img src="http://i.imgur.com/g0b5KW4.png" alt="Content patterns" /></p>
+
+<p>And here's a snippet of how you choose which plugins take priority over other plugins:</p>
+
+<p><img src="http://i.imgur.com/jwuWs4i.png" alt="Plugin weights" /></p>
+
+<p>Again, these aren't bad interfaces by any means. They're just symptoms of the problem, which is that <strong>breadcrumbs are just a hard thing to configure visually.</strong></p>
+
+<p>How about code?</p>
+
+<script src="https://gist.github.com/mikecrittenden/8977916.js"></script>
+
+<p>Crumbs currently ships with 9135 lines of code, again including text files and comments and blank lines.</p>
+
+<h3>Hansel</h3>
+
+<p><a href="https://drupal.org/project/hansel">Hansel</a> is about as old as Crumbs and touts the slogan "Breadcrumbs done right!" It contains 7 modules (one each for Domain, OG, Taxonomy, Forum, Exporting, the UI, and core functionality) and weighs in at a lightweight 4421 lines currently.</p>
+
+<script src="https://gist.github.com/mikecrittenden/8977902.js"></script>
+
+<p>Here's what it looks like:</p>
+
+<p><img src="http://i.imgur.com/SF5sJEq.png" alt="Hansel UI" /></p>
+
+<p>Would you know what to enter where on that screen? Would you know how to build out breadcrumbs for nodes tagged with a taxonomy using that? Yet again, this isn't a problem with the module, the module is fine. <strong>Breadcrumbs are just a hard thing to configure visually.</strong></p>
+
+<h3>Others</h3>
+
+<p>This list is by no means complete. Here are a few others that exist and are, in my perhaps grumpy opinion, either lacking in functionality or equally as bulky and confusing.</p>
+
+<ul>
+<li><a href="https://drupal.org/project/path_breadcrumbs">Path Breadcrumbs</a> (here's a <a href="https://drupal.org/files/project-images/path_breadcrumbs.jpg">screenshot</a>)</li>
+<li><a href="https://drupal.org/project/breadcrumbs_by_path">Breadcrumbs By Path</a> (only works for items that follow a predictable nested URL aliasing convention)</li>
+<li><a href="https://drupal.org/project/menu_breadcrumb">Menu Breadcrumb</a> (only works for items in menus)</li>
+<li>Others? If you know of another breadcrumb module that you absolutely love, feel free to tell me all about it in the comments.</li>
+</ul>
+
+<h2>Why are we here?</h2>
+
+<p>Easy! <strong>Breadcrumbs are just a hard thing to configure visually!</strong></p>
+
+<p>They can depend on so many things and they need to satisfy so many different use cases, that it's just really hard to support all of that and do it in a way that isn't a GUI onslaught.</p>
+
+<p>Let's take a specific example. Say we have just one single content type (just one!) called "Story". And let's pretend that there's a "Category" taxonomy attached to it. Here are some very common and completely valid ways one might want to set up those breadcrumbs:</p>
+
+<ol>
+<li>Make all news authored by a specific user named John Writer follow the "Editorials > John Doe > Title Of Post" pattern.</li>
+<li>Make all news under the "Press Release" taxonomy term (in the Categories vocabulary) follow the "Press Releases > Title Of Post" pattern</li>
+<li>Make all news posted before the current calendar year follow the "News Archive > Year > Month > Title Of Post" pattern</li>
+<li>Make all news posted in the "Blog" taxonomy term follow the "Blog > Author's Name > Year > Month > Title Of Post" pattern</li>
+</ol>
+
+<p>So that's four completely different use cases all on the same content type with only one taxonomy attached to it. That doesn't even touch on multiple content types, multiple taxonomies, different entities (user profiles, and Drupal Commerce products are quite common) or even non-entity pages (Views pages, Panels pages, etc.).</p>
+
+<p>Do you see what I mean? It's a losing game.</p>
+
+<p>Blame <a href="http://mikecr.it/ramblings/drupal-and-invented-here">"Invented Here" syndrome</a> or Drupal's love of all things GUI, or both. Either way, most people are trying to make the best of a bad thing by working around the various failings of these contrib modules.</p>
+
+<h2>An alternative approach</h2>
+
+<p>You are a programmer. Do it in code. It's easy! Just use our friend <code><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_set_breadcrumb/7">drupal_set_breadcrumb()</a></code> like so:</p>
+
+<script src="https://gist.github.com/mikecrittenden/8978510.js"></script>
+
+<p>Here's a rundown of how you could satisfy the 4 use cases above in code, in a few minutes.</p>
+
+<ol>
+<li>Use <code>hook_node_view($node)</code>, grab the author out of <code>$node->uid</code>, and if it's John Writer, set that custom beadcrumb using <code>drupal_set_breadcrumb()</code>.</li>
+<li>Use <code>hook_node_view($node)</code>, grab the category out of <code>$node->field_news_categories</code> (or whatever the field is called), and run <code>taxonomy_term_load()</code> to grab the whole term, and if the <code>$term->name</code> is "Press Release", then set that breadcrumb.</li>
+<li>Use <code>hook_node_view($node)</code>, and if <code>date('Y', $node->created) &lt; date('Y')</code> then set the breadcrumb by passing <code>date('Y', $node->created)</code> and <code>date('F', $node->created)</code> into <code>drupal_set_breadcrumb()</code> for the year and month.</li>
+<li>Same basic idea as #2 above.</li>
+</ol>
+
+<p>Or maybe you're adding breadcrumbs for a Views page? Throw it in a Views hook like <code>hook_views_pre_render(&amp;$view)</code>. Oh, you're trying to add breadcrumbs to a taxonomy term page? Throw a <code>drupal_set_breadcrumb()</code> into <code>hook_taxonomy_term_view($term)</code> and call it a day.</p>
+
+<p>See what I mean? This is basic stuff for any Drupal developer, and it saves you many thousands of lines of code and potentially a lot of time debugging that code and trying to understand the interfaces.</p>
+
+<h2>Caveats</h2>
+
+<p>This method won't work when you're dealing with either of the following scenarios:</p>
+
+<ol>
+<li>You need to accommodate new breadcrumb patterns as things are changed without being able to make code changes. For example, a new promotion is being run tomorrow, with no notice, and that's not enough time to push a code change through QA and find a decent launch window by then. Or maybe you're just an editor who doesn't have code access at all.</li>
+<li>You need to accommodate clients who want to add and configure their own breadcrumbs without relying on you to code it. There's still the difficulty in getting them a module with a UX they can wrap their non-technical brains around, but it's more doable than teaching them to code.</li>
+</ol>
+
+<p>However, if you're not in one of those two situations, then I highly recommend you rid yourself of whatever breadcrumb GUI you've been using.</p>
+
+<p>Or convince the client to get rid of breadcrumbs altogether!</p>
+</div></div></div><div class="field field-name-field-related field-type-node-reference field-label-inline clearfix"><div class="field-label">Read this next:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/ramblings/drupal-and-invented-here">Drupal and “Invented Here”</a></div></div></div>
+  </body>
+</html>
+

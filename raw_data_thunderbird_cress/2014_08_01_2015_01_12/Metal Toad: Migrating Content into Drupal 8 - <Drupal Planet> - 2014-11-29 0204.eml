@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 29 Nov 2014 02:04:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 29 Nov 2014 02:04:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Metal Toad: Migrating Content into Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.metaltoad.com/blog/migrating-content-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Metal Toad: Migrating Content into Drupal 8</title>
+    <base href="http://www.metaltoad.com/blog/migrating-content-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/911/title/en/rss">Migrating Content into Drupal 8</span>
+<span class="field field-node--created field-name-created field-type-created field-label-hidden" data-quickedit-field-id="node/911/created/en/rss">November 28th, 2014</span>
+<span class="field field-node--uid field-name-uid field-type-entity-reference field-label-hidden" data-quickedit-field-id="node/911/uid/en/rss"><a title="View user profile." href="/people/keithdechant" lang="" about="/people/keithdechant" typeof="schema:Person" property="schema:name" datatype="" class="username">Keith Dechant </a></span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/911/body/en/rss">
+    <div class="field-items">
+          <div class="field-item"><p>Drupal 8 includes a powerful built-in migration system for importing content into your site. It is designed to handle data from Drupal 6 or 7, and much more. It is built around a plugin-based architecture, which allows importing of data from any external data source if you write your own source plugin.</p>
+<h3>History</h3>
+<p>When Drupal 7 was released, it came with an upgrade script that would convert a Drupal 6 database into a Drupal 7 database. For Drupal 8, the core team decided against this approach, in favor of creating a more flexible migration module.</p>
+<p>Also, Drupal 7 has the Migrate and Migrate D2D contrib modules, used for importing data into a Drupal 7 database. This effort has been moved into Core in Drupal 8.</p>
+<p>The team developing the Migrate modules maintains a group on Drupal.org. For more information about the status of these modules, visit the <a href="https://groups.drupal.org/imp" target="_blank">IMP project on Drupal.org</a>.</p>
+<h3>Migrations in Core</h3>
+<p>Drupal 8 includes two core modules:</p>
+<p><strong>Migrate</strong> - A base module for creating your own custom migrations. This module provides the core migration architecture, but does not define any usable migrations itself.</p>
+<p><strong>Migrate Drupal</strong>, a module containing migration definitions and source plugins for migrating content from Drupal 6 to Drupal 8. This will eventually support Drupal 7 as well.</p>
+<h3>Other components</h3>
+<p>The Migrate and Migrate Drupal modules do not currently provide a UI for running migrations. You will need an external component to run migrations.</p>
+<p><strong>Drush</strong> You can create a migration manifest (a YAML file) and execute it using the "drush migrate-manifest" command. Drush 7 is required.</p>
+<p>Note: The previous Drush command, "drush migrate-import", used with the Drupal 7 Migrate module, has been removed from Drupal 8.</p>
+<p>Also note: As of Drupal 8 beta 2, the "drush migrate-manifest" command does not work with managed files, because it does not yet have a parameter for specifying the source directory where the files should be copied from.</p>
+<p><strong><a href="https://www.drupal.org/project/migrate_upgrade">Migrate Upgrade</a></strong> - A contrib module which provides a user interface for migrations. As of this writing, the module is still under development.</p>
+<h3>Migrating from Drupal 6</h3>
+<p>The Migrate Drupal module is being built to help with migrating from Drupal 6/7 to Drupal 8. Its aim is to import many components of Drupal like content types, fields, users, nodes, and more.</p>
+<p>Migrate Drupal comes out-of-the-box with many of these migrations already built. It can even query CCK to determine the list of available fields to use when importing field data. To run these built-in migrations, you simply need to define a migration manifest. The following example would import Drupal 6 users and taxonomies:</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">- d6_user
+- d6_taxonomy_vocabulary
+- d6_taxonomy_term</pre></div>
+</div>
+<p>To run the migration, open a command prompt and run the following command:</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">drush migrate-manifest manifest.yml --legacy-db-url=mysql://{dbuser}:{dbpass}@localhost/{dbname}</code></span></p>
+<p>Replace {dbuser}, {dbpass}, and {dbname} with the MySQL username, password, and database name for your Drupal 6 database.</p>
+<h4>Migrating from Drupal 7</h4>
+<p>The Migrate Drupal module in Drupal 8 beta 3 does not yet include support for migrating from Drupal 7. Developers migrating from Drupal 7 to 8 will need to write their own custom migration scripts or pursue other options.</p>
+<p>At the 2014 Pacific Northwest Drupal Summit, several presenters and participants mentioned that the Drupal 7-8 migration path is not expected to be completed by the release of Drupal 8.0.0. It is expected that this will be completed in a future core release.</p>
+<p>For an example of writing a custom migration from Drupal 7 to Drupal 8, see the next installment in this series, <a href="/blog/migrating-users-drupal-7-to-drupal-8">Migrating Users from Drupal 7</a>.</p>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

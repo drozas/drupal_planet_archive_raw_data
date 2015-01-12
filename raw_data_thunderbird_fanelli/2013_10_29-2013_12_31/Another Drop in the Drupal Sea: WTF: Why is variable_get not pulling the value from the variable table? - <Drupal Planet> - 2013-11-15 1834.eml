@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 15 Nov 2013 17:34:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 15 Nov 2013 17:34:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Another Drop in the Drupal Sea: WTF: Why is variable_get not pulling the value from the variable table?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.isaacsonwebdevelopment.com/blog/2013/11/15/wtf-why-variableget-not-pulling-value-variable-table
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Another Drop in the Drupal Sea: WTF: Why is variable_get not pulling the value from the variable table?</title>
+    <base href="http://blog.isaacsonwebdevelopment.com/blog/2013/11/15/wtf-why-variableget-not-pulling-value-variable-table">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>What's that Feature?</p>
+<p>When your code executes a <a href="https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/variable_get/7">variable_get</a> what actually happens is that Drupal inspects the $conf global array variable to see if it contains an index with the variable name. It does NOT actually query the variable table.</p>
+<p><a href="http://blog.isaacsonwebdevelopment.com/blog/2013/11/15/wtf-why-variableget-not-pulling-value-variable-table" target="_blank">read more</a></p>
+  </body>
+</html>
+

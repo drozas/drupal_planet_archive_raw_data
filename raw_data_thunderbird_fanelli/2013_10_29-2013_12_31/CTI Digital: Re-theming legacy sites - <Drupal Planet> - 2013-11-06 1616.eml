@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 06 Nov 2013 15:16:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 06 Nov 2013 15:16:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CTI Digital: Re-theming legacy sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.ctidigital.com/blog/re-theming-legacy-drupal-sites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CTI Digital: Re-theming legacy sites</title>
+    <base href="http://www.ctidigital.com/blog/re-theming-legacy-drupal-sites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p><img alt="" class="media-image" height="320" style="line-height: 1.538em;" width="480" typeof="foaf:Image" src="http://www.ctidigital.com/sites/default/files/drupal-blogstock-480.jpg" /></p>
+<p>Re-theming a legacy site can sometimes be a painful process - but it needn’t be! There are almost always likely to be a few small hiccoughs along the way, particularly if multiple groups of developers taking different approaches have worked on a site before you. However, there are things you can take into consideration and plan for that will certainly alleviate potential issues and ensure the project runs as smoothly as possible.</p>
+<h2>First Steps</h2>
+<p>The first thing to consider when re-theming a legacy site - before even attempting to plan timing estimates or allocating resource - is to perform a thorough code review. In the case of Drupal sites, some of the most important aspects to consider are:</p>
+<h3>Has core been hacked/edited by previous developers</h3>
+<ul><li>This is a big no-no since it makes sites difficult to update without breaking things</li>
+<li>It is also a good sign that whoever worked on it before didn’t really know what they were doing and therefore a red flag for any other development they did on the site.</li>
+<li>A useful module to ascertain if core has been tampered with is <a href="https://drupal.org/project/hacked">Hacked!</a> but you could also just do the same thing manually by downloading the version of Drupal used and then using diff or a version control tool like Git to see if there’s any difference.</li>
+</ul><h3>How up to date are the site’s core and contrib modules</h3>
+<ul><li>Are there any known issues with any of the contrib modules in use or their ease of updating? It’s a good idea to check any modules you’re not sure about to see if they have a recent stable release or any notes on the project page that imply that there could be issues with updating, e.g. the module has been superseded by another.</li>
+<li>In most cases, out of date core or contrib modules will just require updating and shouldn’t throw up any major problems</li>
+</ul><h3>Custom modules: Are there any? What are they used for? How well are they written?</h3>
+<ul><li>If the new theme is going to require any of these modules to be tweaked or changed, you need to be sure these are written according to best practice - the “Drupal way”, following <a href="https://drupal.org/coding-standards">coding standards</a> - and are easy to understand and therefore edit.</li>
+<li>If there are any issues with them, time might need to be allocated for re-writing or re-factoring certain sections of them</li>
+</ul><h3>Existing theme functionality</h3>
+<p>If you are going to be discarding the existing theme in favour of a new one, you will need to take stock of how much functionality is in the theme itself.</p>
+<ul><li>A large template.php file or lots of pre-processing can sometimes be a sign that you will need to make sure you retain any extra functionality that was provided by this part of the theme when creating your new theme.</li>
+<li>Lots of PHP or javascript written directly into template files is another red flag in terms of adding extra time to accommodate re-writing or refactoring of code. It is also an indication you might need to spend a while trawling through questionably written code, ascertaining what it does and then re-writing according to best practise to make it more maintainable.</li>
+</ul><h2>Considering site architecture</h2>
+<p>With Drupal sites the elements that make up a site can differ greatly from project to project. For example, it could implement any combination of panels, views, custom modules or basic nodes to populate pages (to name just a few); it might utilise features to control usually database driven things via code; blocks might be controlled on the blocks page, or, context might have been employed to control where they go. The list of possibilities is almost endless.</p>
+<p>It is important to document how each section or page of a site is created and what elements go into making it up in order to understand how you should go about theming it. In some cases you might want to re-work what a page consists of and so having a record of how it works on-hand will be a massive time-saver.</p>
+<h2>Full re-theme Vs selective</h2>
+<p>If you’re doing a full site re-theme, things can be a lot easier than if you have been asked to just re-theme one section of a site. Thankfully in Drupal, you can still create a separate theme and use a tool like <a href="https://drupal.org/project/themekey">Themekey</a> to just switch to your theme for certain pages, based on URL, content type, user role or a myriad of other filters.</p>
+<p>If you need to switch between different templates in a custom module based on which theme the site is using, <a href="https://api.drupal.org/api/drupal/developer%21globals.php/7">globals</a> such as $theme_key can come in handy to ascertain which theme template to serve, e.g:</p>
+<pre>
+<code>global $theme_key;
+$theme_to_use = ($theme_key == 'new_custom_theme') ? 'new_theme' : 'old_theme';
+return theme($theme_to_use, $vars);</code></pre><h2>Your own legacy</h2>
+<p>There may come a time when a project you have worked on gets passed to someone else and, therefore, you should always consider “future developers” when you do anything. Try to follow the best practise for Drupal, maintain high and consistent coding standards and always be sure to comment any code you write. Avoid any of the pitfalls mentioned above and you might just make the next developers job that much easier!</p>
+ </div></div></div>
+  </body>
+</html>
+

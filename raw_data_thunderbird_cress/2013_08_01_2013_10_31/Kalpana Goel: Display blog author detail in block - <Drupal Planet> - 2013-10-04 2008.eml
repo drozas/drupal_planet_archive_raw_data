@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 04 Oct 2013 19:08:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 04 Oct 2013 19:08:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Kalpana Goel: Display blog author detail in block
+Content-Transfer-Encoding: 8bit
+Content-Base: http://kalpanagoel.com/node/4
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Kalpana Goel: Display blog author detail in block</title>
+    <base href="http://kalpanagoel.com/node/4">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Most of the time its not blog author who adds blog inside the CMS and if you want to display blog author detail in the block who is other than content author. This can be done easily using views.</p>
+<p>I am using example so its easy to explain. I have two content type - blog and team member.<br />
+Blog content type has title, date, topic (taxonomy term reference), authored by (entity reference to team member content type), body, and URL.<br />
+Team member content type has title, member title (position title in the organization), member image, body, and URL.</p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0" rel="dc:subject"><a href="/taxonomy/term/10" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">author detail</a></li><li class="taxonomy-term-reference-1" rel="dc:subject"><a href="/taxonomy/term/11" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">views block</a></li><li class="taxonomy-term-reference-2" rel="dc:subject"><a href="/taxonomy/term/12" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></li></ul></div>
+  </body>
+</html>
+

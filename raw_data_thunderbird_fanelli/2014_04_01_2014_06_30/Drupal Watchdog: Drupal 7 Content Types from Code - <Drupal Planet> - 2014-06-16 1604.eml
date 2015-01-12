@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 16 Jun 2014 14:04:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 16 Jun 2014 14:04:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Drupal 7 Content Types from Code
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/3/2/content-types-from-code
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Drupal 7 Content Types from Code</title>
+    <base href="http://drupalwatchdog.com/3/2/content-types-from-code">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p>One key feature of Drupal 7 that makes it one of the most flexible content management frameworks available, is the ability for administrators to build new types of content – beyond the two built into a standard installation of Drupal 7, “Article” and “Basic page”. Content types are typically created in the administration section of the website, clicking through a series of pages, and manually entering information such as the names of new fields. This is sufficient for most situations, but can become tedious and error-prone. There are several advantages to automating this process: You could define new content types for your own use without having to step through all the screens and mouse clicks. You could define them for use by other people and on other websites without having to document the steps. It would expand your module-writing capabilities, since oftentimes module functionality calls for one or more custom content types. On a related note, this can be valuable in setting up testing harnesses (e.g., in <span class="geshifilter"><code class="php geshifilter-php">test/modules/node/node.test</code></span>, the class <span class="geshifilter"><code class="php geshifilter-php">NodeWebTestCase</code></span>).</p>
+<p>Fortunately, Drupal allows for the programmatic building of content types, using its Fields application programming interface (API). We have already noted two useful examples, "Article" and "Basic page", which we can build upon.</p>
+<h3>Consult the Core</h3>
+<p>During a standard installation, Drupal runs the PHP code in the file <span class="geshifilter"><code class="php geshifilter-php">profiles/standard/standard.install</code></span>, which consists of a single function, <span class="geshifilter"><code class="php geshifilter-php">standard_install()</code></span>. It includes the code to create the two aforesaid content types:</p>        </div>
+  </body>
+</html>
+

@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 13 Aug 2013 12:29:27 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 13 Aug 2013 12:29:27 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 11: string customizations tracked
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-aug-13/drupal-8-multilingual-tidbits-11-string-customizations-tracked
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 11: string customizations tracked</title>
+    <base href="http://hojtsy.hu/blog/2013-aug-13/drupal-8-multilingual-tidbits-11-string-customizations-tracked">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><p>From previous tidbits, <a href="http://hojtsy.hu/blog/2013-jul-23/drupal-8-multilingual-tidbits-9-deployment-friendly-automated-downloads">we know the Localization update module is now built-in</a> in Drupal 8 and it is included in a deployment friendly way. We also <a href="http://hojtsy.hu/blog/2013-jul-24/drupal-8-multilingual-tidbits-10-context-specific-text-translation-apis">covered the new context specific text translation APIs</a>. There are a lot more user interface related changes and new functionality included, so let's dive into one of the more interesting ones!</p>
+<p>We discussed how Drupal now downloads translations and updates your software translations from the Drupal community (thanks to the translation teams on <a href="https://localize.drupal.org/">https://localize.drupal.org/</a>). However we know that not everybody is happy with the community translations proper. So another key feature we included in Drupal 8 is custom translation tracking. How does that work?</p>
+<p>When you add or change a translation, we keep track that you did it for yourself, and when you import a translation file in the Gettext .po format (which is still possible manually), you can also specify if the translations in the file are your customisations or from the community. Although we do not store multiple translations of the same string, we keep track on each string whether it was provided locally or fetched from the community.</p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8ExportCustom.png" /></div>
+<p>Why is this useful? Well, first of all, we can protect your translations from overwrites from the community. Now that translations can be automatically updated, your customisations would get lost if not properly tracked and protected. Automated updates protect your customisations using this tracking system. Second, you can identify these strings and work with them specifically. The translation interface includes filtering for customised translations and you can export only your customisations as well (see above), so you can reuse the same customisations on other sites. Nice, isn't it?</p>
+<h3>Issues to work on</h3>
+<p>Nothing I know at this time. Feel free to point out issues in the comments.</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Jun 2013 16:44:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Jun 2013 16:44:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: undpaul: Split a Views Exposed Form into Multiple Blocks
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.undpaul.de/blog/2013/06/17/split-views-exposed-form
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>undpaul: Split a Views Exposed Form into Multiple Blocks</title>
+    <base href="http://www.undpaul.de/blog/2013/06/17/split-views-exposed-form">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>While working on a project for a customer we had the requirement to display different parts of an exposed form of a view in different regions of the page. Additionally not all parts of the form should be visible on all pages of the site (i.e. the search box should be visible on all pages whereas other exposed filters or sort options should be visible on the result pate only).<br>
+	Normally we would manage this by using some <code>hook_form_alter()</code>-magic and/or create a custom block with a coded form in it. But a hint of <a href="https://drupal.org/user/99340" title="drupal.org user dawehner">Daniel Wehner</a> (<em>dawehner</em>) pointed me to a different solution:</p>
+<p></div></div></div><div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/blog/tags/drupal-planet-english">drupal planet english</a></div></div></div>
+  </body>
+</html>
+

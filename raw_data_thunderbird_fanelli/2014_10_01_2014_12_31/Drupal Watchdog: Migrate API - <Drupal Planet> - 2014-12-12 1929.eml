@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 12 Dec 2014 18:29:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 12 Dec 2014 18:29:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Migrate API
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/migrate-api
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Migrate API</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/migrate-api">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Article        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/4.1-migrate-api.jpg" alt="Magnified digits" width="50%" class="img-responsive img-thumbnail  margin-left" align="right" /></p>
+<p>         The migrate API works with <em>plugins</em> and stores the configuration for those plugins in a <em>configuration entity</em>. There are a number of plugin types offered: <em>source</em>, <em>process</em>, and <em>destination</em> are the most important. Source merely provides an iterator and identifiers, and most of the time the destination plugins provided by core are adequate, so this article will focus on process plugins.</p>
+<h3>Process plugins</h3>
+<p>            Nothing gets into the destination unless it is specified under the top level <span class="geshifilter"><code class="php geshifilter-php">process</code></span> key in the configuration entity. Each key under <span class="geshifilter"><code class="php geshifilter-php">process</code></span> is a destination property and the value of it is a <em>process pipeline</em>. Each “stage” of this pipeline is a plugin which receives the output of the previous stage as input, does some transformation on it, and produces the new value of the pipeline.</p>
+<p>            There are a few plugins which indeed only use the pipeline value as input – for example, the machine name plugin transliterates the input (presumably a human name) and replaces non-alphanumeric characters with underscores. However, if that was all plugins could do they wouldn’t be too useful. Instead, every plugin receives the whole row and the name of the destination property currently being created.</p>
+<p>          Each stage in the process pipeline is described by an array, where the <span class="geshifilter"><code class="php geshifilter-php">plugin</code></span> key is mandatory and the rest is just the plugin configuration.   For example:</p>
+<pre>
+process:
+  vid:
+    -
+    plugin: machine_name
+    source: name
+    -
+    plugin: dedupe_entity
+    entity_type: taxonomy_vocabulary
+    field: vid
+</pre><p>
+            The above mentioned machine name transformation is run on <span class="geshifilter"><code class="php geshifilter-php">name</code></span> and then the entity deduplication plugin adds a numeric postfix ensuring the vid field of the <span class="geshifilter"><code class="php geshifilter-php">taxonomy_vocabulary</code></span> entity is unique. That is the canonical format of the process pipeline.</p>        </div>
+  </body>
+</html>
+

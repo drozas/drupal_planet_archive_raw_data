@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 03 Feb 2014 08:04:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 03 Feb 2014 08:04:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: How to batch assign taxonomy terms to nodes using Views Bulk Operations
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/how-batch-assign-taxonomy-terms-nodes-using-views-bulk-operations
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: How to batch assign taxonomy terms to nodes using Views Bulk Operations</title>
+    <base href="http://www.webomelette.com/how-batch-assign-taxonomy-terms-nodes-using-views-bulk-operations">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In this article I am going to show you a quick trick that will allow you to assign taxonomy terms to a lot of nodes all at once. For this we will use <a href="http://drupal.org/project/views" target="_blank">Views</a> and <a href="https://drupal.org/project/views_bulk_operations" target="_blank">Views Bulk Operations</a> and will require no coding whatsoever. So let's begin.</p>
+<p>First off, make sure you have the 2 modules installed. Drush will quickly take care of that for you if you don't have them yet:</p>
+<pre><div class="codeblock"><code>drush dl ctools views vbo &amp;&amp; drush en ctools views views_ui vbo</code></div></pre><p>Now, the next thing we need to do is create a View page that displays the content (nodes, users, etc) you'd like to operate on in bulk (in our case, add taxonomy terms to). Make sure it uses fields and for start, the title field will be enough. For filtering, use whatever you need to filter the View to show only the content you want and sorting doesn't really matter.</p>
+<p>Next up, add a new field of the type: <code>Bulk operations: Content</code>. This will provide next to the node title a checkbox for you to select that node to be part of the bulk operation.</p>
+<p>To configure this field, make sure you check the boxes <code>Modify entity values</code> and <code>Show available tokens</code> followed by selecting the values of which field you'd like changed (in our case the taxonomy term reference field). In the screenshot below, you can see my selection for the Tags field of the Article node (I am going with a node view displaying articles).</p>
+<p><img src="/sites/default/files/images/20142901133503.png" alt="" class="bordered-image" /></p>
+<p>Now you can save the View and navigate to its page. In the image below you can see my example. A table formatted view with the checkbox and the Article node title to its right. And the VBO operations above it.</p>
+<p><img src="/sites/default/files/images/20142901133521.png" alt="" class="bordered-image" /></p>
+<p><p>Now, let's say I want to apply a taxonomy term to all these nodes. I can select them all (either manually or using the top-most checkbox dedicated for selecting all rows at once), choose my operation (<code>Modify entity values</code>) and click <code>Execute</code>. And this is then my next screen:</p>
+<p><img src="/sites/default/files/images/20142901133536.png" alt="" class="bordered-image" /></p>
+<p>I have an autocomplete widget (like the default Article content type Tags field referencing taxonomy terms) where I can select one or more terms I'd like applied to all those nodes. I also have an option to ensure that existing values do not get overriden, by checking the respective checkbox. And lastly, I have some tokens available to use (because of the Tokens module).</p>
+<p>Once I select my terms and press <code>Next</code>, I get an overview of how many nodes are going to be affected by this change (as you can see below). And that's basically it.</p>
+<p><img src="/sites/default/files/images/20142901133558.png" alt="" class="bordered-image" /></p>
+<p>One thing to keep in mind here. If you are adding a non already existing taxonomy term, VBO will create that term as many times as the number of nodes being processed. So you'll end up with a bunch of terms with the same title. Probably not something you either expect or want. I therefore recommend you create your term before and then apply it to the content.</p>
+<p>Hope this helps!</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/how-batch-assign-taxonomy-terms-nodes-using-views-bulk-operations" st_title="How to batch assign taxonomy terms to nodes using Views Bulk Operations" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/how-batch-assign-taxonomy-terms-nodes-using-views-bulk-operations" st_title="How to batch assign taxonomy terms to nodes using Views Bulk Operations" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/how-batch-assign-taxonomy-terms-nodes-using-views-bulk-operations" st_title="How to batch assign taxonomy terms to nodes using Views Bulk Operations" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

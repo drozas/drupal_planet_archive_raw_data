@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 17 Nov 2013 07:34:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 17 Nov 2013 07:34:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Closures with array_walk to avoid foreach &
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/384
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Closures with array_walk to avoid foreach &</title>
+    <base href="http://www.drupal4hu.com/node/384">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Especially with Drupal 8 requiring PHP 5.4, closures (<a href="http://www.drupal4hu.com/node/291">my brief intro</a>) are going to much be much more useful and widespread. I would like to point out one advantage which already exists: <code>array_walk($a, function (&amp;$value, $key) {// some code here})</code> do not have any lingering after affects because both <code>$value</code> and <code>$key</code> are only visible in the scope of the closure. But <code>foreach ($a as $key =&gt; &amp;$value) { // same code here }</code> leaves $value a reference to the last item and it's guaranteed to give you some nasty, nasty surprises down the line. More, the behavior of foreach itself might change compared to the non reference using <code>foreach ($a as $key =&gt; $value)</code>, read <a href="http://stackoverflow.com/questions/10057671/how-foreach-actually-works/14854568#14854568">how foreach actually works</a> for much more (and a bonus headache).</p>
+<!--break--><!--break--><p>Also, the header of the closure strictly separates the body of the loop from the rest of the function / method where <code>array_walk</code> is called, giving you a very clear overview of what might happen in the loop. For example</p>
+<p><div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />array_walk</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">databaseContents</span><span style="color: #007700">[</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">table</span><span style="color: #007700">], function (&amp;</span><span style="color: #0000BB">$row_array</span><span style="color: #007700">) use (</span><span style="color: #0000BB">$fields</span><span style="color: #007700">, </span><span style="color: #0000BB">$condition</span><span style="color: #007700">, &amp;</span><span style="color: #0000BB">$affected</span><span style="color: #007700">) {<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div></p>
+<p>We immediately know that the function might change the array values, will use the $fields and $condition variables and also change the $affected variable. We know that $fields and $condition can not change within this loop. This might not be visible even when reading the loop because it is possible that you have a function call:</p>
+<p><div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />array_walk</span><span style="color: #007700">(</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">databaseContents</span><span style="color: #007700">[</span><span style="color: #0000BB">$this</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">table</span><span style="color: #007700">], function (&amp;</span><span style="color: #0000BB">$row_array</span><span style="color: #007700">) use (</span><span style="color: #0000BB">$fields</span><span style="color: #007700">, </span><span style="color: #0000BB">$condition</span><span style="color: #007700">, &amp;</span><span style="color: #0000BB">$affected</span><span style="color: #007700">) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$row </span><span style="color: #007700">= new </span><span style="color: #0000BB">DatabaseRow</span><span style="color: #007700">(</span><span style="color: #0000BB">$row_array</span><span style="color: #007700">);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (</span><span style="color: #0000BB">ConditionResolver</span><span style="color: #007700">::</span><span style="color: #0000BB">matchGroup</span><span style="color: #007700">(</span><span style="color: #0000BB">$row</span><span style="color: #007700">, </span><span style="color: #0000BB">$condition</span><span style="color: #007700">)) {<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div></p>
+<p>and without looking up <code>matchGroup</code> it is not possible to know whether it takes <code>$condition</code> by reference -- so just reading the code does not tell you what variables change and which ones are immutable. (And yes, objects passed around by handle and changing all the time is a bummer on this.)</p>
+  </body>
+</html>
+

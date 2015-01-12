@@ -1,0 +1,118 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 07 Jun 2013 14:07:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 07 Jun 2013 14:07:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: How to Code a Custom Drupal Field Formatter for an Existing Field
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-development-services/article/how-code-custom-drupal-field-formatter-existing-field
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: How to Code a Custom Drupal Field Formatter for an Existing Field</title>
+    <base href="http://www.paulbooker.co.uk/drupal-development-services/article/how-code-custom-drupal-field-formatter-existing-field">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If you need to write a custom field formatter for an existing drupal field you only need to write a few lines of custom code that implement hook_field_formatter_info() and hook_field_formatter_view()</p>
+<p>In hook_field_formatter_info() we declare the new formatters for the existing field "link field" ..</p>
+<pre class="brush: php">
+/**
+ * Implements hook_field_formatter_info().
+ */
+function mymodule_field_formatter_info() {
+  return array(
+    'mymodule_screenshot' =&gt; array(
+      'label' =&gt; t('Preview image'),
+      'field types' =&gt; array('link_field'),
+      'settings' =&gt; array(
+        'mymodule_screenshot_size' =&gt; 'small',
+        'mymodule_screenshot_cache' =&gt; 1),
+    ),
+    'mymodule_screenshot_linked' =&gt; array(
+      'label' =&gt; t('Preview image, as link'),
+      'field types' =&gt; array('link_field'),
+      'settings' =&gt; array(
+        'mymodule_screenshot_size' =&gt; 'small',
+        'mymodule_screenshot_cache' =&gt; 1),
+    ),
+  );
+}
+</pre><p>
+These custom formatters would show up under the MANAGE DISPLAY tab.</p>
+<p>Now we just need to tell drupal what to do with these new formatters when the field is shown on the page. Here we will implement the hook_field_formatter_view()  ..</p>
+<pre class="brush: php">
+/**
+ * Implements hook_field_formatter_view().
+ */
+function mymodule_field_formatter_view($entity_type, $entity, $field, $instance, $lang_code, $items, $display) {
+  $element = array();
+  $theme_function = $display['type'];
+  $settings = $display['settings'];
+  $size = $settings['mymodule_screenshot_size'];
+  $cache = $settings['mymodule_screenshot_cache'];
+
+  foreach ($items as $delta =&gt; $item) {
+    $element[$delta] = array(
+      '#markup' =&gt; theme($theme_function, array('element' =&gt; $item, 'size' =&gt; $size, 'cache' =&gt; $cache)),
+    );
+  }
+  return $element;
+}
+</pre><p>
+To determine what formatter was selected we can look at the contents of $display['type'] and then theme the field with one of our custom theme functions ..</p>
+<pre class="brush: php">
+/**
+ * Theme function for mymodule screenshot
+ */
+function theme_mymodule_screenshot($vars) {
+  $url = $vars['element']['url'];
+  $size = $vars['size'];
+  $cache = $vars['cache'];
+
+  $screenshot = _mymodule_request($url, $size, $cache);
+
+  if ($screenshot) {
+    $theme_mymodule = '';
+  }
+  else {
+    $theme_mymodule = 'No Image';
+  }
+
+  return $theme_mymodule;
+}
+
+/**
+ * Theme function for mymodule screenshot linked
+ */
+function theme_mymodule_screenshot_linked($vars) {
+  $url = $vars['element']['url'];
+  $size = $vars['size'];
+  $cache = $vars['cache'];
+
+  $screenshot = _mymodule_request($url, $size, $cache);
+
+  if ($screenshot) {
+    $theme_mymodule = '<a href="' . $url . '" target="_blank"></a>';
+  }
+  else {
+    $theme_mymodule = 'No Image';
+  }
+
+  return $theme_mymodule;
+}
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/drupal-support/tags/field" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">field</a></div><div class="field-item odd" rel="dc:subject"><a href="/drupal-support/tags/formatter" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">formatter</a></div><div class="field-item even" rel="dc:subject"><a href="/drupal-support/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-development-services/article/how-code-custom-drupal-field-formatter-existing-field"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="How to Code a Custom Drupal Field Formatter for an Existing Field">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-development-services/article/how-code-custom-drupal-field-formatter-existing-field"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

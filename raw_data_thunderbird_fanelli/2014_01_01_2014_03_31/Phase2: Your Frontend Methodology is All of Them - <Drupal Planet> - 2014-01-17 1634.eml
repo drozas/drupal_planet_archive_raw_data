@@ -1,0 +1,71 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 17 Jan 2014 15:34:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 17 Jan 2014 15:34:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Your Frontend Methodology is All of Them
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/your-frontend-methodology-is-all-of-them/?utm_source=rss&utm_medium=rss&utm_campaign=your-frontend-methodology-is-all-of-them
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Your Frontend Methodology is All of Them</title>
+    <base href="http://www.phase2technology.com/blog/your-frontend-methodology-is-all-of-them/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=your-frontend-methodology-is-all-of-them">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr" style="text-align: center"><em>Atomic Design, StyleTiles, OOCSS, BEM, SMACSS, Compass &#8211; Combining the latest documented methodologies into a unified approach to component-based design/development</em></p>
+<p>This is the first of a blog post series about teasing sense from the morass of information churning around modern frontend development and design. As a modern development team, you need a strategy. You need guidelines and best practices and defined design patterns. You need a unified language that your team all shares. This blog series starts with an anecdote about the humble &lt;li&gt; element.</p>
+<h1>&lt;li&gt;</h1>
+<p dir="ltr">A few years ago, my team of five frontend developers was tasked with quickly breaking apart comps for the landing page of a straightforward site design. We had to move fast, and we had to work in parallel without stepping on each other’s toes. Each person was given a different component of the front page &#8211; the main menu, the news post listings (complete with action links), the sidebar blocks, the footer menu, the random share widgets slowly asphyxiating the last vestiges of white space and page render performance …</p>
+<p dir="ltr">This was a blog-format Drupal site, which meant a lot of one design pattern:</p>
+<p dir="ltr" style="text-align: center"><a href="http://www.phase2technology.com/wp-content/uploads/2014/01/lists-everywhere.png"><img class="size-full wp-image-6384 aligncenter" alt="lists-everywhere" src="http://www.phase2technology.com/wp-content/uploads/2014/01/lists-everywhere.png" width="550" height="304" /></a></p>
+<p dir="ltr" style="text-align: left">You can’t have a modern, information-focused design without lists, either vertical or horizontal. Take, for example, whitehouse.gov. It is a perfect example of the peanut butter and jelly of Drupal and inline-lists:</p>
+<p style="text-align: center"><img class="aligncenter" alt="" src="https://lh4.googleusercontent.com/dttk5pwOd3gW8kCoNfEkWopLMf7H420wpugo6MtVb2RCQVSSJf8mqKRMelpZ-2BWHoDaXtWzeSmfcnV-LWLTi1hRT1vpEoQGaICuLmjWKc2NQtmKqLL5RmASRQ" width="624px;" height="807px;" /></p>
+<p style="text-align: center">www.whitehouse.gov</p>
+<p dir="ltr">Each of us had to style one or more inline lists in our assigned components. When we regrouped the next day to merge our work together, something odd happened. None of our lists played well together: we’d each styled something as simple as an inline-list completely differently. I used display: inline-block; <a href="http://css-tricks.com/snippets/css/cross-browser-inline-block/">with the IE7 zoom hack</a>. Someone else floated everything left with a clear on the parent element. Someone else chose display: inline. Someone else used inline-block, but without the IE7 inclusion (which we had to suicidally support at the time). The fifth frontend dev panicked and just YOLO’d out a number of position: absolute’s spaced equidistant.</p>
+<p dir="ltr">We had no unified approach to such a common design pattern as the lowly inline list. It was a mess and the different implementations were “leaking” into other aspects of the site build. There were no expectations of behavior: How does this technique behave on IE8? How does this technique handle overflowing content? Why is this technique a higher z-index than our overlays?! We needed to approach these patterns sanely and consistently as a team.</p>
+<h1>Enter Compass and THE ONE TRUE INLINE LIST</h1>
+<p dir="ltr" style="text-align: center"><a href="http://www.phase2technology.com/wp-content/uploads/2014/01/compass-logo-cropped.png"><img class="size-medium wp-image-6375 aligncenter" alt="compass-logo-cropped" src="http://www.phase2technology.com/wp-content/uploads/2014/01/compass-logo-cropped-300x64.png" width="300" height="64" /></a></p>
+<p dir="ltr"><a href="http://sass-lang.com/">Sass</a> and <a href="http://compass-style.org/">Compass</a> changed everything. We weren’t using preprocessors until 2010, but when they hit, we truly started to work as a team. We finally had that thing that managers want their developers to have but don’t quite know how to, because it’s really hard: <strong>we had a PROCESS</strong>.</p>
+<p dir="ltr">It goes like this: Compass is essentially a big collection of really useful Sass mixins (more on Sass later). That is, Compass makes writing a lot of tedious, common CSS structures fast and, more importantly, standardized. In our case, Compass provides the sublime little <a href="http://compass-style.org/reference/compass/typography/lists/inline-block-list/">inline block list</a> mixin.</p>
+<p></p><pre class="crayon-plain-tag">// Apply to the parent ul
+ul.nav{
+&nbsp; @include inline-block-list;
+ }</pre><p></p>
+<p dir="ltr">That little “@include” is applying the following behind the scenes:</p>
+<p></p><pre class="crayon-plain-tag">@mixin inline-block-list($padding: false) {
+&nbsp; @include inline-block-list-container; // Wrapper behavior is handled here for us
+&nbsp; li {
+&nbsp; &nbsp; @include inline-block-list-item($padding); // See below for all the considerations handled for us
+&nbsp; }
+}</pre><p></p>
+<p dir="ltr">Which is actually applying the more pertinent and robust:</p>
+<p></p><pre class="crayon-plain-tag">@mixin inline-block-list-item($padding: false) {
+&nbsp; @include no-bullet; // Because we always forget this
+&nbsp; @include inline-block; // Takes into consideration things like what to include for IE
+&nbsp; white-space: nowrap; // We also forget about this
+
+&nbsp; // Optional padding we can pass in
+  @if $padding {
+&nbsp; &nbsp; padding: {
+&nbsp; &nbsp; &nbsp; left: $padding;
+&nbsp; &nbsp; &nbsp; right: $padding;
+&nbsp; &nbsp; };
+&nbsp; }
+}</pre><p></p>
+<p dir="ltr">There’s a lot going on here, but to summarize: we get an inline list that is self-clearing, floated-left, with optional padding and default, sane styles.</p>
+<p>The <em>second</em> best part of all this is that we wrote NONE of it. The <em>best</em> part is that my whole team knows exactly what to expect in this scenario. No more cowboy-code to solve the same problem five different ways.</p>
+<p dir="ltr">Compass allowed us to define a few important rules within our process. One of those rules has survived 50+ site-launches, two parent companies, and three MacBooks:</p>
+<p dir="ltr" style="text-align: left"><blockquote>If Compass has a mixin for a component, USE IT.</blockquote></p>
+<p dir="ltr">Given that there are dozens of Compass mixins for every facet of CSS, our modern code is vastly more standardized. And vastly more filled with @includes!</p>
+<h1>Compass is just a tool in the toolchain</h1>
+<p dir="ltr">The above illustrates implementation of a framework to give us quick answers when staring at a new project for the first time while panicking about where to start. But something like Compass comes way later in the process. There are other, well-documented frameworks for each step in the design/development process. Each helps make sense of the terrifying possibilities at the start of a large project.</p>
+<p dir="ltr">There exist hundreds of acronym-laden approaches to frontend development The specific frameworks you choose don’t matter so much as agreeing, understanding, and communicating about them. That is to say:</p>
+<p dir="ltr" style="text-align: left"><blockquote>Every step in your design &amp; development process should be accompanied by a well documented framework to solve problems and get work done.</blockquote></p>
+<p dir="ltr" style="text-align: left">There just happens to be many of these frameworks already available all over the internet, which we&#8217;ll link together into a coherent toolchain in parts 2-3 of this blog series. I will cover why frameworks like Atomic Design, StyleTiles, OOCSS, BEM, and SMACSS rock. We&#8217;ll use  a few mental models combined together that can be applied to any frontend process to gain tangible benefits almost immediately.  In the meantime, check out Dave Ruse&#8217;s blog post about <a href="http://www.phase2technology.com/blog/responsive-wireframes-with-foundation/">responsive wireframes using Foundation</a>.</p>
+  </body>
+</html>
+

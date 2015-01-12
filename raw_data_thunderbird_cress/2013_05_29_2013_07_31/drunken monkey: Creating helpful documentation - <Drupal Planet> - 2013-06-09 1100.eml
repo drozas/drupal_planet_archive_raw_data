@@ -1,0 +1,50 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 09 Jun 2013 10:00:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 09 Jun 2013 10:00:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: drunken monkey: Creating helpful documentation
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drunkenmonkey.at/blog/creating-helpful-documentation
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>drunken monkey: Creating helpful documentation</title>
+    <base href="http://drunkenmonkey.at/blog/creating-helpful-documentation">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://drunkenmonkey.at/sites/default/files/styles/medium/public/field_image/books.jpg?itok=26JEfbLO" width="320" height="213" alt="" title="Early versions of the Search API documentation needed users to come to my place and borrow the documentation in book form." /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>TL; DR:</h2>
+<p>Good documentation helps both a module's maintainers and its users, and is quintessential for the success of at least more complex modules. That's why you, as a module maintainer, should not put this (admittedly rather unpopular) task off any further but write some helpful documentation rather sooner than later.</p>
+<p>On a related note, I just set a good example by finally expanding the <a href="https://drupal.org/node/1250878">handbook documentation for the Search API</a>, and adding some for the <a href="https://drupal.org/node/1999280">Solr search module</a> as well. Go check it out!</p>
+<!--break--><h2>Why good documentation pays</h2>
+<p>When we talk about documentation, there are of course two sub-categories: documentation for users (site builders/administrators) and for developers. There are different reasons for having both types of documentation:</p>
+<h3>User documentation</h3>
+<p>User documentation is very important as a first step because it lets you both attract new and keep old users. Users who first hear of your module and take it out for a spin will usually have little tolerance for things not working as expected or for having to figure out everything by themselves. Sure, supporting such (potential) new users in the issue queue and on IRC help, but having a clear "How to" tutorial, maybe with a list common pitfalls, just makes it so much easier for new users. If someone just wants to try out your module, not sure whether they would have any benefit from it, there will be little incentive to actually try to find help if things go wrong, or if they cannot easily find instructions on what to do after enabling your module.</p>
+<p>As a nice side effect, proper documentation will lead to less support requests in the issue queue or on IRC, thus even saving you time in the long run. If you keep the documentation up to date with support requests you've seen more often, users should find what they're looking for there in most cases – and if they don't find the documentation and still create a support request, a simple link to the documentation will suffice.</p>
+<p>In some cases, there is already some documentation directly in the source code, either as a <code>README.txt</code> or as <a href="http://drupal.org/project/advanced_help">Advanced help</a> integration, maybe even plenty of it.<br />
+Still, in terms of being able to find it and, e.g., also using it before downloading a module to see what you can do with it, handbook pages on Drupal.org still have the advantage. Furthermore, having documentation in the handbook significantly lowers the barrier for users of your module to get involved and extend the module's documentation (or to keep it up to date).<br />
+As long as there is no handbook documentation of your module at all, I'd wager the chances of someone else going and creating some are rather slim.</p>
+<h3>Developer documentation</h3>
+<p>Just like user documentation, developer documentation helps you attract new and keep old developers. Developers, who can help with patches in the issue queue, implement new features or create and maintain extension modules of your module. In my case, with the <a href="https://drupal.org/project/search_api">Search API</a> being primarily a framework for creating search-related modules, this is of course especially important – but having people active in the issue queue who can fix the bugs they discover and implement the features they request themselves, who can review your more complex patches, etc., is quite valuable for nearly any module out there. Just by someone else reading through your code (if it's a more complex module), a few rough edges will pop up which would sooner or later have led to problems for someone (perhaps you yourself, as the one who then should fix them).</p>
+<p>For developer documentation, naturally, <a href="http://drupal.org/node/1354">source code comments</a>, a proper <code>.api.php</code> file, etc., are very important. Still, none of these can really give new developers the “great picture” of how your module <em>works</em>. They just document single functions, methods, classes and hooks, but there is no general place for documenting how it all fits together. For that, again, I think handbook pages are the way to go.</p>
+<h2>New/Improved Search API documentation</h2>
+<p>So, after all the grand words, have I myself lived up to them? Well, no, or at least only very recently. For several years now, there was only some basic documentation for the Search API in the handbook, for the first year or so there was none at all.<br />
+However, being asked the same questions over and over in support requests, and recognizing all of the above arguments, I finally got round and significantly expanded the <a href="https://drupal.org/node/1250878">existing documentation</a>:</p>
+<ul><li>There are now a <a href="https://drupal.org/node/2010146">Common pitfalls</a> and a <a href="https://drupal.org/node/2009804">Frequently asked questions</a> section, listing support requests I've received more often over the last years.</li>
+<li>The <a href="https://drupal.org/node/2001110">developer documentation</a> section is completely new. There's still a lot to add, but the two (in my opinion) most important parts are covered: an in-detail explanation of the Search API's architecture and workflow, and documentation about adding custom item types / data sources.</li>
+<li>I moved some of the text from the <a href="http://drupal.org/project/search_api">project page</a> into the handbook – concretely, the extension modules and the related materials. This allows others to easily add to those lists as well, and additionally brings down the length of the project page to just a little over two screen pages.</li>
+<li>Lastly, there is finally also some handbook documentation for the <a href="https://drupal.org/node/1999280">Search API Solr search</a> module, including advice on how to customize the Solr configuration.</li>
+</ul><p>Of course, good documentation is hardly ever finished, and there is still a lot to be added, but I do think that this is at least a sound base now so that most users will find what they want to know.</p>
+<h3>Help still wanted</h3>
+<p>While, as the creator and maintainer, I'm certainly quite knowledgable concerning all Search API-related topics, I'm also for the very same reason one of the worst people to judge what needs documenting, what could be unclear, how things are best explained, etc.<br />
+Therefore, if you have dealt with the Search API on any level in the past or – better still – want to look into it in the near future, please take a look at the new (and old) documentation, see if everything is clear, what might be missing, etc., and tell me your thoughts in the issue queue.</p>
+<p>Or, of course, just jump in and edit or expand the documentation yourself! It's a great place to start contributing, helping others avoid potential problems you've encountered.</p>
+<p>Some more documentation projects I have in mind for the nearer future include creating an example module for implementing a custom datasource (possibly by integrating <a href="http://drupal.org/project/search_by_page">Search by Page</a> with the Search API); and maybe creating a new, up-to-date version of the old <a href="http://vimeo.com/15556855">Search API screencast</a>. If you've got other suggestions, please leave them here as a comment or create an issue for them.</p>
+<p><small>Image credit: <a href="http://www.norden.org/en/news-and-events/images/topics/culture/boecker-2/view?gallery=7378be162ade60962913a59d7b70f730">Johannes Jansson/norden.org</a></small></p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div><div class="field-item odd"><a href="/taxonomy/term/2" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">search api</a></div><div class="field-item even"><a href="/taxonomy/term/3" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">documentation</a></div></div></div>
+  </body>
+</html>
+

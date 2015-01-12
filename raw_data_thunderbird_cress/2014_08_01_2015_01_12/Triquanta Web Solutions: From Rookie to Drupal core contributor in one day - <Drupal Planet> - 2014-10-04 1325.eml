@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 04 Oct 2014 12:25:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 04 Oct 2014 12:25:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Triquanta Web Solutions: From Rookie to Drupal core contributor in one day
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.triquanta.nl/blog/rookie-drupal-core-contributor-one-day
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Triquanta Web Solutions: From Rookie to Drupal core contributor in one day</title>
+    <base href="http://www.triquanta.nl/blog/rookie-drupal-core-contributor-one-day">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p dir="ltr"><span><img alt="A thick fog in Amsterdam" class="media-image img__fid__355 img__view_mode__default attr__format__default" height="1060" src="http://www.triquanta.nl/sites/default/files/3004088682_d23831dc72_o.jpg" title="A thick fog in Amsterdam" width="1600" /></span></p>
+<p class="rteright" dir="ltr"><em><span>Picture: Thomas Ricker</span></em></p>
+<p dir="ltr"><span>A thick fog had settled in Amsterdam. Moist was gathering in my beard and a nice drupal was forming. I had a clear goal in mind and a blurry world around me. As a tourist in my own country I biked among thousands of spoked wheels. I passed hipster parents with children in carts throwing clouds at each other. And soon the Amsterdam RAI showed up. My first community sprint was about to start.</span></p>
+<p dir="ltr"><span>It was the last day of Drupalcon and we had built up a routine. And as one of the human beings we are, I picked the wrong building. Luckily one of the mentors (our own </span><a href="http://twitter.com/marcvangend"><span>@marcvangend</span></a><span>) was helpful enough to show me the way. I entered the building early in the morning and a wall of orange shirts greeted me, a full fledged team of volunteer mentors in the colors of our beautiful hosting country. Armed with name tags, stickers, sprint task cards, a lot of energy and patience they were fully equipped to guide us rookies through the day.</span></p>
+<p dir="ltr"><span>So, what am I? According to the relatively new system of sprint task cards (</span><a href="https://www.drupal.org/files/issues/Sprint-Task-Cards-Final.pdf"><span>pdf</span></a><span>) I could be an Explorer, Community Contributor, Issue Mover, Developer or Mentor. Since I already had Drupal 8 installed, and played with it during, for example, the </span><a href="https://amsterdam2014.drupal.org/session/drupal-8-multilingual-hands"><span>Drupal 8 Multilingual Hands-on </span></a><span>of </span><a href="http://twitter.com/gaborhojtsy"><span>@gaborhojtsy</span></a><span> and </span><a href="https://amsterdam2014.drupal.org/users/aimee-degnan"><span>Aimee Degnan</span></a><span>, I was up to some community contributing.</span></p>
+<p dir="ltr"><span><img alt="Drupal sprint cards" class="media-image img__fid__356 img__view_mode__default attr__format__default" height="193" src="http://www.triquanta.nl/sites/default/files/drupal_sprint_cards.png" title="Drupal sprint cards" width="1084" /></span></p>
+<p class="rteright" dir="ltr"><em><span>Sprint stickers</span></em></p>
+<p dir="ltr"><span>We, the mentored, were seated upstairs while the more experienced once worked more focussed in teams on certain projects at ground level. During the day some of us would descend for some specialized guidance. But first we had to set our teeth in "something". The theme of the day was: get "something" done and get ready to teach others. So, if you didn't know what to do, you where presented an issue to work on or you could search for an issue tagged "novice".</span></p>
+<p dir="ltr"><span>Among the tasks we undertook where: testing and reviewing patches, making screenshots (so helpful, as Angie would show later) or creating a solution on your own. Wait, no, not on your own. You weren't seated alone and the mentors were all over the place to step in at your earliest convenience. </span></p>
+<p dir="ltr"><span>In my case I wanted to see if a core 7 bug I had found earlier was present in 8. So I set out to create a little module for my scenario. But, where to start, which files are needed and how do I name them? Jesus Manuel Olivas </span><a href="http://twitter.com/jmolivas"><span>@jmolivas</span></a><span> and Larry Garfield (</span><a href="https://twitter.com/Crell"><span>@crell</span></a><span>) to the rescue, with respectively the nice </span><a href="https://www.drupal.org/project/console"><span>console module</span></a><span> to generate D8 modules from the CLI and the session recording of the </span><a href="https://amsterdam2014.drupal.org/session/drupal-8-crash-course"><span>Drupal 8 Crash Course</span></a><span>.</span></p>
+<p dir="ltr"><span>Ok, ready to test some hook_form_alter. Result: failure one. It's so simple, but why doesn't it work? Mentor </span><a href="https://twitter.com/BartFeenstra"><span>@BartFeenstra</span></a><span> to the rescue: it seems you checked out branch 8.x instead of 8.0.x, d'oh stupid me. Luckily, after some testing the D7 bug seemed to be gone in D8. However, during my testing I found another new problem. </span></p>
+<p dir="ltr"><span>Because drupal.org was under such a pressure and the issue search didn't really work any more, I descended the stairs in search of a core fields maintainer with the simple question: is this a bug and is there an issue for this problem? And it was a bug, empty multiple field items should be deleted after a node search, and there was no issue for it. Using the </span><a href="https://dreditor.org/"><span>dreditor</span></a><span>, a nice browser helper plugin for people working in the issue queue I was able to create </span><a href="https://www.drupal.org/node/2349819"><span>my issue</span></a><span> in no-time.</span></p>
+<p dir="ltr"><span>In the meantime upstairs the temperature had risen while the ground floor was still comfortable cool, outside it had become a nice early autumn day (meteorologic speaking), and my table neighbour and colleague, Valerie Valkenburg Gibson (</span><a href="https://twitter.com/valvalg"><span>@valvalg</span></a><span>), had created her first core issue and patch. </span></p>
+<p dir="ltr"><span>Since it apparently isn't allowed to get a patch in core without at least 20 comments and multiple people working at it I was offered the opportunity to help improving the patch. So mentored by </span><a href="http://twitter.com/marcvangend"><span>@marcvangend</span></a><span> and Théodore Biadala (</span><a href="https://twitter.com/nod_"><span>@nod_</span></a><span>) I checked if the patch was confirm the coding standards and got rid of some duplicate functionality. Next I did some finger exercises and create a diff, another diff of two diffs, uploaded the new diff and interdiff and licked my chupachup. Then it was time to go to the live core commit session hosted by Angie (</span><a href="http://twitter.com/webchick"><span>@webchick</span></a><span>). </span></p>
+<p dir="ltr"><span>Everybody gathered in front of the big screen while the necessary group pictures where taken and we waited in anticipation. Then Angie showed us how a core committer reviews, tests and finally commits. She even almost mistakenly used branch 8.x instead of 8.0.x, but was quickly corrected by the crowd. And I didn’t feel so stupid anymore. </span><br class="kix-line-break" /><span>Finally, as the closure of the day, we were treated with two live commits and, like my collegue Gerben Spil (</span><a href="https://twitter.com/gerbenspil"><span>@gerbenspil</span></a><span>) always says: there was much rejoicing!</span></p>
+<p dir="ltr"><img alt="Commit by webchick" class="media-image img__fid__357 img__view_mode__default attr__format__default" height="50" src="http://www.triquanta.nl/sites/default/files/Screen%20Shot%202014-10-04%20at%2010.23.17.png" title="Commit by webchick" width="622" /></p>
+<p dir="ltr"><img alt="Live issue review and commit" class="media-image img__fid__358 img__view_mode__default attr__format__default" height="767" src="http://www.triquanta.nl/sites/default/files/BzCOmiKIQAAFEmG.jpg-large.jpg" title="Live issue review and commit" width="1024" /></p>
+<p class="rteright" dir="ltr"><em><span>Picture: Patrick van Efferen</span></em></p>
+<p dir="ltr"><span>Of course so much more happened, there were fun, food, facts and many friends. </span></p>
+<p dir="ltr"><span>And by the way: can I have my new sticker now?</span></p>
+<p><br /><span>Daniël Smidt (</span><a href="https://twitter.com/dmsmidt"><span>@dmsmidt</span></a><span>)</span></p> </div></div></div>
+<ul class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-hidden">
+
+      <li>
+      <a href="/onderwerp/drupal-planet">Drupal-planet</a>    </li>
+  
+</ul>
+  </body>
+</html>
+

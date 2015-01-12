@@ -1,0 +1,265 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 11 Jul 2014 05:24:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 11 Jul 2014 05:24:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: godel.com.au: Ideas to help keep your Drupal project secure against the OWASP Top 10
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.godel.com.au/blog/ideas-help-keep-your-drupal-project-secure-against-owasp-top-10
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>godel.com.au: Ideas to help keep your Drupal project secure against the OWASP Top 10</title>
+    <base href="https://www.godel.com.au/blog/ideas-help-keep-your-drupal-project-secure-against-owasp-top-10">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-blog-header-image-display">
+    <div class="blog-header-image-inner" data-image-url="https://www.godel.com.au/sites/default/files/styles/darken_and_desaturated/public/8329988064_46b2eba8e8_z.jpg?itok=1_Jv9Za6"></div>  </div>
+
+  <div class="field-post-date">
+    Fri July 11, 2014  </div>
+
+  <div class="field-title">
+    <h2>Ideas to help keep your Drupal project secure against the OWASP Top 10</h2>  </div>
+
+  <div class="field-body">
+    <p>I'm sure you've heard the phrase "Security is a process, not a product" before, or something along those lines. Drupal has a pretty good track record as far as Web-based CMS security goes, and there's a dedicated team of experts looking after Core and Contrib, but it's no secret that the most common vulnerabilities are those we accidentally introduce ourselves during our day-to-day tweaking (Drupal.org <a href="https://www.drupal.org/documentation/is-drupal-secure">claims over 90%</a>). The <a href="http://drupalsecurityreport.org/sites/g/files/g598426/f/201403/drupal-security-whitepaper-1-3.pdf">Drupal Security White Paper</a> shows pretty clearly that the further we get away from the heavily peer-reviewed Core codebase, the more likely we are to unwittingly introduce something that's dangerous to our data.</p>
+<p>In the case of what processes we can implement as individuals, self education and reflection is always important, so I figured that the present is as good a time as any to run through the <a href="https://www.owasp.org/index.php/Top_10_2013-Top_10">OWASP Top 10</a> and present a few practical ideas and Drupal "Best Practices" to help mitigate the risks we inevitably expose ourselves to. I've added some quotes from the white paper to each section to put things into perspective.</p>
+<h2>#1 - Injection</h2>
+<blockquote><p>Drupal contains a robust object-oriented database <a title="An Application Programming Interface (API) specifies how software components should interact with each other. An API usually specifies a set of functions or routines that accomplish a specific task or allow an interaction. A good API makes it easier to develop a program by providing all the building blocks. A programmer then puts the blocks together.APIs are provided by existing programs to facilitate interactions between programs. For example, programmers can use the Twitter API to pull in a feed of tweets based on hashtag to a site." class="glossify-link" href="/content/api">API<img src="/sites/all/themes/custom/gt/glossify.png" class="glossify-img" /></a> that makes it difficult for developers to unknowingly create injection holes by automatically sanitizing query parameters and enforcing an interface. Drupal's file system interaction layer limits where files can be written and alters dangerous file extensions that the server could potentially execute.</p>
+</blockquote>
+<p>In Drupal, injection attacks are generally going to be enabled by allowing <a href="http://en.wikipedia.org/wiki/SQL_injection">unsafe data to sneak into SQL queries</a>. In Drupal 7 we have two syntaxes for working with the <a href="https://www.drupal.org/developing/api/database">database API</a>, the classic Drupal 6 style <code>db_query("SELECT * FROM foo f WHERE bar = 'baz'");</code> and the dynamic DBTNG style <code>db_select('foo', 'f')-&gt;condition('bar', 'baz' , '=');</code>.</p>
+<p>For both syntaxes, there are two things I think are worth mentioning:</p>
+<h3>Make use of PHP's PDO and Prepared Statements</h3>
+<p>Drupal's database API wraps PHP's own <a href="http://php.net/manual/en/book.pdo.php">PDO</a>, which supports something called <a href="http://php.net/manual/en/pdo.prepared-statements.php">Prepared Statements</a> that magically guarantee you won't suffer from an injection attack <em>provided you actually use the API correctly</em>.</p>
+<p>So, if you're wondering how to use the API correctly, let's split all SQL queries we might want to use into two categories, those that could be considered hardcoded strings, and those that have one or more variable components. The examples above would be "hard coded", an example of something with variable components might look like this:</p>
+<p><code>// Get the type of the node with the ID of the second URL component.<br />
+// WARNING: Don't actually do this! it is NOT secure.<br />
+$id = arg(1);<br />
+$query = db_query("SELECT type FROM node n WHERE n.nid = " . $id);</code></p>
+<p>The issue here is that, unlike our hardcoded query, the value of <code>$id</code> can be set to anything at all by the end-user, most notably including strings that resemble fragments of SQL queries. We really don't want the end-user to discover one day that they can start executing their own queries against our database by carefully crafting URL components to exploit our PHP logic.</p>
+<p>Here the fix is to either use PDO placeholders using Drupal's classic syntax, or leverage Drupal's internal query builder with the dynamic syntax. The following two examples (one for each syntax) are secure versions of the previous insecure example:</p>
+<p>Drupal 6 syntax:</p>
+<pre><code>// Get the type of the node with the ID of the second URL component.
+// The important part here is that the second argument passed to db_query() 
+// is an array of substitutions that will be sanitized internally.
+$id = arg(1);
+$query = db_query("SELECT type FROM node n WHERE n.nid = :nid", array(':nid' =&gt; $id));
+</code></pre><p>Drupal 7 syntax:</p>
+<pre><code>// Get the type of the node with the ID of the second URL component.
+// The important part here is that we use the dynamic query builder to handle
+// the unsafe $id variable.
+$id = arg(1);
+$select = db_select('node', 'n')
+  -&gt;condition('n.nid', $id, '=')
+  -&gt;fields('n', array('type'));
+</code></pre><p>The question now is, how do we know when a variable is "unsafe"?</p>
+<p>The answer should really be, treat all variables as though they are unsafe by default and stop guessing. Be in the habit of using the more secure syntax by default, even when it is not strictly neccessary. This both reduces the risk of some edge-case creeping up on you that you hadn't considered, and makes your code more portable/standardised at the same time.</p>
+<h3>Make use of whitelists for tables/fields/operators</h3>
+<p>I think maybe this one is less obvious to many people than making use of PDO, but it is also important to consider.</p>
+<p>As mentioned in a <a href="https://www.drupal.org/node/1776016">bunch</a> <a href="https://www.drupal.org/node/829464">of</a> <a href="https://www.drupal.org/node/2186291">core</a> <a href="https://www.drupal.org/node/1426084">issues</a>, and <a href="http://www.pixelite.co.nz/article/sql-injection-and-drupal-7-top-1-10-owasp-security-risks">elsewhere</a> (read the comments) Drupal <em>doesn't</em> actually escape/sanitize <em>everything</em> that you pass the database API. The reason that those issues are still open and not flagged as "critical fix me NOW ZOMG" (In part), is because certain parts of our SQL queries are fundamentally unsafe to use user data for, even if they were being escaped by the system.</p>
+<p>Imagine a query (presumably hooked up to a radio button or select element) like the following:</p>
+<pre><code>// Return the current user's username or email address to be displayed.
+// WARNING: Don't actually do this! it is NOT secure.
+global $user;
+$field_name = $form_state['values']['field'];
+$select = db_select('users', 'u')
+  -&gt;condition('u.uid', $user-&gt;uid, '=')
+  -&gt;fields('u', array($field_name));
+</code></pre><p>In this case, the end-user can hack up the form you presented them however they like and submit something for the <code>field</code> form value like "password" to get a dump of what is stored in the password field for the current user account. It's not hard to imagine other, even more damaging scenarios.</p>
+<p>Since Drupal knows that it is fundamentally insecure to be directly using user data for some things (e.g. table names, fields, operators in <code>condition()</code> and <code>orderBy()</code>) and <em>assumes</em> that you'll <em>definitely</em> be using whitelisted values <em>only</em> in these cases. There may well be a de-prioritised, outstanding Core bug that means your <em>variables are not being sanitised/escaped at all</em>, despite the fact that you're using the query builder. This means that, as well as the end-user getting at your user's passwords when you thought they could only see email addresses, they may also have a way to directly attempt an injection attack on your database.</p>
+<p>The fix here is, make use of whitelists wherever you're dealing with variables for finite, pre-determined lists of valid options (like field names). For example, the above could be rewritten to be more secure like this:</p>
+<pre><code>// Return the current user's username or email address to be displayed.
+global $user;
+// Return the username by default.
+$field_name = 'username';
+// Ony allow field names in our whitelist.
+$allowed_fields = array('username', 'mail');
+if (in_array($allowed_fields, $form_state['values']['field'])) {
+  $field_name = $form_state['values']['field'];
+}
+$select = db_select('users', 'u')
+  -&gt;condition('u.uid', $user-&gt;uid, '=')
+  -&gt;fields('u', array($field_name));
+</code></pre><h2>#2 - Broken authentication and session management</h2>
+<blockquote><p>User accounts and authentication are managed by Drupal core. Authentication cookies and a user's name, ID, and password are managed on the server to prevent a user from easily escalating authorization. User passwords are salted and hashed using an algorithm based on the Portable PHP Password Hashing Framework and existing sessions are destroyed upon login and logout.</p>
+</blockquote>
+<p>Drupal handles this well "out of the box" and most developers will be rarely doing anything that would break it. According to the white paper, there are very few Security Advisories being issued in this category, so I won't dwell on this.</p>
+<h2>#3 - Cross site scripting (XSS)</h2>
+<blockquote><p>Drupal has a strong system for filtering user-generated content on display. Untrusted user's content is filtered to remove dangerous elements by default. For developers, Drupal has at least eight API functions for filtering output to prevent XSS attacks. When identified, common developer errors that lead to XSS vulnerabilities are mitigated by building safer defaults. For example, a page title function in Drupal 6 is the source of many XSS holes due to a lack of proper escaping. In Drupal 7 this function escapes output by default.</p>
+</blockquote>
+<p>Hmmm, I think the words "by default" mean something different to the authors of the white paper than they do to me. If you do <em>anything</em> in the Drupal theme layer, and you don't explicitly, manually sanitise every single one of your variables as you render them, you have XSS holes in your theme.</p>
+<p>In Drupal 8, there's <a href="https://www.drupal.org/node/1825952">a critical issue</a> to try and get automatic escaping of markup into core by using the <a href="http://twig.sensiolabs.org/">Twig</a> rendering system which should dramatically increase security (in line with my intuitive definition of "by default") and improve performance as a nice bonus. That issue attempts to summarise the situation:</p>
+<blockquote><p>No-one can write XSS safe code. Nor core contributors, nor contrib developers, no-one.</p>
+</blockquote>
+<p>and from a <a href="https://www.drupal.org/node/1712444">duplicate issue</a>:</p>
+<blockquote><p>100% of all custom themes are insecure (the rest is rounding error). The reason is often that developers forget to escape their data in the templates.</p>
+</blockquote>
+<p>By the white paper's own reported statistics, over 50% of reported security vulnerabilities in Drupal core and contributed community code are XSS issues.</p>
+<p>In light of all this, between now and when Drupal 8 auto-escaping is released, even if you learn nothing else about Drupal security, you'll want to become familiar with a few of the API functions provided for <a href="https://api.drupal.org/api/drupal/includes!common.inc/group/sanitization/7">string sanitisation</a>.</p>
+<p>For reference, the full list on api.drupal.org is:</p>
+<ul><li><a href="https://api.drupal.org/api/drupal/modules%21filter%21filter.module/function/check_markup/7">check_markup()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/check_plain/7">check_plain()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/check_url/7">check_url()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_attributes/7">drupal_attributes()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_strip_dangerous_protocols/7">drupal_strip_dangerous_protocols()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/filter_xss/7">filter_xss()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/filter_xss_admin/7">filter_xss_admin()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/filter_xss_bad_protocol/7">filter_xss_bad_protocol()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/format_string/7">format_string()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/get_t/7">get_t()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/get_t/7">st()</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/t/7">t()</a></li>
+</ul><p>Read up on all of the sanitisation functions, but the most commonly used (for general theming) are probably:</p>
+<h3>check_plain()</h3>
+<p>Use this when you have a string that is NOT supposed to be HTML, but you want to display it in an HTML context. It's really just a wrapper around <code>htmlspecialchars()</code>. Any characters in your non-HTML string that might be interpreted as HTML by the browser are converted into HTML entities so that they render as you would expect them to in a non-HTML context.</p>
+<p>This means that your string that looks like <code>X &lt; Y &amp; Y &gt; Z</code> becomes <code>X &amp;lt; Y &amp;amp; Y &amp;gt; Z</code>.</p>
+<p>A couple of things to keep in mind with this function:</p>
+<ol><li>It's possible to accidentally double encode characters so that <code>&amp;amp;</code> becomes <code>&amp;amp;amp;</code>, which looks really bad when rendered. It is NOT a good idea to run <code>check_plain()</code> over everything without thinking, in case you run it on a string that has already had <code>check_plain()</code> run on it earlier.</li>
+<li>While <code>check_plain()</code> is an important function for security, "defusing" characters that could be interpreted as HTML, it's primary usage is for encoding/decoding characters, NOT guaranteeing that strings are "HTML safe" by stripping dangerous markup. For example, it's possible that a substring of a string that was previously run through <code>check_plain()</code> will have its encoding corrupted if an HTML entity is truncated before the closing <code>;</code>.</li>
+</ol><h3>check_markup()</h3>
+<p>Use this to apply input filters to a string that is intended to be used <em>as</em> HTML. In this case, we DO want HTML to be interpreted by the browser, but we also want to be careful not to open ourselves up to <code>&lt;script&gt;</code> elements or similar being executed maliciously. In the simplest usage, this function takes two arguments - the string and the machine name of the filter format to apply.</p>
+<p>Filter formats themselves are an important part of core and too detailed a subject for me to go into here. Suffice to say that the "out of the box" formats set the tone for most custom filters created by developers:</p>
+<ol><li><code>plain_text</code> - Behaves as <code>check_plain()</code> does.</li>
+<li><code>filtered_html</code> - Will strip any (customisable) HTML tags considered dangerous and leave the rest intact</li>
+<li><code>full_html</code> - Will render any and all HTML tags in the string, even if they might be dangerous. (ab)Using this causes developers to grumble.</li>
+</ol><p>Avoid using the PHP input filter completely if you care at all about mitigating security risks.</p>
+<h3>t() and/or format_string()</h3>
+<p>Use this in situations where you want to perform simple string substitutions with variables (that might come from end-users data) and, in the case of <code>t()</code> also allow for the string to be translatable into other languages.</p>
+<p>Since <code>t()</code> wraps <code>format_string()</code>, I encourage you to use the former as they behave the same way and you get the translatability "for free".</p>
+<p>The advantage of using placeholders in strings, rather than concatenating variables, is twofold, <code>format_string()</code> will automatically apply <code>check_plain()</code> to substitutions that do NOT begin with <code>!</code> and it makes the strings easier to contextualise for translaters.</p>
+<pre><code>// Here the translators can see a whole sentence and use the placeholders as clues.
+// We don't have to call check_plain() repeatedly because we're using @placeholder syntax.
+t('Yesterday I went to @place and brought home a @thing', array(
+   '@place` =&gt; 'the park',
+   '@thing' =&gt; 'frisbee',
+));
+// Here translators only see two disjointed strings separately:
+// 'Yesterday I went to' and 'and brought home a'.
+t('Yesterday I went to ' . check_plain($place) . 'and brought home a ' . check_plain($thing));
+</code></pre><h2>#4 - Insecure direct object references</h2>
+<blockquote><p>Drupal often provides direct object reference, such as unique numeric identifiers of user accounts or content available in the URL or form fields. While these identifiers disclose direct system information, Drupal's rich permissions and access control system prevent unauthorized requests. Methods for obfuscation are available through configuration and community-contributed code. Further, validation and protection against semantic forgery attacks is implemented in Drupal core via the Form API.</p>
+</blockquote>
+<p>For Drupal, this largely comes down to making sure you have your server environment and Drupal site configured in a way that makes sense for your project, in the context of Drupal, I'm going to tie this into...</p>
+<h2>#5 - Security misconfiguration</h2>
+<blockquote><p>Many critical risks, such as access to administrative site controls, text formats, and private information are restricted to a single admin account by default. Identified design inefficiencies that lead to misconfiguration are corrected often through usability testing and fixes are recommended for inclusion to core. Documentation of best practices for secure configuration and site building are provided for free on drupal.org and there are several contributed projects that conduct automated security review or implement further secure configurations.</p>
+</blockquote>
+<p>In my experience, the two fastest ways to end up with hundreds of spambot accounts (or worse) on your account are:</p>
+<ol><li>Servers configured in a way that is not Drupal friendly, lazily or by someone who isn't an experienced sysadmin.</li>
+<li>Developers building functionality as Drupal user 1 and never logging out or logging in as a user with a different role to test it.</li>
+</ol><p>For the first point. If you are not a sysadmin, you don't directly employ a sysadmin, or you don't have a friend who is a sysadmin who owes you a series of large favours, it is going to be much, much cheaper and less headache inducing to sign up with <a href="https://www.acquia.com/">Acquia</a> or <a href="https://www.getpantheon.com/">Pantheon</a> than to mess around with a shared hosting provider or to try and configure and maintain your own VM.</p>
+<p>For the second point, the Drupal permissions grid is huge and tedious to manage as it involves a lot of user switching but there are a few things you can do for yourself to make maintaining complex permission sets easier.</p>
+<h3>Implement a simple, repeatable testing plan</h3>
+<p>In the Drupal community, <a href="https://www.drupal.org/simpletest">SimpleTest</a> and <a href="http://behat.org/">Behat</a> are very popular testing tools. Both support simple assertions for the HTTP response code and the existence/absences of HTML elements on a rendered page. In fact, automated tests to check that a given user has permission to do something or visit certain pages are some of the easiest to write and can help you avoid those awkward conversations where we have to explain to someone that there was a regression in the site's fundamental security configuration.</p>
+<p>Even if you don't have the time or resources to set up automated tests for a project, make step-by-step notes of critical functionality and user roles that can be tested as part of QA each release.</p>
+<p>If you're using drush, you can generate a one time login for any user in the system with <code>uli</code> and their username:</p>
+<p><code>$ drush @mysite.alias uli 'John Smith'</code></p>
+<h3>Have a deployment plan</h3>
+<p>People who don't know how to use the Drupal permissions grid just love to make changes to it, then immediately forget what changes they made, or tell anyone that they made the changes. That is, if you let them.</p>
+<p>At the very minimum, you should be exporting your permissions into <a href="https://www.drupal.org/project/features">Features</a> so that, should anything go wrong, you have some kind of "oh shit" button to get things back to working order, fast (without rolling back your database).</p>
+<p>The Features approach is a little limiting for Permissions management though:</p>
+<ul><li>The permissions aren't actually locked. It's relatively easy for a permission to be changed on production and it won't be restored to the correct value until the Feature is next reverted.</li>
+<li>It's not easy to toggle permissions on/off for different development environments. For most permissions you aren't going to want to do this anyway, but for those that you do, you really don't want the wrong permissions in the wrong environment.</li>
+<li>There are a very large number of Permissions, and exporting them all to a Feature quickly bloats the Feature code and UI.</li>
+<li>Adding a permission to a Feature artificially introduces a dependency of the Feature on that <a title="Drupal is a Content Management System that is built on modules - different packages of code that provide different functionalities. Because not all websites are the same, different modules are created and installed to allow websites to perform different tasks. Each Drupal-based website is made up of a series of different modules.Modules increase Drupal's functionality and provide services such as:image galleriescustom content types and content listingsWYSIWYG editorsprivate messagingthird-party integration toolsupdating functionalitye-commerce solutionsand much, much more: as of August 2011 the Drupal website lists over 11,000 free modules. You can explore and search a list of Drupal modules here.Drupal uses modules because they allow the many volunteer developers who create Drupal to work in groups on small projects simultaneously.Each module is designed by a volunteer developer and is developed by a team of other volunteer developers who find bugs and suggest features by using and testing development versions of the modules.Modules help solve problems for website creators by providing specific functionalities while still being open source. To an extent, modules can be altered by developers if their exact use is not perfect for the website.Contrib modules &amp; legalitiesAs Drupal is open-source, the licensing and legal considerations are a bit different to proprietary software. You can read them in full here.1: What is the license for Drupal?Drupal and all contributed files hosted on Drupal.org are licensed under the GNU General Public License, version 2 or later. That means you are free to download, reuse, modify, and distribute any files hosted in Drupal.org's Git repositories under the terms of either the GPL version 2 or version 3, and to run Drupal in combination with any code with any license that is compatible with either versions 2 or 3, such as the Affero General Public License (AGPL) version 3.All modules or themes written for Drupal have to licensed under the GPL. The GPL applies to code, but not data - thus your website itself and the data on it is still yours, while any modules used to create your website aren't yours.Any modules or themes written for Drupal must be distributed with their source code so that the user can modify it if they need or want to.Viewing the website is not considered 'distributing' so the source code for your website does not have to be available to anyone who visits it.Because Drupal is licensed free of charge, there is no warranty for it. Importantly, from the GPL itself, Drupal and its distributors (developers) are not liable for damages based on the program itself:12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.Custom modulesFor specific functionality, Godel may need to create a custom module which may be more expensive than using contributed modules, but can be very rewarding.If you are looking to implement some kind of specific functionality in to your website, feel free to browse the relevant modules and see how that functionality has been achieved by others in order to better understand the process behind realising your idea online before you decide to commission Godel to create a custom module for you.Custom modules and patches for existing modules may be uploaded to the Drupal community if they may be useful to other users. This will not affect the way the module functions on your site.Sometimes you can access the functionality you require in a different Release version of the module in question. Sometimes this requires using a beta release or even a previous release of the module." class="glossify-link" href="/content/module">module<img src="/sites/all/themes/custom/gt/glossify.png" class="glossify-img" /></a>.</li>
+<li>Exporting permissions to Features is a tedious and error-prone manual process.</li>
+<li>Permissions exported in Features are not very portable between projects.</li>
+<li>The generated code in Features is difficult to read over quickly.</li>
+<li>It's relatively difficult to manage permissions across multiple domains if you have a multisite setup.</li>
+</ul><p>There are various contrib modules that aim to make permissions management more secure and development friendly, to name a few:</p>
+<ul><li><a href="https://www.drupal.org/project/saferpermissions">Safer Permissions</a> - Acquia Sponsored.</li>
+<li><a href="https://www.drupal.org/project/permissions_variable">Permissions Variable</a> - Disclaimer: I wrote this one.</li>
+<li><a href="https://www.drupal.org/project/secure_permissions">Secure Permissions</a></li>
+</ul><p>Additionally, you might want to consider making permissions management part of your deploy/build scripts if you use such things to manage your environments.</p>
+<h2>#6 - Sensitive data exposure</h2>
+<blockquote><p>Account passwords are salted and repeatedly hashed based on the Portable PHP Password Hashing Framework. Available Drupal community-contributed code offer solutions to encrypt sensitive data at rest or in transit.</p>
+</blockquote>
+<p>This depends a lot on what your employer/client/government considers "sensitive" data. Where I live, in Australia, the government has published a convenient set of guidelides around sensitive and private data that can be used to gauge the level of risk if data were to be exposed. If you don't have any in your site, well that's great - although I still recommend implementing <code>hook_menu()</code> to unset the default <code>node</code> menu path if you haven't already, as it shows every node in the site by default, which can be awkward.</p>
+<p>If you're working with Ubercart or Commerce, please, please triple check whether your payment gateway integration module sends user's credit card data through the Drupal Form API, to your server, before sending it to the payment gateway provider. This goes double (so sextuple check) for anything that claims to store credit card data for later use, even if it is "tokenized". If sensitive credit card (or similar) data touches your server even for a moment, you might be exposing yourself to fines if you haven't taken appropriate steps (<a href="http://drupalpcicompliance.org/">PCI-DSS</a>) to ensure encryption and security.</p>
+<p>If you work with Drush, and multiple environments, you might want to consider implementing <code>hook_drush_sql_sync_sanitize()</code> for your project. This allows you to scrub out sensitive data from your production database as you pull it down, so that you don't accidently lose it to someone shady along with your laptop or not-so-trustworthy contractor. You don't need to use drush for this, there are lots of ways, including a simple shell script with SQL queries, to setup a decent database scrubbing script. Acquia have some <a href="https://docs.acquia.com/articles/scrubbing-drupal-database-environment">documented examples</a> of how to achieve this too, if you're interested.</p>
+<h2>#7 - Missing function level access control</h2>
+<blockquote><p>Function level access in Drupal is protected by a powerful permissions-based system which checks for proper authorization before the action is taken. For the case of URL access, access checking is tightly integrated into the entire menu-rendering and routing system which means that visibility of navigation links and pages are protected by the same system that handles incoming requests.</p>
+</blockquote>
+<p>Yes, menu-rendering uses access checking to ensure that navigation links are protected, but links generated by <code>l()</code> or <code>#type =&gt; 'link'</code> render arrays do not automatically run access checks. Function (and URL) level access control is very easy to implement in Drupal using <code>hook_permission()</code>, <code>hook_menu()</code> and <code>user_access()</code>. Creating new, custom permissions is very straightforward but it's also very easy to get wrong in subtle ways (especially if you're writing some new function that wraps another function with existing access checks) - as I mentioned above, make sure you have a solid testing plan in place for your new permissions scheme before you deploy it!</p>
+<h2>#8 - Cross-Site request forgery</h2>
+<blockquote><p>Drupal validates user intention in actions using industry standard techniques. Typical actions with side- effects (such as actions that delete database objects) are generally conducted with the HTTP POST method. Drupal's Form API implements unique form tokens to protect against CSRF in POST requests. Less important actions can leverage the one-time token generation and validation functions of the Form API while still using an HTTP GET request.</p>
+</blockquote>
+<p>Reviewing the security white paper, we can see that there's a relatively large incidence of contributed, non-core code that is not correctly implementing the <a href="https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7">Drupal Form API</a>, leading to CSRF exploits.</p>
+<p>Avoiding CSRF exploits in Drupal is relatively easy if you follow three simple rules:</p>
+<ol><li>Whenever you expose an action to an end-user that modifies data in your site, implement it using a form (<code>POST</code>) rather than a link + menu callback (<code>GET</code>).</li>
+<li>Never try to build an HTML form manually, always use renderable form arrays and the Form API.</li>
+<li>Always use form validate/submit handlers and <code>$form_state</code> to access user submitted values rather than trying to extract information from <code>$_POST</code> directly.</li>
+</ol><p>If you need to quickly convert some GET based code you suspect might be at-risk to POST requests, the <a href="https://www.drupal.org/node/178896">Drupal documentation</a> suggests converting the page callback to a simple confirmation form using the <code>confirm_form()</code> core function as a base.</p>
+<p>Another option, is to put a token in the URL that is unique for each page load and can't be easily forged, much like the <a href="https://www.drupal.org/project/flag">Flag module</a> does. Keep in mind though that this approach might not behave well in conjunction with cached markup containing links to URLs that rely on tokens like this.</p>
+<h2>#9 - Using components with known vulnerabilities</h2>
+<blockquote><p>Included libraries and frameworks (of which there are few) in Drupal core are system-level, unsophisticated, and of low risk to full server or application compromise.</p>
+</blockquote>
+<p>Unfortunately, this happens very, very frequently in Drupal as soon as you start counting contributed modules as "components". Ironically, the frequency of known security vulnerabilities showing up in installed modules is due in a large part to the security team doing a good job of reviewing and flagging community code. The difficult part here is being proactive about regularly deploying new module versions as security fixes are released.</p>
+<p>It's a shame that the <a href="http://droptor.com/">Droptor</a> service was discontinued, as it provided a central dashboard for reviewing available security updates across multiple sites. Acquia and Pantheon both provide similar dashboards for sites hosted on their servers.</p>
+<p>It's also a shame that the core Update module that "dials out" to Drupal.org to get the status of installed module versions is somewhat poorly optimised. It's very easy to configure a site (such as when using "poor man's cron") so that 20+ second page loads are experienced intermittently when using Update. If performance is important, I recommend enforcing the Update module to be <a href="/blog/using-context-keep-your-development-modules-disabled-your-production-sites">enabled in a review environment</a>, but not production or local development where slow page load times could become an issue.</p>
+<p>There's little else to say here. Keeping your modules up-to-date is simply a matter of organisation/process and diligence and has little to do with development skills or further learning.</p>
+<h2>#10 - Unwanted redirects and forwards</h2>
+<blockquote><p>Internal page redirects cannot be used to circumvent Drupal's integrated menu and access control system. Drupal protects against automatic redirection to off-site URLs which could be used in a phishing attack.</p>
+</blockquote>
+<p>Drupal provides the <code>drupal_goto()</code> function for handling redirections correctly. This function will ignore absolute URLs in <code>GET</code> requests, but otherwise will always respect the <code>destination</code> parameter in the URL. This allows us to safely redirect/forward users by constructing our URLs correctly (with <code>drupal_get_destination()</code>), without opening ourselves up to phishing attacks.</p>
+<p>The contrib <a href="https://www.drupal.org/project/extlink">External Links</a> module also provides visual feedback for users, protecting them against unexpected offsite redirections, showing an icon on any link that will take the user to a new domain. The <a href="https://www.drupal.org/project/extlink_extra">External Links Extra</a> module takes this one step further and allows for a popup warning box, or even a dedicated intermediate page, to make it as clear as possible to users that they are about to be redirected offsite.</p>  </div>
+
+  <div class="field-posted-by">
+    <div  class="ds-2col-stacked user-profile view-mode-blog_post_by clearfix">
+
+  
+  <div class="group-header">
+      </div>
+
+  <div class="group-left">
+    
+  <div class="field-profile-picture">
+    <img src="https://www.godel.com.au/sites/default/files/styles/blog_profile_picture/public/img_7582.jpg?itok=4djVeal1" width="80" height="80" alt="" />  </div>
+  </div>
+
+  <div class="group-right">
+    
+  <div class="field-name">
+    <h3>David Meister</h3>  </div>
+
+  <div class="field-position-title">
+    Director &amp; Lead developer  </div>
+  </div>
+
+  <div class="group-footer">
+      </div>
+
+</div>
+
+  </div>
+
+  <div class="field-blog-social">
+    <a class="facebook-share icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://www.godel.com.au/rss/planet-drupal" target="_blank">f</a><a class="twitter-share icon-twitter" href="https://twitter.com/share" target="_blank">t</a>  </div>
+
+  <div class="field-custom-pager">
+    <div  role="article" class="ds-1col node node-blog-entry view-mode-custom_pager clearfix">
+
+  
+  
+  <div class="field-title">
+    <h3><a href="/blog/using-style-linking-sane-font-face-declarations-post-ie8-world">Using style-linking for sane @font-face declarations in a post-IE8 world</a></h3>  </div>
+
+  <div class="field-post-date">
+    Mon June 30, 2014  </div>
+
+  <div class="field-body">
+    Say no to fake browser bold and fake browser italic, messy @font-face syntax and super-legacy browser bug support with the neat, logical style-linking @font-face syntax.  </div>
+</div>
+
+<div class="next no-result node-blog-entry"></div>  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/planet-drupal">planet drupal</a>  </div>
+  </body>
+</html>
+

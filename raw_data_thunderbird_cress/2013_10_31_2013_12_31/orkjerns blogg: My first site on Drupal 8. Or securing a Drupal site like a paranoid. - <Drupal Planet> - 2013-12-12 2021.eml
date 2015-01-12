@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 12 Dec 2013 20:21:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 12 Dec 2013 20:21:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: orkjerns blogg: My first site on Drupal 8. Or securing a Drupal site like a paranoid.
+Content-Transfer-Encoding: 8bit
+Content-Base: http://orkjern.com/my-first-site-drupal-8-or-securing-drupal-site-paranoid
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>orkjerns blogg: My first site on Drupal 8. Or securing a Drupal site like a paranoid.</title>
+    <base href="http://orkjern.com/my-first-site-drupal-8-or-securing-drupal-site-paranoid">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>So, I just upgraded my first site to Drupal 8. Yup. <a href="http://crashndash.com">It's in production right now</a>. And it has an animated gif front and center.</p>
+<p>In a couple of posts in the coming weeks I will talk about some experiences that I gained from it. Gotchas, goose-bumps moments, raging at the screen and all the other emotions we developers go through in typical day.</p>
+<p>But first a couple of words about the over-all process.</p>
+<p>The site itself is a pretty simple site. It is about <a href="http://crashndash.com">the mobile game Crash n Dash (check it out by the way)</a>. It contains a front page, where we also display a somewhat real time statistic of online users. And it has a high scores list. As you probably understand, this requires a custom module, so there was that. Also, we have a simple custom theme, built on <a href="http://foundation.zurb.com/">the Foundation framework</a>. So there was that.</p>
+<p>This allowed me to learn more about making a module in Drupal 8, the guzzle library for making requests, some good ol twig for the theme. I'll cover my findings in separate posts later.</p>
+<p>Second, a word about security. Since Drupal 8 is alpha still, who know what kind of bugs and potential security holes you can find in there, right? So I ended up disallowing login through regular channels. Since this particular server is behind varnish, disallowing on the default address was really easy, I just put this in my vcl file:</p>
+<pre><code>
+  if (req.http.host == "crashndash.com") {
+    unset req.http.Cookie;
+  } 
+</code></pre><p>
+What this does, is effectively denying all logging in to your site on port 80, since no user ever will get a cookie. </p>
+<p>OK. Well that does not stop someone from logging in if they find the apache port, right? So I put this in my virtual host for the domain (in the directory directive):</p>
+<pre><code>
+Order Deny,Allow
+Deny from all
+Allow from 127.0.0.1
+Allow from x.x.x.x # <- my own ip, so I personally can log in to the site.
+AllowOverride All
+</code></pre><p>
+Of course this does not cover all kinds of other tactics that some people might want to try, but at least we are limiting the possibilities to do harm.</p>
+<p>So next project on d8 is this blog. I mean, as developers, do we really have any excuse for not moving to Drupal 8 with these simple blog sites we put up? I am moving right after I get my feet wet with the migrate module in d8, as I have really enjoyed the projects I have used migrate for earlier.</p>
+<p>Full disclosure: I am also the author behind the website mentioned, and the game referenced in that site. It's a free game, but I think it is still fair to mention. This blog post is a cross post from <a href="http://crashndash.com/blog/crashndash-on-drupal-8">Crash n Dash tech blog</a> and is in part written for shameless self-promotion :)</p>
+<p>Let's end the post with the animated gif that actually is on the front page of that shiny new Drupal 8 site.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-8" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 8</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet drupal</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/security" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">security</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/varnish" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">varnish</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/apache" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">apache</a></div></div></div>
+  </body>
+</html>
+

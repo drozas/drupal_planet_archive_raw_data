@@ -1,0 +1,78 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 03 Dec 2014 22:29:58 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 03 Dec 2014 22:29:58 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal core updates for December 3, 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/451243
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal core updates for December 3, 2014</title>
+    <base href="https://groups.drupal.org/node/451243">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>What's new with Drupal 8?</h2>
+<ul>
+<li>@alexpott premiered <a href="https://www.drupal.org/project/config_installer">Config installer</a> an install profile that takes over the Drupal installer and allows sites to be created from existing configuration. This opens the door for some interesting possibilities moving forward.</li>
+<li>We upgraded Drupal core to use Symfony 2.6 stable. Symfony 2.6 includes over 100 new features and enhancements. For full details see <a href="http://symfony.com/blog/symfony-2-6-0-released">the release announcement</a>.</li>
+<li>Following on from <a href="https://www.drupal.org/SA-CORE-2014-006">SA-CORE-2006</a> we removed mixed SSL support from core, focusing on security by default.</li>
+<li>We updated CKEditor library to 4.4.6, which included an important security fix. This also brought two new features, see <a href="http://ckeditor.com/blog/CKEditor-4.4.6-Released">the release announcement</a> for more detail.</li>
+<li>We fixed a number of performance issues including <a href="http://drupal.org/node/2384163">Entity render cache is needlessly cleared when an Entity*Form*Display is modified</a>, <a href="http://drupal.org/node/2378095">Convert all remaining attached individual CSS/JS assets to attached asset libraries</a> and <a href="http://drupal.org/node/2377397">Themes should use libraries, not individual stylesheets</a> and <a href="http://drupal.org/node/2368275">EntityRouteEnhancer and ContentFormControllerSubscriber implicitly depend on too many services</a>.</li>
+<li>We are working to explain the configuration structures properly with configuration schemas. Recent big changes include all test views being validated and fixing user, system, link, etc. modules. <a href="https://www.drupal.org/node/2183983">There is still a long way to go, follow and join the efforts</a>.</li>
+<li>We resolved a number of security issues including resolving the last missing default access for entity fields, the last one being taxonomy terms. We also made sure that twig debug output can't be used as an XSS vector.</li>
+</ul>
+<h2>Where's Drupal 8 at in terms of release?</h2>
+<p>Since the last Drupal Core Updates, we fixed 18 critical issues and 12 major issues, and opened 9 criticals and 18 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">110 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">705 major issues</a>.</p>
+<p>Part of managing Drupal 8 toward its release is continuously reassessing what <em>must</em> block a release of 8.0.0. (Remember, hundreds of thousands of people will benefit from <a href="https://www.drupal.org/drupal-8.0">all the great new functionality in Drupal 8</a>, so we need to be smart about what does or doesn't hold up that release!) The chart below illustrates not only those newly discovered and newly fixed critical issues each week, but also issues that are <em>promoted to</em> critical and <em>demoted from</em> critical based on our latest understanding. For more information on what is (and isn't) release-blocking, see the <a href="https://www.drupal.org/core/issue-priority">handbook page on issue priority</a>.</p>
+<p><a href="https://plot.ly/~xjm/9/drupal-8-critical-issues-per-week/"><img src="https://groups.drupal.org/files/dec_3_criticals.png" alt="Incoming and outgoing Drupal 8 critical issues per week" /></a></p>
+<h2>Current focus</h2>
+<p>The current top priority in Drupal 8 is to resolve issues that block a beta-to-beta upgrade path (<a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D&amp;issue_tags=D8+upgrade+path">critical issues tagged 'D8 upgrade path'</a>). We also need core contributors to continue <a href="https://www.drupal.org/contributor-tasks/update-allowed-beta">evaluating issues for the beta phase</a> based on the <a href="https://www.drupal.org/core/beta-changes">beta changes policy</a>.</p>
+<p>Finally, keep an eye out for <a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.0.x-dev&amp;issue_tags_op=%3D&amp;issue_tags=blocker">critical issues that are blocking other work</a>.
+</p>
+<h2>How to get involved</h2>
+<p>If you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+<p>If you are interested in really digging into a tough problem and helping resolve a stagnating release blocker, or if you are stuck on a critical currently, join the <a href="http://www.drupal.org/irc">#drupal-contribute IRC channel</a> during <a href="https://groups.drupal.org/node/446803">weekly critical issue office hours</a> on Fridays at 12:00p PST. See <a href="http://drupal4hu.com/taxonomy/term/8">chx's office hours reports</a> for an idea of what we've done so far!</p>
+<p>If you'd like to contribute to a particular Drupal 8 initiative or working group, see the regularly scheduled meetings on the Drupal 8 core calendar. Google calendar ID: <code>happypunch.com_eq0e09s0kvcs7v5scdi8f8cm70@group.calendar.google.com</code></p>
+<p>You can also help by <a href="https://www.gittip.com/DrupalCoreGittipTeam/">sponsoring independent Drupal core development</a>.</p>
+<h2>Notable Commits</h2>
+<p>The best of <code>git log --since &quot;1 week ago&quot; --pretty=oneline</code> (70 commits in total):</p>
+<ul>
+<li><a href="http://drupal.org/node/2359369">Issue 2359369</a> by mpdonadio, Berdir, bdurbin: Render cache is not cleared when module is uninstalled - cache invalidation is always hard :)</li>
+<li><a href="http://drupal.org/node/2377281">Issue 2377281</a> by hussainweb, dawehner: Upgrade to Symfony 2.6 stable - getting close to the 2.7 LTS release</li>
+<li><a href="http://drupal.org/node/2342593">Issue 2342593</a> by znerol, grendzy, David_Rothstein: Remove mixed SSL support from core - aligning Drupal with the wider web trends regarding https</li>
+<li><a href="http://drupal.org/node/2369781">Issue 2369781</a> by larowlan: Ensure twig_debug output has needed sanitization - another critical security fix down</li>
+<li><a href="http://drupal.org/node/2384581">Issue 2384581</a> by cilefen, Wim Leers: Security: Update CKEditor library to 4.4.6 - brings some security improvements</li>
+<li><a href="http://drupal.org/node/2384163">Issue 2384163</a> by yched: Entity render cache is needlessly cleared when an Entity*Fom*Display is modified - performance++</li>
+<li><a href="http://drupal.org/node/2368275">Issue 2368275</a> by martin107, dawehner, znerol, Crell, Wim Leers: EntityRouteEnhancer and ContentFormControllerSubscriber implicitly depend on too many services - ensuring our critical execution path is a lean as posisble</li>
+<li><a href="http://drupal.org/node/2348459">Issue 2348459</a> by larowlan, alexarpen: Fields of type 'Text (formatted)' do NOT save values - a critical that was causing data loss when editor module was enabled</li>
+<li><a href="http://drupal.org/node/2235901">Issue 2235901</a> by alexpott, mdrummond, iMiksu, sun, Wim Leers: Remove custom theme settings from *.info.yml - theme system using config objects like everything else</li>
+<li><a href="http://drupal.org/node/2212335">Issue 2212335</a> by jhodgdon: Separate out NodeSearch::execute() into finding vs. processing results</li>
+<li><a href="http://drupal.org/node/2377397">Issue 2377397</a> by Wim Leers, alexpott: Themes should use libraries, not individual stylesheets - moving us towards simplifying ajax page state, and smaller Javascript settings object - and hence increased performance</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2>Drupal 8 Around the Interwebs</h2>
+<ul>
+<li>Metal toad gave us <a href="http://www.metaltoad.com/blog/migrating-content-drupal-8">two</a> <a href="http://www.metaltoad.com/blog/migrating-users-drupal-7-to-drupal-8">posts</a> about migrating content into Drupal 8</li>
+<li>Drupalize.me gave us an <a href="https://drupalize.me/blog/201412/drupal-8-core-now-more-fields">article about the new fields types in core</a></li>
+<li>Nick Schuch of PreviousNext gave us an update on progress towards <a href="https://www.previousnext.com.au/blog/drupalci-results-component">Drupal.org's new testbot infrastructure</a></li>
+<li>Flocon de toile gave us an article demonstrating how to use @jmolivas' console commands to <a href="http://flocondetoile.fr/blog/create-a-drupal-8-block-seconds">generate a Drupal 8 block in seconds</a></li>
+<li>The Drupal 8 rules team gave us an <a href="http://d8rules.org/news/d8rules-update-october-november-2014">update on their Drupal 8 rules port</a>.</li>
+<li>Brant Wynn writes about <a href="https://www.acquia.com/blog/finding-home-drupal-8-community-or-what-issue-should-i-work">Finding a home in the Drupal 8 community OR What Issue Should I Work On?</a>
+</li>
+</ul>
+<h2>Drupal 8 in "Real Life"</h2>
+<ul>
+<li><strong>December 10 - 14 - Ghent</strong>: The Drupal Association and Wunderkraut are sponsoring a <a href="https://groups.drupal.org/node/447123">focused sprint in Ghent to help move core critical issues forward.</a></li>
+<li><strong>January 17 and 18</strong>: <a href="https://groups.drupal.org/node/447258">Drupal Global Sprint Weekend</a> returns for the third year to unite small local sprints around the world. Find or add your sprint location or join online.</li>
+<li><strong>February 8 - 13 - Bogotá</strong>: <a href="https://latinamerica2015.drupal.org/">DrupalCon Latin America in Bogotá</a> is the next DrupalCon! Join the sprinters and <a href="https://groups.drupal.org/node/447308">sign up for various sprints</a> including Multilingual and <em>Sign me up for anything</em>.</li>
+</ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.0.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/node/2220285">Read more about how you can volunteer to help with these posts</a>!</p>
+  </body>
+</html>
+

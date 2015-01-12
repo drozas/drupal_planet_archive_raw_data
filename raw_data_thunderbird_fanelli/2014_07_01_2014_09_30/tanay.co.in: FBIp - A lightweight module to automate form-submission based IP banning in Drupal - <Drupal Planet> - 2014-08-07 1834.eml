@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 07 Aug 2014 16:34:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 07 Aug 2014 16:34:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: tanay.co.in: FBIp - A lightweight module to automate form-submission based IP banning in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.tanay.co.in/blog/fbip-lightweight-module-automate-form-submission-based-ip-banning-drupal.html
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>tanay.co.in: FBIp - A lightweight module to automate form-submission based IP banning in Drupal</title>
+    <base href="http://www.tanay.co.in/blog/fbip-lightweight-module-automate-form-submission-based-ip-banning-drupal.html">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">Drupal has a nice Internal tool to block IP addresses. It is available in core with no additional modules required. It can be accessed via Configuration -&gt; People -&gt; IP Address Blocking.</span></span></p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;"><img height="284px;" src="/sites/default/files/cdn/2014/08/07/EiMj979UUT0ZbmpfgI19mXHHxyyyNDdj1T_ZC57LT-qBd11mtkQ0kwySCPritGp01m1GUkkm4PE_zr4d9gyWl5Yosr1Tr01tllGzWRXFr_KJTKrTKNj-vo-Yg8K_Q80_MQ" style="border-style: none; transform: rotate(0rad); -webkit-transform: rotate(0rad);" width="624px;" /></span></span></p>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">But it is practically useless without any automation to control spammers as it requires each IP to be manually submitted by the admin.</span></span></p>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">And there are the suite of modules available for Drupal. Ranging from captcha to mollom. And all of these target preventing form submission. While they do a good job in preventing the spammer from submitting forms on your site, the spam bots are still able to access your site/form.</span></span></p>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">And most of the times, there are some really dumb spam boths that do not bother whether they have been successful in the spam attempt. They do not realise that the same and they keep attempting to submit the same form repeatedly. While cpatcha, mollom, honeypot etc on your site are discarding these form submissions from bots, your site’s resources are being utilised to generate this form and show it again to the bots thousands of times.</span></span></p>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">And the worst part is that many of these form pages are not really cached allowing capcha etc to function properly. This makes the condition ever worse.</span></span></p>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">Have you ever wished there was a small module that just blocks a spammer completely after he either submits / attempts to submit a form a dozen times  times on your site?</span></span></p>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">So </span><a href="https://www.drupal.org/project/fbip"><span style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); font-weight: bold; font-style: normal; font-variant: normal; text-decoration: underline; white-space: pre-wrap; background-color: transparent;">FBIP</span></a><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;"> is here now! </span></span></p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><a href="https://www.drupal.org/project/fbip"><span style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); font-weight: bold; font-style: normal; font-variant: normal; text-decoration: underline; white-space: pre-wrap; background-color: transparent;">https://www.drupal.org/project/fbip</span></a></span></p>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><a href="https://www.drupal.org/project/fbip"><span style="font-size: 15px; font-family: Arial; color: rgb(17, 85, 204); font-weight: bold; font-style: normal; font-variant: normal; text-decoration: underline; white-space: pre-wrap; background-color: transparent;"><img height="405px;" src="/sites/default/files/cdn/2014/08/07/SKRypffK8EJqkF3fQ5b8US1tdhSR2KpQNFGKBWnDakIjZqawcipQ9rXigDXY1r4ywP2JYtNtxLJ-s0IGLe4zGu9UBm8MgsivyZ9y3AlIeaeI8KIV5RoVELcRrXB3PRmxPQ" style="border-style: none; transform: rotate(0rad); -webkit-transform: rotate(0rad);" width="519px;" /></span></a></span></p>
+<p>
+<ul style="margin-top:0pt;margin-bottom:0pt;">
+<li dir="ltr" style="list-style-type: disc; font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal;">
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">It keeps a track of form submissions and if some user crosses a threshold that you specify, the user’s IP will be automatically blocked!</span></span></p>
+</li>
+<li dir="ltr" style="list-style-type: disc; font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal;">
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">It is </span><span style="font-size: 15px; font-family: Arial; font-weight: bold; font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">Leightweight</span><span style="font-size: 15px; font-family: Arial; font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">. It does not add any additional tables to your site. It makes use of the Flood Control API available in the core of Drupal to keep a track of submissions per user.</span></span></p>
+</li>
+<li dir="ltr" style="list-style-type: disc; font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal;">
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">You can choose between tracking either all forms on your site. Or specific form ids.</span></span></p>
+</li>
+<li dir="ltr" style="list-style-type: disc; font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal;">
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">You can whitelist some IPs that you do not want to be tracked (Like your site administrators)</span></span></p>
+</li>
+<li dir="ltr" style="list-style-type: disc; font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal;">
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">You can also choose to reset the IP bans at each cron run, if you wish to not to block any user permanently!</span></span></p>
+</li>
+</ul>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;"><img height="553px;" src="/sites/default/files/cdn/2014/08/07/SM7tDRRloLpC-RqqFqZWCHfCkexi1pv374fR5Gs-VYxVb-ZsqEByeg0AejtG1a_v-UUjU6zsJlN6aiJBBD9tOzzT5oNitbWJMo9qApDkREwFCO1o52a5VexMUzH2xE0DHw" style="border-style: none; transform: rotate(0rad); -webkit-transform: rotate(0rad);" width="569px;" /></span></span></p>
+<p>
+<p dir="ltr" style="line-height:1.5;margin-top:0pt;margin-bottom:0pt;"><span id="docs-internal-guid-59970b01-b151-1776-0ad0-cfcb340beea6"><span style="font-size: 15px; font-family: Arial; color: rgb(0, 0, 0); font-style: normal; font-variant: normal; white-space: pre-wrap; background-color: transparent;">Beware Spammer, FBI(p) is watching you!</span></span></p>
+<div>
+	 </div>
+</div></div></div>
+  </body>
+</html>
+

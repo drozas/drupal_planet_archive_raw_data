@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 Aug 2013 07:08:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 Aug 2013 07:08:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: How to Embed Videos using Video Filter in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/how-embed-videos-using-video-filter-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: How to Embed Videos using Video Filter in Drupal 7</title>
+    <base href="http://webwash.net/tutorials/how-embed-videos-using-video-filter-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>The <a href="https://drupal.org/project/video_filter">Video Filter</a> module allows you to easily embed videos into Drupal sites using a simple token (<code>[video:url]</code>). Setting up the module is pretty straight forward. All you have to do is enable the filter in a desired text format, adjust the order of the existing filters, and you're done.</p>
+
+<p>The embed code for YouTube and many other video sites is an <code>iframe</code> HTML tag. By default, Drupal will filter out any <code>iframe</code> HTML code if anonymous and authenticated users use the Filtered HTML text format.</p>
+
+<p>Bottom line is you don't want users to simply paste in <code>iframe</code> HTML code into Drupal. Here's a great answer on stackoverflow on <a href="http://stackoverflow.com/a/7289172">why iframes are considered dangerous and a security risk</a>.</p>
+
+<p>By using Video Filter users can easily embed videos from YouTube by pasting in <code>[video:URL]</code> instead of an <code>iframe</code>. This is a perfect solution for a community website built in Drupal, especially if you allow users to participate in a forum.</p>
+</div></div></div>
+  </body>
+</html>
+

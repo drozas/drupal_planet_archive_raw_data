@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Jun 2013 15:14:23 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Jun 2013 15:14:23 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Leow Kah Thong: Integrate your custom Drupal forms with Mollom CAPTCHA spam protection
+Content-Transfer-Encoding: 8bit
+Content-Base: http://kahthong.com/2013/06/integrate-your-custom-drupal-forms-mollom-captcha-spam-protection
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Leow Kah Thong: Integrate your custom Drupal forms with Mollom CAPTCHA spam protection</title>
+    <base href="http://kahthong.com/2013/06/integrate-your-custom-drupal-forms-mollom-captcha-spam-protection">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/158/body/und/rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="http://drupal.org/project/recaptcha">ReCAPTCHA</a> allows your to add spam protection to your custom Drupal forms without any further coding work.</p>
+<p>However, if you want to integrate with <a href="http://drupal.org/project/mollom">Mollom</a>'s CAPTCHA protection, the following code snippet will do just the trick, simple and easy.</p>
+<div class="codeblock"><code>/**<br /> * Implements hook_mollom_form_list().<br /> */<br />function YOUR_MODULE_mollom_form_list() {<br />  $forms['YOUR_MODULE_CUSTOM_FORM_ID'] = array(<br />    'title' =&gt; t('My custom form'),<br />  );<br />  return $forms;<br />}
+<p>/**<br /> * Implements hook_mollom_form_info().<br /> */<br />function YOUR_MODULE_mollom_form_info() {<br />  $form_info = array(<br />    'mode' =&gt; MOLLOM_MODE_CAPTCHA,<br />  );<br />  return $form_info;<br />}</p></code></div>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above" data-edit-id="node/158/field_tags/und/rss"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/mollom" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">mollom</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/spam" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">spam</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/captcha" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">captcha</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/custom" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">custom</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/forms" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">forms</a></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 14 Jun 2013 21:31:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 14 Jun 2013 21:31:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: baxwrds: Drupal 7 Ubercart Recurring Payment Cancellation Rule
+Content-Transfer-Encoding: 8bit
+Content-Base: http://baxwrds.com/ubercart_cancel_subscription_rule
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>baxwrds: Drupal 7 Ubercart Recurring Payment Cancellation Rule</title>
+    <base href="http://baxwrds.com/ubercart_cancel_subscription_rule">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>For a current <strong>Drupal 7</strong> project that uses <strong>Ubercart</strong> and <strong>Ubercart Recurring</strong> to provide for a subscription service, I need the ability for an admin user to be able to cancel a user's ongoing recurring fee when a subscription level is changed.  I accomplished this with the following php rule:</p>
+<p><code>&lt;?php<br />
+// load all recurring fees for a user<br />
+$recurring_fees = uc_recurring_get_user_fees($user_uid);<br />
+// loop through fees<br />
+foreach ($recurring_fees AS $fee) {<br />
+  // cancel each fee<br />
+  uc_recurring_fee_cancel($fee-&gt;rfid);<br />
+}<br />
+?&gt;<br />
+</code></p>
+<p><a href="http://baxwrds.com/ubercart_cancel_subscription_rule" target="_blank">read more</a></p>
+  </body>
+</html>
+

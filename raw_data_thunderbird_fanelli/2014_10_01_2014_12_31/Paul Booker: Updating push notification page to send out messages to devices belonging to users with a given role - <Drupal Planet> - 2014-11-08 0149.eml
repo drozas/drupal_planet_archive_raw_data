@@ -1,0 +1,166 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 08 Nov 2014 00:49:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 08 Nov 2014 00:49:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Updating push notification page to send out messages to devices belonging to users with a given role
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/code-snippet/updating-push-notification-page-send-out-messages-devices-belonging-0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Updating push notification page to send out messages to devices belonging to users with a given role</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/updating-push-notification-page-send-out-messages-devices-belonging-0">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php">
+/**
+ * Additional handler for push_notifications_mass_push_form_validate form validate.
+ */
+function mymodule_push_notifications_mass_push_form_validate($form, &$form_state) {
+}
+
+/**
+ * Additional handler for push_notifications_mass_push_form_submit form submit.
+ */
+function mymodule_push_notifications_mass_push_form_submit($form, &$form_state) {
+  $recipients = $form_state['values']['recipients'];
+  $payload = $form_state['values']['payload'];
+  $role = $form_state['values']['role'];
+  $language = (isset($form_state['values']['language'])) ? $form_state['values']['language'] : false;
+
+  // Send message to all iOS recipients.
+  if (!empty($recipients['ios'])) {
+    // Get all iOS recipients.
+    $tokens_ios = push_notifications_get_tokens_by_role(PUSH_NOTIFICATIONS_TYPE_ID_IOS, $role, $language);
+    if (!empty($tokens_ios)) {
+      // Convert the payload into the correct format for APNS.
+      $payload_apns = array('aps' => $payload);
+      $result = push_notifications_apns_send_message($tokens_ios, $payload_apns);
+      $dsm_type = ($result['success']) ? 'status' : 'error';
+      drupal_set_message($result['message'], $dsm_type);
+    }
+    else {
+      drupal_set_message(t('No iOS recipients found, potentially for this language.'));
+    }
+  }
+
+  // Send message to all Android recipients.
+  if (!empty($recipients['android'])) {
+    // Get all Android recipients.
+    $tokens_android = push_notifications_get_tokens_by_role(PUSH_NOTIFICATIONS_TYPE_ID_ANDROID, $role, $language);
+    if (!empty($tokens_android)) {
+      // Determine which method to use for Google push notifications.
+      switch (PUSH_NOTIFICATIONS_GOOGLE_TYPE) {
+        case PUSH_NOTIFICATIONS_GOOGLE_TYPE_C2DM:
+        $result = push_notifications_c2dm_send_message($tokens_android, $payload);
+        break;
+
+        case PUSH_NOTIFICATIONS_GOOGLE_TYPE_GCM:
+        $result = push_notifications_gcm_send_message($tokens_android, $payload);
+        break;
+      }
+      $dsm_type = ($result['success']) ? 'status' : 'error';
+      drupal_set_message($result['message'], $dsm_type);
+    }
+    else {
+      drupal_set_message(t('No Android recipients found, potentially for this language.'));
+    }
+  }
+}
+
+/**
+ * Determine all recipients of a given role from a specific device type.
+ *
+ * @param $type_id
+ *   Device Type ID.
+  * @param $role
+ *   User Role.
+ * @param $language
+ *   Language code, optional.
+ * @param $raw
+ *   Boolean, set true to retrieve the raw query results.
+ *
+ * @return
+ *   Array of results, null if no entries.
+ */
+function push_notifications_get_tokens_by_role($type_id = '', $role = FALSE, $language = FALSE, $raw = FALSE) {
+  // Make sure this type_id is supported.
+  $valid_type_ids = array(PUSH_NOTIFICATIONS_TYPE_ID_IOS, PUSH_NOTIFICATIONS_TYPE_ID_ANDROID);
+  if (!in_array($type_id, $valid_type_ids)) {
+    return FALSE;
+  }
+
+  // Select all tokens for this type id and users of given user role.
+  $query = db_select('push_notifications_tokens', 'pnt');
+  $query->join('users', 'u', 'pnt.uid = u.uid');
+  $query->join('users_roles', 'ur', 'u.uid = ur.uid');
+  $query->fields('pnt', array('token'));
+  $query->condition('pnt.type', $type_id);
+  $query->condition('ur.rid', $role);
+  // If language code is passed, limit the results by language.
+  if ($language) {
+    $query->condition('pnt.language', $language);
+  }
+  $result = $query->execute();
+
+  // Return raw result, if needed.
+  if ($raw) {
+    return $result;
+  }
+  // Otherwise, create an array of tokens.
+  else {
+    $tokens = array();
+    foreach ($result as $record) {
+      $tokens[] = $record->token;
+    } 
+
+    return $tokens;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function mymodule_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'push_notifications_mass_push_form') {
+  
+    $result = db_select('role', 'r')
+                ->fields('r',array('rid','name'))
+                ->condition('name',array('administrator','anonymous user'),'NOT IN')
+                ->execute()
+                ->fetchAll();
+    
+    $role = array();
+  
+    foreach($result as $role){
+      $roles[$role->rid] = $role->name;
+    }
+   
+   $form['role']['#title'] = "Roles";
+   $form['role']['#type'] = "select";
+   $form['role']['#options'] = $roles;
+   $form['role']['#required'] = 1;
+   $form['#validate'][] = 'mymodule_push_notifications_mass_push_form_validate';
+   unset($form['#submit']);
+   $form['#submit'][] = 'mymodule_push_notifications_mass_push_form_submit';
+  } 
+}
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/services" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">services</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/push" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">push</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/notifications" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">notifications</a></li><li class="taxonomy-term-reference-3"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/updating-push-notification-page-send-out-messages-devices-belonging-0"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Updating push notification page to send out messages to devices belonging to users with a given role">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/code-snippet/updating-push-notification-page-send-out-messages-devices-belonging-0&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/updating-push-notification-page-send-out-messages-devices-belonging-0"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/updating-push-notification-page-send-out-messages-devices-belonging-0" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

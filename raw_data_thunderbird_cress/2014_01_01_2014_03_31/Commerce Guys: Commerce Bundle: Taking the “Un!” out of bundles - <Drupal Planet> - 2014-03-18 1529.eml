@@ -1,0 +1,93 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 18 Mar 2014 15:29:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 18 Mar 2014 15:29:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Commerce Guys: Commerce Bundle: Taking the “Un!” out of bundles
+Content-Transfer-Encoding: 8bit
+Content-Base: http://commerceguys.com/blog/commerce-bundle-taking-un-out-of-bundles
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Commerce Guys: Commerce Bundle: Taking the “Un!” out of bundles</title>
+    <base href="http://commerceguys.com/blog/commerce-bundle-taking-un-out-of-bundles">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><div>
+	First, let’s clarify our meaning of the term “bundle”. Mothers consider their newborns “little bundles of joy”. Drupal developers feel giddy when they create a new “bundle of fields on an entity type”. Today, however, we’ll be looking at a far more sinister definition; the one used inside the marketing dept. i.e. product bundles.</div>
+<div>
+	 </div>
+<div>
+	I imagine the idea of product bundles originated somewhere in Ancient Egypt during the reign of the Pharaohs. It likely occurred when an engineer in the Mummification department who was struggling to come up with new product ideas decided to swing by the Marketing department for some friendly banter.</div>
+<div>
+	 </div>
+<div>
+	<strong>Marketing Manager:</strong> “Greetings Amun. How’s it going?”</div>
+<div>
+	 </div>
+<div>
+	<strong>Engineer:</strong> “Not so well. I’ve got His Royal Pain-in-the-Butt Tutankhamun breathing down my neck to increase our product line. I’ve told him a thousand times that making mummies only requires three things 1. gauze wrap, 2. embalming fluid, and 3. a nasal brain extractor. What am I to do?!”</div>
+<div>
+	 </div>
+<div>
+	<strong>Marketing Manager: </strong>“Now I’m just spitballing here, but since you’re so good at wrapping, heh heh, why not just wrap all three of those products up, and sell them together as a new product? You know, a DIY mummy kit.”</div>
+<div>
+	 </div>
+<div>
+	<strong>Engineer: </strong>(Sigh)</div>
+<div>
+	 </div>
+<div>
+	and the world was given product bundles.</div>
+<div>
+	 </div>
+<div>
+	 </div>
+<div>
+	Now we’re happy to announce that Drupal Commerce sites can offer their customers product bundles in the form of the <a href="https://drupal.org/project/commerce_bundle">Commerce Bundle</a> module. Some notable features of the module are:</div>
+<div>
+	 </div>
+<div>
+	<img alt="1" src="http://commerceguys.com/sites/default/files/blog/files/1.png" style="width: 100px; float: left; padding: 0px 10px 30px 0px;" /></div>
+<h2>
+	<font color="#2aace2">Product attribute support</font></h2>
+<div>
+	Let’s say that one of your products are all the boondoggle keychains you made at scout camp. They come in a variety of sizes and colors (i.e. attributes), and now you want to bundle them with your Three Wolf Moon t-shirts that have attributes as well. Commerce Bundle will generate select widgets for each attribute per product in your bundle, so that a customer can choose the exact bundle configuration they desire.</div>
+<div style="clear:both;">
+	 </div>
+<div>
+	<img alt="2" src="http://commerceguys.com/sites/default/files/blog/files/2.png" style="font-size: 12px; width: 100px;  float: left; padding: 0px 10px 30px 0px;" /><h2>
+		<font color="#2aace2">Bundle pricing at the product level</font></h2>
+</div>
+<div>
+	This gives you complete control over the price of each item in your bundle. For example, you might have created a bundle containing your illustrations of mythical creatures. You’d like to sell the colored illustrations for $5 more than the black and white. In this case, just set the bundle item price for colored to the desired amount, and you’re all set. This also means that the total bundle price is determined by the sum of the item prices.</div>
+<div style="clear:both;">
+	 </div>
+<div>
+	<img alt="3" src="http://commerceguys.com/sites/default/files/blog/files/3.png" style="font-size: 12px; width: 100px;  float: left; padding: 0px 10px 30px 0px;" /><h2>
+		<font color="#2aace2">Multi-quantity product support</font></h2>
+</div>
+<div>
+	Maybe your keychain/t-shirt bundle isn’t selling so well, and you’d like to sweeten the deal by adding a second keychain for free! This can be done by setting Unit Quantity=2 for your keychain group. The unit quantity tells commerce_bundle how many of a particular product is required when bundle quantity equals one.</div>
+<div style="clear:both;">
+	 </div>
+<div>
+	<img alt="4" src="http://commerceguys.com/sites/default/files/blog/files/4.png" style="font-size: 12px; width: 100px; float: left; padding:0px 10px 30px 0px;" /><h2>
+		<font color="#2aace2">Bundles function at the line item level</font></h2>
+</div>
+<div>
+	Your bundles really only act as a bundle on the Add to Cart form and when a customer is managing their cart (i.e. removing bundles, changing quantity). Once checkout begins, there is no concept of a bundle, just a group of line items in a cart. This means that the module will play nice with other modules in the Drupal Commerce ecosystem e.g. Commerce Reports.</div>
+<div style="clear:both;">
+	 </div>
+<div>
+	 </div>
+<div>
+	This project was built by <a href="http://commerceguys.com/">Commerce Guys</a>, and sponsored by <a href="http://ideaden.com/">Idea Den</a>.</div>
+<p> </p>
+</div></div></div>
+  </body>
+</html>
+

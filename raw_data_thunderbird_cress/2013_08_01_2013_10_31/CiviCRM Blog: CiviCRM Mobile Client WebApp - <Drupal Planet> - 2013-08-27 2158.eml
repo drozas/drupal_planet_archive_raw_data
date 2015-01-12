@@ -1,0 +1,48 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 27 Aug 2013 20:58:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 27 Aug 2013 20:58:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: CiviCRM Mobile Client WebApp
+Content-Transfer-Encoding: 8bit
+Content-Base: http://civicrm.org/blogs/bstalcup/civicrm-mobile-client-webapp
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: CiviCRM Mobile Client WebApp</title>
+    <base href="http://civicrm.org/blogs/bstalcup/civicrm-mobile-client-webapp">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><div>
+<p>For the past several months, my team at the Alliance for Catholic Education at the University of Notre Dame have been working on developing a mobile client for CiviCRM. It is now hosted on GitHub <a href="https://github.com/ACEatND/CiviCRMClient">HERE</a>.</p>
+<p>So what exactly does it do, and what is its purpose?  We know that with the increasingly mobile world, client relations need to be accessible on-the-go.  This is the main motivation behind the work we've done with our CiviCRM Mobile Client (not to be confused with CiviMobile). We have a demo running <a href="http://civicrmmobile.cloudaccess.net/" target="_blank">HERE</a>.  Right now the client has functionality for viewing, searching, editing, and adding contacts with basic fields, notes and relationships (we have organizations, activities and tasks, also in the works but they’re a little buggy right now). We use the Client exclusively with Joomla right now and are very pleased with how it is developing.</p>
+<p>We have noticed some limitations, however. Because we switched from the rest API to the ajax API after the move to Civi 4.3.x (when REST username and password authentication became obsolete), the built-in login for the client no longer functions, since all the verification relies on the CMS--whereas before you could login with a username and password to the rest API.  This introduces a problem for Joomla users (like us).  The verification for Joomla is reliant on a backend login, not a frontend one.  What we've settled on is having the admin login to the back end of the CMS (in our case, Joomla) and redirect to the mobile client from there.  So in order for an administrator to log in, he must first log into the backend of the website and THEN access the mobile client--not a very mobile-friendly set of tasks.  If frontend verification were supported for Joomla (as it is for Drupal), it would greatly increase accessibility and usability of our client for Joomla users.  (We posted on the forums about this <a href="http://forum.civicrm.org/index.php/topic,29217.0.html" target="_blank">HERE</a>)  This is an important piece of functionality that should be supported by CiviCRM, but is not currently.  If anyone has familiarity with Joomla and Civi, as well as the skills to fix this problem, it would greatly support our efforts.</p>
+<div>
+<p>The client itself was deigned to be standalone, so theoretically it will work on any CMS that uses CiviCRM.  You won't have to worry about putting your clients' information at risk, since it uses the same security protocol (via the AJAX API) that Civi does!  It's just a matter of uploading the file to the server, and running the startup script that is included in the repository, and specifying  (The installation script currently only works for Joomla, but another script could easily be made for Drupal).  </p>
+</div>
+<p>We were hoping to get the Civi community involved in this project or to help merge it with the other Mobile work going on which we think will eventually be very useful to many CiviCRM users. Happy to hear your thoughts and contributions on how we might move forward with this project.</p>
+</div>
+<p> </p>
+</div>
+  </div>
+<div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden clearfix">
+    <ul class="field-items">
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/civicrm" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">CiviCRM</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/extensions" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Extensions</a>      </li>
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/civicrm-v43" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">v4.3</a>      </li>
+          <li class="field-item odd">
+        <a href="/category/civicrm-blog-categories/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a>      </li>
+          <li class="field-item even">
+        <a href="/category/civicrm-blog-categories/joomla" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Joomla</a>      </li>
+      </ul>
+</div>
+  </body>
+</html>
+

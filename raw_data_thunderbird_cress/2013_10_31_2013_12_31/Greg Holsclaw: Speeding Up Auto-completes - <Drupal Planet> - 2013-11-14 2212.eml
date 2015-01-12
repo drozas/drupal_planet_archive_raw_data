@@ -1,0 +1,149 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 14 Nov 2013 22:12:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 14 Nov 2013 22:12:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Greg Holsclaw: Speeding Up Auto-completes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.tech-wanderings.com/speeding-auto-completes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Greg Holsclaw: Speeding Up Auto-completes</title>
+    <base href="http://www.tech-wanderings.com/speeding-auto-completes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>With the advent of Google search auto-complete, it seems like auto-complete should be everywhere.</p>
+<p>Any site that has masses of information that is exposed through various search widgets has considered auto-complete in various stages of product design and development. In light of this, Drupal has allowed for quick auto-completion inclusion for over 6 years. In Drupal 7 it looks a bit like this (search for <a href="https://www.google.com/search?q=drupal7+autocomplete">full guides</a> for complete walkthroughs).</p>
+<p>This example is filling in city, state combos in a search field.</p>
+<blockquote>
+<pre>
+/** Implementation of hook_menu **/
+
+function example_menu() {
+  
+  $items['city_autocomplete'] = array(
+    'page callback' =&gt; 'autocomplete_city',
+    'access arguments' =&gt; array('access content'),
+  ); 
+  return items;
+}
+
+function autocomplete_city($string){
+  $string = array(':s' =&gt; $string . '%');
+  $result = db_query('SELECT DISTINCT city, province FROM {location} WHERE city LIKE :s order by city limit 20', $string);
+
+ 
+  $items = array();
+  foreach ($result as $location) {
+    $items[$location-&gt;city .', '.$location-&gt;province;] = $location-&gt;city .', '.$location-&gt;province;
+  }
+  print drupal_json_encode($items);
+}
+
+/** Some form alter, or form generation function **/
+...
+
+    $form['search_string']['#autocomplete_path'] =  'city_autocomplete';
+    $form['search_string']['#attributes']['class'][] = 'form-autocomplete';
+...
+</pre></blockquote>
+<p>After this, the field now will issue auto-complete suggestions as the user types.</p>
+<h2>Not Fast Enough</h2>
+<p>BUT, our business people were down on the speed that the results came back. They wanted it to go faster. So I decided strip out as much of the Drupal bootstrap as possible, and then bypass completely the index.php loading of the normal Drupal framework.</p>
+<p>The goal was to do this while still being able to use the #autocomplete_path form enhancement, no need reinvent everything. To do this, we actually have to create a new base script and point the #autocomplete_path paths to that script. It was easiest to do this by placing the scripts in the same root directory as the regular Drupal index.php script is found.</p>
+<p>Let call it city_autocomplete.php. Below is the adjusted module code.</p>
+<p>Note that the hook_menu item has the '.php' in it. It still works as that is a valid Drupal menu name.</p>
+<blockquote>
+<pre>
+/** Implementation of hook_menu **/
+
+function example_menu() {
+  
+  $items['city_autocomplete.php'] = array(
+    'page callback' =&gt; 'autocomplete_city',
+    'access arguments' =&gt; array('access content'),
+  ); 
+  return items;
+}
+
+//Technically not needed anymore, but leaving in for posterity.
+function autocomplete_city($string){
+  $string = array(':s' =&gt; $string . '%');
+  $result = db_query('SELECT DISTINCT city, province FROM {location} WHERE city LIKE :s order by city limit 20', $string);
+
+ 
+  $items = array();
+  foreach ($result as $location) {
+    $items[$location-&gt;city .', '.$location-&gt;province;] = $location-&gt;city .', '.$location-&gt;province;
+  }
+  print drupal_json_encode($items);
+}
+
+/** Some form alter, or form generation function **/
+...
+
+    $form['search_string']['#autocomplete_path'] =  'city_autocomplete.php';
+    $form['search_string']['#attributes']['class'][] = 'form-autocomplete'; 
+...
+
+</pre></blockquote><p>
+Now, inside the new city_autocomplete.php file. Much of this is taken directly from the index.php file, but we restrict the drupal bootstrap to only the database, and we include one extra file, common.inc which has the drupal_json_encode() function.</p>
+<blockquote>
+<pre>
+&lt;?php
+
+  define('DRUPAL_ROOT', getcwd());
+  
+  require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
+  require_once DRUPAL_ROOT . '/includes/common.inc';
+  drupal_bootstrap(DRUPAL_BOOTSTRAP_DATABASE);
+  
+  // arg(1) is used to gather the data sent to the auto complete script
+  $string = array(':s' =&gt; arg(1) . '%');
+  
+  // The rest is just the body of the autocomplete_city($string) function
+  $result = db_query('SELECT DISTINCT city, state FROM {zipcodes} WHERE city LIKE :s order by city limit 20', $string);
+
+ 
+  $items = array();
+  foreach ($result as $location) {
+    //$items[$location-&gt;city] = $location-&gt;city .', '.$location-&gt;province;
+    $items[$location-&gt;city .', '.$location-&gt;state] = $location-&gt;city .', '.$location-&gt;state;
+  }
+  print drupal_json_encode($items);
+
+</pre></blockquote><p>
+Clear your cache to reload the menu items, and revisit whatever page had your auto-complete attached to it. That is all.</p>
+<h2>Benchmarking (all times from Firebug Console)</h2>
+<p>I wouldn't call this a strenuous set of benchmarking, but does give the ballpark opportunities for speed improvements.</p>
+<p>Local system (vanilla MAMP setup, no code caching):</p>
+<p>Regular Drupal auto complete: <strong>250-350ms</strong><br />
+Limited Bootstrap auto complete: <strong>35-55ms</strong></p>
+<p>Dramatic improvement on a vanilla Apache setup, no code caching.</p>
+<p>Remote Pantheon System (Pantheon DROPS, <a href="http://helpdesk.getpantheon.com/customer/portal/articles/361254" title="http://helpdesk.getpantheon.com/customer/portal/articles/361254">http://helpdesk.getpantheon.com/customer/portal/articles/361254</a>):</p>
+<p>Regular Drupal auto complete: <strong>150-250ms</strong><br />
+Limited Bootstrap auto complete: <strong>100-200ms</strong></p>
+<p>First take-away, the auto-complete was faster under a remote Pantheon server, than my vanilla localhost. Obviously using a code cache is a great performance booster.</p>
+<p>Second take-away, this method does improve performance speeds by around 10-20%, even under great code conditions.</p>
+<h2>Bonus tip</h2>
+<p>You can decrease the delay time between the last key stroke and when the search starts. It defaults to 300ms (essentially doubling the times to display results). It is found in the /misc/autocomplete.js file</p>
+<blockquote>
+<pre>
+...
+
+Drupal.ACDB = function (uri) {
+  this.uri = uri;
+  this.delay = 300;
+  this.cache = {};
+};
+...
+</pre></blockquote><p>
+Change that delay to something less to make all auto-completes start faster. If you don't want to do a core hack, then you need to remake all the Drupal.ACDB JS found in the /misc/autocomplete.js in your own theme or module JS, and make the adjustment there.</p>
+<p><a href="http://www.tech-wanderings.com/speeding-auto-completes" target="_blank">read more</a></p>
+  </body>
+</html>
+

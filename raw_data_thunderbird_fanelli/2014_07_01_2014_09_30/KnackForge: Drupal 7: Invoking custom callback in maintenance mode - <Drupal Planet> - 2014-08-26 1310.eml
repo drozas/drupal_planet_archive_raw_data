@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 26 Aug 2014 11:10:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 26 Aug 2014 11:10:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Drupal 7: Invoking custom callback in maintenance mode
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/pathirakaliappan/drupal-7-invoking-custom-callback-maintenance-mode
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Drupal 7: Invoking custom callback in maintenance mode</title>
+    <base href="http://knackforge.com/blog/pathirakaliappan/drupal-7-invoking-custom-callback-maintenance-mode">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><div>In a Drupal site, if we have any module upgrade or configuration related work to be done in our live site, it is recommended to put the site in maintenance mode, so we can prevent end users from experiencing glitches.</div>
+<div> </div>
+<div>When the site is operating in maintenance mode, any page request would return only maintenance message. Some pages are allowed to access though. The login functionality for instance will work in the maintenance mode. Recently, I faced such a requirements in which a custom module's callback to be invoked as to let Single Sign On (SSO) work for admin in maintenance mode. I would like to explain the way I fixed the same in this blog.</div>
+<div> </div>
+<div>There is a hook in Drupal 7 for that, <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu_site_status_alter/7" target="_blank">hook_menu_site_status_alter()</a>. With this hook we can control the site status before menu dispatching, So we can change the site status for the particular path.</div>
+<div> </div>
+<div></div></div></div></div>
+  </body>
+</html>
+

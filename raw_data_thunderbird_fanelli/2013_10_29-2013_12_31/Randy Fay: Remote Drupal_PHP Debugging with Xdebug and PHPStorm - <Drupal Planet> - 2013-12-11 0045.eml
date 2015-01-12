@@ -1,0 +1,96 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 10 Dec 2013 23:45:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 10 Dec 2013 23:45:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Randy Fay: Remote Drupal/PHP Debugging with Xdebug and PHPStorm
+Content-Transfer-Encoding: 8bit
+Content-Base: http://randyfay.com/content/remote-drupalphp-debugging-xdebug-and-phpstorm
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Randy Fay: Remote Drupal/PHP Debugging with Xdebug and PHPStorm</title>
+    <base href="http://randyfay.com/content/remote-drupalphp-debugging-xdebug-and-phpstorm">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/topics/debugging">debugging</a></div><div class="field-item odd"><a href="/topics/planet-drupal">Planet Drupal</a></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Step-debugging is one of the key skills for any developer, and it can be baffling. When you start trying to control a remote webserver with an IDE running on your local workstation though, it gets even more complicated with the network problems.  This article will deal directly with <a href="http://xdebug.org">Xdebug</a> as the debugging engine on the PHP end and <a href="http://www.jetbrains.com/phpstorm/">Jetbrains PHPStorm 7.x</a>   as the IDE on the workstation side, but these techniques will work for other IDEs like Eclipse or Komodo, and they'll work for the Zend debugging engine as well.</p>
+
+<h3>The Basics: How Remote Debugging Works</h3>
+
+<p>The first thing that you absolutely must understand is the sequence of events and how they're initiated. <em>If</em> you have xdebug configured in your PHP configuration (I'll show how later), then when PHP starts executing:</p>
+
+<ol><li>If the PHP session is started with a URL like http://example.com/?XDEBUG_SESSION_START=PHPSTORM (or it was earlier, creating a cookie), then Xdebug within the PHP execution will attempt to make a connection to an IDE, which defaults to be at localhost, port 9000. (If it can't make a connection, it just moves on.)</li>
+<li>If the IDE is listening, it gives instructions to Xdebug about breakpoints and such.</li>
+<li>When a breakpoint is encountered, Xdebug notifies the IDE on this connection.</li>
+</ol><p>You'll notice that the <em>remote</em> machine is attempting to make a connection to an IDE that is, in our situation, on another machine. Unfortunately with actual server configurations, there is usually no way that an outgoing TCP connection can get to your local workstation. If it <em>can</em> you can just configure that in your php.ini or xdebug.ini by setting xdebug.remote_host and you won't have to do all the things we're about to do. But for now we're going to assume you're trying to debug a machine that is out on the internet that cannot directly access your workstation.</p>
+
+<p>To make this happen we'll do three things:</p>
+
+<ul><li>Configure the remote server for xdebug</li>
+<li>Tunnel the remote Xdebug connection to our local machine via ssh</li>
+<li>Configure PHPStorm on the local machine</li>
+</ul><h3>Remote Server Configuration</h3>
+
+<p>On the remote server:</p>
+
+<ol><li>Make sure the php5-xdebug package or its equivalent is installed. On Debian/Ubuntu this is <code>sudo apt-get install php5-xdebug</code>. On RedHat/Fedora/CentOS this may be <code>sudo yum install php53u-pecl-xdebug</code> depending on the repositories and PHP version you are working with.</li>
+<li>Configure the PHP ini file for the xdebug extension. Debian/Ubuntu: /etc/php5/conf.d/xdebug.ini or /etc/php5/conf.d/20-xdebug.ini, RedHat/Fedora/Centos: /etc/php.d/xdebug.ini. You'll need:
+xdebug.remote_enable=1
+in there. The default host to connect to is localhost, and that's the way we're going to leave it, since we're going to tunnel/proxy the connection to our local machine.  (If you cannot use port 9000 because it's already in play, you'll have to also configure xdebug.remote_port here and on your local IDE. But we're not going to go there right now.)</li>
+<li>Restart Apache or whatever webserver you're using. (If you're using php-fpm, restart it instead). Check for errors of course. </li>
+<li>Visit the phpinfo of the remote machine with a web browser. On drupal you can just visit /admin/reports/status/php to get the full output. You should see "with Xdebug v2.2.3, Copyright" … in there. If you see it, you can scroll down to the xdebug section and check that the config is as you set it, especially remote_enable and remote_host (which should be localhost). </li>
+<li>Check to see that port 9000 is not already in use (especially by php-fpm if you use that). You can do this by making a connection using the venerable telnet tool. <code>telnet localhost 9000</code> on the remote machine (install it if you don't already have it by installing the telnet package). If you can make a connection to this point, before proxying the port, then things aren't going to work because something else is there on port 9000. You'll need to find out what it is and work around it one way or another. (To find out what process is using it, try <code>lsof | grep 9000</code>. If you don't have lsof, install it.)</li>
+</ol><p>(Had you been working on a remote machine that had direct access to your workstation, you could have set xdebug.remote_host to your workstation's hostname or IP address and not have to do the ssh tunneling/proxying that we'll do in the next step.)</p>
+
+<h3>Proxying/Tunneling Your Debugger Connection</h3>
+
+<p>Now we need to bring port 9000 to our local machine. What we're doing here is putting a "feeler" on the remote host that will listen on port 9000 and bring anything that happens there to our local machine on port 9000.</p>
+
+<p><code>ssh -R :9000:localhost:9000 some_user_account@www.example.com</code></p>
+
+<p>You'll need to re-establish this connection any time the tunnel is interrupted due to network connectivity or a remote or local host reboot, etc.</p>
+
+<h3>Set Up The Local IDE</h3>
+
+<p>On your local machine you need these things:</p>
+
+<ol><li>A matching set of code to what's on the remote machine. This can be a remote mount via sshfs or other techniques or a copy, git checkout, etc. Of course if you have a copy you can get very confused by having the wrong code presented to you at a breakpoint. We'll demonstrate sshfs and git checkout below.</li>
+<li>PHPStorm opened to a project with the code which matches the remote machine and with the "Zero Configuration Debugging" button turned on (listening). </li>
+</ol><p>So:</p>
+
+<ul><li>Mount the remote code to your local machine or check out a copy locally that exactly matches.  For example:
+If you have sshfs configured on your workstation, <code>sshfs some_user_account@www.example.com:/var/www/myproject /tmp/myproject</code>would mount the remote code into /tmp/myproject (which you must create ahead of time). If you don't have sshfs yet, google it to figure out how to configure it. It's nice and it's easy.
+If you want to run a copy, do something like <code>cd /tmp; git clone git://github.com/example/myproject.git</code> to get an identical codebase.
+If you prefer, PHPStorm has code syncing capabilities that can maintain a copy for you, but I find it cumbersome.</li>
+<li>Run PHPStorm and choose File-&gt;Open Directory (or open an already existing project, of course). Open the directory where your local copy or mount is. </li>
+<li>Click the "Start Listen for PHP Debug Connections" button on the top toolbar to turn on listening. </li>
+<li>At this point you should be able to 'telnet localhost 9000' on your local workstation and get a connection. If you click to turn off listening, you should <em>not</em> get a connection.
+<img src="/sites/default/files/blog_image/phpstorm_not_listening.png" alt="PHPStorm not listening" /><img src="/sites/default/files/blog_image/phpstorm_listening.png" alt="PHPStorm listening" /></li>
+<li>On the remote machine the same behavior should now be proxied. <code>telnet localhost 9000</code> should result in a connection when PHPStorm is <em>listening</em> and the ssh proxy is working, and it should result in no connection when PHPStorm is not listening.</li>
+</ul><h3>Debug!</h3>
+
+<p>If all has gone well,</p>
+
+<ol><li>Set a breakpoint early in your PHP project. For example, in Drupal set a breakpoint on the first line of index.php.</li>
+<li>Visit your remote website in the browser with  "?XDEBUG_SESSION_START=PHPSTORM" at the end of the URL. For example, http://example.com?XDEBUG_SESSION_START=PHPSTORM.  (Note: As far as I can tell, with this configuration it doesn't matter what XDEBUG_SESSION_START is set to. PHPSTORM is just a placeholder here because all connections are going to the same place.)</li>
+<li>PHPStorm should pop up and let you start debugging.</li>
+</ol><h3>Troubleshooting</h3>
+
+<p>Check these things:</p>
+
+<ul><li>Make sure that on the <em>server</em> you can use telnet to connect to port 9000 when PHPStorm is listening, and not when it's not.</li>
+<li>Make sure you have a breakpoint set and PHPStorm is listening.</li>
+<li>Make sure Xdebug is configured by visiting phpinfo any way you want to.</li>
+</ul><h3>Resources</h3>
+
+<ul><li>The Xdebug site, <a href="http://xdebug.org">xdebug.org</a>, is easy, once you understand what's going on and why. It has full configuration instructions. Send a little (or big) donation while you're there. Derick Rethans has been maintaining Xdebug faithfully for years and years. </li>
+<li><a href="http://www.jetbrains.com/phpstorm">PHPStorm</a> is available for a demo download and there are many instructions and blog posts on "Zero-configuration debugging", which essentially means that PHPStorm will listen for an accept anything, as I've demonstrated here.</li>
+<li>You can also debug command-line php activity on a remote server using nearly the same technique. See <a href="http://developer.sugarcrm.com/2012/11/21/command-line-xdebug-on-a-remote-server/">Command-Line xdebug on a remote server</a>. It basically involves doing what we've done here and setting the environment variable XDEBUG_CONFIG="idekey=PHPSTORM".</li>
+<li>More than one person can debug on a remote server at the same time, but it requires a dbgp proxy to be running on the remote server which will accept connections and connect to the correct local workstation based on the IDEKEY. <a href="http://matthardy.net/blog/configuring-phpstorm-xdebug-dbgp-proxy-settings-remote-debugging-multiple-users/">Configuring PhpStorm, XDebug, and DBGp Proxy Settings for Remote Debugging with Multiple Users</a> explains this quite nicely and explains where to obtain a proxy (pydbgpproxy) that will do the work required.</li>
+</ul></div></div></div>
+  </body>
+</html>
+

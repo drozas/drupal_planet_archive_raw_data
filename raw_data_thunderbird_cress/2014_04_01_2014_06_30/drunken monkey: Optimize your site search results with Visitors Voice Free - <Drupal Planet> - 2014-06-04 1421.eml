@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 04 Jun 2014 13:21:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 04 Jun 2014 13:21:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: drunken monkey: Optimize your site search results with Visitors Voice Free
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drunkenmonkey.at/blog/optimize-search-results-with-visitors-voice
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>drunken monkey: Optimize your site search results with Visitors Voice Free</title>
+    <base href="http://drunkenmonkey.at/blog/optimize-search-results-with-visitors-voice">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://drunkenmonkey.at/sites/default/files/styles/medium/public/field_image/visitors-voice_0.png?itok=PBOs5Bwl" width="240" height="240" alt="" title="Visitors Voice Free, the new tool for search result customization." /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2>TL; DR</h2>
+<p><a href="http://www.visitorsvoice.com/">Visitors Voice Free</a> is a great new solution that lets you easily customize your site's search results by re-ordering or changing them at will. It integrates with <a href="https://drupal.org/project/search_api_solr">Search API Solr Search</a> to automatically apply your changes in all searches on the site.</p>
+<h2>Preface</h2>
+<p>Ever had a client complain about a search on their site which just didn't have the right results? Or maybe you own a site yourself and have encountered this problem? For site administrators it is often easy to see which results should be delivered for certain searches on their site (e.g., "prices" or "opening hours") – but up to now it was woefully difficult to actually let the site search reflect this knowledge. Especially Solr, with its own elaborate scoring mechanism, is hard to influence in this respect, and the effort necessary is often not really justified if there are just one or two searches whose result order is a bit off. However, if the searches in question are important for users, this can still have a negative impact on the perception of your site as a whole.</p>
+<h2>Enter <a href="http://www.visitorsvoice.com/">Visitors Voice Free</a></h2>
+<p>This is a free SaaS solution with <a href="https://drupal.org/project/visitorsvoice">Search API integration</a> which lets you very easily customize your site's search result pages – not only re-ordering the results, but also adding or removing them as you see fit. This ensures that, especially for common or important queries, the search results help your site's visitors as well as possible to find what they are looking for.</p>
+<p>I have already written about <a href="/blog/visitors-voice">Visitors Voice's premium search analytics offer</a> (which will soon <a href="http://www.visitorsvoice.com/visitors-voice-premium-offer.html">receive a major update</a>), and this new, free service perfectly complements their existing offer – use site search analytics to find underperforming search queries, and then fix them right away with an easy-to-use, clean user interface. But, of course, the search customization functionality can also provide great value without the analytics service, if you become aware of problems via some other means (e.g., if you just make sure that the results make sense for the most common search terms).</p>
+<p>Just note that the whole product is still in Beta state at the moment, so their might still be some rough edges – feedback is very welcome – and a few shortcomings are already known. For instance, at the moment only one search index per site is supported, which needs to use a <a href="https://drupal.org/project/search_api_solr">Solr server</a> for the integration to work. Also, only the results that can be viewed by anonymous users are displayed in searches in the Visitors Voice dashboard.<br />
+Given enough interest, these shortcomings can soon be fixed, though.</p>
+<h2>How does it work</h2>
+<p>If you have a site (or a client with one) that uses Search API and Solr for its search, just install <a href="https://drupal.org/project/visitorsvoice">the Visitors Voice module</a> and add your Visitors Voice access key (which you receive after signing up). (If you have more than one index on your site, you'll also need to select searches on which one you want to customize.) Then just log in to the Visitors Voice dashboard and you'll be able to review the results for any search on your site and then get the option to freely change them – re-arrange their order, remove some or add others (as long as they are indexed in the index you're using). The changes will then be immediately (or at the next cron run, if you have "Index items immediately" disabled for the index) reflected in searches on your site.<br />
+The access key authenticates access to this functionality to make sure no-one but you (and people given access by you) can carry out such changes.</p>
+<h2>Get started</h2>
+<p>If you'd like to take a look yourself before signing up for anything, there is <a href="http://www.visitorsvoice.com/live-demo.html">a live demo</a> which you can try.</p>
+<p>Or just <a href="http://www.visitorsvoice.com/sign-up-free.html?partnercode=drunkenmonkey">sign up for a free account</a> and try it out on your own site right away. (With my partner code "drunkenmonkey", you will receive a 10% discount on all of their premium services if you decide to use some of them later.)</p>
+<p>If you'd like to talk about some custom solution, or chat about something else, you can contact the Visitors Voice team at <a href="mailto:info@visitorsvoice.com">info@visitorsvoice.com</a>.</p>
+<h2>Commendation</h2>
+<p>I also want to express my gratitude here that in the course of this project the Visitors Voice team has decided to <a href="http://www.visitorsvoice.com/we-sponsor-search-api-solr-search-module.html">generously sponsor ongoing maintenance of my Solr module</a> in addition to my contract work for them. Drupal Karma++!</p>
+</div></div></div>
+  </body>
+</html>
+

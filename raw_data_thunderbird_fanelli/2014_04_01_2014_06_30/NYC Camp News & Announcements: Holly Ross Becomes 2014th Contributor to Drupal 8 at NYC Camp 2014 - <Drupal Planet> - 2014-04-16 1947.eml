@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Apr 2014 17:47:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Apr 2014 17:47:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: NYC Camp News & Announcements: Holly Ross Becomes 2014th Contributor to Drupal 8 at NYC Camp 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.nyccamp.org//news/holly-ross-2014-nyc-camp-2014
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>NYC Camp News & Announcements: Holly Ross Becomes 2014th Contributor to Drupal 8 at NYC Camp 2014</title>
+    <base href="http://www.nyccamp.org//news/holly-ross-2014-nyc-camp-2014">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <a href="/news/holly-ross-2014-nyc-camp-2014"><img src="http://www.nyccamp.org/sites/default/files/styles/rss_feed/public/images/news/Holly-Ross-Core-Commit.jpg?itok=-39wqobm" width="620" height="400" /></a>
+<p><strong>Making good on a long stranding promise with webchick, the DA's Holly Ross rolled her first patch, and inadvertently became the 2014th contributor to Drupal 8 at NYC Camp 2014!</strong></p>
+
+<p>NYC Camp 2014 ended with a bang that perfectly *put a bird* on what was a really tremendous 14th event put on by the NYC Drupal community. Sunday&nbsp;was the final day on which everyone is encouraged to come back and sprint on Drupal code or a project they are working on or to&nbsp;get&nbsp;started contributing with help from a Drupal mentor. &nbsp;Just over&nbsp;120 attendees came back for Sprints Day, coordinated by &nbsp;<a href="https://drupal.org/user/649374" rel="nofollow">Irene Meisel</a>,&nbsp;<a href="https://drupal.org/user/258568" rel="nofollow">Cathy Theys</a>&nbsp;&amp;&nbsp;<a href="https://drupal.org/user/111437" rel="nofollow">Fureigh</a>.&nbsp;</p>
+
+<p>And we had a very special attendee&nbsp;who with just such mentoring was able to make her first contribution.&nbsp;On Saturday during their panel discussion at the United Nations with UN CITO Atti Riazi, Drupal 7 co-maintainer Angie "webchick" Byron and Drupal Association executive director Holly Ross reaffirmed their vow that webchick would help her commit her first patch to Drupal 8, and set a date of the next day (the last day of the camp which was given over to NYC Camp sprinting.)</p>
+
+<p>Also on Saturday at NYC Camp,&nbsp;<a href="https://drupal.org/user/1756942" rel="nofollow">Alina&nbsp;Mackenzie</a>&nbsp;had&nbsp;<a href="https://drupal.org/node/2239407" rel="nofollow">discovered an issue in the multiligual system</a>&nbsp;documentation, where the language manager interface docblock&nbsp;was returning implementation details (methods should never return implementation details; it belongs to the implementation to do that.)</p>
+
+<p>As Holly was going through the issue queue to pick something to work on, she came across this one, which since it affects the Drupal's Multilingual system was perfect for the United Nations, &nbsp;which is preparing to become the largest multilingual Drupal deployment in the world.&nbsp;&nbsp;Alina had a proposed resolution, so with a little mentoring from Cathy Theys, Holly rolled her 1st patch, which passed SimpleTest.&nbsp;</p>
+
+<p>However SimpleTest couldn't catch another inline comment on the sort method itself which also contained implementation details, that&nbsp;<a href="https://drupal.org/user/107158" rel="nofollow">tstoeckler</a>&nbsp;noticed when he was reviewing Holly's patch. &nbsp;A temporary setback, Holly quickly rolled a 2nd patch, and even included an <a href="https://drupal.org/files/issues/interdiff_3661.txt" rel="nofollow">interdiff</a>. That was enough to satisfy tsoeckler and he marked the new patch RTBC.&nbsp;</p>
+
+<p>YesCT also added her RTBC (though not before noticing a bug in d.o. node ownership when the node is edited by and admin) and <a href="http://drupalcode.org/project/drupal.git/commit/e0a47b4f7528aadfa943c82350561e7c147c0a39" rel="nofollow">webchick commited the patch</a> at 5:00 pm, and thus at the exact end of NYC Camp.</p>
+
+<p>It was then that everyone noticed an amazing coincidence. Holly had just become&nbsp;the 2014th contributor to Drupal 8. At NYC Camp 2014.</p>
+
+<p>Uncanny. <a href="http://drupaltv.org/video/holly-ross-becomes-2014th-contributor-drupal-8-nyc-camp-2014" rel="nofollow">Check out video of the moment on Drupal TV</a></p>
+
+<p><em>Stay tuned for more highlights from NYC Camp 2014</em></p>
+  </body>
+</html>
+

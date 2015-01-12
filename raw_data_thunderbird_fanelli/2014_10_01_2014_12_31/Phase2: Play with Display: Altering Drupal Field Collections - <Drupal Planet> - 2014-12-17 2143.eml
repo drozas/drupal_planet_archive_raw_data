@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 17 Dec 2014 20:43:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 17 Dec 2014 20:43:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Play with Display: Altering Drupal Field Collections
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/play-with-display-altering-drupal-field-collections/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Play with Display: Altering Drupal Field Collections</title>
+    <base href="http://www.phase2technology.com/blog/play-with-display-altering-drupal-field-collections/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr"><span style="line-height: 1.5em;">How do you insert a text field into a rendered entity, all within a field collection? This question came to mind on a recent Drupal 7 build. What at first sounded complicated turned into a concise and elegant solution.</span></p>
+<p dir="ltr">The basis of the requirement broke down into the need for events to list those participating in the event. The build already had existing Event and Profile content types, so the new functionality would only require implementing the list of Profiles participating in an event. Each participant would include their role at the event, along with links to contact them.</p>
+<p dir="ltr" style="text-align: center;"><a href="http://www.phase2technology.com/wp-content/uploads/2014/12/blog.png"><img class="size-medium wp-image-9324 aligncenter" alt="blog" src="http://www.phase2technology.com/wp-content/uploads/2014/12/blog-300x151.png" width="300" height="151" /></a></p>
+<p dir="ltr">To implement this, an Event Participant field collection was added as a field to the Event content type. Each instance of the field collection included a single Profile content type and a single text field for their role at the Event. The Profile would then be displayed as a rendered entity within the field collection so that the Profile’s image and contact links could be displayed. The point at issue then arose. How would the Participant’s role at the event be placed within the rendered Profile teaser, along with the other Profile fields? To the user it needed to look like a single unified entity, with the Profile’s image, role at the Event, Profile name, and contact links all included.</p>
+<p dir="ltr" style="text-align: center;"><img class="aligncenter" alt="Screen Shot 2014-12-11 at 4.27.43 PM.png" src="https://lh5.googleusercontent.com/R4HuFYz831NpS8rsHtbCcKeXIo3qtqK-rvnNtszcp_anTWn3BEfD9CA4soxWoxg11cxaog38eLWwAFxFtF5N6O7VQzXXlhM-4No8dqd8f7e5lHcFWA9XQbfy9IsooR4BBQ" width="624px;" height="152px;" /></p>
+<p dir="ltr">After some initial brainstorming a handful of different approaches came to mind. The initial impression was to use <a title="template_preprocess_field" href="https://api.drupal.org/api/drupal/modules%21field%21field.module/function/template_preprocess_field/7" target="_blank">template_preprocess_field()</a> since it allows the alteration of values in the theme layer. The participant role field would be removed from it’s initial location and inserted into the participant profile object. This did not work though. Despite the repositioning of elements within the render array, the changes occur too late in the rendering execution. The render array had already been rendered and thus the display remained the same.</p>
+<p dir="ltr">After quickly realizing a theme function wasn’t the answer, <a title="hook_node_view" href="https://api.drupal.org/api/drupal/modules%21node%21node.api.php/function/hook_node_view/7" target="_blank">hook_node_view()</a> came to mind. The hook allows for the alteration of a node before it is rendered and so all that would be needed would be to shift the location of the Participant Role field within the $node array. The issue with this implementation and the reason it wasn’t chosen, is that it would require reaching out to the global state to determine what changes are needed. In other words <a title="hook_node_view" href="https://api.drupal.org/api/drupal/modules%21node%21node.api.php/function/hook_node_view/7" target="_blank">hook_node_view()</a> doesn’t realize what context it is called under and would thus require a hack of sorts to determine when it was being called under an Event node. This could be worked around by checking the URL path, but this is not best practice as it is brittle and prone to breaking with future site updates.</p>
+<p dir="ltr">As they say the third time’s the charm. The final solution was to use <a title="hook_field_collection_item_view" href="http://drupalcontrib.org/api/drupal/contributions%21field_collection%21field_collection.api.php/function/hook_field_collection_item_view/7" target="_blank">hook_field_collection_item_view()</a>. This hook allows for the alteration of a field collection item before rendering. Unlike many of the other options, this hook is called for each field collection item, allowing one to both check the field collection name and adjust it’s internal field ordering, before any rendering occurs. Using this hook, each Event Participant field collection item is altered, removing the Role field and inserting it into the Profile rendered entity. Simple as that. Now each Event Participant is correctly displayed as a single unified entity, with an image, name, and a set of contact links.</p>
+<p></p><pre class="crayon-plain-tag">function hook_event_field_collection_item_view($field_collection_item, $view_mode, $langcode) {
+  if ($field_collection_item-&amp;gt;field_name == &quot;field_event_participants&quot;) {
+    $role = $field_collection_item-&amp;gt;content['field_event_participants_role'];
+    $profile_id = $field_collection_item-&amp;gt;field_event_participants_profile[LANGUAGE_NONE][0]['target_id'];
+
+    // Remove Participant Role from previous location in field collection output
+    unset($field_collection_item-&amp;gt;content['field_event_participants_role']);
+
+    // Insert Participant Role into the Participant Profile output
+    $field_collection_item-&amp;gt;content['field_event_participants_profile'][0]['node'][$profile_id]['field_event_participants_role'] = $role;
+  }
+}</pre><p></p>
+<p dir="ltr">Through several quick, small, iterations an elegant, straight-forward solution was found to what at first sounded like a complicated feature request. Now users viewing an Event can see a list of Participants, with each Participant displayed as a single item. Check out more on field collections on the <a href="http://www.phase2technology.com/blog/managing-field-groups-in-drupal-with-the-multifield-module/">Phase2 blog</a>!</p>
+<img src="http://track.hubspot.com/__ptq.gif?a=457100&k=14&bu=http%3A%2F%2Fwww.phase2technology.com&r=http%3A%2F%2Fwww.phase2technology.com%2Fblog%2Fplay-with-display-altering-drupal-field-collections%2F&bvt=rss&p=wordpress" style="float:left;" xml:base="http://www.phase2technology.com/feed/" width="1" height="1" border="0" align="right"/>
+  </body>
+</html>
+

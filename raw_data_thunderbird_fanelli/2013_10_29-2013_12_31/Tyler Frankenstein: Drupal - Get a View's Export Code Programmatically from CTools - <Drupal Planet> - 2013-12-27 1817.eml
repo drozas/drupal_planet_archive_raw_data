@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 27 Dec 2013 17:17:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 27 Dec 2013 17:17:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Tyler Frankenstein: Drupal - Get a View's Export Code Programmatically from CTools
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tylerfrankenstein.com/code/drupal-get-views-export-code-programmatically-ctools
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Tyler Frankenstein: Drupal - Get a View's Export Code Programmatically from CTools</title>
+    <base href="http://tylerfrankenstein.com/code/drupal-get-views-export-code-programmatically-ctools">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-page-tags field-type-taxonomy-term-reference field-label-hidden clearfix"><ul class="links"><li class="taxonomy-term-reference-0"><a href="/tags/drupal-7x" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7.x</a></li><li class="taxonomy-term-reference-1"><a href="/tags/views" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">views</a></li><li class="taxonomy-term-reference-2"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet drupal</a></li></ul></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>With Drupal and Views, we are able to configure a View's settings and import/export them across Drupal sites. This allows us to create backup copies of our View's settings and/or move a View between Drupal sites with relative ease.</p><p>Typically this is a manual process by using the Views UI to copy the "export" code string from one site:</p>
+<pre>http://dev.example.com/admin/structure/views/view/frontpage/export</pre>
+<p>..and then paste the string into the "import" form on another site:</p></div></div></div>
+  </body>
+</html>
+

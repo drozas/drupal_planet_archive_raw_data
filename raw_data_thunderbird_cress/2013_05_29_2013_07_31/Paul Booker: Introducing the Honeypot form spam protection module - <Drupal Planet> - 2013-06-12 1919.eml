@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Jun 2013 18:19:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Jun 2013 18:19:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Introducing the Honeypot form spam protection module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-development-services/article/introducing-honeypot-form-spam-protection-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Introducing the Honeypot form spam protection module</title>
+    <base href="http://www.paulbooker.co.uk/drupal-development-services/article/introducing-honeypot-form-spam-protection-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>This is little introduction into one of the simpler, and more user-friendly ways of controlling spam in Drupal (as opposed to other also-helpful methods, like <a href="http://drupal.org/project/mollom">Mollom</a>, CAPTCHA, etc.).</p>
+<p>The Honeypot Method<br />
+<a href="http://drupal.org/project/honeypot" >Honeypot</a> is aptly named because, just like Pooh bear is drawn towards honey jars, spam bots are drawn towards form fields—especially form fields they think will give them the ability to link back to their own websites. So, the Honeypot method basically inserts a hidden form field to Drupal (or other) forms with a field name like 'homepage' (you can set it to whatever you want). End users don't see the field, so they don't fill it out. But spam bots (usually using prewritten scripts) do see the field (usually), and add something to it. The Honeypot module detects this and blocks the form submission if there's something in the field.</p>
+<p>Additionally, the Honeypot module adds in a timestamp-based deterrent. Usually, forms take at least a few seconds to fill out when a human is entering data into them—especially surveys, user registration forms, etc. Spam bots try to fill out as many forms as they can in as little time as possible, so they will often fill out a form within a couple seconds at most. The Honeypot module requires at least 5 seconds to pass (by default - you can adjust this too!) before a form can be submitted.</p>
+<p>The Honeypot + timestamp form protection method is a very good defense against spam bots, but not so good against actual humans who fill out forms for spammers although there are now some ways you can configure the module to deter 'real' spammers; see honeypot.api.php). If you start having serious spam problems, you might need to add in Mollom or another more intelligent spam prevention service to the mix. The greatest advantage of the Honeypot method is that the user is given no extra obstacles to completing a form. In my opinion, it's the most user-friendly way of preventing spam, even if it's not the most effective in every situation.</p>
+<p>Other Niceties<br />
+You can also bypass the Honeypot protection for certain user roles—say, for instance, site administrators, who just might be able to fill out a form in less than 5 seconds—and you can set which forms on which Honeypot protection will be enabled. You can also tell Honeypot to protect all forms on the site. Finally, you can use honeypot protection in any of your own forms by simply including a little code snippet inside your modules hook_form_alter.</p>
+<pre class="brush: php">
+ honeypot_add_form_protection($form, $form_state, array('honeypot', 'time_restriction'));
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/drupal-development-services/tags/spam" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">spam</a></div><div class="field-item odd" rel="dc:subject"><a href="/drupal-development-services/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-development-services/article/introducing-honeypot-form-spam-protection-module"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Introducing the Honeypot form spam protection module ">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-development-services/article/introducing-honeypot-form-spam-protection-module"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

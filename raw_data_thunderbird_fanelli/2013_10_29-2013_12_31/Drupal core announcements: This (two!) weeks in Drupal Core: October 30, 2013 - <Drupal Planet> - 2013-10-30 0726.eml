@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 30 Oct 2013 06:26:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 30 Oct 2013 06:26:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This (two!) weeks in Drupal Core: October 30, 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/358048
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This (two!) weeks in Drupal Core: October 30, 2013</title>
+    <base href="https://groups.drupal.org/node/358048">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>What's new with Drupal 8?</h2>
+<p>Greetings! We took a week off last week to attend <a href="http://2013.badcamp.net/">BADCamp</a>. There was sprinting-o-plenty, as well as tons of sessions on Drupal 8.</p>
+<p><a href="http://blog.amazeelabs.com/en/being-part-bay-area-drupal-camp-2013"><img src="http://blog.amazeelabs.com/sites/default/files/0-badcamp-4_0.jpg" alt="Numerous sprinters at BADCamp." /></a><br />
+<em>Photo credit: <a href="http://www.amazeelabs.com/">Amazee Labs</a></em></p>
+<p>In the meantime, a lovely new <a href="https://drupal.org/drupal-8.0">Drupal 8 landing page</a> has launched, which includes a list of major new features, information about the current state of the release, and a nice, big, green, demo button!</p>
+<p><a href="https://drupal.org/drupal-8.0"><img src="https://groups.drupal.org/files/Screen Shot 2013-10-29 at 11.19.37 PM.png" width="640" alt="New Drupal 8 landing page" /></a></p>
+<p>There's also been movement to create and centralize <a href="https://drupal.org/node/2116747">expanded Drupal 8 developer API documentation</a> on Drupal.org, including sections on <a href="https://drupal.org/node/2122071">the new routing system</a> and <a href="https://drupal.org/developing/api/entity">the new entity API</a>.</p>
+<p>And speaking of Drupal.org, don't forget to get your patches downloaded in advance of the <a href="https://drupal.org/node/2122515">Drupal.org D7 launch</a>, when d.o will be down for 24 hours. Please take the opportunity to go <acronym title="n. the world outside of or away from houses; open air.">outdoors</acronym> in the <acronym title="n. A star that is the basis of the solar system and that sustains life on Earth, being the source of heat and light.">sun</acronym> and otherwise step <acronym title="adv. At or to a distance in space or time">away</acronym> from the computer. :)</p>
+<!--break--><!--break--><h2>Notable Commits</h2>
+<p>The best of <code>git log --since "2 weeks ago" --pretty=oneline</code> (121 commits in total):</p>
+<ul>
+<li><a href="https://drupal.org/node/2099363">Issue #2099363 by tim.plunkett, mtift, swentel: Allow single config files to be imported and exported</a> is another super handy patch. This takes the Views import/export functionality from Drupal 7 (which allows you to easily copy/paste Views definitions between sites) and expands it out to cover <em>any</em> configuration file in the system! An awesome feature, for both site builders and developers.</li>
+<li>From front-end performance land, <a href="https://drupal.org/node/2120457">Issue #2120457 by Wim Leers, nod_: Add test to guarantee that the Standard profile does not load any JavaScript</a> ensures that Drupal 8 serves no JS to anonymous users, to keep page loads for those users nice and speedy.</li>
+<li><a href="https://drupal.org/node/2112807">Issue #2112807 by tim.plunkett: Move the form builder functions in form.inc to a form service</a>: This snazzy patch moves the guts of includes/form.inc to OO code in the form of FormBuilderInterface, and increases the unit test coverage from 0% to 70% in the process. Awesome work!</li>
+<li>Two big patches went in for improving Drupal 8's accessibility: <a href="https://drupal.org/node/1872206">Issue #1872206 by jessebeach, quicksketch, Wim Leers, mgifford: Fixed Improve CKEditor toolbar configuration accessibility</a>, which provides both an accessible way to create CKEditor toolbars in the admin interface, as well as makes those toolbars output markup accessible to end-users, and <a href="http://drupal.org/node/1851414">Issue #1851414 by nod_, quicksketch, frega, dawehner, damiankloip: Convert Views to use the abstracted dialog modal.</a>, which replaced Views's custom JS with the standard dialog library used throughout core. Win!</li>
+<li>In <a href="https://drupal.org/community-initiatives/drupal-core/d8dx">Developer Experience</a> land, <a href="https://drupal.org/node/2057259">Issue #2057259 by alexpott, cweagans, swentel: Fixed Malformed modulename.info.yml file causes fatal error</a> greatly helps to reduce brittleness in error handling, <a href="https://drupal.org/node/2107137">Issue #2107137 by dawehner, damiankloip, tim.plunkett: Fix the DX for declaring custom access checkers</a> provides a much less verbose option for folks who just want to stick an access method on their controllers and use it, <a href="https://drupal.org/node/2112711"> Issue #2112711 by tim.plunkett: Provide an easier mechanism for using drupal_get_form() directly</a> nicely cleans up form builder calls, and <a href="https://drupal.org/node/2098795">Issue #2098795 by tim.plunkett, Sean Charles, tstoeckler, dawehner, larowlan, damiankloip: Create Base Class for RouteSubscriber Class</a> makes defining routes much easier, by consolidating commonly-used properties into a base class.</li>
+<li>Meanwhile, in Router System Conversion Ville, <a href="https://drupal.org/node/2102125">Issue #2102125 by dawehner, tim.plunkett, neclimdul, pwolanin, YesCT, damiankloip, Tim Bozeman: Big Local Task Conversion</a> went in, to move all local tasks to the new routing system. Work is still ongoing to <a href="https://drupal.org/node/1954892">replace theme callback</a> and <a href="https://drupal.org/node/2084463">convert contextual links</a>. On the bright side, <a href="https://drupal.org/node/2046367">Issue #2046367 by jhodgdon, amateescu, larowlan, juanolalla: Menu routing docs do not match what the code is doing</a> will help folks figure out the new routing system much better now. :)</li>
+<li>In the ongoing quest to <a href="https://drupal.org/node/1980004">create dream markup</a>, <a href="https://drupal.org/node/1982256">Issue #1982256 by mortendk, rteijeiro, tim.plunkett, LewisNyman, tlattimore, yannickoo, ry5n: Clean up html.html.twig markup</a> removes numerous extraneous divs and classes from Drupal's default markup, which can be added back by themes that need them.</li>
+<li>And finally, a follow-up from an old security fix in Drupal 7, <a href="https://drupal.org/node/1934498">Issue #1934498 by attiks, Jelle_S, David_Rothstein, effulgentsia, tstoeckler: Allow the image style 'itok' token to be suppressed in image derivative URLs</a> cleans things up so derivative images can work once again on CDNs and whatnot.</li>
+</ul>
+<h2>Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>If you're a book author, trainer, etc. don't miss <a href="https://association.drupal.org/node/18718">Survey Results: Drupal 8 Information Needs</a>, which has lots of helpful graphs about what people want to know about Drupal 8. A must-read for documentation writers, trainers, book authors, bloggers, and screencasters! :)</li>
+<li>In <a href="https://www.lullabot.com/blog/podcasts/getting-excited-drupal-8-donkey-human-ant-chameleon-cms">Getting Excited for Drupal 8 - The Donkey, Human, Ant, Chameleon CMS</a>, several core contributors chime in on what gets them excited about Drupal 8.</li>
+<li>If you want to stay up to date on the latest happenings with Drupal 8's upcoming Drupal 6 and Drupal 7 => Drupal 8 migration path, you can subscribe to the <a href="https://drupal.org/node/2121299">The IMP initiative: Migrate in Core</a> issue, where ongoing updates will be posted. You can also read a <a href="https://groups.drupal.org/node/357993">progress report</a> of what's happened at BADCamp and since.</li>
+<li><a href="https://www.acquia.com/blog/why-php-real">Why PHP is for Real</a> attempts to contextualize some of the big OO shifts in Drupal 8's architecture with some historical insight about the PHP project.</li>
+<li><a href="http://previousnext.com.au/blog/dynamic-routes-drupal-8-routesubscriber">Dynamic Routes in Drupal 8 with a RouteSubscriber</a> covers how to convert from old hook_menu()-style routes to the new system in Drupal 8, and <a href="http://chertzog.com/post/drupal-8-new-comment-notifications">Drupal 8 - New comment notifications</a> provides a handy, short module for automating mail sending in D8.</li>
+<li>In <a href="http://running-on-drupal8.co.uk/blog/focusing-drupal-eight-contrib"> Focusing on Contrib for Drupal 8</a>, Chris Brown makes the case for why developers should start focusing on D8 contrib <em>now</em>, from a career development point of view.</li>
+</ul>
+<h2>Drupal 8 in "Real Life</h2>
+<ul>
+<li>Two sprints are coming up in the next week: another edition of <a href="https://groups.drupal.org/node/353263">"First Friday" Contrib Sprint Initiative (CSI)</a> (read about the <a href="https://association.drupal.org/node/18658">results</a> from last time) and the <a href="https://groups.drupal.org/node/348728"><br />
+Drupal 8 Tour Writing Sprint</a>, to help get additional site builder tutorials into core.</li>
+<li><a href="http://drupalhagen.dk/">Drupalhagen</a> in Copenhagen, Denmark will also cover a number of Drupal 8 topics, including Twig, technologies such as Guzzle and Symfony, the new plugin system, and even a talk about the <a href="http://typo3.org/">TYPO3</a> CMS.</li>
+<li>Later on this month, don't miss <a href="http://2013.drupalcamp.at/">DrupalCamp Vienna</a> with <a href="https://docs.google.com/a/acquia.com/spreadsheet/ccc?key=0Aqi9fjij06SpdGdibzZPeE5LX1JlTE9qUEd5R0RKSXc#gid=0">a series of sprints</a> in addition to <a href="http://2013.drupalcamp.at/trainings">Drupal 8 trainings</a>.</li>
+</ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

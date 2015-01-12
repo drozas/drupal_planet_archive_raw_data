@@ -1,0 +1,43 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 03 Dec 2014 13:05:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 03 Dec 2014 13:05:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ERPAL: How we automate Drupal security updates
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.erpal.info/de/blog/how-we-automate-drupal-security-updates
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ERPAL: How we automate Drupal security updates</title>
+    <base href="http://www.erpal.info/de/blog/how-we-automate-drupal-security-updates">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>During the past few weeks, automated security updates have been one of the hotly debated topics in the Drupal community. Ever since Drupalgeddon, security automation has been one of the issues we should really try to solve in order to ensure Drupal's continued growth, especially in the enterprise world. Whereas content management systems such as Wordpress already run automated updates in a background process, Drupal does not yet have such a feature. There are <a href="https://www.drupal.org/node/382566">these</a> and <a href="https://www.drupal.org/node/2367319">other</a> discussions ongoing at Drupal.org that point out potential pros and cons of this feature. Personally, from the perspective of a Drupal professional, I think running Drupal module updates in the background could lead to several problems. There are a few reasons for this:</p>
+<ul><li>We somehow need to handle patched modules and cannot just override the complete module with an update</li>
+<li>Letting Drupal rewrite its own codebase will open other security issues</li>
+<li>Professionally developed Drupal projects use GIT (or another code versioning system) to maintain their codebase and handle the deployment process. Every update needs to be committed to the repository so that it’s not removed in the next deployment cycle</li>
+<li>After updating a module, we should run our automated test scripts (for example, behat or selenium) to ensure the site didn't break with the update</li>
+<li>To ensure quality we shouldn’t just run a complete update containing bug fixes and new features but only apply the patch relevant to security</li>
+</ul><p>The issue of applying security updates has become more and more time-sensitive because hackers start to attack vulnerable sites within hours of a security update release. Especially with enterprise web applications and large content sites with lots of users and traffic, this update process is really business critical. Even before the pressure of something like Drupalgeddon, these last two years we had already been thinking about update automation. In this blog post I want to describe the technology and workflows we use to automate security updates in our Drupal projects while ensuring quality with automated and manual tests and the correct handling of patches.</p>
+<p>Every site that we support for our clients sends hourly update reports to our internal ERPAL (you can replace “ERPAL” here with any other ticketing system) over an https connection and with additional encryption. For every security update available, we create a new branch in the project's GIT repository and a task that is related automatically.</p>
+<p><a href="/sites/default/files/erpal-security-update-automation.png" class="fancybox" rel="gallery1"><img src="/sites/default/files/resize/erpal-security-update-automation-647x676.png" style="height:676px; width:647px" width="647" height="676" /></a></p>
+<p>Once the task has been created, we get all the security-relevant patches and code changes from the active modules' repositories and merge them into the modules of the project. These code changes are committed to the new so-called "feature branch". Using Jenkins and a system to build feature branch instances with a live database, the changes are now ready to test. The status of the ERPAL Task is automatically set to "ready to test". Now all automated tests will run, if any are available for the project. The result is documented with a comment on the initially created task.<br />
+Depending on the test mode of the project and the priority of the security update (e.g. “critical” or “highly critical”), the security patches are either deployed directly to live once all tests are passed or the task is assigned to the project manager with the status "ready to test". He can then test the complete patched Drupal installation on a separate feature branch test instance under live conditions. If all tests are passed, the task will be set to "test passed" and the customer receives a notification that the security of his site is up-to-date. The update branch is merged as a hotfix into the master branch and the site is deployed to the live server. After this process, the update branch is deleted and the test instance destroyed to clean up the system. The following graphic describes the behavior.</p>
+<p><img src="/sites/default/files/grafik_drop_guard_process.png" width="647" height="639" /></p>
+<p>This system has several benefits, both for us and for our clients:</p>
+<ul><li>Security-relevant updates are applied within one hour</li>
+<li>Quality is ensured by automated tests and, if needed, by a notification system indicating manual test steps</li>
+<li>No need to involve developers to patch and deploy code</li>
+<li>No website downtime</li>
+<li>All steps are documented in ERPAL to make the process transparent: customers see it in their ERPAL account</li>
+<li>No panic on critical updates; all workflows run as in a normal project and are delivered with compliance to our task workflow</li>
+<li>Instant customer notification once updates are applied gives customers a good feeling ;-)</li>
+</ul><p>This system has been working well for 2.5 years. Working in cooperation with other Drupal shops to test the system, we want to make this security update automation system available for others to use as well. Therefore we will soon publish the whole solution as a service. If you want to become one of the few beta testers, or if you want to become a reseller to deliver the same security automation to your clients, you can sign up at our <a href="http://drop-guard.net">Drop Guard - The Drupal security update automation service</a> page.</p>
+</div></div></div>
+  </body>
+</html>
+

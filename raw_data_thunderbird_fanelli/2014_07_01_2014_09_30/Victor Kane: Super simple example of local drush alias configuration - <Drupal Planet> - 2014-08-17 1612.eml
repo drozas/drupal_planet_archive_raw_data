@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 17 Aug 2014 14:12:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 17 Aug 2014 14:12:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Victor Kane: Super simple example of local drush alias configuration
+Content-Transfer-Encoding: 8bit
+Content-Base: http://awebfactory.com.ar/node/527
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Victor Kane: Super simple example of local drush alias configuration</title>
+    <base href="http://awebfactory.com.ar/node/527">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><p>So I have a folder for drush scripts _above_ several doc root folders on a dev user's server. And I want to run status or whatever and my own <a href="http://drush.ws/docs/shellscripts.html" target="_blank">custom drush scripts</a> on _different_ Drupal web app instances. Drush has alias capability for different site instances, so you can do:</p>
+<p>$ drush @site1 status</p>
+<p>So, how to set up an aliases file?</p>
+<p>(I'm on Ubuntu with Drush 6.2.0 installed with PEAR as per this great d.o. doc page <a href="https://www.drupal.org/node/2132447" target="_blank">Installing Drush on Any Linux Server Out There</a> (<a href="http://www.kalamuna.com/" target="_blank">Kalamuna</a> people, wouldn't you know it?)).</p>
+<p>Careful reading of the <a href="http://drush.ws/">excellent drush documentation</a> points you to a <a href="http://drush.ws/docs/shellaliases.html" target="_blank">Drush Shell Aliases</a> doc page, and from there to the actual <a href="http://drush.ws/examples/example.aliases.drushrc.php" target="_blank">example aliases file</a> that comes with every drush installation.</p>
+<p>So to be able to run drush commands for a few of my local Drupal instances, I did this:</p>
+
+<ul>
+<li>In my Linux user directory, I created the file ~/.drush/aliases.drushrc.php</li>
+<li>Contents:</li>
+</ul>
+<pre>&lt;?php
+
+$aliases['site1'] = array(
+  'root' =&gt; '/home/thevictor/site1/drupal-yii',
+  'uri' =&gt; 'drupal-yii.example.com',
+);
+$aliases['site2'] = array(
+  'root' =&gt; '/home/thevictor/site2',
+  'uri' =&gt; 'site2.example.com',
+);</pre><p>Then I can do, from anywhere as long as I am logged in as that user:</p>
+<pre>$ cd /tmp<br />$ drush @site1 status<br />...<br />$ drush @site2 status</pre><p>and lots of other good stuff. Have a nice weekend.</p>
+<p></p><!-- google_ad_section_end --><div class="og_rss_groups"></div><p><a href="http://awebfactory.com.ar/node/527" target="_blank">read more</a></p>
+  </body>
+</html>
+

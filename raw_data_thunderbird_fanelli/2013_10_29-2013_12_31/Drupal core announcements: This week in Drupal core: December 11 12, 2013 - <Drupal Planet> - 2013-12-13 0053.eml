@@ -1,0 +1,89 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 12 Dec 2013 23:53:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 12 Dec 2013 23:53:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This week in Drupal core: December 11 12, 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/388748
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This week in Drupal core: December <del>11</del> 12, 2013</title>
+    <base href="https://groups.drupal.org/node/388748">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Sorry that we're a day late this week! If you'd like to reduce delays due to xjm's chronic insomnia, consider <a href="#wrap">helping out with these posts</a>. ;)</p>
+<h2 id="new">What's new with Drupal 8?</h2>
+<h3>Working toward drupal-8.0-beta1</h3>
+<p>This week's most important Drupal 8 news is Dries' <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">announcement of the criteria for beta 1</a>. Numerous contributors worked with core maintainers to flesh out an initial list of <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;version%5B%5D=8.x&amp;issue_tags=beta+blocker">beta-blocking issues</a>, and many contributors have begun to work on core in a beta-bound mindset. We'll have more updates on our progress toward beta in upcoming weeks.</p>
+<h3>Looking for Drupal 8 API documentation?</h3>
+<p>Did you know that there's already extensive <a href="https://drupal.org/developing/api/8">API documentation available for Drupal 8</a>? The documentation is still under development since <a href="https://drupal.org/core/release-cycle#api-completion">some APIs are still being finalized</a>, but it's a great resource for developers who would like to explore Drupal 8. You can even help us extend the documentation as you learn. :) <a href="https://drupal.org/user/4166">Gábor Hojtsy</a> is leading efforts on this section of the handbook. (Also check out this quick guide to <a href="https://drupal.org/update/modules/7/8">Converting 7.x modules to 8.x</a>, also under development.)</p>
+<h3>Views block conversions</h3>
+<p>This week the patch for <a href="https://drupal.org/node/1957276">#1957276: Let users set the block instance title for Views blocks in the Block UI</a> finally landed. This longstanding usability issue was blocking the conversion of legacy core blocks to Views -- an important step in realizing the full potential of Views in core. Now that it's in, the block conversions have begun in earnest! Thanks to the <a href="http://www.flickr.com/photos/63401575@N02/8278585481/in/photostream/">VDC team</a>, yoroy, and Bojhan for driving this issue home, and to all contributors who are working on the conversions! To help, check out <a href="https://drupal.org/node/1823450">[Meta] Convert core listings to Views</a>.</p>
+<h2 id="release">Where's Drupal 8 at in terms of release?</h2>
+<p>In the past week, we've closed 15 critical issues and 26 major issues, and opened 7 criticals and 15 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;priorities%5B%5D=400&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">112 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=15&amp;status%5B%5D=4&amp;priorities%5B%5D=300&amp;categories%5B%5D=1&amp;categories%5B%5D=2&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D">475 major issues</a>.</p>
+<h2 id="help">Where can I help?</h2>
+<h3 id="top">Top criticals to hit this week</h3>
+<p>So, as I said above, we've got plenty of critical issues to go around. :) But here are a few super important ones we could use your help on <em>right now</em>.</p>
+<ul>
+<li><a href="https://drupal.org/node/1862202">Objectify the language negotiation system</a> (blocks numerous language CMI conversions)</li>
+<li><a href="https://drupal.org/node/2151829">Doctrine annotation parsing takes an unacceptable amount of time/memory on install</a> (adds 15+ minutes to testbot time, drives memory on installation over 128M) </li>
+<li><a href="https://drupal.org/node/2042807">Convert search plugins to use a ConfigEntity and a PluginBag</a> (blocks node rank conversion to CMI)</li>
+<li><a href="https://drupal.org/node/2021779">Decouple shortcuts from menu links</a> (blocks CMI configuration synchronization)
+</li></ul>
+<h3>More ways to help</h3>
+<h4>Testbot, testbot...</h4>
+<p>There's been a lot of demand on our awesome testbot volunteers jthorson and rfay for support for optional database environments (e.g. SQLite, PostgreSQL) and alternate PHP versions (especially PHP 5.4), as these are blockers for the D8 release. These features are currently blocked on some debugging tasks that could use <strong>your</strong> help! <a href="https://drupal.org/node/2144475">Set up a local testbot environment with Vagrant</a> (<a href="http://vimeo.com/81293969">see this helpful video</a>) and head over to  <a href="https://drupal.org/node/2152251">SQLite testbot confirmation fails with "failed to find test tables to drop" error</a> and <a href="https://drupal.org/node/2150623">6.x-3.x PIFR: 3 Failures in D8 test</a>. These will allow us to make progress on <a href="https://drupal.org/node/2135199">Provide php 5.4 testing on testbots for D8 code without breaking everything else</a>.</p>
+<h4>Drupal 8 performance</h4>
+<p>Performance optimization is among the most important ongoing work during Drupal 8's <a href="https://drupal.org/core/release-cycle#api-completion">API completion phase</a>. Follow  <a href="https://drupal.org/node/1744302">[meta] Resolve known performance regressions in Drupal 8</a> for periodic updates on the work being done. We could also use help from one or more contributors to update this issue's summary to reflect the current work. The Drupal 8 performance team holds weekly meetings to discuss perfomance work, and manages performance issues in this <a href="https://docs.google.com/a/acquia.com/spreadsheet/ccc?key=0AgIiMuY_XxscdFZobFRaVjFnNkZmRUYyd2tqbmRvSGc&amp;usp=drive_web#gid=0">spreadsheet of Drupal 8 performance issues</a>.  If you'd like to join these efforts, contact <a href="https://drupal.org/user/23">Moshe Weitzman</a>.</p>
+<h4>Core mentoring</h4>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.
+</p>
+<h2 id="commits">Notable Commits</h2>
+<p>The best of <code> git log --since &quot;1 week ago&quot; --pretty=oneline</code> (104 commits in total):</p>
+<ul>
+<li>For ages, every Drupal 8 contributor's kneejerk reply to any Drupal 8 whitescreen has been "reinstall D8". No longer! Core contributors are still best off starting from a clean slate for each patch, but a new script makes it so reinstallation is not necessary to resolve every. single. little. thing. <a href="https://drupal.org/node/2097189">Issue #2097189 by damiankloip, sun, Albert Volkman, chx: Add a rebuild script.</a></li>
+<li>A <em>big</em> win for reducing Drupal's complexity and cleaning up the extension system: <a href="https://drupal.org/node/2109287">Issue #2109287 by dawehner, Cottser, tim.plunkett, kim.pepper: Replace list_themes() with a service.</a></li>
+<li>Two awesome DX improvements for Drupal's form system landed this week:
+<ul>
+<li><a href="https://drupal.org/node/2149263">Issue #2149263 by tim.plunkett: Remove confirm_form().</a></li>
+<li><a href="https://drupal.org/node/2145007">Issue #2145007 by tim.plunkett, h3rj4n: Convert form_set_error() in FormBase classes to use FormErrorInterface.</a></li>
+</ul>
+</li>
+<li>Work continues on converting core away from the legacy menu system in several issues:
+<ul>
+<li><a href="https://drupal.org/node/2100577">Issue #2100577 by pwolanin, dawehner: Decouple book module from menu.inc (Phase 1).</a></li>
+<li><a href="https://drupal.org/node/2032309">Issue #2032309 by dawehner, amateescu: Use local tasks derivatives to provide local tasks for views.</a></li>
+<li><a href="https://drupal.org/node/2147501">Issue #2147501 by dawehner: Convert most of the left over local tasks.</a></li>
+</ul>
+</li>
+<li>Extensive work is still underway on Drupal 8's Entity Field API, and one important conversion issue to land this week was: <a href="https://drupal.org/node/2112239">Issue #2112239 by amateescu: Convert base field and property definitions.</a></li>
+<li>Another step in Drupal 8's continuing trend to replace legacy one-off implementations to remove one-off features in favor of standardized, reusable solutions in core or contrib: <a href="https://drupal.org/node/2127725">Issue #2127725 by ParisLiakos: Remove category handling from aggregator.</a></li>
+<li>Finally, some important work toward finishing the Drupal 8 routing system: <a href="https://drupal.org/node/1998638">Issue #1998638 by damiankloip, dawehner, kim.pepper, cosmicdreams, alexpott, larowlan, Damien Tournoud: Replace almost all remaining superglobals.</a></li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2 id="planet">Drupal 8 Around the Interwebs</h2>
+<p>Blog posts about Drupal 8 and how much it's going to rock your face.</p>
+<ul>
+<li>This week <a href="https://drupal.org/user/23">Moshe Weitzman</a> blogged about the <a href="https://www.acquia.com/d8migrate">Improved upgrade process</a> for Drupal 8. The blog post gives a great overview and background on the <a href="https://groups.drupal.org/imp">IMP initiative</a>, which is now in full swing and has completed numerous core patches over the past week.</li>
+<li>Check out webchick's <a href="https://www.youtube.com/watch?v=CkXOhe3gaA8">Drupal 8 webinar</a>, featuring demos of content authoring, mobile, and configuration management. </li>
+<li>There's important discussion happening in response to this <a href="https://groups.drupal.org/node/384813">Drupal 8 Media Battleplan</a>. </li>
+<li>Drupal 8 web services contributor Lin Clark raises some tough questions in: <a href="http://lin-clark.com/blog/2013/12/08/drop-rdfa-drupal-8/">Why Drupal 8 should drop RDFa (and microdata) in favor of JSON</a>.</li>
+<li>Like your Drupal news in audio form? Enjoy this DrupalEasy podcast with core übermentor YesCT: <a href="http://drupaleasy.com/podcast/2013/12/drupaleasy-podcast-118-it-initiative-or-thing">DrupalEasy Podcast 118: Is it an initiative or a thing?</a></li>
+<li>Also from YesCT, a quick <a href="http://cheppers.com/blog/prepare-prepare-for%E2%80%A6-phpunit-tests">call to action for learning PHPUnit</a>.</li>
+<li>Drupal Commerce shares a clever and inspiring post on <a href="http://www.drupalcommerce.org/blog/10943/how-create-drupal-8-toolbar-icon">How to create a Drupal 8 Toolbar Icon</a>.</li>
+<li>Interested in Drupal 8 performance and caching? See frontend ninja Wim Leers' presentation on <a href="http://wimleers.com/talk/drupal-8-perf-ops">cache tags &amp; pluggable asset optimization</a>.
+</li><li>Not D8-related, but hilarious. :) <a href="http://rjtownsend.com/blog/life-drupal-developer-illustrated-cat-gifs">The life of a Drupal developer as illustrated by cat gifs</a></li>
+</ul>
+<h2 id="events">Drupal 8 in "Real Life</h2>
+<p><strong>Dec. 13-14</strong>: <a href="http://drupalcampohio.org/">DrupalCamp Ohio</a> has several sessions on Drupal 8 topics.</p>
+<p><strong>Jan. 25-26</strong>: Mark your calendars for the next <a href="https://groups.drupal.org/node/332998">Global Sprint Weekend</a>. Join local user groups around the planet for a weekend of Drupal 8 contribution. The sprint weekend will be a great opportunity to engage your local community, and there are lots of resources on the sprint page to help get new people involved.</p>
+<h2 id="wrap">Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

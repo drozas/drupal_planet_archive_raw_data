@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 28 May 2014 23:26:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 28 May 2014 23:26:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chapter Three: How to update a Drupal site built by others
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chapterthree.com/%3Ca%20href%3D%22/blog/how-update-drupal-site-built-others%22%3Eview%3C/a%3E
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chapter Three: How to update a Drupal site built by others</title>
+    <base href="http://chapterthree.com/%3Ca%20href%3D%22/blog/how-update-drupal-site-built-others%22%3Eview%3C/a%3E">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Have you ever worked on a Drupal site you hadn’t built yourself? If you have you may already know not every developer follows the Drupal development’s best practices and there are many sites containing “hacked” code. Unrelated to espionage and bond villains the phrase “hacked” refers to any community contributed code that has been independently modified since its original download.<!--break--> Some hacks are necessary including hot-fix patches for specific issues that have not made it into the released version of the code repository yet so not all hacks are bad, many are bug fixes and some are the result of sloppy coding.</p><br />
+<br />
+<p>One of the main support tasks on any Drupal site is performing core/module/theme updates and that’s when your hacked/patched modules can give you a sad face, if the hacked code is accidentally overwritten you may lose its functionality hence extra care is needed when updating hacked code. Before updating any site you need to check if the codebase had been hacked, and how is that done you may ask?</p><br />
+<br />
+<p><img alt="Hacked Report" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/hacked_report.jpg" style="width: 250px; height:250px; margin: 5px 0 20px 15px; float: right;"></p><br />
+<br />
+<h2>Introducing <a href="http://drupal.org/project/hacked">Hacked!</a></h2><br />
+<br />
+<p>Hacked is a great module that checks to see if your Drupal core files or your installed themes and modules have been changed since they were first downloaded and installed. Get it from <a href="http://drupal.org/project/hacked">http://drupal.org/project/hacked</a> and upon install run its report by visiting <b>/admin/reports/hacked</b></p><br />
+<br />
+<p><img alt="Hacked Files" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/hacked_files.jpg" style="width: 250px; height:250px; margin: 5px 25px 15px 0; float: left;"></p><br />
+<br />
+<p>Depending on the number of installed themes and modules the hacked report will take a little time to download the original versions of each and compare them with your current version to see if they have changed. Once you know what’s changed you can decide if it can be updated or not if you knew exactly what was changed, right?</p><br />
+<br />
+<h2>Introducing <a href="http://drupal.org/project/diff">Diff</a></h2><br />
+<br />
+<p>What’s nice about the Hacked! module is that it seamlessly integrates with the <a href="http://drupal.org/project/diff">Diff module</a> allowing you to see all the exact differences between the two versions of the code side-by-side for comparison. This allows you to see if the changes in the hacked files are worth keeping or replicating as sometimes they may not be.</p><br />
+<br />
+<p><img alt="" class="imagecache-500px_wide" src="http://www.chapterthree.com/sites/default/files/legacy/imagecache/500px_wide/diff_report.jpg"></p><br />
+<br />
+<p>Before learning about Hacked and Diff I had to pray to the Droplet on every update to avoid overwriting any hidden implemented tweak but with these two modules I can now update selectively and intelligently without surprises. Lastly, for any update always try it on a test environment first, make sure everything works on your test server before rolling it out on your live production site.</p><br />
+  </body>
+</html>
+

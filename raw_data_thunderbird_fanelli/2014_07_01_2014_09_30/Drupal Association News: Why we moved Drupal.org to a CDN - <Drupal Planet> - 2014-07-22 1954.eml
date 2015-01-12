@@ -1,0 +1,59 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Jul 2014 17:54:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Jul 2014 17:54:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Association News: Why we moved Drupal.org to a CDN
+Content-Transfer-Encoding: 8bit
+Content-Base: https://assoc.drupal.org/blog/basic/why-we-moved-drupal.org-cdn
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Association News: Why we moved Drupal.org to a CDN</title>
+    <base href="https://assoc.drupal.org/blog/basic/why-we-moved-drupal.org-cdn">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>As of a little after 19:00 UTC on 2 July 2014, Drupal.org is now delivering as many sites as possible via our <a href="http://www.edgecast.com/">EdgeCast</a> CDN.</p>
+<h2>
+	<a href="https://www.drupal.org/node/2087411#comment-8671281">Why a CDN</a>?</h2>
+<p>We are primarily concerned with the network level security that a CDN will provide Drupal.org.</p>
+<p>The CDN enables us to restrict access to our origin servers and disallow directly connecting to origin web nodes (which is currently possible). The two big advantages are:</p>
+<ol><li>
+		Accelerate cacheable content (static assets, static pages, etc).</li>
+	<li>
+		Allow us to easily manage network access and have a very large network in front of ours to absorb some levels of attacks.</li>
+</ol><p>Here are some examples of how the CDN helps Drupal.org:</p>
+<ul><li>
+		We were having issues with a .js file on Drupal.org. The network was having routing issues to Europe and people were complaining about Drupal.org stalling on page loads. There was basically nothing we could do but wait for the route to get better. This should never be a problem again with EdgeCast's global network.</li>
+	<li>
+		We constantly have reports of updates.drupal.org because blacklisted because it serves a ton of traffic coming in and out of a small number of IP addresses. This should also not happen again because the traffic is distributed through EdgeCast's network.</li>
+	<li>
+		A few months ago we were under consistent attack from a group of IPs that was sub-HTTP and was saturating the origin network's bandwidth. We now have EdgeCast's large network in front of us that can 'take the beating'.</li>
+</ul><h2>
+	updates.drupal.org</h2>
+<p>By enabling EdgeCast's raw logs, rsync, and caching features, we were able to offload roughly 25 Mbps of traffic from our origin servers to EdgeCast. This change resulted in a drastic drop in origin network traffic, which freed up resources for Drupal.org. The use of rsync and the raw log features of EdgeCast enabled us to continue using our current project usage statistics tools. We do this by syncing the access logs from EdgeCast to Drupal.org’s utility server that processes project usage statistics.</p>
+<h2>
+	<img alt="CDN caching results screenshot" src="https://assoc.drupal.org/files/Screenshot%202014-07-22%2012.51.38.png" style="width: 494px; height: 192px;" /></h2>
+<h2>
+	Drupal.org</h2>
+<p>Minutes after switching www.drupal.org to use the CDN, there were multiple reports of faster page load times from Europe and North America.</p>
+<p>A quick check from France / webpagetest.org:<br />
+	Pre-CDN results: first page load=4.387s. repeat view=2.155s<br />
+	Post-CDN results: first page load=3.779s, repeat view=1.285s</p>
+<h2>
+	Why was the www.drupal.org rename required?</h2>
+<p>Our CDN uses a combination of <a href="https://en.wikipedia.org/wiki/Anycast">Anycast IP addresses</a> and DNS trickery. Each region (Asia, North America, Europe, etc.) has an Anycast IP address associated with it. For example cs73.wac.edgecastcdn.net might resolve to 72.21.91.99 in North America, and 117.18.237.99 in Japan.</p>
+<p>Since 72.21.91.99, 117.18.237.99, etc. are Anycast IPs, generally their routes are as short as possible, and the IP will route to whatever POP is closest. This improves network performance globally.</p>
+<h2>
+	Why can't drupal.org be a CNAME?</h2>
+<p>The DNS trickery above works by using a CNAME DNS record. Drupal.org must be an A record because the root domain cannot be a CNAME. MX records and any other records are <a href="https://tools.ietf.org/html/rfc2181#section-10">not allowed by the RFC on CNAME records</a>. To work around this DNS limitation, Drupal.org URLs are now redirected to www.drupal.org.</p>
+<p> </p>
+<p> </p>
+<p><strong>Related issues</strong><br /><a href="https://www.drupal.org/node/2087411">https://www.drupal.org/node/2087411</a><br /><a href="https://www.drupal.org/node/2238131">https://www.drupal.org/node/2238131</a></p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 18 Nov 2014 15:08:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 18 Nov 2014 15:08:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Transitioning to Drupal 8 templates with Twig
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/transitioning-to-drupal-8-templates-with-twig/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Transitioning to Drupal 8 templates with Twig</title>
+    <base href="http://www.phase2technology.com/blog/transitioning-to-drupal-8-templates-with-twig/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">As many of us know, <a href="https://www.drupal.org/drupal-8.0.0-beta1">Drupal 8 beta</a> was released at the beginning of October which has given us a great preview of the goodies to come. One of those goodies is a new theme engine, <a href="http://twig.sensiolabs.org/">Twig</a>, which replaces PHPTemplate. Twig gives us a lot of extra power over our templates and allows us to clean up a lot of the extra cruft that PHPTemplate forced us to add.</p>
+<p>So you may be asking, how will our brand new Drupal 8 templates look? Well they are going to be a lot leaner. The extra cruft of php tags, functions, and other miscellaneous bits are no longer needed &#8211; in fact, they don’t even work in Twig templates. Arguably, it will be easier to read at a glance what is happening in the Twig versions of Drupal templates. For a great example of how the new templates will look, we can crack open the Views module and compare the templates in the Views module 7.x version to the ones in the Views 8.x version. So let’s compare the views-view.tpl.php file from Views 7.x to views-view.html.twig file in Views 8.x.</p>
+<p style="text-align: center;"><a href="http://phase2technology.com/wp-content/uploads/2014/11/Views-compare-part-one.png"><img class="wp-image-9209 aligncenter" alt="Views-compare-part-one" src="http://phase2technology.com/wp-content/uploads/2014/11/Views-compare-part-one-663x1024.png" width="100%" height="auto" /></a><a href="http://phase2technology.com/wp-content/uploads/2014/11/Views-compare-part-two.png"><img class="size-large wp-image-9210 aligncenter" alt="Views-compare-part-two" src="http://phase2technology.com/wp-content/uploads/2014/11/Views-compare-part-two-769x1024.png" width="100%" height="auto" /></a></p>
+<p dir="ltr"><span style="font-size: 1.25em; line-height: 1.5em;">Twig Comments</span></p>
+<p dir="ltr">Starting from the top, lets work our way down to see what has changed. In the documentation section we can see that for the large block of comments, as well as single line comments, the {# #} syntax is used.</p>
+<p dir="ltr">In the list of variables variables that are available to use, you may notice a few other changes. For example, Twig is not raw PHP, so the ‘$’ is not used at the beginning of variable names. Another change is that is that the $classes_array has been replaced by the attributes variable.</p>
+<h3 dir="ltr">Rendering Variables</h3>
+<p style="text-align: center;"> <a href="http://phase2technology.com/wp-content/uploads/2014/11/Views-compare_example_one.png"><img class=" wp-image-9212 aligncenter" alt="Views-compare_example_one" src="http://phase2technology.com/wp-content/uploads/2014/11/Views-compare_example_one-1024x40.png" width="100%" height="auto" /></a></p>
+<p dir="ltr">Moving down to line #40 we can see the first instance of a variables rendered using Twig. The double curly bracket syntax, {{ my_variable }}, tells Twig that this is a variable and it needs to be rendered out. A variation of this syntax uses dot-notation to render variables contained in an array/object. This syntax looks like {{ my_variable.property_or_element }}, which makes it extremely easy to use. Dot notation is not used in this particular Twig template.</p>
+<h3 dir="ltr">Twig Filters</h3>
+<p dir="ltr">Another powerful feature of Twig is template filters. Filters allow us to do simple manipulations of variables. The syntax for using a filter is similar to the syntax for rendering a variable. The difference is that after the variable name, you insert a | (pipe), followed by the name of the filter. For an example to make a string from a variable all lowercase you would do {{ variable_name|lower }} which transform all of the characters to lowercase. If you have used templating systems from other frameworks, such as Angular.js, this syntax may look familiar to you. This particular Views template does not use filters, but you can see <a href="http://twig.sensiolabs.org/doc/templates.html#filters">examples of different filters </a>on the Twig documentation site. If none of the predefined filters satisfy your requirements, you can extend Twig to create your own filter. The Twig documentation site provides details about <a href="http://twig.sensiolabs.org/doc/advanced.html#id3">creating your own custom filters</a>..</p>
+<h3 dir="ltr">Twig Logic</h3>
+<p style="text-align: center;"><a href="http://phase2technology.com/wp-content/uploads/2014/11/Views-compare_example_two.png"><img class=" wp-image-9213 aligncenter" alt="Views-compare_example_two" src="http://phase2technology.com/wp-content/uploads/2014/11/Views-compare_example_two-1024x56.png" width="100%" height="auto" /></a></p>
+<p dir="ltr">Jumping to line #42, we can see the {% %} (curly-bracket and percentage symbol) syntax, which is used for template logic, such as if statements. This syntax tells Twig that we are not rendering something, but rather that we need to process some logic, such as a control structure or loop, in our template.</p>
+<h3 dir="ltr">The Takeaway</h3>
+<p dir="ltr">This blog post is a high level overview of how Twig templates in Drupal 8 will look.  With Twig, we can choose to use the out-of-the box tools it provides, or we can dive in and extend it with additional features such as new filters. For more information I would highly recommend reading through the Twig documentation for <a href="http://twig.sensiolabs.org/doc/templates.html#twig-for-template-designers">designers</a> and for <a href="http://twig.sensiolabs.org/doc/api.html#twig-for-developers">developers</a>.</p>
+<img src="http://track.hubspot.com/__ptq.gif?a=457100&k=14&bu=http%3A%2F%2Fwww.phase2technology.com&r=http%3A%2F%2Fwww.phase2technology.com%2Fblog%2Ftransitioning-to-drupal-8-templates-with-twig%2F&bvt=rss&p=wordpress" style="float:left;" xml:base="http://www.phase2technology.com/feed/" width="1" height="1" border="0" align="right"/>
+  </body>
+</html>
+

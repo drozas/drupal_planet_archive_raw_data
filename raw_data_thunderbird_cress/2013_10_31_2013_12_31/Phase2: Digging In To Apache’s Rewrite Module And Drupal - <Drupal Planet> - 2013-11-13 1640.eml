@@ -1,0 +1,56 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 13 Nov 2013 16:40:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 13 Nov 2013 16:40:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Digging In To Apache’s Rewrite Module And Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/digging-in-to-apaches-rewrite-module-and-drupal/?utm_source=rss&utm_medium=rss&utm_campaign=digging-in-to-apaches-rewrite-module-and-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Digging In To Apache’s Rewrite Module And Drupal</title>
+    <base href="http://www.phase2technology.com/blog/digging-in-to-apaches-rewrite-module-and-drupal/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=digging-in-to-apaches-rewrite-module-and-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Apache&#8217;s mod_rewrite module is a powerful tool behind Drupal&#8217;s clean URLs, but it can lead to some head scratching moments when attempting to implement custom behavior. In this post, we&#8217;ll walk through a few examples and dig into some corner cases of <a href="http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html">Apache&#8217;s Rewrite module</a> and Drupal.</p>
+<p>For our first scenario we&#8217;re redirecting all GET requests to SSL except those for robots.txt. This is pretty straight forward</p><pre class="crayon-plain-tag">RewriteCond %{HTTP_HOST} example\.com
+RewriteCond %{REQUEST_URI} !^/robots.txt
+RewriteCond %{HTTPS} !on 
+RewriteCond %{REQUEST_METHOD} GET 
+RewriteRule ^ https://example.com%{REQUEST_URI} [L,QSA,R=301]</pre><p>Where it becomes interesting is if we also want to allow requests handled by Drupal to avoid being redirected. For example, assume that any RSS feeds are handled by Drupal but there is no need to force those over SSL. You might think the following would be sufficient:</p><pre class="crayon-plain-tag">RewriteCond %{HTTP_HOST} example\.com
+RewriteCond %{REQUEST_URI} !^/robots.txt
+RewriteCond %{REQUEST_URI} !\.rss$
+RewriteCond %{HTTPS} !on 
+RewriteCond %{REQUEST_METHOD} GET 
+RewriteRule ^ https://example.com%{REQUEST_URI} [L,QSA,R=301]</pre><p>Using only the above, however, results in a redirection being issued to https://example.com/index.php. This is because while the redirect is bypassed here, Drupal&#8217;s use of the Rewrite module means that another pass through the rewrite rules is generated and the redirect is happening on this pass. This pass does not appear to trigger as a sub-request so adding the NS flag to the RewriteRule does not stop the rule from being applied. Using SetEnvIf, however, provides an option.</p><pre class="crayon-plain-tag">SetEnvIf Request_URI \.rss$ RSS_REQUEST=TRUE
+RewriteCond %{HTTP_HOST} example\.com
+RewriteCond %{REQUEST_URI} !^/robots.txt
+RewriteCond %{ENV:REDIRECT_RSS_REQUEST} !=TRUE
+RewriteCond %{ENV:RSS_REQUEST} !=TRUE
+RewriteCond %{HTTPS} !on 
+RewriteCond %{REQUEST_METHOD} GET 
+RewriteRule ^ https://example.com%{REQUEST_URI} [L,QSA,R=301]</pre><p>What is important to notice is that while the SetEnvIf line only sets the variable RSS_REQUEST, we actually test against both RSS_REQUEST and REDIRECT_RSS_REQUEST. This is because when Apache is processing the first pass the RSS_REQUEST variable has our desired value but on the subsequent pass it is renamed to REDIRECT_VARIABLE_NAME, in this case REDIRECT_RSS_REQUEST.</p>
+<p>The SetEnvIf technique can be very useful, especially in places where you may want conditional authentication provided by the web server. This is commonly done for development or staging sites to prevent them from being accidentally crawled by search engines and to provide some security for the sites while they are in development. The conditional authentication can be handy when there are aspects of the site that can&#8217;t interoperate with the authentication requirement but you don&#8217;t want to make the entire site available. Here is an example of using SetEnvIf to allow bypassing HTTP Basic authentication for a few different paths on a site. As you can see, what we learned about the REDIRECT_* variable renaming from the Rewrite examples is important.</p><pre class="crayon-plain-tag">AuthType Basic
+AuthName "Access Restricted"
+AuthUserFile /path/to/the/username/password/file/.htpasswd
+Require valid-user
+SetEnvIf Request_URI ^/openid/ AUTH_WHITELIST
+SetEnvIf Request_URI ^/user/.*/identity AUTH_WHITELIST
+SetEnvIf Request_URI ^/sites/.*/files/ AUTH_WHITELIST
+Deny from All
+Allow from env=AUTH_WHITELIST
+Allow from env=REDIRECT_AUTH_WHITELIST
+Satisfy Any</pre><p>If you would like to dig in more on Apache&#8217;s rewrite module check out the following resources</p>
+<ul>
+<li><a href="http://httpd.apache.org/docs/current/rewrite/intro.html">The mod_rewrite introduction</a></li>
+<li><a href="http://httpd.apache.org/docs/current/rewrite/tech.html">More detailed description of how rewrite rules are processed</a></li>
+<li><a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">The reference documentation for the rewrite module</a></li>
+<li><a href="http://httpd.apache.org/docs/2.2/env.html">Environmental variables in Apache</a> - It was through a comment at the bottom of this page that I learned about the REDIRECT_ renaming that Apache does.</li>
+</ul>
+  </body>
+</html>
+

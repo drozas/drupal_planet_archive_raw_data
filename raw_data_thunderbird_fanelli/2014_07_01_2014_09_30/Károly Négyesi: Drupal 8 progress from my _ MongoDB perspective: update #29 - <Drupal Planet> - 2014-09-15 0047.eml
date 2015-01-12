@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 14 Sep 2014 22:47:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 14 Sep 2014 22:47:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #29
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/408
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #29</title>
+    <base href="http://www.drupal4hu.com/node/408">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Perhaps the most important development is the final naming of what was field/field instance in Drupal 7: in Drupal 8 these are configuration entities. The machine names are field_storage_config and field_config. There has been several renames but we have settled on these finally (although the field_config rename is not yet in). It does reflect the most important difference between them: field storage contains everything pertaining to the storage of the field. The things that do not change the storage of it go into the instance. However, some confusion might come from already existing Drupal 8 documentation and other materials where field_config was the name for what ended up as field_storage_config.</p>
+<p>In other rename news, entity storage/list/form/render "controllers" are now handlers. This probably decreases confusion as controllers are used by the router system to deliver the page content.</p>
+<p>Migrate now tracks the whether a migration has been run or not. Previously we were guessing from the id mappings -- but if a source returned zero rows we couldn't really say whether the migration ran or not. Now we could clarify for real what are hard dependencies and what are optional. In the Drupal 6 migration, there are few optional ones which is just as it should be.</p>
+<p>There's a Views migration in the works. As expected it's really complicated with lots of moving parts but it's coming along nicely.</p>
+<p>Only book storage needs entity field query conversion after the epic comment query conversion issue finally got resolved.</p>
+<p>One of the child issues of the last beta blocker removes the special casing for SQL storage -- hurray! Instead of requesting the schema of entity tables during module install (and other places) and then creating the tables there are now events on entity type create, update and delete. This makes it possible to create mongodb indexes cleanly.</p>
+  </body>
+</html>
+

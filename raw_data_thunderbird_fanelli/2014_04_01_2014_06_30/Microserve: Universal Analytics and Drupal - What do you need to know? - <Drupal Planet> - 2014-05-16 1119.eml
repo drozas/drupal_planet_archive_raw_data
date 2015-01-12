@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 16 May 2014 09:19:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 16 May 2014 09:19:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Microserve: Universal Analytics and Drupal - What do you need to know?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.microserveltd.co.uk/blogs/drupal-development/universal-analytics-and-drupal-what-do-you-need-know
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Microserve: Universal Analytics and Drupal - What do you need to know?</title>
+    <base href="http://www.microserveltd.co.uk/blogs/drupal-development/universal-analytics-and-drupal-what-do-you-need-know">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p dir="ltr" id="docs-internal-guid-bf8d6e20-00a9-b8a6-f0e8-d14a4e724c5e">Universal Analytics is the latest improvement to Google Analytics and primarily aims to provide a more user-centric view so you can see how users are engaging with your website across a wide range of different devices.</p>
+<p dir="ltr">This post aims to cover some of the key areas such as why you should upgrade and how to upgrade.</p>
+<p dir="ltr">Please feel free to skip to relevant sections:</p>
+<ul dir="ltr"><li><a href="#universal-vs-classic"><strong>Universal Vs Classic</strong></a></li>
+<li><a href="#What new features can I make use of"><strong>What new features can I make use of?</strong></a></li>
+<li><a href="#What do I need to do to upgrade to Universal Analytics"><strong>What do I need to do to upgrade to Universal Analytics?</strong></a></li>
+<li><a href="#Updating the Drupal tracking code"><strong>Updating the Drupal tracking code</strong></a></li>
+<li><a href="#Additional tracking code syntax changes"><strong>Additional tracking code syntax changes</strong></a></li>
+<li><a href="#How does this affect me and do I need to act now"><strong>How does this affect me and do I need to act now?</strong></a></li>
+</ul><p dir="ltr"><a id="universal-vs-classic" name="universal-vs-classic"></a></p>
+<h2 dir="ltr">Universal Vs Classic</h2>
+<p dir="ltr">New members are automatically signed up to Universal, with existing members being offered the choice to upgrade at their own will. Google will however automatically move all members over at some point soon.</p>
+<p dir="ltr">Universal Analytics offers the same features and services as the classic Google Analytics, but offers a number of additional features which you may find useful.</p>
+<p dir="ltr"><a id="What new features can I make use of" name="What new features can I make use of"></a></p>
+<h2 dir="ltr">What new features can I make use of?</h2>
+<h4 dir="ltr"><strong>User ID feature</strong></h4>
+<p dir="ltr">Universal Analytics can receive data in relation to a specific User ID, which means you can now track multiple sessions for a single user over different devices with a persistent ID.  For example, a user may have registered on your site during the day using their phone then returned later that evening to make a purchase using their desktop PC. It’s now possible to view this kind of cross device and cross session user engagement.</p>
+<h4 dir="ltr"><strong>New and more flexible data collection methods</strong></h4>
+<p dir="ltr">Three new data collection methods are introduced with Universal Analytics, which means you can now track behavior on any digital device rather than just websites. Apps, game consoles and information kiosks for example can now all be tracked!</p>
+<h4 dir="ltr"><strong>Timezone based processing</strong></h4>
+<p dir="ltr">Google Analytics previously processed data in Pacific Standard Time, but with Universal Analytics data is now processed based on the timezone set in your specific view.</p>
+<h4 dir="ltr"><strong>Organic search sources</strong></h4>
+<p dir="ltr">Analytics recognises traffic from popular search engines as organic search traffic and attributes all other directed traffic as referred traffic. You can now modify the list of search engines to control how Analytics displays traffic from search engines which aren’t on its list.</p>
+<h4 dir="ltr"><strong>Referral and Search exclusions</strong></h4>
+<p dir="ltr">You can now exclude specific websites from being listed within referred traffic, and exclude specific terms from being listed within organic search traffic.</p>
+<p dir="ltr">Common use cases for this maybe where you want to discount customers who found you by searching for your company/brand name from organic search traffic, or to discount URLs from referred traffic which are a third party service of your website (such as a redirect as part of a commerce workflow).</p>
+<h4 dir="ltr"><strong>Session and campaign timeout handling</strong></h4>
+<p dir="ltr">Universal Analytics allows you to manually set session and campaign durations to make them more applicable to the business requirements of your website.</p>
+<p dir="ltr"><a id="What do I need to do to upgrade to Universal Analytics" name="What do I need to do to upgrade to Universal Analytics"></a></p>
+<h2 dir="ltr">What do I need to do to upgrade to Universal Analytics?</h2>
+<p dir="ltr">To upgrade to the new Universal Analytics you must upgrade your GA property first via the admin section in your Google account. You must have the edit permission assigned to your account to do this, and the transfer should take between 1 and 2 days to fully complete.</p>
+<p dir="ltr">There are a number of things to consider before you upgrade, so <a href="https://developers.google.com/analytics/devguides/collection/upgrade/guide#consider-this">see if any of them apply to you first</a>.</p>
+<p dir="ltr">Once the GA property has been upgraded you will need to update your website tracking code, however this step is optional and not doing so will only prevent you from utilising the new features, as all existing features will still work correctly.</p>
+<p dir="ltr">Note: You must upgrade the property first, as upgrading the code before upgrading the property will cause data to no longer be tracked.</p>
+<p dir="ltr"><a id="Updating the Drupal tracking code" name="Updating the Drupal tracking code"></a></p>
+<h2 dir="ltr">Updating the Drupal tracking code</h2>
+<p dir="ltr">At the time of writing there are 2 different versions of the Drupal 7 Google Analytics module; <strong>7.x-1.4</strong> and <strong>7.x-2.x-dev</strong>.</p>
+<p dir="ltr">The <strong>7.x-1.4 branch</strong> is the current stable release which has been available for a number of years and uses the standard Google Analytics (GA.js support).</p>
+<p dir="ltr">The <strong>7.x-2.x-dev branch</strong> is the new development version to support the new Universal Analytics, and is currently unstable. Further information is provided by <a href="https://drupal.org/user/85918">hass</a> (the modules primary maintainer) as follows:</p>
+<p dir="ltr" style="margin-left: 40px;"><em>“This branch is not yet fully functional and removes a lot of well known features like:</em></p>
+<ul><li style="margin-left: 40px;"><em>AdSense (Not yet available)</em></li>
+</ul><p dir="ltr" style="margin-left: 40px;"><em>Known to be broken:</em></p>
+<ul><li style="margin-left: 40px;"><em>Custom Variables are now custom dimensions/metrics and not yet implemented.”</em></li>
+</ul><p dir="ltr">However others have reported that the upgrading to the new module appeared to be seamless.</p>
+<p dir="ltr">It should be noted that if you use both the old <strong>ga.js</strong> script and the new <strong>analytics.js</strong> script together then pageviews will be over-counted in reports, therefore the updated script should replace the old script.</p>
+<p dir="ltr">If you wish to use the new script but do not want to upgrade to the new <strong>7.x-2.x-dev branch</strong> then I would recommend disabling the Google Analytics module and adding the new script to the head of your html.tpl.php file, which as pointed out by <a href="http://drupalcampottawa.com/en/content/integrating-google-analytics-your-drupal-7-site">John Downing at Drupal Camp Ottowa</a>  is fine in practice, but not preferred as support provided by the module is ideal and offers additional functionality such as custom reporting.</p>
+<h2 dir="ltr"><a id="Additional tracking code syntax changes" name="Additional tracking code syntax changes"></a></h2>
+<h2 dir="ltr">Additional tracking code syntax changes</h2>
+<p dir="ltr">Other syntax changes have been made which may require code to be updated such as changes to how events and ecommerce are tracked.</p>
+<p dir="ltr">Here at Microserve we often add custom events tracking code to track clicks on menus and promotional items to enable us to see which content the user is most interested in, which means we would need to also manually change the JS code for any sites we upgrade.</p>
+<p dir="ltr">Codewise, events were previously tracked with a code snippet like this:</p>
+<p dir="ltr"><strong>gaq.push(['_trackEvent', 'category', 'action', 'opt_label', opt_value, opt_noninteraction]);</strong></p>
+<p dir="ltr">however the new tracking code requires them to be tracked like this:</p>
+<p dir="ltr"><strong>ga('send', 'event', 'category', 'action', 'opt_label', opt_value, {'nonInteraction': 1});</strong></p>
+<p dir="ltr">A full list of <a href="https://developers.google.com/analytics/devguides/collection/upgrade/reference/gajs-analyticsjs#snippet">tracking code changes can be found here</a>.</p>
+<p dir="ltr"><a id="How does this affect me and do I need to act now" name="How does this affect me and do I need to act now"></a></p>
+<h2 dir="ltr">How does this affect me and do I need to act now?</h2>
+<p dir="ltr">The most important thing we would recommend is to not blindly update to Universal Analytics before consulting your developer(s), as you need to be sure that the changes will not negatively impact your site.</p>
+<p dir="ltr">True, reporting will still work without any code changes needed, but are there any custom variables or snippets which your site uses that the new Universal Analytics is no longer compatible with?</p>
+<p>We would also recommend you don’t completely ignore the update, as it's much better to upgrade painlessly or be prepared to upgrade when required, rather than waiting for Google to automatically upgrade your site to Universal Analytics for you.</p>
+ </div></div></div>
+  </body>
+</html>
+

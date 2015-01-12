@@ -1,0 +1,120 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 24 Jun 2014 17:25:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 24 Jun 2014 17:25:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Getting Started with References in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/getting-started-references-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Getting Started with References in Drupal</title>
+    <base href="http://atendesigngroup.com/blog/getting-started-references-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/atenRecords_0.png" width="1000" height="600" alt="" /><p><a href="https://drupal.org/documentation/modules/entityreference">Slated</a> to be part of Drupal 8 core, <a href="https://drupal.org/project/entityreference">Entity Reference</a> is a field type module you should be familiar with now. For experienced Drupal users, the reference field is probably not a new concept. Regardless of your Drupal skill level, I hope to give a practical example of how the <em>Entity Reference</em> module can be utilized and introduce a few other modules that greatly improve its usability.</p>
+
+<p>The <em>Entity Reference</em> module provides a new field type that allows entities (nodes, taxonomy terms, etc.) to create a reference (or connection) to each other. The need for references usually comes from needing to create content with complex data points (or fields). My example is for Aten Records (our company's fake record label). Aten Records needs to catalog all of their artists, albums and tracks. Imagine trying to store every album and track for an artist in a single content type (artist for example). It would be challenging because of the data we need to collect for each album and track. It becomes much easier to imagine three content types (artist, album &amp; track), but we need a way to connect the three content types together. <em>Entity References</em> can help!</p>
+
+<p>In this example I am using <a href="https://drupal.org/project/drupal">Drupal 7 core</a> and the <a href="https://drupal.org/project/entityreference">Entity Reference</a> module.</p>
+
+<h2>Creating the example</h2>
+
+<p>You can also follow along with the screencast if you like.</p>
+
+<iframe src="//player.vimeo.com/video/98976913?title=0&amp;byline=0&amp;portrait=0&amp;color=cc0000" width="768" height="576" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+<h3>Create content types</h3>
+
+<ul>
+<li><strong>Artist</strong>
+
+<ul>
+<li>Name (title field)</li>
+<li>Biography (body field)</li>
+<li>Photo (image field)</li>
+<li>Albums (<em>Entity Reference</em> referencing the album content type)</li>
+</ul></li>
+<li><strong>Album</strong>
+
+<ul>
+<li>Title (title field)</li>
+<li>Album Artwork (image field)</li>
+<li>Year (text field)</li>
+<li>Tracks (<em>Entity Reference</em> referencing the track content type)</li>
+</ul></li>
+<li><strong>Track</strong>
+
+<ul>
+<li>Title (title field)</li>
+<li>MP3 (file)</li>
+<li>Length (text)</li>
+<li>Writer (text)</li>
+</ul></li>
+</ul>
+
+<h3>Review entity reference field settings</h3>
+
+<ul>
+<li>Make sure it is pointing to the correct entity type (node in our example)</li>
+<li>Make sure it can reference the correct content types</li>
+<li>Make sure it can reference a unlimited number of options</li>
+</ul>
+
+<h2>Creating Content</h2>
+
+<p>We can now create artists, albums and tracks but the workflow isn't ideal.</p>
+
+<h3>Default workflow (cumbersome)</h3>
+
+<ol>
+<li>Create all tracks for an album</li>
+<li>Create the album (reference the tracks created above)</li>
+<li>Create the artist (reference the album created above)</li>
+</ol>
+
+<p>Repeat for each new album (or artist / album)</p>
+
+<h3>A more ideal workflow</h3>
+
+<p>Using a couple contributed modules, (<a href="https://drupal.org/project/references_dialog">references dialog</a> and <a href="https://drupal.org/project/inline_entity_form">inline entity form</a>), we can greatly improve this workflow.</p>
+
+<ol>
+<li>Create an artist, create albums and tracks directly from the artist edit screen!</li>
+</ol>
+
+<h4>References dialog</h4>
+
+<p><a href="https://drupal.org/project/references_dialog">References dialog</a> launches a new content create form in a modal window on the page where you are currently editing content. I've chosen this for album, so new albums can quickly be created without leaving the artist edit screen.</p>
+
+<ol>
+<li>Enable references dialog</li>
+<li>Modify albums field settings on the artist content type</li>
+</ol>
+
+<h4>Inline entity form</h4>
+
+<p><a href="https://drupal.org/project/inline_entity_form">Inline entity form</a> embeds the form of the referencing entity directly on the page. I've chosen this for tracks so we don't have modals in modals, because we already have an album modal window open at this point.</p>
+
+<ol>
+<li>Enable inline entity form</li>
+<li>Modify tracks field settings on the album content type</li>
+</ol>
+
+<h2>Displaying referenced content</h2>
+
+<p>I will only briefly touch on this topic since it could be a whole other blog post.</p>
+
+<ol>
+<li>Modify the view mode display for artist and album</li>
+<li>For each entity referenced field, choose "show rendered node"</li>
+</ol>
+
+<p>The sky is really the limit with how you use references in a project. Imagine a social site with profiles referencing work experience, a soccer club website with teams referencing players, or a hiking website with trails referencing other nearby trails. What other tips do you have for folks just getting started with <em>Entity References</em>? What other modules improve usability of <em>Entity References</em>?</p>
+  </body>
+</html>
+

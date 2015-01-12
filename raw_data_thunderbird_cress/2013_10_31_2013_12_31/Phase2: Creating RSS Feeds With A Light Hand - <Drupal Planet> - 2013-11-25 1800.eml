@@ -1,0 +1,157 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 25 Nov 2013 18:00:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 25 Nov 2013 18:00:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Creating RSS Feeds With A Light Hand
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/creating-rss-feeds-with-a-light-hand/?utm_source=rss&utm_medium=rss&utm_campaign=creating-rss-feeds-with-a-light-hand
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Creating RSS Feeds With A Light Hand</title>
+    <base href="http://www.phase2technology.com/blog/creating-rss-feeds-with-a-light-hand/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=creating-rss-feeds-with-a-light-hand">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Sometimes when you&#8217;re digging around for the &#8220;standard&#8221; solution to solve a particular problem in Drupal, you&#8217;re gifted with the surprise of finding a hidden little treasure that&#8217;s been lurking in the code all along. This happened to me recently while researching all the options for generating RSS feeds when I &#8220;discovered&#8221; the <code><a href="http://api.drupal.org/api/drupal/modules%21node%21node.module/function/node_feed/7" target="_blank">node_feed()</a></code> function. Sure, it&#8217;s been around since version 4, and it works pretty much the same in versions 7 and 8 as it did initially, and Drupal uses it right out-of-the-box to give general RSS feeds for nodes, but it&#8217;s still news to <em>me</em> &#8212; and I&#8217;m <em>so</em> excited about it! In this post I&#8217;ll look at the general use &#8220;context&#8221; (if you will) for this little gem, discuss a basic implementation scenario, give some caching advice, and suggest possible next steps if stricter display control is needed.</p>
+<h2>But Isn&#8217;t That In The GUI Already?!</h2>
+<p>Anyone who&#8217;s spent more than a day seriously working in Drupal knows that <a href="https://drupal.org/project/views" target="_blank">Views</a> is the go-to solution for aggregating data, and generating feeds is no exception here; you can quickly spit out RSSs or CSVs or even aggregated .doc or .pdf files if you&#8217;re so inclined. Further, using Views can simplify setting up and maintaining complex selection conditions or esoteric data relationships. However, if there&#8217;s a problem with Views, it&#8217;s that it can be a bit resource heavy at times, and if a site needs to be particularly streamlined for speed and efficiency while the project itself makes little use of aggregated data, then the team-lead may declare Views to be an anathema for that code base, and <em>this</em> was the situation I found myself in recently.</p>
+<p>In contrast to creating a feed in Views, the <code>node_feed()</code> function can be a relatively inexpensive process, and it becomes even <em>more</em> efficient if caching mechanisms are effectively applied. If your data selection or formatting needs aren&#8217;t easily supported by Views, then <code>node_feed()</code> is a clearly an option to consider, or if you&#8217;re working on a project that needs to be kept streamlined and light-weight as possible, then this function may be the right solution for you &#8212; especially if the nature of the project is such that Views are being avoided in general, since <em>you</em> don&#8217;t want to be the one who wrote code that breaks that goal for the team, eh?</p>
+<h2>Gimme The Nitty Gritty Obligatory  Example</h2>
+<p>The general use case for this function is to generate content from a menu, usually filtering for particular data (e.g. based on a taxonomy, content type, author, etc.). This means implementing <code><a href="https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_menu/7" target="_blank">hook_menu()</a></code> along with a call-back function which outputs content via <code>node_feed()</code>; e.g.:</p><pre class="crayon-plain-tag">/**
+ * Implement hook_menu().
+ */
+function my_module_menu() {
+  $items = array();
+
+  $items['feed/%/%'] = array(
+    'title' =&gt; 'My Feed',
+    'page callback' =&gt; 'my_module_my_feeds',
+    'page arguments' =&gt; array(1, 2),
+    'access callback' =&gt; 'user_access',
+    'access arguments' =&gt; array('access content'),
+    'type' =&gt; MENU_CALLBACK,
+  );
+
+  return $items;
+}</pre><p>The page call-back now needs to assemble the list of nids to include in the feed and set up the feed itself. There&#8217;s not much to say here that isn&#8217;t covered in my in-line coding-comments:</p><pre class="crayon-plain-tag">/**
+ * Return feed for indicated content.
+ */
+function my_module_my_feeds($arg1, $arg2) {
+  // make double darn sure what's coming in is free from evil
+  $arg1 = check_plain($arg1);
+  $arg2 = check_plain($arg2);
+
+  // The content of $channel provides descriptions in the header of your RSS 
+  // feed; see the d.o. API docs for details.
+  $channel = array(
+    'title' =&gt; 'MY RSS',
+    'link' =&gt; url(
+      'feed/' . $arg1 . '/' . $arg2,
+      array(
+        'absolute' =&gt; TRUE,
+      )
+    ),
+    'description' =&gt; 'This is my super duper RSS feed',
+  );
+
+  // The number_of_items variable might be stored in an admin screen, or simply 
+  // adjusted with drush calls at need.
+  $number_of_items = variable_get('my_module_my_feeds_number_of_items', 10);
+
+  // Ultimately the $nids variable needs to be an array nid integers.
+  $nids = db_select('node', 'n');
+  $nids-&gt;join('some_table', 'st', 'n.nid = st.nid'); // the call to join is non-fluent, soo...
+  $nids-&gt;fields('n', array('nid', 'created'));
+  $nids-&gt;condition('n.status', 1);
+  $nids-&gt;condition('st.property1', $arg1);
+  $nids-&gt;condition('st.property2', $arg1);
+  $nids-&gt;orderBy('n.created', 'DESC');
+  $nids-&gt;range(0, $number_of_items);
+  $nids-&gt;addTag('node_access');
+  $nids = $nids-&gt;execute()-&gt;fetchCol();
+
+  // And that's it! Call the function du jour and let the magic happen! =o)
+  node_feed($nids, $channel);
+}</pre><p></p>
+<h2>Caching For Fun &amp; Profit</h2>
+<p>When <code>node_feed()</code> executes, it fully loads all of the nodes from the list of $nids, and to generate that collection there are inevitably DB queries involved. Altogether, this creates a bit more of a processing load than can be tolerated for every single feed request on a high traffic site. There might be an argument to be made for allowing Drupal&#8217;s standard page caching to deal with this on its own, but sometimes it&#8217;s better to control this yourself. In such a case, <code><a href="https://api.drupal.org/api/drupal/includes%21cache.inc/function/cache_set/7" target="_blank">cache_set()</a></code> and <code><a href="https://api.drupal.org/api/drupal/includes%21cache.inc/function/cache_get/7" target="_blank">cache_get()</a></code> make this a breeze.</p>
+<p>In the following example, code in the <code>my_module_my_feeds()</code> example is expanded to include exactly that type of caching.</p><pre class="crayon-plain-tag">/**
+ * Return feed for indicated content.
+ */
+function my_module_my_feeds($arg1, $arg2) {
+  $cid = 'my_module_my_feeds_' . $arg1 . '_' . $arg2;
+
+  if (
+    ($cache = cache_get($cid))
+    &amp;&amp; is_object($cache)
+    &amp;&amp; !empty($cache-&gt;data)
+    &amp;&amp; time() &lt; $cache-&gt;expire
+  ) {
+    drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
+    print $cache-&gt;data;
+  }
+
+  /// Generate $nids and $channel as above, but replace the call to node_feed() 
+  /// with the following:
+
+  // The call to node_feed() outputs content directly, so its output needs to
+  //  be captured so it can be cached.
+  ob_start();
+
+  // node_feed() sets the header, so it doesn't need to be manually set here as 
+  // it is when it's pulled from cache.
+  node_feed($nids, $channel);
+  $feed = ob_get_clean();
+
+  // The cache_expire_time variable might be stored in an admin screen or just 
+  // adjusted with drush calls at need; obviously, this code assumes the value 
+  // to be something parsable by <a href="http://php.net/manual/en/function.strtotime.php" target="_blank">strtotime()</a>.
+  $cache_expire = strtotime(variable_get('my_module_my_feeds_cache_expire_time', '+2 hours'));
+
+  // Store the feed in cache for later use without all this work of generating 
+  // content.
+  cache_set($cid, $feed, 'cache', $cache_expire);
+
+  print $feed;
+
+  return false;
+}</pre><p></p>
+<h2>But It&#8217;s Not Pretty Enough! =o(</h2>
+<p>Suppose that the markup being generated in RSS content isn&#8217;t quite to your liking. There are a couple of ways to approach the problem of restructuring what&#8217;s included.</p>
+<p>One option would be to copy the existing <code>node_feed()</code> code to your own <code>my_module_node_feed()</code> function and make adjustments from there, obviously calling this new function from the code above. There are probably contexts in which this will be the appropriate response, but the more canonical and upgrade-friendly approach would be to re-theme the content using native mechanisms. You might note that <code>node_feed()</code> calls <code><a href="https://api.drupal.org/api/drupal/modules%21node%21node.module/function/node_view/7" target="_blank">node_view()</a></code> and passes &#8216;rss&#8217; as its $view_mode argument, and it&#8217;s useful to know that in turn this calls <code><a href="https://api.drupal.org/api/drupal/modules%21node%21node.module/function/node_build_content/7" target="_blank">node_build_content()</a></code> by passing that same argument. So, you <em>could</em> implement <code><a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_entity_view_mode_alter/7" target="_blank">hook_entity_view_mode_alter()</a></code>, detect that the current URL structure matches the path to your feed, and change the $view_mode to something else; e.g. &#8216;my_module_rss&#8217;. Strictly speaking, this step isn&#8217;t necessary, but it makes the following suggestions a bit more streamlined.</p>
+<p>From here, it&#8217;s a simple enough matter from <code><a href="https://api.drupal.org/api/drupal/modules%21node%21node.api.php/function/hook_node_view/7" target="_blank">hook_node_view()</a></code> and/or <code><a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_entity_view/7" target="_blank">hook_entity_view()</a></code> to modify content before rendering, but that can get a bit clumsy in some circumstances. A better approach might be to implement a node-preprocess function in a module or theme and add a template suggestion. If you&#8217;ve modified the view mode as suggested above then that could be used to detect changes at the theme level, or all of the code might be consolidated in that preprocess function; e.g.:</p><pre class="crayon-plain-tag">/**
+ * Implement hook_preprocess_HOOK() for node.
+ */
+function my_module_preprocess_node(&amp;$variables) {
+  // if view_mode has been altered as described above:
+  if('my_module_rss' == $variables['view_mode']) {
+    $variables['theme_hook_suggestions'][] = 'node__my_module_rss';
+    $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']-&gt;type . '__my_module_rss';
+  }
+
+  // if view_mode was not previously modified, then this might make sense:
+  if(
+    'rss' == $variables['view_mode']
+    &amp;&amp; 'feed' == arg(0)
+  ) {
+    $variables['theme_hook_suggestions'][] = 'node__my_module_rss';
+    $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']-&gt;type . '__my_module_rss';
+    // ... and perhaps you'll need special formatting with some args...
+    if (!!($arg1 = arg(1))) {
+      $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']-&gt;type . '__my_module_rss__' . check_plain($arg1);
+      if (!!($arg2 = arg(2))) {
+        $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']-&gt;type . '__my_module_rss__' . check_plain($arg1) . '__' . check_plain($arg2);
+      }
+    }
+  }
+}</pre><p>Obviously, you could then implement <strong><code>node--[type|nodeid]--my-module-rss--[arg1]--[arg2].tpl.php</code></strong> (or any of the other degrading variations just implemented) and output precisely the content you&#8217;d like to see in your RSS feed. <strong>=o)</strong></p>
+<h2>And That&#8217;s It In A Nutshell!</h2>
+<p>As you can see, <code>node_feed()</code> is fairly simple withal. Leveraged correctly, it provides sites with a great deal of flexibility even while remaining fairly light with processing. It&#8217;s now my go-to solution for an RSS feed system, though I imagine I&#8217;ll continue to use Views as and when appropriate.</p>
+<p>Makes ya wonder though: What <em>other</em> wee gems are lying around in Drupal core just waiting to be discovered?! <strong>=oP </strong>Feel free to share your favorite Drupal gem in the comments! Learn more about RSS feeds with <a href="http://www.phase2technology.com/author/rbates/">Rob Bates</a> <a href="http://www.phase2technology.com/blog/your-guide-to-extending-rss-feeds-in-drupal/">here</a>.</p>
+  </body>
+</html>
+

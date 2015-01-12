@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 31 Jul 2014 15:02:34 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 31 Jul 2014 15:02:34 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal 8.x is now 8.0.x - new branch
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/436178
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal 8.x is now 8.0.x - new branch</title>
+    <base href="https://groups.drupal.org/node/436178">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>You may have noticed that as of a few days ago that there is a new branch in the Git source code repository for Drupal Core: 8.0.x!</p>
+<p>This branch introduces "Semantic Versioning" for Drupal 8, which will allow us to have an 8.0.x release line, followed by an 8.1.x release line, and possibly more along the same lines. Unlike the drastic API and architecture changes that would accompany a 7.x -&gt; 8.x or 8.x -&gt; 9.x major release update, and correspondingly long timelines, the changes between 8.0.x and 8.1.x are expected to be more incremental (adding features and minor API refinements). Also, the time between 8.0.x and 8.1.x is expected to be correspondingly shorter. This change in philosophy will take some of the pressure off developers to make sure absolutely everything they want gets into the 8.0.x release, because new features can be added in the 8.1.x line.</p>
+<p>Practical implications:</p>
+<ul>
+<li>All of the existing 8.x issues in the Drupal Core issue queue have been moved to the 8.0.x branch.</li>
+<li>Some issues may be pushed off to 8.1.x or 9.x by the branch maintainers: 8.1.x for more incremental changes, and 9.x for more drastic changes; in both cases, for issues that will not make it into 8.0.0.</li>
+<li><strong>Do not file any more 8.x branch issues.</strong></li>
+<li><strong>Switch your local git repositories to use the 8.0.x branch.</strong></li>
+<li>The <strong>8.x branch will be emptied and deleted</strong> sometime soon, probably after the next Alpha release, which is currently scheduled for August 6th (see <a href="https://groups.drupal.org/node/435848" title="https://groups.drupal.org/node/435848">https://groups.drupal.org/node/435848</a>)</li>
+<li>There is also an 8.1.x branch and a 9.x branch. These exist only for purposes of marking issues as "future material". Commits to Drupal 8 Core will be made on the 8.0.x branch only, at least for the time being. We'll make another announcement when it's time to actually start working on the 8.1.x branch.</li>
+</ul>
+<p>For background information, you can read all the discussion on this issue: <a href="https://www.drupal.org/node/2135189" title="https://www.drupal.org/node/2135189">https://www.drupal.org/node/2135189</a></p>
+  </body>
+</html>
+

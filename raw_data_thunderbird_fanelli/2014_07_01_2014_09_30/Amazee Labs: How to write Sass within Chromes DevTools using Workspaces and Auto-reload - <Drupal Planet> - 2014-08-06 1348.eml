@@ -1,0 +1,90 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 06 Aug 2014 11:48:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 06 Aug 2014 11:48:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Amazee Labs: How to write Sass within Chromes DevTools using Workspaces and Auto-reload
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.amazeelabs.com/en/How-to-write-Sass-within-Chromes-DevTools-using-Workspaces-and-Auto-reload
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Amazee Labs: How to write Sass within Chromes DevTools using Workspaces and Auto-reload</title>
+    <base href="http://www.amazeelabs.com/en/How-to-write-Sass-within-Chromes-DevTools-using-Workspaces-and-Auto-reload">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden">How to write Sass within Chromes DevTools using Workspaces and Auto-reload</span><div class="field field-node--field-lead field-name-field-lead field-type-text-long field-label-hidden">
+    <div class="field-items">
+          <div class="field-item"><p>There is this feature in Chromes’ DevTools that allows you to directly edit your local Sass files without ever leaving your beloved browser. Even better, it will refresh your CSS files as soon as Compass has compiled them for you (kinda like <a href="http://www.amazeelabs.com/en/blog/live-reload-sasscompass-guard">Guard</a>!). And to go even further, it will show you where the CSS definitions really come from (the original Sass files), instead of that generated gibberish.</p></div>
+      </div>
+</div>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden">
+    <div class="field-items">
+          <div class="field-item"><h2>Intro</h2>
+<p>So to start, you'll obviously have to be working with Sass/Compass for this to work (pardon the pun!). I won’t go into detail on how to install these lovely things as this could take up an entire post itself. So if you know how to install Sass/Compass on your machine or have a handy co-worker you can annoy (preferably a sys-<s>monkey</s> admin) you’re good to go.</p>
+<p>With Sass and Compass there are as always issues if you're not working with certain specific versions. The most reliable combination that worked for me was this one:</p>
+<ul><li>Susy 1.0.9</li>
+<li>Ruby 1.9.3</li>
+<li>Sass 3.3.0.alpha.134 (i suppose Sass 3.3.x will work fine too)</li>
+<li>Compass 0.12.4.sourcemaps</li>
+</ul><h2>The thing about source maps</h2>
+<p>For Compass you need an entirely different version from the one that you probably have, its called “compass-sourcemap”.</p>
+<p>In order to get that juicy source map action you'll have to open up your shell and type in the following:</p>
+<pre>
+sudo gem install compass-sourcemaps --pre</pre><p>This will install a compass version with source map, in the future source map will (<a href="http://stackoverflow.com/a/16107212">hopefully</a>) be included in the regular compass versions.</p>
+<p>So what is compass-sourcemap exactly you ask? Well first of it’s super fantastic, even if you don't want to have all the workspace/auto-reload mayhem you should take a look at it.</p>
+<p>For example, on a casual day while you’re working with that sassy generated CSS, the inspector can’t really tell you where the real definitions are coming from. It only shows you the line within the generated CSS file. This is where source maps comes in, it generates an additional .map file for every .css file and tells your browser where the CSS definition is coming from. There are 4 things you'll have to do after you've installed all the necessary tools:</p>
+<ol><li>Enable “CSS source maps” in the General Chrome DevTools Settings under “Sources”
+<ul><li>
+<pre>
+<img alt="" data-editor-file-uuid="b440d62d-8743-4a36-9b08-8de83bd64d75" height="281" src="/sites/default/files/inline-images/Screen%20Shot%202014-08-06%20at%2013.59.53_1.png" width="326" /></pre></li>
+</ul></li>
+<li>Enable it in your config.rb file, just add the following line (make sure its not already there)
+<ul><li>
+<pre>
+sass_options = {:sourcemap =&gt; true}</pre></li>
+</ul></li>
+<li>In the shell, run your compass just like you always have
+<ul><li>
+<pre>
+compass watch</pre></li>
+</ul></li>
+<li>Enjoy it!
+<ul><li><img alt="" data-editor-file-uuid="4ad87309-c03d-41f3-8113-19a39c851511" height="308" src="/sites/default/files/inline-images/Screen%20Shot%202014-08-06%20at%2014.03.19.png" width="601" /></li>
+</ul></li>
+</ol><h2>Prepare your Drupal</h2>
+<p>Disable the “Aggregate and Compress CSS files.” option in your Drupal 7 Installation in “YOURSITE/admin/config/development/performance”.</p>
+<p>Next up: download and enable this small module: <a href="https://github.com/AmazeeLabs/cache_buster">https://github.com/AmazeeLabs/cache_buster</a></p>
+<p>This will remove that pesky query behind your .css files, normally this would be a bad thing and you should <strong><em>never</em></strong> use this on a production site. However, for Chrome to properly track your local files it needs to have a permanent link to them, in other words a path that doesn't change. I got the code from an issue queue (i think…) on <a href="http://www.drupal.org">drupal.org</a> but i can’t remember which one, I simply put it inside a module for easy handling. So credits go to the unknown contributor, thank you very much (and sorry)!</p>
+<p>Before:</p>
+<p><img alt="" data-editor-file-uuid="eb7ccd03-e58f-44ba-9550-80a13a3d5552" height="75" src="/sites/default/files/inline-images/before.png" width="731" /></p>
+<p>After:</p>
+<p><img alt="" data-editor-file-uuid="7fef5575-4c32-464a-9e00-eb1e991e0430" height="77" src="/sites/default/files/inline-images/after.png" width="690" /></p>
+<h2>Prepare your Chrome</h2>
+<p>Go back to your general DevTools settings and enable “Auto-reload generated CSS”, its right below the source maps option:</p>
+<p><img alt="" data-editor-file-uuid="26bbdd14-f618-48a7-823b-59f62daf7fe4" height="281" src="/sites/default/files/inline-images/Screen%20Shot%202014-08-06%20at%2014.07.42.png" width="304" /></p>
+<p>After that open up your local project with Chrome and navigate to “Sources” in DevTools. You should see something that looks a little like this:</p>
+<p><img alt="" data-editor-file-uuid="651890ea-2268-4bb0-b713-19d3f4fe79b8" height="358" src="/sites/default/files/inline-images/Screen%20Shot%202014-08-06%20at%2014.09.20.png" width="585" /></p>
+<p>What you’re gonna do next is adding your local site as a workspace inside Chrome, this will remain in there until you manually remove it. I like to take the entire theme folder; you could also add the entire site, that’s all up to you. If you've picked the folder you want, right click and pick “Add folder to workspace”. Navigate to the exact same folder on your local machine and select it.</p>
+<p><img alt="" data-editor-file-uuid="f16c4364-a192-41dd-8709-9ad4221ced29" height="505" src="/sites/default/files/inline-images/Screen%20Shot%202014-08-06%20at%2014.10.42_0.png" width="1206" /></p>
+<p>At this point Chrome will ask you for writing permissions, just oblige and never think of it again. I mean it’s Google; what could possibly go wrong, amiright?</p>
+<p><img alt="" data-editor-file-uuid="fcc7b9e2-40bc-437b-be00-eb28de58b55c" height="95" src="/sites/default/files/inline-images/Screen%20Shot%202014-08-06%20at%2014.12.24.png" width="822" /></p>
+<p>You should now see a new folder at the bottom of the sources tab inside your DevTools, it’s named after the folder you've just picked. Navigate to where the main .css file is (or any other .scss file), right click and select “Map to Network Resource”</p>
+<p><img alt="" data-editor-file-uuid="5f6c8209-d826-463a-813b-59694925150b" height="539" src="/sites/default/files/inline-images/Screen%20Shot%202014-08-06%20at%2014.17.09.png" width="438" /></p>
+<p>Chrome will now bring up a selection of files from your site, match it to your local file.</p>
+<p><img alt="" data-editor-file-uuid="5f08c7e7-e4cc-420e-8307-7c0189b35627" height="177" src="/sites/default/files/inline-images/Screen%20Shot%202014-08-06%20at%2014.18.18_0.png" width="787" /></p>
+<p>And finally Chrome will ask you if it’s okay to reload DevTools; you are totally fine with that so pick “ok” - and you're done!</p>
+<p>You can open any .scss files from your workspace or use the inspector to directly open a file and make all the changes you want. You can save using your standard cmd+s and even open files using cmd+o. Everything will be saved just as if it was done within a proper IDE, except its Chrome!</p>
+<h2>But there’s one more thing</h2>
+<p>If you right-click on any of your .scss files you can select “Local Modifications”; this will bring up a general “History” of all your changes and you can even revert them!</p>
+<p><img alt="" data-editor-file-uuid="9facf0b6-9679-4008-9300-eb155baf2fa3" height="173" src="/sites/default/files/inline-images/history.png" width="718" /></p>
+<p> </p>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

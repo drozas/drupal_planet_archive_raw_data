@@ -1,0 +1,103 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 15 Jan 2014 12:47:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 15 Jan 2014 12:47:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Managing load balanced production environments
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/managing-load-balanced-production-environments
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Managing load balanced production environments</title>
+    <base href="http://deeson-online.co.uk/labs/managing-load-balanced-production-environments">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h5>In December we launched a site onto a multi server load balanced
+production environment. It's certainly the first time I've had to deal with a
+ site that has two web servers and as such, the multi server production
+environment presented a couple of challenges which I cover in this blog.</h5>
+
+<h4>Challenge #1: ip_address() was returning the internal address of the
+server, not the actual user's IP address</h4>
+
+<p>This caused us real problems with the user login process, since all failed
+login attempts were being stored with the same IP address which in turn quickly
+locked everyone out.</p>
+
+<h4>Solution #1:</h4>
+
+<p>The fix was simple enough on our environment: add a code block to
+your settings.php which manually injects the correct
+address from the HTTP headers:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">    <span style="color: #666666; font-style: italic;">// Code provided by Acquia.</span>
+    <span style="color: #666666; font-style: italic;">// Non balanced servers (dev and stage) don't have this problem.</span>
+    <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">!</span><a href="http://www.php.net/empty"><span style="color: #990000;">empty</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$conf</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'reverse_proxy_addresses'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      <span style="color: #000088;">$ips</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/explode"><span style="color: #990000;">explode</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">','</span><span style="color: #339933;">,</span> <span style="color: #000088;">$_SERVER</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'HTTP_X_FORWARDED_FOR'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+      <span style="color: #000088;">$ips</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array_map"><span style="color: #990000;">array_map</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'trim'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$ips</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+      <span style="color: #666666; font-style: italic;">// Add REMOTE_ADDR to the X-Forwarded-For list (the ip_address function will</span>
+      <span style="color: #666666; font-style: italic;">// also do this) in case it's a 10. internal AWS address; if it is we should</span>
+      <span style="color: #666666; font-style: italic;">// add it to the list of reverse proxy addresses so that ip_address will</span>
+      <span style="color: #666666; font-style: italic;">// ignore it.</span>
+      <span style="color: #000088;">$ips</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$_SERVER</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'REMOTE_ADDR'</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+      <span style="color: #666666; font-style: italic;">// Work backwards through the list of IPs, adding 10. addresses to the proxy</span>
+      <span style="color: #666666; font-style: italic;">// list but stop at the first non-10. address we find.</span>
+      <span style="color: #000088;">$ips</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array_reverse"><span style="color: #990000;">array_reverse</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$ips</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+      <span style="color: #b1b100;">foreach</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$ips</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$ip</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+        <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><a href="http://www.php.net/strpos"><span style="color: #990000;">strpos</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$ip</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'10.'</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">===</span> <span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+          <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">!</span><a href="http://www.php.net/in_array"><span style="color: #990000;">in_array</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$ip</span><span style="color: #339933;">,</span> <span style="color: #000088;">$conf</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'reverse_proxy_addresses'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+            <span style="color: #000088;">$conf</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'reverse_proxy_addresses'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$ip</span><span style="color: #339933;">;</span>
+          <span style="color: #009900;">&#125;</span>
+        <span style="color: #009900;">&#125;</span>
+        <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span>
+          <span style="color: #666666; font-style: italic;">// we hit the first non-10. address, so stop.</span>
+          <span style="color: #b1b100;">break</span><span style="color: #339933;">;</span>
+        <span style="color: #009900;">&#125;</span>
+      <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>    </pre></div>
+
+<h4>Challenge #2: The user login form was considered cacheable by Drupal (and
+therefore Varnish)</h4>
+
+<p>Coupled with the above issue, we were getting Varnish cache hits when
+filling out the login form. This meant that all users were sharing a
+form_build_id (and therefore the same form cache was being shared for everyone).
+The upshot was that as soon as anybody entered a valid user name it would
+be stored for everybody else attempting to login. That in turn meant that flood
+attempts were all registered against a single account and it would quickly get
+locked out.</p>
+
+<h4>Solution #2:</h4>
+
+<p>We don't actually have an answer as to the cause of this yet. It could be
+something specific to our site or it could be related to other problems with
+the environment, but the login page is obviously important, so we've added a
+manual call to <span class="geshifilter"><code class="php geshifilter-php">drupal_page_is_cacheable<span style="color: #009900;">&#40;</span><span style="color: #009900; font-weight: bold;">FALSE</span><span style="color: #009900;">&#41;</span></code></span> which fixes it.</p>
+
+<h4>Challenge #3: Views data export, batch processes and temp files</h4>
+
+<p>The batch API splits a large job up into smaller jobs, of which each one is
+processed in a separate HTTP request, held together by an AJAX based page. We
+are using the <a href="https://drupal.org/project/views_data_export">views_data_export</a>
+module to build a relatively large CSV and so enabled the batch mode. What we
+hadn't considered is that each server has it's
+own temporary directory, so because the requests are load balanced between the two
+servers, the CSV was being split roughly into two half's.</p>
+
+<h4>Solution #3:</h4>
+
+<p>If you're lucky enough to be using the Acquia platform, there is a module for this:
+<a href="https://drupal.org/project/acquia_cloud_sticky_sessions">https://drupal.org/project/acquia_cloud_sticky_sessions</a>.<br /></p><h4>Conclusion</h4>
+<p>Each of these challenges only presented themselves to us once we had made it to the 
+production environment, and once we had a realistic amount of user traffic. This made them
+all the harder to detect and solve. We're lucky enough to have the support of Acquia in
+solving the issues quickly but if we were building out this kind of environment ourselves
+things could have been very different.</p></div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/managing-load-balanced-production-environments">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Managing load balanced production environments</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/dan-james">Dan James</a> | 15th January 2014</div></div></div>
+  </body>
+</html>
+

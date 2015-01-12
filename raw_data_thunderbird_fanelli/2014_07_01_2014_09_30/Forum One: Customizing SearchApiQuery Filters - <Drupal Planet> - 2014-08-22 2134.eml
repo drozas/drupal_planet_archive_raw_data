@@ -1,0 +1,106 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 22 Aug 2014 19:34:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 22 Aug 2014 19:34:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Customizing SearchApiQuery Filters
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/customizing-searchapiquery-filters/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Customizing SearchApiQuery Filters</title>
+    <base href="http://forumone.com/insights/customizing-searchapiquery-filters/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I had the opportunity to play with Search API filters to modify Solr searches lately as we had to implement a complex set of filtering rules for a Drupal project. This becomes necessary because Views filters don&#8217;t easily support our conditions, and you really don&#8217;t want to rely on the node access system because your goal is to alter the result set instead of forbidding access altogether. Using SearchApiQuery can be tricky at first, but with practice, one can get the hand of using it effectively.</p>
+<p>First, the easiest way to modify these searches is to implement hook_search_api_query_alter() in one of your modules. Since we use Features heavily, we usually have a search focused Features module, and write any related code within the appropriate feature&#8217;s .module file. This hook has one parameter, which is the SearchApiQuery object itself.</p>
+<pre class="brush: php; title: ; notranslate">
+
+/**
+
+* Implements hook_search_api_query_alter().
+
+*/
+
+function my_module_search_api_query_alter($query) {
+
+}
+
+</pre>
+<p>Remember: we don&#8217;t need to pass objects by reference, since objects are always passed by reference, this means we also don&#8217;t need to return anything from this hook implementation. The SearchApiQuery object provides several operations (presented in <a href="http://drupalcontrib.org/api/drupal/contributions!search_api!includes!query.inc/class/SearchApiQuery/7">its documentation</a>) to modify its search query, but I&#8217;m just going to focus on two for today.</p>
+<pre class="brush: php; title: ; notranslate">$filter = $query-&gt;createFilter($conjunction);</pre>
+<p>&#8230;where $conjunction is a string with a value of either an AND or OR condition. This creates a new <a href="http://drupalcontrib.org/api/drupal/contributions%21search_api%21includes%21query.inc/class/SearchApiQueryFilter/7">SearchApiQueryFilter object</a> that can be added back to the $query later, after we&#8217;ve added conditions to it.</p>
+<pre class="brush: php; title: ; notranslate">$query-&gt;filter($filter);</pre>
+<p>Once we have a filter object, we can add conditions, or other filters to it:</p>
+<pre class="brush: php; title: ; notranslate">
+
+$filter-&gt;condition('field_name', 'value');
+
+$filter-&gt;filter($filter);
+
+</pre>
+<p>As any programmer knows, nesting conditions can be simplified into its basic parts. So the following statement</p>
+<pre class="brush: php; title: ; notranslate">if ($this == $that &amp;&amp; ($here &gt; $there || $foo == $bar))</pre>
+<p>…can be broken down into five evaluations (working backwards allows us to resolve the child conditions before the parents):</p>
+<p>1. $foo == $bar</p>
+<p>2. $here &gt; $there</p>
+<p>3. Result of evaluation 1 || Result of evaluation 2</p>
+<p>4. $this == $that</p>
+<p>5. Result of evaluation 4 &amp;&amp; Result of evaluation 3</p>
+<p>Working with Search API filters is no different than constructing the above nested If statement.</p>
+<p>First, we want to create a base filter for our evaluation. Here I am using an example that the node should be published, but this would typically be already added by your view or use of node access integration by checking the &#8220;Node access&#8221; option sat admin/config/search/search_api/index/[index name]/workflow.</p>
+<pre class="brush: php; title: ; notranslate">
+
+$base_filter = $query-&gt;createFilter('AND');
+
+$base_filter-&gt;condition('status', 1);
+
+</pre>
+<p>We use AND since that is what we outlined. To create additional sub filters, we draw from the same query object.</p>
+<pre class="brush: php; title: ; notranslate">$subfilter = $query-&gt;createFilter('OR');</pre>
+<p>Conditions a straightforward. Just pass the field and the value to filter by. This defaults to == but you do get additional comparisons for integer values. Refer to the API link above for a complete list of options.</p>
+<pre class="brush: php; title: ; notranslate">
+$subfilter-&gt;condition('field_my_field', 'value');
+
+$subfilter-&gt;condition('field_other_field', 'value2');
+
+</pre>
+<p>Now to add this sub filter to the base filter, just pass it to filter().</p>
+<pre class="brush: php; title: ; notranslate">$base_filter-&gt;filter($subfilter);</pre>
+<p>and then add the base filter back to the query object,</p>
+<pre class="brush: php; title: ; notranslate">$query-&gt;filter($base_filter);</pre>
+<p>That&#8217;s all there is to working with the SearchApiQuery interface. The complete example looks something like this:</p>
+<pre class="brush: php; title: ; notranslate">
+/**
+
+* Implements hook_search_api_query_alter().
+
+*/
+
+function my_module_search_api_query_alter($query) {
+
+$base_filter = $query-&gt;createFilter('AND');
+
+$base_filter-&gt;condition('status', 1);
+
+$subfilter = $query-&gt;createFilter('OR');
+
+$subfilter-&gt;condition('field_my_field', 'value');
+
+$subfilter-&gt;condition('field_other_field', 'value2');
+
+$base_filter-&gt;filter($subfilter);
+
+$query-&gt;filter($base_filter);
+
+}
+
+</pre>
+<p>Implementing your filters this way should really be a last resort. The other option that should be considered first is the node access system, which can define node-level permissions that can get indexed in services like Solr.</p>
+  </body>
+</html>
+

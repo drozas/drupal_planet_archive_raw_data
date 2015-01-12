@@ -1,0 +1,108 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 08 Jun 2013 15:21:12 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 08 Jun 2013 15:21:12 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Drupal 7 Preprocess Tricks: Tips From a Themer
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/drupal-7-preprocess-tricks-tips-themer
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Drupal 7 Preprocess Tricks: Tips From a Themer</title>
+    <base href="http://highrockmedia.com/blog/drupal-7-preprocess-tricks-tips-themer">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/img_9524-43-1911770335.jpg" width="900" height="394" alt="Druplicon: &quot;What preprocess tricks will I think of next?&quot;" title="Druplicon: &quot;What preprocess tricks will I think of next?&quot;" class="image-adaptive inline-adaptive" />
+In the course of a day as a Drupal Themer, I need to code a wide variety of functionality into a given site I'm working on. I try to follow Drupal best practices as well and this usually means implementing theme preprocess functions; these become key to a Themer's toolbox. This article is a selection of snippets I've picked up along the way that might help others out. When I first started building with and theming Drupal several years ago, at first I did not see the value of preprocessing but it's turned out to be quite valuable.</p>
+
+<h2>Add JS or CSS with a Pattern Match / Wildcard</h2>
+
+<p>This method is ideal if you want to add special or custom JS or CSS files to a specific path with a pattern match or wildcard. For example I might have unlimited URLs associated with a Taxonomy with patterns such as:</p>
+
+<div class="geshifilter"><span style="color: #339933;">/</span>portfolio<span style="color: #339933;">/</span>cars<br />
+<span style="color: #339933;">/</span>portfolio<span style="color: #339933;">/</span>trains<br />
+<span style="color: #339933;">/</span>portfolio<span style="color: #339933;">/</span>architecture<br />
+<span style="color: #339933;">/</span>portfolio<span style="color: #339933;">/</span>foo</div>
+
+<p>… but then maybe I want to also add this code to some individual pages not associated with the Taxonomy. I can do something like this with a preprocess HTML function.</p>
+
+<div class="geshifilter"><span style="color: #000000; font-weight: bold;">function</span> MYTHEME_preprocess_html<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; <span style="color: #000088;">$path</span> <span style="color: #339933;">=</span> drupal_get_path_alias<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+&nbsp; <span style="color: #000088;">$pattern</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">&quot;portfolio/*<span style="color: #000099; font-weight: bold;">\n</span>foo-page&quot;</span><span style="color: #339933;">;</span><br />
+&nbsp; &nbsp; <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>drupal_match_path<span style="color: #009900;">&#40;</span><span style="color: #000088;">$path</span><span style="color: #339933;">,</span> <span style="color: #000088;">$pattern</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; drupal_add_js<span style="color: #009900;">&#40;</span>drupal_get_path<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'theme'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'MYTHEME'</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">.</span> <span style="color: #0000ff;">'/js/jquery.foo.js'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'file'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+&nbsp; <span style="color: #009900;">&#125;</span><br />
+<span style="color: #009900;">&#125;</span></div>
+
+<p>As you can see from the above code, we are adding JS to anything under the path or <code>/portfolio/</code> but also to a page called <code>foo-page</code>. Note the <code>newline</code> character between the two pattern matches as well as the <code>*</code> which serves as a wildcard. We are also using the Drupal API <code>function drupal_get_</code> <code>path_alias</code> which returns the alias of an internal path. You can imagine the possibilities using this method which could potentially cut back on the number of scripts being aggregated on any given part of your site.</p>
+
+<h2>A Caveat</h2>
+
+<p>The one caveat using this method is that you'll want to be sure to add a test to your script instantiation. So for example, in my scripts file, if I am instantiating the above script, I want to be sure to add an <code>if</code> clause, otherwise you run the risk of calling the script when it does not exist on various pages which would in turn throw a nasty error. So you'd want to do something like so:</p>
+
+<div class="geshifilter"><span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span>$<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">.</span>foo<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+<br />
+<span style="color: #666666; font-style: italic;">// your script foo here… </span><br />
+<br />
+<span style="color: #009900;">&#125;</span></div>
+
+<h2>Weight, Scope and Group</h2>
+
+<p>In certain cases, you need to load a script last or set a specific weight to place it at a specific point in relation to other scripts that are loading.  This can be achieved by "weighting" and "scoping." Scope has two possible constants, <code>header</code> and <code>footer</code> which are self-apparent, you can either load the script in the head of the page or in the footer after everything else; there's lots of advantages to this in regard to Javascript. For grouping, typically a themer is going to use <code>JS_THEME</code> but there's also two other constants available, <code>JS_DEFAULT</code> and <code>JS_LIBRARY</code> which would commonly be used within a module context. Below is a sample</p>
+
+<div class="geshifilter"><span style="color: #000000; font-weight: bold;">function</span> MYTHEME_preprocess_html<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+drupal_add_js<span style="color: #009900;">&#40;</span>path_to_theme<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">.</span> <span style="color: #0000ff;">'/js/foo.js'</span><span style="color: #339933;">,</span><br />
+&nbsp; <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><br />
+&nbsp; &nbsp; <span style="color: #0000ff;">'group'</span> <span style="color: #339933;">=&gt;</span> JS_THEME<span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; <span style="color: #0000ff;">'preprocess'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; <span style="color: #0000ff;">'scope'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'footer'</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; <span style="color: #0000ff;">'weight'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'9999'</span><span style="color: #339933;">,</span><br />
+&nbsp; <span style="color: #009900;">&#41;</span><br />
+<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span></div>
+
+<p>Note also that <code>preprocess</code> is set to <code>TRUE</code> as we want this internal script to be aggregated. However, there's some cases where you'd set this to <code>FALSE</code> perhaps in the case of an external JS file. The high weight number would most likely make it load last but it's a good idea to test this with aggregation off on your dev site so you can actually see where and how it loads. Play with the number if you don't get the desired result.</p>
+
+<h2>CSS Parameters</h2>
+
+<p>You can also weight CSS and it has three group constants available as per the Drupal API page:</p>
+
+<ul>
+<li>CSS_SYSTEM: Any system-layer CSS.</li>
+<li>CSS_DEFAULT: (default) Any module-layer CSS.</li>
+<li>CSS_THEME: Any theme-layer CSS.</li>
+</ul>
+
+<p>It should be pointed out that the groups themselves have weight so you can really fine tune this using a numbered weight as well as a named group 'weight'.</p>
+
+<h2>Browsers</h2>
+
+<p>if you still develop for older versions of Internet Explorer (gasp!), there's a nice <code>add_css</code> Parameter called <code>browsers</code> which combines with the <code>drupal_pre_render_conditional_comments</code> function. This is also a theme <code>preprocess_html</code> function. For example, if you want to render an IE8 fixes stylesheet conditionally, you could do something like this:</p>
+
+<div class="geshifilter"><span style="color: #000000; font-weight: bold;">function</span> MYTHEME_preprocess_html<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+<span style="color: #666666; font-style: italic;">// Add IE 8 fixes style sheet.</span><br />
+&nbsp; drupal_add_css<span style="color: #009900;">&#40;</span>path_to_theme<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">.</span> <span style="color: #0000ff;">'/css/ie8-fixes.css'</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'group'</span> <span style="color: #339933;">=&gt;</span> CSS_THEME<span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'browsers'</span> <span style="color: #339933;">=&gt;</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #990000;">array</span><span style="color: #009900;">&#40;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'IE'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'lte IE 8'</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'!IE'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">FALSE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span><br />
+&nbsp; &nbsp; &nbsp; <span style="color: #0000ff;">'preprocess'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">FALSE</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span></div>
+
+<p>Here we say that we want this to be a conditional stylesheet for less than or equal to IE8 and false for all others and this would render as:</p>
+
+<div class="geshifilter"><span style="color: #339933;">&lt;!--</span><span style="color: #009900;">&#91;</span><span style="color: #b1b100;">if</span> lte IE <span style="color: #cc66cc;">8</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">&gt;</span><br />
+<span style="color: #339933;">&lt;</span><span style="color: #990000;">link</span> type<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;text/css&quot;</span> rel<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;stylesheet&quot;</span> href<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;http://example.com/sites/all/themes/MYTHEME/css/ie8-fixes.css&quot;</span> media<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;all&quot;</span> <span style="color: #339933;">/&gt;</span><br />
+<span style="color: #339933;">&lt;!</span><span style="color: #009900;">&#91;</span><span style="color: #b1b100;">endif</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">--&gt;</span></div>
+
+<p>There's plenty of other parameters, options and constants for adding CSS and JS within theme preprocessing functions and I suggest checking out the Drupal API pages, links referenced below. There's your tips from a themer, I'll be back sometime soon with more!</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">Drupal</li><li class="field-item even">Preprocess</li><li class="field-item odd">PHP</li><li class="field-item even">CSS</li><li class="field-item odd">Tutorial</li><li class="field-item even last">Drupal Planet</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="https://api.drupal.org/api/drupal/includes!common.inc/function/drupal_add_js/7" target="_blank">function drupal_add_js</a></li><li class="field-item even"><a href="https://api.drupal.org/api/drupal/includes!path.inc/function/drupal_get_path_alias/7" target="_blank">function drupal_get_path_alias</a></li><li class="field-item odd"><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_add_css/7" target="_blank">function drupal_add_css</a></li><li class="field-item even last"><a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_pre_render_conditional_comments/7" target="_blank">function drupal_pre_ render_conditional_comments</a></li></ul>
+  </body>
+</html>
+

@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 15 Aug 2013 21:22:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 15 Aug 2013 21:22:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: BeatnikDude: Drupagram module for Drupal Instagram views
+Content-Transfer-Encoding: 8bit
+Content-Base: http://crownedup.com/log/2013-08-15/drupagram-module-drupal-instagram-views
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>BeatnikDude: Drupagram module for Drupal Instagram views</title>
+    <base href="http://crownedup.com/log/2013-08-15/drupagram-module-drupal-instagram-views">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-inline clearfix"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0"><a href="/tags/drupal-planet">Drupal Planet</a></li><li class="taxonomy-term-reference-1"><a href="/tags/drupal">Drupal</a></li><li class="taxonomy-term-reference-2"><a href="/tags/drupagram-module">Drupagram module</a></li><li class="taxonomy-term-reference-3"><a href="/tags/oath-module">OAth module</a></li><li class="taxonomy-term-reference-4"><a href="/tags/views">Views</a></li><li class="taxonomy-term-reference-5"><a href="/tags/views-slideshow">Views slideshow</a></li></ul></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><style type="text/css">
+<!--/*--><![CDATA[/* ><!--*/
+
+    span.s1 {text-decoration: underline}
+    span.Apple-tab-span {white-space:pre}
+  
+/*--><!]]>*/
+</style><p class="p1"><span class="Apple-tab-span">	</span><b>Instagram</b> in an fun and widely used service with its own API. So get on board with the <b>Drupagram module</b> to <span class="s1">fetch and authenticate w/ Instagram including views integration</span>. There are plans to add image caching support to store local versions of the Instagram images thus exposing them as files for image styles etc..</p>
+<p class="p2"><br /></p>
+<p class="p1"><span class="Apple-tab-span">	</span>Simple to set up this great module, go for it….</p>
+<p class="p2"><br /></p>
+<p class="p1">• <b>Download</b> modules:<span class="Apple-converted-space"> </span></p>
+<p class="p1"><i><span class="Apple-tab-span">	</span>» <a href="https://drupal.org/project/oauth">https://drupal.org/project/oauth</a></i></p>
+<p class="p1"><i><span class="Apple-tab-span">	</span>» <a href="https://drupal.org/project/drupagram">https://drupal.org/project/drupagram</a></i></p>
+<p class="p1">• <b>Read</b>: README.txt</p>
+<p class="p1">• <b>Enable</b> modules</p>
+<p class="p1"><span class="Apple-tab-span">	</span>- OAuth</p>
+<p class="p1"><span class="Apple-tab-span">	</span>- drupagram</p>
+<p class="p1">• <b>Register your application with Instagram</b> and get keys for your Instagram client app.:<span class="Apple-converted-space"> </span></p>
+<p class="p1"><i><span class="Apple-tab-span">	</span>» <a href="http://instagram.com/developer/clients/manage/">http://instagram.com/developer/clients/manage/</a></i></p>
+<p class="p1">• <b>Configure</b>:<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-tab-span">	</span>- Disable "Enable the oauth provider": /admin/config/services/oauth</p>
+<p class="p1"><span class="Apple-tab-span">	</span>- Enter Instagram client keys: /admin/config/services/drupagram</p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>- get redirect url and enter it back on Instagram app settings</p>
+<p class="p1">• <b>Enable Instagram account</b>: /user/#/edit/drupagram</p>
+<p class="p1"><span class="Apple-tab-span">	</span>- Add account and approve App via Instagram</p>
+<p class="p1"><span class="Apple-tab-span">	</span>- run cron to import data</p>
+<p class="p1"><span class="Apple-tab-span">	</span>- see this account under: /user/#/instagram</p>
+<p class="p1">• <b>Create a View</b> and use Instagram fields.</p>
+<p class="p1"><span class="Apple-tab-span">	</span>- if you use Views Slideshow disable "Agragate Javascript" in "performance settings"</p>
+<p class="p2"><br /></p>
+<p class="p1"><span class="s1"><b>• References:</b></span></p>
+<p class="p1"><span class="Apple-tab-span">	</span><i>» </i><a href="https://drupal.org/project/services">https://drupal.org/project/services</a></p>
+<p class="p1"><span class="Apple-tab-span">	</span><i>» </i><a href="https://drupal.org/project/oauth">https://drupal.org/project/oauth</a></p>
+<p class="p1"><span class="Apple-tab-span">	</span><i>» </i><a href="https://drupal.org/project/drupagram">https://drupal.org/project/drupagram</a></p>
+</div></div></div>
+  </body>
+</html>
+

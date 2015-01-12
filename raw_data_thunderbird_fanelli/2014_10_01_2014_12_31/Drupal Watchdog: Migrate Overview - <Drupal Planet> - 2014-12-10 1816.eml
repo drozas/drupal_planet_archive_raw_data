@@ -1,0 +1,41 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 10 Dec 2014 17:16:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 10 Dec 2014 17:16:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Migrate Overview
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/migrate-overview
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Migrate Overview</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/migrate-overview">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Article        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/4.1-migrateoverview.jpg" alt="" width="45%" class="img-responsive img-thumbnail  margin-left" align="right" /><br />
+            Two years into the development of Drupal 8, Dries Buytaert announced that Drupal 8.0 might ship without an upgrade path.</p>
+<p>            This unorthodox decision was made to support substantial improvements in Drupal’s major version upgrade process by introducing a robust new sub-system based on the popular contributed modules Migrate and Migrate D2D. The sub-system includes the Migrate module, which provides the basic framework and API, and the Migrate Drupal module, which provides the upgrade paths and framework to enable other Drupal-to-Drupal use cases in contrib.</p>
+<p>            The substantial wins with this new approach include the ability to move directly from Drupal 6 to Drupal 8 – as well as the possibility of providing more fine-grained control over the process – and the option of continuous content migration.</p>
+<p>            The migration team is working extraordinarily hard to be ready by the time that D8 is ready for beta. As of March 31, Migrate API has been committed to core. The last blocking issues for Migrate Drupal were resolved during the DevDays sprint, and the team will begin submitting patches for the D6 to D8 migration path to the core queue any day now.</p>
+<h3>A Drupal 6 to Drupal 8 upgrade without Migrate</h3>
+<p>Without the new API, an abbreviated move from Drupal 6 to Drupal 8 would have looked something like:</p>
+<ol><li>Backup your database
+</li><li>Update core and contrib to the latest version of 6
+</li><li>Disable all contributed modules and switch to the core theme
+</li><li>Delete the D6 code and replace it with D7 core code
+</li><li>Run update.php
+</li><li>Download the D7 contributed modules
+</li><li>Enable the contrib modules
+</li><li>Run update.php
+</li><li>Repeat to upgrade from D7 to D8
+</li></ol><p>            For Drush users, the '<span class="geshifilter"><code class="php geshifilter-php">drush up</code></span>' command would vastly simplify this, but two full upgrades — from 6 to 7, then 7 to 8 — would still have been required, inevitably losing data in each step.</p>        </div>
+  </body>
+</html>
+

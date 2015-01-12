@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 29 Aug 2013 21:06:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 29 Aug 2013 21:06:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: The Problem of Feral Distributions and Some Possible Solutions
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/problem-feral-distributions-and-some-possible-solutions
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: The Problem of Feral Distributions and Some Possible Solutions</title>
+    <base href="http://atendesigngroup.com/blog/problem-feral-distributions-and-some-possible-solutions">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image-blog field-type-image field-label-hidden"><div ><div ><img src="http://atendesigngroup.com/sites/default/files/grayfire.jpg" width="1017" height="620" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div ><div ><p>I found this kitten in my backyard. The kids freaked out at the adorable gray fuzzy fur, her playful energy, and the prospect of caring for the animal. After failing to reach any sort of owner for her, I wondered whether we should keep her. Then she shat all over my bedspread and I stopped wondering. I promised the kids we’d get a pet later, once they were a little older and could help care for and house train it.</p>
+
+<p>This is the same situation we want to avoid with distributions.  When a module turns out to be buggy and unsupported, it's a pain. If we build a site off of a <em>distribution</em> that is buggy and unsupported the problems are that much more pronounced.</p>
+
+<p>For someone to bring a kitten into their house, without being able to care for that animal is irresponsible. The same goes for promoting a distribution. Instead, we want to be able to confidently say, "Here is a solid distro and it is supported."</p>
+
+<p>We’ve taken a few approaches to offering this support for <a href="https://drupal.org/project/openaid">OpenAid</a>: applying some of our 20% non-billable time to OpenAid support, helping develop a community around OpenAid, and integrating development of OpenAid into client work when there’s overlap.</p>
+
+<p>These three approaches have proved sufficient for supporting OpenAid, but what about expanding the distribution?  Here we’ve always found ourselves starved for time. Client work takes precedence, as it should. So, how could we find ways to develop OpenAid within the work we do with clients?</p>
+
+<p>This proves a bit more difficult. For projects where the feature set is similar to what OpenAid offers, it makes sense to use OpenAid as a starting point. However, most of our projects require a more custom approach. Then we thought, what if we broke the OpenAid Features modules out into their own independent projects? That way, if a client requests a Blog that acts similar to what we’ve developed for OpenAid, we can build from there. We’re hoping this approach will be a win-win-win. We save time on some of the initial building out of the feature, we pass that savings on to the client, and then particular improvements we make to the feature can be applied back to the feature which OpenAid uses.  Plus, since these features are not coupled to OpenAid, anyone else can use and develop them, without needing to use the entire OpenAid distribution.</p>
+
+<p>We’ve just recently begun the process of building out these features, which we are calling “Atom modules.”  We’ve rolled out a few, including  <a href="https://drupal.org/sandbox/jcrespo/2051659">Atom Projects</a>, <a href="https://drupal.org/sandbox/jcrespo/2051663">Atom Resources</a>, and <a href="https://drupal.org/sandbox/johne/2069303">Atom Blog</a>.</p>
+
+<p>I’m excited about the potential that “Atomizing” OpenAid’s features will have for our ability to expand OpenAid. Some distributions are taking a similar approach already, and we're looking forward to learning more about how we can make this process work best. This will hopefully prove a useful model for other distributions, making it easier to keep them up to date, continually evolving, and of course keeping users' linens clean.</p>
+</div></div></div>
+  </body>
+</html>
+

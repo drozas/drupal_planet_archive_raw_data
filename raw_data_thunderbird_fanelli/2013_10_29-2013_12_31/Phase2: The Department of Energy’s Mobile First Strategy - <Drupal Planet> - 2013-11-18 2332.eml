@@ -1,0 +1,112 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 18 Nov 2013 22:32:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 18 Nov 2013 22:32:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: The Department of Energy’s Mobile First Strategy
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/the-department-of-energy-and-their-mobile-first-strategy/?utm_source=rss&utm_medium=rss&utm_campaign=the-department-of-energy-and-their-mobile-first-strategy
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: The Department of Energy’s Mobile First Strategy</title>
+    <base href="http://www.phase2technology.com/blog/the-department-of-energy-and-their-mobile-first-strategy/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=the-department-of-energy-and-their-mobile-first-strategy">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Last week the <a href="http://energy.gov">U.S Federal Department of Energy</a>(DOE) announced the <a href="http://energy.gov/articles/introducing-more-responsive-energygov">launch of their new responsive site</a>. We are really excited about the release and what it means for the DOE, to be one of the first federal agencies to launch a responsive web platform. Earlier this year, <a href="http://www.phase2technology.com/author/jturton/">Joshua Turton</a> wrote a <a href="http://www.phase2technology.com/blog/a-mobile-solution-for-the-department-of-energy-thinking-outside-the-box/">blog post explaining how we went about designing an out-of-the-box mobile solution for their web platform</a>. Now that we have launched the responsive site, I would like to build off of Joshua&#8217;s blog post and explain some interesting challenges and our strategies to solve them in order to create this mobile-first solution.</p>
+<p><a href="http://www.phase2technology.com/wp-content/uploads/2013/11/Screen-shot-2013-11-18-at-1.58.36-PM.png"><img class="wp-image-5855 alignleft" alt="image of Energy.gov on different devices" src="http://www.phase2technology.com/wp-content/uploads/2013/11/Screen-shot-2013-11-18-at-1.58.36-PM.png" width="433" height="286" /></a></p>
+<p>The <a href="http://www.phase2technology.com/client/department-of-energy/">DOE&#8217;s web platform</a> is a large and complex site. In addition to the main site, it houses numerous sub sites, many content types with intricate internal layouts, and a primary menu with hundreds of menu items, up to five tiers deep. As Joshua explains in his <a href="http://www.phase2technology.com/blog/a-mobile-solution-for-the-department-of-energy-thinking-outside-the-box/">blogpost</a>, we needed to take this fixed-width grid based website and make it fully responsive and mobile friendly. We called it a &#8220;retrofit&#8221; because the goal was to keep the styling, desktop layouts, and general aesthetic from the original site, but make it respond to changes in viewport size. Before we undertook this venture, I wanted to make sure we had the right tools for the job.</p>
+<h1></h1>
+<h1>Goodbye Less, Hello Sass</h1>
+<p>The previous DOE website theme utilized <a href="http://lesscss.org/">LESS</a>, the dynamic stylesheet language. While so much better than just using CSS without any preprocessing, I was hoping to leverage <a href="http://compass-style.org/">Sass&#8217;s Compass</a> authoring framework and more importantly, some of the advanced tools that Compass enables (such as breakpoint and singularity grid system, but more on those later). It wasn&#8217;t a decision made lightly, because the conversion process would take some time and effort, and it might introduce the risk of regression into the project. Any second guessing was quickly put to rest once we started the manual conversion process. Simple find and replace searches to alter the syntax got us 95% of the way there. We ran into a few &#8220;gotcha&#8221;s. For example, apparently LESS allows the nesting of pseudo classes like this:</p><pre class="crayon-plain-tag">a {
+  :hover {
+    color: red;
+  }
+}</pre><p>Whereas Sass, requires the use of the ampersand to reference the parent selector. So we had to do a search for all possible pseudo classes and add the ampersand.</p><pre class="crayon-plain-tag">a {
+  &amp;:hover {
+    color: red
+  }
+}</pre><p>After the conversion, we were setup to take advantage of some great tools&#8230; tools we would need.</p>
+<h2>Complex Layouts</h2>
+<p>So to begin with, the DOE has some pretty standard layout sections: header, navigation, optional sidebar left, main content, optional sidebar right, and footer. However, on top of that, the content inside main section has its own complex layout. many different content types each with optional sections of their own that may include elements such as rotators, blocks, nodes, maps, image galleries, and more&#8230; all laid out in multiple rows or columns or both. How would those inner layouts be affected when there are differing amounts of sidebars in the outer layout? Would we have to reassign different grid widths to inner elements for each outer layout configuration for each breakpoint? Oh my!</p>
+<p>Fortunately there was an alternative: Nested Layouts via Singularity. With this approach we could create one layout for the main/outer layout sections and a second, independent, nested layout for the inner layouts.</p>
+<h3><a href="https://github.com/Team-Sass/Singularity">Singularity</a></h3>
+<p>Singularity is a semantic, ratio based grid system, similar in function to Susy or Zen Grids. It allows us to have a fluid, ratio based, grid (even an asymmetrical grid if you need it). Since it is implemented by referencing mixins when defining your SCSS on your various elements, you can strip out all of those non-semantic classes from your markup such as grid-9, col-3, pull-5, push-2, alpha, omega, container, etc. Fixed grid width classes on elements are pretty meaningless as those sections shrink, grow, and move around as the viewport gets larger and smaller. (And while we are at it, get rid of all of those clearfix classes, please! Just use a clearfix mixin whenever necessary.)</p><pre class="crayon-plain-tag">/* Grid system and general page layout */
+
+/* Define Singularity grid variable */
+$grids: 12;
+
+/* Fraction of column width for gutter width */
+$gutters: 20/65;
+
+#main-content {
+  .sidebar-second &amp; {
+    @include grid-span(9,1);
+  }
+}
+
+#sidebar-right {
+  @include grid-span(3,10);
+}</pre><p>Now we can utilize Singularity&#8217;s layout() mixin to create a nested layout.</p><pre class="crayon-plain-tag">#main-content {
+  @include layout(9) {
+    .this-thing {
+      @include grid-span(3,1);
+    }
+    .that-thing {
+      @include grid-span(6,4);
+    }
+  }
+}</pre><p>Another nice feature of singularity is that you can choose to use either the grid-span (i.e. John Albin Wilkins&#8217; <a href="http://palantir.net/blog/responsive-design-s-dirty-little-secret">isolation output method</a>) or float-span (more traditional floated spans, with push, pull, alpha and omega concepts) methods of output. We found situations where each solution was appropriate to use, so used both.</p>
+<h3><a href="http://breakpoint-sass.com/">Breakpoint</a></h3>
+<p>Singularity itself doesn&#8217;t have a method to help with managing media queries, but works great in conjunction with the Breakpoint Compass extension. Breakpoint makes writing and managing media queries easier. It enabled us to keep all of our CSS styling for given elements/sections in one place, rather than having separate sections for each media query.</p>
+<h4>Introducing Expandpoints For Mobile First</h4>
+<p>We defined all of our breakpoints as variables to be used throughout our SCSS. While we had a few &#8220;breakpoints&#8221; which defined where major layout shifts occurred (such as the desktop navigation switching to the mobile navigation), we had many more tweakpoints that we defined. We started with a small browser window, and expanded until the layout of the DOE&#8217;s actual content &#8220;broke&#8221;, and we would create a new tweakpoint and alter the layout as necessary. I also introduced a new term: &#8220;expandpoint.&#8221; The term &#8220;breakpoint,&#8221; to me, implies the point at which content would begin to wrap as the viewport shrinks (desktop first). Since we were approaching this from a mobile first perspective, calling the variables &#8220;expandpoints&#8221; helps me get my head wrapped around the purpose each media query. $expandpoint-multicolumn would be the point at which the viewport is wide enough for the sidebars to move from a single column to be on either side of the main content.</p><pre class="crayon-plain-tag">$expandpoint-full:901px;
+
+#main-content {
+// Defaults to full width - all 12 columns
+  .sidebar-second &amp; {
+    @include breakpoint($expandpoint-full) {
+      @include grid-span(9,1);
+    }
+  }
+}
+
+#sidebar-right {
+  // Defaults to full width - all 12 columns
+  @include breakpoint($expandpoint-full) {
+    @include grid-span(3,10);
+  }
+}</pre><p></p>
+<h1>Complex Mobile Navigation</h1>
+<p>The Department of Energy has some significant navigation requirements that presented us with a series of challenges.</p>
+<h2>Challenge 1: Two header menus.</h2>
+<p>The previous iteration had two different header menus: the main menu and a secondary menu. In a mobile world we don&#8217;t have room to display one menu, let alone two.</p>
+<h2>Challenge 2: Deep navigation.</h2>
+<p>The desktop navigation provides two tiers of navigation. Then deeper pages of the site display a sidebar block that contains more layers of site navigation. All of that needed to go away for mobile and be replaced with the three line hamburger. But how would the mobile navigation work? Should we display the entire menu structure as collapsed accordions? Should we just keep expanding down as deep and as much as necessary? We decided against this, as we thought the menu display would quickly become unwieldy as the list got longer and longer.</p>
+<h2>Challenge 3: Dual purpose links.</h2>
+<p>Some menu items were links to pages of themselves (often landing pages for that section) AND at the same time, the parent item of sub-navigation. When you touched that item (no hovering in mobile) would it reveal sub-navigation or go to that page? Could we divide the button in half? A down triangle arrow next to the text could reveal the sub-navigation, while the words themselves would link to the page? We decided against this as we didn&#8217;t think the functionality would be immediately obvious to the end user.</p>
+<h2>Solutions:</h2>
+<ol>
+<li>First we combined the two menus into one. While conceptually simple, implementation was a bit more complex. Since each office sub-site had unique menus that also had to be combined, our devs set to work figuring out a process and writing some scripts where menus could be exported, processed, and then re-imported in the new, proper structure.</li>
+<li>Next, we loaded the entire primary navigation menu tree structure (regardless if &#8220;expanded&#8221; was checked or not in the menu administration), so that the entire depth of menu would be available in the DOM for manipulation with CSS and JavaScript. While loading the menu, we processed the menu in PHP. Parent items with sub-navigation were duplicated and placed as the first item in the sub-navigation and we appended the word &#8220;home&#8221; along with appropriate classes.</li>
+<li>Now that we had the markup we needed, we set to work with layout and Javascript. To make the navigation work, we placed each each nested depth/tier of ULs as a block, side by side one another at 100% width, the next deeper level ULs hidden and to the right. If a menu item with sub-navigation is clicked, we load appropriate menu from next tier by displaying it and shifting everything to the left via CSS transitions.</li>
+<li>Using JavaScript, we duplicated the parent item text as a heading for each sub-navigation list page and created a back button that allows the user to traverse back up the structure.</li>
+</ol>
+<p>In the end we have a flexible solution that enables the user to quickly navigate through five tiers of hundreds of menu items. I find it really nice to use, but I might be biased. <a href="http://energy.gov">Try it out </a>and let me know what you think.</p>
+<p style="text-align: center;"><a style="text-align: center;" href="http://www.phase2technology.com/wp-content/uploads/2013/11/DOE-Mobile-Navigation.png"><img class="size-medium wp-image-5869 aligncenter" alt="DOE-Mobile-Navigation" src="http://www.phase2technology.com/wp-content/uploads/2013/11/DOE-Mobile-Navigation-300x293.png" width="300" height="293" /></a></p>
+<h2>Bonus Challenge: Desktop Navigation too?!??</h2>
+<p>Now that we conquered the mobile navigation&#8230; the desktop navigation still had to work more or less the same way as it did before. Not only did the menu styling need to change based on the viewport&#8230; we had to implement different javascript.</p>
+<h3><a href="http://css-tricks.com/enquire-js-media-query-callbacks-in-javascript/">Enquire.js</a></h3>
+<p>Enquire.js is a lightweight, pure JavaScript library for responding to CSS media queries. When you register Enquire.js you provide it with a media query, then you can write JavaScript that executes when that media query is matched and when it is unmatched. So as the viewport shrinks, we are able to bind various behaviors to navigation elements.  After we leave that viewport, we need to clean up after ourselves and unbind them because another enquire media query is met and different JavaScript functionality is bound to those same elements.</p>
+<h2>Responsive Images</h2>
+<p>The on-going challenge in responsive web design, is how do we provide lower resolution and smaller file sizes to smaller devices? And vice versa?</p>
+<h3>Borealis</h3>
+<p><a href="https://drupal.org/project/borealis">Borealis</a> is a Drupal module that switches in an appropriately sized image (via javascript) given the available width for that image. It is totally independent of the current viewport width, measuring a parent container of the image to determine the size to provide. This also makes the administration of the module quite simple, simply select any image style setting that you want to take advantage of Borealis image swapping.</p>
+<p>While this approach to responsive images is the best approach and philosophy that I&#8217;ve seen so far, we did run into a few problems that we had to hack/patch our way through. Borealis doesn&#8217;t get triggered when images are brought into the DOM via ajax. So if you have a separate photo gallery that loads images, Borealis won&#8217;t work on the new images. To further the problem, the module currently isn&#8217;t playing nice with Drupal as all functions are private, so you can&#8217;t even manually call Borealis internal functions without <a href="https://drupal.org/node/2110245">hacking/patching Borealis</a>.</p>
+<p>So these were some highlights of the challenges we faced and the solutions we came up with to make Energy.gov one of the first cabinet-level federal departments to launch a responsive website platform. It was a pleasure working with the Energy.Gov team and we look forward to working with The Department of Energy to continue to push innovation in government websites.  Read more about The Department Of Energy&#8217;s Web Platform <a href="http://www.phase2technology.com/client/department-of-energy/">here</a>!</p>
+  </body>
+</html>
+

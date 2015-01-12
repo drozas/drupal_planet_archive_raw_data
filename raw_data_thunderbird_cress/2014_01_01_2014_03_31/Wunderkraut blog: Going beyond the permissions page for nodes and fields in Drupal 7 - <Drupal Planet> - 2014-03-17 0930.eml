@@ -1,0 +1,113 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Mar 2014 09:30:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Mar 2014 09:30:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Going beyond the permissions page for nodes and fields in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.wunderkraut.com/blog/drupal-7-node-field-custom-access-control
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Going beyond the permissions page for nodes and fields in Drupal 7</title>
+    <base href="http://www.wunderkraut.com/blog/drupal-7-node-field-custom-access-control">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    Today, I will talk a bit about access control. Specifically, what options you as a module developer have for controlling access to nodes and individual fields. As I&#039;m sure you agree, the Drupal permission system available for site builders is powerful. Yet, fringe cases occur that leave this system wanting.  It&#039;s a case like this I will talk about below.   </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <h2>The context</h2>
+
+<p>The Drupal core permissions system for site builders is very flexible. You can control what kinds of access user roles have over the content (nodes). This means that you can grant users of a particular role the following permissions (to):</p>
+
+<ul><li>Create new content</li>
+<li>Edit own content</li>
+<li>Edit any content</li>
+<li>Delete own content</li>
+<li>Delete any content</li>
+</ul><p>And these permissions can be further targeted towards specific content types. So for instance you can have users of a certain role create Article nodes but not Basic pages.</p>
+
+<h2>The requirement</h2>
+
+<p>With these permissions you have a lot of ground covered. But there are cases in which you'll need to write some code to account for what you need. Let's look at one of these cases, albeit simplified for this article.</p>
+
+<p>Users of the roles <em>Supervisor</em> can create articles. They can then edit all Articles that other <em>Supervisors</em> created but not the ones they themselves created. And herein lies the problem. With the Drupal permissions page alone, you just can't get there.</p>
+
+<p>If <em>Supervisors</em> can edit all Article nodes, that includes also the ones they created. So how to tackle this problem? Using <a href="https://api.drupal.org/api/drupal/modules!node!node.api.php/function/hook_node_access/7" target="_blank">hook_node_access()</a> in your custom module.</p>
+
+<h2>The solution</h2>
+
+<p>So what can you do with this hook? The short version is that you can control access to nodes.</p>
+
+<p>This hook gets called by the node access system to determine if the user that wants to see the node being loaded, should. Using this hook, the system checks if there are any modules that actively want to grant or block access to the node in question. Let's see how we can implement this to solve our problem:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Implements hook_node_access().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> module_name_node_access<span style="color: #009900;">&#40;</span><span style="color: #000088;">$node</span><span style="color: #339933;">,</span> <span style="color: #000088;">$op</span><span style="color: #339933;">,</span> <span style="color: #000088;">$account</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+  <span style="color: #666666; font-style: italic;">// If Supervisor, do not allow to edit their own node.</span>
+  <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$account</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">roles</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">3</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">&amp;&amp;</span> <span style="color: #000088;">$account</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">uid</span> <span style="color: #339933;">==</span> <span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">uid</span> <span style="color: #339933;">&amp;&amp;</span> <span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">type</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'article'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$op</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'update'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      <span style="color: #b1b100;">return</span> NODE_ACCESS_DENY<span style="color: #339933;">;</span>
+    <span style="color: #009900;">&#125;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div>
+
+<p>Let's do a quick rundown of what happens in this code. The function takes three parameters: the <em>$node</em> object being loaded, the <em>$op</em> (operation) being performed and the user <em>$account</em> object trying to access. All the right ingredients basically.</p>
+
+<p>First, we perform three checks in an <em>if conditional</em>. We check if the current user has the <em>Supervisor</em> role. We know that this role has an id of 3. Then we check if the id of the current user equals the one of the author of the node being loaded. Finally, we check if the node being loaded is an Article.</p>
+
+<p>If these three checks pass, we move on to the operation. There can be 4 different types of operations: <em>create</em>, <em>update</em>, <em>delete</em> and <em>view</em>. We check if the operation being performed is <em>update</em>, and if it is, we return the <em>NODE_ACCESS_DENY</em> constant to deny access to the user. Not so complicated.</p>
+
+<p>This will therefore deny access to the node author if s/he wants to edit it. However, this will not stop him or her from viewing the node or even deleting it. But you can perform logic that will help you control that as well if you want. And even more complex stuff like access depending on relationships between users. But again, story for another day.</p>
+
+<h2>Granularity</h2>
+
+<p>To illustrate a slightly more complex case, imagine that our <em>Supervisor</em> should be allowed to edit his or her Article, but not all fields on that node. Field X must be visible but impossible to update. However, the <em>Supervisor</em> must be able to edit Field X on all the other Articles.</p>
+
+<p>In this case, our implementation of <em>hook_node_access()</em> won't do the job since it controls access to the entire node. We'll need a more granular approach, provided by, you guessed it, <a href="https://api.drupal.org/api/drupal/modules!field!field.api.php/function/hook_field_access/7" target="_blank">hook_field_access()</a>.</p>
+
+<p>Before explaining how this works, I want to point out the existence of the great <a href="https://drupal.org/project/field_permissions" target="_blank">Field Permissions</a> module. Using this module, we bring the power of the core Drupal node permissions down to the level of fields. Which is awesome. However, we are restricted in our case by the same implication of granting a role the permission to edit all content of a certain type. So let's see what <em>hook_field_access()</em> brings to the table.</p>
+
+<p>The function works similarly to the previous one, but it takes different parameters. You have again operation (<em>$op</em>) which only includes <em>view</em> and <em>edit</em> in this case. Then you have the <em>$field</em> on which the operation is performed. The third one is the <em>$entity_type</em> the field is attached to, which means using this hook is not restricted to nodes only. Then you have the two optional ones, the <em>$entity</em> object itself and the user <em>$account</em> that tries to access.</p>
+
+<p>And yet again let's see some code that will help us with our slightly more complex case:</p>
+
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Implements hook_field_access().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> module_name_field_access<span style="color: #009900;">&#40;</span><span style="color: #000088;">$op</span><span style="color: #339933;">,</span> <span style="color: #000088;">$field</span><span style="color: #339933;">,</span> <span style="color: #000088;">$entity_type</span><span style="color: #339933;">,</span> <span style="color: #000088;">$entity</span><span style="color: #339933;">,</span> <span style="color: #000088;">$account</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+  <span style="color: #666666; font-style: italic;">// If Supervisor, do not allow to edit Field X on their own Article</span>
+  <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$account</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">roles</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">3</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">&amp;&amp;</span> <span style="color: #000088;">$account</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">uid</span> <span style="color: #339933;">==</span> <span style="color: #000088;">$entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">uid</span> <span style="color: #339933;">&amp;&amp;</span> <span style="color: #000088;">$entity_type</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'node'</span> <span style="color: #339933;">&amp;&amp;</span> <span style="color: #000088;">$entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">type</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'article'</span> <span style="color: #339933;">&amp;&amp;</span> <span style="color: #000088;">$field</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'field_name'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'field_x'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$op</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'edit'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      <span style="color: #b1b100;">return</span> <span style="color: #009900; font-weight: bold;">false</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">&#125;</span>
+  <span style="color: #009900;">&#125;</span>  
+<span style="color: #009900;">&#125;</span></pre></div>
+
+<p>In this function you'll notice a similar logic but oriented towards the field. We check if the accessing user is a <em>Supervisor</em>, if they are the author of the entity, if the entity type is a node, if the node type is an Article and if the field requested is named <em>field_x</em>. If all these are true, we move on to check the operation and return false (no constants here) to deny access to this user from editing the field (if <em>$op == 'edit'</em>).</p>
+
+<p>So what happens in practice? The user can view the Article s/he created. But if s/he edits the Article, Field X is hidden. If the user then goes to edit the Article created by another user, s/he can edit Field X. Neat.</p>
+
+<p>One thing to note here is that since <em>hook_field_access()</em> has only 2 types of operations, if you check against <em>edit</em>, you'll deny access to the user even when first creating the node. To circumvent this behavior, you can perform an additional check. In addition to <em>($op == 'edit')</em>, you can check also if the <em>$entity</em> in question has an id set. Since we are talking about nodes here, you can replace this line: </p>
+
+<span class="geshifilter"><code class="php geshifilter-php"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$op</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'edit'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></code></span>
+<br /><br /><p>With this:</p>
+<span class="geshifilter"><code class="php geshifilter-php"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$op</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">'edit'</span> <span style="color: #339933;">&amp;&amp;</span> <a href="http://www.php.net/isset"><span style="color: #990000;">isset</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$entity</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">nid</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span></code></span>
+<br /><br /><p>This way, if the node is not yet created, the user can work with Field X. But as soon as the node has been saved, the values of Field X can no longer be changed by this user. But this of course depends on your needs.</p>
+
+<h2>Conclusion</h2>
+
+<p>To recap, we've seen above how to control access to nodes and fields in a custom module. All you have to do is implement these hooks (as needed) and perform your logic inside. One thing I urge you though is to always document properly this kind of code to make it easier to understand later why certain users have what can seem <em>inexplicable</em> permissions.</p>
+
+<p>Another interesting thing we've seen is that even one of the most powerful features Drupal has cannot account for all real life cases. But not to worry, under the hood, Drupal allows us to customize its behaviour with just a few lines of code to meet our exact requirements. And be honest, was that complicated?</p> </div>
+    </div>
+  </body>
+</html>
+

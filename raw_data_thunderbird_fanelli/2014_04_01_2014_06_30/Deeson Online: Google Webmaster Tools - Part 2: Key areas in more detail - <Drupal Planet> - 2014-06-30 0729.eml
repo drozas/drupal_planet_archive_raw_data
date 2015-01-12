@@ -1,0 +1,74 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Jun 2014 05:29:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Jun 2014 05:29:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Google Webmaster Tools - Part 2: Key areas in more detail
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/google-webmaster-tools-part-2-key-areas-more-detail
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Google Webmaster Tools - Part 2: Key areas in more detail</title>
+    <base href="http://deeson-online.co.uk/labs/google-webmaster-tools-part-2-key-areas-more-detail">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p style="text-align: center;"><img alt="" src="/sites/default/files/uploads/gwt.png" style="width: 420px; height: 287px;" /></p>
+<p>In my <a href="http://deeson-online.co.uk/labs/google-webmaster-tools-part-1-getting-started">first post</a> I gave an overview of Google Webmaster Tools.</p>
+<p>In this second post I am going to look at some of the key areas that I have found useful when reviewing a site listing in Google from a Drupal developers point of view.</p>
+<p>These area of interest are: Crawl Errors, Fetch as Google and Sitemaps.</p>
+<h2>Crawl details</h2>
+<p>Once logged in to Google Webmaster Tools and selected the site I want to deal with, I have found the ‘Crawl’ section (on the left hand side) to be one of the most important areas.</p>
+<p>Here you can get information on what site pages Google has crawled, including various errors and details about how many URLs have been indexed from your sitemap.xml file.</p>
+<p><strong>Crawl Errors</strong></p>
+<p>This section is broken into the different types of errors:</p>
+<ul>
+<li>Server error</li>
+<li>Soft 404</li>
+<li>Access denied</li>
+<li>Not found</li>
+<li>Not followed</li>
+<li>Other.</li>
+</ul>
+<p><strong><em>Server error:</em></strong> These are any URLs that have returned too slowly or are blocking Google in some way. This would typically be pages causing errors on your site, so they should be dealt with fairly urgently.</p>
+<p><strong><em>Soft 404:</em></strong> These pages are interesting. They are like ‘Not found’ pages, but they aren’t strictly invalid pages as they aren’t returning a 404 header response. Google’s 'help' details these pages as:</p>
+<blockquote><p>‘A soft 404 occurs when your server returns a real page for a URL that doesn't actually exist on your site. This usually happens when your server handles faulty or non-existent URLs as "OK," and redirects the user to a valid page like the home page or a "custom" 404 page.'</p></blockquote>
+<p>In some cases, these pages could be search pages which take in various query parameters to determine the search criteria. As the search content changes, the results of certain criteria may return no results.</p>
+<p>This type of page can also be seen as a ‘soft 404’ page.</p>
+<p>Google recommends setting up your robots.txt file to not index such search pages as the content could be misleading. If you are providing a sitemap.xml file this should contain all of your sites content for Google to index.</p>
+<p><strong><em>Access denied:</em></strong> These are fairly obvious - they are pages that Google can not access.</p>
+<p>This might be due to authentication being required or just that Google is being blocked from seeing the page. It's worth keeping an eye on these pages as it might be that you have an error on a page that is preventing Google from accessing it etc.</p>
+<p><strong><em>Not found:</em></strong> These are also fairly obvious - they are pages that Google can not find or are returning a 404 header response.</p>
+<p>This might be due to the page changing URL or just that the page no longer exists. It is worth keeping an eye on these pages as it might be that you have removed some pages and you didn’t realise that there was a link on a page on your site (or indeed on someone else's site) that is linking to that page.</p>
+<p>In the event that the URL has just changed, but the page that this was referring to still exists, it is advisable to provide a redirect from the old URL to the new URL so that Google can reindex the correct URL. This should be done using a 301 redirect and can be achieved using a htaccess file.</p>
+<p><strong><em>Not followed:</em></strong> These are pages that Google tried to follow but couldn’t for some reason.</p>
+<p><strong><em>Other:</em></strong> This is more of a ‘catch all’ for any pages that couldn’t be accessed but don’t fall into any of the categories above.</p>
+<h3>What can you do with the list of URLs?</h3>
+<p>Within each of the above sections, if there are any URLs found, a list will be presented. Clicking on one of the URLs will open up further useful information:</p>
+<ul>
+<li><strong>Error details:</strong> When this error was first detected and why etc.</li>
+<li><strong>Linked from:</strong> Where this URL is linked from (either your own site or external sites)</li>
+<li><strong>‘Fetch as Google’:</strong> Useful button to see what Google actually sees when it visits the URL</li>
+</ul>
+<p>You can also mark URLs as being ‘fixed’, i.e that they should no longer appear in that list.</p>
+<p>This will remove them from the list, but if Google detects them again they will get added back.</p>
+<p>However, if your content has been ‘fixed’ the URL will automatically be removed from the relevant list when Google crawls that site, you removing it seems to be more for your own sanity and ease of seeing what is still to be sorted out.</p>
+<h2>Fetch as Google</h2>
+<p>This is a useful little section that enables you to enter a page URL for your site and see what Google sees for that page when it is crawling the site.</p>
+<h2>Sitemaps</h2>
+<p>If you have provided a sitemap.xml file to Google than this will provide further details on the number of the pages that the sitemap contains against the number of pages that Google has actually indexed.</p>
+<p>Google says that it won’t guarantee to index all the sites pages, so don’t expect this to match up, but it does give you a good indication on the number of pages that Google is actually aware of.</p>
+<h2>Other resources</h2>
+<p>To be honest, I haven’t looked through all the items in here yet, but the main one that I have used is the Pagespeed insights.</p>
+<p>This is a great little tool that analyses your site URL and tells you how it can perform better and faster. This is always worth having a look at to see how your site is performing, as sometimes small changes can make a big difference.</p>
+<h2>In Part 3...</h2>
+<p>I will analyse how data from Google Webmaster Tools helps me understand sites better and improve their standing in Google, complete with examples.</p>
+<h5><a href="http://twitter.com/deeson_labs">Follow @deeson_labs for all the latest blogs!</a></h5>
+<p> </p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/google-webmaster-tools-part-2-key-areas-more-detail">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Google Webmaster Tools - Part 2: Key areas in more detail</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/mike-davis">Mike Davis</a> | 30th June 2014</div></div></div>
+  </body>
+</html>
+

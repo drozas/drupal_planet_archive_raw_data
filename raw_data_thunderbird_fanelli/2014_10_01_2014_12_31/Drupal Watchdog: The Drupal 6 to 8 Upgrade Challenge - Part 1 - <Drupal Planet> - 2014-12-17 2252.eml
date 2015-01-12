@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 17 Dec 2014 21:52:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 17 Dec 2014 21:52:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: The Drupal 6 to 8 Upgrade Challenge - Part 1
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/blog/2014/12/drupal-upgrade-1
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: The Drupal 6 to 8 Upgrade Challenge - Part 1</title>
+    <base href="http://drupalwatchdog.com/blog/2014/12/drupal-upgrade-1">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--body field-type-text-with-summary field-label-hidden field--rss">
+              <p><em><a href="https://www.drupal.org/u/catch">Nathaniel Catchpole </a>, the Drupal 8 release maintainer and Tag1 Senior Performance Engineer, suggested that Drupal shops everywhere could support the release of Drupal 8 by upgrading their own sites and addressing the issues they find along the way. This series chronicles the journey from Drupal 6 to Drupal 8.</em></p>
+<h2>Part 1: Readiness Assessment</h2>
+<p>Before performing a major version upgrade, I usually go through a series of steps that help me determine:</p>
+<ol><li><strong>What compelling business needs or new functionality are prompting the move?</strong> In this case, the site builder view on the status of D8 will help us identify and hopefully address real barriers to adoption, as well as to prepare materials that help document the journey.</li>
+<li><strong>What does the site do?</strong> If there are functional tests or test plans, I review those. Then, I manually review the site, paying attention to functionality for particular roles. I also check with at least one or two of the stakeholders with each role to learn what features they regularly use, what improvements would better support them, and what they’d really like to see. I don’t normally act on that wish list answer as part of the upgrade proper, but knowing what new functionality they desire can help make decisions about the new modules to use.</li>
+<li><strong>Are there features that are no longer in use?</strong> I’m always surprised, though by now I really shouldn’t be, by the number of things that seemed like a good idea at the time to someone which were never used at all or which are no longer in use.</li>
+<li><strong>Is now the right time?</strong> Are the contributed modules on which the site depends ready or is there a new way to achieve the required functionality.</li>
+</ol><h3>1- Compelling Functionality</h3>
+<p>As noted above, this particular journey is compelled by the desire to identify and fix bugs during the Beta period of Drupal 8. That doesn’t mean we’re not excited by:</p>
+<ul><li><strong>WYSIWYG in Core</strong>- I am ecstatic at the prospect of NOT having to choose and configure basic WYSIWYG functionality.</li>
+<li><strong>Views in Core</strong> - I pay a lot of attention to the experience of content contributors. They’re the everyday users that Dries talked about back at DrupalCon San Francisco, people who use the interface of Drupal as their day job. What a site builder does for them (or fails to do) can make or break the success of the site as well as cement the organizational satisfaction with Drupal itself.</li>
+</ul><p>I want Tag1’s busy staff to find it a pleasure to keep their blogs, community contributions, and case studies up-to-date.</p>
+<h2>2 - Current Functionality</h2>
+<p>Our speciality is performance and scalability for complex websites, which never necessitated building a complex external site for ourselves. We have internal sites that put Drupal 6 though its paces, but the main Tag1 site is a combination of blogs and brochure:</p>
+<ul><li><strong>Review what the current site does </strong><br />
+I start any readiness evaluation looking at the site from the user perspective, clicking around, then reviewing any documentation. The site revealed no surprises. I jotted notes about those user-facing features, mapped to Drupal functionality, and stored them as a sheet in the <a href="https://docs.google.com/spreadsheets/d/1Myq_EPluNfokkYISEXljXWAX5GmFpbphdxc-FO1XrdU/">Readiness spreadsheet</a>. For a basic site, the notes aren’t too impressive, but the process was a valuable refresher on what the site does.</li>
+</ul><ul><li><strong>Inventory the enabled modules</strong><br />
+After looking at the site from the user interface, I make an inventory of enabled modules. The following Drush commands make nice spreadsheets:
+<pre>
+drush pm-list --no-core
+drush pm-list --core
+</pre><p>
+You can take a look on Sheets 2 and 3 of the Readiness spreadsheet to see the entirety of what was and and wasn’t available.</p>
+<p>In our case there are just two areas of concern:</p>
+<p>Blogs have been removed from core, but with views moved in, this won’t be daunting to rebuild. They may work a little differently, but odds are that will be for the better!</p>
+<p>The only missing module that had no alternative and looked like it might hurt was Pathauto. It’s nice to keep URLs tidy and hard to remember to set them, but wouldn’t be strictly necessary for our purposes and there were were no other glaring show stoppers.</p>
+<p>Note: It looks like upgrade work is happening on <a href="https://github.com/md-systems/pathauto">Github</a> so I updated the spreadsheet to make note and will evaluate the status as part of the process.</p></li>
+</ul><ul><li><strong>Look for customizations</strong><br />
+In addition to custom and contributed modules, it’s good to check for inappropriate  customizations done directly to core or contrib. Whatever reason they had for being done back then may need to be accounted for, hopefully in a best-practices way, on the new site.
+<p>Although it seemed unlikely that any relevant changes had been done, for good measure, I always run <a href="https://www.drupal.org/project/hacked">Hacked</a>. It’ll let you know about files that have been changed from the source. </p>
+<p>There were some theme customizations and a .gitignore file was missing, so as suspected, nothing to worry about.</p></li>
+</ul><h2>3 - Features no longer in use</h2>
+<p>I’ve learned over the years that not every module that is enabled is in use! I try to find a link that illustrates somewhere on the site that the module is visibly in play. Even when there is a place in production where the module is used, it’s entirely possible that the production feature itself doesn’t make sense to upgrade. A serious investigation of analytics and logs can be insightful. Data can guide conversations with product owners about what’s still valuable and support decision-making.</p>
+<p>On our straightforward site, there’s not much to <em>not</em> use. As I learned running the first migration, though, even features that were briefly explored but never used can come into play. More on this later.</p>
+<h2>4 - The right time</h2>
+<p>Once you’ve completed your archaeology, you’ll need to find the right time for your organization. Talk with stakeholders about the change and be on the lookout for in-process or upcoming feature requests that you might not be prepared to accommodate.</p>
+<p>In our case, because the motivation for this upgrade is process, not product, we’ll proceed and go as far as we reasonably can with the upgrade. At the time of this writing, I’ve done a D8 install and begun running a migration. (That’s how I know to be on the lookout for certain disabled modules!) I’m feeling confident that we can get a long way.</p>
+<p>Unless the migration process is flawless and the <a href="https://www.drupal.org/node/2341575">Drupal 8 to Drupal 8</a> update path is in place I'd be unlikely to recommend deployment of the work, especially with an impending re-design. While re-entering some data manually has always been a part of previous major version upgrades, I’d be loathe to commit to beta adoption if I thought we’d find ourselves stranded in the latest version. Fortunately, all the preparatory work can be done without the upgrade path in place!</p>
+<p>Coming next in this blog series, Part 2: Preparing to Migrate.</p>
+<p><em>What modules and processes do you use to prepare for a major version upgrade?</em></p>
+        </div>
+  </body>
+</html>
+

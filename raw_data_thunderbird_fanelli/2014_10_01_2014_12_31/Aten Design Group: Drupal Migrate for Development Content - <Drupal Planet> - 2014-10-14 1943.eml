@@ -1,0 +1,90 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 14 Oct 2014 17:43:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 14 Oct 2014 17:43:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Drupal Migrate for Development Content
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/drupal-migrate-development-content
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Drupal Migrate for Development Content</title>
+    <base href="http://atendesigngroup.com/blog/drupal-migrate-development-content">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/drupal-migrate.png" width="1000" height="600" alt="" /><p>Drupal and many of the people who work with it are moving toward a configuration in code model of site development. One of the advantages of a config in code approach is that the code you add, share, and modify works for all the members of your team and across environments. Instead of everyone syncing databases (or passing around notes on how to update their environment because something changed), everything stays up-to-date with the latest code in your version control system. This essentially provides a known, common state for everyone to work against.</p>
+
+<p>Configuration only gets you part of the picture, though. Modules like Features and configuration initiatives for Drupal 8 separate configuration from content. Configuration is sharable settings; content is the information that site stores/uses. This separation makes sense in organizing your code or site, but leaves a big gap in your ability to build and test a project. If I'm working on a project locally, I can't share a link to the article node I'm having trouble with because it’s a combination of configuration and content that exists only on my local machine.</p>
+
+<p>You need standardized content to test against and to provide a common ground to review variations with your team. But what do you do when you're starting on a project and you don't have content from a client yet? You still need to develop code that uses content and you still need to style the site.</p>
+
+<p>Luckily, we can use a common approach for bringing in content from another source, the <a href="http://drupal.org/project/migrate">Migrate module</a>, to help create content we can share and test against. Additionally, the content can be updated, version controlled, and contributed back as the project rolls forward. And – this is very important for development content – when we're finished with dev content we can remove it with Migrate's rollback functionality. Content created with some modules like Devel Generate and even manually created development content aren’t easily removed when you're finished. At Aten, we commonly had many nodes with "DELETE" in the title to make it "easy" for us to find and remove it later, which is less than ideal.</p>
+
+<p>How does this all work? This is our internal workflow:</p>
+
+<ul>
+<li>Create a resources folder in your project. Typically we now have a "root" level that has resources, a public_html folder (which has the Drupal files), and other project files.</li>
+<li>Inside of the resources, we create a content directory and add content files like YAML files, CSVs, etc. (more on that in a minute)</li>
+<li>We have started to use <a href="http://gulpjs.com">gulp</a> and we have a task that will convert the YAML files to JSON.</li>
+<li>We create a custom module in the project for migrate and add migrate classes for each of the content files we need to import. Typically this will be something like "project_content". For dev specific content, we name the migrations with "Dev" on the end. When we have production content (which is awesome to have early in a project), we leave that suffix off the class name since that content isn't something we need to rollback later. </li>
+<li>We've created a script that is shared in the project that enables/disables modules, enables and reverts features, runs the migrations, updates various other things related to the project setup. If I add a new migration, I update that script's configuration to include it for others working on the project. I hope to share more about this script soon.</li>
+</ul>
+
+<h2>Creating Test Content</h2>
+
+<p>Now we need to create the content. Typically this requires some insight provided by our Drupal architecture document, but I have also created a couple of tools to help out with this process which help me stay in code:</p>
+
+<ul>
+<li><a href="http://drupal.org/project/drush_typeinfo">drush typeinfo</a></li>
+<li><a href="http://drupal.org/project/drush_taxonomyinfo">drush taxonomyinfo</a></li>
+</ul>
+
+<p>The typeinfo commands allow you to inspect content types/entities on the site. For example, if you are going to create content for an Article content type, you would run:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">drush typeinfo article</pre></div>
+
+<p>That will output the content type's fields, field types, and some other information. Often this provides a good overview of what pieces you will need to create in your content file. If you have a taxonomy or entity reference field in that content type, you can also get more information about that via another typeinfo command:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">drush typeinfo-field field_article_type</pre></div>
+
+<p>This will return a few specifics that may show you the taxonomy that field uses. And now we can use the taxonomyinfo command to list terms in that vocabulary:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">drush taxonomyinfo-term-list article_type</pre></div>
+
+<p>We can also extend this functionality to automatically stub some of the content (à la <a href="http://drupal.org/project/devel_generate">devel-generate</a>) by creating another drush command. This command lets us get the YAML with some data populated for us:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">drush stub-content article --include-id --include-title --count=5 &gt; resources/content/article.yaml</pre></div>
+
+<p>An example of this command is here: <a href="https://gist.github.com/robballou/a7aa247aa7bdfb3a1b2c">https://gist.github.com/robballou/a7aa247aa7bdfb3a1b2c</a></p>
+
+<p>The stub content functionality makes some really rudimentary content and you can expand that with content from your favorite ipsum replacement or other sources.</p>
+
+<p>We can migrate from a variety of sources:  from CSV files, JSON files, or even other databases. CSV files are a popular choice because you can collaborate on a spreadsheet (especially via Google sheets) and export that data. JSON is another nice solution because the data can match the destination closely. In some of our projects we have even used YAML and converted that to JSON since the readability of YAML is slightly better than JSON — which means we can have people write content who don't know the ins-and-outs of JSON!</p>
+
+<p>Some systems may have access to a PHP YAML library and it could be used to create a Migrate YAML source class. This would eliminate the need to convert files but may rely on that YAML library to be available on local, staging, and production servers. We've used the node.js/gulp approach because it can be shared between environments and projects that may not have this PHP support built in.
+Migrating and Removing Test Content</p>
+
+<p>This article won't get into the details of creating your Migrate code, but the next step in the process is creating and testing the code to get this content into Drupal. When this is done, commit this to your version control system to share with others working on the project or with other systems.</p>
+
+<p>As an example, we'll say we created a migration called ArticlesDev which has a handful of articles in it. The content uses a variety of the fields in the content so we can make sure all the functionality works and includes several nodes so we can test lists of various sizes. We can import the content into any system with:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">drush migrate-import ArticlesDev</pre></div>
+
+<p>If the article content type changes down the line, you can update the content files and re-run the migration, updating the existing content (or adding new content):</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">drush migrate-import --update ArticlesDev</pre></div>
+
+<p>Development-specific content may never get imported on shared systems, but if you do want to use that content for client acceptance testing or for any other case, you can easily remove this content with:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">drush migrate-rollback ArticlesDev</pre></div>
+
+<h2>Content in Code</h2>
+
+<p>If you're working in a team or if you need a client to review functionality, development content can be very handy. Building on this workflow, you can get a set of content in place early in the process, update it as things change, and get rid of it if you don't need it anymore. Your team and your clients have a common ground when discussing the project. As a bonus, your development migration code can be used as a basis for creating or importing live content as you get it from the client.</p>
+  </body>
+</html>
+

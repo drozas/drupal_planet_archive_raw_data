@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 25 Jul 2013 12:42:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 25 Jul 2013 12:42:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Leow Kah Thong: Remove the "No front page content has been created yet." in the default Drupal installation
+Content-Transfer-Encoding: 8bit
+Content-Base: http://kahthong.com/2013/07/remove-no-front-page-content-has-been-created-yet-default-drupal-installation
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Leow Kah Thong: Remove the "No front page content has been created yet." in the default Drupal installation</title>
+    <base href="http://kahthong.com/2013/07/remove-no-front-page-content-has-been-created-yet-default-drupal-installation">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden" data-edit-id="node/161/body/und/rss"><div class="field-items"><div class="field-item even" property="content:encoded"><div class="codeblock"><code>/**<br /> * Implements template_preprocess_page().<br /> */<br />function YOUR_THEME_preprocess_page(&amp;$vars) {<br />  // Remove the "No front page content has been created yet.".<br />  if (isset($vars['page']['content']['system_main']['default_message'])) {<br />    unset($vars['page']['content']['system_main']['default_message']);<br />  }<br />}</code></div>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above" data-edit-id="node/161/field_tags/und/rss"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-7" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal 7</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/theme" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">theme</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/theming" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">theming</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/preprocess" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">preprocess</a></div></div></div>
+  </body>
+</html>
+

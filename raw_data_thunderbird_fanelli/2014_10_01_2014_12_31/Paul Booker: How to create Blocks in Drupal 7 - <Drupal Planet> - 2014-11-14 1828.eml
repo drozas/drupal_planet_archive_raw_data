@@ -1,0 +1,164 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 14 Nov 2014 17:28:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 14 Nov 2014 17:28:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: How to create Blocks in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-blocks-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: How to create Blocks in Drupal 7</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-blocks-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php"> 
+// $Id$
+ 
+/**
+* @file
+* Implements various blocks to improve pending content workflow.
+*/
+ 
+ 
+/**
+ * Implements hook_block_info().
+ */
+function approval_block_info() {
+  $blocks['pending_comments'] = array(
+    'info'       =&gt; t('Pending Comments'),
+    'status'     =&gt; TRUE,
+    'region'     =&gt; 'sidebar_first',
+    'weight'     =&gt; 0,
+  );
+  $blocks['unpublished_nodes'] = array(
+    'info'       =&gt; t('Unpublished Nodes'),
+    'status'     =&gt; TRUE,
+    'region'     =&gt; 'sidebar_first',
+    'weight'     =&gt; 0,
+  );
+  return $blocks;
+}
+  
+/**
+ * Implements hook_block_configure().
+ */
+function approval_block_configure($delta) {
+ 
+  $form = array();
+  
+  switch($delta) {
+  
+  case 'pending_comments':
+    $form['pending_comment_count'] = array(
+      '#type' =&gt; 'textfield',
+      '#title' =&gt; t('Configure Number of Comments to Display'),
+      '#size' =&gt; 6,
+      '#description' =&gt; t('Enter the number of pending comments that will appear in the block.'),
+      '#default_value' =&gt; variable_get('pending_comment_count',  5),
+    );
+    break;
+  
+  case 'unpublished_nodes':
+    $form['unpublished_node_count'] = array(
+      '#type' =&gt; 'textfield',
+      '#title' =&gt; t('Configure Number of Nodes to Display'),
+      '#size' =&gt; 6,
+      '#description' =&gt; t('Enter the number of unpublished nodes that will appear in the block.'),
+      '#default_value' =&gt; variable_get('unpublished_node_count',  5),
+    );
+    break;
+  
+  }
+  return $form;
+}
+ 
+ 
+ 
+/**
+ * Implements hook_block_save().
+ */
+function approval_block_save($delta = '', $edit = array()) {
+ 
+  switch($delta) { 
+    case 'pending_comments':
+       variable_set('pending_comment_count', (int)$edit['pending_comment_count']);
+       break;   
+    case 'unpublished_nodes':
+       variable_set('unpublished_node_count', (int)$edit['unpublished_node_count']);
+       break;
+  }
+  
+  return;
+}
+ 
+/**
+ * Implements hook_block_view().
+ */
+function approval_block_view($delta = '') {
+ 
+  switch ($delta) {
+    case 'pending_comments':
+      $block['subject'] = t('Pending Comments');
+      $block['content'] = approval_block_contents($delta);
+      return $block;
+      break;
+   case 'unpublished_nodes':
+      $block['subject'] = t('Unpublished Nodes');
+      $block['content'] = approval_block_contents($delta);
+      return $block;
+      break;
+  }
+  
+}
+ 
+ 
+/**
+ * A module-defined block content function.
+ */
+function approval_block_contents($delta) {
+  switch ($delta) {
+    case 'pending_comments':
+      if (user_access('administer comments')) {
+         $nbr_comments = variable_get('pending_comment_count');
+         $result = db_query("SELECT cid, subject FROM {comment} WHERE status = 0 limit $nbr_comments");
+         $items = array();
+         foreach ($result as $row) {
+           $items[] = l($row-&gt;subject, 'comment/'.$row-&gt;cid.'/edit');
+         }        
+         return array('#markup' =&gt; theme('item_list', array('items' =&gt; $items)));
+      }
+    break;
+    
+    case 'unpublished_nodes':
+      if (user_access('administer nodes')) { 
+         $nbr_nodes = variable_get('unpublished_node_count');
+         $result = db_query("SELECT nid, title FROM {node} WHERE status = 0 limit $nbr_nodes");
+         $items = array();
+         foreach ($result as $row) {
+           $items[] = l($row-&gt;title, 'node/'.$row-&gt;nid.'/edit');
+         }        
+         return array('#markup' =&gt; theme('item_list', array('items' =&gt; $items)));
+      }
+    break;
+  }
+}
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/block" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">block</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/module" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">module</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="field field-name-field-url field-type-link-field field-label-above"><div class="field-label">URL:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="https://gist.github.com/paulbooker/5420976">paulbooker / gist:5420976</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-blocks-drupal-7"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="How to create Blocks in Drupal 7">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-blocks-drupal-7&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-blocks-drupal-7"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/how-create-blocks-drupal-7" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

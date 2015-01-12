@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 09 Jun 2013 00:17:39 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 09 Jun 2013 00:17:39 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #20
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/369
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: Drupal 8 progress from my / MongoDB perspective: update #20</title>
+    <base href="http://www.drupal4hu.com/node/369">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>There are a lot of great things happening! Let's first see those that are already in: the config system got back to a saner track by removing the partial import capability and only allowing import of full config trees. This removed manifests which, honestly, I never truly grokked. Also, config import and sync were converted to pluggable services earlier so if someone can figure out how to do partials better then they can do. There was an epic profiling effort made by the Twig team to get the conversion committable -- and then Alex Pott honored them by committing patches one by one instead of rolled together to give them credit. Same with the views rename method patches. Big, big kudos to Alex for this! </p>
+<p>Database connections are now serializable. As MongoDB doesn't use PDO, this is only important to us in the way the Database class has been refactored to allow for this. </p>
+<p>Entity controllers now can have their dependencies injected (what about entities themselves? see below). Although batch v2 didn't happen, the batch storage is now pluggable (and soon the batch specific tables will be gone completely as msonnabaum points out that the expirable keyvalue storage is fit for it). </p>
+<p>On a performance front, let's note that contextual links are now AJAX, making them compatible with render caching. The issue was filed in 2010 and I filed it as "this will never be done although it's rather necessary", so big kudos to everyone fixing it.</p>
+<p>Firing hooks during major upgrades were always a problem and we discouraged it but now this will throw an exception (this was mostly my work). This is the second cornerstone on making the Drupal 7-&gt;8 upgrade path way more resilient than before, the first one are tests for use cases that were untestable before. Probably it'd been better if migrate happened this cycle, but it didn't so we cook with whatever ingredients we have.</p>
+<p>The evented branch of the entity refactor is now dead and won't happen but a lot of that code now lives in the widely accepted "let's move as much logic as possible from storage controllers to entity classes" patch. It even passed once but due to the user entities conversion to the next generation controller it currently fails but I expect it to be fixed this weekend and it's possible it'll get committed soon. This will make replacing entity storage controllers much easier and supporting contrib entities much easier too.</p>
+<p>Meanwhile, entity classes themselves are being changed to not be plugins. This makes some sense because, well, there's not much pluggability here you would want to do. I believe this leads to dependency injection of plugins which will be useful now that most of the logic is moving there.</p>
+<p>Ps. Let me congratulate two people here. You can't even find msonnabaum among the Drupal 7 contributors core and he is rapidly becoming one of the shaping architects of Drupal, quite for the better. Tim Plunkett of the Views in Core team, the unstoppable coding machine, who can somehow balance like five ongoing patches over 100kb, had only 23 core mentions in the Drupal 7 cycle. I am so glad to see others taking lead.</p>
+  </body>
+</html>
+

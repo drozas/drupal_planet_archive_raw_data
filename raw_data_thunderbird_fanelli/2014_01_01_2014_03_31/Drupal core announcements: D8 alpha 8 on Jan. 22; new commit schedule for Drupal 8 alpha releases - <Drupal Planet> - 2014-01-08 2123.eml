@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 08 Jan 2014 20:23:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 08 Jan 2014 20:23:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: D8 alpha 8 on Jan. 22; new commit schedule for Drupal 8 alpha releases
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/394763
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: D8 alpha 8 on Jan. 22; new commit schedule for Drupal 8 alpha releases</title>
+    <base href="https://groups.drupal.org/node/394763">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>To improve core momentum as we work toward a <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">Drupal 8 beta</a>, we are going to try some added structure in the commit schedule around Drupal 8 alpha releases:</p>
+<ol>
+<li>
+<p>For <strong>one week before each alpha release</strong>, we will commit only critical and major patches, to encourage focus on these important issues in preparation for each alpha release. (See the <a href="https://drupal.org/node/45111">documentation on core issue priorities</a> for more information.)</p>
+</li>
+<li>
+<p>Immediately following the alpha release, there will be <strong>a "disruption week"</strong>. Core maintainers will work with patch authors to schedule commits for patches that are difficult to reroll or are likely to break many other patches (for example, patches that touch dozens of files, or make significant changes to key APIs). The goal here is to help contributors know when to reroll these patches for the best chance of a timely commit, and to manage conflicts with critical, major, and beta-blocking issues. Patches that should be scheduled are identified at the core maintainers' discretion. See the <a href="https://drupal.org/project/issues/search/drupal?issue_tags_op=%3D&amp;issue_tags=Avoid+commit+conflicts">Avoid commit conflicts</a> and <a href="https://drupal.org/project/issues/search/drupal?issue_tags_op=%3D&amp;issue_tags=Will+cause+commit+conflicts">Will cause commit conflicts</a> issue tags.</p>
+</li>
+</ol>
+<p>After we've tried this schedule for a couple months, we will re-evaluate it to make sure it is having the intended effect.</p>
+<p>The release of the next alpha, drupal 8.0-alpha8, will be <strong>January 22, 2014</strong>. With that in mind, here is the commit schedule for the rest of this month.</p>
+<table>
+<tr>
+<tr>
+<th nowrap>
+<p>Wed. Jan. 15 - Tues. Jan 21</p>
+</th>
+<td>
+<p>Only <a href="https://drupal.org/project/issues/search/drupal?status[0]=14&amp;priorities[0]=400&amp;priorities[1]=300&amp;version[0]=8.x&amp;issue_tags_op=%3D&amp;text=&amp;assigned=&amp;submitted=&amp;participant=&amp;&amp;&amp;issue_tags=&amp;order=last_comment_timestamp&amp;sort=asc">critical and major</a> patches committed.</p>
+</td>
+</tr>
+<tr>
+<th>
+<p>Wed. Jan 22</p>
+</th>
+<td>
+<p>Drupal 8.0-alpha 8 released.</p>
+</td>
+</tr>
+<tr>
+<th nowrap>
+<p>Thurs. Jan. 23 - Tues. Jan 28</p>
+</th>
+<td>
+<p>Disruptive patches committed at core maintainers' discretion. (Schedule in advance with a core maintainer.) Note that January 25 - 27 will be blocked off from scheduled changes, due to the <a href="https://groups.drupal.org/node/332998">Global Sprint Weekend</a>.</p>
+</td>
+</tr>
+<tr>
+</tr></tr></table>
+  </body>
+</html>
+

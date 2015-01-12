@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 07 Feb 2014 17:14:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 07 Feb 2014 17:14:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chromatic: Gotchas to Look Out for When Inheriting a Drupal Site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.chromaticsites.com/blog/gotchas-look-out-when-inheriting-drupal-site
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chromatic: Gotchas to Look Out for When Inheriting a Drupal Site</title>
+    <base href="http://www.chromaticsites.com/blog/gotchas-look-out-when-inheriting-drupal-site">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+              	<p>We’ve recently attracted new clients that came with Drupal sites already in tow. New clients is always a good thing, especially when they come with a fondness for Drupal, but it isn’t all peaches and cream. We’ve found the transition hasn’t always been as smooth as we’d expect. Here’s a list of some common gotchas to look out for when inheriting a Drupal site from another developer or Drupal shop.</p>
+
+	<h2>Before quoting new functionality, upgrades, etc. ask to review the codebase directly</h2>
+
+	<p>There’s no substitute for actually digging in and directly reviewing the codebase. We strongly recommend doing this before estimating any new features, upgrades, or maintenance. Skipping this can come back to bite you later when a feature that would normally take you one hour takes seven because the previous developer hacked something to bits or built something untenable. Additionally, you’ll see right off the bat whether of not the previous shop followed Drupal best practices regarding code standards, where things should live, etc. This information will speak volumes about what you’re getting yourself into.</p>
+
+	<h2>Hacked Core?! Hacked Contrib?! <span class="caps">GRRRRRRR</span>!</h2>
+
+	<p>If you are able to get your hands on the codebase and a working copy of the site, do yourself a favor and install and run the <a href="https://drupal.org/project/hacked">Hacked</a> module. This little gem will compare the existing core and contrib modules against their unhacked/pure counterparts. After running this, you’ll see any and everywhere that has been hacked by the previous dev team. Hopefully, this reports that nothing has been hacked. If anything has been hacked, be sure to adjust your estimates accordingly and do some <span class="caps">CYA</span> by alerting the client.</p>
+
+	<h2>Is the site version controlled? Preferably in Git?</h2>
+
+	<p>All projects should be using version control. The information that a commit log offers is invaluable when inheriting a site. Assuming the commit messages are quality and concise, you can quickly gather an understanding of how the project and code grew to its current state. When debugging, troubleshooting, or otherwise trying to grok how the last dev set things up, <strong>git blame</strong> is priceless. If the project you’re inheriting isn’t version controlled, consider making it a requirement moving forward with your new client. This is a requirement we rigidly enforce on all of our engagements.</p>
+
+	<h2>Hosting, <span class="caps">SSH</span> Access and Drush</h2>
+
+	<p>A firm understanding of the existing hosting situation is crucial. We try to have this conversation as soon as possible to get everyone on the same page. If the existing site is hosted on cheap shared hosting without proper <span class="caps">SSH</span> access, we try to fix that right away. Gone are the days of <span class="caps">FTP</span> deployments and manual database changes. These methods are slow, painful, and risky. This is why we make it a requirement that if we’re to be responsible for deployments to production, we must have <span class="caps">SSH</span> access with Drush and Git installed.</p>
+
+	<h2>Features?</h2>
+
+	<p>Is the site you’re taking over not using <a href="https://drupal.org/project/features">Features</a> to manage configuration in code? Or, if it is using Features, are they overridden? Either of these scenarios are a definite red flag. The last thing you want is to deploy a bunch of fancy new code and accidentally revert features that were previously overridden! When we inherit a site like this, the first thing we do is get all of the features modules to a default state on a dev or staging environment. This way, everyone on our team can be sure they aren’t breaking things on their next features revert via Drush. drush fra -y <span class="caps">FTW</span>!</p>
+
+	<h2>Basic Drupal features being overridden by custom code, modules</h2>
+
+	<p>This one bit us just the other day. The site we inherited was (seemingly) using the basic search that comes with core. The client was trying to adjust the weight/priority of certain node types in the search and wasn’t able to achieve the results they were looking for. After hours of digging and lot’s of head scratching, we realized the default search page was being overridden by a custom view. <span class="caps">DOH</span>! The tricky part here is that there was nothing obvious about this on the default search admin panel. If it were us, we would’ve set some alert on that page to remind users that those settings would not be respected.</p>
+
+	<h2>Panels vs. Context?</h2>
+
+	<p><a href="https://drupal.org/project/panels">Panels</a> and <a href="https://drupal.org/project/context">Context</a> are both great modules…. err… solutions to the page building problem. Chances are the site you’re inheriting is using one or both of these modules. Some site builders are rabid about one tool being better than the other. Here at <span class="caps">CHROMATIC</span> we use Context more often than not. It isn’t a deal breaker for us, but it is definitely something to consider when taking on an existing Drupal site. Run for the hills if the site is still using the default block admin panel from D6! </p>
+
+	<h2>Is the site running Pressflow or another Drupal distribution?</h2>
+
+	<p>In some cases, you might be taking over a Drupal 6 site that is running Pressflow. This is crucial because it will determine how, when you update Drupal core. If the previous developer used Pressflow, you’d hope it was for a good/obvious reason but we’ve found instances where it wasn’t obvious at first glance. Keep an eye out for this one.</p>
+
+	<p>Keep these gotchas in mind next time you inherit a Drupal site. It could save you loads of time and frustration! Leave us your favorite (or not so favorite) gotchas in the comments below. Happy Drupaling!</p>          </div>
+  </body>
+</html>
+

@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 18 Jun 2013 13:41:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 18 Jun 2013 13:41:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Singlebrook Technology: Default Menu Blocks
+Content-Transfer-Encoding: 8bit
+Content-Base: http://singlebrook.com/blog/default-menu-blocks
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Singlebrook Technology: Default Menu Blocks</title>
+    <base href="http://singlebrook.com/blog/default-menu-blocks">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>by Jeff Amaral</em>
+</p>
+<h3 id="thechallenge:">The Challenge:</h3>
+
+<p>Display the second level menu items of the currently active page, fully expanded, in the left sidebar of every page but the node edit form. And have this configuration saved in code so that every member of your development team can have it all work automatically.</p>
+
+<hr />
+
+<p>Drupal menus allow you to hierarchically organize the content on your site. In Drupal 7, there are four system menus available by default: <em>Navigation</em>, <em>Management</em>, <em>User menu</em>, and <em>Main menu</em>. The Main menu is generally used for primary navigation (AKA the links generally shown at the top of every page).</p>
+
+<p>All menus in Drupal can be displayed in one of two ways: as a variable in your theme settings or as a block. These blocks are limited. They will display the full menu (including top-level items) and, by default, only expand one of those top-level items if you are on a child page.</p>
+
+<p>Want to show only the second level of the menu with the current page activated? Or the third? Want to expand all of the menu items so you can <a href="http://www.htmldog.com/articles/suckerfish/dropdowns/">suckerfish</a> them? You can’t.</p>
+
+<p>Because of these deficiencies, lots of Drupal site builders turn to <a href="https://drupal.org/project/menu_block">Menu Block</a>, an incredibly popular and useful module....
+  </body>
+</html>
+

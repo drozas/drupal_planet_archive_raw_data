@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 11 Jun 2013 15:40:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 11 Jun 2013 15:40:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gábor Hojtsy: Drupal 8 multilingual tidbits 1: language first
+Content-Transfer-Encoding: 8bit
+Content-Base: http://hojtsy.hu/blog/2013-jun-11/drupal-8-multilingual-tidbits-1-language-first
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gábor Hojtsy: Drupal 8 multilingual tidbits 1: language first</title>
+    <base href="http://hojtsy.hu/blog/2013-jun-11/drupal-8-multilingual-tidbits-1-language-first">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even"><h3>Starting a new series</h3>
+<p>The <a href="http://buytaert.net/multilingual-support-in-drupal-8">Drupal 8 Multilingual Initiative was announced on May 9th, 2011</a> - 25 months ago. Since it's inception, the heroic efforts of <a href="http://www.drupal8multilingual.org/team">people on the initiative</a> resulted in about <a href="https://drupal.org/project/issues/search/drupal?status[0]=15&amp;status[1]=2&amp;status[2]=3&amp;status[3]=5&amp;status[4]=6&amp;status[5]=18&amp;status[6]=7&amp;issue_tags=D8MI">400 issues resolved</a> but there are <a href="https://drupal.org/project/issues/search/drupal?page=5&amp;status[0]=1&amp;status[1]=13&amp;status[2]=8&amp;status[3]=14&amp;status[4]=4&amp;status[5]=16&amp;issue_tags=D8MI">still about 300 open to resolve</a>. We have made huge advances in terms of multilingual support in Drupal 8 thanks to all these changes and you can still help to make it perfect.</p>
+<p>I'd love to highlight some of the great improvements that we made to make you excited about what is coming and point out some related places where you can still help to perfect what we have so far. This is number one in a series of short posts to discuss these improvements.</p>
+<h3>Language first in the installer</h3>
+<p>Drupal 8 makes language occupy the prominent first step in the installer. And compared to Drupal 7 where you were presented with a wall of textual instructions as to how to locate and download a translation file, place into a specific directory and reload the page, Drupal 8 comes with the realization that these are all automatable tasks. So we show you about a 100 languages to choose from to install Drupal 8 in.</p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8InstallLanguage.png" /></div>
+<p>The new Drupal version also comes with highly improved browser based language detection capabilities, so it will attempt to automatically identify your preferred language for this installation based on what your browser tells us. So in most cases, you'll likely just hit the button to continue and not think much about this.</p>
+<p>We not only present you with the list of languages, we also download and import the translations to your system proper. So all the steps you did manually before are now automated. The installer can also fully show up in right to left languages, such as when picking Arabic.</p>
+<div style="text-align: center;"><img src="http://hojtsy.hu/files/Drupal8InstallerRTL.png" /></div>
+<p>Also, if you pick a foreign language here, English will not be among your site's languages anymore either. Drupal 8's assumption is that if you install in a foreign language, you likely want a foreign language website without English showing up at all kinds of places as an option. Compared to Drupal 7 where English was not possible to remove.</p>
+</div></div></div>
+  </body>
+</html>
+

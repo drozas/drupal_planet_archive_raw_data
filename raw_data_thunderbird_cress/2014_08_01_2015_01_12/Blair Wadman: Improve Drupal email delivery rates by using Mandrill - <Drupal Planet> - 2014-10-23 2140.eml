@@ -1,0 +1,26 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 23 Oct 2014 20:40:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 23 Oct 2014 20:40:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Blair Wadman: Improve Drupal email delivery rates by using Mandrill
+Content-Transfer-Encoding: 8bit
+Content-Base: http://befused.com/drupal/mandrill
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Blair Wadman: Improve Drupal email delivery rates by using Mandrill</title>
+    <base href="http://befused.com/drupal/mandrill">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Recently one of my clients had a problem with a large portion of transactional email never being seen. The emails were being directed to the recipients' spam folders and were generally being over-looked. These were important emails regarding things like membership confirmations, invoices and event information and were critical to the experience of the members.</p>
+<p>Why was this happening? Mostly because the emails were being sent by the web server. I switched it to a Mandrill, a service designed to take care of the headaches of sending transactional email, and this greatly improve the delivery rate.</p>
+<p>It is notoriously difficult to ensure emails from your application (such as Drupal) actually get delivered without getting caught in spam filters. Email providers like Mandrill have the expertise to maximise delivery rate. You are unlikely to have the time or expertise to manage this process for your own web server.</p>
+<p>Mandrill provides great stats so that you can gain a greater understanding of email delivery, if it is getting caught by spam filters, bounces, open rates etc. You can also test different versions of the same email to see which one performs best in terms of open rates.....</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/drupal/site-building" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Site building</a></div><div class="field-item odd" rel="dc:subject"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div></div>
+  </body>
+</html>
+

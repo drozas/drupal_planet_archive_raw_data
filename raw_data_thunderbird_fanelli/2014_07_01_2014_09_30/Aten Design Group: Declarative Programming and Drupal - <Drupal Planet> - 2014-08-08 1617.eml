@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 08 Aug 2014 14:17:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 08 Aug 2014 14:17:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Declarative Programming and Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/declarative-programming-and-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Declarative Programming and Drupal</title>
+    <base href="http://atendesigngroup.com/blog/declarative-programming-and-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/drupal_3.png" width="1000" height="600" alt="" /><p>Lately I've been very interested in declarative programming. Last week Smashing Magazine published <a href="http://www.smashingmagazine.com/2014/07/30/declarative-programming/">my article on Declarative Programming and the Web</a>, and last weekend I gave a talk at DrupalCamp Colorado on <a href="https://2014.drupalcampcolorado.org/session/footless-drupal">"Footless Drupal"</a> in which I talked about how Drupal 8 is using declarative programming for configuration; how the <a href="https://www.drupal.org/project/cinc">Config in Code (CINC)</a> module is aiming to, among other things, backport that to Drupal 7; and how it's already possible to use custom configuration workflows outside the default Drupal interfaces.</p>
+
+<p>If you're not already familiar with declarative programming and/or the Drupal 8 configuration API, I recommend reading my <a href="http://www.smashingmagazine.com/2014/07/30/declarative-programming/">declarative programming article in Smashing</a> (of course I do), as well as <a href="https://www.drupal.org/developing/api/8/configuration">Drupal's configuration API documentation</a> before continuing. All caught up? Great, let's talk about some next steps for expanding declarative programming in Drupal.</p>
+
+<h2>Custom Configuration Tools</h2>
+
+<p>First, we need more tools for managing configuration, with interfaces designed around more specific workflows. We're using a wide variety of approaches to building Drupal sites, and with a standard configuration format, there's no reason we shouldn't have the same variety of configuration interfaces. Do you define your content types in spreadsheets? Me too. I made <a href="http://cinc.io/playground/tsv2module/">an interface for that</a>. Do you test your menus as static HTML? Great, let's make an interface that converts HTML menus to Drupal menu config. Do 90% of your views show all content of a given type? Let's auto-generate those Views configs.</p>
+
+<p>While there's still a lot changing in Drupal 8, and some of that will likely impact configuration structures, those structures are stable enough and simple enough that we should be building our own tools around them today. And as CINC gets closer to D8 config API parity, we can use more and more of the same configuration in D7 as well. These tools can be written entirely outside Drupal, in a completely different language if you prefer, which then exports to <a href="https://en.wikipedia.org/wiki/YAML">YAML</a>. Or you can take advantage of the information available within Drupal, i.e. current site configuration and content, and build modules with new interfaces. The world is our new Drupal configuration playground. Let's get playing.</p>
+
+<h2>Declarative Forms</h2>
+
+<p>But there's also no reason declarative programming in Drupal needs to stop at configuration. Drupal has a wide variety of non-configuration concepts that could benefit from declarative approaches. One area I've been thinking a lot about lately is forms. Drupal's form API is already mostly declarative, but it's built around PHP arrays, and we interact with form arrays with imperative code. We could probably learn a lot by comparing Drupal forms to existing standards for declarative forms, like <a href="https://en.wikipedia.org/wiki/XForms">XForms</a>. But simply taking a form array and formatting it as YAML would be a good start. (Or we could do it as JSON, as <a href="http://www.gizra.com/content/headless-drupal-form-api-drupal9/">Amitai Burstein has suggested</a>).</p>
+
+<p>I'm sure declarative forms in Drupal would end up being a large and complex project, but it would come with large benefits as well. Many form alters apply universally to a given form, so they might as well be editing the original form definition directly. That wouldn't make sense in community module code, but moving the form definition outside code would allow such form alters to happen directly in the configuration. The same way we can now do <span class="geshifilter"><code class="text geshifilter-text">\Drupal::config('node.type.page')-&gt;set('name', 'Basic page')-&gt;save()</code></span>, we could do form alters with something like <span class="geshifilter"><code class="text geshifilter-text">\Drupal::form('formid')-&gt;set('mytextfield.#title', 'My Text Field')-&gt;save()</code></span>. Or with a YAML workflow, simply editing a YAML file would edit the form. That's already a huge benefit, as it would open up many form alters to a much wider group of implementers. Remember when we edited forms directly in HTML? A YAML form interface could give us that same ease of editing while still maintaining the power of Drupal's form API.</p>
+
+<p>And just like with declarative configuration, declarative forms would open up a wider world of use cases. Forms created in <a href="https://www.drupal.org/project/webform">Webform</a> or the field API could be easily reused in custom modules. And the same forms could be built or used entirely outside Drupal, opening the door for more form-building tools focused on specific workflows.</p>
+
+<p>Hopefully this is enough to get more people excited about taking advantage of the parts of Drupal that already have declarative interfaces, and also pushing declarative programming even further in Drupal. I'm continuing to work on these ideas and will likely have more examples to share soon, but I'd really like to see more people playing here. If you're already working or interested in working on declarative programming in Drupal, let's talk.</p>
+  </body>
+</html>
+

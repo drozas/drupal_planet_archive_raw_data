@@ -1,0 +1,59 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Oct 2013 13:10:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Oct 2013 13:10:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: The new .editorconfig file in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wunderkraut.com/blog/the-new-editorconfig-file-in-drupal-8/2013-10-22
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: The new .editorconfig file in Drupal 8</title>
+    <base href="http://wunderkraut.com/blog/the-new-editorconfig-file-in-drupal-8/2013-10-22">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field-ns-prod-entrpr-thumbnail">
+    <div id="file-3401" class="file file-image file-image-png">
+
+  
+  
+  <div class="content">
+    <img src="http://wunderkraut.com/sites/wunderkraut.com/files/styles/ns_prod_enterprise_thumbnail/public/field_ns_prod_entrpr_thumbnail/logo_0.png?itok=BIckyIFy" alt="logo.png" />  </div>
+
+  
+</div>
+  </div>
+
+  <p class="field-ns-blog-post-lead">
+    We have a new file called .editorconfig in the root folder of Drupal 8. Behind this file there is a very interesting initiative that is worth spreading.  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p> </p><p><img alt="editorconfig_header.png" class="media-image" height="100" title="editorconfig_header.png" width="737" src="http://wunderkraut.com/sites/wunderkraut.com/files/field_ns_prod_entrpr_thumbnail/editorconfig_header.png" /></p><p>The project <a href="http://editorconfig.org">EditorConfig</a> tries to promote the idea of having a <strong>.editorconfig</strong> file in each of your projects, so you can enjoy a consistent coding style between different editors and IDEs. No need to configure anymore the editor for every project.</p><p>The text format of <em>.editorconfig</em> is easy to read. For example this is the current <em>.editorconfig</em> in Drupal8 alpha 4:</p>
+<pre>
+
+# Drupal editor configuration normalization
+# @see http://editorconfig.org/
+
+# This is the top-most .editorconfig file; do not search in parent directories.
+root = true
+
+# All files.
+[*]
+end_of_line = LF
+indent_style = space
+indent_size = 2
+
+# Not in the spec yet:
+# @see https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+</pre>
+<p> </p><p>In this file is expressed in a concise and readable manner some basic conventions part of the <a href="https://drupal.org/coding-standards">Drupal coding standards</a>.</p><p>To make use of the the <em>.editorconfig</em> file, you need to install the plugin in your favourite editor to make it happen:</p><p><img alt="editorconfig_plugins.png" class="media-image" height="418" title="editorconfig_plugins.png" width="480" src="http://wunderkraut.com/sites/wunderkraut.com/files/styles/large/public/editorconfig_plugins.png?itok=m0uQiF3y" /><br />The success of the project EditorConfig relies on how far the initative spreads, and how many text editors and IDEs support this brilliant initiative.</p><p>Not only Drupal, but many other open source projects have included this editorconfig file as part of their repositories: jQuery, Ruby, Symfony, CakePHP, Octopress, Modernizr, etc and <a href="https://github.com/editorconfig/editorconfig/wiki/Projects-Using-EditorConfig">many others</a>.</p><p>When the <em>.editorconfig</em> file was <a href="https://drupal.org/node/1713662">committed to Drupal 8</a> in Dec 2012 there were some doubts about its usefulness and the issue was marked with the "<em>review before release</em>" tag. But I believe this file will stay with us for a long time.<br /> </p><p> </p> </div>
+    </div>
+  </body>
+</html>
+

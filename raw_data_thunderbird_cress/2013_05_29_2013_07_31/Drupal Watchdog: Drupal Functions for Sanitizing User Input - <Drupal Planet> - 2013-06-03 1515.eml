@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 03 Jun 2013 14:15:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 03 Jun 2013 14:15:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Drupal Functions for Sanitizing User Input
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/2/2/sanitizing-functions
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Drupal Functions for Sanitizing User Input</title>
+    <base href="http://drupalwatchdog.com/2/2/sanitizing-functions">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-article-body field-type-text-long field-label-hidden">
+        <div class="field-item even"><h3>Ways to Protect Your Websites</h3>
+<p>Any website can be vulnerable to a variety of security problems, regardless of its underlying web technologies, including Drupal. Yet the most common type of attack involves a visitor injecting ill-intentioned code that is presumed to be regular text. For instance, an attacker might submit a comment to a blog post, but instead of providing only innocuous text, he includes malicious JavaScript code, hoping that it will be rendered by the web browser of anyone later viewing that page. Another attack vector, known as SQL injection, works by submitting through a form field some SQL code that, if not handled properly, ends up as part of a database query, intended to execute an unauthorized statement, such as truncating or dropping tables within the database, setting passwords to known values, or stealing user sessions.</p>
+<p>That latter type of foul play is well addressed by Drupal's database API layer, which, if used properly and consistently in one's custom code, can negate the risk of an SQL injection breaching one's defenses. Consequently, Drupal developers and administrators will more likely encounter the former type of attack.</p>
+<p>Broadly speaking, there are two schools of thought regarding how best to avoid falling victim to any online miscreant attempting to force his code to be displayed in your pages' contents or URLs. It might seem that the safest defense is to never allow unvetted content into the website's database. This process of sanitizing all text beforehand could be thought of as "pre-filtering". Drupal generally takes the opposite approach ("post-filtering") — namely, allowing all submitted content into the database, but always sanitizing it on output.</p></div>
+  </div>
+<fieldset class="field-group-fieldset group-article-author collapsible  form-wrapper" id="node_article_rss_group_article_author"><legend><span class="fieldset-legend">Author</span></legend><div class="fieldset-wrapper"><div class="field field-name-field-article-author-name field-type-text field-label-hidden">
+        <div class="field-item even">Michael J. Ross</div>
+  </div>
+<div class="field field-name-field-article-author-byline field-type-text-long field-label-hidden">
+        <div class="field-item even"><p>As an experienced web developer, Michael J. Ross creates custom websites for businesses and non-profits, using Drupal and other leading technologies. He writes articles and book reviews, of which more than 500 have been published in print and online.</p>
+</div>
+  </div>
+</div></fieldset>
+
+		<a class="da2a_button" href="http://www.addtoany.com/share_save" id="da2a_1"><img src="/sites/all/modules/addtoany/images/share_save_171_16.png" width="171" height="16" alt="Share/Save"/></a>
+		<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+da2a.script_load();
+//--><!]]>
+</script>
+  </body>
+</html>
+

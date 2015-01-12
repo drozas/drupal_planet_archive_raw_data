@@ -1,0 +1,228 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 20 Dec 2013 00:26:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 20 Dec 2013 00:26:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Node Embed: A Viable Media Management Solution for Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/node-embed-viable-media-management-solution-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Node Embed: A Viable Media Management Solution for Drupal</title>
+    <base href="http://atendesigngroup.com/blog/node-embed-viable-media-management-solution-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/node-embed.png" width="1000" height="600" alt="" /><p>Drupal has long struggled in the area of media management and embedding. Despite Drupal’s wide selection of media modules, none of them have matched our requirements (probably too much to ask). <a href="https://drupal.org/project/media">Media</a> module almost tries to do too much thus being a little overwhelming and challenging to modify. The <a href="https://drupal.org/project/insert">Insert</a> and <a href="https://drupal.org/project/video_embed_field">Video Embed</a> modules, among others, attempt to solve specific use cases, but are quite limited. While developing <a href="http://www.cpr.org">cpr.org</a> (Colorado Public Radio), we were able to really spend some time making <a href="https://drupal.org/project/node_embed">Node Embed</a> work well. While it's not without issues, I’m excited to share how we’ve used the Node Embed module at Aten to help solve our media management needs.</p>
+
+<p>Node Embed allows you to embed one node into another. In this post, I’ll outline what it takes to set up Node Embed to embed images into your content. The same concept could be used for audio, video, or whatever content you can dream up to embed.</p>
+
+<p>Before going any further, I want to give a shout out to Aten's <a href="http://atendesigngroup.com/about/scott-reynen">Scott Reynen</a> who is the current maintainer of Node Embed and has added some of the functionality to Node Embed mentioned in this post.</p>
+
+<h2>Embed an image with a caption and credit</h2>
+
+<p><em>This tutorial is based on Drupal 7.x</em></p>
+
+<iframe src="//player.vimeo.com/video/82048740?byline=0&amp;portrait=0&amp;color=fcc318" width="768" height="528" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+<h3>1. Download &amp; enable necessary modules</h3>
+
+<p>I'm assuming you know how to download and enable modules.</p>
+
+<h4>Required Modules</h4>
+
+<ul>
+<li><a href="https://drupal.org/project/node_embed">Node Embed</a></li>
+<li><a href="https://drupal.org/project/views">Views</a> and its dependencies</li>
+</ul>
+
+<h4>Optional modules</h4>
+
+<ul>
+<li><a href="https://drupal.org/project/wysiwyg">WYSIWYG</a> (Node Embed supports CKeditor or FCKeditor) <em>WYSIWYG is not required but makes it easy for content editors to embed nodes directly from the WYSIWYG toolbar.</em></li>
+</ul>
+
+<h3>2. Verify text formats</h3>
+
+<ul>
+<li>Navigate to <span class="geshifilter"><code class="text geshifilter-text">/admin/config/content/formats</code></span></li>
+<li>Edit the text format profile you want to enable Node Embed for</li>
+<li>Enable “Insert Node” by checking the checkbox</li>
+<li>You may need to experiment with Filter processing order, but should work out of the box (typically first in the list)</li>
+</ul>
+
+<p><strong>Note:</strong> If using with filtered html, make sure you are allowing <img> tags!</p>
+
+<h3>3. Setup content types</h3>
+
+<p>For this example I’ll assume you have at least Basic Page and Image content types.</p>
+
+<h4>Basic page content type</h4>
+
+<ul>
+<li>Title Field</li>
+<li>Body Field</li>
+</ul>
+
+<h4>Image content type</h4>
+
+<ul>
+<li>Title</li>
+<li>Photo caption</li>
+<li>Credits</li>
+<li>Image field</li>
+</ul>
+
+<h3>4. Embed a node</h3>
+
+<p>After completing the first three steps, you are ready to embed a node.</p>
+
+<ul>
+<li>Create a new Image node (with an image of course). Take note of the NID (Node ID) after saving the node. NIDs can easily be found in the URL when editing a node. <strong>Note:</strong> If using the Node Embed button with WYSIWYG, you can avoid manually finding Node IDs.</li>
+<li>Create a new Basic Page node. While creating or editing the Basic Page node, embed your Image node. The format is <span class="geshifilter"><code class="text geshifilter-text">[[nid:(node_id)]]</code></span> Replace “(node_nid)” with your actual node ID. ex. <span class="geshifilter"><code class="text geshifilter-text">[[nid:1]]</code></span></li>
+<li>Save the node. You should now have an embedded image. By default, Node Embed will use the “Default” view mode for the content you are embedding.</li>
+</ul>
+
+<p>Your embedded content may not look exactly like you want at this point, so continue on to learn how to customize it.</p>
+
+<h2>Customizing embedded content</h2>
+
+<p>There are at least three options for taking control of your embedded content.</p>
+
+<iframe src="//player.vimeo.com/video/82048739?byline=0&amp;portrait=0&amp;color=fcc318" width="768" height="523" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+<h3>1. Customize the Node Embed view mode</h3>
+
+<p>By default, Node Embed module provides a Node Embed view mode for every content type. It just needs to be enabled. Until the Node Embed view mode is enabled, it will use the default view mode. A module like <a href="https://drupal.org/project/ds">Display Suite</a> will give you additional control over the output of your view mode.</p>
+
+<ul>
+<li>Visit /admin/structure/types</li>
+<li>Click “Manage Display” for the Image content type </li>
+<li>Enable Node Embed view Mode (This setting is hidden in the vertical tabs at the bottom of the page)</li>
+<li>Adjust the Node Embed view Mode (set image style, etc.)</li>
+</ul>
+
+<h3>2. Create a node embed template in your theme</h3>
+
+<p>Creating a custom node template will give you complete control over your markup.</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">sites/all/themes/[custom_theme]/node--[content_type_machine_name]--node_embed.tpl.php</pre></div>
+
+<p>You can put whatever html you like in your <span class="geshifilter"><code class="text geshifilter-text">node--[content_type_machine_name]--node_embed.tpl.php</code></span> file. Here is a very simple example that will show the image field if it exists:</p>
+
+<div class="geshifilter"><pre class="geshifilter-php"><span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span><a href="http://www.php.net/isset"><span style="color: #000066;">isset</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$content</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'field_image'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>: <span style="color: #000000; font-weight: bold;">?&gt;</span>
+&lt;figure&gt;&lt;?php <a href="http://www.php.net/print"><span style="color: #000066;">print</span></a> render<span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$content</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'field_image'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>; ?&gt;&lt;/figure&gt;
+<span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">endif</span>; <span style="color: #000000; font-weight: bold;">?&gt;</span></pre></div>
+
+<p><strong>Note:</strong> Using the render function will still use some view mode settings like image styles and whether labels show or not.</p>
+
+<h3>3. Overwrite the default view mode</h3>
+
+<p>By default Node Embed uses a view mode called <span class="geshifilter"><code class="text geshifilter-text">node-embed</code></span>.</p>
+
+<p>If you have a different view mode you prefer to use simply adjust your Node Embed code. For example, the following Node Embed code would use the teaser view mode.</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">[[nid:2 view_mode=teaser]]</pre></div>
+
+<h2>Passing in custom variables</h2>
+
+<p>Node embed allows you to pass variables that you can access in preprocess functions and templates.</p>
+
+<p>Imagine needing to easily be able to left or right align images. Your node embed code changes slightly to:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">[[nid:1 align=right]]</pre></div>
+
+<p><strong>Note:</strong> align is a made up variable. It could be anything, and same for the value right.</p>
+
+<h3>Accessing the Node Embed Parameter in code</h3>
+
+<p>You can access the parameters using the following construct in a node preprocess function.</p>
+
+<div class="geshifilter"><pre class="geshifilter-php"><span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'node_embed_parameters'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'align'</span><span style="color: #66cc66;">&#93;</span></pre></div>
+
+<p>Add a node preprocess function to <span class="geshifilter"><code class="text geshifilter-text">template.php</code></span></p>
+
+<div class="geshifilter"><pre class="geshifilter-php"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<span style="color: #808080; font-style: italic;">/**
+ * Override or insert variables into the node template.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> yourthemename_preprocess_node<span style="color: #66cc66;">&#40;</span>&amp;<span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+  <span style="color: #b1b100;">if</span> <span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'view_mode'</span><span style="color: #66cc66;">&#93;</span> == <span style="color: #ff0000;">'node_embed'</span> &amp;&amp; <span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'type'</span><span style="color: #66cc66;">&#93;</span> == <span style="color: #ff0000;">'image'</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+&nbsp;
+    <span style="color: #808080; font-style: italic;">// Check to see if the align Node Embed parameter exists</span>
+    <span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span><a href="http://www.php.net/isset"><span style="color: #000066;">isset</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'node_embed_parameters'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'align'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+      <span style="color: #808080; font-style: italic;">// For security, run align through the check_plain() function</span>
+      <span style="color: #808080; font-style: italic;">// Add the alignment value to the classes array used in our node template</span>
+      <span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'classes_array'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #66cc66;">&#93;</span> = check_plain<span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$variables</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'node_embed_parameters'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'align'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>;
+    <span style="color: #66cc66;">&#125;</span>
+&nbsp;
+  <span style="color: #66cc66;">&#125;</span>
+<span style="color: #66cc66;">&#125;</span>
+<span style="color: #808080; font-style: italic;">// Closing php included only for proper highlighting in blog post</span>
+<span style="color: #000000; font-weight: bold;">?&gt;</span></pre></div>
+
+<p>Add the following to <span class="geshifilter"><code class="text geshifilter-text">node--image--node_embed.tpl.php</code></span></p>
+
+<div class="geshifilter"><pre class="geshifilter-php"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<span style="color: #808080; font-style: italic;">/**
+ * $classes variable will include the alignment value of right, left or whatever is passed in
+ */</span>
+<span style="color: #000000; font-weight: bold;">?&gt;</span>
+&nbsp;
+&lt;figure <span style="color: #000000; font-weight: bold;">class</span>=<span style="color: #ff0000;">&quot;&lt;?php print $classes; ?&gt; image-wrapper&quot;</span>&gt;
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span><a href="http://www.php.net/isset"><span style="color: #000066;">isset</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$content</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'field_image'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>: <span style="color: #000000; font-weight: bold;">?&gt;</span>
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <a href="http://www.php.net/print"><span style="color: #000066;">print</span></a> render<span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$content</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'field_image'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>; <span style="color: #000000; font-weight: bold;">?&gt;</span>
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">endif</span>; <span style="color: #000000; font-weight: bold;">?&gt;</span>
+&nbsp;
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span><a href="http://www.php.net/isset"><span style="color: #000066;">isset</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$content</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'body'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>: <span style="color: #000000; font-weight: bold;">?&gt;</span>
+  &lt;figcaption&gt;&lt;?php <a href="http://www.php.net/print"><span style="color: #000066;">print</span></a> render<span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$content</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'body'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>; ?&gt;&lt;/figcaption&gt;
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">endif</span>; <span style="color: #000000; font-weight: bold;">?&gt;</span>
+&nbsp;
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">if</span><span style="color: #66cc66;">&#40;</span><a href="http://www.php.net/isset"><span style="color: #000066;">isset</span></a><span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$content</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'field_credits'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span><span style="color: #66cc66;">&#41;</span>: <span style="color: #000000; font-weight: bold;">?&gt;</span>
+  &lt;div <span style="color: #000000; font-weight: bold;">class</span>=<span style="color: #ff0000;">&quot;image-credits&quot;</span>&gt;&lt;?php <a href="http://www.php.net/print"><span style="color: #000066;">print</span></a> render<span style="color: #66cc66;">&#40;</span><span style="color: #0000ff;">$content</span><span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">'field_credits'</span><span style="color: #66cc66;">&#93;</span><span style="color: #66cc66;">&#41;</span>; ?&gt;&lt;/div&gt;
+  <span style="color: #000000; font-weight: bold;">&lt;?php</span> <span style="color: #b1b100;">endif</span>; <span style="color: #000000; font-weight: bold;">?&gt;</span>
+&lt;/figure&gt;</pre></div>
+
+<p>Finally, add some css <span class="geshifilter"><code class="text geshifilter-text">style.css</code></span> (or whatever stylesheet being used)</p>
+
+<div class="geshifilter"><pre class="geshifilter-css">//add the potential classes that someone may use in Node Embed
+<span style="color: #6666ff;">.right</span> <span style="color: #66cc66;">&#123;</span>
+  <span style="color: #000000; font-weight: bold;">float</span>: <span style="color: #000000; font-weight: bold;">right</span>;
+  <span style="color: #000000; font-weight: bold;">padding-left</span>: <span style="color: #933;">20px</span>;
+<span style="color: #66cc66;">&#125;</span>
+<span style="color: #6666ff;">.left</span> <span style="color: #66cc66;">&#123;</span>
+  <span style="color: #000000; font-weight: bold;">float</span>: <span style="color: #000000; font-weight: bold;">left</span>;
+  <span style="color: #000000; font-weight: bold;">padding-right</span>: <span style="color: #933;">20px</span>;
+<span style="color: #66cc66;">&#125;</span></pre></div>
+
+<p><strong>Note:</strong> The Aten team will hopefully release our custom module that allows you to dynamically setup Node Embed Parameters and allows your users to easily insert an image with alignment, etc. Hat tip to <a href="http://atendesigngroup.com/about/rob-ballou">Rob Ballou</a> for his excellent work there. Here is a sneak peek:</p>
+
+<iframe src="//player.vimeo.com/video/82049282?byline=0&amp;portrait=0&amp;color=fcc318" width="768" height="473" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+<p><img src="https://www.evernote.com/shard/s201/sh/600f89a5-0103-40a1-95c9-8a6f630dcbea/91c2d63b114cf879b23aa4a8c01a1de6/deep/0/Create-Blog-Post---CPR.png" alt="Custom Node Embed Options" /></p>
+
+<p>The module provides "Align" and "Do not format or resize" to the Node Embed WYSIWYG insert form, making it easy to add custom parameters in a user friendly way. These options are customizable per content type.</p>
+
+<h2>Caveats</h2>
+
+<ul>
+<li>Migrating content containing node embed tags would cause the embedded content to break if the node IDs don’t match on the new environment.</li>
+<li>Node Embed inserts custom tags into your markup <span class="geshifilter"><code class="text geshifilter-text">[[nid:(node_id)]]</code></span>. This won’t translate well if ever migrating away from Drupal or Node Embed.</li>
+</ul>
+
+<h2>Troubleshooting</h2>
+
+<ul>
+<li>If just <span class="geshifilter"><code class="text geshifilter-text">[[nid:(node_id)]]</code></span> is outputting to the screen, make sure the node you are embedding exists and is published.</li>
+<li>Double check text formats to make sure Node Embed tags (image tag included) are getting processed and not filtered out</li>
+</ul>
+
+<h2>Call for Comments</h2>
+
+<p>What are your thoughts on this approach to media handling in Drupal? What else has or hasn't worked for you?</p>
+  </body>
+</html>
+

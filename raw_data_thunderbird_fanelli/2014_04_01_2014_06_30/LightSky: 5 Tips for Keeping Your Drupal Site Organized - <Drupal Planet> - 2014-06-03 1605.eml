@@ -1,0 +1,58 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 03 Jun 2014 14:05:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 03 Jun 2014 14:05:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LightSky: 5 Tips for Keeping Your Drupal Site Organized
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.lightsky.com/blog/5-tips-keeping-your-drupal-site-organized
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LightSky: 5 Tips for Keeping Your Drupal Site Organized</title>
+    <base href="http://www.lightsky.com/blog/5-tips-keeping-your-drupal-site-organized">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="https://drupal.org" target="_blank">Drupal</a> is perhaps the most powerful framework/CMS available today.  I kid you not, there is almost nothing that can’t be created with Drupal.  From the most basic brochure site, to a way to track things for your family or business, and even large corporate applications tracking inventory and integrating with other tools.  Regardless of which category you fit in to some important steps should be taken to ensure that you are keeping your Drupal project clean and clutter free.</p>
+<h2>
+	Tip #1: Organizing your modules directory</h2>
+<p>According to Drupals best practices, you should put all of your modules into your sites/all/modules folder. Drupal will recursively search that directory for modules. Because of this, I like to encourage developers to take that one step further and create subdirectories to store modules in. For example, for the sites that we develop, we have the following directory structure in place:</p>
+<p>sites/all/modules<br />
+	   | - contrib<br />
+	   | - custom<br />
+	   | - features<br />
+	   | - dev</p>
+<p>The contrib folder contains all modules downloaded from drupal.org. The custom modules folder contains any custom modules that we have to write for the site. The features directory contains any features exported for the site. The dev folder contains any modules that are used for development. Typically, I add the dev folder to the sites .gitignore file so that modules contained within it don’t make it to production.</p>
+<p>There really isn’t a right or wrong way to organize your modules folder, but one thing you should know is that if you do decide to go this route, you won’t be able to update via the core update module, however, you will still be able to update your modules via drush.</p>
+<p>If you already have an existing site and are looking to organize your modules directory, be sure to rebuild the registry after moving your modules (and as always, make a backup). This will ensure that drupal will be made aware of your new module locations and will prevent any errors.</p>
+<h2>
+	<br />
+	Tip #2: Creating Useful Content Types</h2>
+<p>One thing that can sometimes confuse sitebuilders is when to create a new content type, or when to simply modify an existing one. A good rule of thumb is to take all of your features that you wish for the site to have, and then pick out the nouns (i.e: news, events, podcasts, videos, etc).</p>
+<p>I also like to encourage that the content types be singular, not plural. I realize this may seem a little nit-picky, however, when a user goes to add a piece of content, they usually add those one piece at a time, so the admin interface should reflect that.</p>
+<p>Also, it’s a good idea to ensure that your content types, and any respective fields, are named in such a way that description text isn’t needed to describe what they do. For example, if you are creating a content type that will add images to a homepage slider, then your content type should be called “Homepage Slideshow Image”.</p>
+<p>It’s also a good idea to ensure that when adding fields to a content type, that you do so in a way that the label accurately describes what this field does, and that in cases where it doesn’t, you add appropriate description text. Not only does this help with administrative usability, it also helps ensure you remember that fields purpose long after the site is pushed to production.</p>
+<h2>
+	Tip #3: Primary Navigation Structure</h2>
+<p>When trying to determine the site organization for your visitors, a lot of things must be taken into consideration. Who is your target user? What information are they seeking when they come to your website? What is the best way to help them find what they are looking for? Often times, a visitor will come to your website for a reason, and so your navigation structure should help guide them to what they are looking for. Having a properly organized site structure makes for a better user experience.</p>
+<p>I generally consider two different approaches when it comes to site navigation. The organization oriented approach, and the visitor oriented approach.</p>
+<p>The organization oriented approach would have a navigation structure similar to what you see on our site (Home, About Us, Our Services, etc). This is typically useful when you have visitors coming to your site that fall into one or two categories. For example, most of our visitors are looking for our content, services, or want to contact us. Because they already have an idea as to what they are looking for, we guide them through what our organization has can offer.</p>
+<p>If your website is more geared towards helping users find information, or if you have a limited target audience and are hoping to pull them deeper into your site, you may choose to go with a visitor oriented navigation structure. Let’s use one of our clients websites, The City of Goshen (link). Like many municipalities, the City of Goshen knew that they had people coming there seeking certain types of information.  You can see from there navigation structure that they had three types of visitors to their site. : Residents, Visitors and Businesses. So when generating their site structure, they choose to categorize the sites content in a way that they could drop it into one of those buckets.</p>
+<p>Personally, I don’t feel as though one type of navigation structure is better than the other, but regardless of which one you choose, keep in mind that your menu structure should be organized. Be sure to use your primary navigation items as “buckets” to hold content, and try to go no further than a secondary or tertiary level of navigation.</p>
+<h2>
+	Tip #4: Views</h2>
+<p><a href="https://www.drupal.org/project/views" target="_blank">Views</a> can be tricky, especially for someone new to the world of site building in Drupal. The biggest tip I can have is to try to limit the number of views that you have. Keep in mind that views have the ability to have multiple pages/blocks/feeds/etc in one view, so be sure to make the most out of each view that you build, and avoid doing work twice. As a rule of thumb, I would have one view for each content type (when it’s needed). So if I have a blog, I’d have my blog page (/blog) any blocks that the blog would need (such as a recent posts block) and if needed a RSS feed included all in that same view. As with content types, be sure to name your views in such a way that they are self explanatory and use the description field when appropriate.</p>
+<h2>
+	Tip #5: URL Aliases</h2>
+<p>If you aren’t using <a href="https://www.drupal.org/project/pahtauto" target="_blank">pathauto</a> in your site, you should be. It helps ensure that your URLs are clean and conform to standards.  You want to automate as many tasks that will help your SEO as you can, and pathauto automates the foundation of each pages SEO, the URL.</p>
+<p>The big thing I like to stress with URL aliases is to have your individual content types have their own pattern. What I mean is that all your blog posts should have a path of blog/* your news items a path of news/*. This can be accomplished by using the [node:title] token.</p>
+<p>With regard to primary navigation items, I like to have the URL aliases based off of the menu structure. Let’s say that you have a primary navigation page called “About Us” and a secondary page called “Our Staff” located underneath it, you’d likely want your URL alias to be “/about-us/our-staff”. The easiest way to accomplish this is to use the following pathauto token for basic pages (or whatever non-noun content types you have)</p>
+<p>[node:menu-link:parent:title]/[node:title]</p>
+<p>Hopefully you found the tips contained within this article helpful. If you have any other site organization tips, please add them in the comments below.</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,50 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 11 Jun 2014 18:49:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 11 Jun 2014 18:49:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: fdiv.net: the floating-point divide: Sorting of products in Drupal Commerce Add To Cart form
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fdiv.net/2014/06/11/sorting-products-drupal-commerce-add-cart-form
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>fdiv.net: the floating-point divide: Sorting of products in Drupal Commerce Add To Cart form</title>
+    <base href="http://fdiv.net/2014/06/11/sorting-products-drupal-commerce-add-cart-form">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>This is a quick post regarding the sort order of option elements in the <a href="http://drupal.org/project/commerce">Drupal Commerce</a> Add to Cart form as part of Product Reference&nbsp;fields.</p>
+
+<p>I was confused as to how this was sorting. It does not sort by the Product title. It does not sort by the Product entity identifier. On my development site, the options seemed to be sorting by&nbsp;<span class="caps">SKU</span>.</p>
+
+<p>There were a couple options to look&nbsp;into:</p>
+
+<h3>1.&nbsp;hook_form_alter().</h3>
+
+<p>I initially decided to give up and go the custom code route disparagingly. Although this option did in fact allow me to change the sort order to an arbitrary one, the Add to Cart form had already loaded the Product price of the default value meaning that the wrong price was displayed for the Product on initial page&nbsp;load.</p>
+
+<p>In order to change that I&#8217;d have to write even more custom&nbsp;code.</p>
+
+<p>Not&nbsp;good&#8230;</p>
+
+<h3>2. Change the&nbsp;<span class="caps">SKU</span>.</h3>
+
+<p>I found that the list was sorted by <span class="caps">SKU</span>. However this was not an option because changing SKUs will mess with history. And though I tried this option, it did not change the sort order. This might have worked given the actual issue&nbsp;below.</p>
+
+<p>Not&nbsp;good&#8230;</p>
+
+<h3>The actual&nbsp;issue</h3>
+
+<p>The product list is stored as part of a Product Reference field, which can be a multi-value field. The product ids are ordered by field &#8220;delta&#8221; or in other words the ordinal in which they were&nbsp;stored.</p>
+
+<p>The Select List field widget (and Checklist field widget) stores multi-value field items in the order of the options. So if initially the Select List grabbed the order by <span class="caps">SKU</span>, then that&#8217;s the storage&nbsp;order.</p>
+
+<p>Commerce also provides an Autocomplete field widget. Field items are assigned their delta left-to-right. The Autocomplete field widget would allow sort ordering of Commerce&nbsp;Products.</p>
+
+<p>If Product Reference field were an <a href="http://drupal.org/project/entity_reference">Entity Reference</a> field, then select lists could pull an ordered list from a view or sort by a particular entity property or&nbsp;field.</p>
+  </body>
+</html>
+

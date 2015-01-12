@@ -1,0 +1,65 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 17 Oct 2014 16:25:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 17 Oct 2014 16:25:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Amazee Labs: Faster import & display with Data, Feeds, Views & Panels
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.amazeelabs.com/en/blog/faster-import-processing-display-data-feeds-views-panels
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Amazee Labs: Faster import & display with Data, Feeds, Views & Panels</title>
+    <base href="http://www.amazeelabs.com/en/blog/faster-import-processing-display-data-feeds-views-panels">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden">Faster import &amp; display with Data, Feeds, Views &amp; Panels</span><div class="field field-node--field-lead field-name-field-lead field-type-text-long field-label-hidden">
+    <div class="field-items">
+          <div class="field-item"><p>Handling loads of data with nodes and fields in Drupal can be a painful experience: every field is put into a separate table which makes inserts and queries slow. In case you just want to import &amp; display unstructured data without the flexibility and sugar of fields, this walkthrough is for you! </p></div>
+      </div>
+</div>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden">
+    <div class="field-items">
+          <div class="field-item"><p>On a recent customer project, we were tasked with importing prices and other information related to products. While we are fine with handling 10k+ products in the database, we didn't want to create field tables for the price information to be attached to products. For every product, we have 10 maybe even more prices which would result in 100k+ prices at least.</p>
+<p>The prices shouldn't be involved in anything related to the product search, they should just appear as part of the product view itself. Also there is no commerce system involved at the current state of the project.</p>
+<p>Putting the prices into a separate field on the product node may sound like a good idea in the first place. Remember, when loading a list of of those products, all the prices will have to get loaded as well. We wanted those prices to be decoupled from the products, be stored in a lightweight way and only be loaded when necessary - on the single product view.</p>
+<h3>1) Light-weight data structures in Drupal using the data module</h3>
+<p>First, I thought implementing a custom entity or just data table would be the way to go. But then we considered giving the data module a try. The <a href="https://www.drupal.org/project/data">data module</a> allows site builders to work on a much lower level than with Drupal fields: you can create database tables, specify their columns and define relationships. What it really makes appealing is that you can access the structured data using views, expose the custom data tables as custom entity types and use the Feeds module for importing that data, without any coding required.</p>
+<p>After installing the data module, you can manage your data tables under <em>Structure &gt; Data tables</em></p>
+<p><img alt="Overview of data tables" data-editor-file-uuid="e40bc595-0c2e-4b58-b806-6a77e24a9232" height="400" src="/sites/default/files/inline-images/drupal_data_feeds_01_tables.png" width="974" /></p>
+<p>We create a data table for the product prices and specify the schema with all the columns that should be included. Just like fields but without any fancy formatters on top of it:</p>
+<p><img alt="Data schema configuration" data-editor-file-uuid="769e0734-e9e3-4d12-b501-1dbee1b76e5e" height="600" src="/sites/default/files/inline-images/drupal_data_feeds_02_schema.png" width="978" /></p>
+<p>This will create the desired database table for you.</p>
+<p>Having defined the data, we can use the Entity data module that comes with Data to expose the data table as a custom entity type. By doing so, you will get integrations like for example with <a href="https://www.drupal.org/project/search_api">Search API</a> for free.</p>
+<p><img alt="Data table as entity type" data-editor-file-uuid="4047df11-1f43-4d3d-a200-b7c575df341a" height="452" src="/sites/default/files/inline-images/drupal_data_feeds_03_entity.png" width="977" /></p>
+<p> </p>
+<h3>2) Import using Feeds and the generic entity processor</h3>
+<p>Luckily, the <a href="https://www.drupal.org/node/1033202">[Meta] Generic entity processor</a> issue for the Feeds module has been committed after 3 years of work. As there hasn't been a release since the time of committing the patch (January 2014), this is only available from later dev versions of the Feeds module.</p>
+<p>But it's worth the hassle! We can now select from a multitude of different feeds processors based on all the different entity types in the system. After clearing caches, the data tables that we have previously exposed as entity types, do now show up:</p>
+<p><img alt="Feeds entity processors" data-editor-file-uuid="0884c3e2-0fb8-4f84-9d00-c50693c1f5e9" height="613" src="/sites/default/files/inline-images/drupal_data_feeds_04_processor.png" width="965" /></p>
+<p>The feeds configuration is performed as usual. In the following, we map all the fields from the clients CSV file to the previously defined columns of the data table:</p>
+<p><img alt="Feeds mapping" data-editor-file-uuid="056c3fd1-06b2-4e3c-9547-71d636163249" height="612" src="/sites/default/files/inline-images/drupal_data_feeds_05_mapping.png" width="980" /></p>
+<p>We are now able to import large junks of data without pushing them through the powerful but slow Field API. A test import of ~30k items was performed within seconds. A nodes &amp; Fields based import usually creates 200 items per minute.</p>
+<h3>3) Data is good, display is better</h3>
+<p>In the next step, we create a <a href="https://www.drupal.org/project/views">View</a> based on the custom data table to display prices for products. We specify a number of <a href="https://www.drupal.org/node/1578558">contextual filters</a> so that users will see prices a) the current product and restricted to b) the user's price source and c) currency.</p>
+<p><img alt="Views data" data-editor-file-uuid="5fbe2de4-41a5-4b3f-b754-84ff12e866f1" height="699" src="/sites/default/files/inline-images/drupal_data_feeds_06_views.png" width="964" /></p>
+<p>Notice, that the Views display is a <a href="https://www.drupal.org/node/1583868"><em>(Ctools / Views) Content pane</em></a>, which has some advanced pane settings in the mid section of the views configuration.</p>
+<p>Most importantly, we want to specify the <em>argument input</em>: Usually we would use Context to map the views contextual filters to Ctools contexts that we provide through <a href="https://www.drupal.org/project/panels">Panels</a>.</p>
+<p><img alt="Views pane argument input" data-editor-file-uuid="74f012c1-e44c-4f41-9c09-09bd2e9e930d" height="651" src="/sites/default/files/inline-images/drupal_data_feeds_07_argument_input.png" width="963" /></p>
+<p>Somehow, in this case, a specific field didn't work with the context system which automatically checks if all necessary context's are available and only allows you to use the Views pane under such circumstances. As you can see in the screenshot above, i have set all arguments to "Input on pane config" as a work around.</p>
+<p>Exactly these pane config inputs show up when we configure the Views pane in Panels. In this case, we have added the Product prices view as a pane on the <a href="https://www.drupal.org/project/panelizer">panelized</a> full node display of the Product node type (Drupal jargons ftw!).</p>
+<p><img alt="Data view pane config" data-editor-file-uuid="53ea6e48-d8b3-405f-ae3e-6277a8eb6f9f" height="473" src="/sites/default/files/inline-images/drupal_data_feeds_08_pane_config.png" width="963" /></p>
+<p>Each pane config is populated with the appropriate keyword substitutions based on available contexts node and user of the panelized node.</p>
+<h3>4) The end result</h3>
+<p>Finally this is the site builded result of a product node including a prices table:</p>
+<p><img alt="Product result" data-editor-file-uuid="f80beda2-56cc-4e20-b356-86e421fa2083" src="/sites/default/files/inline-images/drupal_data_feeds_09_result.png" /> </p>
+<p>This concludes my how-to on the <a href="https://www.drupal.org/project/data">Data</a>, <a href="https://www.drupal.org/project/feeds">Feeds</a>, <a href="https://www.drupal.org/project/views">Views</a> and <a href="https://www.drupal.org/project/panels">Panels</a> modules to attach a large data sets to nodes without putting them into fields. Once you know how the pieces fit together, it will take you less time than me writing this blog post to import and display large amounts of data in a less flexible, but more performant way! </p>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 16 Oct 2014 04:01:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 16 Oct 2014 04:01:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Fixing Drupal Fast - Using Ansible to deploy a security update on many sites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/fixing-drupal-fast-using
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Fixing Drupal Fast - Using Ansible to deploy a security update on many sites</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/fixing-drupal-fast-using">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Earlier today, the Drupal Security Team announced <a href="https://www.drupal.org/SA-CORE-2014-005">SA-CORE-2014-005 - Drupal core - SQL injection</a>, a 'Highly Critical' bug in Drupal 7 core that could result in SQL injection, leading to a whole host of other problems.</p>
+<p>While not a regular occurrence, this kind of vulnerability is disclosed from time to time—if not in Drupal core, in some popular contributed module, or in some package you have running on your Internet-connected servers. What's the best way to update your entire infrastructure (all your sites and servers) against a vulnerability like this, and <em>fast</em>? High profile sites could be quickly targeted by criminals, and need to be able to deploy a fix ASAP... and though lower-profile sites may not be immediately targeted, you can bet there will eventually be a malicious bot scanning for vulnerable sites, so these sites need to still apply the fix in a timely manner.</p></div></div></div>
+  </body>
+</html>
+

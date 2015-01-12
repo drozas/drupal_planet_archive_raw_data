@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 01 May 2014 20:19:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 01 May 2014 20:19:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Another Drop in the Drupal Sea: Ways to shoot yourself in the foot: Submit "buttons"
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.isaacsonwebdevelopment.com/blog/2014/05/01/ways-shoot-yourself-foot-submit-buttons
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Another Drop in the Drupal Sea: Ways to shoot yourself in the foot: Submit "buttons"</title>
+    <base href="http://blog.isaacsonwebdevelopment.com/blog/2014/05/01/ways-shoot-yourself-foot-submit-buttons">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I was writing custom forms that needed a validate handler and a submit handler. So, I followed the standard approach of</p>
+<pre>
+  function my_module_menu(){
+    $items = array();
+    $items['my/module/custom-form'] = array(
+      'title' => 'I am a doofus',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('my_module_custom_form'),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    );
+    return $items;
+  }
+</pre><p><em>Note: My access callback is just to simplify this example.</em></p>
+<p><a href="http://blog.isaacsonwebdevelopment.com/blog/2014/05/01/ways-shoot-yourself-foot-submit-buttons" target="_blank">read more</a></p>
+  </body>
+</html>
+

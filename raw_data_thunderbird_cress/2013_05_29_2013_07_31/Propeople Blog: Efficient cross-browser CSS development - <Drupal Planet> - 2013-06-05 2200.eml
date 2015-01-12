@@ -1,0 +1,60 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Jun 2013 21:00:18 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Jun 2013 21:00:18 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Propeople Blog: Efficient cross-browser CSS development
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wearepropeople.com/blog/efficient-cross-browser-css-development
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Propeople Blog: Efficient cross-browser CSS development</title>
+    <base href="http://wearepropeople.com/blog/efficient-cross-browser-css-development">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>One of the important tasks of a front-end developer is to make every website compatible with a wide range of browsers. The goal of getting a handsome design to look exactly the same in every currently-used browser is practically impossible to attain. Most developers believe that a perfect compatibility between browsers is not necessary.
+</p>
+<p>Efficient cross-browser CSS development obtains maximum cross-browser similarity with a minimal amount of code. In order to achieve that, the developer should be thoroughly familiar with the following CSS principles:</p>
+<ul><li>The CSS Box Model</li>
+<li>The Difference Between Block and Inline</li>
+<li>Floating and Clearing</li>
+<li>Positioning</li>
+<li>Internet Explorer’s Most Common Problems</li>
+</ul><p>More and more users are using more advanced browsers every single day, but some users will not be able to upgrade. That’s why efficient cross-browser CSS development should come close to the concept of <a href="http://en.wikipedia.org/wiki/Progressive_enhancement" target="_blank" rel="nofollow">progressive enhancement</a>:</p>
+<ol><li>to support all browsers to some degree</li>
+<li>to establish a solid baseline of cross-browser support</li>
+<li>to make sure that older browsers look and work reasonably well </li>
+<li>to enhance the design with advanced CSS features for supportive browsers.</li>
+</ol><p>In those situations where some sort of advanced support, such as CSS3 or HTML5 , is desired for older browsers there are a wide variety of solutions, techniques and tools, here are some that we have used within <a href="http://wearepropeople.com/" target="_blank">Propeople web development projects</a>:</p>
+<p><strong>- jQuery browser detection</strong><br />
+Should only be used as a last resort, isn't accessible for users with disabled JavaScript .</p>
+<p><strong>- conditional comments</strong><br />
+In order to minimize errors, Microsoft implemented conditional comments in their browser, which allow to link a stylesheet that will be interpreted by a single browser, or only by a certain version of IE.</p>
+<p><strong>- CSS hacks</strong><br /><strong>Advantages</strong>: there are hacks for every browser (not only IE), keeping everything in one file is easier to maintain, smaller number of requests to server, an often used hack is the smart use of selectors supported (or not) only by specific browsers.<br /><strong>Disadvantages</strong>: hacks often cause CSS files to not validate, CSS files are harder to compress. Hacks are often considered as invalid or repeated code and removed.</p>
+<p><strong>- JavaScript shims</strong><br />
+Every browser has a master list of HTML elements that it supports.<br />
+All browsers render unknown elements inline, i.e. as if they had a display:inline CSS rule. The <a href="http://www.w3.org/DOM/" target="_blank" rel="nofollow">DOM</a> that browsers create when they encounter unknown elements differs. If IE7, 8 doesn’t explicitly recognize the element name, it will insert the element into the DOM as an empty node with no children. All the elements that you would expect to be direct children of the unknown element will actually be inserted as siblings instead. To enable the styling of HTML5 elements there are JavaScript  <a href="http://en.wikipedia.org/wiki/Shim_(computing)" target="_blank" rel="nofollow">shims</a>, eg.,  <a href="https://code.google.com/p/html5shiv/" target="_blank" rel="nofollow">HTML5Shiv</a>.<br />
+The basic idea of this script is to create HTML5 elements:<br />
+document.createElement(elementName), and it applies basic styling for HTML5 elements. This lets the CSS engine know that elements with that name exist.</p>
+<p><strong>- Progressive Internet Explorer</strong>, <a href="http://css3pie.com/" target="_blank" rel="nofollow">CSS3 PIE</a><br />
+It is an IE-attached behavior which, when applied to an element, allows IE to recognize and display a number of CSS3 properties. The behavior property lets us use CSS to attach a script to a specific element in order to implement DHTML (<a href="http://msdn.microsoft.com/en-us/library/ie/aa740473.aspx" target="_blank" rel="nofollow">Dynamic HTML</a>) components.<br />
+PIE currently supports only some CSS3 features: border-radius, box-shadow, border-image, multiple background images, linear-gradient as background image, while other features are under development. To use PIE we need to copy from the PIE distribution the following files: </p>
+<ul><li>PIE.htc - an HTML file that contains a script and a set of HTC-specific elements that define the component.</li>
+<li>PIE.php - a wrapper script that serves up the PIE.htc file using the correct content-type header.</li>
+</ul><p>Important: both PIE.php and PIE.htc are in the same CSS directory of our Drupal theme, and then for the target elements in the CSS file we point the behavior to the PHP file instead, eg: behavior:url(/sites/all/themes/drupal_theme/CSS/pie.php); also these elements require position:relative.
+</p>
+<p>As a conclusion, designers and developers should embrace flexibility on the web and should design with new technologies like <a href="http://wearepropeople.com/blog/best-responsive-web-design-tools" target="_blank">responsive design</a> with CSS3 media queries, rich typography or HTML5 video and audio. There are many useful tools that we can use to incorporate (where it is possible) new technologies in our designs for older browsers. But both we, the developers, and <a href="http://wearepropeople.com/clients" target="_blank">our clients</a>, should understand the fact that our designs will not look identical in every browser and our code will not be rendered exactly the same.</p>
+<p><strong>Share Your Thoughts!</strong><br />
+How do you do things? Please share your experience regarding efficient cross-browser CSS development in the comment section, or on <a href="http://twitter.com/propeople" target="_blank" rel="nofollow">Twitter</a>, <a href="http://facebook.com/propeople" target="_blank" rel="nofollow">Facebook</a>. </p>
+</div></div></div><div class="control-group form-type-item form-item">
+  <label class="control-label">Language </label>
+<div class="controls"> English
+</div></div>
+<div id="comment-wrapper"></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></div><div class="field-item odd"><a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div></div></div><div class="field field-name-field-drupal-planet field-type-taxonomy-term-reference field-label-above"><div class="field-label">Check this option to include this post in Planet Drupal aggregator:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/drupal/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

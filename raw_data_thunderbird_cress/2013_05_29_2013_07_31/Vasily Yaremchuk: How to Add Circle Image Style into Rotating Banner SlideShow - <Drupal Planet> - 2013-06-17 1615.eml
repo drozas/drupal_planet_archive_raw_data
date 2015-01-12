@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Jun 2013 15:15:58 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Jun 2013 15:15:58 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Vasily Yaremchuk: How to Add Circle Image Style into Rotating Banner SlideShow
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yaremchuk.ru/blog/how-add-circle-image-style-rotating-banner-slideshow
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Vasily Yaremchuk: How to Add Circle Image Style into Rotating Banner SlideShow</title>
+    <base href="http://yaremchuk.ru/blog/how-add-circle-image-style-rotating-banner-slideshow">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>During update work of the site of our Drupal department (<a href="http://php.sfdev.com">http://php.sfdev.com</a>) we faced following task: to upload rectangular images but to show circle ones on the pages of our site. </p>
+<p>In the case if we are going to display circle image form Image or Media field it is easy to set image style preset and use it in the field display. But Rotating banner (<a href="https://drupal.org/project/rotating_banner">https://drupal.org/project/rotating_banner</a>) does not allow to use image styles without hack module.</p>
+<p>It is extremely worth practice to hack contributes module even in no feather development status :-) </p>
+<p>But how can avoid to hack module and use image style to make image be circle?</p>
+<p>By the way to do circle images with image style preset you can use ImageCache Action Module (<a href="https://drupal.org/project/imagecache_actions">https://drupal.org/project/imagecache_actions</a>)</p>
+<p>Ok, back to our task. We can try to use hook_preprocess_image(). In our theme template.php file we put following code:<br />
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">sfdev_preprocess_image</span><span style="color: #007700">(&amp;</span><span style="color: #0000BB">$vars</span><span style="color: #007700">) {<br />&nbsp; if(isset(</span><span style="color: #0000BB">$vars</span><span style="color: #007700">[</span><span style="color: #DD0000">'attributes'</span><span style="color: #007700">][</span><span style="color: #DD0000">'class'</span><span style="color: #007700">]) &amp;&amp; </span><span style="color: #0000BB">$vars</span><span style="color: #007700">[</span><span style="color: #DD0000">'attributes'</span><span style="color: #007700">][</span><span style="color: #DD0000">'class'</span><span style="color: #007700">] == </span><span style="color: #DD0000">'rb-background-image'</span><span style="color: #007700">) {<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$url_splits </span><span style="color: #007700">= </span><span style="color: #0000BB">explode</span><span style="color: #007700">(</span><span style="color: #0000BB">variable_get</span><span style="color: #007700">(</span><span style="color: #DD0000">'file_public_path'</span><span style="color: #007700">, </span><span style="color: #0000BB">conf_path</span><span style="color: #007700">() . </span><span style="color: #DD0000">'/files/'</span><span style="color: #007700">), </span><span style="color: #0000BB">$vars</span><span style="color: #007700">[</span><span style="color: #DD0000">'path'</span><span style="color: #007700">]);<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$vars</span><span style="color: #007700">[</span><span style="color: #DD0000">'path'</span><span style="color: #007700">] = </span><span style="color: #0000BB">image_style_url</span><span style="color: #007700">(</span><span style="color: #DD0000">'circle'</span><span style="color: #007700">, </span><span style="color: #0000BB">file_build_uri</span><span style="color: #007700">(</span><span style="color: #0000BB">$url_splits</span><span style="color: #007700">[</span><span style="color: #0000BB">1</span><span style="color: #007700">]));<br />&nbsp; }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div></p>
+<p>Fortunately each rotating banner add 'rb-background-image' to each image. So we can separate this kind of images from the other ones:<br />
+<code>if(isset($vars[&#039;attributes&#039;][&#039;class&#039;]) &amp;&amp; $vars[&#039;attributes&#039;][&#039;class&#039;] == &#039;rb-background-image&#039;) {</code></p>
+<p>Before implementing hook_preprocess_image we should create 'circle' image style to use it in this function.<br />
+To make Drupal create circle image we should just simply request it via image style URL:<br />
+<code>image_style_url(&#039;circle&#039;, file_build_uri($url_splits[1]));</code><br />
+So the main idea to put image style URL instead original one.</p>
+<p>By the way, after some discussions we decide to create circle images manually, because in some cases they should not be circle :-)<br />
+And these cases are not predictable :-(</p>
+</div></div></div><!-- google_ad_section_end --><div class="field field-name-taxonomy-wp-blog-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Blog tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog-tags/planet-drupal">Planet Drupal</a></li><li class="taxonomy-term-reference-1"><a href="/blog-tags/faq">FAQ</a></li></ul></div>
+  </body>
+</html>
+

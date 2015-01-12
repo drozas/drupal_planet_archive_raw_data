@@ -1,0 +1,111 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 07 Jan 2014 12:23:45 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 07 Jan 2014 12:23:45 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: OhTheHugeManatee: How to Remove a Drupal Install Profile
+Content-Transfer-Encoding: 8bit
+Content-Base: https://ohthehugemanatee.org/blog/2014/01/07/how-to-remove-a-drupal-install-profile/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>OhTheHugeManatee: How to Remove a Drupal Install Profile</title>
+    <base href="https://ohthehugemanatee.org/blog/2014/01/07/how-to-remove-a-drupal-install-profile/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://drupal.org/project/install_profile_api">Install profiles</a> are a great way to throw together a functional Drupal site really quickly. In Drupal 6, an Install Profile was just a blueprint for setting up a site really quickly. What you did after the site was installed was your own business! But in Drupal 7 profiles are much more integrated with core. The assumption is that when you use an install profile, you want to rely on the profile&rsquo;s maintainer for all your updates. This is not always the case.</p>
+
+<p>Very often your site will diverge from the install profile as it takes on a life of its own, and it will be useful to convert it to &ldquo;vanilla&rdquo; Drupal. Today I&rsquo;ll use a relatively simple example of a musician site which is moving away from the <a href="https://drupal.org/project/pushtape">Pushtape</a> distribution. Later I&rsquo;ll return to this subject with the much more in-depth example of moving a community site away from <a href="https://drupal.org/project/commons">Drupal Commons</a>.</p>
+
+<h2>Move things around</h2>
+
+<p>Install profiles have all their files stored in the site root&rsquo;s <em>profiles/</em> directory. The first step is going to be moving everything out of there. In the case of pushtape, we have libraries, modules, and a theme stored in there. We&rsquo;re going to move them to a more normal location.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">#</span> mkdir sites/all/libraries
+</span><span class='line'><span class="gp">#</span> mv profiles/pushtape/libraries/* sites/all/libraries
+</span><span class='line'>
+</span><span class='line'><span class="gp">#</span> mkdir sites/all/modules/custom
+</span><span class='line'><span class="gp">#</span> mv profiles/pushtape/modules/pushtape_* sites/all/modules/custom
+</span><span class='line'><span class="gp">#</span> mv profiles/pushtape/modules/* sites/all/modules
+</span><span class='line'>
+</span><span class='line'><span class="gp">#</span> mkdir sites/all/themes
+</span><span class='line'><span class="gp">#</span> mv profiles/pushtape/themes/* sites/all/themes
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next we need to see if there are any variables set in the install profile which really depend on the profile directory. If there are, we&rsquo;ll have to set them again with the new path.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">#</span> <span class="nb">cd </span>profiles/pushtape
+</span><span class='line'><span class="gp">#</span> grep <span class="s1">&#39;profiles/pushtape&#39;</span> * -R
+</span><span class='line'><span class="go">pushtape.install:  variable_set(&#39;sm2_path&#39;, &#39;profiles/pushtape/libraries/soundmanager2&#39;);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this case, we see one variable_set which tells the system where to find the soundmanager2 library. We can update that easily enough with drush:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">#</span> drush vset sm2_path <span class="s1">&#39;sites/all/libraries/soundmanager2&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we have to update Drupal&rsquo;s setting for which install profile was used to create the site.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">#</span> drush vset install_profile standard
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In some cases this will be enough to work. Personally I like to keep my modules folder more organized, so I go the extra mile:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">#</span> <span class="nb">cd </span>sites/all/modules
+</span><span class='line'><span class="gp">#</span> mkdir contrib
+</span><span class='line'><span class="gp">#</span> mv !<span class="o">(</span>custom|contrib<span class="o">)</span> contrib
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I also separated out the custom code from the features. You can figure out which custom modules implement features with <em>find . |grep features</em>, and move them into a separate directory manually.</p>
+
+<h2>Clearing caches</h2>
+
+<p>Once you&rsquo;re done moving things around, CLEAR CACHES. Drupal keeps an index of module, library, and theme directories, and you just broke it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">drush cc all</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The only problem is, in many cases you will have moved a module that is required for drupal bootstrap. So you&rsquo;ll have to get the handy drush tool <a href="https://drupal.org/project/registry_rebuild">Registry Rebuild</a>, and run that before your cache clear:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">#</span> drush dl registry_rebuild
+</span><span class='line'><span class="gp">#</span> drush rr
+</span><span class='line'><span class="gp">#</span> drush cc all
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s it &ndash; your site is now officially a vanilla Drupal install. Test by removing the profiles/pushtape directory, clearing caches, and browsing around your site.</p>
+
+<p><em>NOTE: With a more complex install profile I expect to encounter more difficulty. Stay tuned for the post on extricating yourself from Commons later this year!</em></p>
+  </body>
+</html>
+

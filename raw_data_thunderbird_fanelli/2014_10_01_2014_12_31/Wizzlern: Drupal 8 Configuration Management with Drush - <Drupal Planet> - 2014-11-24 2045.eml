@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 24 Nov 2014 19:45:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 24 Nov 2014 19:45:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wizzlern: Drupal 8 Configuration Management with Drush
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wizzlern.nl/drupal/drupal-8-configuration-management-with-drush
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wizzlern: Drupal 8 Configuration Management with Drush</title>
+    <base href="http://wizzlern.nl/drupal/drupal-8-configuration-management-with-drush">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ankeiler field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item odd"><p>Today I got my feed wet with Drupal 8 Configuration Management. For those who are new to this excellent feature in Drupal 8, you should read the documentation at drupal.org (<a href="https://www.drupal.org/documentation/administer/config">Managing configuration in Drupal 8</a>) or watch this <a href="http://www.youtube.com/watch?v=eg2dtPFyGxs">DrupalCon Amsterdam video</a>. This article assumes you are familiar with Drush and Drush aliases.</p><p>I worked with a very basic workflow using a development site and an acceptance site. Both sites are under revision control, where the complete webroot (core + modules, but not settings.php) is placed in git. For gitignore I used a copy of the example.gitignore which you'll find in Drupal's root directory.</p><p>I used <a href="https://github.com/drush-ops/drush">Drush 7</a> to import and export the configuration. 'Export' is to transfer a site's configuration from Drupal to file and 'Import' is to transfer in reversed direction. Using <span class="geshifilter"><code class="text geshifilter-text">drush @dev config-export</code></span> you export the configuration from the development site to the sites/default/config_*/staging directory. The staging directory now holds many *.yml files that each contain the configuration of an individual section. I've chosen to use git to transfer these files to the acceptance site. At the acceptance site <span class="geshifilter"><code class="text geshifilter-text">drush @acc config-import</code></span> is used to transfer the configuration from the file system to the acceptance site.</p><p>Make sure that the acceptance site is a copy of the development site. For example using <span class="geshifilter"><code class="text geshifilter-text">drush @dev archive-dump</code></span> you can make a copy of both the files and database. With this you can create a copy of the site using <span class="geshifilter"><code class="text geshifilter-text">drush archive-restore</code></span>.</p><p>I made these changes to the .gitignore file to allow the staging directory to be added to git:</p></div></div></div><div class="field field-name-taxonomy-vocabulary-2 field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item odd"><a href="/category/tags/drupal-8">drupal 8</a></div><div class="field-item even"><a href="/category/tags/drush">drush</a></div><div class="field-item odd"><a href="/category/tags/deployment">deployment</a></div><div class="field-item even"><a href="/category/tags/configuration-management">configuration management</a></div></div></div>
+  </body>
+</html>
+

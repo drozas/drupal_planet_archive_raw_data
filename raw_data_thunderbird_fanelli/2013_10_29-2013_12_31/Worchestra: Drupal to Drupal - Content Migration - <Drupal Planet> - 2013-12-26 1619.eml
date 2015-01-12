@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 26 Dec 2013 15:19:11 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 26 Dec 2013 15:19:11 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Worchestra: Drupal to Drupal - Content Migration
+Content-Transfer-Encoding: 8bit
+Content-Base: http://batayneh.me/article/drupal-drupal-content-migration
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Worchestra: Drupal to Drupal - Content Migration</title>
+    <base href="http://batayneh.me/article/drupal-drupal-content-migration">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>At some point you will feel the need for a new cleaner website, so you build your new Drupal site with cleaner content types, and you want to migrate your old content to the new website.<br /><a target="_blank" href="https://drupal.org/project/migrate">Migrate module</a> is the module for that, however, by itself you will not be able to do your migration, you have to build your migration classes on top of that module, so below are the migration steps.</p>
+<p>We start with creating a new module that will depend on Migrate module.<br />
+Create worchestra_legacy.info<br /></p><div class="geshifilter"><pre class="text geshifilter-text" style="font-family:monospace;">name = "Worchestra Legacy"
+description = ""
+core = "7.x"
+package = "Worchestra"
+ 
+files[] = migrate/base.inc
+files[] = migrate/articles.inc</pre></div></div></div></div>
+  </body>
+</html>
+

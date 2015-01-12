@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 17 Sep 2014 12:54:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 17 Sep 2014 12:54:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LightSky: My Thoughts on the Drupal Project Application Process
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.lightsky.com/blog/my-thoughts-drupal-project-application-process
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LightSky: My Thoughts on the Drupal Project Application Process</title>
+    <base href="http://www.lightsky.com/blog/my-thoughts-drupal-project-application-process">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Giving back to the Drupal community was one thing I wanted to make sure we did more of as a company. It's been a little over a year since I took ownership of LightSky and our Drupal contributions are increasing. We are actively contributing patches where we can, sponsoring local Drupal meetups and camps and even hanging out on IRC. One thing we have not done until now was to contribute a module. At some point, I would like all my development staff to contribute a module (or modules) back to the community and I figured if I was to ask this of my staff, it was only fair that I did it first. It took some time to figure out what to contribute back, but once I had an idea I was excited to get started.</p>
+<p>My first attempt was to write a Tweet Embed module. It would create an input filter so that when you dropped a link to a tweet into it, it would embed it into the content. I spent a few weeks polishing the module and felt ready to submit it to review. After submitting it, it was discovered by an approver that there was an issue in the Twitter module issue queue to implement this exact functionality. That means this module was a no go since it would cause duplication. At the time I was frustrated, but only at myself. I should have been more diligent on ensuring that I was not duplicating functionality.</p>
+<p>My second attempt, and the one that would be successful, was to write a module to encapsulate the <a href="https://www.drupal.org/project/linkedin_company" target="_blank">LinkedIn Company</a> API. The module would pull in shares and display them in a themeable block. I wound up writing two modules, one for the authentication and one to pull in the shares. I spent some time writing, testing and polishing and finally felt it was ready to submit.</p>
+<h2>
+	The Review Process</h2>
+<p>The review process was immensely helpful. It is encouraged that you do a peer review of three other modules that are awaiting approval. This allows your application to move a little more quickly through the process, but I would encourage you to do it even if that is not something you are interested in. For me, the review process did a few things. One, it allowed me to see how other people were solving problems in Drupal. I've been doing Drupal development for five years or so, but there are always things to learn. It also allowed me to become intimately familiar with what is expected of your module during the review process. After I did my initial set of reviews, I found myself going back to my module and making improvements that I may have not made otherwise. </p>
+<p>After adding the reviews to my application issue, I started to get feedback on my module. The feedback that was given was very helpful and informative. I can confidently say that I learned a few things in the process. I got quite a few reviews of my module and each pointed out things that I should fix. At one point the reviewers asked me to contact the LinkedIn module maintainers and verify that my modules functionality was not something they intended to implement. It was not and I got the green light to move forward. From there my module sat in a RTBC state for 3-4 weeks. It was difficult during this time to remain patient, but with so many applications awaiting approval and so few approvers, this is what happens. Eventually, I was granted the ability to promote my module to a full project, and the ability to create full projects in the future.</p>
+<h2>
+	Final Thoughts and Tips</h2>
+<p>The review process is thorough, and that is a good thing. As a community we want to make sure that the people who are submitting modules are properly vetted and that they use best practices when coding. Although there was a bit of inactivity after the module was RTBC, it was not unbearable and if anything has encouraged me to remain involved in the review process to help alleviate some of the load. The biggest tip I can give is to not only be patient, but also be open to criticism. It's a little nerve wracking to have many people comb through your code line by line, but that is the nature of open source software. The feedback they provide will help you become a better Drupal developer and I know for me it was very exciting to learn how I could do things better. One of my big stumbling blocks the first time around was the fact that I did not do enough research when determining what module to write. Make sure that the module you are submitting doesn't duplicate functionality of another module. If there is a similar module out there, create an issue asking if they intended to implement your functionality. Sometimes a patch is a better place for a piece of functionality than a module and that is how it should be. Putting in a little extra research and effort on your end early on will prevent headaches during the review process.</p>
+<p>If contributing is something you want to do, I would encourage you to take the jump and do it. I really do believe that you get back ten times what you give to the Drupal community.</p>
+<p> </p>
+<h3>
+	If you have not already be sure to <a href="http://www.lightsky.com/lightsky-social">follow us</a> on social media or subscribe to our <a href="http://www.lightsky.com/rss">RSS feed</a> and <a href="http://eepurl.com/dx_lj">newsletter</a>. You can also <a href="http://www.lightsky.com/simple-contact-form">contact us</a> directly or <a href="http://www.lightsky.com/request-consultation">request a consultation</a>. </h3>
+</div></div></div>
+  </body>
+</html>
+

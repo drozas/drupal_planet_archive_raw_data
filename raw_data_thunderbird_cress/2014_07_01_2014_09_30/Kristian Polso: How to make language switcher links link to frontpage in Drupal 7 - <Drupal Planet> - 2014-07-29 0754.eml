@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 29 Jul 2014 06:54:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 29 Jul 2014 06:54:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Kristian Polso: How to make language switcher links link to frontpage in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://polso.info/how-make-language-switcher-links-link-frontpage-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Kristian Polso: How to make language switcher links link to frontpage in Drupal 7</title>
+    <base href="http://polso.info/how-make-language-switcher-links-link-frontpage-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    Drupal has a block called "Language Switcher", which displays links to different language versions of the current page/node. If the node does not have translated version on the specified language, the block will not display a link for it. This can cause some confusion, since the user always expects to see links to all of the site's languages.
+This can be fixed by modifying the block so that the all of the links link to the corresponding language's frontpage. It is easy to do by editing the site's theme.
+  </body>
+</html>
+

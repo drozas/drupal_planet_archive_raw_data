@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 22 Mar 2014 14:55:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 22 Mar 2014 14:55:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Steindom LLC: Using MAMP and Forward to share local Drupal websites
+Content-Transfer-Encoding: 8bit
+Content-Base: http://steindom.com/articles/using-mamp-and-forward-share-local-drupal-websites
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Steindom LLC: Using MAMP and Forward to share local Drupal websites</title>
+    <base href="http://steindom.com/articles/using-mamp-and-forward-share-local-drupal-websites">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><a href="http://www.mamp.info/">MAMP</a> is a great tool for setting up websites for local development (and the <a href="http://blog-en.mamp.info/2014/03/release-of-mamp-mamp-pro.html">new 3.0 release</a> is much for flexible than previous versions). <a href="https://forwardhq.com/">Forward</a> is a simple command-line tool for routing DNS traffic to your local machine. Getting them to work with Drupal (the way I wanted) took me awhile to figure out, but it's actually very easy.</p>
+<!--break--><p>
+Say I've got a local site at <strong>awesome.dev</strong>. Using the following Forward command would share my site with the world at <strong>awesome-steindom.fwd.wf</strong>.</p>
+<p></p><div class="geshifilter"><div class="bash geshifilter-bash">forward awesome.dev awesome</div></div>
+<p>However, <a href="http://news.forwardhq.com/post/40822408241/the-curious-case-of-the-host-and-x-forwarded-host">as they explain on their blog</a>, the HTTP_HOST header would be "awesome.dev", while the HTTP_X_FORWARDED_HOST header would be "awesome-steindom.fwd.wf". This causes problems with Drupal, which uses the HTTP_HOST header to generate URLs in the source code. (In simpler terms, the referenced JS, CSS, and images would be inaccessible to anyone but me.)</p>
+<p>One solution is to setup MAMP to use custom port for your site, like awesome.dev:8081, and then to use a command like this:</p>
+<p></p><div class="geshifilter"><div class="bash geshifilter-bash">forward <span class="nu0">8081</span> awesome</div></div>
+<p>However, I dislike having to type in ports for local development. It finally dawned on me that a quick an easy solution is to add an alias in MAMP with the name of my Forward domain.</p>
+<p>So, the step-by-step process is as follows:</p>
+<p>1) Start Forward on port 80 with your desired subdomain:</p>
+<p></p><div class="geshifilter"><div class="bash geshifilter-bash">forward <span class="nu0">80</span> awesome</div></div>
+<p>2) Add an alias in MAMP:</p>
+<p><img src="/sites/default/files/articles/mamp-forward.png" width="1060" height="1088" alt="MAMP with Forward alias" class="img-responsive" /></p>
+<p>And that's it! After restarting MAMP, my client can now visit awesome-steindom.fwd.wf <em>and</em> see all the styles and images.</p>
+</div></div></div><div class="field field-name-submitted-by field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">Submitted by <span class="username">Joel Stein</span> on March 22, 2014.</div></div></div><div class="field field-name-field-article-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/mamp">MAMP</a>, <a href="/tags/drupal">Drupal</a>, <a href="/tags/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

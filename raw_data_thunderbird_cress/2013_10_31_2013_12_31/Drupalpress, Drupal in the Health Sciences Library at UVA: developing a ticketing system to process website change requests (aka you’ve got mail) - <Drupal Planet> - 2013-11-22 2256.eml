@@ -1,0 +1,52 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 22 Nov 2013 22:56:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 22 Nov 2013 22:56:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupalpress, Drupal in the Health Sciences Library at UVA: developing a ticketing system to process website change requests (aka you’ve got mail)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.hsl.virginia.edu/drupalpress/developing-a-ticketing-system-to-process-website-change-requests-aka-youve-got-mail/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupalpress, Drupal in the Health Sciences Library at UVA: developing a ticketing system to process website change requests (aka you’ve got mail)</title>
+    <base href="http://blog.hsl.virginia.edu/drupalpress/developing-a-ticketing-system-to-process-website-change-requests-aka-youve-got-mail/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Ever since we launched our site re-design, we&#8217;ve had a pretty steady flow internal change requests &#8211; add links, change fonts, re-style buttons, adjust layouts, modify permissions, etc.</p>
+<p>We were trying to process these requests through a ticketing system that we built on our staff intranet in Drupal 6 &#8211; it basically allowed us to toggle tickets between open/closed and send emails when we were finished. With requests piling up (some of which overlapped with one another and/or were vaguely articulated and/or were out of our control anyways) this system wasn&#8217;t cutting it. We decided to scrap it and develop a new workflow in Drupal 7 with three questions in mind:</p>
+<p>1) How can the requestor  clearly communicate what it is they actually want us to do<br />
+2) How can we clearly communicate what it is we&#8217;re actually doing<br />
+3) And how can we, as the general put it, start &#8220;hitting a small nail with an awfully big hammer&#8221;</p>
+<p>The first two issues were solved easily enough: we enabled comments on the &#8220;Web Request&#8221; content type. When someone creates a node of that type, we can sniff out what they need with some probing in the comments area. The comments allow for transparent dialogue, so long as you have an effective method for distribution.</p>
+<p>Enter the awfully big hammer&#8230;</p>
+<p>Using a combination of rules, views, display suite and user reference fields, we gave node authors the ability to create email lists specific to the requests they create. With the click of a button they can message as many of their colleagues as they choose, giving them the gift of email at every step of the request.</p>
+<p>Here&#8217;s how we did it:</p>
+<p>First we created a form &#8211; we set up a content type for &#8220;Web Requests&#8221; &#8211; we were going to use entityforms but couldn&#8217;t since we needed commenting. We added fields for the data we wanted to collect (request title, details, link, and screenshots). We also created administrative fields (for things like UX data, project tagging, etc.) that are only visible to the web team, and therefore don&#8217;t appear on the node/add form that requestors use.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/requestform.png"><img class="alignnone size-medium wp-image-809" alt="requestform" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/requestform-300x243.png" width="300" height="243" /></a></p>
+<p>The most important field (for the email list) is the user reference field &#8211; what we termed &#8220;Stakeholders&#8221; is a selection of users of a given role formatted as checkboxes, with no restriction on the number of values.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/users.png"><img class="alignnone size-medium wp-image-810" alt="users" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/users-300x162.png" width="300" height="162" /></a></p>
+<p>The stakeholders appear on the form listed by name &#8211; that works for the users filling out the form, but not for rules, which will need their email addresses. Using display suite, we can configure a custom output for the stakeholders field when it is used as a token. In the &#8220;Manage Display&#8221; screen, you can specify custom display settings. Since we&#8217;ll be using tokens in the rules and views configurations we want to customize that to get the user&#8217;s email.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/displaysuiteconfig1.png"><img class="alignnone size-medium wp-image-811" alt="displaysuiteconfig1" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/displaysuiteconfig1-300x88.png" width="300" height="88" /></a></p>
+<p>So the token display for the field needs to output [user:mail]</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/displaysuiteconfig2.png"><img class="alignnone size-medium wp-image-812" alt="displaysuiteconfig2" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/displaysuiteconfig2-300x124.png" width="300" height="124" /></a></p>
+<p>With the content type and fields configured, we&#8217;re ready for rules.</p>
+<p>We want &#8220;Stakeholders&#8221; to be notified when a new request is created. So, we add a rule that reacts on saving new content and triggers an email message. By adding a condition that states that the content has the stakeholder field, we can get the token (mentioned above) and use that as one of the recipients for the email. But the email action will only pass through one of the values. That means only one person will be emailed, and that&#8217;s not good enough &#8211; we need everyone getting these emails. Rules allows us to loop actions, but not without a view that contextually displays content, which in this case is a list of stakeholder email address.</p>
+<p>So we create a new view of content &#8211; the only field we need is a stakeholders field that has a custom formatter of tokenized text and outputs [user:mail]</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/viewsfield.png"><img class="alignnone size-medium wp-image-817" alt="viewsfield" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/viewsfield-300x153.png" width="300" height="153" /></a></p>
+<p>The next step is to set a contextual filter that acts on the content node id (nid) &#8211; this should generate a list of stakeholder email address per node. Preview it to make sure by passing the view a nid.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/viewsruledisplay.png"><img class="alignnone size-medium wp-image-818" alt="viewsruledisplay" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/viewsruledisplay-300x115.png" width="300" height="115" /></a></p>
+<p>In order to call the view in rules, we have to give it a rules display. This also allows you to specify row variables &#8211; the important thing in this case is that we use the rendered result and the data type is text.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/viewsrulevariable.png"><img class="alignnone size-medium wp-image-816" alt="viewsrulevariable" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/viewsrulevariable-300x156.png" width="300" height="156" /></a></p>
+<p>With the view in place, we can go back to the rule we created and call it as a views loop.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/viewsloop.png"><img class="alignnone size-medium wp-image-815" alt="viewsloop" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/viewsloop-300x86.png" width="300" height="86" /></a></p>
+<p>Add the email action to that loop and you&#8217;re set.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/rule-21.png"><img class="alignnone size-medium wp-image-821" alt="rule-2" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/rule-21-300x169.png" width="300" height="169" /></a></p>
+<p>Each event that triggers an email will have its own rule, but you can use the same view/view loop structure for all of them, except comments. To get the stakeholder addresses to work in an email that&#8217;s set off by a comment, you have to create another view. This will be a view of comments that is configured almost identically to the stakeholder view, but with a relationship that joins comments to content so that you can use the nid filter.</p>
+<p><a href="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/commentsview-2.png"><img class="alignnone size-medium wp-image-819" alt="commentsview-2" src="http://blog.hsl.virginia.edu/drupalpress/files/2013/11/commentsview-2-300x123.png" width="300" height="123" /></a></p>
+  </body>
+</html>
+

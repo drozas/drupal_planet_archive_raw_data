@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 25 Apr 2014 15:43:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 25 Apr 2014 15:43:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: bojanz's blog: Storing hierarchical data: Materialized Path
+Content-Transfer-Encoding: 8bit
+Content-Base: http://bojanz.wordpress.com/2014/04/25/storing-hierarchical-data-materialized-path/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>bojanz's blog: Storing hierarchical data: Materialized Path</title>
+    <base href="http://bojanz.wordpress.com/2014/04/25/storing-hierarchical-data-materialized-path/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>
+Web applications often need a way to represent and store hierarchies.
+A menu with its submenus. A category with its subcategories. A comment and its replies.
+Storing the hierarchy, and later reconstructing it from the stored data is just a part of the puzzle. We also need a way to find the parents or children of an item. We need to be able to re-parent an item (move it to another part of the hierarchy). Finally, there is the need to order items in a way that reflects their position in the hierarchy.
+</p>
+<p>
+There are several ways to do this, each with its own pros and cons:
+<ul>
+	<li>Adjacency list</li>
+	<li>Nested set</li>
+	<li>Closure table (aka bridge table)</li>
+	<li>Materialized path (path enumeration)</li>
+</ul>
+Let’s give materialized paths a shot. We'll then see how our encoding trick makes it even better.
+</p>
+<a class="moretag" href="http://bojanz.wordpress.com/2014/04/25/storing-hierarchical-data-materialized-path"> Read more...</a><img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=bojanz.wordpress.com&#038;blog=13038938&#038;post=157&#038;subd=bojanz&#038;ref=&#038;feed=1" width="1" height="1" />
+  </body>
+</html>
+

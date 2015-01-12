@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Jun 2013 14:31:12 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Jun 2013 14:31:12 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: comm-press | Drupal in Hamburg: The forgotten xdebug slows down things. Turn it off!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://comm-press.de/en/blog/forgotten-xdebug-slows-down-things-turn-it
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>comm-press | Drupal in Hamburg: The forgotten xdebug slows down things. Turn it off!</title>
+    <base href="http://comm-press.de/en/blog/forgotten-xdebug-slows-down-things-turn-it">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h3 class="category" >Knowledge</h3><div class="form-item form-type-item">
+  <label>Language </label>
+ English
+</div>
+<div class="field field-name-title"><h1><a href="/en/blog/forgotten-xdebug-slows-down-things-turn-it">The forgotten xdebug slows down things. Turn it off!</a></h1></div><span class="author" >Cathy Theys</span><span class="published" >06/06/2013 - 16:31</span><div class="field field-name-field-teaser"><p>I work remotely, which means limited opportunities to watch over people's shoulders and for people to accidentally see me do silly things and make recommendations. At the Drupalcon Portland Drupal 8 Multilingual sprint extended days, I got to sit in a room with other contributors to core, right next to people! While I was waiting for tests to run (or was it waiting for drush -y si to finish?) I complained about how slow it was. A few minutes later, a thoughtful comment from someone (someone = Gábor) was: "Do you have xdebug on? Turn it off."</p>
+
+<p>[Aside: We say contributing to core is good for Drupal shops for many reasons. Here is another reason: devs learn stuff that improves them for when they work on client billable hours back in the shop. <a href="https://drupal.org/community-initiatives/drupal-core">Get involved with contributing to Drupal 8.</a> (Notice the link there to mentoring.) ]</p>
+
+<p>Wow! I had turned xdebug on ages ago when debugging something and forgotten to turn it off!</p>
+
+<p>Things are a lot faster now. :) Here are instructions for how to tell if it's enabled. To turn it off, find the lines in your php.ini and comment them out.</p>
+</div>
+  </body>
+</html>
+

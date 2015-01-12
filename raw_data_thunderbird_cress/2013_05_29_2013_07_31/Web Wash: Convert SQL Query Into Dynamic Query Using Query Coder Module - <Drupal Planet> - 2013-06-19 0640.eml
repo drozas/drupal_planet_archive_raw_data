@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 19 Jun 2013 05:40:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 19 Jun 2013 05:40:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: Convert SQL Query Into Dynamic Query Using Query Coder Module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/convert-sql-query-dynamic-query-using-query-coder-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: Convert SQL Query Into Dynamic Query Using Query Coder Module</title>
+    <base href="http://webwash.net/tutorials/convert-sql-query-dynamic-query-using-query-coder-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p><a href="http://drupal.org/project/query_coder">Query coder</a> allows you to convert SQL queries into <a href="http://drupal.org/node/310075">dynamic queries</a>. The module offers a simple UI where you can paste in a SQL query, press submit and then you're presented with a dynamic query code example.</p>
+
+<p>In Drupal 7, you can query the database in two ways; using a <a href="http://drupal.org/node/310072">static</a> or a <a href="http://drupal.org/node/310075">dynamic</a> query.
+Static queries are the simplest to write and the fastest from a performance stand point. A static query will suffice for general <code>SELECT</code> queries.</p>
+
+<p><a href="http://drupal.org/node/310075">Dynamic queries</a> on the other hand can be tricky and takes some getting used to. One benefit of using it is that other modules can modify the query by implementing <a href="http://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_query_alter/7"><code>hook_query_alter</code></a>.</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 26 May 2014 13:58:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 26 May 2014 13:58:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Beta blocker deadline target what? A quick guide to Drupal 8 release management tags
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/424518
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Beta blocker deadline target what? A quick guide to Drupal 8 release management tags</title>
+    <base href="https://groups.drupal.org/node/424518">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Drupal 8's feature freeze was <a href="http://buytaert.net/drupal-8-feature-freeze-extended">over a year ago</a>, and we are close to <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">releasing a Drupal 8 beta</a> to provide testers and contributed module authors with what they need to prepare for Drupal 8.0. What does this mean for issues in the core queue? When we look at Drupal core issues, we should ask two questions:</p>
+<ol>
+<li>Is this issue worth holding up the entire Drupal 8 release (no one can use Drupal 8 until it's done)?</li>
+<li>If not, what deadline does it have?</li>
+</ol>
+<p>Here's a guide to how we organize issues based on the answers to these questions.
+</p>
+<dl>
+<dt><a href="https://drupal.org/project/issues/drupal?priorities=400&amp;version=8.x">Critical</a> issue priority</dt>
+<dd>In the Drupal core queue, issues with the critical priority must be resolved before we create a Drupal 8 release candidate. These are the issues that will <strong>hold up Drupal 8's release</strong>--for a week, a month, however long it takes--even when everything else is ready. The <a href="http://cgit.drupalcode.org/drupal/tree/core/MAINTAINERS.txt#n6">Drupal 8 branch maintainers</a> are currently reviewing issues to decide which will and will not block release. (See the  <a href="https://drupal.org/core/issue-priority#critical">criteria for critical issues</a>.)</dd>
+<dt><a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+blocker">beta blocker</a> issue tag</dt>
+<dd>Beta blockers are critical issues (we would not release Drupal 8 without them being resolved) that are needed to provide a <em>stable data model</em> and <em>stable critical APIs</em>. (See <a href="http://buytaert.net/the-next-step-for-drupal-8-is-a-beta">Dries' explanation of the beta criteria</a>.) <strong>Only the Drupal 8 branch maintainers</strong> should add this tag.</dd>
+<dt><a href="https://drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+deadline">beta deadline</a> issue tag</dt>
+<dd>Non-critical issues (we would not hold up release for them) that significantly change the data model or critical APIs, and therefore can only be committed before the first beta is released. If they're not finished by the time the beta is ready, they must either be postponed to Drupal 8.1.0 or Drupal 9.</dd>
+<dt><a href="https://drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta+target">beta target</a> issue tag</dt>
+<dd>Beta targets are issues that we prioritize for the beta release, but that are not critical and therefore will not hold up the release cycle. These issues might also go into beta2, beta3, etc. if they don't also have the beta deadline tag.</dd>
+<dt><a href="https://drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=rc+deadline">rc deadline</a> issue tag</dt>
+<dd>Issues that are not critical but can only be committed before the first release candidate is released (for example, an <a href="https://drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=Approved+API+change">Approved API change</a>). If they're not finished by the time the release candidate is ready, they must either be postponed to Drupal 8.1.0 or Drupal 9. </dd>
+<dt><a href="https://drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status%5B%5D=1&amp;status%5B%5D=13&amp;status%5B%5D=8&amp;status%5B%5D=14&amp;status%5B%5D=4&amp;version%5B%5D=8.x&amp;issue_tags_op=%3D&amp;issue_tags=minor+version+target">minor version target</a> issue tag (new!)</dt>
+<dd>Add this tag to issues that might be good candidates for a Drupal 8.1.0 or another minor release, like new features, major UI improvements, etc. Consider whether beta or rc deadline issues could fall in this category. (See the <a href="https://drupal.org/node/2135189">Proposal to manage the Drupal 8 release cycle</a> for more information on minor versions.)</dd>
+</dl>
+<p><em>Note: There is no "rc blocker" or "release blocker" tag. The critical issue priority indicates release blockers. Non-release-blocking issues marked "critical" will be downgraded.</em></p>
+<p>So that's Drupal 8's release management in a nutshell! Help us release Drupal 8 to the world as soon as possible by focusing on the most important changes, and think about which improvements can wait for Drupal 8.1.0 or be done in a contributed project.</p>
+  </body>
+</html>
+

@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 27 Apr 2014 14:19:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 27 Apr 2014 14:19:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Conditional Fields and Display Suite
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/blogs/post/conditional-fields-and-display-suite
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Conditional Fields and Display Suite</title>
+    <base href="http://forumone.com/blogs/post/conditional-fields-and-display-suite">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As part of our normal Drupal process we use both <a href="https://drupal.org/project/ds" target="_blank">Display Suite</a>&nbsp;(DS) and <a href="https://drupal.org/project/conditional_fields">Conditional Fields</a>&nbsp;frequently. While building out a site I ran into a very strange issue, when I was trying to output a field through DS it just wasn't showing up. I tried playing around with the formatters, label, etc. ... and nothing changed. So I fired up xdebug and took a look at the render array coming through and, yep, the field was in there. But '#access' was set to false. I went through all the usual suspects, user permissions, field permissions ... nothing. When the entity was loaded it was fine, but just prior to rendering it was set to false. So when stepping through all the code I ran into the culprit ... conditional_fields_entity_view_alter</p>
+<p>When Display Suite builds the entity for rendering it only has the fields that are part of the display mode. So if you exclude the Conditional Field it won't show up in the entity. And in this little snippet of code:</p>
+<pre><code>       // Manage orphan fields (dependents with no dependees).       $evaluate = in_array(CONDITIONAL_FIELDS_FIELD_VIEW_EVALUATE, $behaviors);       $hide_orphan = in_array(CONDITIONAL_FIELDS_FIELD_VIEW_HIDE_ORPHAN, $behaviors);       $hide_untriggered_orphan = in_array(CONDITIONAL_FIELDS_FIELD_VIEW_HIDE_UNTRIGGERED_ORPHAN, $behaviors);       $is_orphan = empty($build[$dependee]['#access']);       if ($is_orphan) {         // Hide the dependent. No need to evaluate the dependency.         if ($hide_orphan) {           $build[$dependent]['#access'] = FALSE;           continue;         }  </code></pre>
+<p>it directly checks to see if the conditional field is in the entity, and if not sets the '#access' attribute to false. So we just made a change to the information architecture to have that field display on the page and everything worked. Once you know it's a fairly simple thing to understand. But if you haven't run into it before it can take some significant investigation to figure it out.</p><div class="field field-type-text field-field-short-description">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <p>&nbsp;Display Suite and Conditional Fields are hugely useful modules. There are some times when they don't always play nicely together. Here's one example of where they don't and how to fix it.</p>        </div>
+        </div>
+</div>
+  </body>
+</html>
+

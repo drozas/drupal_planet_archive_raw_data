@@ -1,0 +1,143 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 15 Nov 2013 23:37:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 15 Nov 2013 23:37:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: mcdruid.co.uk: Check your cache before you wreck yourself
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.mcdruid.co.uk/content/check-your-cache-before-you-wreck-yourself
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>mcdruid.co.uk: Check your cache before you wreck yourself</title>
+    <base href="http://www.mcdruid.co.uk/content/check-your-cache-before-you-wreck-yourself">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Cache invalidation is known as one of the very few <em>hard things in computer science</em>.</p>
+<p>It seems to be a common misconception that Drupal's cache_get checks whether a given cache entry has expired, and won't return a stale result. In fact, in Drupal this is not always the case.</p>
+<p>The docs for both D6 and D7 actually say that if a specific timestamp is given as the $expire parameter in a cache_set, that this <em>"Indicates that the item should be kept at least until the given time, after which it behaves like CACHE_TEMPORARY."</em>. [<a href="https://api.drupal.org/api/drupal/includes!cache.inc/function/cache_set/6" rel="nofollow">D6</a>/<a href="https://api.drupal.org/api/drupal/includes!cache.inc/function/cache_set/7" rel="nofollow">D7</a>]</p>
+<p>So this does not say that cache entries will expire (i.e. cache_get will not return them) after this timestamp has passed; rather it says that "the item should be removed at the next general cache wipe."</p>
+<p>What this actually means is that it's the responsibility of the code which does a cache_get to check whether any object that it gets back is still valid in terms of the time it should expire.</p>
+<p>So, if you want to use Drupal's cache system in D6 or D7 to store a value for a short amount of time, but not wait for the cache entry to be cleared until "the next general cache wipe", you must check the expire timestamp on any cache object that you receive back from a cache_get.</p>
+<p>Here's a little php script which illustrates this; we still get a cache object back even although it has expired:</p>
+<p><div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+&nbsp;
+<a href="http://www.php.net/define"><span style="color: #990000;">define</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'TEST_CACHE_LIFETIME'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">10</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// seconds</span>
+<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">!</span><a href="http://www.php.net/defined"><span style="color: #990000;">defined</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'REQUEST_TIME'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #666666; font-style: italic;">// REQUEST_TIME is in D7 but not D6</span>
+  <a href="http://www.php.net/define"><span style="color: #990000;">define</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'REQUEST_TIME'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/time"><span style="color: #990000;">time</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+<span style="color: #b1b100;">print</span> <span style="color: #0000ff;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>###<span style="color: #000099; font-weight: bold;">\n</span>running cache test at &quot;</span> <span style="color: #339933;">.</span> REQUEST_TIME <span style="color: #339933;">.</span> <span style="color: #0000ff;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000088;">$reset_cache</span> <span style="color: #339933;">=</span> <span style="color: #009900; font-weight: bold;">FALSE</span><span style="color: #339933;">;</span>
+<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$cached</span> <span style="color: #339933;">=</span> cache_get<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'test_cache_expiry'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'cache'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>  <span style="color: #009900;">&#123;</span>
+  <span style="color: #b1b100;">print</span> <span style="color: #0000ff;">'this came from cache: '</span> <span style="color: #339933;">.</span> <a href="http://www.php.net/print_r"><span style="color: #990000;">print_r</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$cached</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$cached</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">expire</span> <span style="color: #339933;">&lt;</span> REQUEST_TIME<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$reset_cache</span> <span style="color: #339933;">=</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">print</span> <span style="color: #0000ff;">&quot;cached data has expired; resetting<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+<span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #000088;">$reset_cache</span> <span style="color: #339933;">=</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$reset_cache</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #b1b100;">print</span> <span style="color: #0000ff;">'setting this to cache: '</span> <span style="color: #339933;">.</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$data</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/md5"><span style="color: #990000;">md5</span></a><span style="color: #009900;">&#40;</span><a href="http://www.php.net/rand"><span style="color: #990000;">rand</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">.</span> <span style="color: #0000ff;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">;</span>
+  cache_set<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'test_cache_expiry'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$data</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'cache'</span><span style="color: #339933;">,</span> REQUEST_TIME <span style="color: #339933;">+</span> TEST_CACHE_LIFETIME<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>...and here's what happens if we run it a few times in quick succession:</p>
+<p><div class="geshifilter"><pre class="text geshifilter-text" style="font-family:monospace;">$ for i in {1..8}; do drush scr cache_test.php; sleep 3; done
+&nbsp;
+###
+running cache test at 1384557409
+setting this to cache: 5d9f014b374764e35220ead02102b1e7
+&nbsp;
+###
+running cache test at 1384557412
+this came from cache: stdClass Object
+(
+    [cid] =&gt; test_cache_expiry
+    [data] =&gt; 5d9f014b374764e35220ead02102b1e7
+    [created] =&gt; 1384557409
+    [expire] =&gt; 1384557419
+    [serialized] =&gt; 0
+)
+&nbsp;
+###
+running cache test at 1384557416
+this came from cache: stdClass Object
+(
+    [cid] =&gt; test_cache_expiry
+    [data] =&gt; 5d9f014b374764e35220ead02102b1e7
+    [created] =&gt; 1384557409
+    [expire] =&gt; 1384557419
+    [serialized] =&gt; 0
+)
+&nbsp;
+###
+running cache test at 1384557419
+this came from cache: stdClass Object
+(
+    [cid] =&gt; test_cache_expiry
+    [data] =&gt; 5d9f014b374764e35220ead02102b1e7
+    [created] =&gt; 1384557409
+    [expire] =&gt; 1384557419
+    [serialized] =&gt; 0
+)
+&nbsp;
+###
+running cache test at 1384557422
+this came from cache: stdClass Object
+(
+    [cid] =&gt; test_cache_expiry
+    [data] =&gt; 5d9f014b374764e35220ead02102b1e7
+    [created] =&gt; 1384557409
+    [expire] =&gt; 1384557419
+    [serialized] =&gt; 0
+)
+cached data has expired; resetting
+setting this to cache: a57b9e9734824207e0aa6d4d6a4b6973
+&nbsp;
+###
+running cache test at 1384557426
+this came from cache: stdClass Object
+(
+    [cid] =&gt; test_cache_expiry
+    [data] =&gt; a57b9e9734824207e0aa6d4d6a4b6973
+    [created] =&gt; 1384557422
+    [expire] =&gt; 1384557432
+    [serialized] =&gt; 0
+)
+&nbsp;
+###
+running cache test at 1384557429
+this came from cache: stdClass Object
+(
+    [cid] =&gt; test_cache_expiry
+    [data] =&gt; a57b9e9734824207e0aa6d4d6a4b6973
+    [created] =&gt; 1384557422
+    [expire] =&gt; 1384557432
+    [serialized] =&gt; 0
+)
+&nbsp;
+###
+running cache test at 1384557433
+this came from cache: stdClass Object
+(
+    [cid] =&gt; test_cache_expiry
+    [data] =&gt; a57b9e9734824207e0aa6d4d6a4b6973
+    [created] =&gt; 1384557422
+    [expire] =&gt; 1384557432
+    [serialized] =&gt; 0
+)
+cached data has expired; resetting
+setting this to cache: abbe82035a1bcaea187259f316f04309</pre></div></p>
+<p>Note that not all cache backends work the same - memcache doesn't seem to return cache entries after their expire timestamp has passed, for example.</p>
+<p>We should assume, however, that we might well get a cache object which has expired back from cache_get, so we should always check the expire property before assuming that the cache entry is valid</p>
+<p>See <a href="https://drupal.org/node/534092" title="https://drupal.org/node/534092" rel="nofollow">https://drupal.org/node/534092</a> for some discussion as to whether this is a bug or a feature.</p>
+  </body>
+</html>
+

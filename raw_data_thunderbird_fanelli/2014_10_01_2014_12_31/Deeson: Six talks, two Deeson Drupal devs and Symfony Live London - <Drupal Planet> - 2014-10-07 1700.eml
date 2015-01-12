@@ -1,0 +1,172 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 07 Oct 2014 15:00:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 07 Oct 2014 15:00:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson: Six talks, two Deeson Drupal devs and Symfony Live London
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.deeson.co.uk/labs/six-talks-two-deeson-drupal-devs-and-symfony-live-london
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson: Six talks, two Deeson Drupal devs and Symfony Live London</title>
+    <base href="https://www.deeson.co.uk/labs/six-talks-two-deeson-drupal-devs-and-symfony-live-london">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/lead_image/20141001_153151.jpg?itok=UKkWPSh-" width="400" height="533" alt="Symfony Live London" title="Symfony Live London" />
+
+  
+    
+        
+          <p>Dan and I went to <a href="http://london2014.live.symfony.com" target="_blank">Symfony Live London</a> last Friday to find out what was happening in the world of Symfony.</p>
+        
+    
+  
+
+
+
+  
+    
+        
+          <p>Here's a <strong>summary</strong> of the six talks we attended:</p>
+        
+    
+  
+
+
+
+  
+    
+      
+        <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/secondary_images/images_and_text/screen_shot_2014-09-23_at_14.36.13_1.png?itok=3FJioP2v" width="400" height="188" alt="Symfony Live" title="Symfony Live" />      
+      
+        <h4>1. The Dependency Trap</h4>
+<p><a href="http://zalas.eu/"><strong>Jakub Zalas</strong></a> gave an interesting talk about the difficulties of relying too heavily on third-party services and classes.</p>
+<p>He went through the process of thinking about writing code while avoiding being overly reliant on a third-party. The main benefit is when you need to change your code or third-party service at a later date, it should be easy enough to do without having to re-write half of your application.</p>
+      
+    
+  
+
+
+
+
+  
+    
+        
+          <h4>2. How Kris Builds Symfony Apps</h4>
+<p>Although I haven't been working with Symfony that long, the name <strong>'<a href="http://kriswallsmith.net/" target="_blank">Kris Wallsmith</a>'</strong> keeps coming up when looking around at various bundles. He talked about his approach to building apps.</p>
+<p>He went through the different layers involved in building an app, such as controller, models, services, event handlers, etc. He dismissed the myth of 'thin controllers, fat models', by looking at what the controllers, models and services actually do at each level.</p>
+<p>In his view they are all just 'mapping layers' between the different data abstraction layers apps have. When you look at it like this, you end up with 'thin controllers, thin models' and 'thin services with thin events'.</p>
+        
+    
+  
+
+
+
+  
+    
+      
+        <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/secondary_images/images_and_text/imag0238.jpg?itok=47cCaXOV" width="400" height="312" alt="Symfony Live" title="Symfony Live" />      
+      
+        <h4>3. The Naked Bundle</h4>
+<p><a href="http://php-and-symfony.matthiasnoback.nl/"><strong>Matthias Noback</strong></a> introduced the self-titled, 'Noback's Principle: Code shouldn't rely on something that it doesn't truly need'.</p>
+<p>He suggested we should limit our dependency on the framework as much as possible. </p>
+      
+    
+  
+
+
+
+
+  
+    
+        
+          <p>We should try to limit to the point where pretty much everything that you would normally put inside a Symfony Bundle (which is a concept very much tied to the framework) can be moved in some way into framework agnostic, re-usable components.</p>
+<p>The talk was enlightening, but it made me wonder whether I am ready to break away from Symfony so soon!</p>
+        
+    
+  
+
+
+
+  
+    
+        
+          <h4>4. One Commit, One Release. Continuously Delivering a Symfony Project</h4>
+<p><strong><a href="http://www.slideshare.net/loalf">Javier Lopez</a></strong> went through the continuous integration process they used on a project. The talk explained that a release to production doesn't have to be a such a daunting task.</p>
+<p>Interestingly, they had managed to reduce the time it took to deploy a release from 30 minutes to 30 seconds. They released most days, rather than once a week or each fortnight. Also the product owner could trigger a release rather than relying on a developer to do it.</p>
+<p>At Deeson we are using continuous integration for our web build projects more and more.</p>
+        
+    
+  
+
+
+
+  
+    
+      
+        <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/secondary_images/images_and_text/20141001_153151.jpg?itok=L1VCcOea" width="400" height="313" alt="Symfony Live" title="Symfony Live" />      
+      
+        <h4>5. Converting a Website to a New Religion: Symfony</h4>
+<p><strong>Michael Cullum</strong> has been involved in the rebuild of phpBB using Symfony and went through their approach to rebuilding such a large scale app.</p>
+      
+    
+  
+
+
+
+
+  
+    
+        
+          <p>When looking at rebuilding a site, you can be tempted to copy and paste a lot of code.</p>
+<p>Michael highlighted the problems with repasting code. In fact when we have the opportunity to rewrite code, we should be tackling it head on.  </p>
+<p>We all write code which we look at six months or a year later and think, "what was I thinking when I wrote that?" He told us to understand what we are trying to achieve and write efficient code now.</p>
+<p>What was interesting is that they had looked at a section of phpBB at a time. They started with the home page and got that working, then moved onto the next page. </p>
+<p>This is different from the norm of building the functionality and then getting theming working across the entire site as a second step.  </p>
+        
+    
+  
+
+
+
+  
+    
+      
+        <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/secondary_images/images_and_text/20140926_161952.jpg?itok=nnA9Idyv" width="200" height="140" alt="Symfony Live" title="Symfony Live" />      
+      
+        
+
+<h4>6. Decorating Applications with Stack</h4>
+<p><a href="https://beau.io/"><strong>Beau Simensen</strong></a> was introducing '<a href="http://stackphp.com/" target="_blank">Stack</a>' - a convention for composing HttpKernelInterface middlewares into your application.  </p>
+<p>He went through its history, which applications can currently use it (Symfony, Silex, Laravel 4, and Drupal 8) and a brief overview of how it can be used.</p>
+
+
+      
+    
+  
+
+
+
+
+  
+    
+        
+          <p>Although an interesting concept, it didn't seem immediately relevant to our experience.</p>
+        
+    
+  
+
+
+
+  
+    
+        
+          <h4>A worthwhile event</h4>
+<p>As we're using Symfony more and more, it was interesting to be part of the event and to attend such a range of interesting talks.</p>
+  </body>
+</html>
+

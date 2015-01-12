@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 19 Jul 2013 16:27:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 19 Jul 2013 16:27:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: CiviCRM Blog: Sending an email to a target when signing a Petition
+Content-Transfer-Encoding: 8bit
+Content-Base: http://civicrm.org/blogs/jamie/sending-email-target-when-signing-petition
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>CiviCRM Blog: Sending an email to a target when signing a Petition</title>
+    <base href="http://civicrm.org/blogs/jamie/sending-email-target-when-signing-petition">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+        <div class="field-item even" property="content:encoded"><p>With the 4.3 upgrade, the Progressive Technology Project has made a number of important steps toward breaking out our work into pieces that others can use on their sites. This blog will begin a series of (hopefully) weekly blogs outlining new functionality that others can use.</p>
+<p>Our first blog features the civicrm_petition_email Drupal module. Thanks to the hard work of agh1, a Drupal 6 version of the module is available (https://github.com/agh1/civicrm_petition_email). We just finished porting it to Drupal 7.</p>
+<p>For the impatient:</p>
+<p> git clone git://git.progressivetech.org/powerbase/civicrm_petition_email</p>
+<p>With this module enabled, there are a few new checkboxes on the petition form that allow you to specify the name and email address of a target that should get notified every time the petition is filled out. In addition, you can optionally specify a field in the petition that should be used as a custom message to the target instead of the default message (which is also configurable).</p>
+<p>Enjoy!</p>
+<p> </p>
+</div>
+  </div>
+  </body>
+</html>
+

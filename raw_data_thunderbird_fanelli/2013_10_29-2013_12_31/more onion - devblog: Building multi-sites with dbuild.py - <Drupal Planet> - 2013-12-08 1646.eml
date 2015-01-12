@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 08 Dec 2013 15:46:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 08 Dec 2013 15:46:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: more onion - devblog: Building multi-sites with dbuild.py
+Content-Transfer-Encoding: 8bit
+Content-Base: http://devblog.more-onion.com/building-multi-sites-dbuildpy
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>more onion - devblog: Building multi-sites with dbuild.py</title>
+    <base href="http://devblog.more-onion.com/building-multi-sites-dbuildpy">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"> <p>Here at more onion we're hosting most of our client's sites ourselves. This means we are hosting lots of sites which share most of their modules (ie. our standard Drupal installation). Reproducible setups, fast builds, sharing-module code among many sites -- This is where our new <a href="https://github.com/torotil/dbuild.py">build-tool called dbuild.py</a> comes in.</p>
+<p>It started out as yet another wrapper around <code>drush make</code> and <code>drush site-install</code> but became a fully fledged download-extract-patch-symlink tool in the end.</p></div></div></div><div class="field field-name-field-tag field-type-taxonomy-term-reference field-label-inline clearfix"><h3 class="field-label">Tags: </h3><ul class="links inline"><li class="taxonomy-term-reference-0"><a href="/tags/dbuildpy">dbuild.py</a></li><li class="taxonomy-term-reference-1"><a href="/tags/hosting">hosting</a></li><li class="taxonomy-term-reference-2"><a href="/tags/multi-site">multi-site</a></li><li class="taxonomy-term-reference-3"><a href="/tags/drupal-planet">Drupal Planet</a></li></ul></div>
+  </body>
+</html>
+

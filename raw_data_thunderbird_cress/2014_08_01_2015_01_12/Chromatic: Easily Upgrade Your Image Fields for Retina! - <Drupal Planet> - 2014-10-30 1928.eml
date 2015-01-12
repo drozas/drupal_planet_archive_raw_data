@@ -1,0 +1,42 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 30 Oct 2014 19:28:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 30 Oct 2014 19:28:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chromatic: Easily Upgrade Your Image Fields for Retina!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.chromaticsites.com/blog/easily-upgrade-your-image-fields-retina
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chromatic: Easily Upgrade Your Image Fields for Retina!</title>
+    <base href="http://www.chromaticsites.com/blog/easily-upgrade-your-image-fields-retina">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+              <p>Drupal makes it so easy to add image fields to your content types. <a href="https://www.drupal.org/community-initiatives/drupal-core/fields" target="_blank">Fields in core for the win!</a> With image styles in core, its as easy as ever to create multiple image sizes for display in various contexts (thumbnails, full, etc.). But what about providing hi-resolution versions of your rasterized images for retina displays? Out of the box, you don’t really have a lot of good options. You could simply upload high resolution versions and force your users, regardless of display type to download massive file versions, but that’s not exactly the best for performance. You could use some custom field theming and roll your own implementation of the <code class="prettyprint">&lt;picture&gt;</code> element, but <a href="http://caniuse.com/#search=picture" target="_blank">browser support</a> is basically null at this point. That won’t do. You could <a href="http://blog.cloudfour.com/how-apple-com-will-serve-retina-images-to-new-ipads/" target="_blank">do what Apple does</a> and force the browser to download 1x versions of your images then use javascript to detect high resolution displays and then force the browser to download all of the high resolution versions…I think you see my point.</p>
+<p>What if you could create hi-resolution versions of these images without a ton of added filesize overhead? What if you could do this all within Drupal? No special coding, no uploading of multiple versions, no special field templates or unnecessary javascript. Just a basic Drupal image field with a special image style defined.</p>
+<h4>Here’s how you do it:</h4>
+<ol><li>Create your image field. (In most cases, you’ve probably already got this.) <a href="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/01-adding-image-field.png" class="external"><img src="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/01-adding-image-field.png" alt="Adding an image field via the Drupal field's interface" /></a></li>
+<li>Download and install the <a href="https://www.drupal.org/project/hires_images" target="_blank">HiRes Images module</a> <em>This module allows you to create an image style at 2x the desired pixel dimensions. If your desired maximum image width is 720 css pixels, your output image would be saved at 1440px.</em></li>
+<li>Download and install the <a href="https://www.drupal.org/project/image_style_quality" target="_blank">Image Style Quality module</a> <em>This nifty module allows you to define specific image qualities on a per image style basis instead of using Drupal’s global image quality setting.</em> <a href="(external)http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/02-drush-enable-modules.png" class="external"><img src="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/02-drush-enable-modules.png" alt="Display of drush commands" /></a></li>
+<li>Add a new image style (or alter an existing)</li>
+<li>Add your normal image style presets, like scale, crop etc. If you’re scaling, set your scale to be 2x your desired maximum output in pixels. So if you want an output of 720, set your scale to 1440px.</li>
+<li>Add the “Hi-Res (x2)”" effect. This will output you’re image element at half the scale amount above. So we get a max of 720px.</li>
+<li>Add the “Quality” effect and set it to something like 60%. This may take some experimenting to find a balance between image quality and file size. In my example, I went with 60% compression. This yielded an image that was still really sharp and a reasonable file size. <a href="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/03-final-image-style.png" class="external"><img src="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/03-final-image-style.png" alt="Final image style with high resolution filter and image quality reduction" /></a></li>
+<li>Set your display mode to use this new (or altered) image style. <a href="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/04-configure-display.png" class="external"><img src="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/04-configure-display.png" alt="Configuring the image field to use the recently created image style with the Manage Display interface" /></a></li>
+<li>Enjoy your beautiful, high resolution, performant image fields!</li>
+</ol><p>Hard to believe this works right? You’d think your retina version would look really crappy with that much compression, but it doesn’t. In fact, in some cases it will look just as sharp and be smaller than a 1x counterpart. See my screenshots below for proof:</p>
+<h4>Side-by-side comparison:</h4>
+<p><a href="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/05-side-by-side.png" class="external"><img src="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/05-side-by-side.png" alt="Side by side comparison screenshot" target="_blank" /></a></p>
+<h4>Network panel output:</h4>
+<p> <a href="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/06-network-comparison.png" class="external"><img src="http://blog-media.chromaticsites.com.s3.amazonaws.com/retina-image-fields/06-network-comparison.png" alt="Developer tools network panel screenshot" /></a></p>
+<p>So we end up with a high resolution version of our uploaded image that is actually smaller than the original version at 720px! Looks great on retina devices and doesn’t badly penalize users of standard definition displays. WIN!</p>
+<p>For a detailed explanation of this technique in broader terms, see <a href="http://blog.netvlies.nl/design-interactie/retina-revolution/" target="_blank">Retina Revolution</a> by Daan Jobsis</p>
+          </div>
+  </body>
+</html>
+

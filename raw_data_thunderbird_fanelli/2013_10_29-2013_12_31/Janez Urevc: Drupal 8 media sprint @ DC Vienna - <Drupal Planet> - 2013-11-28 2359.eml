@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 28 Nov 2013 22:59:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 28 Nov 2013 22:59:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Janez Urevc: Drupal 8 media sprint @ DC Vienna
+Content-Transfer-Encoding: 8bit
+Content-Base: http://janezurevc.name/drupal-8-media-sprint-dc-vienna-0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Janez Urevc: Drupal 8 media sprint @ DC Vienna</title>
+    <base href="http://janezurevc.name/drupal-8-media-sprint-dc-vienna-0">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p><em>Note: this is X-post from g.d.o. Please post your comments there.</em></p>
+<p> </p>
+<p><a href="http://2013.drupalcamp.at">DC Vienna</a> was taking place last weekend with extending sprints on Monday and Tuesday. We started Drupal 8 media part of this great DrupalCamp on Saturday with a BoF. We discussed some of the current architectual decisions there and kicked-off a sprint that was happening on Sunday, Monday and Tuesday. We mostly worked on basic low-level things for media entity such as:</p>
+<ul><li>media entity definition,</li>
+<li>entity create, update and edit forms,</li>
+<li>media bundle definiton,</li>
+<li>bundle create, update and edit forms,</li>
+<li>fields configuration on media entity,</li>
+<li>access controller (i.e. basic access control for media entity),</li>
+<li>very basic views integration,</li>
+<li>test coverage for current features.</li>
+</ul><p>There was also some UI related work done. We started to work on <a href="https://twitter.com/el22or/status/404983477474697216">mocks for ediorial flow</a>, which is probably the most important part of what we're doing.</p>
+<h2>Where are we</h2>
+<p>Currently we're able to create media entities that belong to the corresponding media bundles. We can attach fields to them, which menas that we can add local files (using core's fields). Once we have a media entity with local file attached to it we use entity reference field to attach that entity to a node. We can use standard display configuration to display media entity on a content: <img alt="Media entity example" src="https://groups.drupal.org/files/cup.png" title="Media entity example" /></p>
+<h2>Where to go next</h2>
+<p>There is still a lot of work to do. We need to keep working on editorial experience, we need to improve views integration and use that to create media library, we still need to make some architecture decisions, etc. We can do work remotely, but it is quite clear that we achive most progress when attending sprints. For that reason we started to think about organizing a week-long <strong>sprint somwhere in central Europe in the beginning of next year</strong>. We would definitely like to attract more people. We're open to suggestions about the place and time of that sprint. Please <strong>comment on this post if you want to attend or host this sprint</strong>.</p>
+<h2>Thanks go to...</h2>
+<p>I would like to express special thanks to few people that helped us a lot during the sprint in Vienna:</p></div></div></div>
+  </body>
+</html>
+

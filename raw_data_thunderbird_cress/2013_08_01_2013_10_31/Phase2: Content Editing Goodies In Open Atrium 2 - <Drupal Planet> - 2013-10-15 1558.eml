@@ -1,0 +1,59 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 15 Oct 2013 14:58:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 15 Oct 2013 14:58:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Content Editing Goodies In Open Atrium 2
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/content-editing-goodies-in-open-atrium-2/?utm_source=rss&utm_medium=rss&utm_campaign=content-editing-goodies-in-open-atrium-2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Content Editing Goodies In Open Atrium 2</title>
+    <base href="http://www.phase2technology.com/blog/content-editing-goodies-in-open-atrium-2/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=content-editing-goodies-in-open-atrium-2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="https://drupal.org/user/740">Heather James</a> of <a href="acquia.com">Acquia</a> recently published <a href="https://www.acquia.com/blog/content-editing-enhancements-drupal-8">a great post</a> about all the fancy new content editing features of Drupal 8. If you haven&#8217;t read it, go ahead and do that&#8211;it&#8217;s chock full of great reasons to be excited about Drupal 8.</p>
+<p>That said, here at Phase2, we were struck by a lot of the similarities between things mentioned in that post and things that we&#8217;ve built into <a href="https://drupal.org/project/openatrium">Open Atrium 2</a>. Here&#8217;s a quick rundown of some content editing goodies that are in Open Atrium 2, some of which also made it into Drupal 8 and some of which didn&#8217;t.</p>
+<h2>Two Column Content Creation/Editing</h2>
+<p>Like Drupal 8, we put the meat of the node add/edit forms on the left and the metadata on the right. This gives form elements a clear separation and reduces the &#8220;oh crap this form never ends&#8221; factor when messing with content.</p>
+<p>Here&#8217;s what it looks like when adding a discussion post:</p>
+<p><img class="alignnone" alt="" src="http://i.imgur.com/hQCMQhr.png" width="700" /></p>
+<p>The particularly astute readers might notice that the fields have also been rearranged and resized a bit. For example, the title input is now really big as if to scream &#8220;I AM IMPORTANT&#8221; and the URL alias field is placed right underneath it, since that&#8217;s usually based on the title.</p>
+<h2>Save As Draft</h2>
+<p><img class="alignright" alt="" src="http://i.imgur.com/zGPUJPi.png" width="308" height="58" />This simple little feature can save a lot of headaches. Rather than changing the &#8220;Published&#8221; field to Not Published before clicking Save, which I personally forget to do approximately 10/10 times, just click the &#8220;Save As Draft&#8221; button, conveniently made nice and big and placed next to the Publish button.</p>
+<h2>Notifications? Notifications!</h2>
+<p>How many times have you made a change to some piece of content and then promptly emailed a person or group of people to tell them about it? The future is now, friend. Let OA2 do that for you.</p>
+<p><img class="alignright" alt="" src="http://i.imgur.com/ch4B49g.png" width="399" height="309" /></p>
+<p>When adding or editing content, you can choose if you want to notify specific users, specific teams of users, or specific groups. You can also opt out of sending notifications altogether by clicking the checkbox, so that you don&#8217;t have to manually removing anyone that you may have subscribed on the last edit every time you correct a simple typo.</p>
+<p>Or how about being on the receiving end of these? Say you&#8217;re subscribed to a thread that gets a lot of traffic and you find yourself with 30 emails a day because of all the comments. We created the <a href="https://drupal.org/project/message_digest">Message Digest</a> module to fix that. That module will let you tell OA2 that you want to receive digest emails only every day or every week (one message per-group or one global message for all groups) rather than a new email per update.</p>
+<p style="text-align: center;"><img class="aligncenter" alt="" src="http://i.imgur.com/yZRW6Fa.png" width="700" /></p>
+<h2>Well-integrated WYSIWYG editing</h2>
+<p>It was a given that OA2 would need a solid WYSIWYG editing experience, so we pushed pretty hard to make that as solid as we possibly could. To start, there&#8217;s the standard TinyMCE editor with all the usual suspects in terms of formatting.</p>
+<p><img class="aligncenter" alt="" src="http://i.imgur.com/EV67G8C.png" width="552" height="107" /></p>
+<p>We also included some perhaps less-used or more advanced features such as Paste From Word, Insert Special Character, Undo/Redo, etc. which are collapsed by default and show themselves when you click the little &#8220;keyboard&#8221; icon at the top right.</p>
+<p><img class="aligncenter" alt="" src="http://i.imgur.com/xzGfLhx.png" width="505" height="110" /></p>
+<p>Or maybe you feel more at home looking at HTML than formatted text? Change the input format to &#8220;HTML&#8221; and the WYSIWYG will be replaced with a toolbar that lets you insert HTML elements easily but still gives you access to the code.</p>
+<p><img class="aligncenter" alt="" src="http://i.imgur.com/sgvNzca.png" width="415" height="126" /></p>
+<p>But how about media? Adding images and embedding things like YouTube video is done by clicking the &#8220;picture&#8221; icon. From there, you can upload an image directly or paste an image URL or video link to generate embed code. You can also browse for previously upload images thanks to the Media module integration.</p>
+<p><img class="aligncenter" alt="" src="http://i.imgur.com/mRoUsHz.png" width="686" height="345" /></p>
+<p>To round out the WYSIWYG goodies, we made it easy to link to existing content by adding LinkIt support. This gives you a cool little autocomplete field when adding a link that looks for titles of existing content.</p>
+<p><img class="aligncenter" alt="" src="http://i.imgur.com/6DGkUqN.png" width="576" height="398" /></p>
+<h2>Lots of UI simplifications</h2>
+<p>We worked really hard to prune the UI and remove Drupalisms wherever possible to make everything really easy for non-developers to get around, and there&#8217;s really too much in this category to name.</p>
+<p>As one quick example, we removed the army of tabs that tend to show up on nodes on Drupal sites with a lot of modules (Edit, Delete, View, Panelizer, Log, Subscribe, Revisions, Archive, etc. etc. help me). Instead, we show the most used one (&#8220;Edit&#8221;) by default, and hide any others that might be useful under a little gear dropdown menu. So you&#8217;re left with these pretty little buttons instead of a mile long tab strip.</p>
+<p style="text-align: center;"> <img class="aligncenter" alt="" src="http://i.imgur.com/T7CLDb6.png" width="546" height="255" /></p>
+<h2>Taking a tour</h2>
+<p><img class="alignleft" alt="" src="http://i.imgur.com/wiuo3yx.png" width="260" height="89" />When you&#8217;re first presented with a system as powerful as Open Atrium 2, it&#8217;s going to be a little daunting no matter how easy we try and make it. To ease that pain, we created the <a href="http://drupal.org/project/bootstrap_tour">Bootstrap Tour</a> which gives us (and YOU!) an easy to use interface for creating tours. For example, if you want to learn how to create a new page, you&#8217;d just click the little question mark icon in the navbar and click &#8220;Adding a new page&#8221; in the dropdown.</p>
+<p><img class="alignright" alt="" src="http://i.imgur.com/K9mDE8i.png" width="394" height="176" />That will take you to the admin section and give you a little pop up next to the link you&#8217;d use to create a new page. This will describe what the link does and what happens when you click it.</p>
+<p>Then, click &#8220;Next&#8221; in the popup and you&#8217;ll be taken to the actual form where you enter details about your new page along with helpful popups telling you which fields do what. It&#8217;s a really seamless experience and it makes learning the ins and outs of Open Atrium 2 about as easy as it possibly could be.</p>
+<p>The cool part about this is that it&#8217;s so easy to create and edit tours that once you learn the ins and outs of OA2 and you move on to customizing things, you can create your own tours to teach your coworkers or users how to use what you build. So if you build an Intranet on top of OA2, adding guided tutorials for your users is really, really easy.</p>
+<p style="text-align: center;"><a href="http://www.phase2technology.com/wp-content/uploads/2013/10/tour.png"><img class=" wp-image-5569 aligncenter" alt="tour" src="http://www.phase2technology.com/wp-content/uploads/2013/10/tour.png" width="700" /></a></p>
+<h2>Lots more</h2>
+<p>There&#8217;s really too much to put it all in one (or a few) blog posts, but take it from me, as someone who is not easily impressed by things like this: there are a LOT of really exciting things for content editors in Open Atrium 2. We&#8217;re really excited to launch later this month at <a href="badcamp.net">BADCamp</a>! In the meantime, <a href="https://drupal.org/project/openatrium">download the latest beta</a> and tell us what you think!</p>
+  </body>
+</html>
+

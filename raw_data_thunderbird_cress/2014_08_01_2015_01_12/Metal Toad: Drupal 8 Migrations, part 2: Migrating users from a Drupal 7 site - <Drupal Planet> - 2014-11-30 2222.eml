@@ -1,0 +1,315 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 30 Nov 2014 22:22:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 30 Nov 2014 22:22:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Metal Toad: Drupal 8 Migrations, part 2: Migrating users from a Drupal 7 site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.metaltoad.com/blog/migrating-users-drupal-7-to-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Metal Toad: Drupal 8 Migrations, part 2: Migrating users from a Drupal 7 site</title>
+    <base href="http://www.metaltoad.com/blog/migrating-users-drupal-7-to-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/912/title/en/rss">Drupal 8 Migrations, part 2: Migrating users from a Drupal 7 site</span>
+<span class="field field-node--created field-name-created field-type-created field-label-hidden" data-quickedit-field-id="node/912/created/en/rss">November 30th, 2014</span>
+<span class="field field-node--uid field-name-uid field-type-entity-reference field-label-hidden" data-quickedit-field-id="node/912/uid/en/rss"><a title="View user profile." href="/people/keithdechant" lang="" about="/people/keithdechant" typeof="schema:Person" property="schema:name" datatype="" class="username">Keith Dechant </a></span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/912/body/en/rss">
+    <div class="field-items">
+          <div class="field-item"><p>In this article, we will be building a custom migration which will import users from a Drupal 7 site into a Drupal 8 site. The migration will include the standard user profile fields like username and email address, plus a few custom fields added to the user profile.</p>
+<p>The Drupal 8 Migration system is very flexible and can be used to migrate many types of data. For an overview of its capabilities and architecture, see <a href="/blog/migrating-content-drupal-8">Part 1 of this series</a>.</p>
+<h3>Try this at home!</h3>
+<p>If you want to try this code yourself, you will need to set up the following:</p>
+<p>A clean install of Drupal 7, with the following customizations:</p>
+<p>In Admin -&gt; Configuration -&gt; People -&gt; Account Settings -&gt; Manage Fields, add the following fields:</p>
+<ul><li>"First Name" - Text</li>
+<li>"Last Name" - Text</li>
+<li>"Biography" - Long text (summary is not necessary)</li>
+<li>The default widget and settings are OK for all fields</li>
+</ul><p>Once the field configuration is complete, you will need to create a few users so you have some data to migrate.</p>
+<p>A clean install of Drupal 8, with the following:</p>
+<p>In Admin -&gt; Configuration -&gt; People -&gt; Account Settings -&gt; Manage Fields, add the following fields:</p>
+<ul><li>"First Name" - Text (plain)</li>
+<li>"Last Name" - Text (plain)</li>
+<li>"Biography" - Text (formatted, long)</li>
+<li>The default widgets and settings are OK for all fields</li>
+</ul><h3>Create the custom migration module</h3>
+<p>Migrations are contained within Drupal 8 modules. All migration modules depend on the core "Migrate" module, which provides the migration framework. In addition, for our custom migration here, we are depending on the core "Migrate Drupal" module (which provides Drupal 6 to Drupal 8 migrations) for some base classes.</p>
+<p>To begin, we will create our own custom module called "migrate_custom" and add the following information to the file "migrate_custom.info.yml":</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">name: Custom Migration
+description: Custom migration module for migrating data from a Drupal 7 site.
+package: Migrations
+type: module
+core: 8.x
+dependencies:
+  - migrate
+  - migrate_drupal</pre></div>
+</div>
+<h3>The migration definition</h3>
+<p>For our migration, we need to create a YAML file containing the source, destination, and field mappings (called "process").</p>
+<h4>Source and destination</h4>
+<p>These configuration parameters inform the Migrate module how to get the data and where to save it. In our example, "source" will refer to a custom plugin we define, and "destination" will refer to the built-in "entity:user" plugin defined by the core Migrate module.</p>
+<p>To start our migration definition, create a new file within your module, in the location <span class="geshifilter"><code class="text geshifilter-text">{module root}/config/install/migrate.migration.custom_user.yml</code></span> with the following contents:</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">id: custom_user
+source:
+  plugin: custom_user
+destination:
+  plugin: entity:user
+process:
+  # Field mappings and transformations will go here. We will get to this in a minute.</pre></div>
+</div>
+<h4>Creating the source plugin</h4>
+<p>Our definition above will request data from a source plugin called "custom_user". (Note that this name does not need to be the same as the name of the migration itself.) So, we need to create a new PHP class to contain the source definition.</p>
+<p>Create a new file with the path <span class="geshifilter"><code class="text geshifilter-text">{module root}/src/Plugin/migrate/source/User.php</code></span> with the following contents:</p>
+<div class="geshifilter">
+<div class="php geshifilter-php" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<span style="color: #009933; font-style: italic;">/**
+ * @file
+ * Contains \Drupal\migrate_custom\Plugin\migrate\source\User.
+ */</span>
+ 
+<span style="color: #000000; font-weight: bold;">namespace</span> Drupal\migrate_custom\Plugin\migrate\source<span style="color: #339933;">;</span>
+ 
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\migrate\Plugin\SourceEntityInterface<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\migrate\Row<span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">use</span> Drupal\migrate_drupal\Plugin\migrate\source\DrupalSqlBase<span style="color: #339933;">;</span>
+ 
+<span style="color: #009933; font-style: italic;">/**
+ * Extract users from Drupal 7 database.
+ *
+ * @MigrateSource(
+ *   id = "custom_user"
+ * )
+ */</span>
+<span style="color: #000000; font-weight: bold;">class</span> User <span style="color: #000000; font-weight: bold;">extends</span> DrupalSqlBase <span style="color: #000000; font-weight: bold;">implements</span> SourceEntityInterface <span style="color: #009900;">{</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> query<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">select</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'users'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'u'</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">fields</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'u'</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array_keys"><span style="color: #990000;">array_keys</span></a><span style="color: #009900;">(</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">baseFields</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span>
+      <span style="color: #339933;">-&gt;</span><span style="color: #004000;">condition</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'uid'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">0</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'&gt;'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> fields<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$fields</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">baseFields</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$fields</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'first_name'</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'First Name'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$fields</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'last_name'</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Last Name'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #000088;">$fields</span><span style="color: #009900;">[</span><span style="color: #0000ff;">'biography'</span><span style="color: #009900;">]</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Biography'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$fields</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> prepareRow<span style="color: #009900;">(</span>Row <span style="color: #000088;">$row</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$uid</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getSourceProperty</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'uid'</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+ 
+    <span style="color: #666666; font-style: italic;">// first_name</span>
+    <span style="color: #000088;">$result</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getDatabase</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">query</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'
+      SELECT
+        fld.field_first_name_value
+      FROM
+        {field_data_field_first_name} fld
+      WHERE
+        fld.entity_id = :uid
+    '</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span><span style="color: #0000ff;">':uid'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$uid</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">foreach</span> <span style="color: #009900;">(</span><span style="color: #000088;">$result</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$record</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+      <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">setSourceProperty</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'first_name'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$record</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">field_first_name_value</span> <span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span>
+ 
+    <span style="color: #666666; font-style: italic;">// last_name</span>
+    <span style="color: #000088;">$result</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getDatabase</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">query</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'
+      SELECT
+        fld.field_last_name_value
+      FROM
+        {field_data_field_last_name} fld
+      WHERE
+        fld.entity_id = :uid
+    '</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span><span style="color: #0000ff;">':uid'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$uid</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">foreach</span> <span style="color: #009900;">(</span><span style="color: #000088;">$result</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$record</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+      <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">setSourceProperty</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'last_name'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$record</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">field_last_name_value</span> <span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span>
+ 
+    <span style="color: #666666; font-style: italic;">// biography</span>
+    <span style="color: #000088;">$result</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getDatabase</span><span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">query</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'
+      SELECT
+        fld.field_biography_value,
+        fld.field_biography_format
+      FROM
+        {field_data_field_biography} fld
+      WHERE
+        fld.entity_id = :uid
+    '</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span><span style="color: #0000ff;">':uid'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$uid</span><span style="color: #009900;">)</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">foreach</span> <span style="color: #009900;">(</span><span style="color: #000088;">$result</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$record</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+      <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">setSourceProperty</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'biography_value'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$record</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">field_biography_value</span> <span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+      <span style="color: #000088;">$row</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">setSourceProperty</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'biography_format'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$record</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">field_biography_format</span> <span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">}</span>
+ 
+    <span style="color: #b1b100;">return</span> parent<span style="color: #339933;">::</span><span style="color: #004000;">prepareRow</span><span style="color: #009900;">(</span><span style="color: #000088;">$row</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> getIds<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #b1b100;">return</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+      <span style="color: #0000ff;">'uid'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+        <span style="color: #0000ff;">'type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'integer'</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'alias'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'u'</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * Returns the user base fields to be migrated.
+   *
+   * @return array
+   *   Associative array having field name as key and description as value.
+   */</span>
+  <span style="color: #000000; font-weight: bold;">protected</span> <span style="color: #000000; font-weight: bold;">function</span> baseFields<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #000088;">$fields</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">(</span>
+      <span style="color: #0000ff;">'uid'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'User ID'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'name'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Username'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'pass'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Password'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'mail'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Email address'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'signature'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Signature'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'signature_format'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Signature format'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'created'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Registered timestamp'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'access'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Last access timestamp'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'login'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Last login timestamp'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'status'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Status'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'timezone'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Timezone'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'language'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Language'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'picture'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Picture'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'init'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">t</span><span style="color: #009900;">(</span><span style="color: #0000ff;">'Init'</span><span style="color: #009900;">)</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #000088;">$fields</span><span style="color: #339933;">;</span>
+ 
+<span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> bundleMigrationRequired<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #009900; font-weight: bold;">FALSE</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+  <span style="color: #009933; font-style: italic;">/**
+   * {@inheritdoc}
+   */</span>
+  <span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> entityTypeId<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+    <span style="color: #b1b100;">return</span> <span style="color: #0000ff;">'user'</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">}</span>
+ 
+<span style="color: #009900;">}</span>
+<span style="color: #000000; font-weight: bold;">?&gt;</span></pre></div>
+</div>
+<p>Pay attention to the docblock immediately preceding the class definition. The lines</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal"> * @MigrateSource(
+ *   id = "custom_user"
+ * )</pre></div>
+</div>
+<p>set the ID of the plugin. This ID must match the ID we used in the migration definition above. Failure to keep these the same will result in a "source plugin not found" error.</p>
+<p>Also noteworthy here are a few required methods:</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">query()</code></span> defines the basic query used to retrieve data from Drupal 7's `users` table.</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">prepareRow()</code></span> will be called once for each row, at the beginning of processing. Here, we are using it to load the related data from the field tables (first name, last name, and biography). Any property we create using <span class="geshifilter"><code class="text geshifilter-text">$row-&gt;setSourceProperty()</code></span> will be available in our "process" step. Notice that the biography is slightly different from the other fields, because it is a formatted text field. In addition to the contents, its field table also contains a formatting setting, which we want to import.</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">baseFields()</code></span> contains an array of the basic fields within the `users` table. These are used by query() and also are used by the Migrate Upgrade contrib module to describe the fields. The field descriptions are not used by the Drush "migrate-manifest" command.</p>
+<h4>The destination plugin</h4>
+<p>The <span class="geshifilter"><code class="text geshifilter-text">destination:</code></span> setting in custom_user.yml informs the Migrate module where to store your data. In our case, we are using the "entity:user" plugin, which is built in to the core Migrate module. For importing other content, there are several other built-in destination plugins, such as "entity:node", "entity:user_role", "entity:taxonomy_term", "url_alias", and more. For the complete list, inspect the files in your Drupal 8 site at <span class="geshifilter"><code class="text geshifilter-text">core/modules/migrate/src/Plugin/migrate/destination</code></span>.</p>
+<p>You can define your own destination plugin if you require, but the built-in ones are sufficient to handle the most common Drupal content.</p>
+<h4>Process plugins and field mapping</h4>
+<p>The "process" section contains instructions to map fields from the source to the destination. It also allows for many different types of transformations, such as replacing values, providing a default value, or de-duplicating machine names.</p>
+<p>Back in our <span class="geshifilter"><code class="text geshifilter-text">custom_user.yml</code></span> file, we now add our process settings:</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">id: custom_user
+source:
+  plugin: custom_user
+destination:
+  plugin: entity:user
+process:
+  uid: uid
+  name: name
+  pass: pass
+  mail: mail
+  status: status
+  created: created
+  changed: changed
+  access: access
+  login: login
+  timezone: timezone
+  langcode: language
+  preferred_langcode: language
+  preferred_admin_langcode: language
+  init: init
+  field_first_name: first_name
+  field_last_name: last_name
+  'field_biography/value': biography_value
+  'field_biography/format':
+    plugin: static_map
+    bypass: true
+    source: biography_format
+    map:
+      1: plain_text
+      2: basic_html
+      3: full_html
+      4: full_html</pre></div>
+</div>
+<p>The simplest process mappings take the form of <span class="geshifilter"><code class="text geshifilter-text">destination_field: source_field</code></span>. The source field can be anything your source plugin defines. The destination fields must match the fields available in the destination plugin.</p>
+<p>In our example, most of the fields in the source match fields of the same name in the destination. A few fields have been renamed from Drupal 7 to Drupal 8, for example "language" is now "langcode". The process field mappings reflect this.</p>
+<p>The Biography field is a special case here. It contains both a value and a format. So, we need to supply values for both of these. Also, the "field_biography_format" field in Drupal 7 contains integers, where in Drupal 8 it contains the machine names of the formats. To convert the old values to the new, we are using the "static_map" process plugin.</p>
+<p>If specified in the process field mappings, the UID field will cause migrate to preserve the UIDs in the imported data. This may cause migrate to overwrite existing users. It should be used with care.</p>
+<p>The core Migrate module includes several useful process plugins which are not covered here. See the official documentation at <a href="https://www.drupal.org/node/2129651">https://www.drupal.org/node/2129651</a> for a complete list. You can also write your own process plugins if your data requires custom processing. Any custom process plugins can be saved in the directory <span class="geshifilter"><code class="text geshifilter-text">modules/{module name}/src/Plugin/migrate/process</code></span>.</p>
+<h3>Uninstall hook</h3>
+<p>While developing a migration module, you will often need to make changes to your migration definitions. Because these are configuration entities, you will need to reinstall your module for any changes to take effect.</p>
+<p>Additionally, since Drupal 8 beta 2, Drupal modules no longer delete their configuration when they are uninstalled. Therefore, you will need to write a quick uninstall hook to handle this.</p>
+<p>In the file <span class="geshifilter"><code class="text geshifilter-text">migrate_custom.module</code></span>, add the following function:</p>
+<div class="geshifilter">
+<div class="php geshifilter-php" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #009933; font-style: italic;">/**
+ * Implements hook_uninstall().
+ *
+ * Cleans up config entities installed by this module.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> migrate_custom_uninstall<span style="color: #009900;">(</span><span style="color: #009900;">)</span> <span style="color: #009900;">{</span>
+  db_query<span style="color: #009900;">(</span><span style="color: #0000ff;">"DELETE FROM {config} WHERE name LIKE 'migrate.migration.custom%'"</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+  drupal_flush_all_caches<span style="color: #009900;">(</span><span style="color: #009900;">)</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">}</span></pre></div>
+</div>
+<h3>Running the migration using Drush 7</h3>
+<p>Now, it's time to install our new module and run the migrations. Use Drush or the Admin -&gt; Extend page to enable the migrate_custom module, along with its dependencies, migrate and migrate_drupal.</p>
+<p>Next, we need to create a manifest file. Create a file named <span class="geshifilter"><code class="text geshifilter-text">manifest.yml</code></span> (the location is not important) with the following contents:</p>
+<div class="geshifilter">
+<div class="text geshifilter-text" style="font-family:monospace;">
+<pre style="font-family: monospace; font-weight: normal; font-style: normal">- custom_user</pre></div>
+</div>
+<p>To run the migration, open a command prompt and run the following command:</p>
+<p><span class="geshifilter"><code class="text geshifilter-text">drush migrate-manifest manifest.yml --legacy-db-url=mysql://{dbuser}:{dbpass}@localhost/{dbname}</code></span></p>
+<p>Replace {dbuser}, {dbpass}, and {dbname} with the MySQL username, password, and database name for your Drupal 7 database.</p>
+<p>If you prefer, you can try out the Migrate Upgrade module which provides a UI to run migrations.</p>
+<p>Log in to your Drupal 8 site, clear the cache, and view the users list. You should see your imported users from the Drupal 7 site.</p>
+<h3>Next steps</h3>
+<p>This migration omits a few things for brevity, including user roles and signatures. As an exercise, you could expand the migration to include the "signature" and "signature_format" fields. Migrating the user roles would require a second migration, with its own definition and source plugin.</p>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

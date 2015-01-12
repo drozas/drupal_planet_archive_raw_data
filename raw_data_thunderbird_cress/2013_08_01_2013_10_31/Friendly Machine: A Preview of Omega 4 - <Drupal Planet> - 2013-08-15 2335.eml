@@ -1,0 +1,79 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 15 Aug 2013 22:35:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 15 Aug 2013 22:35:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: A Preview of Omega 4
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/preview-omega-4
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: A Preview of Omega 4</title>
+    <base href="http://friendlymachine.net/posts/preview-omega-4">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Recently the <a href="https://drupal.org/project/omega">Omega 4 base theme</a>, despite its beta status, has been declared ready for production use. Since I’ve always been a big fan of Omega, I thought I’d write up an overview and share a few observations.</p>
+<p>First, let me say that I really like the changes. Omega 4 is a significant improvement on Omega 3 and over the course of this post I’ll explain why I think this is the case. That said, there are major changes that some may find challenging.</p>
+<!--break-->
+<p>Omega has been known for providing a powerful set of tools that could be easily used by non-technical site builders. It wasn’t necessary to be a front-end developer in order to get a lot of value from Omega. Things have changed.</p>
+<p>As the <a href="https://drupal.org/node/2060741">documentation</a> states, Omega 4 is, “completely targeted at moderate to advanced themers.” The browser tools you used in Omega 3 to modify grids and layouts are gone and a knowledge of more advanced tools and techniques are required to use Omega 4 as intended.</p>
+<p>Let’s go over some of the changes.</p>
+<h2>Layouts</h2>
+<p>As I mentioned, one of the keys to the popularity of Omega theme has been its relative ease of use for non-technical users. By providing browser-based grid and region configuration tools, it has allowed site builders to modify page layouts without knowledge of HTML, CSS or even grids, for that matter.</p>
+<p>With Omega 4 those tools are now gone, replaced with what are now called, “layouts”. The current Omega documentation says that layouts make, “creating variations of page.tpl.php in code or the use of the Delta module unnecessary.”</p>
+<p>I agree with the part about Delta - it’s gone. But it seems to me that layouts are very similar to the page.tpl.php file. Take a look below at the file structure of a layout I’ve created for a theme I’m working on. It's very simple. The layout is named “Basis” to give you an idea of the naming convention.</p>
+<p><img src="http://friendlymachine.net/sites/default/files/uploads/omega-4-layout-folder.jpg" alt="Omega 4 layout folder" width="730" height="500" /></p>
+<p>You’ll see that the layout has three files:</p>
+<ol><li>basis-layout.tpl.php</li>
+<li>basis.layout.inc</li>
+<li>preview.png</li>
+</ol><p>The basis.layout.tpl.php file is where the markup for the layout is located and, as I said, seems like a version of page.tpl.php. If I’m wrong about this, please correct me in the comments. I’ve read elsewhere that it’s a lightweight, theme-based replacement for Panels Everywhere, but it looks like page.tpl.php to me. I may be missing something.</p>
+<p>The basis.layout.inc file has information similar to what you might see in the .INFO file. See if any of this looks familiar:</p>
+<div class="callout-box">
+<p><code>name = Basis <br />description = The default layout for Basis theme. <br />preview = preview.png <br />template = basis-layout</code></p>
+<p><code>; Regions </code></p>
+<p><code>regions[header] = Header <br />regions[branding] = Branding <br />regions[preface] = Preface <br />regions[highlighted] = Highlighted <br />regions[help] = Help <br />regions[content] = Content <br />regions[sidebar-first] = First sidebar <br />regions[sidebar-second] = Second sidebar <br />regions[footer] = Footer</code></p>
+<p><code>; Stylesheets stylesheets[all][] = css/layouts/basis/basis.layout.css</code></p>
+</div>
+<p>All that’s happening is that you’re giving the layout a name, specifying the stylesheet that is used for the layout and defining the regions that are used. In a future post I’ll go over creating a new layout from scratch, but you’ll see in the screenshot below what you end up with in the theme settings - the layout I’ve created is blue with those in red provided by Omega.</p>
+<p><img src="http://friendlymachine.net/sites/default/files/uploads/images/omega-4-layout-select.jpg" alt="Omega 4 layout selecter" width="730" height="500" /></p>
+<p>Once you have a layout defined, you can apply it to a specific page, content type, etc. via the <a href="https://drupal.org/project/context_omega">Context Omega</a> module (which is really slick, by the way). Again, I’ll go over this in more detail in a future post, but if you don’t feel like waiting you’ll know the pieces you need to get started with your own layouts.</p>
+<p>Another important note is that Omega 4 layouts are available to the Panels module, so after a themer gets an Omega sub-theme set up, site builders could use Panels or Display Suite to modify things as needed.</p>
+<h2>Susy Grids</h2>
+<p>Omega 4 comes with the <a href="http://susy.oddbird.net/">Susy grid framework </a> by default. Susy is what allows you to build responsive layouts and after playing around with it, I think it was a great choice.</p>
+<p>Susy focuses on your responsive grid - nothing else. I’ve worked with other frameworks - for example, Zurb’s <a href="http://foundation.zurb.com/grid.php">Foundation</a> - and they often come with a lot of other bells and whistles. By comparison, the simplicity of Susy is refreshing.</p>
+<p>One of the cool things about Omega 4 is, if you don’t want to use Susy, you don’t have to. You can plug in any grid system you prefer, edit your layouts if needed and you’re all set. If you’re up to speed on your Sass + Compass, it’s really easy.</p>
+<p>I’ve decided I’m going to stick with Susy for my Omega projects and my advice for those new to grids is to do the same. The reason I say this is because most of the future tutorials and documentation will be written using Susy in the examples. If you get stuck and go searching for help, you’ll be more likely to get it if you’re using the default grid framework.</p>
+<p>That said, people who are familiar with grids, templates and the like will be able to use any grid system they like without hassle.</p>
+<h2>Sass + Compass</h2>
+<p>It isn’t required that you use Sass + Compass with Omega 4, but I highly recommend it. It seems to me that the Drupal community in general is standardizing on Sass + Compass and it makes a lot of sense to invest in learning how to use these tools and techniques.</p>
+<p>After spending some time with Omega 4, my feeling is that if you’re not going to use Sass + Compass on your projects, maybe Omega isn’t a good choice. You could certainly do it, but there is a lot of stuff you’ll be missing out on and you’d definitely be making things harder for yourself.</p>
+<h2>SMACSS</h2>
+<p>A potentially confusing change (at least until you get the hang of it) is the use of <a href="http://smacss.com/">SMACSS</a>, or Scalable and Modular Architecture for CSS. It’s not a technology, but rather a way of organizing your CSS.</p>
+<p>Until I started playing around with Omega 4, I had only heard about SMACSS and decided it was a good idea I’d take up someday. Well, “someday” has arrived. I have to admit, I was a little confused at first about where I should be putting things. In fact, I’m not 100% sure I’ve got it perfectly straight now.</p>
+<p>It’s yet another thing you’ll need to get the hang of to use Omega 4 as intended. Despite the extra cognitive load this change adds, I think it’s a good choice. It’s forward looking and will allow themers to more easily maintain their CSS.</p>
+<h2>Polyfills</h2>
+<p>To help your themes play nicely with all the browsers out there, Omega 4 comes with a number of polyfills that you can enable for your themes.</p>
+<p>If you’re not familiar with a polyfill, it’s a plugin that provides functionality that a particuar browser lacks. Most polyfills allow designers to use CSS3 and HTML5 features on clunky browsers like IE 8 and below.</p>
+<p>Here are the polyfills that come with Omega 4:</p>
+<ul><li><a href="http://selectivizr.com/">Selectivizr.js</a></li>
+<li><a href="https://code.google.com/p/css3-mediaqueries-js/">CSS3 Media Queries JS</a></li>
+<li><a href="http://responsejs.com/">Respond.js</a></li>
+<li><a href="http://css3pie.com/">CSS3 PIE</a></li>
+<li><a href="http://en.wikipedia.org/wiki/HTML5_Shiv">HTML5 shiv</a></li>
+</ul><p>This is a nice selection and you can easily add any others that your project might require.</p>
+<h2>Before You Get Started</h2>
+<p>Prior to setting up your Omega 4 development environment, I recommend you read <a href="https://drupal.org/node/1936970">this post</a>. Unfortunately, I <strong>did not</strong> read it before I got started and so I’ve got to go back and fix things. I almost always work solo, so it’s not urgent, but I wish I had seen this post before I got started.</p>
+<p>And finally, here’s another <a href="http://solutionsbyheidi.com/2013/04/04/using-omega-4-with-omega-child-theme-compass-sass-susy/">useful post</a> that will help you get things set up properly as you begin working with Omega 4. It’s actually where I found the first link on how to do a proper set up, but it includes a few other things you may find useful.</p>
+<h2>Did your Head Explode?</h2>
+<p>Lots of changes, huh? Omega 4 is very forward in its approach and there may be a lot of new stuff to learn depending on how well you’ve been keeping up with changing tools and techniques. Overall, this is a good thing, although I do realize that many will be put off by such massive changes.</p>
+<p>It will be interesting to see if Omega retains its popularity, but in my opinion it’s a great base theme for experienced Drupal themers and a nice improvement on Omega 3. If you’d like to read my future posts on Omega 4 and other things Drupal, be sure to <a href="#region-sidebar-second">sign up</a> for updates.</p>
+<p>If you have any comments or corrections, you may politely leave them below.</p>
+</div></div></div>
+  </body>
+</html>
+

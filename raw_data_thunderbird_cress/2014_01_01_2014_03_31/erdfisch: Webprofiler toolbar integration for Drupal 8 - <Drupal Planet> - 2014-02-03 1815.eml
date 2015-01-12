@@ -1,0 +1,65 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 03 Feb 2014 18:15:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 03 Feb 2014 18:15:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: erdfisch: Webprofiler toolbar integration for Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://blog.erdfisch.de/2014/02/webprofiler-toolbar-integration-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>erdfisch: Webprofiler toolbar integration for Drupal 8</title>
+    <base href="http://blog.erdfisch.de/2014/02/webprofiler-toolbar-integration-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>As someone working on some drupal site you often want to understand what happens on a specific site. This blog post will describe a tool which helps to understand the site faster and easier.</p>
+<p>One example you wanna see are the executed database queries. In Drupal 7 we had the wonderful <a href="https://drupal.org/project/devel">Devel</a> module which showed a list of executed database queries below the page but there are way more information you might want to know:</p>
+<ul>
+<li>PHP Configuration</li>
+<li>The needed time and memory</li>
+<li>List of enabled themes/modules</li>
+<li>Routing information (aka. hook_menu in D7)</li>
+<li>The requested cache/Key-Value data</li>
+<li>Information about the Request raw data</li>
+</ul>
+<p><a href="http://symfony.com">Symfony</a> has a nice toolbar at the bottom<br />
+which stores this information, shows it and make it available as separate page<br />
+for additional research.</p>
+<p>The founder of symfony (<a href="http://github.com/fabpot">fabpot</a>) gave me some<br />
+initial version of a drupal integration. Sadly <a href="https://drupal.org/user/138068">Luca Lusso</a> started independent on a version, so we merged the code together and continue<br />
+on <a href="https://drupal.org/node/2165731" title="https://drupal.org/node/2165731">https://drupal.org/node/2165731</a>.</p>
+<p>So here is out it looks like (click images for larger version):<br />
+<a href="http://blog.erdfisch.de/sites/blog.erdfisch.de/files/webprofiler.png"><img src="http://blog.erdfisch.de/sites/blog.erdfisch.de/files/webprofiler.png" style="max-width:100%;" \ /></a><br />
+so you see quite a big amount of integrations already. Let's list what we have at the moment:<br />
+<a href="http://blog.erdfisch.de/sites/blog.erdfisch.de/files/detail.png"><img src="http://blog.erdfisch.de/sites/blog.erdfisch.de/files/detail.png" style="max-width:100%;" \ /></a></p>
+<ul>
+<li>PHP Config</li>
+<li>Request</li>
+<li>Forms</li>
+<li>Database</li>
+<li>Modules/Themes</li>
+<li>Routing</li>
+<li>Cache</li>
+<li>State</li>
+<li>(Config: There is a working branch relying on a core patch: <a href="https://drupal.org/node/2184231" title="https://drupal.org/node/2184231">https://drupal.org/node/2184231</a>)</li>
+<li>Your ideas!</li>
+</ul>
+<p>You could certainly ask yourself whether this is a total replacement of the devel module. There is an<br />
+ongoing discussion at <a href="https://drupal.org/node/257770" title="https://drupal.org/node/257770">https://drupal.org/node/257770</a> whether to use the symfony toolbar/an alternative php one.</p>
+<p>Please try out the module on Drupal 8 and come up with more ideas and help us.</p>
+<div class="field field-type-filefield field-field-blogbild">
+      <div class="field-label">Weitere Bilder:&nbsp;</div>
+    <div class="field-items">
+            <div class="field-item odd">
+                    <img  class="imagefield imagefield-field_blogbild" width="794" height="258" alt="" src="http://blog.erdfisch.de/sites/blog.erdfisch.de/files/webprofiler.png?1391278082" />        </div>
+              <div class="field-item even">
+                    <img  class="imagefield imagefield-field_blogbild" width="1184" height="759" alt="" src="http://blog.erdfisch.de/sites/blog.erdfisch.de/files/detail.png?1391278177" />        </div>
+        </div>
+</div>
+  </body>
+</html>
+

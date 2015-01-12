@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 14 Oct 2013 19:40:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 14 Oct 2013 19:40:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: orkjerns blogg: One-liner for fetching the live-database on your dev server (or localhost)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://orkjern.com/one-liner-fetching-live-database-your-dev-server-or-localhost
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>orkjerns blogg: One-liner for fetching the live-database on your dev server (or localhost)</title>
+    <base href="http://orkjern.com/one-liner-fetching-live-database-your-dev-server-or-localhost">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>So when I first realised that I was neglecting this blog, I somewhat found comfort in that at least it hadn't been a year, right? OK, so now it has almost been a year. Does that mean I have stopped finding solutions to my Drupal problems (as the "About me" block states)? Well, no. The biggest problem is remembering to blog about them, or finding the time. But finding the time is not a Drupal problem, and I most definitely have not found the solution to that problem. Anyway, I digress. Let's end the streak with a quick tip that I use all the time: Syncing live databases without having drush aliases.</p>
+<p>If you use drush-aliases, you could just do <a href="http://drush.ws/#sql-sync">drush sql-sync.</a> But for me, even if I do, I still prefer this method, as I find it extremely easy to debug.</p>
+<p>First I make sure I am in my Drupal root:<br />
+<code><br />
+$ cd /path/to/drupal<br />
+</code></p>
+<p>Then I usually make sure I can bootstrap Drupal from drush:<br />
+<code><br />
+$ drush st<br />
+</code></p>
+<p>If that output says my database is connected, then let's test the remote connection:<br />
+<code><br />
+$ ssh myuser@remotemachine.com "drush  --root=/path/in/remote/server st"<br />
+</code></p>
+<p>If that output also says we are connected, it means we are good to go, with my favourite command ever:<br />
+<code><br />
+$ ssh myuser@remotemachine.com "drush  --root=/path/in/remote/server sql-dump" | drush sql-cli<br />
+</code></p>
+<p>If you have a drush-alias for the site, you can also go:<br />
+<code><br />
+drush @live-site-alias | drush sql-cli<br />
+</code></p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">development</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drush" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drush</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/mysql" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">mysql</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/database-dump" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">database dump</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/workflow" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">workflow</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet drupal</a></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,89 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 07 Nov 2014 17:00:54 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 07 Nov 2014 17:00:54 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson: Using PhpStorm's Live Templates for t functions
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.deeson.co.uk/labs/using-phpstorms-live-templates-t-functions
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson: Using PhpStorm's Live Templates for t functions</title>
+    <base href="https://www.deeson.co.uk/labs/using-phpstorms-live-templates-t-functions">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>At Deeson's <a href="https://www.jetbrains.com/phpstorm/">PhpStorm</a> is our IDE of choice. Working with PhpStorm's <strong>Live Templates</strong> can save you some valueable time. In this post I'll show you how to use Live Templates to surround strings in simple <a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/t/7"><strong>t functions</strong></a> in template files.</p>
+<h4>Live templates</h4>
+<p>PhpStorm’s Live Templates are chunks of code which can be quickly inserted into a file. Surround Live Templates allow you to select a piece of text and surround it with template.</p>
+<h4>Drupal's t function</h4>
+<p>It's Drupal best practice to wrap all strings in a <a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/t/7">t function</a> - this allow the sting to be translated. In a template file this looks like:</p>
+<p>&lt;span&gt;&lt;?php print t('This is good Practice'); ?&gt;&lt;/span&gt;</p>
+<p>On most sites there will be hundreds of these strings, so anything that can shave off time will be worthwhile.</p>
+<h4>Take a look</h4>
+<p>Here’s an example of Surround Live Templates in action. It’s quick and easy to surround a string with a simple <a href="https://api.drupal.org/api/drupal/includes%21bootstrap.inc/function/t/7">t function</a>.</p>
+        
+    
+  
+
+
+  
+    
+      
+        
+
+        <h2 class="element-invisible oembed-title"><a href="https://www.deeson.co.uk/file/phpstorm-live-templates-and-t-function-0">PhpStorm Live Templates and T function</a></h2>
+    
+  
+  
+      
+
+  
+
+      
+    
+  
+
+
+
+  
+    
+        
+          <p></p>
+<h4>Shortcuts</h4>
+<p>To show the Surround Live Template list on Macs use <strong>Cmd+Alt+J </strong>and if you are on a Windows machine use <strong>Ctrl+Alt+J</strong>.</p>
+<h4>Setting up Live Templates</h4>
+<p>To set up a Surround Live Template, go to <strong>Preferences</strong> &gt; <strong>Live Templates </strong>and click the <strong>plus symbol</strong> in the top right of the window.</p>
+<p>A Surround Live Template needs to have ‘<strong>$SELECTION$’</strong> in it, which is replaced with the selected text. The template also need to be available in the correct contexts.</p>
+<h4>Here's one I prepared earlier...</h4>
+        
+    
+  
+
+
+
+  
+    
+      <img src="https://d5av3fo92eabs.cloudfront.net/sites/default/files/styles/image_400_width/public/secondary_images/images/php-storm-t-string-template-set-up.png?itok=rEIWQQfi" width="400" height="295" alt="PHPStorm templates" title="PHPStorm templates" />    
+  
+
+
+
+  
+    
+        
+          <p></p>
+<h4 dir="ltr">Have a go</h4>
+<p dir="ltr">To set up this T string Surround Live Template, the template text needs to be:</p>
+<p dir="ltr"><strong>&lt;?php print t('$SELECTION
+  </body>
+</html>
+); ?&gt;</strong></p>
+<p dir="ltr">It needs to be applicable in the ‘HTML’ context.</p>
+<p dir="ltr">That’s it! You should now be able to use the template. Let us know if you've got any PhpStorm tips too.</p>
+  </body>
+</html>
+

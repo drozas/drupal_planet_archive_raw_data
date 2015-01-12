@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Jul 2014 19:28:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Jul 2014 19:28:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Commerce: Converting Your Existing Platform.sh Development Environment to a Makefile
+Content-Transfer-Encoding: 8bit
+Content-Base: https://drupalcommerce.org/blog/15243/converting-your-existing-platformsh-development-environment-makefile
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Commerce: Converting Your Existing Platform.sh Development Environment to a Makefile</title>
+    <base href="https://drupalcommerce.org/blog/15243/converting-your-existing-platformsh-development-environment-makefile">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><img src="https://drupalcommerce.org/sites/default/files/platform-sh-you-are-missing-out.png" alt="Platform.sh build window: Building as a vanilla project, you are missing out!" /><p>One of the most exciting features of Platform.sh is it’s ability to use Drush makefiles to rapidly prototype sites. By default, new projects can start with a makefile that will automatically add Commerce Kickstart or vanilla Drupal. Then, using the makefile, you can add new modules, themes, and libraries, by simply adding a few lines to the makefile and commiting. When you push the changes to your platform, the entire site will be rebuilt. Plus, whenever you’re in “makefile mode” any extra files that are in the root of the respository get pushed into sites/all/default. So if you have any custom modules, you can just stick them in <code>modules/</code> and they’ll end up in <code>sites/all/default/modules</code>. This can make your code bases not only small, but far more manageable.  You can convert a site that isn’t a makefile into a makefile. And in this post, that’s exactly what we’re going to do. </p>
+</div></div></div>
+  </body>
+</html>
+

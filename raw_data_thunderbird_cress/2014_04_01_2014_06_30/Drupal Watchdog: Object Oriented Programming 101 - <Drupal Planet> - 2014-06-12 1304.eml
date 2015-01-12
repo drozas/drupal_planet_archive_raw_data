@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 12 Jun 2014 12:04:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 12 Jun 2014 12:04:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Object Oriented Programming 101
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/3/1/object-oriented-programming-101
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Object Oriented Programming 101</title>
+    <base href="http://drupalwatchdog.com/3/1/object-oriented-programming-101">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/images/web/watchdog-head.jpg" class="img-responsive right-border" />Drupal 8 is in hot development, with this massive release expected [soon]. Among other changes, Drupal 8 represents the first Drupal release to fully embrace the potential of object-oriented programming made possible by more recent versions of PHP. (Drupal 7 merely dipped its toes in the proverbial water.) However, after a decade as a procedural application with procedurally-minded developers, the transition from an all-procedural to a mixed object-oriented/procedural system is likely to be bumpy, especially for developers who are still new to object-oriented code.</p>
+<p>While a complete treatment of the entirety of object-oriented programming (OOP) would more than fill this entire magazine, a firm grounding in the concepts and syntax of OOP should fit in just a few pages. Shall we have a go at it?</p>
+<h3>First, an Aside</h3>
+<p>There is no one true form of OOP. Many different languages have implemented something they called OOP in vastly different ways, sometimes missing features considered common in other languages. Javascript, for instance, has objects that have little similarity to objects in PHP. For now we are considering only “classic” OOP (that is, those involving classes), and PHP in particular. Most of it would apply to any C-family language as well (C++, Java, C#, etc.).</p>
+<h3>Data Types</h3>
+<p>To understand what an object is, let’s first understand what came before it. Consider a string. A string is a <em>data type</em>, a definition of a certain type of data. Certain types of data have operations that may be performed on them, to either change them or get information about them. <span class="geshifilter"><code class="php geshifilter-php">strlen()</code></span>, for instance, retrieves the length of a string. For another data type, however, such as integer, that operation doesn’t apply but division does.  </p>
+<p>A large part of the underlying power of OOP is that it allows you to define your own custom data types. These data types are called <em>classes</em>. A class has some internal structure, but just as the implementation details of strings are not your concern, the implementation details of a class should be irrelevant to someone using it. A class consists of <em>properties</em> and <em>methods</em>. Consider:</p>        </div>
+  </body>
+</html>
+

@@ -1,0 +1,133 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 15 Jan 2014 15:44:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 15 Jan 2014 15:44:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Exposing External Content to Drupal’s Search
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/exposing-external-content-to-drupals-search/?utm_source=rss&utm_medium=rss&utm_campaign=exposing-external-content-to-drupals-search
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Exposing External Content to Drupal’s Search</title>
+    <base href="http://www.phase2technology.com/blog/exposing-external-content-to-drupals-search/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=exposing-external-content-to-drupals-search">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">Search is a vital part of content-rich websites. Like many CMS or blogging platforms, Drupal provides basic search functionality out-of-the-box. However, for advanced features like intelligent full-text keyword matching and faceted searching based on content attributes, we typically implement the <a href="http://lucene.apache.org/solr/">Apache Solr</a> search engine, which has straightforward integration with Drupal.</p>
+<p dir="ltr">What if your Drupal site search should include content that’s not in Drupal?</p>
+<p dir="ltr">Often when planning a site build, we identify content that will not live in the new CMS but needs to be displayed alongside native CMS content in search or other lists. For example, an organization’s blog may be powered by a standalone WordPress site, and it may be required to present this blog’s content in the new site’s search. Another use case is a site that integrates with a specialized database, the content of which should be searchable.</p>
+<p>There are three general approaches for integrating external content in Drupal’s search:</p>
+<ol>
+<li dir="ltr">
+<p dir="ltr">Import the content into Drupal as basic “stubs”</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Crawl the content and populate the search index directly</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Use a third-party, turnkey solution</p>
+</li>
+</ol>
+<p dir="ltr">I’ll discuss each of these approaches and the potential pros and cons to consider.</p>
+<h2 dir="ltr">Import external content into Drupal as “stub” nodes</h2>
+<p dir="ltr">This approach is well suited for importing content from blogs or other CMSes that provide an RSS feed or content API. It stays true to the “Drupal way,” using nodes to represent content and providing extended functionality with common “contrib” modules. The most significant limitation with this approach is the dependency on having a usable source feed.</p>
+<p dir="ltr">When taking this approach, we often use the <a href="http://drupal.org/project/feeds">Feeds</a> contrib module to provide the core mechanism for retrieving feeds, parsing the feed format, and producing nodes from the feed’s content. Since the full version of the content will not be viewed on the Drupal site, the import does not need to fully replicate off the source content; rather it can be tailored to copy the content needed for search functionality. This includes not only the content that is displayed in search results, but also any content that should be indexed for keyword or facet matches.</p>
+<p dir="ltr">In some cases, it is necessary to create a custom Feeds parser plugin, which can perform custom translations on or additional processing for the content as it’s imported. This approach allows external content to be exposed for full-text search on the content’s text and for faceted search on the content’s metadata or attributes. For example, you may want to provide facets by post author that cover both native Drupal content and posts imported from a blog, and need to map the author identifier used on the blog to the Drupal user. For more information on creating a Feeds plugin, see the <a href="http://drupal.org/node/622700">Feeds developer documentation</a> on drupal.org and the API code examples bundled with the module itself.</p>
+<p dir="ltr">One challenge to using feeds for content ingestion is that feeds are usually intended primarily for the syndication of new content, and a given feed may not allow retrieving all historical content. In some cases, the feed can be “paged through” by adding arguments to the feed URL. Custom code can take advantage of this to iterate through the feed pages until all content is fetched. In other cases, it may be necessary to import historical content from an exported database and then use the feed to import only new content.</p>
+<p dir="ltr">In planning for this approach, consider these pros and cons:</p>
+<h4> Pros</h4>
+<ul>
+<li dir="ltr">
+<p dir="ltr">“Stub” content is native to Drupal so can be used outside of search</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Uses well-known modules within the Drupal ecosystem</p>
+</li>
+</ul>
+<h4>Cons</h4>
+<ul>
+<li dir="ltr">
+<p dir="ltr">External content must be available by feed or API</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Difficult to manage many sources with different feed formats</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Extra care is needed to handle both an import of archival content and an ongoing import of new content</p>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h2 dir="ltr">Crawl content and populate the search index</h2>
+<p dir="ltr">In some cases, the external content is not accessible by feed or API. This external content could be the pages of a static or proprietary website, the contents of a specialized external database, or an archive of documents, spreadsheets, and other files.</p>
+<p dir="ltr">For these cases, one option is to implement a crawler, or a routine that finds and parses external content, and use it to populate the search index directly. This approach allows content to be included in the Drupal site’s search results even if the content is not stored in Drupal at all. This allows greater flexibility to use languages other than PHP and to employ open source tools.</p>
+<p dir="ltr">Imagine the case where a Drupal site’s search should include content from a network of sister sites that do not share a common CMS platform. Rather than working from a backend data source, like an RSS feed or file export, you can “scrape” content directly from the rendered, frontend web pages.</p>
+<p dir="ltr">This process involves a number of steps: finding content on the sites, determining if it’s new or updated, parsing the page into structured fields, and submitting the parsed data to the search engine. To facilitate this process, we’ve used the open source web crawler Apache Nutch, which accepts a list of URLs from which to start crawling and a set of configuration files to govern the retrieval, parsing, and processing of the results.</p>
+<p>One challenge to this approach is that the external content is not exposed directly to Drupal, only through Solr as search results. Therefore, the external content cannot be as easily intermingled with other lists of native Drupal content, nor can it be linked or embedded in content through reference fields. Also, this means that some code for the custom processing or formatting of search results may need to be duplicated between Drupal and the crawler code.</p>
+<p dir="ltr">In planning for this approach, consider these pros and cons:</p>
+<h4 dir="ltr">Pros</h4>
+<ul>
+<li dir="ltr">
+<p dir="ltr">External content without a feed or API can be handled</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Complex crawling code is offloaded from Drupal to another application</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">External content is not duplicated in Drupal’s database</p>
+</li>
+</ul>
+<h4>Cons</h4>
+<ul>
+<li dir="ltr">
+<p dir="ltr">External content is not fully exposed to Drupal, so integration is limited</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">DevOps expertise and special infrastructure may be needed to implement crawler</p>
+</li>
+</ul>
+<div dir="ltr"></div>
+<h2 dir="ltr">Use a third-party, turnkey solution</h2>
+<p dir="ltr">The previous approaches allow external content to be included in a Drupal site search powered by Apache Solr, which allows site managers to customize the search experience by weighting fields for keyword searches, by exposing sort options, and by adding search facets for important content attributes. This search experience can extend beyond the search page to regions throughout the site that highlight related content.</p>
+<p dir="ltr">If this degree of customization and integration is not needed, a simple alternative is to use a third-party, turnkey solution for a site’s search. For example, Google has <a href="http://www.google.com/enterprise/search/products/">enterprise search products</a> that all your site to host a Google-powered search. The basic version provides Google Search-like results limited to your web sites presented within an on-site, branded experience.</p>
+<p dir="ltr">This is a good option where familiar and reliable search functionality is of higher importance to custom search functionality with specific weightings and facet categories. Also, this approach constrains the cost and effort involved in maintaining the search application or extending the scope of the crawler.</p>
+<p dir="ltr">In planning for this approach, consider these pros and cons:</p>
+<h4 dir="ltr">Pros</h4>
+<ul>
+<li dir="ltr">
+<p dir="ltr">Familiar and reliable user experience for search functionality</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Low cost for management and maintenance</p>
+</li>
+</ul>
+<h4>Cons</h4>
+<ul>
+<li dir="ltr">
+<p dir="ltr">Less flexibility for styling the search results, defining facets, and applying custom weightings</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Limited by vendor support, product functionality, and licensing fees</p>
+</li>
+</ul>
+<div dir="ltr">
+<table>
+<colgroup>
+<col width="*" />
+<col width="*" /></colgroup>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 dir="ltr">Conclusion</h2>
+<p>The ability to easily find content through an on-site search feature is expected on high traffic, content rich websites. In certain cases, user experience is improved when a site’s search results include matches for content that may be part of another site or data source. In this article, I’ve discussed approaches for accomplishing this by importing the content as basic “stubs”, by crawling the content and adding it to the search index, or by using a third-party solution. The resources and requirements of your project can help weigh the pros and cons of each approach and determine which provides a best fit.</p>
+<p dir="ltr">For more about our work implementing search, see CJ’s article on <a href="http://www.phase2technology.com/blog/techniques-to-improve-your-solr-search-results/">Techniques To Improve Your Solr Search Results</a> and Brad’s article on <a href="http://www.phase2technology.com/blog/using-search-api-attachments-with-remote-solr-extraction/">Using Search API Attachments With Remote Solr Extraction</a>.</p>
+  </body>
+</html>
+

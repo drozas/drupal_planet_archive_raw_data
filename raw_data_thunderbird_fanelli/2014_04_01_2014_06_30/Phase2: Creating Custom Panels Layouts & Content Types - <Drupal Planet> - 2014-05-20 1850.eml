@@ -1,0 +1,164 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 20 May 2014 16:50:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 20 May 2014 16:50:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Creating Custom Panels Layouts & Content Types
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/creating-custom-panels-layouts-content-types/?utm_source=rss&utm_medium=rss&utm_campaign=creating-custom-panels-layouts-content-types
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Creating Custom Panels Layouts & Content Types</title>
+    <base href="http://www.phase2technology.com/blog/creating-custom-panels-layouts-content-types/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=creating-custom-panels-layouts-content-types">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">The <a href="https://drupal.org/project/panels">Panels module</a> provides a flexible and intuitive way to place content throughout your site. This blog post will show you how to use and customize some of the features in panels including layouts and content types.</p>
+<h1>Layouts</h1>
+<p><img alt="" src="https://lh6.googleusercontent.com/0iHsaVAZ8agvAY6ovqFQA7djAvFSkNCHsOszY1_lCKIqNbkqj7JRyD9-CAbbuTQDSHVWDWv2Omm_37ncZc1HL1K7Wz2Pt-n6jPzBKFdiKjfvnHTQrFES-77Kne6Au63UMw" width="468px;" height="212px;" /></p>
+<p dir="ltr">As it sounds, layouts allow users to choose where each piece of content on a given panel can be rendered. There are two different types of layouts. Builders allow users to create a custom layout inside the GUI via the layout Designer, while predefined layouts allow you to write the actual html to be used within your layout. This blog post will cover the latter option.</p>
+<p dir="ltr">When creating a layout you can create one either inside your theme or within your module. For this example we will be creating a two-column layout using the theme implementation. In your theme create a folder named “layouts” and in your theme_name.info file add the following lines.</p>
+<p></p><pre class="crayon-plain-tag">; Panel Layouts
+
+plugins[panels][layouts] = layouts</pre><p></p>
+<p dir="ltr">This line tells the theme to look for custom layouts within our layouts directory inside our theme. Inside of your Layout’s folder, create a folder called one_third_left and inside of that folder create three files, one_third_left.inc, one-third-left.tpl.php, one-third-left.css. Your directory structure should be as follows:</p>
+<p> <img alt="" src="https://lh4.googleusercontent.com/pxvL_5Ib9hew_BtPLVy-wGUt89fZONMX8412YeTNKFWlbZNvgmw4d383na-w7cd5-xcc4UXvkTanGOpsLqrgjEinbQPTjaS4Tfh_cZkBGRav5gmarq2Pnip6S91VpBeang" width="236px;" height="112px;" /></p>
+<p dir="ltr">The .inc file controls the regions that are present as well as the theme and css to be used within the layout. Open the one_third_left.inc file and add the following lines.</p>
+<p></p><pre class="crayon-plain-tag">&lt;?php
+
+/**
+* Implements hook_panels_layouts()
+*/
+function theme_name_one_third_left_panels_layouts() {
+
+  $items['one_third_left'] = array(
+    'title' =&gt; t('Theme Name: One Third Left'),
+    'category' =&gt; t('Theme Name'),
+    'icon' =&gt; 'one-third-left.png',
+    'theme' =&gt; 'one-third-left',
+    'css' =&gt; 'one-third-left.css',
+    'regions' =&gt; array(
+      'header' =&gt; t('Header'),
+      'content' =&gt; t('Content'),
+      'sidebar' =&gt; t('Sidebar'),
+    ),
+  );
+
+  return $items;
+}</pre><p></p>
+<p dir="ltr">This array defines all the needed items for a layout to appear. The title as it sounds, is the title of the panel we created. Category is used to group similar layouts together. When choosing a layout you first need to select the category and then the corresponding layouts will be shown. The icon is a visible representation to help users see what the layout looks like at a glance (The icon was omitted for this tutorial). The theme is the tpl file used to control the layout and html. Css controls the styling of the layout, it is also important to know that the css file is also used to control the layout shown inside the gui. Regions are used to define where content can be placed inside of the layout.</p>
+<p dir="ltr">Open one-third-left.tpl.php and add the following lines.</p>
+<p></p><pre class="crayon-plain-tag">&lt;div &lt;?php !empty($css_id) ? print 'id="' . $css_id . '"' : ''; ?&gt;&gt;
+  &lt;div class="columns"&gt;
+    &lt;div class="header"&gt;
+      &lt;?php print $content['header'];?&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="medium-4 columns left-sidebar"&gt;
+    &lt;?php print $content['sidebar'];?&gt;
+  &lt;/div&gt;
+  &lt;div class="medium-8 columns"&gt;
+    &lt;?php print $content['content'];?&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre><p></p>
+<p dir="ltr">In this tpl example, we are creating a 2 column layout with a header. Notice the $content variable. Each of these corresponds to a region that we created inside of our .inc file. To add more regions simply add them to the .inc file and place them in the tpl. I will not cover the css in this tutorial but once cache is cleared you should now see your new layout available for use.</p>
+<h1 dir="ltr">Content Types</h1>
+<p dir="ltr">Ctools content types are like blocks in the sense that they both provide an easy way to create pieces of content that can be placed throughout a site. Where content types excel is in the configuration. While blocks allow you to configure them by means of a form, those settings are global, so every instance of a block will have the same settings no matter where it is placed. Content Types on the other hand allow you to create one content type and have different settings applied. This portion of the tutorial will discuss how a ctools content type can be created.</p>
+<p dir="ltr">First add ctools as a dependency in your module_name.info file.</p>
+<p></p><pre class="crayon-plain-tag">dependencies[] = ctools</pre><p></p>
+<p dir="ltr">Create a folder named “plugins” inside of your module directory. Next add a folder named “content_types” inside of the newly created plugins directory. Then add the following lines to your module_name.module file.</p>
+<p></p><pre class="crayon-plain-tag">&lt;?php
+
+/*
+* Implements hook_ctools_plugin_directory().
+*/
+function module_name_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools' &amp;&amp; $plugin_type == 'content_types') {
+    return 'plugins/content_types';
+  }
+}</pre><p></p>
+<p dir="ltr">This hook tells ctools where to look for its content types. In this example we will create a simple content type that displays the 5 newest published nodes and allows the user to choose whether or not the title is linkable.</p>
+<p dir="ltr">Inside the content_type folder, create another folder called newest_node and inside that folder create a file called newest_nodes.inc. Add the following lines to the file.</p>
+<p></p><pre class="crayon-plain-tag">&lt;?php
+
+$plugin = array(
+  'title' =&gt; t('Newest Nodes'),
+  'description' =&gt; t('Display a list of the newest nodes'),
+  'single' =&gt; TRUE,
+  'render callback' =&gt; 'newest_nodes_content_type_render',
+  'defaults' =&gt; array(),
+  'edit form' =&gt; 'newest_nodes_edit_form',
+  'category' =&gt; array(t('My Module')),
+);</pre><p></p>
+<p dir="ltr">This array is used to define our settings for the content type. As it sounds, title is the title of the content type. Single is used to show that our content type has no subtypes. The render callback is the function that is used to generate the markup for our content type. Defaults is the default ctools context. In our case we do not have one. The edit form is the form function used to generate the content type settings. Finally category is used to group similar content types. To add the form add the following lines.</p>
+<p></p><pre class="crayon-plain-tag">/**
+* Content type settings form.
+*/
+function newest_nodes_edit_form($form, &amp;$form_state) {
+
+  $conf = $form_state['conf'];
+
+  $form['number'] = array(
+    '#type' =&gt; 'select',
+    '#title' =&gt; t('Select the number of node to display'),
+    '#options' =&gt; array(5 =&gt; t('Five'), 10 =&gt; t('Ten'), 15 =&gt; t('Fifteen')),
+    '#required' =&gt; TRUE,
+    '#default_value' =&gt; isset($conf['number']) ? $conf['number'] : ''
+  );
+
+  $form['link'] = array(
+    '#type' =&gt; 'checkbox',
+    '#title' =&gt; t('Link title to node'),
+    '#default_value' =&gt; isset($conf['link']) ? $conf['link'] : '',
+  );
+
+  return $form;
+}
+
+/**
+* Content type submit handler.
+*/
+function newest_nodes_edit_form_submit($form, &amp;$form_state) {
+  foreach (array('number', 'link') as $key) {
+    $form_state['conf'][$key] = $form_state['values'][$key];
+  }
+}</pre><p></p>
+<p dir="ltr">This simple form let users decide how many nodes to display and whether or not a link should be displayed. Now lets proceed with adding the actual render function.</p>
+<p></p><pre class="crayon-plain-tag">function newest_nodes_content_type_render($subtype, $conf, $args, $context) {
+
+  $results = db_select('node', 'n')
+    -&gt;fields('n', array('nid', 'title'))
+    -&gt;condition('status', 1)
+    -&gt;range(0, $conf['number'])
+    -&gt;execute()
+    -&gt;fetchAll();
+
+  $items = array();
+
+  foreach ($results as $result) {
+    if (isset($conf['link'])) {
+      $items[] = l($result-&gt;title, 'node/' . $result-&gt;nid);
+    }
+    else {
+      $items[] = $result-&gt;title;
+    }
+  }
+
+  $block = new stdClass();
+  $block-&gt;title = t('Newest Nodes');
+  $block-&gt;content = theme('item_list', array('items' =&gt; $items));
+
+  return $block;
+}</pre><p></p>
+<p dir="ltr">This function does a simple db_select using the variables we set in our form to limit the number of items displayed and to also decide whether or not to display a link. Clear your cache and you should now see your newly created content type available along with the settings form.</p>
+<p> <img alt="" src="https://lh5.googleusercontent.com/2FJdZqF_T2Qd6ktykvTFMnNZQVRlibvBXpoBTzbGlBbXUhCI_JIyjtRJplqeJyyaTuqliOr79bsnKtVp1Z6mekn7S0H1V073VbvbntGoOW0AliWZoR4JVT9N7sLmaw1wCg" width="327px;" height="259px;" /></p>
+<p><img alt="" src="https://lh4.googleusercontent.com/6-4KUiCzR4GpU9ZDHzJm7jEm31_Rm2wMt5lqLZNy7KU-14Hn8CbYKRIw3BKqQGUXClgUTO25PLTviD8NxiI45z3Air-H_nAjcxfco-GQ3RLPPukiJ0hOmoW55B7L50XxEA" width="410px;" height="198px;" /></p>
+<h2 dir="ltr">Finally here is what my Content Type looks like once styled.</h2>
+<p><img alt="" src="https://lh4.googleusercontent.com/32DJrbiGeYJ9o32OekblGeOnI3NJH1ri_YiXXExAJNq6jzXS_0SUvNISItwmvYmTtvwmX-OehKdTpOBeOK5cuD8j4NwMg7xEvseUp4rCGQaQiu9HsWpSIqNqT89ji3xhsw" width="207px;" height="197px;" /></p>
+<p>While my previous example is a bit on the simplistic side it does highlight the power of ctools layouts and content types. When used with the appropriate CSS responsive layouts can be created and easily changed per node type. For more information on the Panels Module, check out some of our other <a href="http://www.phase2technology.com/?s=panels">Phase2 thoughts.</a></p>
+  </body>
+</html>
+

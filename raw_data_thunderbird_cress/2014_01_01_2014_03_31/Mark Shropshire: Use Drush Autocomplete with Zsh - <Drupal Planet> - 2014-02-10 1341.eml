@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 10 Feb 2014 13:41:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 10 Feb 2014 13:41:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mark Shropshire: Use Drush Autocomplete with Zsh
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mark.shropshires.net/blog/use-drush-autocomplete-zsh
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mark Shropshire: Use Drush Autocomplete with Zsh</title>
+    <base href="http://mark.shropshires.net/blog/use-drush-autocomplete-zsh">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p><strong>Update:</strong> I had the filename as <code>drush.autocomplete.sh</code>, but the filename should now be <code>drush.complete.sh</code>. Brent noticed this. The info below as been updated as such.</p>
+
+<p><a href="https://twitter.com/brentsdunn">Brent Dunn</a> pointed me to <a href="https://github.com/drush-ops/drush/blob/master/drush.complete.sh">drush.complete.sh</a>, which I didn't even know existed. Brent and I both wanted to give this a go in Zsh since we use <a href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>, but drush.autocomplete.sh is setup for bash.</p>
+
+<p>I was able to get drush autocompletes working with Zsh thanks to <a href="http://stackoverflow.com/a/8492043">this stack exchange post</a></p>
+
+<ol>
+<li>Save <a href="https://github.com/drush-ops/drush/blob/master/drush.complete.sh">drush.complete.sh</a> to your local file system</li>
+<li>Add the following to your <code>~/.zshrc</code> file
+<div class="codeblock"><code>autoload bashcompinit<br />bashcompinit<br />source /path/to/your/drush.complete.sh</code></div></li>
+<li>Source the changes: <code>$ source ~/.zshrc</code></li>
+</ol>
+
+<p>Now you can enjoy drush autocompletions in zsh style! For example, <code>$ drush sql</code> followed by tab will give you a browsable list of all the drush sql related commands.</p>
+
+<p><img src="https://www.evernote.com/shard/s1/sh/9cc1bce1-a290-4849-943b-d5167477224b/067dccba83155180319b23b1824d016c/deep/0/1.-zsh.png" alt="1.%20zsh" width="800" /></p>
+</div></div></div><section class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-above view-mode-rss"><h2 class="field-label">Blog Category:&nbsp;</h2><ul class="field-items"><li class="field-item even"><a href="/taxonomy/term/16" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">sysadmin</a></li><li class="field-item odd"><a href="/taxonomy/term/13" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li></ul></section>
+  </body>
+</html>
+

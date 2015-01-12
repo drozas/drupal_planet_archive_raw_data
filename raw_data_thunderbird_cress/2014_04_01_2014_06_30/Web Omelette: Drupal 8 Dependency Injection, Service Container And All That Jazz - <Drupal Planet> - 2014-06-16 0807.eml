@@ -1,0 +1,112 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 16 Jun 2014 07:07:24 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 16 Jun 2014 07:07:24 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: Drupal 8 Dependency Injection, Service Container And All That Jazz
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/drupal-8-dependency-injection-service-container-and-all-jazz
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: Drupal 8 Dependency Injection, Service Container And All That Jazz</title>
+    <base href="http://www.webomelette.com/drupal-8-dependency-injection-service-container-and-all-jazz">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>With the move from a mostly procedural to a mostly OOP based architecture in Drupal 8, many Drupal developers have been introduced to new concepts we don't fully understand. I myself was terrified of notions such as dependency injection and service container, making me worry about the future of my Drupal development.</p>
+
+<p>So I took it to Symfony (from where many components have been borrowed) and then Drupal 8 alpha releases and turns out it's not a big deal. All you need in order to understand them is to know basic OOP principles. Check out <a href="http://drupalwatchdog.com/3/1/object-oriented-programming-101">Larry Garfield's timeless introductory article to Object Oriented Programming</a> on Drupal Watchdog for a good start.</p>
+
+<p>In this article I am going to talk a bit about what dependency injection is and why one would use a container for managing these dependencies. In Symfony and Drupal 8 this is called a service container (because we refer to these global objects as services). Then, we will take a look at how these are applied in Drupal 8. Briefly, because you don't need much to understand them.</p>
+
+<h2>So what is dependency injection?</h2>
+
+<p>Take the following simple class:</p>
+
+<pre><code>class Car {
+
+  protected $engine;
+
+  public function __construct() {
+    $this-&gt;engine = new Engine();
+  }
+
+  /* ... */
+
+}
+</code></pre>
+
+<p>When you instantiate a new class <code>Car</code> you go like this:</p>
+
+<pre><code>$car = new Car();
+</code></pre>
+
+<p>And now you have an object handler (<code>$car</code>) that has an <code>$engine</code> property containing the handler of another object. But what if this car class needs to work with another engine? You'd have to extend the class and overwrite its constructor for each new car with a different engine. Does that make sense? No.</p>
+
+<p>Now consider the following:</p>
+
+<pre><code>class Car {
+
+  protected $engine;
+
+  public function __construct($engine) {
+    $this-&gt;engine = $engine;
+  }
+
+  /* ... */
+
+}
+</code></pre>
+
+<p>To instantiate an object of this class, you go like this:</p>
+
+<pre><code>$engine = new Engine();
+$car = new Car($engine);
+</code></pre>
+
+<p>Much better. So now if you need to create another car using another engine, you can do so easily without caring about the <code>Car</code> class too much since it is supposedly equipped to work with all the engines in your application.</p>
+
+<pre><code>$turbo = new TurboEngine();
+$car2 = new Car($turbo);
+</code></pre>
+
+<p><strong>And that is dependency injection</strong>. The <code>Car</code> class depends on an engine to run (dooh), so we inject one into its constructor which then does what it needs to do. Rather than hardcoding the engine into the Car class which would not make the engine swappable. Such constructor injections are the most common but you'll also find other types such as the setter injection by which we would pass in the engine through a setter method.</p>
+
+<h2>So what is this container business?</h2>
+
+<p><div  id="block-inject-2" class="block-inject block-inject-2"></div><div class="clearfix"></div><p>So far we've seen a very simple class example. But imagine (rightfully) that the <code>Car</code> has many other potentially swappable components (dependencies), like a type of gear shift, breaks or wheels. You have to manually instantiate all these dependent objects just so you can pass them to the one you actually need. This is what the container is for, to do all that for you.</p>
+
+<p>Basically it works like this. You first register with the container your classes and their dependencies. And then at various points of your application, you can access the container and request an instance of a particular class (or service as we call them in Symfony and Drupal 8). The container instantiates an object of that class as well as one of each of its dependencies, then returns you that service object. But what is the difference between services that we usually access through the container and other PHP classes?</p>
+
+<p>A very good definition that makes this distinction comes from the <a href="http://symfony.com/doc/current/book/service_container.html">Symfony book</a>:</p>
+
+<blockquote>
+  <p>As a rule, a PHP object is a service if it is used globally in your application. A single Mailer service is used globally to send email messages whereas the many Message objects that it delivers are not services. Similarly, a Product object is not a service, but an object that persists Product objects to a database is a service.</p>
+</blockquote>
+
+<p>Understanding how the container works under the hood is I believe not crucial for using it. It's enough to know how to register classes and how to access them later. There are multiple ways to register services but in Drupal 8 we use YAML files. In Symfony, you can use directly PHP, YAML or even XML. To know more about how to do this in Drupal 8, check out <a href="https://drupal.org/node/2133171">this documentation page</a>. Accessing the services in Drupal 8, on the other hand, is done in one of two ways: statically and using, yet again, dependency injection.</p>
+
+<p>Statically, it's very simple. We use the global <code>\Drupal</code> namespace to access its <code>service()</code> method that returns the service with the name we pass to it.</p>
+
+<pre><code>$service = \Drupal::service('my service');
+</code></pre>
+
+<p>This approach is mostly used for when we need a service in our <code>.module</code> files where we are still working with procedural code. If we are in a class (such as a form, controller, entity, etc), we should always inject the service as a dependency to the class. Since I covered it elsewhere and the Drupal documentation mentioned provides a good starting point, I won't go into the exact steps you need to take in order to inject dependent services into your Drupal 8 classes. However, you can check out my <a href="http://www.sitepoint.com/series/how-to-build-a-drupal-8-module/">introductory series on Drupal 8 module development</a>, on Sitepoint.com, where I covered the process of creating services and injecting them as dependencies (in the third part).</p>
+
+<h2>Conclusion</h2>
+
+<p>So there you go. Dependency injection is a very simple concept that has to do with the practice of decoupling functionality between classes. By passing dependencies to objects we can isolate their purpose and easily swap them with others. Additionally, it make is much easier to unit test the classes individually by passing mock objects.</p>
+
+<p>The service container is basically there to manage some classes when things get overwhelming. That is, when the number grows and the number of their dependencies also increases. It keeps track of what a certain service needs before getting instantiated, does it for you and all you have to do is access the container to request that service.</p>
+
+<p>Hope its clear.</p>
+</div></div></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/drupal-8-dependency-injection-service-container-and-all-jazz" st_title="Drupal 8 Dependency Injection, Service Container And All That Jazz" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/drupal-8-dependency-injection-service-container-and-all-jazz" st_title="Drupal 8 Dependency Injection, Service Container And All That Jazz" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/drupal-8-dependency-injection-service-container-and-all-jazz" st_title="Drupal 8 Dependency Injection, Service Container And All That Jazz" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,97 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 19 Jan 2014 22:47:17 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 19 Jan 2014 22:47:17 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Daniel Pocock: Debian solving Drupal's third-party library challenge
+Content-Transfer-Encoding: 8bit
+Content-Base: http://danielpocock.com/debian-solving-drupal-third-party-library-distribution
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Daniel Pocock: Debian solving Drupal's third-party library challenge</title>
+    <base href="http://danielpocock.com/debian-solving-drupal-third-party-library-distribution">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The <a href="http://www.drupal.org">tremendously successful Drupal community</a> observes stringent requirements about many things, in particular, <a href="https://drupal.org/licensing/faq#q7">licensing</a> and <a href="https://drupal.org/node/422996">the prohibition of bundling third-party JavaScript</a>.</p>
+<p>While these policies may seem onerous at first glance, it turns out there is another project with a <a href="http://www.debian.org/social_contract">written guarantee to provide third-party code in a form that meets the expectations of Drupal</a> and does so in a way that completely automates all that tedious effort into one-click oblivion.  I'm talking about <a href="http://www.debian.org">the Debian GNU/Linux operating system</a>.</p>
+<h3>Drupal's libraries module</h3>
+<p>The <a href="https://drupal.org/project/libraries">libraries module for Drupal</a> appeared as an initial attempt to help track third-party JavaScript.</p>
+<p>The module has been <a href="http://packages.debian.org/drupal7-mod-libraries">available in Debian for almost a year</a> and has recently been provided in the <em>wheezy-backports</em> distribution for people running the stable version of Debian.</p>
+<p>The library provides a standard way for other modules to reference third-party JavaScript but it still leaves the web master with some manual work to go out and download all the necessary JavaScript and copy it into the right place.  This is where Debian comes to the rescue.</p>
+<h3>Using the module in practice</h3>
+<p>I've recently uploaded <a href="http://jscommunicator.org">JSCommunicator</a> to Debian and wanted to provide a convenient way for people to get it in Drupal.</p>
+<p>Therefore, in addition to providing the <a href="http://packages.qa.debian.org/j/jscommunicator.html">JSCommunicator packages</a>, I created an extra package, <a href="http://packages.debian.org/drupal7-mod-jscommunicator">drupal7-mod-jscommunicator</a>.</p>
+<p><em>JSCommunicator</em> itself depends on other JavaScript, specifically, the <a href="http://jssip.net">JsSIP</a> library.  I repeated the same process for <em>JsSIP</em>.  This gives us the following collection of four related packages:</p>
+<table><tr><th>Third-party library</th>
+<th>Library itself</th>
+<th>Drupal module, packaged</th>
+</tr><tr><th>JSCommunicator</th>
+<td>libjs-jscommunicator</td>
+<td>drupal7-mod-jscommunicator</td>
+</tr><tr><th>JsSIP</th>
+<td>libjs-jssip</td>
+<td>drupal7-mod-jssip</td>
+</tr></table><p>If you explore the package details in <a href="http://packages.debian.org/drupal7-mod-jscommunicator">Debian's package catalog</a> you will notice that each package depends on the other packages it requires.</p>
+<p>Debian's package management utility, <em>apt-get</em>, can transitively resolve all the relationships between this set of packages.  In fact, on a newly built server, you can simply run the command:</p>
+<blockquote><p><em>apt-get install drupal7-mod-jscommunicator</em></p></blockquote>
+<p>and the <em>apt-get</em> utility will install Apache, MySQL, Drupal itself, the libraries module, all the related JavaScript libraries and the final Drupal module of JSCommunicator itself.  It really is that easy.  Here is an example of the output displayed by the command on a freshly built server:</p>
+<pre>
+# apt-get -d install drupal7-mod-jscommunicator
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  apache2 apache2-bin apache2-data curl dbconfig-common drupal7
+  drupal7-mod-jssip drupal7-mod-libraries fontconfig-config fonts-dejavu-core
+  javascript-common libaio1 libapache2-mod-php5 libapr1 libaprutil1
+  libaprutil1-dbd-sqlite3 libaprutil1-ldap libarchive-extract-perl libc6
+  libcurl3 libdbd-mysql-perl libdbi-perl libedit2 libfontconfig1 libgcrypt11
+  libgd3 libhtml-template-perl libjbig0 libjpeg8 libjs-jssip libjson-c2
+  liblocale-gettext-perl liblog-message-simple-perl liblua5.1-0
+  libmodule-pluggable-perl libmysqlclient18 libonig2 libperl4-corelibs-perl
+  libpng12-0 libpod-latex-perl libqdbm14 librtmp0 libssh2-1 libterm-ui-perl
+  libtext-charwidth-perl libtext-iconv-perl libtext-soundex-perl libtiff5
+  libuuid-perl libvpx1 libxml2 libxpm4 locales mysql-client mysql-client-5.5
+  mysql-common mysql-server mysql-server-5.5 mysql-server-core-5.5 perl
+  perl-base perl-modules php5 php5-cli php5-common php5-gd php5-json
+  php5-mysql php5-readline ssl-cert wwwconfig-common
+Suggested packages:
+  apache2-doc apache2-suexec-pristine apache2-suexec-custom apache2-utils
+  php-pear glibc-doc libclone-perl libmldbm-perl libnet-daemon-perl
+  libplrpc-perl libsql-statement-perl rng-tools libgd-tools
+  libipc-sharedcache-perl libterm-readkey-perl tinyca perl-doc
+  libterm-readline-gnu-perl libterm-readline-perl-perl make libb-lint-perl
+  libcpanplus-dist-build-perl libcpanplus-perl libfile-checktree-perl
+  liblog-message-perl libobject-accessor-perl php5-user-cache
+  openssl-blacklist postgresql-client
+The following NEW packages will be installed:
+  apache2 apache2-bin apache2-data curl dbconfig-common drupal7
+  drupal7-mod-jscommunicator drupal7-mod-jssip drupal7-mod-libraries
+  fontconfig-config fonts-dejavu-core javascript-common libaio1
+  libapache2-mod-php5 libapr1 libaprutil1 libaprutil1-dbd-sqlite3
+  libaprutil1-ldap libarchive-extract-perl libcurl3 libdbd-mysql-perl
+  libdbi-perl libfontconfig1 libgd3 libhtml-template-perl libjbig0 libjpeg8
+  libjs-jssip libjson-c2 liblog-message-simple-perl liblua5.1-0
+  libmodule-pluggable-perl libmysqlclient18 libonig2 libperl4-corelibs-perl
+  libpng12-0 libpod-latex-perl libqdbm14 librtmp0 libssh2-1 libterm-ui-perl
+  libtext-soundex-perl libtiff5 libvpx1 libxpm4 mysql-client mysql-client-5.5
+  mysql-common mysql-server mysql-server-5.5 mysql-server-core-5.5 php5
+  php5-cli php5-common php5-gd php5-json php5-mysql php5-readline ssl-cert
+  wwwconfig-common
+The following packages will be upgraded:
+  libc6 libedit2 libgcrypt11 liblocale-gettext-perl libtext-charwidth-perl
+  libtext-iconv-perl libuuid-perl libxml2 locales perl perl-base perl-modules
+12 upgraded, 60 newly installed, 0 to remove and 222 not upgraded.
+Need to get 37.2 MB of archives.
+After this operation, 152 MB of additional disk space will be used.
+Do you want to continue [Y/n]? 
+</pre><h3>Libraries joins core in Drupal 8</h3>
+<p>With the <a href="https://drupal.org/project/libraries">libraries module</a> joining the core in Drupal 8, there will be further opportunity for Drupal users to consolidate on their use of Debian to completely automate the management of all third-party libraries and modules throughout their Drupal system(s).</p>
+</div></div></div>
+  </body>
+</html>
+

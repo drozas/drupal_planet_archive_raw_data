@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 19 Sep 2014 18:29:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 19 Sep 2014 18:29:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Jonathan Brown: Generating safe markup in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://jonathanpatrick.me/blog/safe-markup
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Jonathan Brown: Generating safe markup in Drupal 8</title>
+    <base href="http://jonathanpatrick.me/blog/safe-markup">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The most insecure part of a Drupal website is typically the theme. <a href="https://www.drupal.org/drupal-8.0" target="_blank">Drupal 8</a> is using <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> as its template layer. This is a massive leap forward. It's no longer possible to put SQL queries in a template file!</p>
+<p>Furthermore, Drupal 8 is now taking advantage of a security feature of Twig: <a href="https://www.drupal.org/node/2296163" target="_blank">autoescape</a>. Every variable in a Twig template will be escaped if it is not marked as safe. This makes it much harder to introduce <a href="http://en.wikipedia.org/wiki/Cross-site_scripting" target="_blank">XSS</a> vulnerabilities.</p>
+<p>Unfortunately any HTML that your module produces will end up being double-escaped and the HTML itself will be visible instead of the browser's rendering of it. The quick and dirty way to fix this problem is to wrap your string with \Drupal\Component\Utility\SafeMarkup::set:</p>
+<div class="codeblock">
+<pre><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$output </span><span style="color: #007700">= </span><span style="color: #0000BB">SafeMarkup</span><span style="color: #007700">::</span><span style="color: #0000BB">set</span><span style="color: #007700">(</span><span style="color: #DD0000">'&lt;div class="my-module"&gt;' </span><span style="color: #007700">. </span><span style="color: #0000BB">$my_variable </span><span style="color: #007700">. </span><span style="color: #DD0000">'&lt;div&gt;'</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></pre></div>
+<p>But this defeats the whole point of using autoescape. The correct approach is that all HTML created by a module should be declared in a Twig template. This means that all the variables are guaranteed to be escaped. It is also very easy to implement.</p>
+<p>First you need to declare the template in your hook_theme():</p>
+<div class="codeblock">
+<pre><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">my_module_theme</span><span style="color: #007700">(array </span><span style="color: #0000BB">$existing</span><span style="color: #007700">, </span><span style="color: #0000BB">$type</span><span style="color: #007700">, </span><span style="color: #0000BB">$theme</span><span style="color: #007700">, </span><span style="color: #0000BB">$path</span><span style="color: #007700">) {<br />  return array(<br />    </span><span style="color: #DD0000">'my_module_my_template' </span><span style="color: #007700">=&gt; array(<br />      </span><span style="color: #DD0000">'template' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'my-template'</span><span style="color: #007700">,<br />      </span><span style="color: #DD0000">'variables' </span><span style="color: #007700">=&gt; array(<br />        </span><span style="color: #DD0000">'variable1' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">NULL</span><span style="color: #007700">,<br />        </span><span style="color: #DD0000">'variable2' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">NULL</span><span style="color: #007700">,<br />      ),<br />    ),<br />  );<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></pre></div>
+<p>You then need to create a Twig template file, for example my_module/templates/my-template.html.twig:</p>
+<div class="codeblock"><code>{#<br />/**<br /> * @file<br /> * Default theme implementation for my template.<br /> *<br /> * Available variables<br /> * - variable1: The first variable.<br /> * - variable2: The second variable.<br /> */<br />#}<br />&lt;div class="my-template"&gt;<br />  This is the first variable: &lt;b&gt;{{ variable1 }}&lt;/b&gt;.<br />  This is the second variable: &lt;i&gt;{{ variable2 }}&lt;/i&gt;.<br />&lt;/div&gt;</code></div>
+<p>When you need to generate your html you should use the drupal_render() function:</p>
+<div class="codeblock">
+<pre><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$render </span><span style="color: #007700">= array(<br />  </span><span style="color: #DD0000">'#theme' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'my_module_my_template'</span><span style="color: #007700">,<br />  </span><span style="color: #DD0000">'#variable1' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">t</span><span style="color: #007700">(</span><span style="color: #DD0000">"First"</span><span style="color: #007700">),<br />  </span><span style="color: #DD0000">'#variable2' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">t</span><span style="color: #007700">(</span><span style="color: #DD0000">"Second"</span><span style="color: #007700">),<br />);<br /><br /></span><span style="color: #0000BB">$output </span><span style="color: #007700">= </span><span style="color: #0000BB">drupal_render</span><span style="color: #007700">(</span><span style="color: #0000BB">$render</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">?&gt;</span></span></code></pre></div>
+<p>Strings returned by drupal_render() are automatically marked as safe and will not be escaped again.</p>
+</div></div></div>
+  </body>
+</html>
+

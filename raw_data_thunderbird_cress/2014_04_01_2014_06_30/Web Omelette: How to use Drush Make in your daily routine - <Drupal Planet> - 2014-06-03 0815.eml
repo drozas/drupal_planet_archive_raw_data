@@ -1,0 +1,145 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 03 Jun 2014 07:15:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 03 Jun 2014 07:15:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: How to use Drush Make in your daily routine
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/how-use-drush-make-your-daily-routine
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: How to use Drush Make in your daily routine</title>
+    <base href="http://www.webomelette.com/how-use-drush-make-your-daily-routine">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-announcement field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p class="typo-box box-information">This is a <strong>guest post from Kate Marshalkina</strong>, a Russian Drupal developer who works for <a href="https://licel.ru/">Licel LLC</a><a></a>. Enjoy the read and check out some of her other work.</p>
+</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Drush Make is well-known as an advanced tool for Drupal distribution building. But it also can be very useful for those who have never dealt with distributions. One great example is <a href="https://www.acquia.com/blog/patching-drush-make">applying patches like a boss</a>.</p>
+
+<p>In this article I’ll show you how I use Drush Make to automate some of my routine tasks and help me to discover great Drupal stuff.</p>
+
+<h2>Drush Make commands</h2>
+
+<p>Drush Make includes 2 commands which are already built in <a href="https://github.com/drush-ops/drush">Drush</a> itself:</p>
+
+<ol>
+<li><code>make</code> — Turns a <code>.makefile</code> into a Drupal codebase.</li>
+<li><code>make-generate</code> — Generates a <code>.makefile</code> from the current Drupal site.</li>
+</ol>
+
+<p>Both commands are related to a <code>.makefile</code> — flat text file with Drush Make instructions. You can read more about <code>.makefile</code> syntax <a href="https://github.com/drush-ops/drush/blob/master/docs/make.txt">here</a>.</p>
+
+<p>But for now, let's go deeper and see Drush Make in action.</p>
+
+<h2>Rebuild your development environment</h2>
+
+<p>How often do you install a new and clean Drupal site for development, testing or demonstration purposes? Additionally to Drupal core, developers usually have a predefined list of favorite modules like Administration Menu, Views or something more special. With Drush Make you can automate this process greatly by combining all the projects you need into one file and lettting Drush Make build it for you.</p>
+
+<p>Here is an example <code>.makefile</code> for a multilingual testing site:</p>
+
+<pre><code>; Drush Make API version.
+api = 2
+; Drupal core.
+core = 7.x
+
+;Common modules.
+projects[admin_menu][subdir] = "contrib"
+projects[ctools][subdir] = "contrib"
+projects[token][subdir] = "contrib"
+projects[views][subdir] = "contrib"
+
+; Development modules.
+projects[devel][subdir] = "development"
+
+; Multilingual modules.
+projects[fallback_language_negotation][subdir] = "contrib"
+projects[variable][subdir] = "contrib"
+projects[i18n][subdir] = "contrib"
+projects[i18nviews][subdir] = "contrib"
+
+; Load some translations.
+translations[] = de
+translations[] = ru
+</code></pre>
+
+<p>This file can be saved locally (in <code>~/.drush/make-files/d7_i18n.make</code> for example) or hosted on a remote server like GitHub.</p>
+
+<p>To use it, let’s run the <code>make</code> command to prepare our custom build on our server (in <code>/var/www/drupal_test.local</code> for example):</p>
+
+<pre><code>$ drush make d7_i18n.make /var/www/drupal_test.local
+</code></pre>
+
+<p>The first run can be quite long, but the next time Drush will take most of projects from its cache.</p>
+
+<p>As a result, the latest Drupal core, contrib modules and translations from the <code>.makefile</code> will be downloaded and placed in appropriate folders. Now you can go to your site's URL and run the <code>install.php</code> or run the installation process directly with Drush:</p>
+
+<pre><code>$ drush si --db-url="mysql://user:password@localhost/databasename" --site-name="Drupal Multilingual"
+</code></pre>
+
+<p><div  id="block-inject-2" class="block-inject block-inject-2"></div><div class="clearfix"></div><p>Additionally, you can also generate a tarball from the <code>.makefile</code> with <code>--tar</code> option:</p>
+
+<pre><code>$ drush make d7_i18n.make drupal_multilingual --tar
+</code></pre>
+
+<p>Add to that a couple of features (based on <a href="https://drupal.org/project/features">Features</a> module) and you’ll end up with your own distro.</p>
+
+<h2>Download dependencies</h2>
+
+<p>Have you ever noticed that some contrib modules provide <code>.make</code> or <code>.make.example</code> file? These usually contain a list of specific external libraries (like the jQuery Colorbox plugin for the Colorbox module). These file can be built inside existing Drupal codebases using the <code>--no-core</code> flag. As an example, let’s say you want to download the <a href="https://drupal.org/project/chosen">Chosen</a> module:</p>
+
+<pre><code>$ drush dl chosen
+Project chosen (7.x-2.0-beta4) downloaded to sites/all/modules/contrib/chosen.
+
+$ drush make sites/all/modules/contrib/chosen/chosen.make.example --no-core
+chosen downloaded from https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip
+</code></pre>
+
+<p>In this case, the proper jQuery plugin was downloaded and unzipped into the proper directory inside  the <code>libraries/</code> folder. Isn’t that handy?</p>
+
+<p>Module developers, please, add a <code>.make.example</code> file into your Drupal.org projects if you are using any external libraries. Instead of building custom Drush commands like <code>chosen-plugin</code>, we can use Drush Make. Just compare <a href="http://cgit.drupalcode.org/chosen/tree/drush/chosen.drush.inc?id=7.x-2.0-beta4">117 lines</a> to <a href="http://cgit.drupalcode.org/chosen/tree/chosen.make.example?id=7.x-2.0-beta4">7</a>.</p>
+
+<h2>Generate makefile from existing site</h2>
+
+<p>You can easily share a custom Drupal build with Drush Make. First run <code>generate-makefile</code> command from Drupal root to generate a skeleton:</p>
+
+<pre><code>$ drush generate-makefile drupal_custom_build.make
+</code></pre>
+
+<p>The generated file <code>drupal_custom_build.make</code> will contain instructions for all <em>enabled</em> projects with specific versions. If a project has <code>.git</code> folder, Drush Make will automatically set appropriate properties:</p>
+
+<pre><code>projects[redirect][type] = "module"
+projects[redirect][download][type] = "git"
+projects[redirect][download][url] = "http://git.drupal.org/project/redirect.git"
+projects[redirect][download][branch] = "7.x-1.x"
+projects[redirect][download][revision] = "0b7b8dc2d58cb277874d87c91c45f0a361e148f7"
+</code></pre>
+
+<p>This file still needs a quick manual review. For example, you can add patch references. In my project, 2 patches are applied to the Redirect module:</p>
+
+<pre><code>projects[redirect][patch][] = "https://drupal.org/files/issues/redirect-global-905914-145.patch"
+projects[redirect][patch][] = "https://drupal.org/files/issues/redirect.circular-loops.1796596-146.patch"
+</code></pre>
+
+<p>The resulting <code>.makefile</code> may be very useful if you want to share your working environment with a colleague or to provide definitive info for troubleshooting.</p>
+
+<h2>Bonus! Explore Drupal world!</h2>
+
+<p>Finally, the Drush Make file itself is a good read for discovering new cool contrib projects. Check out well-tested <a href="http://cgit.drupalcode.org/commerce_kickstart/tree/drupal-org.make?id=refs/heads;id2=7.x-2.x">Commerce Kickstart</a> or <a href="https://github.com/openscholar/openscholar/blob/SCHOLAR-3.x/openscholar/drupal-org.make">OpenScholar</a> <code>.makefiles</code> with plenty of interesting projects inside.</p>
+
+<p>I hope this article will help you use Drush more widely, to automate some of your tasks or to even build your first distribution!</p>
+</div></div></div><div class="field field-name-field-suffix field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><h2>About the Author</h2>
+<p><img src="https://drupal.org/files/styles/grid-2/public/user-pictures/picture-1399638-1401262684.jpg?itok=dnBjQqxM" width="140" style="float:left; margin-right:10px;" /></p>
+<p>Kate is a passionate web developer from Russia who fell in love with Drupal in 2011.</p>
+<p> She cares about multilingual stuff, usability and performance. </p>
+<p> </p>
+<p class="typo-box box-information" style="clear:both;margin-top:20px;"><strong>Connect with Kate:</strong><br /><a href="https://twitter.com/kalabro" target="_blank">Twitter</a> | <a href="https://drupal.org/user/1399638" target="_blank">drupal.org</a> | <a href="https://plus.google.com/100512846332318883515" target="_blank">Google +</a></p>
+</div></div></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/how-use-drush-make-your-daily-routine" st_title="How to use Drush Make in your daily routine" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/how-use-drush-make-your-daily-routine" st_title="How to use Drush Make in your daily routine" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/how-use-drush-make-your-daily-routine" st_title="How to use Drush Make in your daily routine" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

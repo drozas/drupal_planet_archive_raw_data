@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 21 Nov 2014 23:57:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 21 Nov 2014 23:57:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: 3C Web Services: How to redirect all traffic to HTTPS on your Drupal site
+Content-Transfer-Encoding: 8bit
+Content-Base: https://3cwebservices.com/drupal/how-redirect-all-traffic-https-your-drupal-site
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>3C Web Services: How to redirect all traffic to HTTPS on your Drupal site</title>
+    <base href="https://3cwebservices.com/drupal/how-redirect-all-traffic-https-your-drupal-site">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Since Google announced that it gives an additional SEO boost for sites that are fully encrypted with HTTPS it is now advisable to encrypt your entire site and not just pages with sensitive information such as user login and checkout pages.</p>
+<p>There are multiple method to achieve this. We like using the below modification to .HTACCESS file. Simply add this code to the .HTACCESS file that is located in the Drupal root directory after the the line "" and all traffic to your site will now automatically be redirected from HTTP to HTTPS.</p>
+  </body>
+</html>
+

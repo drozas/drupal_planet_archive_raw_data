@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 17 Jun 2013 15:11:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 17 Jun 2013 15:11:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Toronto Website Developer: Flag Application Module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.torontowebsitedeveloper.com/drupal-tips-tricks/flag-application-module
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Toronto Website Developer: Flag Application Module</title>
+    <base href="http://www.torontowebsitedeveloper.com/drupal-tips-tricks/flag-application-module">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-article field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><h2>An itch to scratch</h2>
+For a while, I've wanted to contribute a module back to the Drupal community and actively maintain it. I can't exactly tell you why I wanted to do this but it's been a burning desire. <br /><br />
+
+I know there are a lot of projects that have been abandoned and can use some help (Nodereview being one that I'm still trying to keep up with) but I wanted to be in the driver's seat and intimately understand the code having written it. I hope that makes sense.<br /><br />
+
+However, I didn't want to write anything on a whim. I wanted the module to be something that was useful and something people could use. An idea finally came to me as I was working to develop a site of my own (separate from this site and something I'll be discussing in a future post as it should help drupal developers find new business). <br /><br /><h2>Thank you Flag Friend</h2>
+Recently I've been helping out with some work on the Flag Friend module around the javascript link not working - if your using the module, you can follow the issue here: <a href="https://drupal.org/node/1433122">https://drupal.org/node/1433122</a>. In doing so, I became pretty familiar and comfortable with the Flag module code and API. Then, as I was working on a project, I thought it would be cool if people could flag a node in order to maintain it and a site administrator could approve that flag. I couldn't find a way to easily do that and so, the Flag Application module was born.<br /><br /><h2>Flag Application Description</h2>
+If you're interested in the module, you can find it here: <a href="https://drupal.org/sandbox/yaworsk/2020689">https://drupal.org/sandbox/yaworsk/2020689</a>. Essentially, Flag Application integrates with the Flag Module to create the custom Flag "application".<br /><br />
+
+Just like other flags, users can flag nodes with an application. Administrators are provided with an administration page to review applications and can either approve or deny the application. All applications are listed as pending prior to administrator review.<br /><br />
+
+Additionally, this module integrates with Rules to allow for custom actions once an application has been approved or denied. However, I still have to write specific actions for the module itself (i.e., approve / deny an application) -- currently the module only provides conditions to react to.<br /><br />
+
+If you end up checking out or using the module, I'd love to hear your feedback.</div></div></div>
+  </body>
+</html>
+

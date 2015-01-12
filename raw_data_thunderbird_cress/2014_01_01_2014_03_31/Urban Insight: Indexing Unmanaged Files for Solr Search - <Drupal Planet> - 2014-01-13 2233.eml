@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 13 Jan 2014 22:33:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 13 Jan 2014 22:33:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Urban Insight: Indexing Unmanaged Files for Solr Search
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.urbaninsight.com/2014/01/13/indexing-unmanaged-files-for-solr-search
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Urban Insight: Indexing Unmanaged Files for Solr Search</title>
+    <base href="http://www.urbaninsight.com/2014/01/13/indexing-unmanaged-files-for-solr-search">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The method presented creates multiple Solr documents from a single content element (aka node in Drupal lingo), only applied to files. Apache Solr module provides an API to allow just that. That is what actually happens with the Apache Solr Attachments module for <b>managed</b> files. If a Drupal node has three attached files parsable by Tika, total of 4 Solr documents would be indexed; one node plus three files. Solr documents derived from files will show up as a search result as if they are an independent entity.</p>
+</div></div></div>
+  </body>
+</html>
+

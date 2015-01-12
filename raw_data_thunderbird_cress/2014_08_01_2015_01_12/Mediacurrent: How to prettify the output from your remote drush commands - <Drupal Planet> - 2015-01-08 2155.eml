@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 08 Jan 2015 21:55:07 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 08 Jan 2015 21:55:07 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Mediacurrent: How to prettify the output from your remote drush commands
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.mediacurrent.com/blog/how-to-improve-output-from-remote-drush-commands
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Mediacurrent: How to prettify the output from your remote drush commands</title>
+    <base href="http://www.mediacurrent.com/blog/how-to-improve-output-from-remote-drush-commands">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img typeof="foaf:Image" src="http://d1l4od7sxc8nwf.cloudfront.net/sites/default/files/styles/thumb_blog_spotlight/public/prettify-output-remote-commands-v1.png?itok=oQEAVus2" width="200" height="152" alt="Prettify the output from your remote drush commands" title="Prettify the output from your remote drush commands" /> <p>Have you noticed how the output from your remote drush commands wraps at awkward lengths? This is especially annoying with features commands:</p>
+<p><img height="762" width="1024" class="media-element file-original-media" typeof="foaf:Image" src="http://d1l4od7sxc8nwf.cloudfront.net/sites/default/files/aq1r5f4.png" alt="" title="" /></p>
+<p>Well, here's a quick fix! Throw this snippet into your drush alias. It adds a "shell-alias" that executes the <code>features-list</code> command with the <code>--tty</code> SSH option.</p>
+  </body>
+</html>
+

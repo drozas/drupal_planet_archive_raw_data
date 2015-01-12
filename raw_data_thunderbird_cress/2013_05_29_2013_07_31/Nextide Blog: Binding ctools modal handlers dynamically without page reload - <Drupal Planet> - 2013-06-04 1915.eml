@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 04 Jun 2013 18:15:03 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 04 Jun 2013 18:15:03 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Nextide Blog: Binding ctools modal handlers dynamically without page reload
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.nextide.ca/node/672
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Nextide Blog: Binding ctools modal handlers dynamically without page reload</title>
+    <base href="http://www.nextide.ca/node/672">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>On a recent project I required a way to bind ctools handlers to their respective links dynamically. The project had the links being displayed using ajax based on user input, and so the handlers would have to be bound to the new links (and unbound for the links that disappeared) without the page being reloaded.</p>
+<p>Searching online for a solution did not turn up any useful results. Digging into the ctools module code, there didn&#39;t seem to be any easy way to accomplish this. The handlers are bound on page load, using Drupal behaviours.</p>
+  </body>
+</html>
+

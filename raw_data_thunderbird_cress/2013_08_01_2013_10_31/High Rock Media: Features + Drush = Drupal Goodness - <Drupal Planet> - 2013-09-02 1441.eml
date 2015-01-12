@@ -1,0 +1,128 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 02 Sep 2013 13:41:12 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 02 Sep 2013 13:41:12 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Features + Drush = Drupal Goodness
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/features-drush-drupal-goodness
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Features + Drush = Drupal Goodness</title>
+    <base href="http://highrockmedia.com/blog/features-drush-drupal-goodness">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/img_9293-279-1073227364.jpg" width="880" height="268" alt="A basic Drush and Features workflow" title="A basic Drush and Features workflow" class="image-adaptive inline-adaptive" /></p>
+
+<p>I've used both Features and Drush for a few years but until recently didn't know you can create, update and manage your features all with Drush. I can thank the good folks on a new dev team I'm working with who pointed me in the right direction for this method and I ran with it from there; I thought I'd share my early experience with these methods.</p>
+
+<h2>Time Saver</h2>
+
+<p>If you've got  a legacy Drupal 6 site to manage, creating and managing Features with Drush is good news as Features UI in D6 can sometimes be unwieldy and almost unusable.</p>
+
+<p>Whether it's Drupal 6 or 7, this method is a huge timesaver and you'll work much smarter and faster as a developer, in this case Drush plus Features.</p>
+
+<h2>Getting Started</h2>
+
+<p>It's pretty easy to get up and running once you get the hang of the syntax and terminology. Of course you'll need Drush, Features and Chaos tool suite (ctools) installed on your site along with any other contrib modules from which your Feature will be created such as Views.</p>
+
+<p>Approaching Feature creation with Drush is similar to the UI method in the sense that you'll be adding components to the Feature but I'll also show you a few shortcuts along the way. To start, as an example I want to incorporate a View into my Feature so I'll invoke a basic Drush command in Terminal:</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php">drush fe <span style="color: #339933;">--</span>d events_feature views<span style="color: #339933;">:</span>latest_events</code></span></p>
+
+<p>The above string says to create a new feature, <code>fe</code>, short for <code>features-export</code>, using debug (<code>--d</code>), and then name it "<em>events_feature</em>" and use a view called <code>latest_events</code>. We use the debug function as it provides useful information if something goes wrong and as you'll see later will exclude any bad code along the way.</p>
+
+<p>After this command, you should see a return message in Terminal:</p>
+
+<div class="geshifilter">Will create a <span style="color: #000000; font-weight: bold;">new</span> module in sites<span style="color: #339933;">/</span>all<span style="color: #339933;">/</span>modules<span style="color: #339933;">/</span>features<span style="color: #339933;">/</span>events_feature<br />
+<span style="color: #b1b100;">Do</span> you really want to <span style="color: #b1b100;">continue</span>? <span style="color: #009900;">&#40;</span>y<span style="color: #339933;">/</span>n<span style="color: #009900;">&#41;</span><span style="color: #339933;">:</span> </div>
+
+<p>After confirming above, you'll now have a new folder that contains the Feature. I found that in my tests with Drupal 6, the default location is sites/all/modules whereas in Drupal 7, the default location is sites/all/modules/features/. Of course Drush has a means of specifying the location of your Feature by invoking the <code>--destination command</code>. It would look something like this:</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php">drush fe <span style="color: #339933;">--</span>d <span style="color: #339933;">--</span>destination<span style="color: #339933;">=</span><span style="color: #0000ff;">&quot;sites/all/modules/custom&quot;</span> &nbsp;events_feature views<span style="color: #339933;">:</span>latest_events</code></span></p>
+
+<p>Here we tell Drush to put the new feature in a modules custom folder.</p>
+
+<h2>Adding and Updating</h2>
+
+<p>Until now, we've only covered creating a new Feature with Drush but what about updating and adding components? Well, there's plenty more we can do and here is where the fun starts. The first thing you'll want to do is <code>drush cc all</code> and then enable the feature so we can work with it -- <code>drush en events_feature</code> -- this is just like enabling a regular module. If we look in the new .info file that was created, we see some basic info:</p>
+
+<div class="geshifilter">name <span style="color: #339933;">=</span> events_feature<br />
+core <span style="color: #339933;">=</span> <span style="color: #cc66cc;">7</span><span style="color: #339933;">.</span>x<br />
+package <span style="color: #339933;">=</span> Features<br />
+dependencies<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> views<br />
+features<span style="color: #009900;">&#91;</span>ctools<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> views<span style="color: #339933;">:</span>views_default<span style="color: #339933;">:</span><span style="color:#800080;">3.0</span><br />
+features<span style="color: #009900;">&#91;</span>features_api<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> api<span style="color: #339933;">:</span><span style="color: #cc66cc;">2</span><br />
+features<span style="color: #009900;">&#91;</span>views_view<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> latest_events</div>
+
+<p>This all looks familiar but note that dependancies and other info was added automatically when Drush created this. The package indicates a grouping similar to module grouping only this would apply to the the Features UI main page. I usually add some useful additional info as well including a description, version number and module path.</p>
+
+<div class="geshifilter">description <span style="color: #339933;">=</span> Latest Events Feature<br />
+version <span style="color: #339933;">=</span> <span style="color: #cc66cc;">7</span><span style="color: #339933;">.</span>x<span style="color: #339933;">-</span><span style="color:#800080;">1.0</span><br />
+project path <span style="color: #339933;">=</span> sites<span style="color: #339933;">/</span>all<span style="color: #339933;">/</span>modules<span style="color: #339933;">/</span>custom</div>
+
+<h2>I've Got the Power...</h2>
+
+<p>Let's say you create an image style called "<em>adaptive</em>" and you've updated your view to use that style. First we'd simply add this new component to the Feature's info file. The best way to determine what components are available on your site is to have Drush compile a components list:</p>
+
+<div class="geshifilter">drush fc</div>
+
+<p>You'll now get a nicely printed list in Terminal of available components. Choose an item from the list and you'll be presented with all sub-items within the component, where they are being used and which ones are free to use. I'd then choose image and see:</p>
+
+<div class="geshifilter">Available sources &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp;image<span style="color: #339933;">:</span>50x50_avatar &nbsp;Provided by<span style="color: #339933;">:</span> user_follow <br />
+&nbsp;image<span style="color: #339933;">:</span>35x35 &nbsp; &nbsp; &nbsp; &nbsp; Provided by<span style="color: #339933;">:</span> user_groups <br />
+&nbsp;image<span style="color: #339933;">:</span>50x50 &nbsp; &nbsp; &nbsp; &nbsp; Provided by<span style="color: #339933;">:</span> user_groups <br />
+&nbsp;image<span style="color: #339933;">:</span>adaptive<br />
+&nbsp;image<span style="color: #339933;">:</span>thumbnail &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br />
+&nbsp;image<span style="color: #339933;">:</span>medium &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />
+&nbsp;image<span style="color: #339933;">:</span>large </div>
+
+<p>From the list, I can now formulate my component syntax for the adaptive image stye ready to be put into the .info file.</p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php">features<span style="color: #009900;">&#91;</span>image<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> adaptive</code></span></p>
+
+<p>Now we'll update the Feature via Drush using<code>drush fu</code>, short for <code>drush features-update</code>.</p>
+
+<div class="geshifilter">drush <span style="color: #339933;">--</span>d fu events_feature</div>
+
+<p>This is where the power of Drush and Features comes into its own. By simply adding a new component to the Feature's info file and updating via Drush, it now will find and add dependencies, variables, ctools instances and anything related to Features API.  These all get added and Drush will create any new module files. In this case an <code>events_feature.features.inc</code> file which has the definition of the new image style we've added.</p>
+
+<p>As another example, say you add a node type called Events that has custom fields that you want to add to your existing Feature, simply add <code>features[node][] = events</code> to your info file, run Features update and now you have all your events node related fields and definitions within the Feature as well as variables and other dependancies.</p>
+
+<p><em>Alternatively, run:</em></p>
+
+<p><span class="geshifilter"><code class="php geshifilter-php">drush <span style="color: #339933;">--</span>d fe events_feature node<span style="color: #339933;">:</span>events</code></span></p>
+
+<p>... and the new components, dependancies and the like will get added. Important to note that using this method, add only new components that are not already in the Feature to your <code>drush fe</code> string, otherwise you'll get a message that there are no new components to add.</p>
+
+<p>One interesting thing to do with all this is, if you are managing your local dev with Git, use Git Tower to visually see the diff changes after you run <code>drush fu</code>. It's a great visual learning tool and really gets you dialed in to the nuances of what goes into a Feature. You can also run <code>drush --d fu-all</code> to update all your Features within a site.</p>
+
+<p>You can use Drush to revert a Feature which comes in handy on a remote site. Once you've pulled from Git on your remote server, simply do this:</p>
+
+<div class="geshifilter">drush <span style="color: #339933;">--</span>d fr events_feature</div>
+
+<p>This will revert the remote Feature to your most recent version you had updated locally.</p>
+
+<h2>Extra, Extra...</h2>
+
+<p>As a bonus, I'll cover how to export static blocks.  You'll need the Features Extra module for this. With Features Extra, when adding a new static block, you'll see a new field within the block's edit page called "<em>Machine name.</em>" Once you give the block a machine name and save it, the block will now be available for export via Features.</p>
+
+<p>Let's say I've created a block called <em>My Custom Block</em> with a machine name of <em>my_custom_block</em>. You can add the new components using the Features Extra syntax to your .info file as we did above as such:</p>
+
+<div class="geshifilter">features<span style="color: #009900;">&#91;</span>fe_block_boxes<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> my_custom_block<br />
+features<span style="color: #009900;">&#91;</span>fe_block_settings<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> block<span style="color: #339933;">-</span>my_custom_block</div>
+
+<p>There are  two parts to this, the actual block and content,<code>fe_block_boxes</code> and all the settings for the block itself, <code>fe_block_settings</code>. This might include permissions, content type, theme block region and more. Though the options are less so for Drupal 6, Drupal 7 brings a lot more settings into the block edit page itself and these are all available here for export. Now if you run <code>drush --d fu events_feature</code>, you'll magically see new files appear within your feature for the newly exported block.</p>
+
+<p>If you get any of your syntax wrong for adding new components to the .info file, using debug mode, Drush will simply delete any bad code or syntax and you may even see some useful debug info in Terminal. If you're using Git Tower to visually track your changes, you'll immediately see where things went wrong in your diff files.</p>
+
+<p>This is the tip of the iceberg with Drush and Features but it should get you thinking about how to approach this, and in the long run work smarter and faster as a Drupal Developer whether you are a Themer, Site Builder or Backend dev.</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">Drupal</li><li class="field-item even">Drush</li><li class="field-item odd">Features</li><li class="field-item even">PHP</li><li class="field-item odd last">Drupal Planet</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="http://drushcommands.com" target="_blank" rel="nofollow">Drush commands</a></li><li class="field-item even"><a href="https://drupal.org/node/1510610" target="_blank" rel="nofollow">Set name, description and package directly with drush features-export</a></li><li class="field-item odd"><a href="https://drupal.org/node/960926" target="_blank" rel="nofollow">Features &amp; Drush</a></li><li class="field-item even"><a href="https://drupal.org/node/840732" target="_blank" rel="nofollow">Features UI /create page chokes on sites with BIG variable table, possible issue with Strongarm as well</a></li><li class="field-item odd last"><a href="http://www.git-tower.com/" target="_blank" rel="nofollow">Git Tower</a></li></ul>
+  </body>
+</html>
+

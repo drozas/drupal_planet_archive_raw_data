@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 21 Apr 2014 13:18:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 21 Apr 2014 13:18:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: DevNation’s Hack Night Champs: Building A Drupal Hosting Dashboard On OpenShift
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/devnations-hack-night-champs-building-a-drupal-hosting-dashboard-on-openshift/?utm_source=rss&utm_medium=rss&utm_campaign=devnations-hack-night-champs-building-a-drupal-hosting-dashboard-on-openshift
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: DevNation’s Hack Night Champs: Building A Drupal Hosting Dashboard On OpenShift</title>
+    <base href="http://www.phase2technology.com/blog/devnations-hack-night-champs-building-a-drupal-hosting-dashboard-on-openshift/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=devnations-hack-night-champs-building-a-drupal-hosting-dashboard-on-openshift">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">This past Wednesday night, I participated in the <a href="https://www.openshift.com/sites/default/files/devnation-hacknight.png">DevNation Hack Night</a> in conjunction with <a href="http://www.redhat.com/summit/">Red Hat Summit</a>. I was joined by Phase2’s CTO <a href="http://www.phase2technology.com/author/febbraro/">Frank Febbraro</a> and <a href="http://www.phase2technology.com/author/jcaccavano/">Joe Caccavano</a>, our CMO. Here at Phase2 we are big fans of OpenShift, RedHat’s open source Platform-as-a-Service (PaaS) offering, and we see a huge opportunity for Drupal in this space. In order to make Drupal a first class citizen on OpenShift, we helped develop <a href="http://origin.openshift.com/blog/openshift-openatrium-drupal">Drupal 7 and 8 quickstart packages for Openshift</a> in addition to building the official <a href="http://origin.openshift.com/">OpenShift Origin community site</a> using <a href="http://openatrium.com/">Open Atrium</a>, our Drupal social collaboration distribution.</p>
+<p dir="ltr">Some of the benefits of using a PaaS like OpenShift is the ability to have a uniform environment, security, and automatic deployments with the Git distributed version control system. PaaS also gives you an API to spin up applications the same way Infrastructure as a Service (cloud computing) providers give you an API to spin up compute resources.</p>
+<p dir="ltr">With our enthusiasm for OpenShift and Drupal, we decided to develop our own Drupal-based PaaS on top of OpenShift as a proof of concept at DevNation’s Hack Night. In just under two and half hours, we were able to create an application to host an OpenShift Origin set up on Google compute engine, and build a Drupal based PaaS on top of this.</p>
+<p dir="ltr">In order to create a Drupal-based PaaS that can be used like other cloud hosting providers, we developed an application that runs on OpenShift that communicates with the OpenShift API to quickly spin up new applications. Our application was built with node.js and Angular and works alongside another application we built with PHP to help set up Drush-based automation for Drupal sites. With these applications running on OpenShift, you can have your dev, stage and live site all together with the ability to pull a database from stage to dev or promote a database from stage to live.</p>
+<p dir="ltr">Here is a demo I have recorded to show the MVP we put together in 2.5 hours during the hack night.  We had a blast building this Drupal hosting dashboard with OpenShift and I&#8217;m happy to say that our team won first prize. Earlier during the conference, we also contributed a number of improvements to a <a title="Our fork of the node.js OpenShift Client" href="https://github.com/phase2/node-openshift-client">Node.js OpenShift Client</a>.</p>
+<p><iframe width="500" height="313" src="//player.vimeo.com/video/92270298" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe></p>
+<p><a href="http://vimeo.com/92270298">DevNation Screencast</a> from <a href="http://vimeo.com/phase2">Phase2</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+<p dir="ltr">
+<p>This project really shows the power of OpenShift Rest API’s: if you have access to any language that can consume REST web services, you can fully automate your application lifecycle. I’m looking forward to continuing to build, develop, and hack with open source partners like OpenShift.</p>
+<p style="text-align: center;"><a href="http://www.phase2technology.com/wp-content/uploads/2014/04/BlZVwmACYAAp9yg.png"><img class=" wp-image-6982 aligncenter" alt="Frank and Steven win DevNation hack Night!" src="http://www.phase2technology.com/wp-content/uploads/2014/04/BlZVwmACYAAp9yg.png" width="540" height="405" /></a></p>
+  </body>
+</html>
+

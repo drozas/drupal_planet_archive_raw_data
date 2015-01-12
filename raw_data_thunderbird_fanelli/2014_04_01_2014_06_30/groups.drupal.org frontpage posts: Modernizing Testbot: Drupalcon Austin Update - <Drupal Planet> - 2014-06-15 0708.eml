@@ -1,0 +1,47 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 15 Jun 2014 05:08:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 15 Jun 2014 05:08:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: groups.drupal.org frontpage posts: Modernizing Testbot: Drupalcon Austin Update
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/427723
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>groups.drupal.org frontpage posts: Modernizing Testbot: Drupalcon Austin Update</title>
+    <base href="https://groups.drupal.org/node/427723">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h3>Background:</h3>
+<p><em><a href="https://groups.drupal.org/node/408603">"Modernizing Testbot"</a> is a Drupal community initiative with the goal of rebuilding Drupal.org's Automated Testing / Continuous Integration infrastructure, leveraging modern practices and tools in order to enhance the capabilities and functionality provided by the platform and better meet the changing needs of the Drupal community.  The initiative first took root with the vetting of a potential design and architecture during the DevOps Summit at BADCamp 2013, which then led to the development of a functional Proof of Concept during DevDays Szeged.  DrupalCon Austin saw a number of further refinements to the model, and launch of the official project pages/repositories on Drupal.org.  This post is intended to provide a snapshot of what was accomplished.</em></p>
+<h3>Drupal.org Project Pages</h3>
+<p>The week before DrupalCon saw the launch of the <a href="https://drupal.org/project/drupalci">'DrupalCI' project on Drupal.org</a>, which is intended as the umbrella project for related 'Modernizing Testbot' work.  The initiative has been broken down into five sub-projects under the same DrupalCI namespace.  The initiative is still young, and code in the following repositories is not necessarily ready for use, but this is where you will find things during development and after the platform goes live:</p>
+<ol>
+<li><b><a href="https://drupal.org/project/drupalci_drupalorg">drupalci_drupalorg</a></b>: Responsible for integration between drupal.org and the DrupalCI platform</li>
+<li><b><a href="https://drupal.org/project/drupalci_jenkins">drupalci_jenkins</a></b>: Responsible for the scripts and configuration files used on the jenkins master/slave servers which serve as the central job dispatcher for the environment</li>
+<li><b><a href="https://drupal.org/project/drupalci_testbot">drupalci_testbot</a></b>: Responsible for the job runners performing the actual work, but also functional as a standalone project for local testing</li>
+<li><b><a href="https://drupal.org/project/drupalci_results">drupalci_results</a></b>: Responsible for the long-term archival, storage, and exposure of build artifacts and job results, similar to qa.d.o today</li>
+<li><b><a href="https://drupal.org/project/drupalci_puppet">drupalci_puppet</a></b>: Responsible for the puppet configuration scripts used to build out the various servers which make up the environment.</li>
+</ol>
+<h3>Development Infrastructure</h3>
+<p>Also in the weeks leading up to DrupalCon Austin, we set up a full development environment with the help of the Drupal.org Infrastructure Team.  This environment has been set up entirely on Drupal.org infrastructure, and is intended to closely mimic that which would be used for a production launch of the platform.  A special thanks goes out to <a href="https://drupal.org/u/nick_schuch">nick_shuch</a> (PreviousNext) for his help in setting up the jenkins server and initial drupalci_puppet scripts.</p>
+<h3>Multiple Environment Support</h3>
+<p>One of the primary testbot sprint goals for the week was to enhance the proof of concept build, enabling support for testing on multiple database types and php versions.  In addition to his contributions as sponsor of the DrupalCon sprints, user <a href="https://drupal.org/u/jaredsmith">jaredsmith</a> (Bluehost) also joined the testbot sprint team; where he started with developing a Docker build which would add support for a Postgres 9.1 test environment to the platform ... and then followed that up with builds for MariaDB 5.5 and 10 as well.  With these Docker builds now available in the repository, we are ready to begin integration and testing of these environments with the actual run scripts; and any assistance the community could provide with this task would certainly be welcome.</p>
+<h3>Initial Drupal.org Integration</h3>
+<p>While it will be quite some time before the DrupalCI platform is actually integrated with Drupal.org itself, we anticipate the need for some means of triggering tests from a Drupal.org dev site, in order to demonstrate the full end-to-end communications path as envisioned for the final deployment. User <a href="https://drupal.org/u/Psikik">Psikik</a> dropped by our table during the Friday sprints in order to express an interest in the project, and looking for some way to chip in. Despite  admitting to have never built a drupal module before, Psikik took on the task of developing the initial drupalci_drupalorg implementation, providing the ability to trigger jobs on our remote Jenkins server from a form located on Drupal.org (or, in this case, a D.o dev instance); with his final result ending up committed directly as-is (other than namespace changes) to the drupalci_drupalorg repository.</p>
+<h3>Test Runner Refinements</h3>
+<p>Throughout the week, and especially during the Friday/extended sprints, users <a href="https://drupal.org/u/dasrecht">dasrecht</a> and <a href="https://drupal.org/u/ricardoamaro">ricardoamaro</a> (original author of the Szeged proof of concept, sprinting remotely from Portugal) made a number of refinements to the test runner bash scripts; including refactoring to a new directory structure which should better position the project for an expanded set of functionality in the near future.  Dasrecht also contributed an initial framework for a future 'drupalci' console command, which will eventually serve as the primary end-user interface for local interaction with the platform.</p>
+<h3>Jenkins scripts</h3>
+<p>Also during the Friday sprints, user <a href="https://drupal.org/u/geerlingguy">geerlinguy</a> and I both made progress on the development of jenkins scripts which will be triggered in order to kick off new jobs/test runs.</p>
+<h3>Where to from here ... What's next?</h3>
+<p>Starting next week, I intend on establishing a rotating weekly "Modernizing Testbot" call; alternating each week between North/South American and Europe/Asia/Australia-friendly timezones.  Progress and updates on the initiative will be shared via the <a href="https://groups.drupal.org/drupal-org-testing-infrastructure">'Drupal.org Testing Infrastructure'</a> group on groups.drupal.org, so anyone interested in the ongoing progress of the initiative is encouraged to sign up there.  Our immediate priority will be further testing and stablizing the Postgres and MariaDB environment support for local testing purposes, after which we'll turn attention towards the investigation of issue queue/patch workflow improvements which could be supported by the platform.</p>
+<p>As always, testing and contributions are welcome; if you would like to get involved, please feel free to contact me via my <a href="https://drupal.org/user/148199/contact">Drupal.org contact form</a>.</p>
+<h3>Bonus Points: QA.Drupal.Org "Test Complete" Notifications</h3>
+<p>While not directly related to the 'Modernizing Testbot' activities,  I simply cannot leave without a huge shout out to <a href="https://drupal.org/u/justafish">justafish</a>, who approached me during the extended sprints, asking what it would take to enable json support for qa.d.o test results.  After I provided her with an admittedly not-so-helpful answer (i.e. "If someone else was to do the work, I'll deploy it; but it otherwise isn't a priority") and a qa.d.o dev site, she had a working json feed, PIFR patch, and new view definitions completed in no time.  This work was deployed live to qa.d.o on Tuesday, so that end users can now access the json view of their test by appending '/json' to the 'view test' URL.  This in turn enabled development this week of a chrome extension (also by justafish), which can <a href="https://www.lullabot.com/blog/article/receive-desktop-notifications-chrome-drupalorg-tests">monitor your tests in progress and notify you as soon as the qa.d.o test run is complete</a> ... a project that I anticipate will very quickly find it's way into the toolset of Drupal core developers everywhere.</p>
+  </body>
+</html>
+

@@ -1,0 +1,87 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 03 Dec 2014 20:57:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 03 Dec 2014 20:57:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Using git pre-commit hooks to keep you Drupal codebase clean
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/using-git-pre-commit-hooks-keep-you-drupal-codebase-clean
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Using git pre-commit hooks to keep you Drupal codebase clean</title>
+    <base href="http://www.pixelite.co.nz/article/using-git-pre-commit-hooks-keep-you-drupal-codebase-clean">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/using-git-pre-commit-hooks-keep-you-drupal-codebase-clean&amp;count=horizontal&amp;via=&amp;text=Using%20git%20pre-commit%20hooks%20to%20keep%20you%20Drupal%20codebase%20clean&amp;counturl=http%3A//www.pixelite.co.nz/article/using-git-pre-commit-hooks-keep-you-drupal-codebase-clean" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/using-git-pre-commit-hooks-keep-you-drupal-codebase-clean&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/using-git-pre-commit-hooks-keep-you-drupal-codebase-clean" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/using-git-pre-commit-hooks-keep-you-drupal-codebase-clean" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-hero-image">
+    <img typeof="foaf:Image" src="http://www.pixelite.co.nz/sites/default/files/styles/hero_image_article/public/pre-commit.png?itok=2EboNHfv" alt="" />  </div>
+
+  <div class="field-body">
+    <p>All too often when peer reviewing code done by other Drupalers, I spot debug code left in the commit, waiting for the chance to be deployed to staging and break everything.</p>
+
+<p>I started to read up on <a href="http://git-scm.com/docs/githooks">git hooks</a>, paying particular attention to pre-commit:</p>
+
+<blockquote>
+<p>This hook is invoked by <em>git commit</em>, and can be bypassed with <strong>--no-verify</strong> option.  It takes no parameter, and is invoked before obtaining the proposed commit log message and making a commit.  Exiting with non-zero status from this script causes the <em>git commit</em> to abort.</p>
+</blockquote>
+
+<p>You can write you pre-commit hook in any language, bash seems the most sane due to the power of text analysis tools at your disposal.</p>
+
+<h2>Where is the code</h2>
+
+<p>Here is a link to the github repository with the pre-commit hook:</p>
+
+<pre><code>git clone https://github.com/wiifm69/drupal-pre-commit.git
+</code></pre>
+
+<h2>Features</h2>
+
+<ul>
+<li>Executes PHP lint across the PHP files that were changed</li>
+<li>Checks PHP for a blacklist of function names (e.g. <strong>dsm()</strong>, <strong>kpr()</strong>)</li>
+<li>Checks JavaScript/CoffeeScript for a blacklist of function names (e.g. <strong>console.log()</strong>, <strong>alert()</strong>)</li>
+<li>Ignores deleted files from git and will not check them</li>
+<li>Tells you all of the fails at the end (and stores a log)</li>
+<li>Only lets the commit go ahead when there are no fails</li>
+</ul>
+
+<h2>Installation</h2>
+
+<pre><code>cd /tmp
+git clone https://github.com/wiifm69/drupal-pre-commit.git
+cd drupal-pre-commit
+cp scripts/pre-commit.sh [PATH_TO_YOUR_DRUPAL_PROJECT]/scripts
+cd [PATH_TO_YOUR_DRUPAL_PROJECT]
+ln -s ../../scripts/pre-commit.sh .git/hooks/pre-commit
+</code></pre>
+
+<h2>Feedback</h2>
+
+<p>I am keen to hear from anyone else on how they do this, and if you have any enhancements to the code then I am happy to accept pull requests on github. Happy coding.</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/git" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">git</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="http://git-scm.com/docs/githooks">Git hooks</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

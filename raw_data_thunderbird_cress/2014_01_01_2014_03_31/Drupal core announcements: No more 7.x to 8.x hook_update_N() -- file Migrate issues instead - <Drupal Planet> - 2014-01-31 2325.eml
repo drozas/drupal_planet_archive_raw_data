@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 31 Jan 2014 23:25:29 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 31 Jan 2014 23:25:29 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: No more 7.x to 8.x hook_update_N() -- file Migrate issues instead
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/402803
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: No more 7.x to 8.x hook_update_N() -- file Migrate issues instead</title>
+    <base href="https://groups.drupal.org/node/402803">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>At DrupalCon Prague, we decided not to provide a Drupal 7 to Drupal 8 upgrade path using the database update system, and to instead provide data migration using a <a href="https://www.acquia.com/blog/d8migrate">Drupal 8 data migration API</a> based on the Migrate module. As of today, <a href="https://drupal.org/node/2186315">Drupal 7 sites can no longer be upgraded to Drupal 8 with update.php</a>, and all implementations of <code>hook_update_N()</code> have been <a href="https://drupal.org/node/2168011">removed from Drupal 8 core</a>.</p>
+<p>Going forward, <code>hook_update_N()</code> should only be included to provide 8.x to 8.x updates, once the 8.x to 8.x upgrade path is supported.</p>
+<p><strong>If your patch introduces a data model change</strong> that would previously have required a <code>hook_update_N()</code> implementation, consider instead whether a new / changed <a href="https://drupal.org/node/2127611">data migration</a> is needed. Migration works by calling APIs, so most changes (for example entities) are covered already. But if your data change is not covered by an API (like changing a raw configuration object name or key) then you need to:</p>
+<ol>
+<li><a href="https://drupal.org/node/add/project-issue/drupal">Create a new issue</a> in the Migrate component.</li>
+<li>Document the data model change in the issue and reference the core issue that introduces it under the "related issues" section.</li>
+<li>Update the summary of your main issue to indicate that the data model change has a corresponding Migrate issue.</li>
+</ol>
+<p>If you are unsure whether new migration code is needed, file the issue anyway, and Migrate maintainers will review it and close it if it is not needed.
+</p>
+  </body>
+</html>
+

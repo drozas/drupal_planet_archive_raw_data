@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 03 Jun 2013 08:28:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 03 Jun 2013 08:28:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: How to Override Core Functionality in your Theme
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/article/how-override-core-functionality-your-theme
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: How to Override Core Functionality in your Theme</title>
+    <base href="http://www.paulbooker.co.uk/article/how-override-core-functionality-your-theme">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>If you wanted to add right double angle quotes or raquo to each of your comment block comments. First you would track down the functionality that needs changing  to theme_comment_block() inside the comments module ..</p>
+<pre class="brush: php">
+function theme_comment_block() {
+  $items = array();
+  $number = variable_get('comment_block_count', 10);
+  foreach (comment_get_recent($number) as $comment) {
+    $items[] = l($comment->subject, 'comment/' . $comment->cid, array('fragment' => 'comment-' . $comment->cid)) . '&nbsp;<span>' . t('@time ago', array('@time' => format_interval(REQUEST_TIME - $comment->changed))) . '</span>';
+  }
+  if ($items) {
+    return theme('item_list', array('items' => $items));
+  }
+  else {
+    return t('No comments available.');
+  }
+}
+
+function comment_block_view($delta = '') {
+  if (user_access('access comments')) {
+    $block['subject'] = t('Recent comments');
+    $block['content'] = theme('comment_block');
+    return $block;
+  }
+}
+</pre><p>
+and then make your changes by overriding  theme_comment_block inside your theme's template.php as .. </p>
+<pre class="brush: php">
+function mytheme_comment_block() {
+  $items = array();
+  $number = variable_get('comment_block_count', 10);
+  foreach (comment_get_recent($number) as $comment) {
+    $items[] = l('&raquo; ' . $comment->subject, 'comment/' . $comment->cid, array('fragment' => 'comment-' . $comment->cid, 'html' => true)) . '&nbsp;<span><em>' . t('@time ago', array('@time' => format_interval(REQUEST_TIME - $comment->changed))) . '</em></span>';
+  }
+  if ($items) {
+    return theme('item_list', array('items' => $items));
+  }
+  else {
+    return t('No comments available.');
+  }
+}
+</pre><p>
+After clearing the cache your theme function will be now called instead of the theme function provided by the core comment module.  </p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/override" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">override</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/theme" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">theme</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></div></div></div><div class="easy_social_box clearfix vertical easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/article/how-override-core-functionality-your-theme"
+data-count="vertical"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="How to Override Core Functionality in your Theme">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-googleplus last"><div class="g-plusone" data-size="tall" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/article/how-override-core-functionality-your-theme"></div></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

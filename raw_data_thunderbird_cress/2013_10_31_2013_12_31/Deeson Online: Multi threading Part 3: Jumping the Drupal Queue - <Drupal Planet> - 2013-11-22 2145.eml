@@ -1,0 +1,146 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 22 Nov 2013 21:45:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 22 Nov 2013 21:45:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Multi threading Part 3: Jumping the Drupal Queue
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/multi-threading-part-3-jumping-drupal-queue
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Multi threading Part 3: Jumping the Drupal Queue</title>
+    <base href="http://deeson-online.co.uk/labs/multi-threading-part-3-jumping-drupal-queue">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>In <a href="http://deeson-online.co.uk/labs/multi-threading-part-1-how-make-drush-rush">Part 1</a> of this series, we introduced the multi threading handler for Drush. In <a href="http://deeson-online.co.uk/labs/multi-threading-part-2-how-make-migrate-move">Part 2</a>, we saw how the handler could be used to process migrations in parallel in order to speed it up. In Part 3, we look at a use of the handler on the <a href="https://api.drupal.org/api/drupal/modules%21system%21system.Queue.inc/group/Queue/7">Drupal Queue sub system</a>.</p>
+<p>The Drupal Queue is used for storing items for later processing. Each item placed on the Queue is a potential work package which something else must come along and process later. Typically you would write a Drush script or hook_cron implementation to handle this. If you do it with Drush, then it can be enhanced with the Drush multi threaded handler which will potentially allow faster completion. Note that this process is only useful if you do not care about the order the items in the Queue are processed in, you cannot predict the order the threads will process items in.</p>
+<p>An example implementation is provided in the <a href="https://github.com/johnennewdeeson/drush-multi-threading">github code repository for this project</a> in the file mtq.drush.inc. Put this in your sites/all/drush directory with the mt.drush.inc file and clear cache <span class="geshifilter"><code class="php geshifilter-php">drush cc all</code></span>. You can then run the example multi threaded Queue processor with:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;">drush mtq<span style="color: #339933;">-</span>process <span style="color: #339933;">--</span>threads<span style="color: #339933;">=</span><span style="color: #cc66cc;">2</span> <span style="color: #339933;">--</span>limit<span style="color: #339933;">=</span><span style="color: #cc66cc;">100</span></pre></div>
+<p>This code populates an example Queue called 'mtq' with 100 items and then processes them in parallel with two threads. As with the previous migrate example in Part 2, don't go crazy with the number of threads. You will need to balance the best combination of parameters for your particular application. We've found that eight typically works the best on a single server but you might be able to handle more depending on your setup. As the number of threads increases, the bottle neck tends to move into the database, so watch your DB server for signs of high load.</p>
+<h3>How to guide</h3>
+<p>The code is composed of two Drush commands:</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Implements hook_drush_command().
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> mtq_drush_command<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+ <span style="color: #000088;">$items</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+ <span style="color: #000088;">$items</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'mtq-process'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+  <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'A command to process items on the Queue.'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'options'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+   <span style="color: #0000ff;">'threads'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The number of threads to use'</span><span style="color: #339933;">,</span>
+   <span style="color: #0000ff;">'limit'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The total number of jobs to put on the Queue'</span><span style="color: #339933;">,</span>
+   <span style="color: #0000ff;">'batch_size'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'How many items from the Queue to process in each thread. Default is 10.'</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+ <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+ <span style="color: #000088;">$items</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'mtq-consumer'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+  <span style="color: #0000ff;">'description'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'A single consumer process.'</span><span style="color: #339933;">,</span>
+  <span style="color: #0000ff;">'arguments'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+   <span style="color: #0000ff;">'limit'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'The number of jobs to process on the Queue'</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+ <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+ <span style="color: #b1b100;">return</span> <span style="color: #000088;">$items</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+<p>mtq-process is the multi threading command which manages the threads. mtq-consumer is the code for one thread which processes items from the Queue.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Process the Queue, multi threaded.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> drush_mtq_process<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+ <span style="color: #000088;">$time</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/time"><span style="color: #990000;">time</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+ <span style="color: #000088;">$threads</span> <span style="color: #339933;">=</span> drush_get_option<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'threads'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+ <span style="color: #000088;">$limit</span> <span style="color: #339933;">=</span> drush_get_option<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'limit'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">100</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+ <span style="color: #000088;">$batch_size</span> <span style="color: #339933;">=</span> drush_get_option<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'batch_size'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">10</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+ <span style="color: #666666; font-style: italic;">// Populate the Queue with dummy data.</span>
+ _mtq_populate_queue<span style="color: #009900;">&#40;</span><span style="color: #000088;">$limit</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+ <span style="color: #000088;">$queue</span> <span style="color: #339933;">=</span> DrupalQueue<span style="color: #339933;">::</span><span style="color: #004000;">get</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'mtq'</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+ <span style="color: #000088;">$queue_size</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$queue</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">numberOfItems</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+ try <span style="color: #009900;">&#123;</span>
+  drush_print<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Going to work on <span style="color: #006699; font-weight: bold;">{$queue_size}</span> items from the Queue with <span style="color: #006699; font-weight: bold;">{$threads}</span> threads...&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  drush_thread_manager<span style="color: #009900;">&#40;</span><span style="color: #000088;">$queue_size</span><span style="color: #339933;">,</span> <span style="color: #000088;">$batch_size</span><span style="color: #339933;">,</span> <span style="color: #000088;">$threads</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'_mtq_setup'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+ <span style="color: #009900;">&#125;</span>
+ catch <span style="color: #009900;">&#40;</span>Exception <span style="color: #000088;">$e</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  drush_set_error<span style="color: #009900;">&#40;</span><span style="color: #000088;">$e</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getMessage</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+ <span style="color: #009900;">&#125;</span>
+&nbsp;
+ <span style="color: #000088;">$time</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/time"><span style="color: #990000;">time</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">-</span> <span style="color: #000088;">$time</span><span style="color: #339933;">;</span>
+ drush_print<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Time taken with <span style="color: #006699; font-weight: bold;">{$threads}</span> threads: <span style="color: #006699; font-weight: bold;">{$time}</span> seconds&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009933; font-style: italic;">/**
+ * A multi threaded setup function.
+ *
+ * @param int $thread_id
+ *  An identifier for the thread which will execute this command.
+ * @param int $batch_size
+ *  How many tasks this command should work on.
+ * @param int $offset
+ *  The position in a Queue of jobs for the first job this command
+ *  should work on.
+ *
+ * @return string
+ *  A command which can be executed on the command line.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> _mtq_setup<span style="color: #009900;">&#40;</span><span style="color: #000088;">$thread_id</span><span style="color: #339933;">,</span> <span style="color: #000088;">$batch_size</span><span style="color: #339933;">,</span> <span style="color: #000088;">$offset</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+ <span style="color: #b1b100;">return</span> <span style="color: #0000ff;">&quot;drush mtq-consumer <span style="color: #006699; font-weight: bold;">$batch_size</span>&quot;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+<p>This is the code for the multi threaded Drush command you invoke yourself. The function <span class="geshifilter"><code class="php geshifilter-php">_mtq_populate_queue</code></span> here would not be needed in your own implementation and is provided as an example of how to add items to the Queue. The result of the function gets the size of the Queue and tells the multi thread handler to work on that many items from the Queue in small batches. A batch is the number of items from the Queue a thread will work on before finishing.</p>
+<div class="geshifilter">
+<pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Consume items from the Queue.
+ *
+ * @param int $limit
+ *  The maximum number of items to consume.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> drush_mtq_consumer<span style="color: #009900;">&#40;</span><span style="color: #000088;">$limit</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">10</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+ <span style="color: #000088;">$queue</span> <span style="color: #339933;">=</span> DrupalQueue<span style="color: #339933;">::</span><span style="color: #004000;">get</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'mtq'</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+ <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$count</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">0</span><span style="color: #339933;">;</span> <span style="color: #000088;">$count</span> <span style="color: #339933;">&lt;</span> <span style="color: #000088;">$limit</span><span style="color: #339933;">;</span> <span style="color: #000088;">$count</span><span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+  <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$item</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$queue</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">claimItem</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+   <span style="color: #000088;">$transaction</span> <span style="color: #339933;">=</span> db_transaction<span style="color: #009900;">&#40;</span><span style="color: #009900; font-weight: bold;">__FUNCTION__</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+   try <span style="color: #009900;">&#123;</span>
+    <span style="color: #666666; font-style: italic;">// Do something with the item.</span>
+    _mtq_process_item<span style="color: #009900;">&#40;</span><span style="color: #000088;">$item</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">data</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+   <span style="color: #009900;">&#125;</span>
+   catch <span style="color: #009900;">&#40;</span>Exception <span style="color: #000088;">$e</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #000088;">$transaction</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">rollback</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    drush_set_error<span style="color: #009900;">&#40;</span><span style="color: #000088;">$e</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">getMessage</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">return</span><span style="color: #339933;">;</span>
+   <span style="color: #009900;">&#125;</span>
+&nbsp;
+   <span style="color: #666666; font-style: italic;">// Unset the transaction to force a commit.</span>
+   <a href="http://www.php.net/unset"><span style="color: #990000;">unset</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$transaction</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+   <span style="color: #000088;">$queue</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">deleteItem</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$item</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+ <span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009933; font-style: italic;">/**
+ * Process an item on the Queue.
+ */</span>
+<span style="color: #000000; font-weight: bold;">function</span> _mtq_process_item<span style="color: #009900;">&#40;</span><span style="color: #000088;">$data</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+ drush_print<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Processing <span style="color: #006699; font-weight: bold;">{$data['id']}</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+ <a href="http://www.php.net/usleep"><span style="color: #990000;">usleep</span></a><span style="color: #009900;">&#40;</span><a href="http://www.php.net/rand"><span style="color: #990000;">rand</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">100000</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1000000</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+<p>Here we see the code for the individual consumer thread. This takes the next item from the Queue and passes it to a helper function to process. The db_transaction inside the drush_mtq_consumer function is a useful pattern for ensuring the message and associated data is preserved on the Queue in the case of failure.</p>
+<p>In most applications, the only thing you need to replace in the code above is the helper function. This just deals with a single item from the Queue. The rest of the code is all boiler plate to support multi threading Queues.</p>
+<p>As ever, let us know how you get on and share your thoughts and ideas below. Happy threading!</p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/multi-threading-part-3-jumping-drupal-queue">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Multi threading Part 3: Jumping the Drupal Queue</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/john-ennew">John Ennew</a> | 22nd November 2013</div></div></div>
+  </body>
+</html>
+

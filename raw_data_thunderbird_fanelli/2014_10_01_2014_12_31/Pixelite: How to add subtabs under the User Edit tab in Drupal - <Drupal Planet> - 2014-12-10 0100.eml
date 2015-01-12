@@ -1,0 +1,76 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 10 Dec 2014 00:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 10 Dec 2014 00:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: How to add subtabs under the User Edit tab in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/subtabs-under-user-edit
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: How to add subtabs under the User Edit tab in Drupal</title>
+    <base href="http://www.pixelite.co.nz/article/subtabs-under-user-edit">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2 id="tldr">tl;dr;</h2>
+
+<p>To get your tabs to appear on the user edit page use <a href="https://api.drupal.org/api/drupal/modules%21user%21user.api.php/function/hook_user_categories/7">hook_user_categories()</a> and <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu_alter/7">hook_menu_alter()</a>.</p>
+
+<h2 id="the-detail">The detail</h2>
+
+<p>Getting submenu items to appear within the user edit area of Drupal has not always worked as I would expect from reading the documentation around <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu/7">hook_menu()</a>. As it happens the user module provides hooks to make this quite simple.</p>
+
+<p><a href="https://api.drupal.org/api/drupal/modules%21user%21user.api.php/function/hook_user_categories/7">hook_user_categories()</a> allows you to return a subset of the parameters you’d expect to see in <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu/7">hook_menu()</a>.</p>
+
+<p>In this example we would have a new set of tabs added to the User Edit page.  The first is <em>Account</em> and is now presented because we have more than one tab here now.  The second is <em>Report Settings</em> and it would have a URL like <code>user/12345/edit/report_settings</code> where <em>report_settings</em> is taken from the name parameter.</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="sd">/**</span>
+<span class="sd"> * Implements hook_user_categories().</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">my_module_user_categories</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+    <span class="k">array</span><span class="p">(</span>
+      <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;report_settings&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nx">t</span><span class="p">(</span><span class="s1">&#39;Report settings&#39;</span><span class="p">),</span>
+      <span class="s1">&#39;weight&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s1">&#39;access callback&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;user_edit_access&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;access arguments&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+
+<p>At this point we have a new menu item presented as a tab on the user edit page and clicking it takes us to a blank form with a submit button. I think this is due to the way menu items can inherit behaviour from parent menu items. We’ll be wanting to overload that behaviour though and present our own form.  This can be done through <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu_alter/7">hook_menu_alter()</a>.</p>
+
+<p>Checking the keys of the array passed to <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu_alter/7">hook_menu_alter()</a> we should find that we have a new one called <code>user/%user_category/edit/report_settings</code>. We can edit this one to point it at our preferred form built using the <a href="https://api.drupal.org/api/drupal/includes%21form.inc/group/form_api/7">Form API</a> as usual.</p>
+
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="sd">/**</span>
+<span class="sd"> * Implements hook_menu_alter().</span>
+<span class="sd"> */</span>
+<span class="k">function</span> <span class="nf">my_module_menu_alter</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$callbacks</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nv">$callbacks</span><span class="p">[</span><span class="s1">&#39;user/%user_category/edit/report_settings&#39;</span><span class="p">][</span><span class="s1">&#39;page arguments&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;my_module_user_report_settings&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="c1">// We need to set the file path as it defaults to the user module.</span>
+  <span class="nv">$callbacks</span><span class="p">[</span><span class="s1">&#39;user/%user_category/edit/report_settings&#39;</span><span class="p">][</span><span class="s1">&#39;file path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">drupal_get_path</span><span class="p">(</span><span class="s1">&#39;module&#39;</span><span class="p">,</span> <span class="s1">&#39;my_module&#39;</span><span class="p">);</span>
+  <span class="nv">$callbacks</span><span class="p">[</span><span class="s1">&#39;user/%user_category/edit/report_settings&#39;</span><span class="p">][</span><span class="s1">&#39;file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;my_module.user.inc&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+
+<h2 id="gotchas">Gotchas</h2>
+
+<ul>
+  <li>You will want to be clearing your menu cache a lot while getting this working. Every edit will require a <code>drush cc menu</code>.</li>
+  <li>Ensure you have set the <code>file path</code> in the hook_menu_alter() if you have your have your page callback or form function for drupal_get_form() in a separate file.</li>
+</ul>
+
+<h2 id="comments">Comments</h2>
+
+<p>If you have found that this post has been helpful ping me in the comments, on twitter (<a href="http://twitter.com/unifex">@Unifex</a>) or on <a href="http://drupal.org">D.o</a> at <a href="http://drupal.org/u/Gold">Gold</a>.</p>
+  </body>
+</html>
+

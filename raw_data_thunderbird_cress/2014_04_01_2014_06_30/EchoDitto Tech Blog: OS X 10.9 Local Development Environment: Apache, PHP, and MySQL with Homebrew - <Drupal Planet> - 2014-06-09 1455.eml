@@ -1,0 +1,319 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 09 Jun 2014 13:55:28 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 09 Jun 2014 13:55:28 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: EchoDitto Tech Blog: OS X 10.9 Local Development Environment: Apache, PHP, and MySQL with Homebrew
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.echoditto.com/blog/os-x-109-local-development-environment-apache-php-and-mysql-homebrew
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>EchoDitto Tech Blog: OS X 10.9 Local Development Environment: Apache, PHP, and MySQL with Homebrew</title>
+    <base href="http://www.echoditto.com/blog/os-x-109-local-development-environment-apache-php-and-mysql-homebrew">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://www.echoditto.com/sites/default/files/styles/medium/public/blog/9407904271_8b4187d916_z.jpg?itok=8pyEbNO_" width="220" height="220" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><style>code {display:inline;padding:0;margin:0;border:none;}</style>
+There's nothing quite like setting up everything on your Mac for Drupal (or other PHP) development in a way that things just work and don't need constant fiddling. This guide will walk you through using <a href="http://brew.sh/">Homebrew</a> to install Apache, PHP, and MySQL for a "MAMP" development environment. We'll also use DNSMasq and Apache's VirtualDocumentRoot to set up "auto-VirtualHosts," and add a firewall rule to allow the default http port 80 to be used without running Apache as root.</p>
+
+<p>At the conclusion of this guide, you'll be able to create a directory like <em>~/Sites/project</em> and access it at <em>http://project.dev</em> without editing your <em>/etc/hosts</em> file or editing any Apache configuration. You'll also be able to use <a href="http://xip.io/">xip.io</a> with auto-VirtualHosts for accessing your sites on other devices in your local network.</p>
+
+<p>We also configure PHP and MySQL to allow for enough flexibility for complex operations generally only reserved for development and not production.</p>
+
+<p>The OS X operating system comes with Apache and PHP pre-installed, and I've <a href="/blog/os-x-107-lion-development-native-apache-php-homebrew-mysql-or-mariadb">previously</a> <a href="/blog/os-x-107-lion-development-native-mamp-mysql-installer">recommended</a> utilizing them to some degree for getting a local PHP development environment on your Mac. Since then, the community around Homebrew has improved dramatically and I now recommend that our developers at EchoDitto use Homebrew exclusively for all components.</p>
+
+<h1>Homebrew Setup</h1>
+
+<p>If you've not already install Homebrew, you can follow the instructions at <a href="http://brew.sh/">brew.sh</a>, or simply run the following command:</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">ruby <span style="color: #660033;">-e</span> <span style="color: #ff0000;">&quot;<span style="color: #007800;">$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)</span>&quot;</span>
+brew doctor
+brew update</pre></div></div>
+
+<h1>PATH Variable</h1>
+
+<p>Since OS X already comes with PHP and Apache, we'll want to make sure that our <code>brew</code>-installed versions appear in the shell path before the built-in ones. The following command adds logic to your <em>~/.bash_profile</em> to ensure the Homebrew directory is in the beginning of <strong>$PATH</strong>.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #7a0874; font-weight: bold;">echo</span> <span style="color: #ff0000;">&quot;export PATH=<span style="color: #000099; font-weight: bold;">\$</span>(echo <span style="color: #000099; font-weight: bold;">\$</span>PATH | sed 's|/usr/local/bin||; s|/usr/local/sbin||; s|::|:|; s|^:||; s|\(.*\)|/usr/local/bin:/usr/local/sbin:\1|')&quot;</span> <span style="color: #000000; font-weight: bold;">&gt;&gt;</span> ~<span style="color: #000000; font-weight: bold;">/</span>.bash_profile <span style="color: #000000; font-weight: bold;">&amp;&amp;</span> <span style="color: #7a0874; font-weight: bold;">source</span> ~<span style="color: #000000; font-weight: bold;">/</span>.bash_profile</pre></div></div>
+
+<h1>MySQL</h1>
+
+<p>The following commands will download and install the latest version of MySQL and do some basic configuration to allow for large imports and a couple other miscellaneous configuration changes.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">brew <span style="color: #c20cb9; font-weight: bold;">install</span> <span style="color: #660033;">-v</span> mysql
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">cp</span> <span style="color: #660033;">-v</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> mysql<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>support-files<span style="color: #000000; font-weight: bold;">/</span>my-default.cnf $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> mysql<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>my.cnf
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #000000; font-weight: bold;">&gt;&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> mysql<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>my.cnf <span style="color: #cc0000; font-style: italic;">&lt;&lt;'EOF'
+# EchoDitto changes
+max_allowed_packet = 2G
+innodb_file_per_table = 1
+EOF</span>
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">sed</span> <span style="color: #660033;">-i</span> <span style="color: #ff0000;">''</span> <span style="color: #ff0000;">'s/^# \(innodb_buffer_pool_size\)/\1/'</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> mysql<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>my.cnf</pre></div></div>
+
+<p>Now we need to start MySQL using OS X's launchd, and we'll set it to start when you login.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #7a0874; font-weight: bold;">&#91;</span> <span style="color: #000000; font-weight: bold;">!</span> <span style="color: #660033;">-d</span> ~<span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents <span style="color: #7a0874; font-weight: bold;">&#93;</span> <span style="color: #000000; font-weight: bold;">&amp;&amp;</span> <span style="color: #c20cb9; font-weight: bold;">mkdir</span> <span style="color: #660033;">-v</span> ~<span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents
+&nbsp;
+<span style="color: #7a0874; font-weight: bold;">&#91;</span> <span style="color: #660033;">-f</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> mysql<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>homebrew.mxcl.mysql.plist <span style="color: #7a0874; font-weight: bold;">&#93;</span> <span style="color: #000000; font-weight: bold;">&amp;&amp;</span> <span style="color: #c20cb9; font-weight: bold;">ln</span> <span style="color: #660033;">-sfv</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> mysql<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>homebrew.mxcl.mysql.plist ~<span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents<span style="color: #000000; font-weight: bold;">/</span>
+&nbsp;
+<span style="color: #7a0874; font-weight: bold;">&#91;</span> <span style="color: #660033;">-e</span> ~<span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents<span style="color: #000000; font-weight: bold;">/</span>homebrew.mxcl.mysql.plist <span style="color: #7a0874; font-weight: bold;">&#93;</span> <span style="color: #000000; font-weight: bold;">&amp;&amp;</span> launchctl load <span style="color: #660033;">-w</span> ~<span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents<span style="color: #000000; font-weight: bold;">/</span>homebrew.mxcl.mysql.plist</pre></div></div>
+
+<p>By default, MySQL's root user has an empty password from any connection. You are advised to run <code>mysql_secure_installation</code> and at least set a password for the root user.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #666666;">$</span><span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> mysql<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>bin<span style="color: #000000; font-weight: bold;">/</span>mysql_secure_installation</pre></div></div>
+
+<h1>Apache</h1>
+
+<p>Start by stopping the built-in Apache, if it's running, and prevent it from starting on boot. This is one of very few times you'll need to use <code>sudo</code>.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">sudo</span> launchctl unload <span style="color: #660033;">-w</span> <span style="color: #000000; font-weight: bold;">/</span>System<span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchDaemons<span style="color: #000000; font-weight: bold;">/</span>org.apache.httpd.plist <span style="color: #000000;">2</span><span style="color: #000000; font-weight: bold;">&gt;/</span>dev<span style="color: #000000; font-weight: bold;">/</span>null</pre></div></div>
+
+<p>Apache is not in the default repository of Homebrew formulas, nor are some dependencies, so we use the <code>brew tap</code> command to add other formula repositories.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">brew tap homebrew<span style="color: #000000; font-weight: bold;">/</span>dupes
+brew tap homebrew<span style="color: #000000; font-weight: bold;">/</span>apache</pre></div></div>
+
+<p>We'll install Apache 2.2 with Apr and OpenSSL from Homebrew as well instead of utilizing the built-in versions of those tools.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">brew <span style="color: #c20cb9; font-weight: bold;">install</span> <span style="color: #660033;">-v</span> httpd22 <span style="color: #660033;">--with-brewed-apr</span> <span style="color: #660033;">--with-brewed-openssl</span></pre></div></div>
+
+<p>We'll be using the file <em>~/Sites/httpd-vhosts.conf</em> to configure our VirtualHosts, so we create necessary directories and then include the file in <em>httpd.conf</em>.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #7a0874; font-weight: bold;">&#91;</span> <span style="color: #000000; font-weight: bold;">!</span> <span style="color: #660033;">-d</span> ~<span style="color: #000000; font-weight: bold;">/</span>Sites <span style="color: #7a0874; font-weight: bold;">&#93;</span> <span style="color: #000000; font-weight: bold;">&amp;&amp;</span> <span style="color: #c20cb9; font-weight: bold;">mkdir</span> <span style="color: #660033;">-pv</span> ~<span style="color: #000000; font-weight: bold;">/</span>Sites
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">touch</span> ~<span style="color: #000000; font-weight: bold;">/</span>Sites<span style="color: #000000; font-weight: bold;">/</span>httpd-vhosts.conf
+&nbsp;
+<span style="color: #007800;">USERHOME</span>=$<span style="color: #7a0874; font-weight: bold;">&#40;</span>dscl . <span style="color: #660033;">-read</span> <span style="color: #000000; font-weight: bold;">/</span>Users<span style="color: #000000; font-weight: bold;">/`</span><span style="color: #c20cb9; font-weight: bold;">whoami</span><span style="color: #000000; font-weight: bold;">`</span> NFSHomeDirectory <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">awk</span> <span style="color: #660033;">-F</span><span style="color: #ff0000;">&quot;\: &quot;</span> <span style="color: #ff0000;">'{print $2}'</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> <span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #000000; font-weight: bold;">&gt;&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>apache2<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">2.2</span><span style="color: #000000; font-weight: bold;">/</span>httpd.conf <span style="color: #cc0000; font-style: italic;">&lt;&lt;EOF
+# Include our VirtualHosts
+Include ${USERHOME}/Sites/httpd-vhosts.conf
+EOF</span></pre></div></div>
+
+<p>We'll create a folder for our logs in <em>~/Sites</em> as well.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #7a0874; font-weight: bold;">&#91;</span> <span style="color: #000000; font-weight: bold;">!</span> <span style="color: #660033;">-d</span> ~<span style="color: #000000; font-weight: bold;">/</span>Sites<span style="color: #000000; font-weight: bold;">/</span>logs <span style="color: #7a0874; font-weight: bold;">&#93;</span> <span style="color: #000000; font-weight: bold;">&amp;&amp;</span> <span style="color: #c20cb9; font-weight: bold;">mkdir</span> <span style="color: #660033;">-pv</span> ~<span style="color: #000000; font-weight: bold;">/</span>Sites<span style="color: #000000; font-weight: bold;">/</span>logs</pre></div></div>
+
+<p>Now to fill in the contents of <em>~/Sites/httpd-vhosts.conf</em> that we included in <em>httpd.conf</em> earlier. Note that <strong>this is one command to copy and paste!</strong> Start with <code>USERHOME</code> through the second <code>EOF</code> has a single copy and paste block for the terminal.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #007800;">USERHOME</span>=$<span style="color: #7a0874; font-weight: bold;">&#40;</span>dscl . <span style="color: #660033;">-read</span> <span style="color: #000000; font-weight: bold;">/</span>Users<span style="color: #000000; font-weight: bold;">/`</span><span style="color: #c20cb9; font-weight: bold;">whoami</span><span style="color: #000000; font-weight: bold;">`</span> NFSHomeDirectory <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">awk</span> <span style="color: #660033;">-F</span><span style="color: #ff0000;">&quot;\: &quot;</span> <span style="color: #ff0000;">'{print $2}'</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> <span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #000000; font-weight: bold;">&gt;</span> ~<span style="color: #000000; font-weight: bold;">/</span>Sites<span style="color: #000000; font-weight: bold;">/</span>httpd-vhosts.conf <span style="color: #cc0000; font-style: italic;">&lt;&lt;EOF
+#
+# Use name-based virtual hosting.
+#
+NameVirtualHost *:80
+&nbsp;
+#
+# Set up permissions for VirtualHosts in ~/Sites
+#
+&lt;Directory &quot;${USERHOME}/Sites&quot;&gt;
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+&lt;/Directory&gt;
+&nbsp;
+# For http://localhost in the users' Sites folder
+&lt;VirtualHost _default_:80&gt;
+    ServerName localhost
+    DocumentRoot &quot;${USERHOME}/Sites&quot;
+&lt;/VirtualHost&gt;
+&nbsp;
+#
+# VirtualHosts
+#
+&nbsp;
+## Manual VirtualHost template
+#&lt;VirtualHost *:80&gt;
+#  ServerName project.dev
+#  CustomLog &quot;${USERHOME}/Sites/logs/project.dev-access_log&quot; combined
+#  ErrorLog &quot;${USERHOME}/Sites/logs/project.dev-error_log&quot;
+#  DocumentRoot &quot;${USERHOME}/Sites/project.dev&quot;
+#&lt;/VirtualHost&gt;
+&nbsp;
+#
+# Automatic VirtualHosts
+# A directory at ${USERHOME}/Sites/webroot can be accessed at http://webroot.dev
+# In Drupal, uncomment the line with: RewriteBase /
+&nbsp;
+# This log format will display the per-virtual-host as the first field followed by a typical log line
+LogFormat &quot;%V %h %l %u %t \&quot;%r\&quot; %&gt;s %b \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combinedmassvhost
+&nbsp;
+# Auto-VirtualHosts with .dev
+&lt;VirtualHost *:80&gt;
+  ServerName dev
+  ServerAlias *.dev
+&nbsp;
+  CustomLog &quot;${USERHOME}/Sites/logs/dev-access_log&quot; combinedmassvhost
+  ErrorLog &quot;${USERHOME}/Sites/logs/dev-error_log&quot;
+&nbsp;
+  VirtualDocumentRoot ${USERHOME}/Sites/%-2+
+&lt;/VirtualHost&gt;
+&nbsp;
+# Auto-VirtualHosts with xip.io
+&lt;VirtualHost *:80&gt;
+  ServerName xip
+  ServerAlias *.xip.io
+&nbsp;
+  CustomLog &quot;${USERHOME}/Sites/logs/dev-access_log&quot; combinedmassvhost
+  ErrorLog &quot;${USERHOME}/Sites/logs/dev-error_log&quot;
+&nbsp;
+  VirtualDocumentRoot ${USERHOME}/Sites/%-7+
+&lt;/VirtualHost&gt;
+EOF</span></pre></div></div>
+
+<h2>Run with port 80</h2>
+
+<p>You may notice that <em>httpd.conf</em> is running Apache on port <strong>8080</strong>, but the <VirtualHosts> above are using port <strong>80</strong>. The next two commands will create and load a firewall rule to forward 8080 requests to 80. The end result is that we can use port 80 in VirtualHosts without needing to run Apache as root.</p>
+
+<p>The following <strong>single</strong> command will create the file <em>/Library/LaunchAgents/com.echoditto.httpdfwd.plist</em> as root, and owned by root, since it needs elevated privileges.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">sudo</span> <span style="color: #c20cb9; font-weight: bold;">bash</span> <span style="color: #660033;">-c</span> <span style="color: #ff0000;">'export TAB=
+  </body>
+</html>
+</span><span style="color: #ff0000;">&quot;'&quot;</span><span style="color: #ff0000;">'\t'</span><span style="color: #ff0000;">&quot;'&quot;</span><span style="color: #ff0000;">'
+cat &gt; /Library/LaunchAgents/com.echoditto.httpdfwd.plist &lt;&lt;EOF
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+${TAB}&lt;key&gt;Label&lt;/key&gt;
+${TAB}&lt;string&gt;com.echoditto.httpdfwd&lt;/string&gt;
+${TAB}&lt;key&gt;ProgramArguments&lt;/key&gt;
+${TAB}&lt;array&gt;
+${TAB}${TAB}&lt;string&gt;sh&lt;/string&gt;
+${TAB}${TAB}&lt;string&gt;-c&lt;/string&gt;
+${TAB}${TAB}&lt;string&gt;ipfw add fwd 127.0.0.1,8080 tcp from any to me dst-port 80 in &amp;amp;&amp;amp; sysctl -w net.inet.ip.forwarding=1&lt;/string&gt;
+${TAB}&lt;/array&gt;
+${TAB}&lt;key&gt;RunAtLoad&lt;/key&gt;
+${TAB}&lt;true/&gt;
+${TAB}&lt;key&gt;UserName&lt;/key&gt;
+${TAB}&lt;string&gt;root&lt;/string&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+EOF'</span></pre></div></div>
+
+<p>This file will be loaded on login and set up the 80->8080 port forward, but we can load it manually now so we don't need to log out and back in.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">sudo</span> launchctl load <span style="color: #660033;">-w</span> <span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents<span style="color: #000000; font-weight: bold;">/</span>com.echoditto.httpdfwd.plist</pre></div></div>
+
+<h1>PHP</h1>
+
+<p>The following is for the latest release of PHP, version 5.5. If you'd like to use 5.3, 5.4 or 5.6, simply change the "5.5" and "php55" values below appropriately. <em>(Note: if you use 5.3, the OpCache extension instructions are different. They will be posted below after the instructions for newer versions.)</em></p>
+
+<p>Start by adding the PHP tap for Homebrew. PHP 5.3 needs an additional tap, so skip the second command if you are using 5.4 or higher.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">brew tap homebrew<span style="color: #000000; font-weight: bold;">/</span>php
+&nbsp;
+<span style="color: #666666; font-style: italic;"># Skip this if using PHP 5.4 or higher</span>
+brew tap homebrew<span style="color: #000000; font-weight: bold;">/</span>versions</pre></div></div>
+
+<p>Install PHP and mod_php. This command will also load the PHP module in the <em>httpd.conf</em> file for you.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">brew <span style="color: #c20cb9; font-weight: bold;">install</span> <span style="color: #660033;">-v</span> php55 <span style="color: #660033;">--homebrew-apxs</span> <span style="color: #660033;">--with-apache</span></pre></div></div>
+
+<p>Add PHP configuration to Apache's <em>httpd.conf</em> file.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #000000; font-weight: bold;">&gt;&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>apache2<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">2.2</span><span style="color: #000000; font-weight: bold;">/</span>httpd.conf <span style="color: #cc0000; font-style: italic;">&lt;&lt;EOF
+# Send PHP extensions to mod_php
+AddHandler php5-script .php
+AddType text/html .php
+DirectoryIndex index.php index.html
+EOF</span></pre></div></div>
+
+<p>Set timezone and change other PHP settings (this is a <strong>single</strong> command). <code>sudo</code> is needed here to get the current timezone on OS X (in previous versions of OS X it wasn't needed, I'm not sure why it is now).</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">sed</span> <span style="color: #660033;">-i</span> <span style="color: #ff0000;">'-default'</span> <span style="color: #ff0000;">&quot;s|^;\(date\.timezone[[:space:]]*=\).*|\1 <span style="color: #000099; font-weight: bold;">\&quot;</span><span style="color: #007800;">$(sudo systemsetup -gettimezone|awk -F&quot;\: &quot; '{print $2}')</span><span style="color: #000099; font-weight: bold;">\&quot;</span>|; s|^\(memory_limit[[:space:]]*=\).*|\1 256M|; s|^\(post_max_size[[:space:]]*=\).*|\1 200M|; s|^\(upload_max_filesize[[:space:]]*=\).*|\1 100M|; s|^\(default_socket_timeout[[:space:]]*=\).*|\1 600|; s|^\(max_execution_time[[:space:]]*=\).*|\1 300|; s|^\(max_input_time[[:space:]]*=\).*|\1 600|;&quot;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.5</span><span style="color: #000000; font-weight: bold;">/</span>php.ini</pre></div></div>
+
+<p>Add a PHP error log; without this, you may get Internal Server Errors if PHP has errors to write and no logs to write to (this is a <strong>single</strong> command; be sure to copy and paste the lines containing <code>USERHOME</code> through the last <code>EOF</code> as a <strong>single</strong> command).</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #007800;">USERHOME</span>=$<span style="color: #7a0874; font-weight: bold;">&#40;</span>dscl . <span style="color: #660033;">-read</span> <span style="color: #000000; font-weight: bold;">/</span>Users<span style="color: #000000; font-weight: bold;">/`</span><span style="color: #c20cb9; font-weight: bold;">whoami</span><span style="color: #000000; font-weight: bold;">`</span> NFSHomeDirectory <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">awk</span> <span style="color: #660033;">-F</span><span style="color: #ff0000;">&quot;\: &quot;</span> <span style="color: #ff0000;">'{print $2}'</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> <span style="color: #c20cb9; font-weight: bold;">cat</span> <span style="color: #000000; font-weight: bold;">&gt;&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.5</span><span style="color: #000000; font-weight: bold;">/</span>php.ini <span style="color: #cc0000; font-style: italic;">&lt;&lt;EOF
+; PHP Error log
+error_log = ${USERHOME}/Sites/logs/php-error_log
+EOF</span></pre></div></div>
+
+<p>This weird little "hack" is needed to fix <a href="https://github.com/Homebrew/homebrew-php/issues/1039#issuecomment-41307694">a permissions problem</a> with using <code>pear</code> or <code>pecl</code>.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">touch</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> php55<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>lib<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span>.lock <span style="color: #000000; font-weight: bold;">&amp;&amp;</span> <span style="color: #c20cb9; font-weight: bold;">chmod</span> 0644 $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> php55<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>lib<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span>.lock</pre></div></div>
+
+<p>The OpCache extension will speed up your PHP environment dramatically, and it's easy to install for 5.4 and higher. <strong>If you are looking to install PHP 5.3, skip this block.</strong></p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">brew <span style="color: #c20cb9; font-weight: bold;">install</span> <span style="color: #660033;">-v</span> php55-opcache</pre></div></div>
+
+<p><strong>Skip this block unless you are using PHP 5.3</strong>. Because there is no <em>php53-opcache</em> Homebrew formula, we can install it with <code>pecl</code> and replicate the same configuration file.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">pecl <span style="color: #c20cb9; font-weight: bold;">install</span> zendopcache-beta
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">sed</span> <span style="color: #660033;">-i</span> <span style="color: #ff0000;">''</span> <span style="color: #ff0000;">&quot;s|^\(zend_extension=<span style="color: #000099; font-weight: bold;">\&quot;</span>\)\(opcache\.so<span style="color: #000099; font-weight: bold;">\&quot;</span>\)|\1<span style="color: #007800;">$(php -r 'print(ini_get(&quot;extension_dir&quot;)</span>.&quot;</span><span style="color: #000000; font-weight: bold;">/</span><span style="color: #ff0000;">&quot;);')\2|&quot;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.3</span><span style="color: #000000; font-weight: bold;">/</span>php.ini
+&nbsp;
+<span style="color: #7a0874; font-weight: bold;">echo</span> <span style="color: #ff0000;">&quot;[opcache]&quot;</span> <span style="color: #000000; font-weight: bold;">&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.3</span><span style="color: #000000; font-weight: bold;">/</span>conf.d<span style="color: #000000; font-weight: bold;">/</span>ext-opcache.ini
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">grep</span> <span style="color: #660033;">-E</span> <span style="color: #ff0000;">'^zend_extension.*opcache\.so'</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.3</span><span style="color: #000000; font-weight: bold;">/</span>php.ini <span style="color: #000000; font-weight: bold;">&gt;&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.3</span><span style="color: #000000; font-weight: bold;">/</span>conf.d<span style="color: #000000; font-weight: bold;">/</span>ext-opcache.ini
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">sed</span> <span style="color: #660033;">-i</span> <span style="color: #ff0000;">''</span> <span style="color: #ff0000;">'/^zend_extension.*opcache\.so/d'</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.3</span><span style="color: #000000; font-weight: bold;">/</span>php.ini
+&nbsp;
+<span style="color: #666666; font-style: italic;"># &quot;php54&quot; is not a typo here- I'm using a sample config file from</span>
+<span style="color: #666666; font-style: italic;"># another recipe for my config file in php53</span>
+<span style="color: #c20cb9; font-weight: bold;">grep</span> <span style="color: #660033;">-E</span> <span style="color: #ff0000;">'^[[:space:]]*opcache\.'</span> \
+  $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>Taps<span style="color: #000000; font-weight: bold;">/</span>homebrew<span style="color: #000000; font-weight: bold;">/</span>homebrew-php<span style="color: #000000; font-weight: bold;">/</span>Formula<span style="color: #000000; font-weight: bold;">/</span>php54-opcache.rb \
+  <span style="color: #000000; font-weight: bold;">|</span> <span style="color: #c20cb9; font-weight: bold;">sed</span> <span style="color: #ff0000;">'s/^[[:space:]]*//g'</span> <span style="color: #000000; font-weight: bold;">&gt;&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.3</span><span style="color: #000000; font-weight: bold;">/</span>conf.d<span style="color: #000000; font-weight: bold;">/</span>ext-opcache.ini</pre></div></div>
+
+<p>And continue with steps for all PHP versions: give OpCache some more memory to keep more opcode caches.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">sed</span> <span style="color: #660033;">-i</span> <span style="color: #ff0000;">''</span> <span style="color: #ff0000;">&quot;s|^\(opcache\.memory_consumption=\)[0-9]*|\1256|;&quot;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>php<span style="color: #000000; font-weight: bold;">/</span><span style="color: #000000;">5.5</span><span style="color: #000000; font-weight: bold;">/</span>conf.d<span style="color: #000000; font-weight: bold;">/</span>ext-opcache.ini</pre></div></div>
+
+<h1>Start Apache</h1>
+
+<p>Start Homebrew's Apache and set to start on boot.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">ln</span> <span style="color: #660033;">-sfv</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> httpd22<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>homebrew.mxcl.httpd22.plist ~<span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents
+&nbsp;
+launchctl load <span style="color: #660033;">-w</span> ~<span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents<span style="color: #000000; font-weight: bold;">/</span>homebrew.mxcl.httpd22.plist</pre></div></div>
+
+<h1>DNSMasq</h1>
+
+<p><a href="/blog/never-touch-your-local-etchosts-file-os-x-again">I've covered this before</a>, but we'll list the commands here again for completeness. This example will have any DNS request ending in <em>.dev</em> reply with the IP address <em>127.0.0.1</em>.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal">brew <span style="color: #c20cb9; font-weight: bold;">install</span> <span style="color: #660033;">-v</span> dnsmasq
+&nbsp;
+<span style="color: #7a0874; font-weight: bold;">echo</span> <span style="color: #ff0000;">'address=/.dev/127.0.0.1'</span> <span style="color: #000000; font-weight: bold;">&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>dnsmasq.conf
+&nbsp;
+<span style="color: #7a0874; font-weight: bold;">echo</span> <span style="color: #ff0000;">'listen-address=127.0.0.1'</span> <span style="color: #000000; font-weight: bold;">&gt;&gt;</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew --prefix<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>dnsmasq.conf</pre></div></div>
+
+<p>Because DNS services run on a lower port, we need to have this run out of <em>/Library/LaunchAgents</em>, so we do need to use <code>sudo</code> for the initial setup.</p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">sudo</span> <span style="color: #c20cb9; font-weight: bold;">cp</span> <span style="color: #660033;">-v</span> $<span style="color: #7a0874; font-weight: bold;">&#40;</span>brew <span style="color: #660033;">--prefix</span> dnsmasq<span style="color: #7a0874; font-weight: bold;">&#41;</span><span style="color: #000000; font-weight: bold;">/</span>homebrew.mxcl.dnsmasq.plist <span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents 
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">sudo</span> launchctl load <span style="color: #660033;">-w</span> <span style="color: #000000; font-weight: bold;">/</span>Library<span style="color: #000000; font-weight: bold;">/</span>LaunchAgents<span style="color: #000000; font-weight: bold;">/</span>homebrew.mxcl.dnsmasq.plist </pre></div></div>
+
+<p>With DNSMasq running, configure OS X to use your local host for DNS queries ending in <em>.dev</em></p>
+
+<div class="geshifilter"><div class="bash geshifilter-bash" style="font-family:monospace;"><pre style="font-family: monospace; font-weight: normal; font-style: normal"><span style="color: #c20cb9; font-weight: bold;">sudo</span> <span style="color: #c20cb9; font-weight: bold;">mkdir</span> <span style="color: #660033;">-v</span> <span style="color: #000000; font-weight: bold;">/</span>etc<span style="color: #000000; font-weight: bold;">/</span>resolver 
+&nbsp;
+<span style="color: #c20cb9; font-weight: bold;">sudo</span> <span style="color: #c20cb9; font-weight: bold;">bash</span> <span style="color: #660033;">-c</span> <span style="color: #ff0000;">'echo &quot;nameserver 127.0.0.1&quot; &gt; /etc/resolver/dev'</span></pre></div></div>
+
+<h1>Great! So, what did I do?</h1>
+
+<p>We set up Apache to run on boot on port 8080 with mod_php with auto-VirtualHosts for directories in the <em>~/Sites</em> folder. The OS X firewall will forward all port 80 traffic to port 8080, so we don't have specify the port number when visiting web pages in web browsers. MySQL is installed and set to run on boot as well. DNSMasq and some OS X configuration is used to direct any hostname ending in <em>.dev</em> to the local system to work in conjunction with Apache's auto-VirtualHosts.</p>
+
+<h2>What do I do now?</h2>
+
+<p>You shouldn't need to edit the Apache configuration or edit /etc/hosts for new local development sites. Simply create a directory in <em>~/Sites</em> and then reference that foldername + .dev in your browser to access it.</p>
+
+<p>For example, use <code>drush</code> to download Drupal 7 to the directory <em>~/Sites/firstproject</em>, and it can then be accessed at <em>http://firstproject.dev/</em> without any additional configuration. A caveat - you will need to uncomment the line in Drupal's .htaccess for <strong>RewriteBase /</strong> to work with the auto-VirtualHosts configuration.</p>
+
+<h2>What about this xip.io thing?</h2>
+
+<p>If your Mac's LAN IP address is <em>192.168.0.10</em>, you can access sites from any other device on your local network using <em>http://firstproject.192.168.0.10.xip.io/</em>. You can test a websites on your Mac with your phone/tablet/etc. Pretty great, right?</p>
+
+<h2>What if this "auto-VirtualHost" doesn't work for me?</h2>
+
+<p>If you need to create a manual VirtualHost in Apache because the auto-VirtualHost does not work for your configuration, you may need to declare it before the auto-VirtualHosts if you're also going to use .dev as the TLD. Otherwise the auto-VirtualHost block will be accessed first.</p>
+
+<p><em>Photo by <a href="https://flic.kr/p/fkkYb4">Florian Klien</a></em></p>
+</div></div></div>
+  </body>
+</html>
+

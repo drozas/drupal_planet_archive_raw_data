@@ -1,0 +1,138 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 06 Dec 2013 02:25:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 06 Dec 2013 02:25:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Brian Osborne: The Importance of Character Encodings
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.bkosborne.com/blog/importance-character-encodings
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Brian Osborne: The Importance of Character Encodings</title>
+    <base href="http://www.bkosborne.com/blog/importance-character-encodings">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>I recently started on a project that involves migrating some data from a legacy app & database into Drupal. The old application is a collection of PHP scripts that basically just generate forms, accept data, insert said data into the database, and output it on a website. Pretty simple stuff - there's not a whole lot going on. It was developed long before many of the popular CMS's and frameworks came to be, and probably before people really started paying attention to the character encoding of their data.</p>
+
+<p>I initially began the data migration using Drupal's <a href="https://drupal.org/project/migrate" target="_blank">Migrate</a> module, setting up my new content types and fields, and running through some test imports. Things seemed to go well, until I started scanning the imported data. I started to see some really strange characters like â€™ and Ã©</p>
+
+<p>For the most part, it was pretty clear what these characters were supposed to represent, based on the context they were placed in. I knew right off the bat that it had <em>something</em> to do with character encodings, something that I've never taken the time to truly understand. I made the mistake of thinking "oh this shouldn't take too long to fix", later unraveling my very own "character encoding hell". Do I'll talk more about that towards the bottom of the post, but let's first get an intro character encodings.</p>
+
+<h2>So what are character encodings exactly?</h2>
+
+<p>When textual data is stored and transmitted, it has to first be converted to binary just like everything else. So how is text converted? There needs to be a lookup table matching characters with binary representations. That's determined by the character encoding that is chosen - which can be one of many.</p>
+
+<p>Whenever data is decoded, the character encoding must be known beforehand. Web browsers do this every time you view a website. How do they know what encoding the text is in? The web server tells it, or the browser has to make an educated guess (not what you want!).</p>
+
+<p><a href="http://en.wikipedia.org/wiki/ASCII" target="_blank">ASCII</a> is a very basic character encoding that many are familiar with. It covers the English language along with common symbols and control characters, using only 7 bits to provide a maximum of 128 characters in the set. ASCII isn't really used anymore on the web because of the small number of characters it supports. There are many encodings that do use a full 8-bit byte for each character, re-claiming that wasted 8th bit from ASCII. In America, the most common single byte encodings are probably <a href="http://en.wikipedia.org/wiki/Windows-1252" target="_blank">Windows-1252</a> and <a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1" target="_top">ISO-8859-1</a>. However, no single byte encodings can possibly hold all of the characters necessary to create one "universal" encoding that can support a language like English and Japanese.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/UTF-8" target="_blank">UTF-8</a> is a <a href="http://en.wikipedia.org/wiki/Unicode" target="_blank">Unicode</a> compliant character encoding that has become the dominant encoding on the web because it IS a variable width (ranges from 1 to 6 bytes per character, limiting wasted bits) universal encoding. It supports just about every character in every language you can think of. This is <strong>very important</strong> for the web. It makes multilingual sites easier to manage since you don't have to worry about any localized character sets for each language. Everything uses the same character set.</p>
+
+<p>Most developers should only be dealing with UTF-8 at this point (or another Unicode encoding) and should understand how character encodings are involved in every part of your website or application.</p>
+
+<h2>Where you need to worry about them</h2>
+
+<h3>Web pages</h3>
+
+<p>There are two opportunities to do this - one is the "Content-Type" HTTP response header which is typically set to <code>text/html; charset=utf-8</code> for standard HTML pages. Your application should set this before delivering the response to the browser. It also includes the MIME type of the response which tells the browser what type of document is being delivered (image, video, document, etc).</p>
+
+<p>The other is a meta tag header <code>&lt;meta charset="utf-8"&gt;</code> or <code>&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;</code>. The former is the newer HTML5 version. It's a bit confusing to indicate the character encoding <em>within</em> the data that needs to be decoded, but this is allowed in HTML. Parsers will interpret everything as ASCII until it hits that header (which will work, since the HTML syntax is within ASCII and can be parsed that way) then re-parse the document with the new encoding. The reason it's supported in HTML is to account for any inability to set the HTTP response header which would otherwise provide the same info.</p>
+
+<p><strong>You should be using both methods. Without setting this data, your browser will have to guess, and it may display "garbage" text.</strong></p>
+
+<p>You can actually see what character encoding your browser chose to render the page in, and even force it to render it using a different encoding. It's a handy tool that can help diagnose if a page was meant to be rendered in some other encoding. Chrome, FireFox, and Safari all support this ability (IE probably does as well) in the "View" menu.
+
+<h3>Form submissions</h3>
+
+<p>When data in input in text boxes or text areas in an HTML form, the browser has to encode it before sending it to the server. What encoding does it use to do this? Again, this is up to you to decide. By default most browsers will just use the same encoding that the page was rendered with. However, you can specify this in the <code>&lt;form&gt;</code> tag: <code>&lt;form action="/process.php" accept-charset="UTF-8"&gt;</code>. So, while explicitly indicating the character set to encode the data with is not totally necessary, you should do it anyway just in case. If this is not set you risk the browser encoding the data in some random Encoding that your back-end is not anticipating.</p>
+
+<h3>MySQL connections</h3>
+
+<p>Something that is often overlooked is that when you communicate with a database server and you send textual data, you need to indicate the character encodings when sending and receiving data between your back-end and the MySQL server. This makes sense once you understand that any time text is transferred from one place to another, you need to indicate what encoding the text is in. The text does not automatically have a way of indicating what encoding it's in (not universally anyway).</p>
+
+<p>It get's pretty tricky here, at least with MySQL. There are <a href="http://dev.mysql.com/doc/refman/5.1/en/charset-connection.html" target="_blank">specific settings</a> in MySQL that you can set after a connection has been established that dictate how characters are treated between the client and server. In particular, there are three things that are important to look at:</p>
+<ul>
+  <li>The encoding of data you send to the server from the client</li>
+  <li>What encoding the server should convert to after receiving the data</li>
+  <li>The encoding the server should return to the client when queries are run (a conversion if necessary).</li>
+</ul>
+
+<p>Assuming the data you're sending MySQL actually IS in UTF-8 and the data in MySQL is stored as UTF-8, you'll want all three of those things to be UTF-8. No conversions will actually take place, and MySQL will just pass everything along as UTF-8. To set these values, you can simply execute the statement <code>SET NAMES utf8</code> after making a connection.</p>
+
+<p>If you DON'T set these values, then MySQL will <b>more than likely default to latin1</b> (Windows-1252) which is just asking for trouble! A knowledgable developer may recognize that they need to set the character encoding for their web page and forms, and even their database fields (see below). However, if they have a backend script that accepts UTF-8 data from a form submission, but it doesn't <em>tell</em> MySQL it's UTF-8, then MySQL will think it's latin1 when it's actually UTF-8.</p>
+
+<h3>MySQL text field storage</h3>
+<p>Text fields in MySQL require you to indicate the character encoding of text fields. Defaults are set up on the server, database, and table level (each inheriting from the former). Since you're telling MySQL a field is a text field, it needs to know how to interpret the raw data it's storing as textual data. Without doing so, you wouldn't be able to query for text or have MySQL compare text fields with one another. You could alternatively just use <code>BLOB</code> fields instead, where the data is stored as binary data and not interpreted in any way. Just keep in mind you won't be able to search on these fields.</p>
+
+<p>From what I can tell (as well as another blog author I reference below), MySQL doesn't change how the data is stored based on the encoding of a field. It just interprets the data differently when reading it. I could be wrong here (if I am, please let me know in the comments). However, you can <a href="http://dev.mysql.com/doc/refman/5.0/en/charset-conversion.html" target="_blank">alter the encoding of an existing field</a> which will re-encode it (actually does change the data) as long as you recognized the limitations outlined in the that article.</p>
+
+<p>For instance, if the string é was encoded as latin1 and stored in MySQL in a latin1 field, it will be stored as hex value <code>E9</code>. You can verify this yourself by running something like <code>SELECT hex(text_field_name) FROM table_name</code>. If you then run <code>ALTER TABLE `table_name` CHANGE `text_field_name` `text` MEDIUMTEXT  CHARACTER SET utf8 NULL;</code> MySQL will convert that data from latin1 to UTF-8 for you. If you run the hex query again, you'll get back <code>C3 A9</code>.</p>
+
+<p>In MySQL 5, all the text storage defaults are set to latin1 (Windows-1252) just like they are for the connection settings discussed above. While it's well known at this point that UTF-8 is preferred, I believe that the consensus was that the team behind MySQL didn't want to make the dramatic change to UTF-8 quite yet (though I think this is how it will be in MySQL 6).</p>
+
+<p>Note: the collation of a field has nothing to do with how the data is stored, and instead effects how the data is compared and sorted.</p>
+
+<h2>What can go wrong</h2>
+
+<p>One of the important things to understand is that <strong>UTF-8 is a multibyte encoding</strong>. This means that the majority of characters are represented with more than one byte (typically two or three), while a traditional character set just uses one byte per character. To really understand let's look at a practical example. Here's the word "Résumé" in two different common encodings:</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+	<thead>
+		<tr>
+			<th scope="col">Encoded in</th>
+			<th scope="col">Bytes</th>
+			<th scope="col">Interpreted in Windows-1252</th>
+			<th scope="col">Interpreted in UTF-8</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Windows-1252</td>
+			<td style="white-space: nowrap">52 E9 73 75 6D E9</td>
+			<td>Résumé</td>
+			<td>R�sum�</td>
+		</tr>
+		<tr>
+			<td>UTF-8</td>
+			<td style="white-space: nowrap">52 C3 A9 73 75 6D C3 A9</td>
+			<td>RÂ©sumÂ©</td>
+			<td>Résumé</td>
+		</tr>
+	</tbody>
+</table>
+<br/>
+
+<p>The normal letters in Résumé are actually the same in both Windows-1252 and UTF-8 (that's was an intentional design choice when creating UTF-8). However, once we get into the special accented e, it's actually represented with <em>two bytes</em> in UTF-8 and just one in Windows-1252.</p>
+
+<p>If your data is sent from the browser to the server as UTF-8 (this is something you as a web developer have control over), is then stored in your database as UTF-8, and finally pulled out of the database and displayed on your website as UTF-8, then will be all dandy. This is how things should be and you have little to worry about.</p>
+
+<p>But let's say that you accidentally removed the charset meta tag from your page template and your web server and app don't set the "character-encoding" HTTP header. Your app will still be delivering UTF-8 encoded text to the browser, but the browser no longer <em>knows</em> it's UTF-8. So the browser guesses. It's possible it will correctly guess that it's UTF-8, but it's also possibly it will guess Windows-1252 as the encoding. If that happens, Résumé will look like RÂ©sumÂ©. Why? Because the é was sent to the browser as <code>C3 A9</code>, which in Windows-1252 translates to the characters Â and ©. If it were correctly interpreted as UTF-8, the browser would correctly translate <code>C3 A9</code> to é.</p>
+
+<p>Whoops! You catch the error a few hours later and make sure the character set is properly set to UTF-8. No harm done, right? Since the the data didn't actually change at all, there is no data corruption to worry about. The browser now interprets the text data properly as UTF-8. Well, not so fast. Let's say you have a form on your site that accepts comment submissions. Someone submitted the form when the browser rendered the page in Windows-1252. Since most browsers will encode data in form submissions using the same encoding that it used to render the page, the text may be encoded as Windows-1252 and sent along to your backend.</p>
+
+<p>Now you have a problem. Your app is expecting the data to come in as UTF-8 when it's actually encoded as Windows-1252! If the comment contains with the word "Résumé", it will be encoded to <code>52 E9 73 75 6D E9</code> instead of <code>52 C3 A9 73 75 6D C3 A9</code> like it should be in UTF-8. You may have your database driver setup to indicate that the data you're sending it is UTF-8, and the database field may be set to store it as UTF-8. It's possible that your DB abstraction code throws an exception when it sees that <code>52 E9 73 75 6D E9</code> is not valid UTF-8 (which is correct, it's not valid), but it may let it slide and insert it anyway.</p>
+
+<p>After you fixed the website to tell browsers you're sending it UTF-8, let's say someone goes to view the comment that was submitted earlier. Instead of displaying Résumé, the browser will actually display R�sum�. That funny question mark box is the Unicode "replacement character" - which is used when the byte sequence in the text is not supported in UTF-8. <code>E9</code>, the byte that Windows-1252 uses for é, is NOT a valid UTF-8 character. If you're curious why, <a href="http://en.wikipedia.org/wiki/UTF-8" target="_blank">you need to read more about how UTF-8 encodes text</a>.</p>
+
+<p>You have data corruption now. To fix this, you'd need to find the data entries that were submitted with the wrong encoding and manually convert them to UTF-8. Not a fun task. Yo can't even assume that any text submitted after your bad commit would be encoded as Windows-1252 and is stored incorrectly. Some browsers may have properly send UTF-8 data and it was properly encoded. So if you tried to re-encode all the data after that commit to UTF-8, you may end up double-encoding the valid UTF-8 characters.</p>
+
+<h2>Conclusion and further reading</h2>
+
+<p>Character encodings are not trivial to deal with and it's not terribly fun trying to figure out why funny characters are being displayed on your app or website. Hopefully after reading this you'll take the subject seriously and really begin to understand what character encodings mean to your website and application. Generally <b>you should be using UTF-8 everywhere!</b>.</p> 
+
+<p>The application I'm working on has been operating for years without a character encoding set in the HTML pages or form submissions. I've determined that form submission data has been encoded in UTF-8, Windows-1252, and ISO-8859-1, with no definitive way to figure out what data is what. The application does not set the character encoding for the MySQL connection at all, so it defaults to latin1 (Windows-1252). To top it all off, the database text fields are a mix of UTF-8 and latin1 (and the UTF-8 fields may have been "converted" from latin1). It's been frustrating trying to determine what is right and wrong in the database and how to properly fix it because there's both a mix of encodings on the field storage level as well as the input coming into the app. There's no sure fix for any of it.</p>
+
+<p>If you're interested in learning more, these are some great starting points:</p>
+<ul>
+<li><a href="http://kunststube.net/encoding/" target="_blank">What Every Programmer Absolutely, Positively Needs To Know About Encodings And Character Sets To Work With Text</a></li>
+<li><a href="http://kunststube.net/frontback/" style="line-height: 1.6em;" target="_blank">Handling Unicode Front To Back In A Web App</a></li>
+<li><a href="http://en.wikipedia.org/wiki/UTF-8" target="_blank">UTF-8</a> and <a href="http://en.wikipedia.org/wiki/Unicode" target="_blank">Unicode Wikipedia</a></li>
+<li><a href="https://www.bluebox.net/insight/blog-article/getting-out-of-mysql-character-set-hell" target="_blank">Getting Out of MySQL Character Set Hell</a></li>
+</ul></div></div></div><div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/taxonomy/term/6">Drupal</a></div><div class="field-item odd"><a href="/tags/encodings">encodings</a></div><div class="field-item even"><a href="/tags/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

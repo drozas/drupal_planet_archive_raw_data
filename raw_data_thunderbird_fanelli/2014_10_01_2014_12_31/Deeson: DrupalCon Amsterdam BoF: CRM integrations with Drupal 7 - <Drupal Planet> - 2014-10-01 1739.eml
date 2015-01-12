@@ -1,0 +1,53 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 01 Oct 2014 15:39:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 01 Oct 2014 15:39:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson: DrupalCon Amsterdam BoF: CRM integrations with Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: https://www.deeson.co.uk/labs/drupalcon-amsterdam-bof-crm-integrations-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson: DrupalCon Amsterdam BoF: CRM integrations with Drupal 7</title>
+    <base href="https://www.deeson.co.uk/labs/drupalcon-amsterdam-bof-crm-integrations-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I organised a Birds of a Feather (BoF) session at <strong>DrupalCon Amsterdam</strong> yesterday to discuss people's experiences of integrating <a href="http://en.wikipedia.org/wiki/Customer_relationship_management">Customer Relation Management</a> (CRM) systems with Drupal.</p>
+<h4>The draw</h4>
+<p>It seems like it was a pretty popular topic as 12 people joined in a lively discussion which covered a number of areas.</p>
+<h4>General integration issues</h4>
+<p>We shared our experiences about integrating Drupal with <strong>remote systems</strong>, such as a CRM.</p>
+<p>We agreed that writing custom integration modules can be a l<strong>aborious process</strong> and prefer using a module to help with the integration to <strong>reduce the effort</strong>.</p>
+<h4>Integration modules</h4>
+<p>If a <strong>specific integration module</strong> <strong>does not exist</strong> then the generic <a href="http://drupal.org/project/wsclient">Web Services Client module</a> can be used to integrate to web services and provide Drupal actions based on <strong>Rules</strong>. For a <strong>non-Rules</strong> based approach, which requires more development, there is the <a href="http://drupal.org/project/wsif">Web Services Integration Framework</a>.</p>
+<h4>Edge cases</h4>
+<p>Integrations also require <strong>consideration</strong> of edge cases, such as what to do if the remote system is unavailable. For example, should a user still be able to update their details on a Drupal website if the CRM is down for maintenance? If they are, how do you go about <strong>synchronising data</strong> later?</p>
+<h4>Possible solutions</h4>
+<p>These are the solutions we debated:</p>
+<p>1. The group was in general agreement that there should only be one repository of <strong>'the truth' </strong>and data should not be contained in two systems. In the case of a CRM system, user information should live in the CRM and <strong>cache</strong> what is needed on the website.</p>
+<p>2. If the <strong>CRM is down</strong>, we agreed on a simple simple solution. Firstly, detect the system is down, switch off the connection to the remote system and display helpful messages if talking to the remote system was required. For example, <em>"Our database is unavailable at present, we are working to correct the problem. Please check back later"</em>. The <a href="http://drupal.org/project/wsif">Web Service Integration Framework</a> module takes this approach and <strong>protects</strong> sites by preventing connections being generated to the remote service if it's unavailable, which in turn <strong>prevents slow page loads</strong>.</p>
+<p>3. More <strong>complex strategies</strong> are needed if it's critical that the website must be operational if the CRM is down. These include<strong> time-stamping requests</strong> so the data can be correctly reintegrated when the CRM returns.</p>
+<h4>Integration platforms</h4>
+<p>The group then discussed <strong>integration platforms</strong>.</p>
+<p>These are <strong>cloud-based</strong> solutions which allow a simple mechanism for connecting two systems, such as <strong>Mulesoft, bip.io, cloudwork.io </strong>and<strong> zapier.com</strong>.</p>
+<p>By integrating your Drupal site with one of these, you can use <strong>plugins</strong> to pass data straight to your CRM. This means less integration work as many CRMs come with plugins for these platforms already. Also, if you <strong>change your CRM provider</strong>, it's a simple matter of changing the settings in the cloud interface instead of writing or installing a new integration module on your site.</p>
+<p>One <strong>disadvantage</strong> of using integration platforms is the rather large issue around <strong>trust. </strong>Afterall,<strong> </strong>your data will be passing through a cloud-based solution. Also, you rely on the <strong>quality</strong> of the plugin provided by the platform and custom requirements will still need to be addressed.</p>
+<p>You can also setup and run your own integration platform using the <a href="http://camel.apache.org/">Apache Camel</a> project.</p>
+<h4>API quality</h4>
+<p>When writing <strong>custom integrations</strong>, the quality of the CRM's API needs to be considered. Some in the group said <a href="http://www.salesforce.com/">SalesForce</a> provides a good mechanism for integration. Salesforce also has a <a href="http://drupal.org/project/salesforce">Drupal integration module</a> to help, which is maintained by the helpful people at <strong>ThinkShout</strong>, one of whom was at the BOF.</p>
+<h4>CRMs differences</h4>
+<p>When it comes to CRMs, there is a <strong>wide choice</strong> of systems available.</p>
+<p>Drupal-based products, such as <a href="https://www.drupal.org/project/crm_core">CRM Core</a> and <a href="https://www.drupal.org/project/redhen">RedHen</a> were discussed. The flexibility of Drupal means these are good starting points for custom CRMs for specific requirements.</p>
+<p>Other CRMs provide a reasonable out-of-the-box experience but were generally thought to be more work to customise.</p>
+<p>We also discussed <a href="https://www.drupal.org/project/erpal">Erpal</a>, a complete backend business management solution, combines a CRM and invoicing system aimed at small to medium sized businesses.</p>
+<p>As an organisation increases in size, it might need to move its CRM into a separate system, rather than being contained within their website or backend system. If this was the case then the group said it was worth considering larger platforms, such as <strong>SalesForce</strong> or <strong>MS Dynamics</strong>.</p>
+<h4>Finishing up...</h4>
+<p>There are many options in the CRM space and the BoF group went though many of the benefits and pitfalls.</p>
+<p>It's clear that <strong>care must be taken</strong> when thinking about CRM integration. I advise having a look at what others have done before and which integration modules exist to help you before starting a <strong>custom integration</strong>.</p>
+  </body>
+</html>
+

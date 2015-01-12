@@ -1,0 +1,171 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 20 Jan 2014 08:43:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 20 Jan 2014 08:43:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Using the Drupal 7 Form API states system to create conditions between form elements
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wunderkraut.com/blog/using-the-drupal-7-form-api-states-system-to-create-conditions-between-form-elements/2014-01-20
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Using the Drupal 7 Form API states system to create conditions between form elements</title>
+    <base href="http://wunderkraut.com/blog/using-the-drupal-7-form-api-states-system-to-create-conditions-between-form-elements/2014-01-20">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    In this article we will look at how you can leverage the power of the Drupal 7 Form API states system to create dependencies between your form fields. In other words, when you programmatically write your forms, you’ll be able to make the behaviour of the elements depend on others.  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"> <p>To illustrate this power, we’ll write some code, but first, let’s see some theory.</p>
+<h2>What are the <em>states</em> and what do they do?</h2>
+<p>The states are simple properties or HTML attributes of DOM elements. When creating your form elements using the Form API, you can apply various states to them depending on the states of others. Thus there are 2 kinds of elements: those which act as the condition for others and those which depend on these conditions to change their state. I like the way <a href="https://drupal.org/comment/2617738#comment-2617738" target="_blank">Jeff Robbins</a> of Lullabot categorises the elements by the possible states they can have: <em>callers</em> and <em>listeners</em>.</p>
+<div style="float:left; width:48%; background-color: #ecf1f4; padding: 5px; box-sizing: border-box;" class="blog-tags">
+<p>The possible states for the first group (the ones that trigger change in others)</p>
+<ul><li>empty</li>
+<li>filled</li>
+<li>checked</li>
+<li>unchecked</li>
+<li>expanded</li>
+<li>collapsed</li>
+<li>value</li>
+</ul></div>
+<div style="width:51%; float:right; margin-bottom: 20px; background-color: #ecf1f4; padding: 5px; box-sizing: border-box;" class="blog-tags">
+<p style="margin-bottom:0px;">The possible states for the second group (the ones that get applied onto elements):</p>
+<ul style="float:left; width: 50%;"><li>enabled</li>
+<li>disabled</li>
+<li>required</li>
+<li>optional</li>
+<li>visible</li>
+<li>invisible</li>
+<li>checked</li>
+</ul><ul><li>unchecked</li>
+<li>expanded</li>
+<li>collapsed</li>
+</ul></div>
+<p style="clear:both">And what does Drupal do? It provides all the necessary javascript to make all these behavioral alterations on the fly so you don’t have to worry about javascript or jQuery. </p>
+<h2>Example module</h2>
+<p>To illustrate how this all works, we are going to build a tiny module which declares a path to a form. Using this form, we will play around with some elements and see all this in action. So let’s dive in. You can <a href="https://bitbucket.org/webomelette/states-system/src" target="_blank">download this small module</a> if you want to follow along.</p>
+<p>Assuming you have done the necessary to create your empty module, we can go ahead and declare the menu path using <em>hook_menu()</em>:</p>
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #009933; font-style: italic;">/**
+ * Implements hook_menu().
+ */</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">function</span> states_menu<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+  <span style="color: #000088;">$items</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'states-example'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'title'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Demonstrating the Form API states system'</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'page callback'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'drupal_get_form'</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'page arguments'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'states_example_form'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'type'</span> <span style="color: #339933;">=&gt;</span> MENU_NORMAL_ITEM<span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'access arguments'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'access content'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">return</span> <span style="color: #000088;">$items</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+<p></p>
+<p>This registers the <em>states-example</em> path which will render the <em>states_example_form</em> declared below:</p>
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">function</span> states_example_form<span style="color: #009900;">&#40;</span><span style="color: #000088;">$form</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span><span style="color: #000088;">$form_state</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+  <span style="color: #000088;">$form</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'name'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Your name'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'textfield'</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> 
+&nbsp;
+  <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'submit'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'submit'</span><span style="color: #339933;">,</span> 
+    <span style="color: #0000ff;">'#value'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Submit'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">return</span> <span style="color: #000088;">$form</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+<p></p><p>If you clear the cache and go to that path, you should see the form with 2 form elements: the <em>name</em> field and the <em>submit</em> button. No biggie. One thing to keep in mind for later is that the array key 'name' will be the actual DOM name of the form element. </p>
+<p>Lets now add another element below the <em>name</em> field that will depend on the latter and show up only if the user enters something in the <em>name</em> field:</p>
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'preferences'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Your preference'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'select'</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#options'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'moto'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Motorcycles'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'cars'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Cars'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+     <span style="color: #666666; font-style: italic;">// Show this field only if the name field is filled.</span>
+    <span style="color: #0000ff;">'#states'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'visible'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'input[name=&quot;name&quot;]'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'filled'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div>
+<p></p>
+<p>Lets scan through this array and see what’s what. Above the comment we can see that the element is a select list with 2 options and a title. Below the comment we declare that to this element will be applied the state <em>visible</em> when and if the DOM element of the type input with the <em>name="name"</em> (your classic css/jQuery selector and which happens to be the first element in our form) gets filled. Otherwise, the opposite state is applied - in this case, <em>invisible</em>. </p>
+<p>So in the browser when the form is loaded on the page, only the <em>name</em> field is visible. When the user starts typing the name, the <em>preferences</em> field appears. Refresh the page and check it out. Drupal adds the necessary javascript for this to happen. </p>
+<p>You can also do it the other way around. You can apply the state <em>invisible</em> when another element <em>=&gt; array('filled' =&gt; FALSE)</em>. It will have the same effect except you declare it differently. </p>
+<p>Next, let’s add another element that will depend on the <em>preferences</em> field:</p>
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'brands'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Your favorite brand'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'select'</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#options'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Toyota'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'BMW'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'Audi'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+     <span style="color: #666666; font-style: italic;">// The reverse of the previous field: hide this field if there is no name</span>
+    <span style="color: #0000ff;">'#states'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'visible'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'select[name=&quot;preferences&quot;]'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'value'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'cars'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div>
+<p></p>
+<p>This is another select list but the visibility of this element depends on the actual value of the previous one. So in the browser, this will only appear if and when the user selects that they prefer cars over motorcycles. </p>
+<p>Let’s look at the next 2 elements:</p>
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'marriage'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Are you married?'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'checkbox'</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'spouse_preferences'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Your spouse\'s preference'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'radios'</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#options'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'moto'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Motorcycles'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'cars'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Cars'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+     <span style="color: #666666; font-style: italic;">// Show this field only if the user name is filled and if s/he is married.</span>
+    <span style="color: #0000ff;">'#states'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'visible'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'input[name=&quot;name&quot;]'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'filled'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+        <span style="color: #0000ff;">'input[name=&quot;marriage&quot;]'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'checked'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div>
+<p></p>
+<p>The first one is a simple checkbox that will show no matter what. But the second one is another select list and here we can see that the visibility of this depends on 2 previous elements. So this will show only when and if the user fills in a name and checks the box confirming that s/he is married. A so called AND condition, if you will. I will tell you write off the bat that you cannot do OR conditions with the states system - at least not that I could figure out. If you manage to find a way, let me know.</p>
+<p>And the last two elements we will look at in this article:</p>
+<div class="geshifilter"><pre class="php geshifilter-php" style="font-family:monospace;">  <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'kids'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'How many kids do you have?'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'select'</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#options'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000088;">$form</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'kids_preferences'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+    <span style="color: #0000ff;">'#title'</span> <span style="color: #339933;">=&gt;</span> t<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Your kids\' preference'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#type'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'radios'</span><span style="color: #339933;">,</span>
+    <span style="color: #0000ff;">'#options'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'moto'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Motorcycles'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'cars'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'Cars'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+     <span style="color: #666666; font-style: italic;">// Show this field only if the user has kids.</span>
+    <span style="color: #0000ff;">'#states'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+      <span style="color: #0000ff;">'visible'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'input[name=&quot;marriage&quot;]'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'checked'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #009900; font-weight: bold;">TRUE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #0000ff;">'disabled'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span>
+        <span style="color: #0000ff;">'select[name=&quot;kids&quot;]'</span> <span style="color: #339933;">=&gt;</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'value'</span> <span style="color: #339933;">=&gt;</span> <span style="color: #0000ff;">'0'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+      <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+    <span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span>
+  <span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div>
+<p></p>
+<p>Again the first one will show no matter what, but this time it's a select list. The second one depends on two other elements for two different state changes. First, it will become <em>visible</em> only if the the user checks the box that s/he is married. Second, it will become <em>disabled</em> if the user selects that s/he has 0 kids. Neat. </p>
+<h2>Conclusion</h2>
+<p>As i mentioned in the beginning of the article, there are a number of different states available for elements and Drupal handles all the javascript for you. We cannot go over all of them here nor try all the different combinations of what you can do with the states system. I thus encourage you experiment further on your own. You can even <a href="https://bitbucket.org/webomelette/states-system/src" target="_blank">download this little module</a> and use it as a starting point.</p><p> 
+
+</p><p>And as always, Drupal.org is your friend and you can find some more information on the states system at the following pages: </p>
+<ul><li><a href="https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html/7#states" target="_blank">Form API reference</a></li>
+<li><a href="https://api.drupal.org/api/examples/form_example%21form_example_states.inc/function/form_example_states_form/7" target="_blank">Some more examples on how to use the states system</a></li>
+<li><a href="https://api.drupal.org/api/drupal/includes!common.inc/function/drupal_process_states/7" target="_blank">drupal_process_states()</a> 
+</li></ul></div>
+    </div>
+  </body>
+</html>
+

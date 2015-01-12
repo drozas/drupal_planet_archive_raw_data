@@ -1,0 +1,47 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 11 Mar 2014 11:00:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 11 Mar 2014 11:00:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: It canna handle the load cap'in
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/it-canna-handle-load-capin
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: It canna handle the load cap'in</title>
+    <base href="http://deeson-online.co.uk/labs/it-canna-handle-load-capin">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><h2 class="p1">Load testing</h2>
+<p class="p1">When building a site you want to make sure that it can handle the expected (and even unexpected) load that might incur through the traffic that the site will receive.</p>
+<p class="p2">There are some tools that you can use, such as ‘siege’ or 'ab' (Apache Benchmark) to test the impact of multiple users requesting a page (or several pages).  These can be good for the initial testing of page loads etc., but in order to be able to see more realistic results of multiple users from multiple locations around the world there is a nice online service called <a href="https://loadimpact.com">Load Impact</a>.</p>
+<p class="p2">This allows you to configure user scenarios (user journeys through a site) and store your test configurations (configurations that you can run multiple times and clone to store different variations) and even schedule tests to be run on you site at regular intervals.</p>
+<p class="p2">The configuration allows you to set how many user syou want to simulate accessing your site over a period of time, known as a 'load test'. So, for example, you can scale from one to 200 number of users over a five minute period. </p>
+<p class="p2">You can also add multiple user schedules within the load test, meaning that you can build a scenario which increases the number of users from one to 200 over a four minute period, then keep the number of users at 200 for a further two minutes.</p>
+<p class="p2" style="text-align: center;"><img alt="" src="/sites/default/files/uploads/screen_shot_2014-03-01_at_16.17.18.png" style="width: 500px; height: 175px;" /></p>
+<p class="p1">You can also configure where your traffic is going to be coming from in the world and set up multiple sources.</p>
+<h2 class="p2">Site testing</h2>
+<p class="p2">This approach became invaluable recently when working on a site. The site had varnish cache configured for it, but there were a couple of places where AJAX calls were being made back to the Drupal site to get up-to-the-minute data from a third party web service. </p>
+<p class="p2">From the initial testing with Load Impact on the home page, our varnish cached pages responded as you would have expected - no problems at all. We then also used Load Impact to test a specific AJAX end point to see how this would handle the requests.</p>
+<p class="p2">Having done this, this highlighted that the third party web service response gradually got slower as the number of users increased, indicating a potential weak point in the site.</p>
+<p class="p2">After the initial testing of specific pages, we did full testing of a users journey. We used Load Impact as it has a nice plugin for Chrome which allows you to record page clicks into its programming language script (Lua) which you can save as a user scenario. They also have full documentation on their scenario scripting.</p>
+<p class="p2">We then ran this test using the above load plan (one - 200 users in four minutes, followed by continuous 200 users for a further two minutes) and found that once we had got up to about 200 users using the site, the site became very slow and finally ground to a halt. Not a good outcome.</p>
+<h2 class="p2">Investigating highlighted problems</h2>
+<p class="p2">Within Apache’s configuration for its <a href="https://httpd.apache.org/docs/2.2/mod/mod_log_config.html#formats">log format</a>, you can include the 'the time taken to serve the request, in seconds' (%T) and 'the time taken to serve the request, in microseconds' (%D)  in the access log. The reason for including both is because the first (%T) is in seconds and you would hope that most requests take less than a second to process.  </p>
+<p class="p2">So including the second time (%D) which is in microseconds, you can get a more accurate response time. Also, having the first time in seconds can help when grepping the logs for requests (which took over a second to process).</p>
+<p class="p2">You can also enable Apache’s ’status’ screen, but for security reasons, make sure that this is configured to be behind a htpassword or only accessible via localhost and an SSH tunnel. This status page shows various details about Apache including the number of threads that are being used and what requests the threads are being used for.  </p>
+<p class="p2" style="text-align: center;"><img alt="" src="/sites/default/files/uploads/fig08-01.jpg" style="width: 550px; height: 281px;" /></p>
+<p class="p1">Having added the request times to the log format and activated that status page, we re-ran the test.</p>
+<p class="p2">As the number of users approached 200 concurrent users, we could see the apache threads building up and not being released until we hit the maximum number of threads (255). At this point apache was then queuing requests, delaying all future requests.</p>
+<p class="p2">Once the test had stopped we analysed the access logs which showed that the AJAX requests had been taking over 40 seconds to process as the number of users increased, which was therefore tying up a thread meaning that we eventually hit out limit.</p>
+<p class="p2">As there was nothing that could be done about the speed of the third party web service, we opted for caching the response from their web service for a period of five minutes, reducing the number of requests to it, meaning that the service could then handle the requests better.</p>
+<p class="p2">Having implemented the caching, we re-ran the tests. Throughout the test, the site was responsive and seemed to have no impact from the number of users on it.  </p>
+<p class="p2">We were much happier and the client was very pleased that their site would be able to handle the load that they might expect!</p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/it-canna-handle-load-capin">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>It canna handle the load cap&#039;in</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/mike-davis">Mike Davis</a> | 11th March 2014</div></div></div>
+  </body>
+</html>
+

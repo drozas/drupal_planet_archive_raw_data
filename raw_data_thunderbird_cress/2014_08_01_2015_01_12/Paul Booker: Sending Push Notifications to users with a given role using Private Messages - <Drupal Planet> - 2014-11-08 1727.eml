@@ -1,0 +1,73 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 08 Nov 2014 17:27:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 08 Nov 2014 17:27:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Paul Booker: Sending Push Notifications to users with a given role using Private Messages
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.paulbooker.co.uk/drupal-developer/code-snippet/sending-push-notifications-users-given-role-using-private-messages
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Paul Booker: Sending Push Notifications to users with a given role using Private Messages</title>
+    <base href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/sending-push-notifications-users-given-role-using-private-messages">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><pre class="brush: php">
+/**
+ * Implements hook_privatemsg_message_insert.
+ */
+function push_notifications_privatemsg_message_insert( $message ) {
+  if ( variable_get( 'push_notifications_privatemsg_integration', 0 ) ) {
+    // Compose the payload. If the body is empty, just use the subject line.
+    // Otherwise, combine subject and body.
+    $payload = (empty($message->body)) ? $message->subject : $message->subject . ' ' . $message->body;
+    $payload = 'From ' . $message->author->name . ': ' . $payload;
+    // Compose an array of recipients.
+    $recipients = array();
+    
+    foreach ( $message->recipients as $recipient ) { 
+      if ( $recipient->type == "role" && $recipient->name != 'authenticated user' ) {   
+        $results = db_select('users_roles', 'ur')
+        ->fields('ur', array('uid'))
+				->condition('ur.rid', $recipient->rid, '=')
+        ->execute()
+        ->fetchCol();
+      }
+      elseif ( $recipient->type == "role" && $recipient->name == 'authenticated user' ) {   
+        $results = db_select('users', 'u')
+        ->fields( 'u' )
+        ->execute()
+        ->fetchCol();
+      }  
+      if ($recipient->type == "role") {
+        foreach ($results as $result) {
+          $recipients[] = $result;
+        }
+      }
+      else{
+        $recipients[] = $recipient->uid;
+
+      }  
+    }
+    push_notifications_send_message( $recipients, $payload );
+  }
+}
+</pre></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/drupal-developer/tags/push" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">push</a></li><li class="taxonomy-term-reference-1"><a href="/drupal-developer/tags/notifications" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">notifications</a></li><li class="taxonomy-term-reference-2"><a href="/drupal-developer/tags/privatemsg" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">privatemsg</a></li><li class="taxonomy-term-reference-3"><a href="/drupal-developer/tags/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a></li></ul></div><div class="field field-name-field-url field-type-link-field field-label-above"><div class="field-label">URL:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="https://www.drupal.org/node/2206009#comment-9156301">Push Notification does not send Push when Private Message goes to Roles</a></div></div></div><div class="easy_social_box clearfix horizontal easy_social_lang_und">
+            <div class="easy_social-widget easy_social-widget-twitter first"><a href="http://twitter.com/share" class="twitter-share-button"
+data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/sending-push-notifications-users-given-role-using-private-messages"
+data-count="horizontal"
+data-lang = "en"
+data-via=""
+data-related=":Check it out!"
+data-text="Sending Push Notifications to users with a given role using Private Messages">Tweet</a></div>
+          <div class="easy_social-widget easy_social-widget-facebook"><iframe src="//www.facebook.com/plugins/like.php?locale=en_US&amp;href=http%3A//www.paulbooker.co.uk/drupal-developer/code-snippet/sending-push-notifications-users-given-role-using-private-messages&amp;send=false&amp;layout=button_count&amp;width=88&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font=&amp;height=21&amp;appId=" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:88px; height:21px;" allowTransparency="true"></iframe></div>
+          <div class="easy_social-widget easy_social-widget-googleplus"><div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://www.paulbooker.co.uk/drupal-developer/code-snippet/sending-push-notifications-users-given-role-using-private-messages"></div></div>
+          <div class="easy_social-widget easy_social-widget-linkedin last"><script type="in/share" data-url="http://www.paulbooker.co.uk/drupal-developer/code-snippet/sending-push-notifications-users-given-role-using-private-messages" data-counter="right"></script></div>
+  </div> <!-- /.easy_social_box -->
+  </body>
+</html>
+

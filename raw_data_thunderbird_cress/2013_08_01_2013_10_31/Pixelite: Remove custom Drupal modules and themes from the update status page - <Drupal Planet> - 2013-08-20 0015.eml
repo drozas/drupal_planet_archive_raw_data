@@ -1,0 +1,76 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 19 Aug 2013 23:15:44 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 19 Aug 2013 23:15:44 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Remove custom Drupal modules and themes from the update status page
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/remove-custom-drupal-modules-and-themes-update-status-page
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Remove custom Drupal modules and themes from the update status page</title>
+    <base href="http://www.pixelite.co.nz/article/remove-custom-drupal-modules-and-themes-update-status-page">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/remove-custom-drupal-modules-and-themes-update-status-page&amp;count=horizontal&amp;via=&amp;text=Remove%20custom%20Drupal%20modules%20and%20themes%20from%20the%20update%20status%20page&amp;counturl=http%3A//www.pixelite.co.nz/article/remove-custom-drupal-modules-and-themes-update-status-page" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/remove-custom-drupal-modules-and-themes-update-status-page&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/remove-custom-drupal-modules-and-themes-update-status-page" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/remove-custom-drupal-modules-and-themes-update-status-page" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-body">
+    <p>Throughout the course of building large complex Drupal sites, you invariably end up writing a suite of custom modules to produce the required functionality and behaviour for the site.</p>
+
+<p>One issue is that when you do create these custom modules, the core update status page attempts to find new versions of your custom modules on the Drupal.org update server. Of course this check fails, but it takes up precious time to work that the module is not on drupal.org and also the grey box looks kind of ugly.</p>
+
+<p><img src="/sites/default/files/article_images/update_status.png" width="588" height="193" alt="The update status page showing how modules on Drupal.org look nice and pretty and custom ones look grey and boring."  /></p>
+
+<p>The above image is an example of this for one of my recent Drupal sites I worked on.</p>
+
+<h2>Remove them from the update status page</h2>
+
+<p>In order to remove custom modules from this page, there is a convenient hook you can utilise <a href="https://api.drupal.org/api/drupal/modules%21update%21update.api.php/function/hook_update_projects_alter/7">hook_update_projects_alter()</a>. Here is an example piece of code that we have in one of our custom modules:</p>
+
+<pre><code>/**
+ * Implements hook_update_projects_alter().
+ */
+function MYMODULE_update_projects_alter(&amp;$projects) {
+  // We wish to remove our custom modules from any drupal.org updates.
+  foreach($projects as $key =&gt; $project) {
+    // Most custom module match this naming convention.
+    if (preg_match('/^mts_.*$/', $key)) {
+      unset($projects[$key]);
+    }
+    // These custom modules do not match the above.
+    else if (in_array($key, array('token_i18n_macrons'))) {
+      unset($projects[$key]);
+    }
+  }
+}
+</code></pre>
+
+<p>Notice the <code>preg_match()</code> on module name - I find it really helpful to keep all custom modules (and themes) sudo namespaced by prefixing a small word at the front (in this case '<code>mts_</code>'). This means that this code will also work for future custom modules as well.</p>
+
+<p>Hope this simple tutorial has helped you out a little. Let me know if you have any other tips and tricks for custom modules and Drupal in the comments.</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/updatestatus" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">updatestatus</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="https://api.drupal.org/api/drupal/modules%21update%21update.api.php/function/hook_update_projects_alter/7">hook_update_projects_alter()</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

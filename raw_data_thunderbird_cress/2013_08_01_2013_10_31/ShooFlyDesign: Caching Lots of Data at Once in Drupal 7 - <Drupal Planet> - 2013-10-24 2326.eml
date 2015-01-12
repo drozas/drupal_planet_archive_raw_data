@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 24 Oct 2013 22:26:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 24 Oct 2013 22:26:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: ShooFlyDesign: Caching Lots of Data at Once in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.shooflydesign.org/buzz/caching-lots-of-data-at-once-in-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>ShooFlyDesign: Caching Lots of Data at Once in Drupal 7</title>
+    <base href="http://www.shooflydesign.org/buzz/caching-lots-of-data-at-once-in-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>I'm working on a Drupal project that requires calculating some custom stats for each registered user.  To get it working, I ran my SQL queries right in <a href="https://api.drupal.org/api/drupal/modules%21user%21user.api.php/function/hook_user_load/7">hook_user_load()</a>, which is wildly inefficient; it's much better to run the queries once and cache the results for a while.  Drupal has nice <a href="https://api.drupal.org/api/drupal/includes%21cache.inc/7">cache functions</a> built-in, but I wasn't totally clear on how to use them based on the documentation.</p>
+
+<p>Jeff Eaton of Lullabot wrote a <a href="http://www.lullabot.com/blog/article/beginners-guide-caching-data-drupal-7">really helpful article on how to do basic caching in Drupal 7</a>, which is a good introduction, but didn't really explain how to cache a bunch of related, but separately calculated, pieces of data using a function you'd call repeatedly.  <a href="https://drupal.org/project/examples">Examples module</a> is also great, and does include a cache_example module, but also didn't have an example that was right up my alley.</p>
+
+<p>So, here's how to write a single function that can cache data for a bunch of similar objects (in my case, users). Now, of course there are probably ways to make this better, but it does work!</p>
+
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/buzz/caching-lots-of-data-at-once-in-drupal-7">Read more</a></div></div></div>
+  </body>
+</html>
+

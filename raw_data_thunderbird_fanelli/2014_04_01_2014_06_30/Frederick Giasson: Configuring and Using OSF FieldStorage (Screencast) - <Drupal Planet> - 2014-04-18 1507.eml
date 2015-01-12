@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 18 Apr 2014 13:07:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 18 Apr 2014 13:07:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Frederick Giasson: Configuring and Using OSF FieldStorage (Screencast)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://fgiasson.com/blog/index.php/2014/04/18/configuring-and-using-osf-fieldstorage-screencast/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Frederick Giasson: Configuring and Using OSF FieldStorage (Screencast)</title>
+    <base href="http://fgiasson.com/blog/index.php/2014/04/18/configuring-and-using-osf-fieldstorage-screencast/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Adc&amp;rfr_id=info%3Asid%2Focoins.info%3Agenerator&amp;rft.title=Configuring and Using OSF FieldStorage (Screencast)&amp;rft.aulast=Giasson&amp;rft.aufirst=Frederick&amp;rft.subject=OSF Academy&amp;rft.subject=OSF for Drupal&amp;rft.subject=Planet Drupal&amp;rft.subject=Structured Dynamics&amp;rft.source=Frederick Giasson&#8217;s Weblog&amp;rft.date=2014-04-18&amp;rft.type=blogPost&amp;rft.format=text&amp;rft.identifier=http://fgiasson.com/blog/index.php/2014/04/18/configuring-and-using-osf-fieldstorage-screencast/&amp;rft.language=English"></span>
+<p>This screencast introduces you to another one of the most important <a href="https://drupal.org/project/osf"><code>OSF for Drupal</code></a> connector: the <a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Saving_Local_Content">OSF FieldStorage module</a>. What this module does is to create a new <code>FieldStorage</code> type for Drupal7. It enables Drupal7 to save the values of its <code>Content Types</code> fields into another storage system than the default one (i.e MySQL in most of the cases).</p>
+<p>Because of the way that the <code>Field</code> system has been designed in <code>Drupal7</code>, it is possible to save the values of different fields that compose the same <code>Content Type</code> bundle into different field storage system. For example, if your <code>Content Type bundle</code> is composed of 10 fields, then 4 of them could be saved into MySQL and 6 of them into <code>OSF</code>.</p>
+<p>The main purpose of the OSF FieldStorage module is to be able to save Drupal local <code>Content Type</code> information into OSF. What that means is that all your Drupal7 local content then become accessible, manageable and manipulatable using the 27 <a href="http://opensemanticframework.org">Open Semantic Framework (OSF)</a> web services endpoints. Your local Drupal content can then be shared with other Drupal instances that could use <code>OSF for Drupal</code> to connect to that same OSF instance and seamlessly republish/re-purpose that local content from the other Drupal portal.</p>
+<p><a href="http://wiki.opensemanticframework.org/index.php/Single_Authoring_Environment:_the_OSF_FieldStorage_Connector">Here is the documentation</a> of the architecture of this connector module.</p>
+<p>This is the power of the OSF FieldStorage connector module. It supports the following Drupal features:</p>
+<ol>
+<li>Full FieldStorage API</li>
+<li>Entities caching</li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Modifying_and_Revising_Resources">Revisioning</a></li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Using_the_SearchAPI">SearchAPI</a></li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/List_of_Supported_Field_Type_and_Field_Widgets_by_OSF_Entities">29 field widgets</a></li>
+<li><a href="http://wiki.opensemanticframework.org/index.php/Category:OSF_for_Drupal_User_Manual#Exporting_Resources">Export feature in 6 formats</a></li>
+</ol>
+<p>In this screencast, you will be introduced to Drupal7&#8242;s Field system. Then you will see how the OSF FieldStorage module creates a new FieldStorage type for Drupal7 and how it can be used. Then you will see how to configure the OSF FieldStorage module: to creating new Content Type fields that uses this <code>osf_fieldstorage</code> type, how to map these fields to <code>RDF</code>, how to use one of the 29 supported field widgets, etc.</p>
+<p>Finally, you will see how you can synchronize <strong>existing</strong> Content Type pages (that was created before <code>OSF for Drupal</code> was installed on your Drupal instance) into a OSF instance.</p>
+<p>&nbsp;</p>
+<p><center><br />
+<a href="https://www.youtube.com/watch?v=Ra9B8Zfjbtk"><div style="margin:10px;overflow:hidden;display:table;line-height:0;text-align:center;width:400px;" class="aligncenter"><img class="shadow_curl  wp-image-2389 size-full" src="http://fgiasson.com/blog/wp-content/uploads/2014/04/tut_8_blog_400.png" alt="tut_8_blog_400" width="400" height="224"  style="padding:0 !important; margin:0 !important; max-width:100% !important;"><br/><img src="http://fgiasson.com/blog/wp-content/plugins/shadows/shadow_curl.png" class="shadow_img" style="margin:0 !important;height:10px;width:100%;"></div></a></center></p>
+  </body>
+</html>
+

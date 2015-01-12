@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 09 Jun 2014 00:04:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 09 Jun 2014 00:04:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Alexander Mikhailian: An Ansible playbook for a smallish and very simple Drupal cluster
+Content-Transfer-Encoding: 8bit
+Content-Base: http://mikhailian.mova.org/node/241
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Alexander Mikhailian: An Ansible playbook for a smallish and very simple Drupal cluster</title>
+    <base href="http://mikhailian.mova.org/node/241">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The cluster runs on apt-based systems. It is designed for high-availability: failure of one server is not critical. However, there is no automatic failover configuration. Instead, manual recovery is possible within minutes.</p>
+
+<ul>
+<li>Load balancers run varnish. Its configuration file takse into account the context_breakpoint cookie that's used to implement <a href="http://venturebeat.com/2013/11/19/responsive-design-adaptive/">responsive delivery</a>. The same server also has memcached.</li>
+<li>Application servers run nginx and a recent php5-fpm through unix sockets. There's also drush. The filesystem is shared through glusterfs. </li>
+<li>MariaDb is configured in master-slave mode on database servers. They also run Apache Solr.</li>
+</ul>
+
+<p>All servers set up exim to work as smarthost, sending mails through gmail. In practice, gmail limits outgoing emails to a few thousands per day, so it is better to replace it by a dedicated solution such as Mailchimp. There's also newrelic for server monitoring on all servers.</p>
+
+<p>The playbook assumes that all servers have public IPs on eth0 and sit in the private network on eth1.</p>
+
+<p>For the rest, check the code in <a href="https://github.com/mikhailian/drupal-cluster-playbook">github</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

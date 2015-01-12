@@ -1,0 +1,47 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 03 Nov 2014 14:28:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 03 Nov 2014 14:28:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Singlebrook Technology: Super Simple Drupal Layout with Region View Modes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://singlebrook.com/blog/super-simple-drupal-layout-with-region-view-modes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Singlebrook Technology: Super Simple Drupal Layout with Region View Modes</title>
+    <base href="http://singlebrook.com/blog/super-simple-drupal-layout-with-region-view-modes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>by Jeff Amaral</em>
+</p>
+
+<p>Combining Drupal core’s <a href="https://drupal.org/node/1577752">view modes</a> and <a href="https://www.drupal.org/node/171224">theme regions</a> with a small home-grown module created a new way to lay out node pages.</p>
+
+<p>The resulting module, <a href="https://www.drupal.org/project/region_view_modes">Region View Modes</a>, places copies of nodes, rendered through specific view modes, into theme regions. Yes, those are the same regions into which you would normally place blocks. There’s no new layout system here. You use the one you already have: your theme.</p>
+
+<p>Once enabled, using the module is pretty easy:</p>
+
+<ul>
+<li>Visit the <em>Manage Display</em> page for any content type (e.g. Article)</li>
+<li>Expand the <em>Custom Display Settings</em> section</li>
+<li>Check the view mode for one or more theme:region combinations. For example, <em>Bartik theme: Sidebar first region</em>
+</li>
+<li>Click <em>Save</em> at the bottom of the page</li>
+<li>You’ll now see the activated view mode(s) near the top of the page. Click on one.</li>
+<li>Reorder, hide, or change the settings for any fields</li>
+<li>View a node of that content type</li>
+</ul>
+
+<p>Here’s a demo:</p>
+
+<p><iframe width="480" height="360" src="//www.youtube-nocookie.com/embed/ttIQ1L0ovOA?rel=0" frameborder="0"></iframe>
+</p>
+
+<p>That’s all you need to know to use the module, but if you’re curious about how it works, read on!...
+  </body>
+</html>
+

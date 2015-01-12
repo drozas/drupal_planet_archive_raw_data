@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 24 Jul 2014 18:52:40 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 24 Jul 2014 18:52:40 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Drupal 8 Code Sprint at the Jersey Shore
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/drupal-8-code-sprint-jersey-shore/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Drupal 8 Code Sprint at the Jersey Shore</title>
+    <base href="http://forumone.com/insights/drupal-8-code-sprint-jersey-shore/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>On the heels of our own <a href="http://forumone.com/insights/forum-one-enters-the-sprints/">Drupal 8 code sprint in DC</a>, I spent the last weekend with the New Jersey Drupal group who organized a Drupal 8 <a href="http://jerseyshoredrupal.github.io/">code sprint in Asbury Park, NJ</a> – and although I was never <a href="http://en.wikipedia.org/wiki/Greetings_from_Asbury_Park,_N.J.">greeted by The Boss</a>, I was pleased to participate thanks to the generosity of the event organizers.</p>
+<h2>Issue-Focused</h2>
+<p>I worked on <a title="Issue" href="https://www.drupal.org/node/2301239" target="_blank">the MenuLink NG part 1</a> issue extensively with <a title="Peter Wolanin, Drupal.org" href="https://www.drupal.org/u/pwolanin">Peter Wolanin</a> and <a title="YesCT, Drupal.org" href="https://www.drupal.org/u/yesct">YesCT</a>. This issue is part of the <a title="Issue" href="https://www.drupal.org/node/2256521" target="_blank">[Meta] New plan, Phase 2</a> issue which proposed performance improvement and UI improvement in Drupal 8. This issue originally had a 600KB patch, but to make it more reviewable/committable the issue was split into five child issues.</p>
+<p>Three of us spent a solid two days and more than 30 hours addressing every single point that had been raised by reviewers – and which had been holding up the process of adding this to Core.</p>
+<div id="attachment_3382" style="width: 710px" class="wp-caption aligncenter"><img class="wp-image-3382 size-large" src="http://forumone.com/wp-content/uploads/2014/07/code-sprint-1-700x525.jpg" alt="code-sprint-1" width="700" height="525" /><p class="wp-caption-text">Image courtesy of Blink Reaction</p></div>
+<h2>About this Issue (a high level overview)</h2>
+<p>A site builder or developer can create menu links in Drupal via configuration by changing the weight, position, creating links in menu, or in code. All these different types of menu links need to be rendered together in menus, so that they present the same in the API to developers. The developer experience on this issue needs to be easy, as almost everything depends on menu items.</p>
+<p>While we toiled on this issue, other sprinters worked on <a title="Issue" href="https://www.drupal.org/node/2289511" target="_blank">DrupalCon Austin&#8217;s Consensus Banana</a>, testing the migration path from Drupal 6 to Drupal 7, along with some other issues.</p>
+<div style="text-align: center;"><img class="alignnone wp-image-3451 size-full" src="http://forumone.com/wp-content/uploads/2014/07/consensus-banana.jpg" alt="The DrupalCon Austin Consensus Banana!" width="599" height="376" /></div>
+<h2>Results and Commits</h2>
+<p>The sprint was a very productive one, and resulted in <a href="”https://www.drupal.org/node/2301239”">Menu part 1</a> and <a href="”https://www.drupal.org/node/2301273”">Menu part 2</a> being committed to Core, which was a beta-blocker issue. As of this sprint there were seven beta-blocker issues, but solving the Menu issue helps to put us one step closer to the Drupal 8 Beta release!</p>
+<p>For those interested, here are the commits for <a href="https://www.drupal.org/commitlog/commit/2/8bb62da27d7d0f97168a9f868ceabc152e00cbb8">part 1</a> and <a href="https://www.drupal.org/commitlog/commit/2/50ac4700e21f401fea8cca2379e111a912173a95">part 2</a>. And for those needing a chuckle, Alex &#8220;The Situation&#8221; Pott – who thankfully preferred DCC (Drupal Core Commits) over GTL (Gym, Tan, Laundry) – drew this <a href="https://www.drupal.org/node/2301239#comment-8969113">goaty looking lama</a> to celebrate his commit <img src="http://forumone.com/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley" /> </p>
+<div id="attachment_3384" style="width: 710px" class="wp-caption aligncenter"><img class="wp-image-3384 size-large" src="http://forumone.com/wp-content/uploads/2014/07/code-sprint-2-700x525.jpg" alt="Image courtesy of Blink Reaction" width="700" height="525" /><p class="wp-caption-text">Image courtesy of Blink Reaction</p></div>
+<p>It was very rewarding to work for a weekend with this group of talented developers, and I think we all left the shore content in the knowledge that we&#8217;d made strides toward bringing Drupal 8 that much closer to completion.</p>
+<p>Check out these other <a href="https://twitter.com/hook_menu/status/488384919899738112">pictures taken by Peter Wolanin</a> and <a href="https://twitter.com/drupalcampnj/status/487978544887496704">DrupalCamp NJ at the event »</a></p>
+  </body>
+</html>
+

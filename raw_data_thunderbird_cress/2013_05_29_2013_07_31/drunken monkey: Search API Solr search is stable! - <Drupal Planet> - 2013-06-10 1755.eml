@@ -1,0 +1,32 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 10 Jun 2013 16:55:22 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 10 Jun 2013 16:55:22 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: drunken monkey: Search API Solr search is stable!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drunkenmonkey.at/blog/search-api-solr-1.0-released
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>drunken monkey: Search API Solr search is stable!</title>
+    <base href="http://drunkenmonkey.at/blog/search-api-solr-1.0-released">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://drunkenmonkey.at/sites/default/files/styles/medium/public/field_image/champagne.jpg?itok=GPlAerLa" width="320" height="213" alt="" title="I don&#039;t really care much for champagne, but I&#039;ve been told it&#039;s mandatory on such occasions." /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It sometimes seems to me, that there are two different types of Drupal module maintainers: the ones who create a stable 1.0 release as soon as any code is working; and those who leave their modules "unstable" for years until they finally pluck up the courage to go 1.0. (I guess there also have to be some with the right middle approach, but those propably just don't catch one's eye as much.) There are actually projects in the top 10 of <a href="https://drupal.org/project/usage/">contrib module usage</a> without a stable 7.x release (although there may of course be good reasons for that).<br />
+Anyways, in that pattern I'm definitely one of the latter group. I have only recently gotten to eventually creating stable releases for a number of modules (though some of them already had several thousand users) – <a href="https://drupal.org/project/search_api_db">Search API Database search</a> (over 11k users) and <a href="https://drupal.org/project/search_api_page">Search API Pages</a> (almost 3k users) are still waiting – and the 1.0 release of the <a href="https://drupal.org/project/search_api">Search API</a> itself also took extremely long (by which time it also already had over 2000 reported* users).</p>
+<p>In that context, it is kind of a milestone that there is now finally a <a href="https://drupal.org/node/2015541">1.0 release of the Search API Solr Search</a> module. (If you are not familiar with it, it's pretty self-explanatory: it allows you to use <a href="http://lucene.apache.org/solr/">Apache Solr</a> with the Search API.) As with the other modules, it had already been production-ready for quite some time, and currently has almost 5000 users.</p>
+<p>In the case of the Solr Search module, though, there were several good reasons to wait with a stable release – foremost, the <a href="https://drupal.org/node/1509380">Apache Solr Common Configurations</a> project, though definitely a good thing, changed the configuration files quite drastically when the module was otherwise stable. We also managed to add numerous feature (like location search support) and fix a lot of bugs, but those would have probably worked as well in subsequent minor releases. There were some other major refactorings, though, (foremost the effort to <a href="https://drupal.org/node/1846254">get rid of the external library dependency</a>) whose inclusion in the 1.0 release is definitely beneficial.</p>
+<p>Additionally, for the Solr Search module the 1.0 stable release is also kind of a promise: with it, I'm saying that I'm now confident that no major changes to the config files will be necessary anymore, so that there won't be the necessity for re-indexing the content for future new (minor) releases. Time will tell whether I'll be able to keep that promise but, as said, I'm quite confident.</p>
+<p>So, if you shied away from giving the module a spin in the past, due to its missing stable release: it has been ready for quite some time now, but now it's official!<br />
+For all existing users: upgrade to the new stable release and see if there are features or bug fixes that help you out (or, hopefully not, any bugs you can report)! Recent additions include support for SSL, field collapsing, Solr 4.x and location-based searches.<br />
+(Also, check out the <a href="https://drupal.org/node/1999280">new documentation</a>, if you haven't done so already!)</p>
+<p><small>* By the way, is there any data or estimations out there on what percentage of users the Drupal.org usage statistics actually capture?</small></p>
+<p><small>Image credit: <a href="http://www.flickr.com/photos/melkon/2961754653/">Sergey Melkonov</a></small></p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/taxonomy/term/4" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">search api solr</a></div><div class="field-item odd"><a href="/planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">planet</a></div></div></div>
+  </body>
+</html>
+

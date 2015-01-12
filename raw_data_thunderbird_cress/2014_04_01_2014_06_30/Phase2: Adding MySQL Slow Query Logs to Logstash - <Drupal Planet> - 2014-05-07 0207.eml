@@ -1,0 +1,123 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 07 May 2014 01:07:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 07 May 2014 01:07:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Adding MySQL Slow Query Logs to Logstash
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/adding-mysql-slow-query-logs-to-logstash/?utm_source=rss&utm_medium=rss&utm_campaign=adding-mysql-slow-query-logs-to-logstash
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Adding MySQL Slow Query Logs to Logstash</title>
+    <base href="http://www.phase2technology.com/blog/adding-mysql-slow-query-logs-to-logstash/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=adding-mysql-slow-query-logs-to-logstash">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="http://logstash.net/">Logstash</a> is a great tool for consolidating logs and making them easy to analyze. Adding multiline log files such as MySQL&#8217;s slow query log, however can be a bit of a challenge. Once you have, however, asking questions like &#8220;how many of my slow queries last week involved the taxonomy_hierarchy table and were from user slow_query_writer&#8221; become a snap.</p>
+<p>There are a few resources for this online<sup><a id="footnote-one-return" href="#footnote-one">1</a></sup> but none that I found worked out of the box. Here is how to setup a logstash recipe for MySQL&#8217;s slow query logs using logstash. If you were using a <a href="http://logstash.net/docs/1.3.3/tutorials/getting-started-simple">simple logstash instance</a> you may want to put the snippets below into /etc/logstash/logstash.conf</p>
+<p>This was developed using logstash 1.2.2 and MySQL 5.5 on an Ubuntu 12.04 LTS system. This recipe also appears to work for the 1.3.3 version of logstash.</p>
+<p>To handle MySQL&#8217;s slow query log format, the multiline codec must be used as part of the input section of the configuration file. Some of the examples I found show multiple multiline entries. Examination of the <a style="font-size: 13px;" href="https://github.com/elasticsearch/logstash/blob/v1.3.3/lib/logstash/codecs/multiline.rb">multiline codec</a> and testing shows, however, that a single entry needs to be used to break up each record<sup><a id="footnote-two-return" href="#footnote-two">2</a></sup>. Due to the way the matching works, a negated previous entry must be used so that anything which does not match the record is buffered.</p><pre class="crayon-plain-tag">input {
+  file {
+    type =&gt; "mysql-slow"
+    path =&gt; "/var/log/mysql/mysql-slow.log"
+
+    # Key breaking the log up on the # User@Host line, this will mean
+    # sometimes a # Time line from the next entry will be incorrectly
+    # included but since that isn't consistently present it can't be
+    # keyed off of
+    #
+    # Due to the way the multiline codec works, previous must be used
+    # to collect everything which isn't the User line up. Since
+    # queries can be multiline the User line can't be pushed forward
+    # as it would only collect the first line of the actual query
+    # data.
+    #
+    # logstash will always be one slow query behind because it needs 
+    # the User line to trigger that it is done with the previous entry.
+    # A periodic "SELECT SLEEP(1);" where 1 is above the slow query
+    # threshold can be used to "flush" these events through at the
+    # expense of having spurious log entries (see the drop filter)
+    codec =&gt; multiline {
+      pattern =&gt; "^# User@Host:"
+      negate =&gt; true
+      what =&gt; previous
+    }
+  }
+}</pre><p>This has a side effect of causing events being recorded to always be one event behind the last one in the slow query log file. See the comments in the code for more details and a tip on how to handle if this is an issue for you.</p>
+<p>Now that each record is gathered, various filters can be used to parse interesting fields out of it. Many of these are straight data captures. The last 3 allow for setting the exact time of the event based on the logged unix timestamp.</p>
+<p>This can be handy if you just want to periodically rotate a log file and then pull it into logstash instead of monitoring it continuously. Without this change, logstash would use a timestamp based on when it processed the item from the log.</p><pre class="crayon-plain-tag">filter {
+  # Capture user, optional host and optional ip fields
+  # sample log file lines:
+  # User@Host: logstash[logstash] @ localhost [127.0.0.1]
+  # User@Host: logstash[logstash] @  [127.0.0.1]
+  grok {
+    match =&gt; [ "message", "^# User@Host: %{USER:user}(?:\[[^\]]+\])?\s+@\s+%{HOST:host}?\s+\[%{IP:ip}?\]" ]
+  }
+  # Capture query time, lock time, rows returned and rows examined
+  # sample log file lines:
+  # Query_time: 102.413328  Lock_time: 0.000167 Rows_sent: 0  Rows_examined: 1970
+  # Query_time: 1.113464  Lock_time: 0.000128 Rows_sent: 1  Rows_examined: 0
+  grok {
+    match =&gt; [ "message", "^# Query_time: %{NUMBER:duration:float}\s+Lock_time: %{NUMBER:lock_wait:float} Rows_sent: %{NUMBER:results:int} \s*Rows_examined: %{NUMBER:scanned:int}"]
+  }
+  # Capture the time the query happened
+  grok {
+    match =&gt; [ "message", "^SET timestamp=%{NUMBER:timestamp};" ]
+  }
+  # Extract the time based on the time of the query and 
+  # not the time the item got logged
+  date {
+    match =&gt; [ "timestamp", "UNIX" ]
+  }
+  # Drop the captured timestamp field since it has been moved to the
+  # time of the event
+  mutate {
+    remove_field =&gt; "timestamp"
+  }
+}</pre><p>Once the multiline codec has been used to break the lines up into each record extracting fields you are interested in is fairly straightforward. The configuration above results in the overall SQL query being seen in the primary message for the log item with particular elements pulled out as fields.</p>
+<p>Here&#8217;s a sample of what you see using the stdout debugging output</p><pre class="crayon-plain-tag">{
+      "@timestamp" =&gt; "2014-03-04T19:59:06.000Z",
+         "message" =&gt; "# User@Host: logstash[logstash] @ localhost [127.0.0.1]\n# Query_time: 5.310431  Lock_time: 0.029219 Rows_sent: 1  Rows_examined: 24575727\nSET timestamp=1393963146;\nselect count(*) from node join variable order by rand();\n# Time: 140304 19:59:14",
+        "@version" =&gt; "1",
+            "tags" =&gt; [
+                [0] "multiline"
+            ],
+            "type" =&gt; "mysql-slow",
+            "host" =&gt; [
+                [0] "cj",
+                [1] "localhost"
+            ],
+            "path" =&gt; "/var/log/mysql/mysql-slow.log",
+            "user" =&gt; "root",
+              "ip" =&gt; "127.0.0.1",
+        "duration" =&gt; 5.310431,
+       "lock_wait" =&gt; 0.029219,
+         "results" =&gt; 1,
+         "scanned" =&gt; 24575727,
+    "date_matched" =&gt; "yes"
+}</pre><p>One final tip, if you go the route of having periodic SLEEP calls to flush logging as hinted at in the multiline codec comments you should be able to add the following at the top of your filter so they are dropped rather than imported into logstash.</p><pre class="crayon-plain-tag">filter {
+  # drop sleep events
+  grok {
+    match =&gt; { "message" =&gt; "SELECT SLEEP" }
+    drop_if_match =&gt; true # appears ineffective, thus tag and conditional
+    add_tag =&gt; [ "sleep_drop" ]
+    tag_on_failure =&gt; [] # prevent default _grokparsefailure tag on real records
+  }
+  if "sleep_drop" in [tags] {
+    drop {}
+  }
+  ... previous filter items here ...
+}</pre><p>Learn more from some of our Phase2 DevOps experts <a href="http://www.phase2technology.com/?s=devops">here</a>!</p>
+<p>&nbsp;</p>
+<p><strong>Footnotes</strong></p>
+<ol>
+<li id="footnote-one">This recipe was created derived from info at http://leejo.github.io/2013/11/21/parsing_mysql_slow_query_log_with_logstash/ and<br />
+https://github.com/logstash/cookbook/blob/gh-pages/recipes/mysql/mysql-slow.conf. <a title="Return to footnote location" href="#footnote-one-return">↩</a></li>
+<li id="footnote-two">See the decode, do_next and do_previous handler functions which match, buffer and flush based on whether the pattern matched. If you attempt multiple patterns, for example to push the &#8220;# Time: &#8230;&#8221; portion forward into the next record, when logstash encounters a line that does not match it triggers a flush of the record. <a title="Return to footnote location" href="#footnote-two-return">↩</a></li>
+</ol>
+  </body>
+</html>
+

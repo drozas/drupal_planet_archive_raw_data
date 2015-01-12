@@ -1,0 +1,51 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 14 Dec 2013 04:43:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 14 Dec 2013 04:43:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: BryceAdamFisher.com: Best Practices for Translation in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://bryceadamfisher.com/blog/best-practices-translation-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>BryceAdamFisher.com: Best Practices for Translation in Drupal</title>
+    <base href="http://bryceadamfisher.com/blog/best-practices-translation-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- field.tpl -->
+
+<div class="field field-type-image">
+  
+ <!-- theme hook suggestions: -->
+ <!-- hook:field --> 
+  <!-- TPL:* field--image.tpl.php -->
+<!-- TPL:* field--field-image.tpl.php -->
+<!-- TPL:* field--article.tpl.php -->
+<!-- TPL:* field--field-image--article.tpl.php -->
+
+  
+                <a href="/blog/best-practices-translation-drupal"><img typeof="foaf:Image" src="http://bryceadamfisher.com/sites/default/files/styles/medium/public/field/image/3028574063_b9b2112b2c.jpg?itok=68xxl_6G" width="220" height="146" alt="The Quran - a symbol for the ethics of translation in Drupal" /></a>        </div>
+<!--/field.tpl -->
+
+<!-- field.tpl -->
+
+<div class="field field-type-text-with-summary">
+  
+ <!-- theme hook suggestions: -->
+ <!-- hook:field --> 
+  <!-- TPL:* field--text-with-summary.tpl.php -->
+<!-- TPL:* field--body.tpl.php -->
+<!-- TPL:* field--article.tpl.php -->
+<!-- TPL:* field--body--article.tpl.php -->
+
+  
+                <p>I'm sharing lessons learned from my experience using Drupal 6 and i18n for translation. The long story short: Make translation easier by keeping things simple. Don't use the t() when you can keep translatable strings fully in the database, and don't break up individual strings into multiple t().</p>
+        </div>
+<!--/field.tpl -->
+  </body>
+</html>
+

@@ -1,0 +1,147 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 01 Jul 2014 04:58:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 01 Jul 2014 04:58:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Updating Drupal to use Google Analytics Universal tracking
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/updating-drupal-use-google-analytics-universal-tracking
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Updating Drupal to use Google Analytics Universal tracking</title>
+    <base href="http://www.pixelite.co.nz/article/updating-drupal-use-google-analytics-universal-tracking">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/updating-drupal-use-google-analytics-universal-tracking&amp;count=horizontal&amp;via=&amp;text=Updating%20Drupal%20to%20use%20Google%20Analytics%20Universal%20tracking&amp;counturl=http%3A//www.pixelite.co.nz/article/updating-drupal-use-google-analytics-universal-tracking" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/updating-drupal-use-google-analytics-universal-tracking&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/updating-drupal-use-google-analytics-universal-tracking" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/updating-drupal-use-google-analytics-universal-tracking" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-body">
+    <p>So Google Analytics has a new version of Google Analytics dubbed "Universal Analytics", which has a bunch of new features, that could be handy for your website. I would dive into exactly what they are here, as you can read about them on <a href="https://support.google.com/analytics/answer/2790010?hl=en">Google's own website</a>.</p>
+
+<p>In this post I will go through the steps to upgrade the Google Analytics 7.x-1.x module to the new 7.x-2.x version that supports Universal Analytics.</p>
+
+<h2>Update the Drupal module</h2>
+
+<p>If you read the <a href="https://www.drupal.org/project/google_analytics">Google Analytics module page</a> you will spot that there are two different branches in use, in order to get the correct version you will need to get the 7.x-2.x version.</p>
+
+<p>You can do this with Drush:</p>
+
+<pre><code>drush dl google_analytics-7.x-2.x
+drush updb
+</code></pre>
+
+<h2>Event tracking</h2>
+
+<p>If you have used custom event tracking in your website, a few changes are required.</p>
+
+<p>Instead of</p>
+
+<pre><code>_gaq.push(['_trackEvent', 'category', 'action', 'opt_label', opt_value, opt_noninteraction]);
+</code></pre>
+
+<p>It is now</p>
+
+<pre><code>ga('send', 'event', 'category', 'action', 'opt_label', opt_value, {'nonInteraction': 1});
+</code></pre>
+
+<h3>Handy grep command</h3>
+
+<p>If you want to find the offending lines of code, you can use grep</p>
+
+<pre><code>grep -nrI "_trackEvent" *
+</code></pre>
+
+<h2>Custom variables are now dimensions and metrics</h2>
+
+<p>If you were using the old style custom variables, these are now completely gone, now replaced with dimensions and metrics. You can <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets">read more about these on Google's website</a>.</p>
+
+<p>Instead of</p>
+
+<pre><code>_gaq.push(['_setCustomVar',
+  1,                           // Slot
+  'Customer Type',             // Name
+  'Paid',                      // Value
+  1                            // Scope (1 = User scope)
+]);
+</code></pre>
+
+<p>It is now</p>
+
+<pre><code>ga('set', 'dimension1', 'Paid');
+</code></pre>
+
+<h3>Drupal support of custom dimensions and metrics</h3>
+
+<p>The Drupal module has an active issue that allows you to configure this through the UI, unfortunately this is still only a patch at the moment, but is looking likely to be committed shortly (it maybe already if you are reading this now). For now I patched the Google Analytics module with Drush make</p>
+
+<pre><code>; Google Analytics
+projects[google_analytics][type] = module
+projects[google_analytics][subdir] = contrib
+projects[google_analytics][version] = 2.x
+; Implement custom dimensions and custom metrics
+; https://www.drupal.org/node/2136031
+projects[google_analytics][patch][] = "http://www.drupal.org/files/issues/google_analytics-2136031-1-custom_dimensions.patch"
+</code></pre>
+
+<h2>DoubleClick data</h2>
+
+<p>If you were using the additional data that DoubleClick integration provided, this is now supported, this is just a tickbox on the admin settings page.</p>
+
+<p>To enable it</p>
+
+<pre><code>variable_set('googleanalytics_trackdoubleclick', 1)
+</code></pre>
+
+<h2>Other new features in Universal Analytics</h2>
+
+<h3>UserID tracking</h3>
+
+<p>This effectively allows you to track the same user across multiple devices. This comes in handy if your users can login to your Drupal site, and they would likely login on their mobile phones, and tablets etc. You can read more on <a href="https://support.google.com/analytics/answer/3123663">Google's page about User ID tracking</a></p>
+
+<p>To enable it</p>
+
+<pre><code>variable_set('googleanalytics_trackuserid', 1)
+</code></pre>
+
+<h3>Enhanced Link Attribution feature</h3>
+
+<p>Allows Google Analytics to differentiate URLs based on what link the user clicked on, really handy if you have many links pointing at the same page. You can read more on <a href="https://support.google.com/analytics/answer/2558867">Google's page about User ID tracking</a></p>
+
+<p>To enable it</p>
+
+<pre><code>variable_set('googleanalytics_tracklinkid', 1)
+</code></pre>
+
+<h2>Finally</h2>
+
+<p>Run this little gem over your codebase to ensure there are no legacy Google Analytics code lying around.</p>
+
+<pre><code>grep -nrI "_gaq" *
+</code></pre>
+
+<p>Let me know if you have any tips or tricks in the comments for the new Google Analytics</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/google-analytics" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Google Analytics</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="https://www.drupal.org/project/google_analytics">Drupal module for Google Analytics</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

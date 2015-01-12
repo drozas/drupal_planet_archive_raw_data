@@ -1,0 +1,40 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 01 May 2014 17:14:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 01 May 2014 17:14:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: AGLOBALWAY: Responsive tools
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.aglobalway.com/content/responsive-tools
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>AGLOBALWAY: Responsive tools</title>
+    <base href="http://www.aglobalway.com/content/responsive-tools">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <div>Responsive design is hot, real hot. This isn’t new to anyone either, but when developing sometimes you need a little but of help or some assistance from a few modules, libraries or some browser extensions.  Some of the tools I come across quite often seem to be after thoughts, like I need something that I never expected. Say clients putting embed YouTube videos in the ckEditor and they want it responsive. I fixed that with FitVids (<a href="https://drupal.org/project/fitvids">https://drupal.org/project/fitvids</a>), which is a very handy, and lightweight jQuery module/library that supports all major video providers. </div>
+
+<div> </div>
+
+<div>Always facing challenges making IE8+ websites, and also responsive for everyone else not behind a enterprise firewall or in the dark ages. Media queries help make website scale from 320px iPhone 4 all the way up to 27” 1080p monitor but in IE 8 and down media queries take over and now the website is a huge mobile phone.  No matter what screen size Respond.js (<a href="https://github.com/scottjehl/Respond">https://github.com/scottjehl/Respond</a> )  to the rescue. Created by Scott Jehl and the Filament Group. Respond.js is a polyfill for min/max-width CSS3 Media Queries that brings your responsive website back in time to work in IE 6 + 8 and also shrinks to your iPhone 4. The trick to get this working in Drupal is to Go to /admin/config/development/performance. Enable Aggregate and compress CSS files. Respond.js only works on &lt;link&gt; tags; it will not work on @import stylesheets. Drupal 7 uses @import when CSS aggregation is disabled, but uses &lt;link&gt; when CSS aggregation is enabled. Duh!! Give it a try then go to your aunt’s house and fire up her 1999 Dell running XP. </div>
+
+<div> </div>
+
+<div>The most used responsive tool would have to be responsive frameworks. There are a lot out there but not all work well with Drupal. Bootstrap (<a href="https://drupal.org/project/bootstrap">https://drupal.org/project/bootstrap</a> ) is great and we’ve used it and tested it and become pretty comfortable with how it works and how we make it work for us. Plus they have a great support community!  Basic (<a href="https://drupal.org/project/basic">https://drupal.org/project/basic</a> ) is a SASS based grid system using bourbon neat (<a href="http://neat.bourbon.io/">http://neat.bourbon.io/</a> ) which is great to use with all the mixins, functions and variables packed up in there.  As the Basic project page says “Basic is perfect if you want a simple, smart, and flexible theme starter.” Which it exactly is.  </div>
+
+<div> </div>
+
+<div>Responsive Images Community Group (<a href="http://responsiveimages.org/">http://responsiveimages.org/</a> ) </div>
+
+<div>”We’re a group of developers working towards a client-side solution for delivering alternate image data based on device capabilities to prevent wasted bandwidth and optimize display for both screen and print.”</div>
+
+<div>Here are some smart guys/girls who are making the Internet a much better place.  They’re pushing picture element and the srcset to the W3C. Here’s more info about the picture element <a href="http://picture.responsiveimages.org/">http://picture.responsiveimages.org/</a> and the srcset <a href="http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/">http://www.w3.org/html/wg/drafts/srcset/w3c-srcset/</a> . Before you know it our responsive websites will have responsive images and no more heavy jQuery plugins just good old-fashioned HTML5 and CSS3. </div>
+
+<div> </div> </div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/responsive" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">responsive</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div></div></div>
+  </body>
+</html>
+

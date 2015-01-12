@@ -1,0 +1,52 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 07 Nov 2013 03:59:10 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 07 Nov 2013 03:59:10 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: This week in Drupal Core: November 6, 2013
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/367318
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: This week in Drupal Core: November 6, 2013</title>
+    <base href="https://groups.drupal.org/node/367318">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>What's new with Drupal 8?</h2>
+<p>Greetings. For any of you who celebrated Halloween, Dia de Muertos, All Souls' Day, Samhain, or any other holiday marking the halfway point between equinox and solstice or between the material and spirit worlds, we hope you enjoyed your festivities and reflections. Drupal.org itself observed the event by <a href="https://drupal.org/node/2122515">dying for a day</a> on October 31, and coming back to life <a href="https://drupal.org/node/2124989">as a Drupal 7 website</a> on November 1. Thank you to <a href="https://drupal.org/node/1945788">everyone who contributed to that upgrade</a>! If you're working on Drupal 8 core or are porting your modules to Drupal 8, and are encountering issues with the upgraded issue queue, be sure to read the <a href="https://drupal.org/faq">Drupal.org Drupal 7 upgrade F.A.Q.</a></p>
+<p>Over the past week, a lot of progress has been made in documenting <a href="https://drupal.org/node/2116747">Drupal 8 APIs</a>. You can learn a lot by reading those pages, and you can learn even more by fixing or adding to them.</p>
+<p><a href="https://drupal.org/node/2122071"><img src="/files/routing_docs.png" alt="The brand spankin&#039; new routing handbook!" /></a></p>
+<p>Something we forgot to mention <a href="https://groups.drupal.org/node/358048">last week</a> is Lewis Nyman's post on <a href="https://groups.drupal.org/node/350833">where things are at with the Seven Style Guide for Drupal 8</a>. If you want to help make the administrative experience of Drupal 8 look awesome, there are a bunch of links there to guide you. Meanwhile, if you're interested not in the contents of CSS files, but in the system that adds those files to the web page as efficiently and extensibly as possible, the issue/sandbox to <a href="https://drupal.org/node/1762204">Introduce Assetic compatibility layer for core's internal handling of assets</a> is far enough along that there's something for people to see and play with, but still plenty left to help out on before it's ready for committing to Drupal 8.</p>
+<p>Finally, before we move on to this week's commits, articles, and events, be aware that <a href="https://groups.drupal.org/node/364138">Drupal 8 alpha5 is targeted for Nov. 18</a>, and alpha releases will continue monthly after that.
+</p>
+<h2>Notable Commits</h2>
+<p>The best of <code> git log --since &quot;1 week ago&quot; --pretty=oneline</code> (48 commits in total):</p>
+<ul>
+<li>This week saw four nice accessibility improvements: <a href="https://drupal.org/node/1106344">Issue #1106344 by mgifford, BarisW: Taxonomy term reference field headers always should be rendered with a HTML header (invisible or not)</a>, <a href="https://drupal.org/node/1964880">Issue #1964880 by MiroslavBanov, jessebeach, falcon03, rteijeiro: Convert the Overlay close button from an anchor element to a button element</a>, <a href="https://drupal.org/node/2047175">Issue #2047175 by mgifford, jessebeach: Make the status message field discoverable by assistive technology agents; alert AT agent users to error messages</a>, and <a href="https://drupal.org/node/2036239">Issue #2036239 by kevee, mgifford: Color contrast on toolbar sub-menu links</a>! Great job, folks!</li>
+<li>On the documentation front, thank you to the contributors of <a href="https://drupal.org/node/2106635">Issue #2106635 by jay.dansand, jhodgdon: Fix up docs for base hooks in hook_theme</a> and <a href="https://drupal.org/node/2120459">Issue #2120459 by amitsedaiz, vijaycs85, joachim: Fix up docs for theme_status_report()</a>; accurate and understandable documentation is always appreciated.</li>
+<li>Working with entity translations and language fallbacks just got a whole lot easier and more consistent with <a href="https://drupal.org/node/2019055">Issue #2019055 by plach, fago, berdir, yched, Gábor Hojtsy, kfritsche, jibran: Switch from field-level language fallback to entity-level language fallback</a>: yay, you will be able to translate node titles in Drupal 8 without needing any contrib modules!!</li>
+<li>When it comes to user experience and developer experience, removing clutter can really make a difference. So yay for <a href="https://drupal.org/node/2098071">Issue #2098071 by Wim Leers, Bojhan: Disable filter guidelines for a text format if that text format has a text editor enabled</a> removing a bunch of screen text that someone using a text editor doesn't need to read, and for <a href="https://drupal.org/node/2112705">Issue #2112705 by mikey_p: Replace EntityType::$module with provider</a> removing a redundant annotation key from every entity type.</li>
+<li><a href="http://martinfowler.com/bliki/TwoHardThings.html">There are only two hard things in Computer Science: cache invalidation and naming things.</a> Well, <a href="https://drupal.org/node/2094241">Issue #2094241 by moshe weitzmann, amateescu, Wim Leers: Cache tag the page cache</a> solves one of them, for what on many sites, is the most important cache. High performance websites even when content changes frequently: here we come!</li>
+<li>Speaking of caching, if we really want to do it effectively, we need to <a href="https://drupal.org/node/1830588">remove drupal_set_title()</a>, and there were 5 commits this week that made progress on that, including <a href="https://drupal.org/node/2102465">Issue #2102465 by vijaycs85, ACF, InternetDevels, sidharthap: Remove drupal_set_title() in node module controllers</a>.</li>
+<li>In <a href="http://www.garfieldtech.com/blog/dropping-forward">Dropping forward</a>, Larry Garfield explains the importance of decoupling systems, including entity storage, for sites of all sizes. Drupal 8 has already made great strides in that, but we still need to <a href="https://drupal.org/node/2068325">convert some direct SQL queries to Entity Query API</a>. <a href="https://drupal.org/node/2041083">Issue #2041083 by marcingy, grisendo, herom: Move database query out of \Drupal\aggregator\FeedFormController</a> and <a href="https://drupal.org/node/2068337">Issue #2068337 by marcingy, pfrenssen: Convert taxonomy term SQL queries to the Entity Query API</a> got done this week (thank you!), but we still have nodes, comments, and others left to go.</li>
+<li>Speaking of decoupled systems and storage, one of the decouplings that has many site builders eagerly awaiting Drupal 8 is that configuration storage is decoupled from content storage. So in theory, you'll be able to deploy/synchronize configuration from one site to another. How close is that theory to reality? <a href="https://drupal.org/node/2121751">[META] Making configuration synchronisation work</a> lays out 11 known issues to solve. This week, the second one, <a href="https://drupal.org/node/2069373">Issue #2069373 by swentel, yched: Race conditions on import if CUD on ConfigEntity A triggers changes in ConfigEntity B</a>, got solved. 9 to go.</li>
+</ul>
+<h2>Drupal 8 Around the Interwebs</h2>
+<p>This was a light week for blogging about Drupal 8, at least among blogs picked up by Drupal Planet. Despite the lack of quantity though, the quality is top notch: Ivan Zugec wrote <a href="http://webwash.net/tutorials/upgrading-code-snippets-module-drupal-8-creating-custom-field">Upgrading Code Snippets Module to Drupal 8: Creating a Custom Field</a>, a very direct and informative walk through of creating a custom field type, widget, and formatter.</p>
+<h2>Drupal 8 in Real Life</h2>
+<ul>
+<li>Nov. 7th @ Sydney, Australia: <a href="https://groups.drupal.org/node/348728">Drupal 8 Tour Writing Sprint</a>.</li>
+<li>Nov. 8th - 9th @ Cork, Ireland: <a href="http://drupalcampcork.org/">DrupalCamp Cork</a>.</li>
+<li>Nov. 8th - 9th @ Copenhagen, Denmark: <a href="http://drupalhagen.dk/">Drupalhagen</a>.</li>
+<li>Nov. 9th @ Chattanooga, Florida, USA: <a href="https://www.drupalcampchattanooga.com/">DrupalCamp Chattanooga</a>.</li>
+<li>Nov. 9th - 10th @ Delhi, India: <a href="http://2013.drupalcampdelhi.com/">DrupalCamp Delhi</a>.</li>
+</ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/user/65776/contact">Contact xjm</a> if you'd like to help communicate all the interesting happenings in Drupal 8!</p>
+  </body>
+</html>
+

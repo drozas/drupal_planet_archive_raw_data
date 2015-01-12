@@ -1,0 +1,61 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 16 Jul 2013 10:09:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 16 Jul 2013 10:09:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Code Enigma: Migrating data from Drupal 6 to Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.codeenigma.com/en/blog/migrating-data-drupal-6-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Code Enigma: Migrating data from Drupal 6 to Drupal 7</title>
+    <base href="http://www.codeenigma.com/en/blog/migrating-data-drupal-6-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>One of our clients is redeveloping the front-end of their site and wanted to take the opportunity to upgrade from Drupal 6 in the process. As the basic data structure was to remain the same, it made sense to go for a straight upgrade, following the instructions in the <a href="http://drupalcode.org/project/drupal.git/blob/refs/heads/7.x:/UPGRADE.txt">UPGRADE.txt</a> file from Drupal 7.</p>
+<p>After checking that all the modules on the original site were up to date, I did a quick site audit. All of the Drupal 6 modules used had a Drupal 7 version except for the <a href="https://drupal.org/project/attribute">attribute</a> module. The attribute module lets you create a CCK field that contains an attribute:value pair, such as color:blue or size:large. This kind of functionality can be created in Drupal 7 using the <a href="https://drupal.org/project/field_collection">field collection</a> module, but would require a bit of work to migrate the data over.</p>
+<p>The original site used <a href="https://drupal.org/project/features">features</a> extensively. The built in Drupal upgrade path is designed around migrating data contained in the database, not in code. A quick look through the features issue queue provided <a href="https://drupal.org/node/1014522#comment-5719202">this patch</a> which adds an extra drush command to features – <code><kbd>drush features-import-all</kbd></code>.  Running this moved all of the features into the database.  I could then disable each of the custom features without losing any configuration data.</p>
+<p>Continuing with the instructions in UPGRADE.txt, I quickly had Drupal core updated to version 7 together with all the contributed modules that had a Drupal 7 release.  All the content types were still there, but missing lots of fields, which brings us to the next step – moving Drupal 6 CCK data to Drupal 7 fields.  This is well covered in the Drupal handbook page, <a href="http://drupal.org/node/1144136">Migrating D6 Content Construction Kit (CCK) to D7 Fields</a>.</p>
+<p>By this point, all the old content was showing up in Drupal 7 apart from the attribute fields. The old CCK attribute field was called field_item_for_sale_glance and all the data was in the content_field_item_for_sale_glance table in the database.</p>
+<p>I created a new field_collection, which I also called field_item_for_sale_glance, containing two text fields; field_sale_attribute_key and field_sale_attribute_value.  After that, a quick bit of custom code was required to copy the data across.</p>
+<pre class="brush:php;">
+function sale_attribute_to_field_collection() {
+  // Get all item_for_sale nodes.
+  $result = db_select('node', 'n')
+    -&gt;fields('n')
+    -&gt;condition('n.type', 'item_for_sale')
+    -&gt;execute();
+
+  foreach ($result as $node_data) {
+    // Check to see if the old CCK attribute field has any data for this node.
+    $old_field = db_select('content_field_item_for_sale_glance', 'old')
+      -&gt;fields('old')
+      -&gt;condition('old.nid', $node_data-&gt;nid)
+      -&gt;condition('old.vid', $node_data-&gt;vid)
+      -&gt;orderBy('old.delta', 'ASC')
+      -&gt;execute();
+
+    foreach ($old_field as $old_data) {
+      if ($node = node_load($node_data-&gt;nid)) {
+        // Create a new field collection item.
+        $field_collection_item = entity_create('field_collection_item', array('field_name' =&gt; 'field_item_for_sale_glance'));
+        // Attach it to the node.
+        $field_collection_item-&gt;setHostEntity('node', $node);
+        // Insert the attribute field values.
+        $field_collection_item-&gt;field_sale_attribute_key[LANGUAGE_NONE][0]['value'] = $old_data-&gt;field_item_for_sale_glance_attribute;
+        $field_collection_item-&gt;field_sale_attribute_value[LANGUAGE_NONE][0]['value'] = $old_data-&gt;field_item_for_sale_glance_value;
+        // Save the field collection.
+        $field_collection_item-&gt;save();
+      }
+    }
+  }
+}</pre><p>That successfully moved the last of the data over, ready for the front-end work to begin.</p>
+<p>Once Drupal 8 is released, I imagine we'll see a flurry of Drupal 6 sites wanting to move to Drupal 7.  It's good to see that the upgrade process is relatively painless.</p>
+</div></div></div><div class="field field-name-field-blog-service-areas field-type-node-reference field-label-above"><div class="field-label">Related Service Areas:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/development">Development</a></div></div></div><div class="field field-name-field-blog-intro field-type-text-long field-label-above"><div class="field-label">Teaser:&nbsp;</div><div class="field-items"><div class="field-item even">Massaging Drupal 6 data into Drupal 7</div></div></div><div class="field field-name-field-blog-categories field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/category/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div><div class="field-item odd"><a href="/en/category/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div></div></div><div class="field field-name-field-blog-primary-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Primary Category:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/en/category/development" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Development</a></div></div></div>
+  </body>
+</html>
+

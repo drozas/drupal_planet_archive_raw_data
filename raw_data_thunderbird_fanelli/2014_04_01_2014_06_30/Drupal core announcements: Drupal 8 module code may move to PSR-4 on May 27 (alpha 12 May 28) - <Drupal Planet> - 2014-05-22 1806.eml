@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 22 May 2014 16:06:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 22 May 2014 16:06:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal 8 module code may move to PSR-4 on May 27 (alpha 12 May 28)
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/424163
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal 8 module code may move to PSR-4 on May 27 (alpha 12 May 28)</title>
+    <base href="https://groups.drupal.org/node/424163">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Following the <a href="https://drupal.org/node/2246699">addition of PSR-4 support to Drupal 8</a>, the next step will be to <a href="https://drupal.org/node/2247991">move all Drupal 8 core module code to PSR-4 (Issue #2247991)</a>.</p>
+<p>Since this change is significant and will require the reroll of many existing patches, a potential commit window for is scheduled for May 27, to give contributors a chance to prepare for this change and update their patches before <a href="https://austin2014.drupal.org/">DrupalCon Austin</a>. Drupal 8.0-alpha12 will now be released on May 28 to allow time for this change. (If the patch for <a href="https://drupal.org/node/2247991">Issue #2247991</a> is not ready by May 27, it will be postponed until after DrupalCon.)</p>
+<p>After this change, the deprecated PSR-0 directory structure will continue to work for contributed modules, but this support will be dropped before the first beta in <a href="https://drupal.org/node/2247287">Issue #2247287</a>, so you should also update your Drupal 8 contributed modules to PSR-4.</p>
+  </body>
+</html>
+

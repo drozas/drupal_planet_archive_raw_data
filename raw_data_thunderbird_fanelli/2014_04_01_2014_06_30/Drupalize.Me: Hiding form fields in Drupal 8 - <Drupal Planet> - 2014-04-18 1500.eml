@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 18 Apr 2014 13:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 18 Apr 2014 13:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupalize.Me: Hiding form fields in Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalize.me/blog/201404/hiding-form-fields-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupalize.Me: Hiding form fields in Drupal 8</title>
+    <base href="http://drupalize.me/blog/201404/hiding-form-fields-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden text-content text-secondary"><div class="field-items"><div class="field-item even"><p>If you have worked with the Field UI in Drupal 7 you will know that you are able to prevent fields from being displayed when viewing entities (e.g. content, users etc). It was fairly simple, you would go to the Manage Display tab of an entity and move the field to the ‘Hidden’ region as shown in the screenshot below.</p>
+<p><img alt="" height="869" src="http://drupalize.me/sites/default/files/blog_post_images/hide-form-fields-1.png" style="font-size: 0.923em; line-height: 1.5em;" width="1073" /></p>
+<p>So you could hide a fields output from being displayed when viewing that entity. But what about when editing that entity? There was no way in the Drupal 7 Field UI to hide a field on a form. You would have to write some form of <strong>hook_form_alter()</strong> in a custom module and manually force the field to be hidden, like shown in <a href="http://drupal.stackexchange.com/questions/49047/hide-text-field-in-hook-form-alter">this example</a>.</p></div></div></div>
+  </body>
+</html>
+

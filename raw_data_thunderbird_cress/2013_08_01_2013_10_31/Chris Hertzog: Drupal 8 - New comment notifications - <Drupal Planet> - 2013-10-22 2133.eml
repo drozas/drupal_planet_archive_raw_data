@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 22 Oct 2013 20:33:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 22 Oct 2013 20:33:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Chris Hertzog: Drupal 8 - New comment notifications
+Content-Transfer-Encoding: 8bit
+Content-Base: http://chertzog.com/post/drupal-8-new-comment-notifications
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Chris Hertzog: Drupal 8 - New comment notifications</title>
+    <base href="http://chertzog.com/post/drupal-8-new-comment-notifications">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Having a website built on a Drupal 8 alpha means running without many popular modules. In this case I'm talking about the Rules module (<a href="https://drupal.org/project/rules">https://drupal.org/project/rules</a>). Rules has been the go to module for executing actions whenever something happens on a Drupal site.</p>
+<p>At the time of this post's writing, the Rules module has not yet been ported to Drupal 8. Additionally Trigger has been removed from core (<a href="https://drupal.org/node/2116417">https://drupal.org/node/2116417</a>). </p>
+<p>With this being a public blog and Anonymous comments enabled, I needed a way to help moderate spam. The Honeypot module (<a href="https://drupal.org/project/honeypot">https://drupal.org/project/honeypot</a>) does a good job at blocking spam bots, but there is still the spam that is posted by human beings. To help with this, I wanted to receive an email every time a new comment is posted.</p>
+<p>In Drupal 7 we could easily use Rules for this. Just react on a new comment, and send an email message. But since we don't have the luxury of the Rules module at the moment, we will need to write a little code.</p>
+<p>What we can do is act on <code class="prettyprint">hook_comment_insert</code> and use <code class="prettyprint">drupal_mail</code> to send an email.</p>
+<p class="code-header">hook_comment_insert().</p>
+<pre class="prettyprint"><code>/**<br />&nbsp; * Implements hook_comment_insert().<br />&nbsp; */<br />function mymodule_comment_insert($comment){<br />&nbsp; $to = '<a href="mailto:me@myemail.com">me@myemail.com</a>';<br /><br />&nbsp; // Get the default site email.<br />&nbsp; $site_mail = config('system.site')-&gt;get('mail'); <br /><br />&nbsp; // Get the comment author name.<br />&nbsp; $author = $comment-&gt;get('name')-&gt;value; <br /><br />&nbsp; // Get a link to the comment.<br />&nbsp; $uri = comment_uri($comment);<br />&nbsp; $url = l($uri['path'], $uri['path']);<br /><br />&nbsp; // Get the comment body value.<br />&nbsp; $body = $comment-&gt;get('comment_body')-&gt;value;<br /><br />&nbsp; // Store the information for use in our hook_mail implementation.<br />&nbsp; $variables = array(<br />&nbsp;&nbsp;&nbsp; '!author' =&gt; $author,<br />&nbsp;&nbsp;&nbsp; '!url' =&gt; $url,<br />&nbsp;&nbsp;&nbsp; '!comment_body' =&gt; $body,<br />&nbsp; );<br /><br />&nbsp; // Send the comment along with the variables as parameters to drupal_mail.<br />&nbsp; $params = array(<br />&nbsp;&nbsp;&nbsp; 'comment' =&gt; $comment,<br />&nbsp;&nbsp;&nbsp; 'variables' =&gt; $variables,<br />&nbsp; );<br /><br />&nbsp; // Send the message.<br />&nbsp; drupal_mail('mymodule', 'comment_notify', $to, 'en', $params, $site_mail, TRUE);<br /><br />}</code></pre>
+<p>Now we just need to implement <code class="prettyprint">hook_mail</code> to construct the message.</p>
+<p class="code-header">hook_mail().</p>
+<pre class="prettyprint"><code>/**<br />&nbsp; * Implements hook_mail().<br />&nbsp; */<br />function mymodule_mail($key, &amp;$message, $params) {<br />&nbsp; $comment = $params['comment'];<br />&nbsp; $variables = $params['variables'];<br /><br />&nbsp; switch ($key) {<br />&nbsp;&nbsp;&nbsp; case 'comment_notify':<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $message['subject'] = t('A new comment has been posted');<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $message['body'][] = t("!author has posted a comment at !url.", $variables);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $message['body'][] = t("Comment body: !comment_body.", $variables);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br />&nbsp; }<br />}</code></pre>
+<p>Simple. Now every time a comment is posted, I get an email. Now use that information wisely :).</p>
+</div></div></div><div class="field field-node--field-category field-name-field-category field-type-taxonomy-term-reference field-label-above"><div class="field-label">Categories</div><div class="field-items"><div class="field-item even"><a href="/category/drupal-planet">Drupal Planet</a></div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 12 Jun 2013 20:49:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 12 Jun 2013 20:49:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: There is a module for that!: Arabic music notation in the browser
+Content-Transfer-Encoding: 8bit
+Content-Base: http://thereisamoduleforthat.com/content/arabic-music-notation-browser
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>There is a module for that!: Arabic music notation in the browser</title>
+    <base href="http://thereisamoduleforthat.com/content/arabic-music-notation-browser">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>I created a <a href="https://drupal.org/sandbox/kratib/2018043">bare-bones content filter</a> to add musical notation to Drupal content, using the <a href="http://vexflow.com/">VexFlow / VexTab music engraving library</a>. Here's a little sample, also showing my fork of the original library to handle basic Arabic musical notation (quarter tones and special scales):</p>
+
+<div class="vex-tabdiv" scale="1.0" editor="true">
+tabstave notation=true tablature=false clef=treble key=Rast
+notes C/4 D/4 E%@/4 F/4 | G/4 A/4 B%@/4 C/5
+</div>
+
+<p>Feel free to fiddle with the music snippet above.</p>
+<p><a href="http://thereisamoduleforthat.com/content/arabic-music-notation-browser" target="_blank">read more</a></p>
+  </body>
+</html>
+

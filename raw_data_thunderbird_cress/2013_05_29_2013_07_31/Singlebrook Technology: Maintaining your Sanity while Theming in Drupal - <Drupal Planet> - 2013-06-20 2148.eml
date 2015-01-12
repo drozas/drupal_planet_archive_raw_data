@@ -1,0 +1,30 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 20 Jun 2013 20:48:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 20 Jun 2013 20:48:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Singlebrook Technology: Maintaining your Sanity while Theming in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://singlebrook.com/blog/maintaining-your-sanity-while-theming-in-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Singlebrook Technology: Maintaining your Sanity while Theming in Drupal</title>
+    <base href="http://singlebrook.com/blog/maintaining-your-sanity-while-theming-in-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>by Alexandra Atzl</em>
+</p>
+<p><a href="https://github.com/singlebrook/drupal_theme_template" target="_blank">TL;DR</a>
+</p>
+<p>Over the past several months I've spent working on Drupal projects, I've learned that theming these sites can easily become a labyrinth of function overrides, template files, stylesheets, javascripts, images—everything but the kitchen sink. </p>
+
+<p>So at Singlebrook, we've come up with a simple way to organize our theming files, and created a base "template" folder for new themes, packaging up the best of SASS, Modernizr, LiveReload, and sane file organization. </p>
+
+<p>Our theme is meant to be a baseline that can be renamed and built upon, rather than a base theme for sub-themes to stem from.  We can simply clone the base theme template repository into our new Drupal site, rename the folder and all theme functions/files, and voila!  Ready to go.  ...
+  </body>
+</html>
+

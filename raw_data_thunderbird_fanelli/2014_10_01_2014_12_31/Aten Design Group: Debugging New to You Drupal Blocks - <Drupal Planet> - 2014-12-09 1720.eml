@@ -1,0 +1,72 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 09 Dec 2014 16:20:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 09 Dec 2014 16:20:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Aten Design Group: Debugging New to You Drupal Blocks
+Content-Transfer-Encoding: 8bit
+Content-Base: http://atendesigngroup.com/blog/debugging-new-you-drupal-blocks
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Aten Design Group: Debugging New to You Drupal Blocks</title>
+    <base href="http://atendesigngroup.com/blog/debugging-new-you-drupal-blocks">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <img src="http://atendesigngroup.com/sites/default/files/drupal-debugging-blocks.png" width="1000" height="600" alt="" /><p>Let’s say a friend (or a new client) asks you to make a small change to their Drupal website. You’ve never seen this site before and the original developer(s) are long gone. Of course the text is in some obscure block. Sometimes finding where to make the requested change is easy. Sometimes it’s not. I’m going to go through some debugging tips for such a case.</p>
+
+<p>The first thing you should do is inspect that part of the page with your browser’s dev tools (e.g. <a href="https://developer.mozilla.org/en-US/docs/Tools/Page_Inspector">Firefox</a>, <a href="https://developer.chrome.com/devtools">Chrome</a>). Often IDs and class names will help identify the block.</p>
+
+<p>Here’s an example of the DOM of a view block from the nodequeue module.</p>
+
+<p><span class="geshifilter"><code class="text geshifilter-text">&lt;div id=&quot;block-views-nodequeue-2-block&quot; class=&quot;block block-views contextual-links-region block--marquee&quot;&gt;</code></span></p>
+
+<p>The ID "block-views-nodequeue-2-block" means this is a views block.  "nodequeue-2" is the view machine name, and "block" is the name of the specific display in that view. You can browse the list of views at /admin/structure/views, or in this case, go directly to /admin/structure/views/view/nodequeue_2/edit/block. The path to edit a view in Drupal 7 is always at /admin/structure/views/view/[VIEW NAME]/edit/[DISPLAY NAME]. If contextual links are on, it may be even quicker to access the edit page from the options available. Look for a gear icon in the upper right corner of the section.</p>
+
+<p>Here’s a block defined in code:</p>
+
+<p><span class="geshifilter"><code class="text geshifilter-text">&lt;div id=&quot;block-cei-custom-blocks-cei-unicef-timeline&quot; class=&quot;block block-cei-custom-blocks contextual-links-region&quot;&gt;</code></span></p>
+
+<p>In this case in cei_custom_blocks_block_info() defines a block delta: 
+<span class="geshifilter"><code class="text geshifilter-text">$blocks['cei_unicef_timeline']</code></span>
+The code that defines this block’s output will either be in <span class="geshifilter"><code class="text geshifilter-text">cei_custom_blocks_block_view()</code></span> or that function will call another.</p>
+
+<p>In one particular case I didn’t have a lot to go on. There was very little in the DOM. This members page consisted of user images, name, and title. The client requested one additional field be included for each user on the members page. It wasn’t a view or anything else easily identifiable. The output was in system block 0 which doesn't give me anything to go on. One particularly unique class name was block-totem-common-embed-type-search-0 (this was the totem install profile) but a search of the code turned up nothing. That’s because the code that built these blocks was highly abstracted. Reviewing that code didn’t reveal where I could add the field either. Finally I searched on another class name. I didn’t find exactly where the class name was inserted, but it happened to match a template file that was in one of the submodule's ‘inc’ directories.</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">  &lt;div&lt;?php print $attributes; ?&gt;&gt;
+    &lt;?php print $user_profile['images']['user_thumb']; ?&gt;
+    &lt;?php print render($title_prefix); ?&gt;
+    &lt;h3&gt;&lt;?php print render($user_profile['name']); ?&gt;&lt;/h3&gt;
+    &lt;?php print render($title_suffix); ?&gt;
+&nbsp;
+    &lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;</pre></div>
+
+<p>Once I found that, making the needed modification was simple.</p>
+
+<p>To help identify a block, you can also look at what is placing the block on the page. Some ways this can be done include the blocks UI, Context module, Panels, print directly in code, and template files. If a lot of blocks are placed using the blocks UI, this page can get unwieldy. It’s worth searching the codebase for any distinct phrases. A quick search in the database can also be useful.</p>
+
+<p>Blocks saved in the database are in the blocks and blocks_custom tables.  One way to find such a block in the database uses a query for some matching text:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">SELECT * FROM block_custom WHERE body LIKE &quot;%participate in discussions%&quot;\G</pre></div>
+
+<p>The query matched the following entry:</p>
+
+<div class="geshifilter"><pre class="geshifilter-text">*************************** 1. row ***************************
+   bid: 3
+  body: &lt;p&gt;&lt;strong&gt;A message from the GEC team&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;During the recent GEC baseline sharing events, one of the key messages that came through loud and clear from you was the value of meeting other projects and exchanging knowledge, sharing challenges, solutions, experiences and advice. We began to see the GEC community take root, and to continue this momentum we are launching the GEC forum &amp;ndash; a place for the GEC Community of Practice to develop and grow. This will be the place for you share your expertise, participate in discussions, and interact with other projects that form the community of the Girls&amp;rsquo; Education Challenge. &lt;a href=&quot;http://www.educationinnovations.org/forums/introducing-girls%E2%80%99-education-challenge-forum&quot;&gt;Read more...&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&nbsp;
+  info: GEC welcome message (deliberately not in code)
+format: full_html</pre></div>
+
+<p>Such a block can be edited at /admin/structure/block/manage/block/3/configure. The path to edit a block is always at /admin/structure/block/manage/[Block ID]/configure.</p>
+
+<p>Hopefully these tips will be useful the next time a completely unknown website is dropped in your lap.</p>
+  </body>
+</html>
+

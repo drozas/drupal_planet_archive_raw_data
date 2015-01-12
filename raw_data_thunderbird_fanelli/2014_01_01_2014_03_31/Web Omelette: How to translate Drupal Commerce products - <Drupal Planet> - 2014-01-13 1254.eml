@@ -1,0 +1,35 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 13 Jan 2014 11:54:38 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 13 Jan 2014 11:54:38 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: How to translate Drupal Commerce products
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/translate-drupal-commerce-product-entities-types-and-variations
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: How to translate Drupal Commerce products</title>
+    <base href="http://www.webomelette.com/translate-drupal-commerce-product-entities-types-and-variations">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>This is a short tutorial on enabling <a href="http://www.drupalcommerce.org/" target="_blank">Drupal Commerce</a> product entities to be translated using the <a href="https://drupal.org/project/entity_translation" target="_blank">Entity Translation</a> module in <a href="https://drupal.org/project/commerce_kickstart" target="_blank">Commerce Kickstart</a>.</p>
+<p>As you know, Drupal can be quite frustrating at times when it comes to translation. You have some core stuff available that if coupled with some contrib solutions will get you going but it will never be perfect. At least not so easy. And if you are working with something as complex and custom as Drupal Commerce, things get more difficult, fast.</p>
+<p><a href="http://commerceguys.com/" target="_blank"><img src="/sites/default/files/images/20131312225125.png" alt="" class="push-left" style="float:left" /></a></p>
+<p>Today I want to share with you my experience with enabling product entities to be translated with <strong>Entity Translation</strong> in the <strong>Commerce Kickstart</strong> distro. Let's say your Product Displays are translatable already (either using core and the <a href="https://drupal.org/project/i18n" target="_blank">i18n package</a> or with <strong>Entity Translation</strong>) but the products are not. What do you do?</p>
+<p>Well first you need to go to <code>admin/config/regional/entity_translation</code> and enable <code>Commerce Product</code> under the <strong>Translatable Entities</strong> list. Then - and if you've been searching the internets and reached here desperate for a solution - you have to edit the product type you want translatable (at <code>admin/commerce/products/types</code>) and check the radio <code>Enabled via Entity translation</code>. You know, like with regular content types.</p>
+<p><p>But wait a minute. There is no such thing. You are seeing nowhere product types and this URL throws a 404 error. There are product variations, but no multilingual options when you edit product variation types. So wtf is going? You are using <strong>Commerce Kickstart</strong> - that's what's going on. And <strong>Commerce Kickstart</strong> comes with <a href="https://drupal.org/project/commerce_backoffice" target="_blank">Commerce Backoffice</a> that for ease of use and whatnot removes the product type UI and replaces it with product variations - among other things of course.</p>
+<p>So what do you do? Go ahead and disable the module <strong>Commerce Backoffice Product</strong>. Clear the cache. Then go back to that URL (<code>admin/commerce/products/types</code>), edit the product type you want (remember, the product type is the variation you had before) and you will find upon that multilingual setting you couldn't find. Save the product type and your product entities of that type are now translatable.</p>
+<p>You can then edit the individual fields on the product type/variation and enable translation. And this includes the title as well if you are using the <a href="https://drupal.org/project/title" target="_blank">Title</a> module (which Commerce Kickstart should). This was in fact my need. The product displays where translated but the product entity titles were not. So in my cart, the line items were referencing the product entity title and not that of the display. Translating the product entity title therefore solved my problem.</p>
+<p>Now if you want to go back to the way it was - using product variations and the old UI - which I prefered actually, re-enable the <strong>Commerce Backoffice Product</strong> module and clear the cache a couple of times. I had to wait a bit before everything reverted properly, but it did nonetheless. So if you don't get back your variations instantly, don't fret, they'll come soon.</p>
+<p>OK, so hope this helps.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal-commerce">Drupal Commerce</a></span> | <span class="field-item odd"><a href="/drupal-multilingual">Multilingual</a></span> | <span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/translate-drupal-commerce-product-entities-types-and-variations" st_title="How to translate Drupal Commerce products" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/translate-drupal-commerce-product-entities-types-and-variations" st_title="How to translate Drupal Commerce products" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/translate-drupal-commerce-product-entities-types-and-variations" st_title="How to translate Drupal Commerce products" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

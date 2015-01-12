@@ -1,0 +1,123 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 14 Jul 2014 11:48:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 14 Jul 2014 11:48:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: legomenon.io: Function scope & Drupal cache
+Content-Transfer-Encoding: 8bit
+Content-Base: http://legomenon.io/article/function-scope-drupal-cache
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>legomenon.io: Function scope & Drupal cache</title>
+    <base href="http://legomenon.io/article/function-scope-drupal-cache">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--name-title-field field--type-text field--label-hidden"><div class="field__items"><div class="field__item even">Function scope & Drupal cache</div></div></div><div class="field field--name-field-image field--type-image field--label-hidden"><div class="field__items"><div class="field__item even" rel="og:image rdfs:seeAlso" resource="http://legomenon.io/sites/default/files/field/image/11139399306_c55444f06b_b-1.jpg"></div></div></div><div class="field field--name-body field--type-text-with-summary field--label-hidden"><div class="field__items"><div class="field__item even" property="content:encoded"><p>When developing with caching in mind it's important to consider functionality scope. For example, writing code which is per visitor specific in PHP with caching support ahhh =O. While rewriting that same functionality in JavaScript offers us a quick and cache friendly solution. Consider the following examples.</p>
+
+<pre>
+<div class="prism-wrapper" rel="php"><pre><code class="language-php">
+/**
+ * Implements hook_preprocess_TEMPLATE().
+ */
+function THEME_preprocess_page(&amp;$variables) {
+  $detect = mobile_switch_mobile_detect();
+
+  if ($detect['ismobiledevice'] &amp;&amp; !$detect['istablet']) {
+    $variables['logo'] = url('sites/all/themes/THEME/images/logo_rev.png', array('absolute' =&gt; TRUE));
+  }
+}
+</code></pre></div>
+</pre>
+
+<pre>
+<div class="prism-wrapper" rel="php"><pre><code class="language-php">
+/**
+ * Custom header block content.
+ */
+function _header_search_content_block() {
+  $detect = mobile_switch_mobile_detect();
+  $form = drupal_get_form('search_form');
+
+  // Format search form.
+  $form['basic']['keys']['#attributes']['placeholder'] = t('Search');
+  $form['basic']['keys']['#title_display'] = 'invisible';
+  $form['basic']['keys']['#size'] = 20;
+
+  if ($detect['ismobiledevice'] || $detect['istablet']) {
+    $form['basic']['keys']['#size'] = 15; 
+  }
+
+  $items = array(
+    render($form),
+    l(t('another item'), 'link')
+  );
+
+  return theme('item_list', array('items' =&gt; $items));
+}
+</code></pre></div>
+</pre>
+
+<p>Clearly this code can be easily rewritten in JavaScript. However with caching enabled we'll need a method to pass our device detection variables. The only function which is exempt from Drupal cache is boot(). Calling drupal_add_js() directly from hook_boot() fails; the following example is using Mobile Switch and illustrates a work around.</p>
+
+<pre>
+<div class="prism-wrapper" rel="php"><pre><code class="language-php">
+/**
+ * This is an example of how to manipulate site elements with page
+ * caching enabled. We pass our detection variables to js settings
+ * which we can then act on.
+ */
+function MODULE_boot() {
+  $detect = mobile_switch_mobile_detect();
+
+  // Whatami.
+  $_SESSION['detect'] = array(
+    'ismobile' =&gt; $detect['ismobiledevice'],
+    'istablet' =&gt; $detect['istablet']
+  );
+}
+
+/**
+ * Implements hook_init().
+ */
+function MODULE_init() {
+  drupal_add_js(array('detect' =&gt; $_SESSION['detect']), 'setting');
+}
+</code></pre></div>
+</pre>
+
+<pre>
+<div class="prism-wrapper" rel="javascript"><pre><code class="language-javascript">
+/**
+ * @file
+ * MODULE.theme.js
+ */
+
+(function($) {
+
+  Drupal.behaviors.MODULE = {
+    attach: function(context, settings) {
+      // Swap logo for mobile.
+      if (settings.detect.ismobile &amp;&amp; !settings.detect.istablet) {
+        $('.site-branding__logo img').attr('src', Drupal.settings.basePath + 'sites/all/themes/THEME/images/logo_rev.png');
+      }
+
+      // Search box size.
+      if (settings.detect.ismobile || settings.detect.istablet) {
+        $('.l-region--header .search-form input.form-text').attr('size', 15);
+      }
+    }
+  };
+
+}(jQuery));
+
+</code></pre></div>
+</pre>
+
+<p>These flags can of course be used for more fruitful purposes =)... Note, this sort of consideration is most likely second nature to most Xd.</p></div></div></div>
+  </body>
+</html>
+

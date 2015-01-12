@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 31 Jul 2014 13:10:20 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 31 Jul 2014 13:10:20 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Static Drupal – Taking the pain out of Drupal hosting
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/static-drupal-taking-the-pain-out-of-drupal-hosting/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Static Drupal – Taking the pain out of Drupal hosting</title>
+    <base href="http://www.phase2technology.com/blog/static-drupal-taking-the-pain-out-of-drupal-hosting/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div>Think back with me to the days of static websites. Those were easy! You just threw some html up on a server and that was it. No performance issues, no security issues, no worries about redundant failover if something goes wrong. No getting woken up in the middle of the night because something did happen. It was simple, fast and hard to break.</div>
+<p>All that changed with more Dynamic websites like Drupal. We get a lot for using Drupal. We get a first class CMS, huge ecosystem of modules and the ability to change content live on the server. But we also get a lot of headaches along with it. We have to design a server system that can handle the load, be constantly monitoring it for failures, apply security updates and be vigilant of security breaches and be ready to be woken up when something doesn’t work.</p>
+<p>We recently were challenged to find a way to use the power of Drupal as a CMS but serve the site as generated static pages. It was an interesting idea and we decided to see if we could make it work. We started out by building a proof of concept module that would take a Drupal site and render it as plain HTML pages with all the associated assets such as JS, CSS and images. This turned out not to be too hard once we used a little apache rewrite rule to fix url paths. We decided to call this module the Static module. It is available on Drupal.org (<a href="http://www.drupal.org/project/static" target="_blank">http://www.drupal.org/<wbr />project/static</a>)</p>
+<div></div>
+<div>By itself this module turns out to be really useful for two use cases.</div>
+<div></div>
+<h2>Static websites</h2>
+<div>There is a class of website that is built in Drupal but is rarely if ever updated. There are no “community” bits to it like comments and webforms. For this type of website, you can use the static module to periodically export your entire Drupal site to static html that can be uploaded to a simple server without PHP, MySQL, memcache or anything other than a web server. If changes need to be made, they can be made on a laptop or staging server and then exported and uploaded again. This allows both viewing the full site for acceptance testing before it goes live and all of the performance and security gains of a static website.</div>
+<div></div>
+<h2>Archive websites</h2>
+<div>A similar type of website is an archival site such as the various DrupalCon and DrupalCamp websites. While they no longer need to be live Drupal sites or be updated, they should still be accessible to see the content that was there. In the same way as simple Static websites, archived websites can be generated, uploaded and then left alone.</div>
+<div></div>
+<div>Static websites are great and all but we can actually take it one step further. Turns out this module is also even better for building Hybrid websites.</div>
+<div></div>
+<h2>Hybrid websites</h2>
+<div>A hybrid website is the primary reason we created the static module. We wanted a system where Drupal was installed behind a firewall and a static site was periodically generated and copied over to a public web server. This would allow content writers to create, update and delete content within Drupal which would track what is changing and within a short period of time it would be generated and transferred to the public facing site. Essentially it would have the power of content editing in Drupal but be hosted to the public as static HTML.</div>
+<div></div>
+<div>We got this system working and I’m going to share more about it at my talk during <a href="http://2014.capitalcampandgovdays.com/capital-camp-and-gov-days/sessions/static-drupal-sleep-night-cms">CapitalCamp/Drupal4Gov</a>. Be sure to check it out if you are coming.</div>
+  </body>
+</html>
+

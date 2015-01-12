@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Apr 2014 06:54:02 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Apr 2014 06:54:02 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Jeremy Epstein: The cost of building a "perfect" custom Drupal installation profile
+Content-Transfer-Encoding: 8bit
+Content-Base: http://greenash.net.au/thoughts/2014/04/the-cost-of-building-a-perfect-custom-drupal-installation-profile/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Jeremy Epstein: The cost of building a "perfect" custom Drupal installation profile</title>
+    <base href="http://greenash.net.au/thoughts/2014/04/the-cost-of-building-a-perfect-custom-drupal-installation-profile/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>With virtually everything in Drupal, there are two ways to accomplish a task: <a href="http://getlevelten.com/blog/ian-whitcomb/dont-be-noob-top-5-most-common-drupal-beginner-mistakes">The Easy Way</a>, or <a href="http://www.midwesternmac.com/blogs/jeff-geerling/the-drupal-way">The Right&trade; Way</a>.
+</p>
+<p>Deploying a new Drupal site for the first time is no exception. The Easy Way &ndash; and almost certainly the most common way &ndash; is to simply copy your local version of the database to production (or staging), along with user-uploaded files. (Your code needs to be deployed too, and The Right&trade; Way to deploy it is <a href="https://drupal.org/node/803746">with version-control</a>, which you're hopefully using&hellip; but that's another story.)
+</p>
+<p>The Right&trade; Way to deploy a Drupal site for the first time (at least since Drupal 7, and "with hurdles" since Drupal 6), is to <strong>only</strong> deploy your code, and to reproduce your database (and ideally also user-uploaded files) with a <a href="http://drupal.stackexchange.com/questions/16233/create-a-repeatable-drupal-install">custom installation profile</a>, and also with significant <a href="http://codekarate.com/daily-dose-of-drupal/drupal-7-features-module-deployment">help from the Features module</a>.
+</p>
+<img src="http://greenash.net.au/media/cache/9a/25/9a25647a371c173ede1fe7c07395bcc2.jpg" width="720" height="376" alt="The Right Way can be a deep rabbit hole, though." /><p><em>The Right Way can be a deep rabbit hole, though.</em></p>
+<p><em>Image source:</em> <a href="http://sixnutrition.com/blog/red-pill-or-blue-pill-the-choice-is-yours/">SIX Nutrition</a>.
+</p>
+<p>I've been churning out quite a lot of Drupal sites over the past few years, and I must admit, the vast majority of them were deployed The Easy Way. Small sites, single developer, quick turn-around. That's usually the way it rolls. However, I've done some work that's required custom installation profiles, and I've also been trying to embrace Features more; and so, for my most recent project &ndash; despite it being "yet another small-scale, one-dev site" &ndash; I decided to go the full hog, and to build it 100% The Right&trade; Way, just for kicks.
+</p>
+<p>Does it give me a warm fuzzy feeling, as a dev, to be able to install a perfect copy of a new site from scratch? Hell yeah. But does that warm fuzzy feeling come at a cost? Hell yeah.</p>
+  </body>
+</html>
+

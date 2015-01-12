@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 05 Nov 2014 18:47:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 05 Nov 2014 18:47:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: Amazon S3 module in drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/manikandan/amazon-s3-module-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: Amazon S3 module in drupal</title>
+    <base href="http://knackforge.com/blog/manikandan/amazon-s3-module-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><div>The AmazonS3 module allows the drupal local file system to be replaced with S3, where the files can be uploaded or downloaded from S3. I used the following modules to achieve this:</div>
+<ul><li>   <a href="http://www.drupal.org/project/amazons3">Amazon S3(module)</a></li>
+<li>   <a href="http://www.drupal.org/project/libraries">Libraries API</a></li>
+<li>   <a href="http://www.drupal.org/project/awssdk">AWSSDK for PHP(module)</a></li>
+<li>   <a href="http://aws.amazon.com/sdkforphp">AWSSDK For PHP(library)</a>
+<ul><li><strong>Note:</strong> Verify that SDK library meets your system requirements. Refer this: <a href="http://docs.aws.amazon.com/aws-sdk-php/guide/latest/requirements.html">http://docs.aws.amazon.com/aws-sdk-php/guide/latest/requirements.htm</a>l         </li>
+</ul></li>
+</ul><div> </div>
+<div>Download and install these modules and place SDK library at sites/all/libraries/awssdk.</div>
+<div>Check  'Status report'  for information about the installation of  AmazonS3 and AWSSDK.</div>
+<div style="text-align: center;"><img alt="" class="media-image" height="124" width="748" typeof="foaf:Image" src="/sites/default/files/satus_0.png" /></div>
+<div> </div>
+<div> </div>
+<div>Here we go:</div>
+<div> </div>
+<ul><li> In admin/config/media/amazons3, give your default bucket name which you would have created in S3.</li>
+</ul><p style="text-align: center;">          <img alt="" class="media-image" height="236" width="543" typeof="foaf:Image" src="/sites/default/files/amazon1.png" /></p></div></div></div>
+  </body>
+</html>
+

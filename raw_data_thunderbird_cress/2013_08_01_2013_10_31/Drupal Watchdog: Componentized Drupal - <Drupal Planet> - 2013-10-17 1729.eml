@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 17 Oct 2013 16:29:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 17 Oct 2013 16:29:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Componentized Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/3/1/drupal8-symfony2
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Componentized Drupal</title>
+    <base href="http://drupalwatchdog.com/3/1/drupal8-symfony2">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-article-body field-type-text-long field-label-hidden">
+        <div class="field-item even"><h2>Drupal 8 and Symfony2</h2>
+<p>One of the most widely reported changes to Drupal 8 has been the adoption of several Symfony2 components into Drupal core. So what exactly is Symfony2? Why has Drupal started using it and other third party libraries? And what changes should people expect as they start to build sites and modules based on Drupal 8?</p>
+<h3>How Did We Get to Symfony2?</h3>
+<p>Having existed as a project for 11 years — and with a strong CMS  basis for much of that time —<br />
+Drupal has been primarily focused on serving fully rendered HTML pages to web browsers. Over the past few years, the explosion of web services and mobile usage has led to a need to serve many different types of requests in many different ways, whether partial page requests for parallel processing (client, server, or edge side includes), a JSON response to a web service call, or responding to drush on the command line. Several contributed Drupal modules now exist to support using Drupal like that (<a href="http://drupal.org/project/esi">http://drupal.org/project/esi</a> or <a href="http://drupal.org/project/services">http://drupal.org/project/services</a>), but in all cases they contain a large number of workarounds in order to circumvent the full HTML page rendering that Drupal 7 and previous releases assume.</p>
+<p>The Web Services and Context in Core Initiative (WSCCI) began during the Drupal 7 release cycle and became one of several official Drupal 8 initiatives during 2011; its goal was to update Drupal’s core request handling and page serving in order to better meet the various kinds of requests that a Drupal site must now serve.</p>
+</div>
+  </div>
+<div class="field field-name-field-article-author-name field-type-text field-label-hidden">
+        <div class="field-item even">Nathaniel Catchpole</div>
+  </div>
+<div class="field field-name-field-article-author-byline field-type-text-long field-label-hidden">
+        <div class="field-item even"><p>Nathaniel Catchpole has been using Drupal since version 4.5, and has been a regular contributor to Drupal core since 2006. Along with extensive code profiling, he has contributed over 400 patches to the Drupal 7 release, and also maintains multiple core subsystems and contributed projects. Nathaniel is the branch maintainer for Drupal 8.</p>
+</div>
+  </div>
+
+		<a class="da2a_button" href="http://www.addtoany.com/share_save" id="da2a_1"><img src="http://cdn2.drupalwatchdog.com/sites/all/modules/addtoany/images/share_save_171_16.png" width="171" height="16" alt="Share/Save"/></a>
+		<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+da2a.script_load();
+//--><!]]>
+</script>
+  </body>
+</html>
+

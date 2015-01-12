@@ -1,0 +1,260 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 03 Feb 2014 16:33:59 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 03 Feb 2014 16:33:59 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Phase2: Incremental Imports of Archival Content with Feeds
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.phase2technology.com/blog/incremental-imports-of-archival-content-with-feeds/?utm_source=rss&utm_medium=rss&utm_campaign=incremental-imports-of-archival-content-with-feeds
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Phase2: Incremental Imports of Archival Content with Feeds</title>
+    <base href="http://www.phase2technology.com/blog/incremental-imports-of-archival-content-with-feeds/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=incremental-imports-of-archival-content-with-feeds">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p dir="ltr">Using the <a href="http://drupal.org/project/feeds">Feeds contrib module</a> for Drupal is a popular route for importing content from RSS feeds or similar streams of data, including service APIs like Twitter or Flickr and even email accounts. The module provides robust methods to regularly check a feed for updates and to create or update nodes by mapping feed content to Drupal entities.</p>
+<p dir="ltr">Since RSS feeds usually provide the most recent batch of content, the typical Feeds implementation will incrementally import feed items on an ongoing basis. However, some use cases call for also importing all historical content from the same data source. For example, a new website may need to feature both new and archival content from an external blog.</p>
+<p dir="ltr">In such a case, if the historical content from the source system can be exposed using the same format or method as the feed for ongoing updates, then it may be beneficial to use the same process to accomplish both the archival and ongoing import.</p>
+<h2 dir="ltr">A Migration By Any Other Name?</h2>
+<p dir="ltr">If the use case only involves the archival content import, then this would be a plain and simple migration, and I would likely recommend the <a href="http://drupal.org/project/migrate">Migrate contrib module</a>. However, Migrate is less suited for ongoing, regularly scheduled imports from remote data sources. So in this case, I’d rather find a way for Feeds to work for the archival part of the job.</p>
+<p dir="ltr">That said, we can take a few lessons from the Migrate module in terms of properties of a good migration system when implementing a system with Feeds:</p>
+<ul>
+<li dir="ltr">
+<p dir="ltr">It should be able to run incrementally. The script should not assume that all of the content can be handled in a single operation. There may be network interruptions or resource limitations that break the script on any given run.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">It should not create duplicates if it is run multiple times. There should be no penalty to running the import multiple times either to confirm a successful import or to catch content added since the last import.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">It should be able to be “rolled back” easily. Due to changes made to the importer configuration or the source content, it’s often necessary to remove all imported content and run the import process again.</p>
+</li>
+</ul>
+<p dir="ltr">Feeds provides good support for these requirements. It can run repeatedly on the same feed, and will only create content for new feed items &#8212; either ignoring or updating (based on configuration) content imported on previous runs. It also provides the ability to delete all items from the feed, which satisfies the rollback requirement.</p>
+<p dir="ltr">However, there is a fundamental challenge to using Feeds for this use case. It assumes the feed source has a constant location; for example, the RSS feed URL for a blog is always the same. To support an archival migration, it is likely that you will need to retrieve the content from multiple locations or process it in batches.</p>
+<h2>Handling Multiple Importer Configurations</h2>
+<p dir="ltr">The general issue is that the feed importer needed for historical imports may need to be configured differently than one for ongoing imports. One basic difference may be the feed URL. The archival feed source may need to specify ranges of content by page or date or it may be an export file rather than a URL. Another difference may be the format, where a different feed parser is needed for the historical import.</p>
+<p dir="ltr">To handle multiple configurations, you could either use one feed importer and change its configuration when switching from the historical import to the ongoing import. The other option is to have two feed importers defined, one for the historical import and one for the ongoing import.</p>
+<p dir="ltr">Since it’s important to be able to easily run both imports at any time in order to catch potential new feed items, having to switch feed configuration could be problematic. Instead, I’d prefer to set up one feed importer, say for the ongoing import, and then clone it and tweak the configuration as needed for the historical import.</p>
+<p dir="ltr">There’s one issue with this approach: Feeds avoids importing duplicate content within the context of a feed importer configuration. Therefore, duplicate content may be created as items from the ongoing feed end up in the archival feed.</p>
+<p dir="ltr">A simple solution is to extend the standard node processor plugin and override one function to ensure that imported content items are unique in the context of the target content type. This plugin is available in a <a href="http://drupal.org/sandbox/darthsteven/1444686">drupal.org sandbox project module</a> by Steven Jones or can be implemented by including the following plugin in a custom module:</p>
+<p>&nbsp;</p><pre class="crayon-plain-tag">&lt;?php
+
+/**
+ * Class definition for FeedsUniqueNodeProcessor.
+ *
+ * Allows checking for uniqueness among all nodes in a given content type,
+ * rather than only nodes imported with a given feeds importer.
+ *
+ * Based on: https://drupal.org/sandbox/darthsteven/1444686
+ */
+
+class FeedsUniqueNodeProcessor extends FeedsNodeProcessor {
+
+  /**
+   * Retrieve the target entity's existing id if available. Otherwise return 0.
+   *
+   * @ingroup mappingapi
+   *
+   * @param FeedsSource $source
+   *   The source information about this import.
+   * @param $result
+   *   A FeedsParserResult object.
+   *
+   * @return
+   *   The serial id of an entity if found, 0 otherwise.
+   */
+  protected function existingEntityId(FeedsSource $source, FeedsParserResult $result) {
+    $query = db_select('feeds_item')
+      -&gt;fields('feeds_item', array('entity_id'))
+      -&gt;condition('entity_type', $this-&gt;entityType());
+
+    // Iterate through all unique targets and test whether they do already
+    // exist in the database.
+    foreach ($this-&gt;uniqueTargets($source, $result) as $target =&gt; $value) {
+      switch ($target) {
+        case 'url':
+          $entity_id = $query-&gt;condition('url', $value)-&gt;execute()-&gt;fetchField();
+          break;
+        case 'guid':
+          $entity_id = $query-&gt;condition('guid', $value)-&gt;execute()-&gt;fetchField();
+          break;
+      }
+      if (isset($entity_id)) {
+        // Return with the content id found.
+        return $entity_id;
+      }
+    }
+
+    if ($nid = parent::existingEntityId($source, $result)) {
+      return $nid;
+    }
+
+    return 0;
+  }
+}</pre><p></p>
+<p dir="ltr">Once this plugin is available to Drupal through a module, both the ongoing and archival feed importers should be configured to use this feed processor.</p>
+<h2 dir="ltr">Importing Historical Feed Items</h2>
+<p dir="ltr">Most RSS feeds are limited to a certain number of items, so that as new content is published, the old content “falls off” the feed. Some RSS feeds allow providing a URL parameter for the page of results or date range to retrieve. For example, WordPress blogs allow using the “paged” URL parameter to specify the page of results to return.</p>
+<p>If an RSS feed supports this, then all historical content could be imported by incrementally fetching and processing consecutive batches of content.</p>
+<p>As mentioned earlier, Feeds assumes that the source for a feed is always the same, so this approach requires code to manage the feed source and iterate through the complete range of content. Therefore, rather than running automatically at some interval (as is appropriate for an ongoing feed importer), the historical feed importer should not be set to run automatically.</p>
+<p dir="ltr">The following is a sample of code for managing this incremental import. The approach is:</p>
+<ul>
+<li dir="ltr">
+<p dir="ltr">Define a cron queue worker that configures the archival feed importer to the URL for a given page of results and then runs it.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">On cron, start a queue worker from page 1 if it isn’t already started.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Use hook_feeds_after_import() to detect when the archival feed importer finishes so that the next page can be added to the queue.</p>
+</li>
+<li dir="ltr">
+<p dir="ltr">Define a helper function that does a test fetch of the next page of feed content so that we can gracefully end the import process if the last page was reached.</p>
+</li>
+</ul>
+<p>&nbsp;</p><pre class="crayon-plain-tag">/**
+ * Implements hook_cron().
+ */
+function example_feeds_cron() {
+  // Enqueue the example_feeds_blog_archive job on page 1, if it has not been
+  // started and the job queue is empty.
+  if (variable_get('example_feeds_blog_archive_page', -1) &lt; 0) {
+    $queue = DrupalQueue::get('example_feeds_blog_archive');
+    if (!$queue-&gt;numberOfItems()) {
+      example_feeds_blog_archive_next(1);
+    }
+  }
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ *
+ * Define cron queue jobs for this module.
+ */
+function example_feeds_cron_queue_info() {
+  $queues = array();
+  $queues['example_feeds_blog_archive'] = array(
+    'worker callback' =&gt; 'example_feeds_blog_archive_get',
+    'time' =&gt; 60,
+  );
+  return $queues;
+}
+
+/**
+ * Implements hook_feeds_after_import().
+ *
+ * Handles the post-import event for feeds importers defined by this module.
+ */
+function example_feeds_feeds_after_import($feed) {
+  // When the example_archive feeds importer finishes, queue the
+  // importer on the next page.
+  if ($feed-&gt;importer()-&gt;id === 'example_archive') {
+    example_feeds_blog_archive_next();
+  }
+}
+
+/**
+ * Enqueue the next page (or the specified page) for the blog archive feed
+ * importer. Check that the feed page exists first.
+ */
+function example_feeds_blog_archive_next($page = -1) {
+  if ($page &lt; 0) {
+    $page = variable_get('example_feeds_blog_archive_page', -1) + 1;
+  }
+
+  $source_url = 'http://example.com/feed/?paged=' . intval($page);
+  feeds_include_library('http_request.inc', 'http_request');
+  $result = http_request_get($source_url, NULL, NULL, NULL, 5);
+  if (in_array($result-&gt;code, array(200, 201, 202, 203, 204, 205, 206))) {
+    // If the request was successful, then queue the job to import the feed.
+    $queue = DrupalQueue::get('example_feeds_blog_archive');
+    $queue-&gt;createItem(array($page));
+    variable_set('example_feeds_blog_archive_page', $page);
+    return $page;
+  }
+  drupal_set_message(t('Cannot fetch page %page-num of the blog archive feed, so ending import.', array('%page-num' =&gt; $page)));
+  return FALSE;
+}
+
+/**
+ * Configure the feed importer to fetch the given page of the blog feed.
+ */
+function example_feeds_blog_archive_get($info) {
+  if (!empty($info[0]) &amp;&amp; $page = intval($info[0])) {
+    $source_url = 'http://example.com/feed/?paged=' . intval($info[0]);
+    $source = feeds_source('example_archive');
+    $source_config = array('FeedsHTTPFetcher' =&gt; array('source' =&gt; $source_url));
+    $source-&gt;addConfig($source_config);
+    $source-&gt;save();
+    $source-&gt;startImport();
+  }
+}</pre><p></p>
+<p dir="ltr">With this code to support the archival import, both the archival and ongoing feed importers can be enabled and ready to run. The archival import will run once to pick up historical content, and the ongoing import will run regularly to pick up new items in the feed.</p>
+<h2 dir="ltr">Providing Administrative Control</h2>
+<p dir="ltr">To round off this solution, it’s important to provide a few minimal administrative controls and status information.</p>
+<p dir="ltr">By using the cron queue worker, the importer will process as many pages as it can during a cron run, and is able to pick up where it leaves off. This allows handling a large number of pages of archival content without worrying about memory or execution time limits. However, it means the number of cron runs it takes to complete the import may vary according from run to run. Therefore, the person managing the import will likely want to see how many pages have been processed.</p>
+<p dir="ltr">What if the importer process has a glitch and stops midway through a run? What if the feed’s source site has an outage causing the import to fail? For these reasons, it’s also crucial to have the ability to “nudge” the importer to try again from where it left off.</p>
+<p dir="ltr">In some cases, you may want to re-run the entire import process. Maybe the ongoing importer did not run frequently enough and missed new content items before they “fell off” the first page of the feed. For these reasons, we need to provide a way to restart the importer as needed.</p>
+<p dir="ltr">The following sample code alters the Feeds import page for the archival importer to add status information on the last page fetched and administrative operations for retrying the next page and restarting the whole import.</p>
+<p>&nbsp;</p><pre class="crayon-plain-tag">/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Handles alterations to the feeds_import_form for importers defined by this
+ * module.
+ */
+function example_feeds_form_feeds_import_form_alter(&amp;$form, &amp;$form_state, $form_id) {
+  if ($form['#importer_id'] === 'example_archive') {
+    $form['source_page_status'] = array(
+      '#type' =&gt; 'fieldset',
+      '#title' =&gt; t('Incremental Fetch Status'),
+      '#weight' =&gt; -1,
+    );
+    $form['source_page_status']['page_num'] = array(
+      '#type' =&gt; 'item',
+      '#title' =&gt; t('Last page fetched'),
+      '#markup' =&gt; variable_get('example_feeds_blog_archive_page', t('Not set')),
+    );
+    $form['source_page_status']['page_retry'] = array(
+      '#type' =&gt; 'submit',
+      '#name' =&gt; 'page_retry',
+      '#value' =&gt; t('Retry next page of import'),
+      '#submit' =&gt; array('example_feeds_form_feeds_import_form_blog_archive_submit'),
+    );
+    $form['source_page_status']['page_restart'] = array(
+      '#type' =&gt; 'submit',
+      '#name' =&gt; 'page_restart',
+      '#value' =&gt; t('Restart import'),
+      '#submit' =&gt; array('example_feeds_form_feeds_import_form_blog_archive_submit'),
+    );
+  }
+}
+
+/**
+ * Form submit handler for custom operations for the blog archive import form.
+ */
+function example_feeds_form_feeds_import_form_blog_archive_submit($form, $form_state) {
+  if (!empty($form_state['clicked_button']['#name'])) {
+    if ($form_state['clicked_button']['#name'] === 'page_retry') {
+      if ($page = example_feeds_blog_archive_next()) {
+        drupal_set_message(t('The blog archive job will process page %page-num on the next cron run.', array('%page-num' =&gt; $page)));
+      }
+    }
+    else if ($form_state['clicked_button']['#name'] === 'page_restart') {
+      variable_del('example_feeds_blog_archive_page');
+      $queue = DrupalQueue::get('example_feeds_blog_archive');
+      $queue-&gt;deleteQueue();
+      drupal_set_message(t('The blog archive job will restart on the next cron run.'));
+    }
+  }
+}</pre><p></p>
+<p dir="ltr">With these administrative controls, the combination of an archival and ongoing feed importer can successfully provide a robust and unified approach to migrating existing content as well as catching newly published content.</p>
+<h2 dir="ltr">Putting It All Together</h2>
+<p dir="ltr">The Feeds contrib modules provides a flexible base for a variety of tasks based on fetching and processing content from external sources. This article illustrates an approach for using Feeds to support an incremental import of archival content. This approach may be useful if you are planning a migration from or integration with another CMS.</p>
+<p dir="ltr">For more on these topics, see <a href="http://www.phase2technology.com/blog/exposing-external-content-to-drupals-search/">Exposing External Content to Drupal&#8217;s Search</a>, <a href="http://www.phase2technology.com/blog/planning-your-content-migration/">Planning Your Content Migration</a>, and the sketches and talk linked from <a href="http://www.phase2technology.com/blog/sketching-a-successful-drupal-migration/">Sketching a Successful Drupal Migration</a>.</p>
+  </body>
+</html>
+

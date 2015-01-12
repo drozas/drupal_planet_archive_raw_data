@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 01 Nov 2013 19:01:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 01 Nov 2013 19:01:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Palantir: How To Git What You Want
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.palantir.net/blog/how-git-what-you-want
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Palantir: How To Git What You Want</title>
+    <base href="http://www.palantir.net/blog/how-git-what-you-want">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="featured-blog-image">  
+      <img typeof="foaf:Image" src="http://www.palantir.net/sites/default/files/styles/bloglandingpage-thumbnail/public/blog/images/bt1.png?itok=Z9_M5KK5" width="262" height="175" alt="A version control strategy will help developers avoid wars with their future selves." title="A version control strategy will help developers avoid wars with their future selves." />  </span>
+            <p>Version control systems (and Git in particular) are getting a lot of love from a variety of developer communities these days. And rightly so! A version control strategy is advantageous for any project that’s being actively developed, and absolutely mandatory for any kind of developer collaboration.</p>
+<p>There are dozens (hundreds? thousands? bajillions?) of articles and blog posts about why Git is so wonderful, not to mention detailed documentation of every little feature of Git, both in print and freely available on the Internet. However, I’ve found much less written about the particular ways in which people are using Git. The features are catalogued in painstaking detail, but when it comes to workflow you’re on your own.</p>
+<p>A Git workflow is a pattern of branching, naming, and generally standardizing the way that you and your team (if you have one) use Git. Does that one little fix get its own branch, or is there a branch that serves as a bucket for small changes? How often do you push, and when do you merge? Every time you make a decision about using Git, from commenting a commit to pushing a release, you’re either adhering to a workflow, or creating a new one.</p>
+<p>Maintaining a consistent workflow is generally acknowledged to be essential for collaboration, but it also offers many benefits to the lone-wolf-type developer. Ever looked at your code from six months ago and wondered what you were doing and how it got that way? Cultivating a disciplined Git workflow can help ensure you have somewhere to look for those answers instead of just scratching your head and trying to reverse-engineer something that six-months-ago-you implemented.</p>
+<p>The linear nature of workflow and the easily overwhelming nature of the information available about Git makes a slide deck the perfect medium for breaking all that info into bite-sized chunks and keeping them in a clear, directional order. It also encourages sharing the information with the rest of your development team/dance troupe/barbershop quartet.</p>
+<p>Feel free to modify the workflow basics presented in the slides below to suit your needs or to use it as example from which to build a completely different workflow. This is not *the one true workflow* or probably even the very best workflow. It is however a basis for a structured, documented workflow for using Git in a team or alone. When a client urgently needs to know, “Was the fix for bug #2345 included in the version that was released on August 9th?” then a clear, retraceable path is a thing you need. Trust me, and heed the wisdom shared with me by Palantir's Bec White: "Avoid starting a war with your future self."</p>
+<h2>Download</h2>
+<p>Download the presentation <a href="http://www.palantir.net/sites/default/files/Git_merge_deck.pdf">Git_merge_deck.pdf</a>.</p>
+  </body>
+</html>
+

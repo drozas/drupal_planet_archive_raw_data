@@ -1,0 +1,29 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 09 Aug 2014 09:44:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 09 Aug 2014 09:44:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Joachim's blog: Using Human Queue Worker to process comments
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.noreiko.com/blog/using-human-queue-worker-process-comments
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Joachim's blog: Using Human Queue Worker to process comments</title>
+    <base href="http://www.noreiko.com/blog/using-human-queue-worker-process-comments">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Some time ago, I released <a href="https://www.drupal.org/project/human_queue_worker">Human Queue Worker</a>, a module that takes the concept of the Drupal Queue system, but where the processing of the items is done by human users rather than an automated process. I say 'takes the concept'; it in fact uses the Drupal Queue to create and claim queue items, but instead of declaring your queue with <a href="http://api.drupal.org/api/function/hook_cron_queue_info/7">hook_cron_queue_info()</a>, you declare it to Human Queue Worker as a queue that humans will be working on.</p>
+<p>This was written for my current project and for a fairly specific need, and I didn't imagine many sites would be using it. However, it has an obvious and popular application: approving comments. I always figured it would be nice if someone wrote a little module to define a comment processing human queue.</p>
+<p>Well, that someone is me, and the time is now. You see, I'm an idiot: when I set up this new blog site of mine, I totally forgot to set up a CAPTCHA, and then when I added Mollon, I didn't set it up properly. So this site has a few hundred spammy comments that I need to delete.</p>
+<p>The problem is that comment management takes time. Unless there are some magical area of the core UI I've completely missed, I can either visit each node and delete them one by one, or use the comment admin form. There, I can mass-delete the ones with obvious spammy titles, but all the others will still need individual inspection.</p>
+<p>The Human Queue UI simplifies this hugely. There's just one page for the queue. When you go to that page, you're presented with an item to process. In the case of comment approval, that's the comment itself, plus the parent node and parent comment to give you some context. To process the comment, click one of two buttons: 'Publish' or 'Delete'. The comment is dealt with, and the form reloads, with a brand new comment for you to process. Which means that the only clicking you do is the action buttons: Publish; Delete; Publish; Delete. (Though with the amount of spam on my site, it's probably Delete; Delete; Delete, like the Cybermen.)</p>
+<p>I've not timed it, but I reckon I can probably go at quite a rate. And that's with just one of me: the core Queue system guarantees that only one worker can claim an item at any one time, and that applies to human workers too. So if another user were to work the queue too, by going to the same page, they would be getting shown different comments to work on, and we'd work through the comments at twice the rate.</p>
+<p>Now I just need to find a compliant friend and make them into my worker drone. If you're interested, please don't post a comment!</p>
+</div></div></div>
+  </body>
+</html>
+

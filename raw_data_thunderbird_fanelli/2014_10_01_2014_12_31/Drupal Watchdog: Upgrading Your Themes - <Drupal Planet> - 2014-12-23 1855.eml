@@ -1,0 +1,39 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 23 Dec 2014 17:55:04 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 23 Dec 2014 17:55:04 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Watchdog: Upgrading Your Themes
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drupalwatchdog.com/volume-4/issue-1/upgrading-your-themes
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Watchdog: Upgrading Your Themes</title>
+    <base href="http://drupalwatchdog.com/volume-4/issue-1/upgrading-your-themes">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field--article-edit-printtype field-type-list-text field-label-hidden field--rss">
+              Feature        </div>
+<div class="field field--article-body field-type-text-long field-label-hidden field--rss">
+              <p><img src="http://cdn1.drupalwatchdog.com/sites/default/files/field/image/4.1-UpgradingYourThemes-web.jpg" alt="photo" class="img-responsive img-thumbnail" width="50%" align="right" /><br />
+The rumors are true: pretty much everything has changed in Drupal theming in the latest version.</p>
+<p>At first it seems scary, but as you start digging into things, I think you’ll come to realize that the biggest changes are nearly invisible. Yes, there’s a new template engine with a different syntax, but the concept of template files which nest into one another still exists. We still have regions which can be loaded with blocks. We still have display modes. And you’ll still be working with Views. So while almost everything has changed, there’s also a lot that is quickly going to feel quite comfortable.</p>
+<p>The biggest change, of course, is the retirement of PHPTemplate in favor of Twig. I have to admit that I’m an old-schooler who didn’t really find PHPTemplate all that difficult. (I will also admit that I’ve been known to throw coding elegance out the window in favor of brute force from time-to-time.) Generally, I don’t buy the argument that Twig, on its own, has reduced the complexity of the themes.</p>
+<p>Let me show you what I mean. In PHPTemplate, we might have done something like this:</p>
+<pre>
+&lt;?php print render($action_links); ?&gt;
+</pre><p>And in Twig, the equivalent statement looks like this:</p>
+<pre>
+{{ action_links }}
+</pre><p>Yes, the second line is shorter, but it also feels like it has more magic going on. If you’ve been begging to get your code streamlined, I think you’re going to love Twig. Even if you liked the PHPTemplate way of doing things, there are <em>a lot</em> of advantages we’ve gained with the upgrade to Twig.</p>
+<ol><li>Twig allows us to simplify themes. You are welcome to embed simple logic statements right into your template files.
+</li><li>Twig makes themes more secure. Even though you can embed logic into your template files, it’s not as powerful as PHPTemplate, as there is no PHP allowed in a Twig file. (Try it! You’ll get errors.)
+</li><li>The team working on Twig has dramatically reduced the complexity of the entire theme system.
+</li></ol><p>            I have the utmost respect for those who worked on this process. They didn’t simply duct tape a new templating system onto Drupal. They took the time to carefully comb over Drupal and find the things that were confusing, outdated, or just didn’t belong.</p>        </div>
+  </body>
+</html>
+

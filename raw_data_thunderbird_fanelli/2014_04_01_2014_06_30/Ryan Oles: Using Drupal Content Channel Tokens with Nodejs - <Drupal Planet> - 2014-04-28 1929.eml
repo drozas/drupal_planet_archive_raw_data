@@ -1,0 +1,74 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 28 Apr 2014 17:29:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 28 Apr 2014 17:29:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Ryan Oles: Using Drupal Content Channel Tokens with Nodejs
+Content-Transfer-Encoding: 8bit
+Content-Base: http://theoleschool.com/blog/using-drupal-content-channel-tokens-nodejs
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Ryan Oles: Using Drupal Content Channel Tokens with Nodejs</title>
+    <base href="http://theoleschool.com/blog/using-drupal-content-channel-tokens-nodejs">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>You've decided to add a bit of Node.js functionality to your Drupal site using the <a href="https://drupal.org/project/nodejs">Drupal Nodejs Module</a>.  After <a href="http://theoleschool.com/blog/module-development-nodejs-integration">some reading</a> you realize you need to be setting up user message channels using <span class="geshifilter"><code class="php geshifilter-php">hook_nodejs_user_channels</code></span> or possibly <span class="geshifilter"><code class="php geshifilter-php">nodejs_add_user_to_channel</code></span>. This allows your application to send socket messages to groups of users.  Great!  But you're writing no simple application. You want to go one step further and manage these channels based not only on some property of the user object, but all users who may be currently viewing a particular Drupal served page.  Suddenly the typical user channels no longer cut it. Try as you might, you'll find yourself quickly descending into channel management hell. There has got to be a better way. Thankfully content token channels are here to help.</p>
+
+<h3>Send a Message Based on the Content Being Viewed</h3>
+
+<p>You can think of content token channels as a per page (or piece of content) channel subscription.  This differs from the user channels in that it targets users who are currently viewing a specific page rather than users targeted by some property of the user object (regardless of where they are on the site).</p>
+
+<p>There are two main PHP functions to implement a token channel.  <span class="geshifilter"><code class="php geshifilter-php">nodejs_send_content_channel_token</code></span> to generate a token channel for a given piece of content, and <span class="geshifilter"><code class="php geshifilter-php">nodejs_send_content_channel_message</code></span> to send a message to users subscribed to a given content channel.</p>
+
+<p>To illustrate this lets assume we want to create a channel to send user messages when they are viewing a Drupal node of type <em>page</em>.  To begin we will need to setup our content channel for that node type.  A good place to do this would be <span class="geshifilter"><code class="php geshifilter-php">hook_node_view</code></span> which fires when a user views a node.</p>
+
+<div class="geshifilter"><div class="php geshifilter-php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">function</span> example_node_view<span style="color: #009900;">&#40;</span><span style="color: #000088;">$node</span><span style="color: #339933;">,</span> <span style="color: #000088;">$view_mode</span><span style="color: #339933;">,</span> <span style="color: #000088;">$langcode</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; <span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$node</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">type</span> <span style="color: #339933;">==</span> <span style="color: #0000ff;">&quot;page&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; nodejs_send_content_channel_token<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'page_node_channel'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+&nbsp; <span style="color: #009900;">&#125;</span><br />
+<span style="color: #009900;">&#125;</span></div></div>
+
+<p>Now every time a node of type <em>page</em> is viewed the Node.js server is notified of the <em>page&#95;node&#95;channel</em> content channel. Node.js then adds the channel to the user for whom the page was rendered.</p>
+
+<p>From here if we wish to send a message to all of the users viewing a node of type <em>page</em> we make a simple call to <span class="geshifilter"><code class="php geshifilter-php">nodejs_send_content_channel_message</code></span>.  When and where you choose to fire this message is up to you.  Possibly you want to notify users if the page they are viewing has been updated (<span class="geshifilter"><code class="php geshifilter-php">hook_node_update</code></span>), a user logs in (<span class="geshifilter"><code class="php geshifilter-php">hook_user_login</code></span>), or some new content was added (<span class="geshifilter"><code class="php geshifilter-php">hook_node_insert</code></span>).</p>
+
+<div class="geshifilter"><div class="php geshifilter-php" style="font-family:monospace;"><span style="color: #666666; font-style: italic;">// Build a message object</span><br />
+<span style="color: #000088;">$message</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> stdClass<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #000088;">$message</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">channel</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'page_node_channel'</span><span style="color: #339933;">;</span><br />
+<span style="color: #000088;">$message</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">data</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'body'</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'Hello World!'</span><span style="color: #339933;">;</span><br />
+<br />
+<span style="color: #666666; font-style: italic;">// Send the message to the channel we created</span><br />
+nodejs_send_content_channel_message<span style="color: #009900;">&#40;</span><span style="color: #000088;">$message</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></div></div>
+
+<p>And that's about it!  When <span class="geshifilter"><code class="php geshifilter-php">nodejs_send_content_channel_message</code></span> fires our message will be broadcast to all users subscribed to the page_node_channel.  In this case all users who are currently viewing a node of type <em>page</em>.  This message behaves like any other on the Node.js side, so you could send it to a custom callback handler, as mentioned <a href="http://theoleschool.com/blog/module-development-nodejs-integration">in an earlier post</a>.</p>
+
+<h3>Token Messages From an Node.js Extension</h3>
+
+<p>If you are writing a Node.js server extension and wish to send a message to a content channel, it is worth noting that there is no immediately exposed functionality to do this.  However, Node.js server extensions are aware of what the content channels are via <span class="geshifilter"><code class="php geshifilter-php">config<span style="color: #339933;">.</span>tokenChannels</code></span>. This allows us to mimic the functionality of the Drupal Node.js server with a helper method in our server extension.</p>
+
+<div class="geshifilter"><div class="jquery geshifilter-jquery" style="font-family:monospace;"><span style="color: #003366; font-weight: bold;">function</span> sendMessageToTokenChannel<span style="color: #009900;">&#40;</span>message<span style="color: #339933;">,</span> config<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; <span style="color: #000066; font-weight: bold;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">!</span>message.<span style="color: #660066;">hasOwnProperty</span><span style="color: #009900;">&#40;</span><span style="color: #3366CC;">'channel'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; console.<span style="color: #660066;">log</span><span style="color: #009900;">&#40;</span><span style="color: #3366CC;">'publishMessageToContentChannel: An invalid message object was provided.'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+&nbsp; &nbsp; <span style="color: #000066; font-weight: bold;">return</span><span style="color: #339933;">;</span><br />
+&nbsp; <span style="color: #009900;">&#125;</span><br />
+&nbsp; <span style="color: #000066; font-weight: bold;">if</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">!</span>config.<span style="color: #660066;">tokenChannels</span>.<span style="color: #660066;">hasOwnProperty</span><span style="color: #009900;">&#40;</span>message.<span style="color: #660066;">channel</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; console.<span style="color: #660066;">log</span><span style="color: #009900;">&#40;</span><span style="color: #3366CC;">'publishMessageToContentChannel: The channel &quot;'</span> <span style="color: #339933;">+</span> message.<span style="color: #660066;">channel</span> <span style="color: #339933;">+</span> <span style="color: #3366CC;">'&quot; doesn<span style="color: #000099; font-weight: bold;">\'</span>t exist.'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+&nbsp; &nbsp; <span style="color: #000066; font-weight: bold;">return</span><span style="color: #339933;">;</span><br />
+&nbsp; <span style="color: #009900;">&#125;</span><br />
+<br />
+&nbsp; <span style="color: #000066; font-weight: bold;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #003366; font-weight: bold;">var</span> socketId <span style="color: #000066; font-weight: bold;">in</span> config.<span style="color: #660066;">tokenChannels</span><span style="color: #009900;">&#91;</span>message.<span style="color: #660066;">channel</span><span style="color: #009900;">&#93;</span>.<span style="color: #660066;">sockets</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; &nbsp; config.<span style="color: #660066;">publishMessageToClient</span><span style="color: #009900;">&#40;</span>socketId<span style="color: #339933;">,</span> message<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+&nbsp; <span style="color: #009900;">&#125;</span><br />
+<span style="color: #009900;">&#125;</span></div></div>
+
+<p>Adding this method to your server extension, will allow you to send messages to a content channel, by passing the message and config objects from within your <span class="geshifilter"><code class="php geshifilter-php">exports<span style="color: #339933;">.</span>setup <span style="color: #000000; font-weight: bold;">function</span></code></span>.</p>
+
+<p>Using content token channels has greatly simplified several of the Drupal/Node.js projects I have done.  However, it wasn't immediately apparent that this functionality existed.  So I hope this helps to further clarify the capabilities of this module.</p>
+</div></div></div>
+  </body>
+</html>
+

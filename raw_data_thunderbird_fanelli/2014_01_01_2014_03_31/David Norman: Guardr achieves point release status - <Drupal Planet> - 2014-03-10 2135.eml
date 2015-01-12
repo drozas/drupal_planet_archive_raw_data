@@ -1,0 +1,46 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 10 Mar 2014 20:35:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 10 Mar 2014 20:35:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: David Norman: Guardr achieves point release status
+Content-Transfer-Encoding: 8bit
+Content-Base: https://deekayen.net/guardr-point-release
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>David Norman: Guardr achieves point release status</title>
+    <base href="https://deekayen.net/guardr-point-release">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+  
+  
+                <p>The first point release of the <a href="https://drupal.org/project/guardr">Guardr</a> distribution for Drupal was released last week. Though the Guardr node wasn't created until May 2012, the project actually started about 5 years ago. The product follows much of the history of Drupal - as a collaboration between many developers across multiple different shops. The reality is that the Guardr make file is just a way to organize a crap-load of work that was done in module contrib land.</p>
+<p>I was faced with hardening Drupal beyond the built-in controls as part of a project for a Fortune 100 company. At the time, my thoughts were to turn Drupal from a social publishing platform into a business application. One of my project requirements was to conform to business practices that would limit users' sessions - to make sure when someone shared a login at work that it could only be used by one person at a time. Shared logins break a security principle of accountability. As long as users are sharing the same account, nobody can tell for sure who updated node content or changed site configuration. That's when I started committing patches to the <a href="https://drupal.org/project/session_limit">Session Limit</a> project.</p>
+<p>The <a href="http://drupalsecurityreport.org/">Drupal Security Report</a>, updated recently in December 2013, enumerates how Drupal is secure by default and how each of the security points match to the <a href="https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project">OWASP Top 10</a> vulnerabilities for web applications. The mitigations for OWASP Top 10 items haven't changed substantially over the past 5 years in Drupal core.</p>
+<p>Though Drupal's default configuration sends seemingly harmless information, Guardr goes an extra step - it checks for security updates by default. It seems odd that I should even have to tout that as a feature. Drupal tries to be helpful by displaying errors to the screen after the installation is complete.</p>
+<p>Guardr's install profile disables displaying error reporting by default, silently logging them instead. You should be reviewing your logs regularly anyway. Every time Drupal has to log a PHP warning, a deprecated function, or Drupal nuance, it drags down your database and extends your page load times. Even if you mess up in a big way, Guardr hides fatal PHP errors, too.</p>
+<p>Part of Drupal's history is as a social platform. Even though the forum module has always been a joke to usefulness, the default new user rules permit new user registration without administrator approval - again, something that Guardr locks down.</p>
+<p>While <a href="https://drupal.org/project/logintoboggan">LoginTobogan</a> was a great introduction for usability improvement, allowing users to login using their email address is a security weakness. I recently just added my <em>real</em> email address to the footer of my blog. If I then also allowed anyone on the Internet to login using my email address, the evil <em>they</em> would also have half of the credentials needed to break into my account. Guardr removes usernames from the default outgoing email texts, then combines the <a href="https://drupal.org/project/realname">Realname</a> module to help keep login usernames private. If the attacker doesn't know the username or their password, they've really got a lot of username/password combination permutations to try. Think of it like a poor man's two-factor authentication.</p>
+<p>The Internet has several lists of modules that make Drupal sites more secure, but it's things like the pairing of modules like Realname with the removal of usernames in outgoing core emails that's what makes Guardr stand out. It's the build script. Another example - the <a href="https://drupal.org/project/remove_generator">Remove Generator</a> module removes the META tag that displays "Drupal 7" in the HTML source of every page, but Guardr's build also removes the CHANGELOG.txt file from the root directory, another easy vector for determining both the software and the version of CMS. Why give the vulnerability scanners and penetration testers the easy way out? Let <em>them</em> try some Wordpress vulnerabilities first so your web application firewall and intrusion detection system can flag them well before they get to specific Drupal version exploits.</p>
+<p>Starting with Guardr takes away a bunch of the headaches for securing your site from the start. Imagine having a password policy in place that even forces UID 1 to have a reasonably secure password or which even denies UID 1 the ability to activate the PHP input filter. Run your code through version control, test it, review it, wrap it in accountability, tag it, and don't skip the proper workflow.</p>
+<p>Guardr's configuration keeps enough logs that you can actually go back a few weeks to review what your users have been doing, who's accountable, and pin-point events at specific times. <a href="https://drupal.org/project/role_watchdog">Role watchdog</a> module helps you track down scenarios where a user gave themselves extra access through a role change, then removed the role later - it's logged.</p>
+<p>All this configuration and the modules to go with it are maintained by people who have studied advanced security issues, who work for companies who pursue security-conscious customers, and have proven over several years to contribute back to the Drupal security co-op.</p>
+<p>It's my opinion that starting with <a href="https://drupal.org/project/guardr">Guardr</a> and using the modules therein, sway the balance of Drupal towards being more secure without burdening administrators and users with excess annoyances and overhead. It gives you tools for maintaining uptime, auditing for accountability, injecting countermeasures for attacks, and enforcing policies to make active countermeasures less necessary.</p>
+        </div>
+
+<!-- field.tpl -->
+
+<div class="field field-name-taxonomyextra field-type-taxonomy-term-reference field-label-above">
+  
+      <label>Post categories</label>
+  
+                <div class="field-item"><i class="fa fa-tag"></i> <a href="/taxonomy/term/27">Drupal</a></div>
+        </div>
+  </body>
+</html>
+

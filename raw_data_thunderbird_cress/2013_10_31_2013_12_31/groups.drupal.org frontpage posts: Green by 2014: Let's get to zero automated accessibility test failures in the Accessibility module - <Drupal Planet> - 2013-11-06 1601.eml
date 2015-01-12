@@ -1,0 +1,81 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 06 Nov 2013 16:01:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 06 Nov 2013 16:01:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: groups.drupal.org frontpage posts: Green by 2014: Let's get to zero automated accessibility test failures in the Accessibility module
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/366873
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>groups.drupal.org frontpage posts: Green by 2014: Let's get to zero automated accessibility test failures in the Accessibility module</title>
+    <base href="https://groups.drupal.org/node/366873">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Executive summary</h2>
+<p>We want an <a href="http://drupala11y.org/">accessibility testing green board for Drupal</a>. Currently, the <a href="https://drupal.org/project/accessibility" title="The accessibility module project page on drupal.org">testing platform</a> and <a href="https://github.com/kevee/quail" title="QUAIL accessibility testing github repository">tests</a> are under development and progress is solid, thanks in major part to <a href="https://drupal.org/user/125882" title="Drupal.org user profile for Kevin Miller">Kevin Miller (kevee)</a>. The tests register 257 failures currently, although some might be false positives and duplicates. We need developers, testers and reviewers to get us to robust test coverage and zero failed tests against Drupal 8 by 2014.</p>
+<p>We’re calling this effort <em>Green by 2014</em>.</p>
+<p>Please tag all issues with <strong>accessibility</strong> and <strong>Green by 2014</strong>.</p>
+<h2>Current efforts to improve accessibility in Drupal 8</h2>
+<p>The Drupal 8 development cycle has included concerted effort to improve the accessibility of administration features and content. But we’re not satisfied by uneven improvements. We want Drupal 8 to be the most accessible content management system in the world.</p>
+<p><a href="https://drupal.org/project/accessibility" title="The accessibility module project page on drupal.org">The accessibility module</a> describes itself as “a common framework for checking accessibility of a webpage". It provides facilities to check content and code against standard accessibility guidelines.</p>
+<p>This module and its tests are still under active development. We need developers to assist us in bringing these efforts to conclusion within the Drupal 8 development timeframe so that we can declare with conviction and evidence that Drupal 8 meets <a href="http://www.section508.gov/">Section 508</a> and <a href="http://www.w3.org/WAI/WCAG2AA-Conformance" title="Level AA Conformance to Web Content Accessibility Guidelines 2.0">WCAG AA</a> standards.</p>
+<h2>Update the Accessibility module code to be compatible with the latest D8 HEAD APIs</h2>
+<p>Drupal 8 HEAD, although largely stable, still undergoes occasional pattern and API changes. Given this reality, we need to spend time updating the Accessibility module’s 8.x branch to keep up with these changes. Our effort to get to a automated testing green board must start with updating the Accessibility module so that testers can run it locally.</p>
+<p>We need individuals who are familiar with Drupal 8 module development in order to advance development of the accessibility module. These folks will:</p>
+<ol>
+<li>Create issues in the <a href="https://drupal.org/project/issues/accessibility?categories=All">the Accessibility module issue queue</a>.</li>
+<li>If you can, propose patches to resolve them.</li>
+<li>Patch reviewers. Please follow issues that you can contribute to!</li>
+<li>Please tag your issues with <strong>Green by 2014</strong>.</li>
+</ol>
+<h2>Making Drupal more accessible</h2>
+<p>The Accessibility module helps us identify where Drupal’s access support falls below that of Section 508 and WCAG standards.</p>
+<p>This testing tool runs many tens of tests across numerous pages of a Drupal installation. You can either run the tool locally through the Accessibility module or view the daily run at <a href="http://drupala11y.org/">Drupal Accessibility Status (beta)</a>.</p>
+<p>The tool is not perfect yet, though. Some tests return <a href="https://github.com/kevee/quail/issues/48" title="Example false positive issue in the QUAIL repo issues queue.">false positives</a>, meaning that an identified issue is not really an issue. In this case, we need to adjust the test to remove the false positive. For legitimate test failures, we must log an issue against Drupal core and propose a patch to fix the issue.</p>
+<h2>Logging accessibility issues against Drupal core</h2>
+<p>In cases of an actual accessibility issue, we must first create an issue to describe it and then address that issue with a patch. The Accessibility module reports issues in a table layout. The test name, theme hook, theme item (function or template) and and output markup are provided. I’ve given one example here in a list format.</p>
+<ul>
+<li>Test: Text has appropriate contrast</li>
+<li>Theme hook: page</li>
+<li>Theme item: core/themes/bartik/templates/page.html.twig</li>
+<li>Element: <strong></strong></li>
+</ul>
+<p><a href="https://drupal.org/user/27930" title="User profile for mgifford on drupal.org">mgifford</a> gives us a great example of a focused issue that arose from the automated tests and <a href="https://drupal.org/user/1666662" title="User profile for anandps on drupal.org">anandps</a> provides a patch to review.</p>
+<p><a href="https://drupal.org/node/2125621" title="Drupal.org issues summary">drupala11y.org finds two new color contrast issues</a>.</p>
+<p>In this issue, mgifford gives us a reference to the failed test, the specific code that’s failing and a possible path for a solution.</p>
+<blockquote><p>
+Text has appropriate contrast<br />
+page: core/themes/bartik/templates/page.html.twig </p>
+<p><div class="codeblock"><code>&lt;div class=\section clearfix\&gt;&lt;/div&gt;<br />&lt;div id=\name-and-slogan\&gt;&lt;/div&gt;</code></div></p>
+<p>Does have color contrast problems according to this new <a href="https://chrome.google.com/webstore/detail/color-contrast-analyzer/dagdlcijhfbmgkjokkjicnnfimlebcll?hl=en">Chrome Color Contrast plugin</a>.
+</p></blockquote>
+<p>In your issues, you are not expected to provide a solution. Simply logging the issues gives us a great start to addressing it.</p>
+<p>Drupal already has great issue documenting guidelines in <a href="https://drupal.org/node/73179" title="Tips for making a good issue report on drupal.org">how to create a good issue report</a>. Please follow those guidelines when creating a report.</p>
+<p>Please tag your issues with <strong>accessibility</strong> and <strong>Green by 2014</strong>.</p>
+<h2>False positives</h2>
+<p>The automated testing tool might report an error that occurs becuase of a poorly written test, not because we have an issue with Drupal core code. This is a false positive failure. Most likely the parameters of the test need to be adjusted. You should always first consider, when addressing a test failure, if the test might be at fault if you find in your investigation that the Drupal output passes your manual testing.</p>
+<p>False positives must be fixed in the <a href="https://github.com/kevee/quail" title="QUAIL accessibility testing github repository">QUAIL project</a> directly on Github. To address them, take the following steps (as far as you are able).</p>
+<ol>
+<li>Create an issue in the <a href="https://github.com/kevee/quail/issues">QUAIL project issue queue</a>.</li>
+<li>Tag the issue false positive and Green by 2014.</li>
+<li>If you can, propose a patch to resolve it.</li>
+</ol>
+<h2>Documenting our coverage</h2>
+<p>It’s well and good to have great test coverage, but we need to communicate that coverage to the outside world. Specifically if we are to make <a href="http://www.w3.org/TR/UNDERSTANDING-WCAG20/conformance.html#uc-conformance-requirements-head" title="Understanding Conformance to WCAG guidelines">claims of conformance</a>, we must be very sure that our tests convey conformance.</p>
+<p>That requires us to correlate our existing tests to sections of the specification and explain how the test satisfies that section. The current state of correlations is documented in the <a href="https://github.com/kevee/quail/wiki/Test-Guideline-alignment">Test guideline alignment</a>.</p>
+<p><a href="https://help.github.com/articles/using-pull-requests" title="How to send a Github pull request">Send a pull request</a> to update any of the documentation in the QUAIL github repo.</p>
+<h2>Verification tools</h2>
+<p>You might try the following browser tools, among numerous others, when verifying accessibility tests.</p>
+<p><a href="http://wave.webaim.org/toolbar/">Wave plugin</a> for Firefox<br />
+<a href="https://addons.mozilla.org/en-US/firefox/addon/wcag-contrast-checker/developers">Color Checker</a> for Firefox<br />
+<a href="https://chrome.google.com/webstore/detail/color-contrast-analyzer/dagdlcijhfbmgkjokkjicnnfimlebcll?hl=en">Chrome color contrast tool</a></p>
+<h2>Please help out!</h2>
+<p>We intend to make Drupal 8 the most accessible content authoring and management tool ever. And we intend to make that claim verifiable in part through robust and wide automated testing coverage. We need your skills, dedication and compassion to make it a reality!</p>
+  </body>
+</html>
+

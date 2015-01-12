@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 19 Oct 2013 10:21:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 19 Oct 2013 10:21:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: KnackForge: How to login as any user in Drupal site?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://knackforge.com/blog/sivaji/how-login-any-user-drupal-site
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>KnackForge: How to login as any user in Drupal site?</title>
+    <base href="http://knackforge.com/blog/sivaji/how-login-any-user-drupal-site">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It is no surprise that production sites at times may work differently from dev / stage due to various factors. And in such circumstances, there is a need to login as real site user to be able to reproduce the issue. Of course it is not easy to fix a bug unless it is really reproduced by developer.</p>
+<p>In one of my recent works, I found a simple trick using <a href="http://drupal.org/project/drush">Drush</a> to get access to real user account without distrubing his/her account credentials like login name, email, password, or similar.</p></div></div></div>
+  </body>
+</html>
+

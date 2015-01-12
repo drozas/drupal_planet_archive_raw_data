@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 21 Aug 2013 13:44:06 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 21 Aug 2013 13:44:06 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Midwestern Mac, LLC: Overriding a template file (.tpl.php) from a module
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.midwesternmac.com/blogs/jeff-geerling/overriding-template-file
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Midwestern Mac, LLC: Overriding a template file (.tpl.php) from a module</title>
+    <base href="http://www.midwesternmac.com/blogs/jeff-geerling/overriding-template-file">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>There are many times when a custom module provides functionality that requires a tweaked or radically altered template file, either for a node, a field, a view, or something else.</p>
+<p>While it's often a better idea to use a preprocess or alter function to accomplish what you're doing, there are many times where you need to change the markup/structure of the HTML, and modifying a template directly is the only way to do it. In these cases, if you're writing a generic custom module that needs to be shared among different sites with different themes, you can't just throw the modified template into each theme, because you'd have to make sure each of the sites' themes has the same file, and updating it would be a tough proposition.</p>
+<p>I like to keep module-based functionality inside modules themselves, so I put all templates that do specific things relating to that module into a 'templates' subdirectory.</p></div></div></div>
+  </body>
+</html>
+

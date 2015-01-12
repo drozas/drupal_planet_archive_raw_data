@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 30 May 2014 20:58:31 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 30 May 2014 20:58:31 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: drunomics: An unified field repository & Entity storage improvements for Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://drunomics.com/en/blog/unified-field-repository-entity-storage-improvements-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>drunomics: An unified field repository & Entity storage improvements for Drupal 8</title>
+    <base href="http://drunomics.com/en/blog/unified-field-repository-entity-storage-improvements-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Since the DrupalDevDays in Szeged we've worked a lot on getting the remaining beta blockers of the Entity system done, which are mostely centered around an unified field repository and entity storage improvements; i.e. automatic schema generation for your content entities!</p>
+<p>We've been making great progress on the unified field repository front. There are new field info methods that are provided by the entity manager now, which cover the entity base fields as well as configurable or other module added fields. Those new methods replace the old field_info_fields() or FieldInfo methods, which we've been removed from Drupal 8 already. For more details, see this<a href="https://drupal.org/node/2260037"> change record</a>.</p>
+<p>The work on automatic schema generation is not yet finished though, although we've a huge (300kb) RTBC patch which removes hook_schema() implementations and replaces them with automatically generated schema derived from the entity base field schema. Once that's in, we still have to take care of letting the system handle changes to the field definitions and consequently the schema (<a href="https://drupal.org/node/1498720">issue</a>). Given that it will be possible to automatically generate an entity schema based on a site needs, i.e. we'll have entity storage capable of handling translations for multilingual sites. Actually, this is the primary reaon for getting this feature done that late in the cycle at all. However, besides that, I must say I'm really looking forward to not having to define the schema manually and I'm excited on how easy that will make it to define a new entity type!</p>
+<p>I want to thank Acquia who sponsored some of my contribution time during the last weeks and thus enabled us to move on faster. Furthermore, I want to thank <a href="https://drupal.org/user/107158">tstoeckler</a>, <a href="https://drupal.org/u/plach">plach</a>, <a href="https://drupal.org/u/berdir">berdir</a> and <a href="https://drupal.org/u/jessebeach">jessebeach</a> who all did an amazing work on the mentioned issues!</p>
+  </body>
+</html>
+

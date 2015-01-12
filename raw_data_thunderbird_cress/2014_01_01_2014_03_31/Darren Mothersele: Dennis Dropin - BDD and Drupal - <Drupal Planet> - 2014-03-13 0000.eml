@@ -1,0 +1,91 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 13 Mar 2014 00:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 13 Mar 2014 00:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Darren Mothersele: Dennis Dropin - BDD and Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.darrenmothersele.com//blog/2014/03/13/dennis-dropin-drupal-bdd
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Darren Mothersele: Dennis Dropin - BDD and Drupal</title>
+    <base href="http://www.darrenmothersele.com//blog/2014/03/13/dennis-dropin-drupal-bdd">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Last night I attended the
+<a href="http://www.meetup.com/DennisDropIn-Drupal-OpenSource/events/169988982/">Dennis Dropin</a>
+event on Behavior-Driven Development (BDD) and Drupal. This is a new event on the
+Drupal London scene hosted by Dennis Publishing.</p>
+
+<!--break-->
+
+<p>I&#39;ve been attending Drupal events in London since 2007, and there have been
+a wide variety of different types of events. There have been high points, such as
+<a href="http://darrenmothersele.com/blog/2013/03/05/drupal-camp-london-review.html">Drupal Camp London 2013</a>,
+and low points (we had quite a lot of Microsoft sponsored events, but one in particular
+springs to mind where every presentation was also either paid for by Microsoft or
+about Microsoft technology - I&#39;m not complaining - I have no right to complain
+as I&#39;ve eaten enough of their free pizza over the years!). From
+Drupal Camps, Drupalcon, code sprints, workshops, trainings, and just regular pub meetups,
+London has a really exciting and active Drupal-scene.</p>
+
+<p>Do we need another event?</p>
+
+<p>Well, if this first event in the series is anything to go by I&#39;d say
+definitely, yes please!
+The event took place in the boardroom at Dennis Publishing, so it was limited
+in capacity, about 25 people in attendance and the room was nicely packed.
+<a href="https://twitter.com/PaulLomax">Paul Lomax</a>, the CTO, did say that they had plans
+for a bigger space so by July we could see this expand into a
+bigger event.</p>
+
+<p>I can think of at least three reasons why this event was a success:</p>
+
+<ul>
+<li>It really felt like this was Dennis Publishing wanting to give something back
+to the Drupal community. The two presentations were perfectly matched.
+The first to motivate reasons for adopting BDD, and the second to give practical examples.
+There was enough technical detail to be useful, without being overwhelming.</li>
+<li>Dennis&#39; approach to digital is exemplary, probably due to Paul&#39;s leadership.
+It comes across that the whole team have the right balance of
+formal process and pragmatism.</li>
+<li>It seemed like a lot of the Dennis team were in attendance and the experience
+level of attendees was high. This meant there were some interesting discussions
+around the presentations too.</li>
+</ul>
+
+<p>The event had a natural split in two parts, which I&#39;d never really considered
+before, but perhaps others planning events could take into account. Pairing a
+presentation of motivating business cases with a more technical presentation of
+practical examples and inner workings.</p>
+
+<p>It was interesting to hear in the discussion alongside the presentations
+real world cases of how BDD had caught bugs that would have cost them
+ad revenue or resulted in financial losses if they had made it into production.</p>
+
+<p>I asked about Continuous Deployment and if introducing testing and increased the frequency of deployment.
+Paul confirmed they had been able to do more regular deployments, but gave
+a good reason (one I hadn&#39;t thought of) for why Continuous Deployment is not
+viable in a Drupal environment. His argument was that when you do a deployment
+you have to do a cache clear, and when you do a cache clear you clear the form
+cache. This kicks out any content editors that might be working on the site
+so deployments have to be limited and controlled. This lead to some discussion
+of a growl-like notification system with Node.js to push notifications to
+content editors logged in to the site.</p>
+
+<p>Another really interesting idea was the integration of visual diff into
+the Behat tests. This allows them to do a pixel-by-pixel comparison between
+the staging environment and production to flag up any major changes. A great
+extra precaution to pick up any bugs that may cause blocks to disappear or
+display incorrectly.</p>
+
+<p>The next event in the series,
+<a href="http://www.meetup.com/DennisDropIn-Drupal-OpenSource/events/169953872/">Responsive Web design: How Dennis are skinning this cat</a> is scheduled for April 16th. Already 17 people
+signed up to the Meetup group so I hope I get in!</p>
+  </body>
+</html>
+

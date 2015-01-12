@@ -1,0 +1,160 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 23 May 2014 04:20:51 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 23 May 2014 04:20:51 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal 8 and iOS: Login to Drupal 8 with REST and http basic_auth from your iPhone
+Content-Transfer-Encoding: 8bit
+Content-Base: http://tntfoss-vivekvpandya.rhcloud.com/node/16
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal 8 and iOS: Login to Drupal 8 with REST and http basic_auth from your iPhone</title>
+    <base href="http://tntfoss-vivekvpandya.rhcloud.com/node/16">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="field field-node--title field-name-title field-type-string field-label-hidden" data-quickedit-field-id="node/16/title/en/rss">Login to Drupal 8 with REST and http basic_auth from your iPhone</span>
+<div class="field field-node--body field-name-body field-type-text-with-summary field-label-hidden" data-quickedit-field-id="node/16/body/en/rss">
+    <div class="field-items">
+          <div class="field-item" property="schema:text"><p><span>Let me start form scratch. When a user tries to access a resource on Drupal site that requires special permission or roles, a user have to login and give his identity to Drupal. Similarly if you enable REST support for a resource on your Drupal 8 site for which you want that user should give their identity first that you can choose authentication method such as http  basic_auth to cookie_auth to provide credential along with request to resource. Http basic_auth credential can be passed as base64encoded string value for “Authorization” header. </span></p>
+
+<p><span>As in REST each request should contain all necessary information to be processed if your application tries to access such resource that requires user identity you have to pass credential with “Authorization” header. So I have decide to verify user credential first and then store username and password in “keychain” on my iOS application and when ever server requires base64encoded  credential I can pass it with “Authorization” header. If user logs off then my application will delete the keychain item and also remove the credential information from future requests. In this flow it may possible that a user has logged on with your application and from Drupal site username, password combination has changed. In this case when user tries to access content which requires authentication server will response with 403 (Access forbidden) then application can ask user to login first. This is the flow for login and logout activity.</span></p>
+
+<p>To accomplish this flow I have made one custom module that has only one route and this route it self requires authentication via http basic_auth and on successful authentication it returns a JSON object with authenticated user details. These details can be used in application. Here is controller code and routing.yml file for that module.</p>
+
+<p> </p>
+<code>
+<p>routing.yml file</p>
+
+<p> </p>
+
+<p>uauth_page:</p>
+
+<p>  path: '/user/details'</p>
+
+<p>  options:</p>
+
+<p>    _auth: [ 'basic_auth' ]</p>
+
+<p>  defaults:</p>
+
+<p>    _content: 'Drupal\uauth\Controller\UauthController::uauthPage'</p>
+
+<p>    _title: 'A simple module'</p>
+
+<p>  requirements:</p>
+
+<p>    _role: 'authenticated , administrator’</p>
+
+
+
+<p><span>Lets first start with routing.yml file. This is new routing system due to symphony. Here first we give a machine name to a route like uauth_page: in my case followed by path (i.e is a part of URL to match with) ‘/user/details/‘. In routing.yml files some fields are required for each route like ‘defaults:’ because it offers a page call back when some one visit this route in my case it will be uauthPage() method from my controller object. In ‘options:’ I have specified authentication type as basic_auth. For more details about new routing system please read <a href="https://drupal.org/node/1800686"><span>https://drupal.org/node/1800686</span></a>.</span></p>
+
+<p> </p>
+
+<p><span>So we have set a route which requires basic_auth to access its contents. Now what will be in the contents will be decided by controller code. Here controller uses ‘module_handler’ service from dependency injection container ( i.e just create a object of class ‘module_handler’ for me). This is new symphony way to create a module in Drupal ( fully object oriented ). Once my controller object is created a public method uauthPage() can be called, the method just uses ‘Response’ class object provided by Symphony , gathers various information about current user form the controller class and creates a JSON object and return it. Actually I should use ‘Serialization’ module provided by Drupal 8 here but I found good documentation from Symphony CMF and I read it and build this module. In future I will try to make this module to use Drupal provided modules and also support http methods in addition to ‘GET’ only. Here is link to <a href="http://symfony.com/doc/current/index.html">Symphony documents</a>. </span></p>
+
+<p> </p>
+
+<p> </p>
+<code>
+<p>Controller Code</p>
+
+<p> </p>
+
+<p> &lt;?php </p>
+
+<p> </p>
+
+<p>namespace Drupal\uauth\Controller;</p>
+
+
+<p>use Drupal\Core\Controller\ControllerBase;</p>
+
+<p>use Symfony\Component\DependencyInjection\ContainerInterface;</p>
+
+<p>use Symfony\Component\HttpFoundation\Response;</p>
+
+<p>class UauthController extends ControllerBase {</p>
+
+<p> </p>
+
+<p>  public static function create(ContainerInterface $container){</p>
+
+
+
+<p>    return new static($container-&gt;get('module_handler'));</p>
+
+
+
+<p>  }</p>
+
+
+<p>   public function uauthPage(){</p>
+
+
+
+<p>$account = $this-&gt;currentUser();</p>
+
+<p>$userName = $account-&gt;getUsername();</p>
+
+<p>$email = $account-&gt;getEmail();</p>
+
+<p>$roles = $account-&gt;getRoles();</p>
+
+<p>$responseArray = array('name' =&gt; $userName,</p>
+
+<p>                        'email' =&gt; $email,</p>
+
+<p>                        'roles' =&gt; $roles;</p>
+
+<p>$response = new Response(json_encode($responseArray));</p>
+
+<p>$response-&gt;headers-&gt;set('Content-Type','application/json');</p>
+
+
+<p>return $response;</p>
+
+<p>   }</p>
+
+<p>}</p>
+
+
+
+<p><span>Ok, so we are done with Drupal side. Here is a complete code for ‘uauth’ custom module <a href="https://github.com/vivekvpandya/uauth"><span>https://github.com/vivekvpandya/uauth</span></a> just paste it to your modules directory and enable it from your site/admin/modules.</span></p>
+
+<p><span>Now let’s talk about iOS SDK side. I have already mention the flow for login. To implement that flow I have created a keychain wrapper class and a user model class that is a singleton class. A top level navigation controller will check if keychain item is set for a service name than fetch that username and password and try to get user details from the route created above. If it succeeds it will push user details view controller and if not it will show an alert and pushes login view controller. If a key chain item is not there initially than it will push login view controller.</span></p>
+
+<p><span>When ever user logs out keychain item will be deleted. At any time application receives 403 “Access Denied ” error keychain item will also be deleted because  it is the case when user has changed his password form the site.</span></p>
+
+<p><span>Why to use keychain? Once a user has logged on to the application and if he kills the application though this logged in stat should be preserved. So anyway we need a persistence storage for a information from which we can reconstruct information about the user logged in.One may think to use NSUserDefaults. I have used the same thing before but it was not giving performance as was required because there was a problem with my coding and two animation was clashing due to swapping of view controllers and I don’t know why but this also reset my NSUserDefaults. So I read about keychain to store credentials it not only more secure but it is really a persistence storage and offers various way to store and retrieve sensitive information. I have used SGKeychain (<a href="https://github.com/secondgear/SGKeychain"><span>https://github.com/secondgear/SGKeychain</span></a>) wrapper to understand the how to access keychain items. I would also recommend you to read <a href="https://developer.apple.com/library/ios/documentation/security/Conceptual/keychainServConcepts/01introduction/introduction.html#//apple_ref/doc/uid/TP30000897">Keychain Service Programming Guide</a> and <a href="https://developer.apple.com/library/ios/documentation/security/Reference/keychainservices/Reference/reference.html"> Keychain Service Reference for iOS </a> . </span></p>
+
+<p><span>Here is the code for my application <a href="http://github.com/vivekvpandya/TipsAndTricksCFNetworkingDrupal"><span>http://github.com/vivekvpandya/TipsAndTricksCFNetworkingDrupal</span></a> try it. It uses <a href="http://tntfoss-vivekvpandya.rhcloud.com/user/details"><span>http://tntfoss-vivekvpandya.rhcloud.com/user/details</span></a> to verify user. A test user it created on my site with username = test and password = test.</span></p>
+
+<p><span>For the people who are new to Drupal 8 and Symphony I will be glad to answer your queries because it is not possible to cover each small things in this blog. Also for any question regarding my iOS application code you can mail me at <a href="mailto:vivekvpandya@gmail.com"><span>vivekvpandya@gmail.com</span></a>. </span></p>
+</code></code></div>
+      </div>
+</div>
+<div class="field field-node--field-tags field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix" data-quickedit-field-id="node/16/field_tags/en/rss">
+  <h3 class="field-label">Tags: </h3>
+  <ul class="links">
+          <li class="taxonomy-term-reference-0"><a href="/taxonomy/term/3" property="schema:about">Drupal Planet</a></li>
+      </ul>
+</div>
+<div class="field field-node--comment field-name-comment field-type-comment field-label-hidden" data-quickedit-field-id="node/16/comment/en/rss">
+    <div class="field-items">
+          <div class="field-item" rel="schema:comment"><section id="comments" class="comment-wrapper">
+  
+  
+
+  
+</section>
+</div>
+      </div>
+</div>
+  </body>
+</html>
+

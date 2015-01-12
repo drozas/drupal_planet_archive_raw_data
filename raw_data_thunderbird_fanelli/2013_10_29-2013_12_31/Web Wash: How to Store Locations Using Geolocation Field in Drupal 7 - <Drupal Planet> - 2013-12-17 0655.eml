@@ -1,0 +1,33 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 17 Dec 2013 05:55:33 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 17 Dec 2013 05:55:33 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Wash: How to Store Locations Using Geolocation Field in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://webwash.net/tutorials/how-store-locations-using-geolocation-field-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Wash: How to Store Locations Using Geolocation Field in Drupal 7</title>
+    <base href="http://webwash.net/tutorials/how-store-locations-using-geolocation-field-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-ww-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"><p>The common approach these days for storing geolocation data is to use a combination of <a href="http://webwash.net/node/9">Address Field, Geofield, geoPHP and Geocoder</a>. Another way, is to use the good old <a href="http://webwash.net/node/157">Location</a> module.</p>
+
+<p>But, today I want to show you how to use the <a href="https://drupal.org/project/geolocation">Geolocation Field</a> module</p>
+
+<p>The module implements a field that allows you to store longitude and latitude coordinates. But where the module really shines is with its field widgets and formatters.</p>
+
+<p>It ships with two sub-modules called: "Geolocation Google Maps" and "Geolocation HTML5".</p>
+
+<p>The "Geolocation Google Maps" sub-module comes with a pretty cool widget that allows a user to select a location using an address or by clicking on a map. You can select a location by entering in an address and if the location is not right, then just click on the map and fix it up.</p>
+
+<p>The "Geolocation HTML5" sub-module allows you to define your location using <a href="http://www.w3.org/TR/geolocation-API/">HTML5's geolocation API</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

@@ -1,0 +1,31 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 04 Dec 2014 13:00:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 04 Dec 2014 13:00:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Commerce: How to switch your payment settings based on environment variables using Platform.sh
+Content-Transfer-Encoding: 8bit
+Content-Base: https://drupalcommerce.org/blog/31375/how-switch-your-payment-settings-based-environment-variables-using-platformsh
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Commerce: How to switch your payment settings based on environment variables using Platform.sh</title>
+    <base href="https://drupalcommerce.org/blog/31375/how-switch-your-payment-settings-based-environment-variables-using-platformsh">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>When working on a Commerce project which uses a payment gateway, you need to always make sure that your Staging and Development environments are properly targeting the sandbox or test mode of your payment gateway, and that your Production site is targeting the live account.</p>
+<p>This is actually true for <strong>any third-party service integration which provides a sandbox</strong> where you can test. The objective is to make sure you never send test data on a live account, no matter the service you're testing on.</p>
+<p>For this tutorial, I will focus on payment method settings, but the principle remains the same for any other third-party integration. </p>
+<p>I will start from an empty Drupal site hosted on <a href="https://platform.sh">Platform.sh</a> and go through the following steps:</p>
+<ul><li>Enable and configure <a href="https://www.drupal.org/project/commerce_paypal">Paypal WPS</a> payment method</li>
+<li>Export its configuration to a <em>settings.local.php</em> file</li>
+<li>Override its <strong>Sandbox</strong> configuration on the Staging environment</li>
+<li>Write custom code to read the configuration from the <em>settings.local.php</em></li>
+</ul><p>As you see, the goal (<em>as always with Drupal</em>) is to read the configuration from your code so that you can easily switch from a sandbox mode to a live mode.</p>
+</div></div></div>
+  </body>
+</html>
+

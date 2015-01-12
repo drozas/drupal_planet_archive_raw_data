@@ -1,0 +1,23 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 01 Nov 2014 15:22:47 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 01 Nov 2014 15:22:47 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Károly Négyesi: MongoDB and Drupal 8: what and why?
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupal4hu.com/node/412
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Károly Négyesi: MongoDB and Drupal 8: what and why?</title>
+    <base href="http://www.drupal4hu.com/node/412">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Now that we have a fairly good idea how Drupal 8 and data looks let's discuss what can MongoDB provide and why would you want to run it. In Drupal 8, every kind of data can be stored independently. I fully expect that people will indeed mix storages. For example, D8 by default runs a config query on every page to find the blocks to be displayed for the current theme. Again, by default, config entities are stored as serialized PHP arrays so the only way a query like that can run is to load every single block entity from the database and iterate over them. This can get quite slow with hundreds of blocks -- don't forget that a block entity just stores the placement of a block and the same block can be placed several times. Also, after finding the blocks for the current theme, visibility rules (path, node types, roles) are applied again in PHP. If the configuration is stored in MongoDB then all this can become an indexed, practically instant query. Configuration storage, after all, is just storing and querying and retrieving arrays and MongoDB is really, really good at that. Because of this, I expect many sites to pick MongoDB for their configuration storage. I also expect that because of the simplicity of cross-entity type JOINs, many people will stick with SQL for their content storage. Although it must be noted that the choice can be made per entity type and as MongoDB stores complete entities it is able to index even those queries that the SQL storage can not. </p>
+<p>There are some simpler storages which are also a good fit for MongoDB: sessions because of the write performance and logging because MongoDB has a capped collection (a circular buffer) feature so you will always have the latest N messages and never too much.</p>
+  </body>
+</html>
+

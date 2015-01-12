@@ -1,0 +1,110 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Sep 2013 18:50:30 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Sep 2013 18:50:30 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Triquanta Web Solutions: Drupalcon Prague
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.triquanta.nl/blog/drupalcon-prague
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Triquanta Web Solutions: Drupalcon Prague</title>
+    <base href="http://www.triquanta.nl/blog/drupalcon-prague">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-main-image field-type-image field-label-hidden">
+    <img src="http://www.triquanta.nl/sites/default/files/styles/content-full-width/public/images/drupalcon_prague.jpg?itok=vbH2GogL" />  </div>
+<div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>From the 23rd to the 27th of September the annual DrupalCon was held in Prague. DrupalCon is the biggest Drupal event in Europe. This year there were 1840 attendees! The Drupal community is awesome and it again became clear that this community is the greatest asset of Drupal.<br />
+	In this post a short summary of things that are worth mentioning.</p>
+<h2>
+	Opening Session</h2>
+<p>It's a tradition that <a href="http://www.robshouse.net/" target="_blank">Robert Douglass</a> and <a href="https://drupal.org/user/76919" target="_blank">Jeffrey "Jam" McGuire</a> open DrupalCon with a special sessions. As musician I liked the opening session they prepared for Prague a lot. They performed an opera about Drupal. I would recommend to watch it.</p>
+<p><iframe allowfullscreen="" frameborder="0" height="315" src="//www.youtube.com/embed/3eSxaNmGHYQ" width="420"></iframe></p>
+<h2>
+	Drupal 8</h2>
+<p>A lot of sessions where about the upcoming Drupal 8. It was good to get information about what is going to change for developers, themers and site builders.</p>
+<p>There are a lot of things to get excited about in Drupal 8. There are improvements for everybody who is working with Drupal. Developers, themers, site builders but also content editors and IT-managers will love the new features. There are 200 new features in Drupal 8. Some of the highlights:</p>
+<ul><li>
+		Building on a lot of existing frameworks and libraries, in particular Symfony2, leveraging all the work of those communities</li>
+<li>
+		Becoming a real OOP framework, making it even easier to extend</li>
+<li>
+		WYSIWYG editor in core and inline editing</li>
+<li>
+		Views in core</li>
+<li>
+		Separation of configuration and content, making deployments a lot easier</li>
+<li>
+		REST Services in core, making Drupal an ideal tool for content delivery to all media, including mobile apps</li>
+<li>
+		Lots of improvements to multilingual features</li>
+<li>
+		Responsive out of the box, including the admin interface</li>
+<li>
+		Twig, a brand new theming layer</li>
+</ul><p>If you want to know all about the state of Drupal 8, watch the keynote of Dries Buytaert at the DrupalCon.</p>
+<p><iframe allowfullscreen="" frameborder="0" height="315" src="//www.youtube.com/embed/8uhNFoOnz_g" width="420"></iframe></p>
+<p>There is still a lot to do. The 3 major things to fix are:</p>
+<ul><li>
+		Speeding it up, make it faster</li>
+<li>
+		Fix the developer learning curve, make it easier to step in</li>
+<li>
+		Create an upgrade path</li>
+</ul><p>So help out if you can!</p>
+<h2>
+	Designing for the experience</h2>
+<p>The keynote of <a href="http://aralbalkan.com/" target="_blank">Aral Balkan</a> was about design driven development in open source. He stated that all open source development is in essence feature driven, something I have to agree. A normal user wants tools that just work. They don't want to compile a new driver because a software update broke compatibility.</p>
+<p>Big corporations like Google and Apple get the idea of experience. If you want to deliver a good experience you have to have control over hardware, software and services. Google and Apple provide that. They make there own devices (Nexus / iPhone, iPad) including there own software (Android / iOS) and connecting all those devices to there services (GMail etc./ iCloud).</p>
+<p>The biggest problem with those companies is that they collect all your data and monetize that data. Everybody should know now that when you use a free product, you are their product. The business model of all those Silicon Valley companies is just broken. Start a free service and get a lot of users. Interest some venture capital and grow the company. After some time the venture capitalists want there investment back, with profit. But the only thing those companies have is user data, so they screw there users and sell their data.</p>
+<p>To overcome this problem we need an open source solution that is design driven and creates a perfect experience. Aral Balkan started a company that want to do just that. Create the hardware, software and services and open source it all. A very interesting idea and worthwhile <a href="http://codename-prometheus.eu/" target="_blank">keeping an eye on</a>.</p>
+<h2>
+	Aphorisms of API design</h2>
+<p>I really liked the session of <a href="http://www.garfieldtech.com/">Larry Garfield</a> about API design. It was really about API's but also about writing sensible and maintainable code. He stated 8 aphorisms:</p>
+<ul><li>
+		N is the only number, 1 is a special case of N</li>
+<li>
+		Let the code debug for you, be lazy</li>
+<li>
+		Docs or it didn't happen</li>
+<li>
+		A UI is not an API</li>
+<li>
+		Leverage existing patterns</li>
+<li>
+		Avoid taking decisions</li>
+<li>
+		There is no problem that can't be solved with adding another layer of abstraction, except abstraction</li>
+<li>
+		You are not a unique snowflake</li>
+</ul><p>If you are a (Drupal) developer be sure to check this session!</p>
+<p><iframe allowfullscreen="" frameborder="0" height="315" src="//www.youtube.com/embed/PFM3fcoDxFk" width="420"></iframe></p>
+<h2>
+	MuseScore and the Open Well-Tempered Clavier</h2>
+<p>The session of Robert Douglass was this year about his project to open source the music of Bach. He already did this successfully with the Goldberg variations. He is now doing the same with the <a href="http://www.kickstarter.com/projects/293573191/open-well-tempered-clavier-bah-to-bach?ref=card" target="_blank">Well-Tempered Clavier</a>. His wife Kimiko Ishizaka will record the music and the MuseScore project will help in creating and distributing the score.</p>
+<p>In my opinion the MuseScore project is another success story of Drupal. <a href="http://musescore.org/" target="_blank">MuseScore</a> is a software tool for music notation and publishing. The possibilities to do this online are still limited. There is an open format for music notation, but that is not widely adopted yet. MuseScore is trying to bring score publishing on the web to a next lever and doing this with the help of Drupal.</p>
+<p>Not only is there main website running Drupal, also the community they have for MuseScore users, where they can publish there scores, uses Drupal. Plus the closed, payed part of the community uses Drupal Commerce for the e-commerce features. MuseScore has developed a tool to annotate scores with the help of contributed modules. This shows the versatility of a system like Drupal.</p>
+<p>If you like music and missed this session make sure to watch it. Not only is Robert  talking about MuseScore and Bach, but Kimiko also plays the Well-Tempered Clavier.</p>
+<p><iframe allowfullscreen="" frameborder="0" height="315" src="//www.youtube.com/embed/VUoWSCMBZLk" width="420"></iframe></p>
+<h2>
+	Next year, Amsterdam!</h2>
+<p><img alt="Amsterdam" class="media-image img__fid__258 img__view_mode__default attr__format__default" src="http://www.triquanta.nl/sites/default/files/Amsterdam-photo-by-schlijper.jpg" style="width: 100%;" title="Amsterdam" /></p>
+<p>After this great DrupalCon in Prague it's time to prepare for next year. And DrupalCon 2014 will be held in <a href="https://amsterdam2014.drupal.org/" target="_blank">Amsterdam</a>! We are very excited about this news and looking forward seeing everybody again in our home town!</p>
+</div></div></div>
+<ul class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-hidden">
+
+      <li>
+      <a href="/blog-tags/drupal">Drupal</a>    </li>
+      <li>
+      <a href="/blog-tags/drupalcon">drupalcon</a>    </li>
+      <li>
+      <a href="/onderwerp/drupal-planet">Drupal-planet</a>    </li>
+  
+</ul>
+  </body>
+</html>
+

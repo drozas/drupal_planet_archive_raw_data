@@ -1,0 +1,59 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 25 Nov 2014 22:23:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 25 Nov 2014 22:23:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: Using Panels without Panelizer
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/insights/using-panels-without-panelizer/
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: Using Panels without Panelizer</title>
+    <base href="http://forumone.com/insights/using-panels-without-panelizer/">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>The Panels and Panelizer modules have opened up a whole world of options for layouts in Drupal, but too often the usage and features of these powerful tools get confused. My goal with this post is to explore some of the capabilities the Panels module has to offer before ever getting into the realm of using Panelizer.</p>
+<p>At a high level, the goals of each of these modules break down into the following:</p>
+<ul>
+<li><a href="https://www.drupal.org/project/panels">Panels</a>: Create custom pages with configurable layouts and components.</li>
+<li><a href="https://www.drupal.org/project/panelizer">Panelizer</a>: Configure Panels layouts and content on a per instance basis for various entities.</li>
+</ul>
+<p>Often, I see both modules added and used when Panelizer isn’t needed at all. What&#8217;s the problem with that? Introducing Panelizer when it isn’t needed complicates the final solution and can lead to unnecessary headaches later in configuration management, content maintenance, and system complexity.</p>
+<h2>Panels and Panel Variants</h2>
+<p>Before the introduction of Panelizer, site-builders got by just fine with Panels alone. This original solution is still valid and just as flexible as it ever was. The secret in doing this lies in understanding how variants work and knowing how to configure them.</p>
+<h3><b>Default Layout for All Nodes</b></h3>
+<p>Once Drupal finds a Panels page in charge of rendering the page request, Panels proceeds through the page’s variants checking the defined selection rules on each. Starting from the first variant, Panels evaluates each set of selection rules until one passes. As soon as a variant’s selection rules pass successfully, that variant is used and the rest below it are ignored. This is why it’s important to pay attention to the order in which you define your variants to ensure you place less strict selection rules later in the sequence.</p>
+<p>Using this to your advantage, a good common practice is to define a default variant for your Panels page to ensure there is a baseline that all requests can use. To do this, you’ll need to define a new variant with no selection rules, so the tests always pass, and place it last in the series of variants. Since the selection rules on this variant will always pass, be aware that any variants placed below it will never be evaluated or used.</p>
+<p><img class="alignnone wp-image-5463 size-large" src="http://forumone.com/wp-content/uploads/2014/11/PanelizerBlog1-700x392.png" alt="Screenshot of variant rule" width="700" height="392" /></p>
+<h3><b>Custom Layouts per Content Type</b></h3>
+<p>Once you have a generic default in place to handle the majority of content items for your Panels page, you can start to tackle the pages that might have more specific or unique requirements. You can do this by creating a new variant above your default and define selection rules to limit its use to only the scenarios you’re targeting.</p>
+<p><img class="alignnone wp-image-5464 size-large" src="http://forumone.com/wp-content/uploads/2014/11/PanelizerBlog2-700x293.png" alt="Screenshot of Panel Content" width="700" height="293" /></p>
+<p>A common use case for this is the changing layout for content based on content types. To build this out, you need to edit the default node_view Panels page and add a new variant. If this page variant is intended to handle all nodes of this type, I’ll typically name it with the name of the content type so it’s clear. The next step is to configure the selection rules by adding the “Node: Bundle” rule and select the content type we’re building for. Once you save the new variant, any detail pages for that content type should render using the new configuration.</p>
+<p><img class="alignnone wp-image-5465 size-large" src="http://forumone.com/wp-content/uploads/2014/11/PanelizerBlog3-700x252.png" alt="Screenshot of Reorder Variants" width="700" height="252" /></p>
+<p>Building on this, a single page can be expanded to handle any number of variants using any combination of selection rules necessary. It’s common to see a variant added for each content type in this way. Examples of further customizations that are possible include:</p>
+<p>•    A specific layout for a section of the site matching a specific URL pattern</p>
+<p>•    Separate layouts based on the value of a field on the entity</p>
+<p>•    Alternate views of a page if the user doesn’t have access to it</p>
+<p>•    Separate views of a page based on the user’s role</p>
+<p>Thanks to CTools, these selection rules are also pluggable. This means if you can’t find the right combination of selection rules to enforce the limitation you need, it’s easy to write a new plug-in to add your specific rule.</p>
+<h2>Avoiding Too Many Variants</h2>
+<p>Using the existing selection rules allows for a great deal of flexibility. Adding in custom plugins further improves your options to define any number of increasingly specific variants.</p>
+<p>It is possible to take this too far, however. The cost of creating a new variant is that your layouts and content configurations are now forked further. Any common changes across them now have to be maintained in independent variants to maintain continuity.</p>
+<h3><b>Visibility Rules</b></h3>
+<p>It’s important to also remember the other features Panels offers, including visibility rules. Visibility rules are configured on a per-pane basis inside a specific variant’s layouts. These rules offer the same conditions available in variant-level selection rules. Since they’re configured on individual panes, however, you can focus on the component-level differences between pages. A common use case for this is to use the same node variant for multiple content types with similar layouts and configure the unique panes with visibility rules to limit which pages they show on.</p>
+<p><img class="alignnone wp-image-5466 size-large" src="http://forumone.com/wp-content/uploads/2014/11/PanelizerBlog4-700x468.png" alt="Screenshot of Visibility Rule" width="700" height="468" /></p>
+<p>To elaborate on this, here&#8217;s an example. Assuming a default node variant with a two-column layout, we can define the common elements that all nodes will have, such as the page title, rendered content, and maybe a sidebar menu. If we then add the requirement that all article nodes include a list of similar articles in the sidebar, we can accomodate this by placing the correct pane in the sidebar and adding the visibility rule “Node: Bundle”. We’ll then configure it to use the current node being viewed and limit it to show only when that node is in the “Article” bundle. Now, whenever a node is displayed, it will show the common panes, but the block for similar articles will only show in the sidebar if we’re viewing a article node.</p>
+<p><img class="alignnone wp-image-5467" src="http://forumone.com/wp-content/uploads/2014/11/PanelizerBlog5.png" alt="Screenshot of Node:Bundle" width="500" height="495" /></p>
+<h2><img class="alignnone wp-image-5468" src="http://forumone.com/wp-content/uploads/2014/11/PanelizerBlog6.png" alt="Screenshot of Article Bundle" width="499" height="335" /></h2>
+<h2>Choosing the Right Approach</h2>
+<p>Once you get to the level of creating panel variants or visibility rules just for single pages, it’s usually time to ask if you’re using the right tool. When you’ve gotten to the point where individual page instances need to be different, you’ve come to the impasse of determining the best approach.</p>
+<p>If it’s only a handful of pages that are each unique, then the most straightforward solution may be to create independent Panels pages for each of these.</p>
+<p>If instead, individual instances of the same type need different layouts or configurations, then it may be time to install Panelizer to allow instance-specific overrides.</p>
+<p>&nbsp;</p>
+  </body>
+</html>
+

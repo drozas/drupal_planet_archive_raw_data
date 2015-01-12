@@ -1,0 +1,64 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 24 Mar 2014 08:10:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 24 Mar 2014 08:10:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: 5 things you should not do on a Drupal site
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/5-things-you-should-not-do-in-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: 5 things you should not do on a Drupal site</title>
+    <base href="http://www.webomelette.com/5-things-you-should-not-do-in-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>In this article I am going to go over 5 things you should definitely not be doing on a Drupal site. In this venture I will try to avoid the "not not do" type of actions and focus only on what you should simply not do.</p>
+
+<h2>Do not hack core</h2>
+
+<p>I think this advice is quite straightforward and spread within the Drupal community. But it cannot be stressed enough. Drupal provides a myriad of ways you can avoid the temptation of modifying core files. And even if a particular problem you have seems that it can be solved so easily by hacking core, don't. Employ proper techniques of overriding that particular functionality.</p>
+
+<p>Why? Well, good luck updating Drupal later on if you modify core files. Either you will override your changes which will effectively break your functionality or you will have to keep making those changes every time you update. Drupal 7 is already past 20 versions, so think about it. A, and a kitten dies every time someone hacks core.</p>
+
+<h2>Do not make updates on production</h2>
+
+<p>Speaking of updating Drupal core (or even contrib), I think it's important to know you should never perform the updates straight on the production environment. You never know what can break as a result of the new functionality core or contrib brings to the table or removes from your site.</p>
+
+<p>In other words, make sure you test everything locally or on a specific environment you have for this kind of purpose. It's not a big deal, you set it up once and then can reuse it for all your other sites or projects. This goes of course also for any kind of development work you do - never first on production.</p>
+
+<p>And since we are on updates, make sure you read what the nature of the update is - even if it's security. It doesn't hurt to know what functionality will be affected. And this way, you learn maybe some new things about Drupal.</p>
+
+<h2>Do not install all the modules in the world</h2>
+
+<p>When I was a beginner I was amazed by the plethora of modules available to extend core. So I installed and installed because <em>maybe</em> the functionality will be needed later on site. Drupal can do so much. Little did I know that this would virtually halt my site to a standstill. And turns out, most of that functionality was never even needed.</p>
+
+<p><p>So my point is, make sure the modules you install are needed at the moment you install them. Try to gauge the quality of the code (there are various factors for that) and then test locally if it does the job for you. If yes, commit it to the repository and use it. If not, delete it, no point in cluttering your codebase or even worse, having it enabled and loaded by Drupal with every page request.</p>
+
+<h2>Do not commit your settings.php file</h2>
+
+<p>If you are storing the Drupal codebase in a Git repository, and you should, it sometimes happens that you commit the <code>settings.php</code> file. This means the credentials to accessing the database are stored in its history and <strong>are a bitch to remove</strong>.</p>
+
+<p>Normally, this shouldn't' happen. Drupal comes with a <code>.gitignore</code> file that by default prevents the <code>settings.php</code> file from being considered relevant to the repo. And that's how it needs to stay. I've seen however cases in which this was not properly respected or the <code>.gitignore</code> file was changed (or removed) causing the the database credentials to be to be committed and available in plain text in the repository. So be careful.</p>
+
+<h2>Do not use the PHP Filter module</h2>
+
+<p>If you are running Drupal 7, you'll maybe know that there is this module called <em>PHP Filter</em>. Don't use it. Not only it represents a huge security risk if unauthorised users get to evaluate PHP with it, but you can also <strong>evaluate PHP with it!</strong>. Which is absurd.</p>
+
+<p>There's a good reason why separation of concerns (logic from presentation) is to be desired in web applications. And god knows Drupal 7 falls short in many respects, but this is to the extreme. Putting PHP in with your content is the mother of all the <em>you're doing it wrong</em>. So just don't. Unless you have to. I'm kidding. Write a custom module to handle the functionality you'd need there and disable PHP Filter. But don't delete it because it's core (see my first point).</p>
+
+<h2>Conclusion</h2>
+
+<p>In this article I talked about 5 random things you should not be doing on or with your Drupal website. There are more of course, but these are - in my opinion - some of the important ones.</p>
+
+<p>In the next one, I will take a more positive approach and give you some random tips on what you <strong>should</strong> be doing on your Drupal site. See you then.</p>
+</div></div></div><div class="field field-name-field-categories field-type-taxonomy-term-reference field-label-hidden">In <span class="field-items"><span class="field-item even"><a href="/drupal">Drupal</a></span></span></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/5-things-you-should-not-do-in-drupal" st_title="5 things you should not do on a Drupal site" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/5-things-you-should-not-do-in-drupal" st_title="5 things you should not do on a Drupal site" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/5-things-you-should-not-do-in-drupal" st_title="5 things you should not do on a Drupal site" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

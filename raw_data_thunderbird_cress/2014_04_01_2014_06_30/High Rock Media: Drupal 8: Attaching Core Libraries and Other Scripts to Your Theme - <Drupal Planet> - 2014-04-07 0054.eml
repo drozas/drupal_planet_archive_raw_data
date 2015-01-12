@@ -1,0 +1,67 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 06 Apr 2014 23:54:37 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 06 Apr 2014 23:54:37 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: High Rock Media: Drupal 8: Attaching Core Libraries and Other Scripts to Your Theme
+Content-Transfer-Encoding: 8bit
+Content-Base: http://highrockmedia.com/blog/drupal-8-attaching-core-libraries-and-other-scripts-your-theme
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>High Rock Media: Drupal 8: Attaching Core Libraries and Other Scripts to Your Theme</title>
+    <base href="http://highrockmedia.com/blog/drupal-8-attaching-core-libraries-and-other-scripts-your-theme">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item odd" property="content:encoded"><p><img src="http://highrockmedia.com/sites/default/files/styles/adaptive/public/additional-images/hrm-blog-banner-yml-819849953.png" width="880" height="250" alt="In this blog post, we learn how to add core and theme scripts in to Drupal 8 using a theme libraries YML or YAML file." title="In this blog post, we learn how to add core and theme scripts in to Drupal 8 using a theme libraries YML or YAML file." class="image-adaptive inline-adaptive" /></p>
+
+<p>For the past six months, I've been in the process of porting my contrib theme, Gratis, to Drupal 8. One of the challenges for contrib is Drupal 8 has been a constant moving target in terms of API changes. With every new Alpha of Drupal 8, I've had to adjust many bits of theme code to adhere to these new APIs.</p>
+
+<p>One of the biggest challenges has been figuring out how to add jQuery and other core scripts into the theme. That's because off the shelf, Drupal 8 does not add these for anonymous users.  This seems like an odd choice by core but my guess is that is was done for Drupal 8 to be more minimalistic and nimble on its feet.</p>
+
+<p>At any rate, if you have a contrib theme, most likely the first thing you'll do is add all of these back in to bring it back to a point where Drupal 7 was. To add an additional layer of complexity to all this is the fact that the manner in which this is done has changed dramatically in recent weeks.</p>
+
+<h2>Exit nested arrays, enter YAML</h2>
+
+<p>At first one added core libraries using <code>hook_library_info</code> which was a mess of PHP nested arrays in your theme's <code>.theme</code> file. Now, in true Drupal 8 fashion, we do this with a <code>.yml</code> or "<em>yaml</em>" (rhymes with camel) file. YAML is an acronym for "Yet Another Markup Language" or "<em>Ain't Markup Language</em>" and has become a core method for streamlining code in Drupal 8.</p>
+
+<p>Here is a basic example of how you can add jQuery to a theme and a few dependencies. You'd do this by creating a <code>*libraries.yml</code> file in the root of your theme. So in my case my theme name is <em>foobar</em> so the file name would be <code>foobar.libraries.yml</code>.</p>
+
+<p><div class="geshifilter">foobar<span style="color: #339933;">-</span>corescripts<span style="color: #339933;">:</span><br />
+&nbsp; version<span style="color: #339933;">:</span> VERSION<br />
+&nbsp; js<span style="color: #339933;">:</span><br />
+&nbsp; &nbsp; js<span style="color: #339933;">/</span>scripts<span style="color: #339933;">.</span>js<span style="color: #339933;">:</span> <span style="color: #009900;">&#123;</span><span style="color: #009900;">&#125;</span><br />
+&nbsp; dependencies<span style="color: #339933;">:</span><br />
+&nbsp; &nbsp; <span style="color: #339933;">-</span> core<span style="color: #339933;">/</span>jquery<br />
+&nbsp; &nbsp; <span style="color: #339933;">-</span> core<span style="color: #339933;">/</span>drupal<span style="color: #339933;">.</span>ajax<br />
+&nbsp; &nbsp; <span style="color: #339933;">-</span> core<span style="color: #339933;">/</span>drupal<br />
+&nbsp; &nbsp; <span style="color: #339933;">-</span> core<span style="color: #339933;">/</span>drupalSettings<br />
+&nbsp; &nbsp; <span style="color: #339933;">-</span> core<span style="color: #339933;">/</span>jquery<span style="color: #339933;">.</span>once</div></p>
+
+<p>With the above code, we'll be adding the core scripts <em>jquery.js, drupal.js, ajax.js and jquery.once.js</em> to our theme. This will make it available for anonymous users. With YAML, indentation spaces are relevant so you'll need to get that bit right. In addition, we are calling a theme relative script in the theme's js folder, <em>scripts.js</em>. The name <code>-corescripts</code> can be anything you want as long as it matches when you go to attach it in your <code>.theme</code> file as outlined below.</p>
+
+<h2>Attach the Library</h2>
+
+<p>The next step to actually attach the library we created with a theme preprocess function creating a variable in combination with the <code>#attached</code> method.</p>
+
+<p><div class="geshifilter"><span style="color: #009933; font-style: italic;">/**<br />
+&nbsp;* Override or insert variables into the page template.<br />
+&nbsp;*/</span><br />
+<span style="color: #000000; font-weight: bold;">function</span> foobar_preprocess_page<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$vars</span><span style="color: #339933;">,</span> <span style="color: #000088;">$hook</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span><br />
+&nbsp; <span style="color: #666666; font-style: italic;">// Render the library we defined in foobar.libraries.yml</span><br />
+&nbsp; <span style="color: #000088;">$libraries</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'#attached'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'library'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">'foobar/foobar-corescripts'</span><span style="color: #339933;">;</span><br />
+&nbsp; drupal_render<span style="color: #009900;">&#40;</span><span style="color: #000088;">$libraries</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
+<span style="color: #009900;">&#125;</span></div></p>
+
+<p>Attaching the library above implements <em>provider-namespaced strings</em>  i.e. <code>'gratis/foobar-corescripts'</code> where previously it had an array associated with it. This is new in Drupal 8 Alpha 10 and it through me off for a while until I found a core issue that documented this change. Finally, we use <code>function drupal_render</code> to render the new library.</p>
+
+<h2>What's Next?</h2>
+
+<p>In a future Drupal 8 related articles, I'll get in to setting custom configuration for your Drupal 8 theme, this comes in real handy and we'll be using YAML with the added addition of using Drupal 8's CMI layer. I'll also talk more about API changes as they relate to themers, it's probably safe to do that now as Drupal 8 is most likely heading toward a beta within the next few months and it seems like many of the major core API changes have been done.</p>
+</div></div></div><h2 class="field-label">Tags&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first">Drupal</li><li class="field-item even">YAML</li><li class="field-item odd">Drupal 8</li><li class="field-item even">Drupal Planet</li><li class="field-item odd last">Theming</li></ul><h2 class="field-label">Resources&nbsp;</h2><ul class="field-items tag-items"><li class="field-item odd first"><a href="https://drupal.org/node/1996238" target="_blank" rel="nofollow">Replace hook_library_info() by *.libraries.yml file</a></li><li class="field-item even"><a href="https://drupal.org/node/2203407" target="_blank" rel="nofollow">Replace #attached library array values with provider-namespaced strings</a></li><li class="field-item odd"><a href="http://yaml.org/spec/current.html" target="_blank" rel="nofollow">YAML Ain't Markup Language (YAML™) Version 1.1</a></li><li class="field-item even"><a href="https://api.drupal.org/api/drupal/core%21includes%21common.inc/function/drupal_render/8" target="_blank" rel="nofollow">function drupal_render</a></li><li class="field-item odd"><a href="http://drupal.stackexchange.com/questions/109023/how-do-i-make-a-drupal-8-theme-require-jquery-for-anonymous-users" target="_blank" rel="nofollow">How do I make a Drupal 8 theme require Jquery (for anonymous users)?</a></li><li class="field-item even"><a href="http://en.wikipedia.org/wiki/YAML" target="_blank" rel="nofollow">YAML (Wikipedia)</a></li><li class="field-item odd"><a href="https://drupal.org/project/gratis" target="_blank" rel="nofollow">Drupal Gratis, A Responsive Theme (7 &amp; 8)</a></li><li class="field-item even last"><a href="https://drupal.org/project/gratis#d8" target="_blank" rel="nofollow">Gratis Drupal 8 related issues</a></li></ul>
+  </body>
+</html>
+

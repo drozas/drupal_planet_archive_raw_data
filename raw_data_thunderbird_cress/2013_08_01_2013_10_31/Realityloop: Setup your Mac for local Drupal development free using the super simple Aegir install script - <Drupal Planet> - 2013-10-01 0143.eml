@@ -1,0 +1,49 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 01 Oct 2013 00:43:48 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 01 Oct 2013 00:43:48 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Realityloop: Setup your Mac for local Drupal development free using the super simple Aegir install script
+Content-Transfer-Encoding: 8bit
+Content-Base: http://realityloop.com/blog/2013/10/01/setup-your-mac-local-drupal-development-free-using-super-simple-aegir-install-script
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Realityloop: Setup your Mac for local Drupal development free using the super simple Aegir install script</title>
+    <base href="http://realityloop.com/blog/2013/10/01/setup-your-mac-local-drupal-development-free-using-super-simple-aegir-install-script">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://realityloop.com/sites/realityloop.com/files/field/image/ml-aegir_0.png"><img typeof="foaf:Image" src="http://realityloop.com/sites/realityloop.com/files/field/image/ml-aegir_0.png" width="128" height="128" alt="OSX Aegir Install" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Aegir allows you to deploy and manage many Drupal sites, and can scale across multiple server clusters, it makes it easy to install, upgrade, and backup an entire network of Drupal sites. Aegir is also really good as a local development stack!</p>
+
+<p>In 2011 over a period of about 3 months I worked on getting Aegir to install and function on a Mac running Lion. I finally succeded in October of that year which resulted in a blog entry with manual setup steps to do so yourself. Since then I've rewritten subsequent posts on how to upgrade the setup for Mountain Lion and how to do a clean install.</p>
+
+<p>Having watched several people follow the steps I noticed that many people ran into issues by accidentally missing a step, and it was extremely difficult for them to debug this themselves, so over a period of about 2 weeks in July I sat down and scripted this entire process and also upgraded it so that it will work on Mavericks which is soon to be released.</p>
+
+<p>If there is anyone with experience writing scripts using expect, please drop me a line as I would like to get to the point where no manual input is required during the running of the script and need some help. That siad this is fully battle tested on my own laptop which is running Mavericks 10.9 and I set up using the script.</p>
+
+<p><em>This script will work on 10.8.4, 10.8.5, and 10.9.</em></p>
+<!-- break -->
+<strong>Step 1: Go to the project page on Github</strong><br />
+<p><a href="http://rl.cm/osxaegirscript">OSXAegirInstaller</a></p>
+
+<strong>Step 2: Read the README</strong><br />
+<p>The script is really designed for install on a clean machine, but should work if you've never installed any webserver on port 80 or DB service on port 3306. I'd suggest making a Time Machine Backup before running it on your machine (It's a good idea to make one anyway).</p>
+
+<strong>Step 3: Install it</strong><br />
+<p>Once you've decided to go ahead follow the steps in the Readme to run the install script, and by all means read the script first, it's heavily commented.</p>
+
+<strong>Step 4: Aegir should now be installed</strong><br />
+<p>Assuming all went well you can now remove the aegir.sh script by typing the following in your terminal.
+<div class="geshifilter"><pre class="text" style="font-family:monospace;">rm ~/aegir.sh</pre></div></p>
+
+<strong>Step 5: Say thanks</strong><br />
+<p>Make me feel good for the hard work I've put in to figuring out how to install Aegir on OSX in the first place (It was approximately 3 months of work after all), and now the time scripting the process (around 2 weeks)</p>
+
+
+<p><strong>note:</strong> If you find any issues or want to improve the script please use the <a href="https://github.com/BrianGilbert/OSXAegirInstaller/issues">project issue queue on Github</a>, I won't be providing support via the comments here.</p></div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even" rel="dc:subject"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal planet</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/os-x" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">os x</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/aegir" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">aegir</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/nginx" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">nginx</a></div><div class="field-item odd" rel="dc:subject"><a href="/tags/mariadb" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">mariadb</a></div><div class="field-item even" rel="dc:subject"><a href="/tags/php" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">php</a></div></div></div>
+  </body>
+</html>
+

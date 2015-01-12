@@ -1,0 +1,157 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 14 Sep 2014 18:00:36 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 14 Sep 2014 18:00:36 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Steve Purkiss: Case Study - NickJr. Colour CMS & API - Feedback sought!
+Content-Transfer-Encoding: 8bit
+Content-Base: http://purkiss.com/blog/steve-purkiss/2014/09/14/case-study-nickjr-colour-cms-api-feedback-sought
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Steve Purkiss: Case Study - NickJr. Colour CMS & API - Feedback sought!</title>
+    <base href="http://purkiss.com/blog/steve-purkiss/2014/09/14/case-study-nickjr-colour-cms-api-feedback-sought">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-ds-user-picture field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/member/steve-purkiss"><img typeof="foaf:Image" src="http://purkiss.com/sites/default/files/styles/thumbnail/public/pictures/picture-1-1336663751.png?itok=wMsa2w3I" alt="Steve Purkiss&#039;s picture" title="Steve Purkiss&#039;s picture" /></a></div></div></div><div class="field field-name-post-date field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">Sunday, 14th September 2014</div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h1>Case Study - NickJr. Colour CMS &amp; API - Feedback sought!</h1></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>It's been an embarrassing amount of time since I last blogged or did anything to my site so I've started to create some content, but before I submit it as a case study on Drupal's site I'd love to have some feedback, it's been years since I wrote case studies so a little rusty. Is it of interest? Does it help? Does it answer the right questions? Are there any questions you'd like me to answer?</p>
+<h2>
+	<img alt="NickJr. Colour CMS Home Screen" src="https://farm4.staticflickr.com/3860/15051258229_1aa45a09c2_c.jpg" /></h2>
+<h2>
+	Brief overview</h2>
+<p>Viacom’s Nick Jr. is a digital television channel aimed younger children, home to popular shows including Dora the Explorer, Angelina Ballerina, and PAW Patrol. 'Colour' is a section of the Nick Jr. website where, daily, tens of thousands of users interact with predefined line-art drawings using paint brushes and stickers. They can then, if they wish to, send pictures they create to their friends via email. The mostly Flash-based front-end currently connects to a legacy back-end system which is being replaced with Drupal.</p>
+<h2>
+	Completed Drupal site or project URL</h2>
+<p><a href="http://www.nickjr.co.uk/create/#!/colour">http://www.nickjr.co.uk/create/#!/colour</a></p>
+<h2>
+	Why Drupal was chosen</h2>
+<p>Drupal's core and contributed modules along with customisable web administration interface provided all the functionality required out-of-the-box and is already used widely throughout the organisation.</p>
+<h2>
+	Describe the project (goals, requirements and outcome)</h2>
+<h3>
+	Project Goals</h3>
+<p>The goal of this project was to provide a bespoke back-end CMS based on Drupal to replace the legacy system, along with introducing new functionality enabling Send to Gallery and Pic of the Week features. The CMS needed to as simple as possible for content managers to use, and the whole system had to be able to cope with the tens of thousands of users using the API on a daily basis.</p>
+<h3>
+	Deliverables</h3>
+<p>The site was to be delivered as a Drupal install profile so it can be adapted and re-used – an initial step towards creating internal Nickelodeon-specific distributions of Drupal, further lowering costs and time-to-market for future projects with similar requirements. Purkiss built a similar system a few months prior for Universal Artists uView Augmented Reality App and have extensive experience integrating Drupal with 3rd party services so were ideally placed to deliver this type of Drupal project.</p>
+<h3>
+	Theme</h3>
+<p>First we set up the install profile with Shiny, the administration theme which comes with Drupal Commerce Kickstart, to be the main theme to the site. Shiny is a great theme for this kind of system where there's really only one main display the content managers interact with – it's easy on the eye with good typography and spacing.</p>
+<h3>
+	Legacy Migration</h3>
+<p>We then re-created what functionality was required from the legacy system using Drupal Services – the calls for saving images, retrieving images for a show, etc. There was a major difference here as the legacy system stored all the data in flat XML files with no user data linked. Drupal is a relational database system so we have user accounts, content types and taxonomies – this proved to be an exercise in both education of the client as to the benefits of hooking into the Drupal API, along with re-architecting of the current content model and workflow.</p>
+<h3>
+	Features</h3>
+<p>We used a Features-based approach to development with each of these features, along with the install profile, having their own private Git code repository in the cloud in order for issue tracking and maintenance to be easier.</p>
+<p>The features we delivered were as follows:</p>
+<ul><li>
+		<strong>Content Types</strong>
+<ul><li>
+				<em>NickJr Colour Image</em> – stores the user’s image along with a Canvas ID which refers to the line art used, a taxonomy field to link to the associated show, and two flags – one to show if the user has sent the image in to Nickelodeon for consideration to be included in the showcase, and one to denote whether it is in the associated show’s showcase.</li>
+</ul></li>
+<li>
+		<strong>Fields</strong>
+<ul><li>
+				<em>User Profile Fields</em> – extra profile fields to store the user’s name and age.</li>
+</ul></li>
+<li>
+		<strong>Rules</strong>
+<ul><li>
+				<em>Redirect after login</em> – redirects to the front page view after logging in.</li>
+<li>
+				<em>Pic of the Week</em> – Views Bulk Operations Component – one rule to set and one to unset an image as Pic of Week</li>
+<li>
+				Showcase – one to set and one to unset an image as to be in a Show's Showcase<img alt="NickJr. Colour CMS Views Bulk Operations" src="https://farm6.staticflickr.com/5570/15234929291_3a4d74aeea_o.png" /></li>
+</ul></li>
+<li>
+		<strong>Services</strong>
+<ul><li>
+				<em>NickJr. Colour API</em> – the Services settings for the custom API endpoints.</li>
+</ul></li>
+<li>
+		<strong>Taxonomy</strong>
+<ul><li>
+				<em>Shows Taxonomy</em> – with Pic of the Week field</li>
+</ul></li>
+<li>
+		<strong>Variables</strong>
+<ul><li>
+				<em>Always harmonize views filters</em> – Allows views to use both contextual and exposed filters for views</li>
+</ul></li>
+<li>
+		<strong>Views</strong>
+<ul><li>
+				<em>Front Page</em> – Displays all images, defaults to only show images Sent to Nick</li>
+<li>
+				<em>Showcase</em> – Displays images in showcase, all if no show_id sent through</li>
+<li>
+				<em>User Profile</em> – Displays users images on their profile page</li>
+</ul></li>
+</ul><h3>
+	Schedule</h3>
+<p>Project timescale and budget was for an incredibly tight 10 days which we delivered in, however were subsequently hired for a further 7 days to re-factor the API and provide a few final additions to the administration interface.</p>
+<p>Out-of-the-box, Drupal Services module provide a standard set of API calls so you can do things like create a user, a node, etc. so all the functionality required was there however required a number of calls to the API to achieve the desired workflow. It was decided to spend extra time creating custom API endpoints which would hide this functionality, reduce the number of API calls required, and make it easier for future users of the API.</p>
+<p>The downside to this approach is the technical debt introduced when diverting away from the *.drupal.org infrastructure of support, i.e. core and contributed modules. In this instance the code was simply wrapping existing API calls and the client has access to technical resources so the decision was to take on the technical debt in order to produce a more tailored outcome.</p>
+<h3>
+	Outcome</h3>
+<p>We used the extra time to create a RESTful API which abstracted away from Drupal Services out-of-the-box API endpoints along with coding an auto account creation system to link up user data from the front-end without users having to enter their email address, a requirement of Drupal’s user account creation. We documented the API using Drupal’s inbuilt help module and passed the system over to the client, helping them through building the system from the Drush make file.</p>
+<h3>
+	Summary</h3>
+<p>The resulting system is a clean, simple-to-use CMS with RESTful API handling thousands of users on a daily basis. Content managers have a separate role with very restricted access so can only do what they need to do on the system.</p>
+<p>We really enjoyed delivering this project, however alert anyone thinking of building similar to allow extra time, especially if it is their first Drupal experience - no matter how good specifications are, issues usually arise in one form or another. Also often once people do start using Drupal and see the possibilities available, requirements change and it is good to allow for those to be taken into account.</p>
+<h3>
+	About Purkiss</h3>
+<p>Purkiss helps organisations onboard Drupal through consultancy, development, training and support. For more information about Purkiss services please visit <a href="http://purkiss.com">http://purkiss.com</a></p>
+<h2>
+	Modules/Themes/Distributions</h2>
+<p>boolean_formatter<br />
+	cors<br />
+	eva<br />
+	features<br />
+	filter_harmonizer<br />
+	mimemail<br />
+	rules<br />
+	services<br />
+	shiny<br />
+	smtp<br />
+	strongarm<br />
+	views_bulk_operations<br />
+	views</p>
+<h2>
+	Why these modules/theme/distribution were chosen</h2>
+<ul><li>
+		<strong>boolean_formatter</strong> – makes the user interface a little nicer by providing icons for boolean fields such as ticks and crosses</li>
+<li>
+		<strong>CORS</strong> – required for connecting to the front-end</li>
+<li>
+		<strong>EVA</strong> - we used an Entity Views Attachment to display users pictures on their profiles</li>
+<li>
+		<strong>features</strong> - features allows you to export configuration settings to code</li>
+<li>
+		<strong>filter_harmonizer</strong> - Views Filter Harmonizer fixes an issue when using multiple filters on views</li>
+<li>
+		<strong>mimemail</strong> - used to send images via email</li>
+<li>
+		<strong>rules</strong> - as described above, used for redirecting user on login and for custom views bulk operations</li>
+<li>
+		<strong>services</strong> - used for the RESTful API</li>
+<li>
+		<strong>shiny</strong> - an administration theme we are using for the entire site</li>
+<li>
+		<strong>smtp</strong> - for sending email</li>
+<li>
+		<strong>strongarm</strong> - for storing variables in features</li>
+<li>
+		<strong>views_bulk_operations</strong> - to enable easy workflow, such as adding an image to a showcase</li>
+<li>
+		<strong>views</strong> - so we can display the data we want easily</li>
+</ul><h2>
+	Community contributions</h2>
+<p>As the API is specific to the client and used mostly existing functionality we had no code to contribute. The only custom code was for automatic account creation and there are existing modules which provide similar functionality which we used the code from but is too specific to this install to re-use externally.</p>
+<p>This is however the second time we’ve been asked for this sort of system, and with the growth of mobile apps we are currently working out whether it would be possible to create a distribution which will help get most of the way there - at least have relevant modules and perhaps an example scenario based on the simple image requirements for this project.</p>
+</div></div></div><div class="field field-name-taxonomy-vocabulary-1 field-type-taxonomy-term-reference field-label-inline inline"><div class="field-label">tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/tags/case-studies" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">case studies</a></div><div class="field-item odd"><a href="/tags/drupal-planet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal Planet</a></div><div class="field-item even"><a href="/tags/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Planet Drupal</a></div></div></div>
+  </body>
+</html>
+

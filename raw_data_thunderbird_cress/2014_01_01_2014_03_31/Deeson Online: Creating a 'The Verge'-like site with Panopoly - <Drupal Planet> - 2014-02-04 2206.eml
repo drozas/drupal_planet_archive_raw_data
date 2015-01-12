@@ -1,0 +1,70 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 04 Feb 2014 22:06:32 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 04 Feb 2014 22:06:32 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Deeson Online: Creating a 'The Verge'-like site with Panopoly
+Content-Transfer-Encoding: 8bit
+Content-Base: http://deeson-online.co.uk/labs/creating-verge-site-panopoly
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Deeson Online: Creating a 'The Verge'-like site with Panopoly</title>
+    <base href="http://deeson-online.co.uk/labs/creating-verge-site-panopoly">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p><a href="http://www.voxmedia.com/">Vox Media</a> have a great platform in Chorus, making websites like The Verge, SB Nation and Polygon. Their interesting and varied article layouts engage and focus the reader, and provide much more flexibility for the content editor.</p>
+<p>But if you're using Drupal, how can you improve your content editing process? We looked at several approaches, and came out with one clear winner: Panopoly.</p>
+<p>As developers, we should consider the user experience of the content editor more than we currently do, and be more considerate of the workflow required to publish a good-looking article.</p>
+<p>Ever had issues with WYSIWYG editors ruining your perfect layout? By structuring your content, as Polygon does <a href="http://www.polygon.com/game/tomb-raider-2013/2348" target="_blank">here</a>, your editors can avoid getting too caught up in markup, while retaining flexibility in page layout.</p>
+<div style="text-align: center;"><img alt="" src="/sites/default/files/uploads/pic_1.png" style="width: 420px; height: 355px;" /></div>
+<div> </div>
+<div style="text-align: center;"><em>An example of a "snippet" from The Verge</em></div>
+<div> </div>
+<p>The Verge uses "snippets" to structure content. A snippet contains editable sections to place content in. In the above example, there is the title of the snippet, a left column and a right column.</p>
+<p>There are three distinct sections in this one snippet. You could achieve this with a conventional WYSIWYG, and some HTML knowledge, but this is not acceptable for most content editors. Although we don't know how Chorus (Vox Media's proprietary CMS), works, we can see that this approach offers ease of use and flexibility to your users without intricate knowledge of HTML, and allows them to focus on what really matters: the content. </p>
+<p>We studied this approach and decided to use it for <a href="http://deeson-mc.co.uk" target="_blank">Deeson Member Communications</a>. </p>
+<p>Some of our requirements were:</p>
+<div>
+<ul>
+<li>
+<p>Be able to move sections of content up and down as required, while having different layouts for each section on the page. </p>
+</li>
+<li>
+<p>Be able to have different styles available to choose for a particular piece of content. </p>
+</li>
+<li>
+<p>Be able to reuse some content across the site, without duplication.</p>
+</li>
+</ul>
+</div>
+<p>It soon became clear that a conventional WYSIWYG would not do the job here, and we needed something easy to use. </p>
+<p>Enter <a href="http://drupal.org/project/panopoly" target="_blank">Panopoly</a>. By playing around with a freshly installed version, we began to see the potential for change in the usual content editing process.</p>
+<p>Original designs for the site included a "Super Page", which incorporated several different sections, with varied layouts. For example, one section is a full width background image with text, and another is a centred container with a list of links.</p>
+<p>How do we get editors up to speed with the required HTML to achieve this?</p>
+<p>The answer: we shouldn't need to. Our system should abstract the layout in a way that is clear and understandable, while also having ease of use. </p>
+<p>Digging into Panopoly, we found a handy module in Fieldable Panel Panes. This module does what it says on the tin, and allows you to add fieldable panes to your panel layouts. Panopoly 7.x-1.0-rc3 provides a few key pane types such as text and image gallery out of the box, but we needed a little more customisation. In 7.x-1.0-rc3, Fieldable Panel Panes requires a custom module to define custom pane types, but this is very simple to do with a hook:</p>
+<p><span class="geshifilter"><code class="php geshifilter-php"><span style="color: #009933; font-style: italic;">/** * Implements hook_entity_info_alter(). */</span> <span style="color: #000000; font-weight: bold;">function</span> yourmodule_custom_panes_entity_info_alter<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span>amp<span style="color: #339933;">;</span><span style="color: #000088;">$entity_info</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> <span style="color: #000088;">$entity_info</span><span style="color: #009900;">&#91;</span><span style="color: #339933;">&amp;</span><span style="color: #666666; font-style: italic;">#39;fieldable_panels_pane&amp;#39;][&amp;#39;bundles&amp;#39;][&amp;#39;machine_name_of_new_pane&amp;#39;] = array( &amp;#39;label&amp;#39; =&amp;gt; t(&amp;#39;Name of custom pane), &amp;#39;pane category&amp;#39; =&amp;gt; t(&amp;#39;Category your pane will appear in&amp;#39;), &amp;#39;pane top level&amp;#39; =&amp;gt; FALSE, &amp;#39;pane icon&amp;#39; =&amp;gt; &amp;#39;&amp;#39;, // Path to icon for your pane if needed &amp;#39;admin&amp;#39; =&amp;gt; array( &amp;#39;path&amp;#39; =&amp;gt; &amp;#39;admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type&amp;#39;, &amp;#39;bundle argument&amp;#39; =&amp;gt; 4, // Note that this has all _ replaced with - from the bundle name. &amp;#39;real path&amp;#39; =&amp;gt; &amp;#39;admin/structure/fieldable-panels-panes/manage/machine-name-of-new-pane&amp;#39;, &amp;#39;access arguments&amp;#39; =&amp;gt; array(&amp;#39;administer fieldable panels panes&amp;#39;), ), ); }</span></code></span></p>
+<p>In future Panopoly releases, the newest version of Fieldable Panel Panes should be included, which includes a UI for adding new pane types. </p>
+<p>After your custom pane type is defined, all field configuration is then done through the UI as usual, at admin/structure/fieldable-panels-panes.</p>
+<p>You can add fields as you would with a content type or other entities, and configure field display with Display Suite for your custom view modes.</p>
+<p>The end result of this is a custom pane your editors can easily add to pages. On the Deeson Member Communications site, we use several types of panes to create a custom experience for each page.</p>
+<div style="text-align: center;"> </div>
+<div style="text-align: center;"><img alt="" src="/sites/default/files/uploads/pic_2.png" style="width: 150px; height: 461px;" /></div>
+<p>Each of these panes include editable regions, where the editor is free to produce content unburdened by markup considerations. With Panopoly, we can also move each of these regions in place to get an idea of how the content will actually look when published.</p>
+<p style="text-align: center;"><img alt="" src="/sites/default/files/uploads/pic_3.png" style="width: 420px; height: 229px;" /><br /><i>The options at the top of each pane allow editing, custom styling, deletion, and placement. </i></p>
+<p style="text-align: center;"><img alt="" src="/sites/default/files/uploads/pic_4.png" style="width: 420px; height: 329px;" /></p>
+<p style="text-align: center;"><i><i>Editing a fieldable pane - note we allow HTML in the body field here to allow easy bullet points, bolded text, etc.</i></i></p>
+<p>Check out <a href="http://deeson-mc.co.uk/magazines" target="_blank">http://deeson-mc.co.uk/magazines</a> to see what we've been able to achieve with Panopoly.</p>
+<p>We've had a lot of fun with this new content editing experience, and there's still more we can do. Using Panopoly is a different approach to editing content in Drupal, and the UI is developed enough to aid even the most markup-averse content admin.</p>
+<p>We recommend trying Panopoly out on your next project, be that a content-generated site or a site which requires varying types of layout per page.</p>
+<p>If you have the resources to look into making something different for your users, Panopoly is definitely something to take into consideration.</p>
+<p> </p>
+<p> </p>
+</div></div></div><div class="field field-name-node-link field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even"><a href="/labs/creating-verge-site-panopoly">Read more</a></div></div></div><div class="field field-name-title field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even" property="dc:title"><h2>Creating a &#039;The Verge&#039;-like site with Panopoly</h2></div></div></div><div class="field field-name-meta field-type-ds field-label-hidden"><div class="field-items"><div class="field-item even">By <a href="/category/author/annika-clarke">Annika Clarke</a> | 4th February 2014</div></div></div>
+  </body>
+</html>
+

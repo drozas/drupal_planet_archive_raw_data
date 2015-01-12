@@ -1,0 +1,49 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 17 Jan 2014 20:58:56 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 17 Jan 2014 20:58:56 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Palantir: Diving In With Sculpin: A Designer's Holiday-Fueled Adventure
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.palantir.net/blog/diving-sculpin-designers-holiday-fueled-adventure
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Palantir: Diving In With Sculpin: A Designer's Holiday-Fueled Adventure</title>
+    <base href="http://www.palantir.net/blog/diving-sculpin-designers-holiday-fueled-adventure">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <span class="featured-blog-image">  
+      <img typeof="foaf:Image" src="http://www.palantir.net/sites/default/files/styles/bloglandingpage-thumbnail/public/blog/images/Sculpin-1.png?itok=teUzXofK" width="262" height="175" alt="Sculpin are ugly. But this one is good." title="Sculpin are ugly. But this one is good." />  </span>
+            <p>The Palantir design team has been refining our process to build responsive and modular in-browser prototypes and to create more reusable code. We've also been asked to create smaller-scale websites for clients who don't need all the bells and whistles that Drupal can provide. We think we’ve found a solution in a great tool called <a href="http://www.sculpin.io">Sculpin</a>.</p>
+<p>Sculpin is a static site generator created by <a href="http://beausimensen.com/">Beau Simensen</a>. It is similar to other static site generators like Jekyll and Phrozn. Since Sculpin uses Twig like Drupal 8 does (and Drupal is our domain), we believe Sculpin to be a prototyping tool well-suited for Palantir’s design team. Using Twig templates starting in the design phase puts design prototypes one step closer to the real thing. The initial code we create will be reusable and can help us focus on object-oriented design from the very beginning. </p>
+<p>We took Sculpin for a spin using Palantir’s <a href="http://holiday2013.palantir.net/">2013 Holiday site</a> as a first experiment, and I was Dr. Frankenstein. As a designer at Palantir, I mostly work with HTML, Sass, and sometimes a little PHP and Javascript. Before this project, I had never worked directly with a templating system. This post won’t get too far into the technical nitty-gritty, but my observations about Sculpin should be useful for someone who, like me, is just getting started with Sculpin and Twig. </p>
+<p>Anyway, after reading some Twig documentation and playing around with the Sculpin blog skeleton, I was ready to get started. Our Holiday site proved to be a great, low-pressure way to experiment with and discover the benefits and challenges of using Sculpin. Here’s what I learned during this first try:</p>
+<h2>Doing what it does best: blogging</h2>
+<p>Building Palantir’s holiday site in Sculpin was the perfect test of Sculpin’s basic functionality. Out of the box, Sculpin is meant for blogs. It comes with the “<a href="https://sculpin.io/documentation/bundles/SculpinPostsBundle/">Sculpin Posts Bundle</a>”  baked-in, which essentially allows you to have a series of posts with some blogging functionality.</p>
+<p>Creating and populating posts is simple. Once you create one HTML Twig template, all you have to do is create a markdown file and dump your content into it. A basic markdown file in Sculpin consists of YAML front matter and content. In the YAML, you can specify different variables. </p>
+<p>This is also where you specify which type of template to use. Sculpin looks at your markdown files and magically* populates the content into your specified template.</p>
+<h2>The power of Twig</h2>
+<p>Twig is insanely useful. I’ve never personally used a templating engine before, and I was blown away. This might be obvious to some, but basically you create an HTML template with some empty content blocks. In the YAML front matter of your markdown file, you specify which template to use and in the body, you place the content for the blocks. Twig looks at the markdown file and takes the content you placed in each block and populates it in the HTML Twig template you specified. </p>
+<p>This might not do much for you if you have only have a few posts, but when you have 25 posts, like I did for the Holiday site, populating markdown files is much easier than filling out 25 HTML files. Its usefulness really shines when you have to update a style or move some things around. You only have to update one template rather than 25 separate docs.</p>
+<h2>Struggles and roadblocks</h2>
+<p>My Sculpin experimentation wasn’t all rainbows and lollipops. I did run into a few roadblocks along the way including an installation hiccup involving a “timezone undefined” error, some concerns regarding the usability of markdown files for non-technical users, and a “--generate” bug that was giving me multiple outputs of the same post that linked nowhere. Granted, when I was creating our Holiday site at the end of last year, Sculpin’s documentation was much more sparse. A lot of progress has been made since then; it has since been updated and is more thorough with a lot of great new examples. </p>
+<p>I don’t want to get into the technical side of these issues here, and a few of them have been resolved. There will likely be a more technically oriented post on its way soon. But I did want to mention them in case our readers are having any similar issues. Comment below, and we’ll compare notes.</p>
+<h2>The results: our Holiday site</h2>
+<p>When all was said and done, Sculpin gave me the flexibility and ease of use I desired to create our simple, blog-style Holiday site on a relatively tight deadline. </p>
+<p>For the homepage, we chose a card-style layout. The cards are just a blog list with some fancy styles. The images, titles, and author’s names have been pulled into the card from the YAML front matter that is part of each markdown file.</p>
+<p><img src="/sites/default/files/general/images/Holiday-site-2.png" width="700" height="466" alt="Home page image for the Palantir.net Holiday site" title="Home page image for the Palantir.net Holiday site" /></p>
+<p>On an internal page, I used two buckets for content: the introduction area and the main content area. I also included a sidebar share feature on each page using Twig’s include function. I took advantage of the pagination functionality and created a simple navigation at the top of the article page with “Next” “Last” and a “Home” button. </p>
+<p><img src="/sites/default/files/general/images/holiday-site-3.png" width="700" height="456" alt="" /></p>
+<p>Again, <a href="http://holiday2013.palantir.net/">here’s the link to the site</a>, which is fully responsive and has a little bit of content for everybody. </p>
+<p><img src="/sites/default/files/general/images/holiday-site-4.png" width="700" height="451" alt="" /></p>
+<h2>Where I net out</h2>
+<p>Sculpin is a great way to prep for the impending release of Drupal 8, because it is relatively easy to get started and allowed this Twig novice to start experimenting with the powerful functionality Twig offers. And, if you need to create a small, blog-friendly site, don’t be afraid to get creative with your site by pushing the limitations of what Sculpin can do for you. In the end, I found Sculpin to be a formidable static site generator. </p>
+<p>Final note to Beau: Why did you name it Sculpin?</p>
+<p><em>*Palantir can neither confirm nor deny the use of actual magic in the creation of our Holiday site or in Sculpin’s capabilities</em>.</p>
+  </body>
+</html>
+

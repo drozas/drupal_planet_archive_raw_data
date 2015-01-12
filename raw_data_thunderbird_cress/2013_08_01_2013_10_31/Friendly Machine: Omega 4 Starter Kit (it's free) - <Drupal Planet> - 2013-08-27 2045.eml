@@ -1,0 +1,38 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 27 Aug 2013 19:45:35 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 27 Aug 2013 19:45:35 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Friendly Machine: Omega 4 Starter Kit (it's free)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://friendlymachine.net/posts/omega-4-starterkit
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Friendly Machine: Omega 4 Starter Kit (it's free)</title>
+    <base href="http://friendlymachine.net/posts/omega-4-starterkit">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I've been playing around with Omega 4 lately and I've put together a starter kit that I'd like to share. As with most things Drupal, there are a lot of different ways to to achieve a particular outcome, and working with Omega theme is no exception.</p>
+<p>In this post I’ll briefly go over a few of the choices I’ve made in putting together this installation profile, which I’ve decided to call Basis. Keep in mind that it’s still a work in progress, but if you’re new to Omega 4, you may find it saves you time in getting up to speed. Here's <a href="http://basis.friendlymachine.net/">the demo</a> if you'd like to see a preview.</p>
+<!--break-->
+<h2>Omega 4 Layouts</h2>
+<p>Basis uses two different layouts. If you’re not familiar with layouts, they take the place of the Delta + Context combo in Omega 3. Layouts are essentially versions of page.tpl.php (read this <a href="http://friendlymachine.net/posts/preview-omega-4">preview</a> of Omega to learn more).</p>
+<p>In Basis, the two column layout is used for the basic page content type and the single column layout is used for articles. However, with the <a href="https://drupal.org/project/context_omega">Context Omega</a> module you can apply different layouts on a per node basis and I've done this with the front page, giving it the same layout as an article.</p>
+<p>In an upcoming post I’m going to go through the process of creating a layout for Omega 4, so keep your eyes peeled for that if you'd like to see how it's done.</p>
+<h2>Display Suite</h2>
+<p>The layout for the nodes is managed with <a href="https://drupal.org/project/DS">Display Suite</a>. If you’re not familiar with Display Suite, it’s a very cool module that allows you fine-grained control over the display of your content. It's similar to Panels, but with a friendly user interface.</p>
+<p>If you’d like to get up to speed with Display Suite, there is a very good series of <a href="http://drupalize.me/series/display-suite-drupal-7">video tutorials</a> by Kristof De Jaeger, the creator of Display Suite, that I can recommend. I love DS, but it does take some getting used to. I’m actually planning a series of posts on Omega 4 and Display Suite because I think the combo is a good bridge for those used to Omega 3.</p>
+<h2>A Few Things to Keep in Mind</h2>
+<p>First, remember that this installation profile is a work in progress. I’m just sharing an early experiment with Omega 4. Basis isn’t meant to be production ready. Stuff is left undone and this is intentional.</p>
+<p>If you’d like to use Basis for your project, feel free. At some point I’ll offer a more polished version of Basis here on Friendly Machine, but for now, I’m still thinking of the best way to do things.</p>
+<h2>Download Basis</h2>
+<p>OK, so here's the <a href="https://github.com/friendlymachine/omega-4-starter/archive/master.zip">download link</a> for the zip file on GitHub - you can also check out the <a href="https://github.com/friendlymachine/omega-4-starter">full project</a> if you prefer to grab it with Git. The file is bigger than I normally prefer because I added the source image files so it would be easier to play around with image styles. I may rethink this in the future, but I'm going with it for now.</p>
+<p>If you’d like to read my future posts on Omega 4 and other things Drupal, be sure to <a href="#region-sidebar-second">sign up</a> for updates. Any comments or corrections, may be politely left below.</p>
+</div></div></div>
+  </body>
+</html>
+

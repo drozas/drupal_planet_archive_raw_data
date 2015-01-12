@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 16 Nov 2014 22:00:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 16 Nov 2014 22:00:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Gizra.com: Behat - The Right Way
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.gizra.com/content/behat-the-right-way
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Gizra.com: Behat - The Right Way</title>
+    <base href="http://www.gizra.com/content/behat-the-right-way">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><a href="http://behat.org">Behat</a> is a wonderful tool for automatic testing. It allows you to write your user stories and scenarios in proper English, which is then parsed by Behat and transformed to a set of clicks or other operations that mimic a real user.</p>
+
+<p>If you don&#39;t have automated tests on your project, I would argue that you&#39;re doing it wrong (I explain why on <a href="https://www.getpantheon.com/blog/drupal-development-gizra-way">The Gizra Way</a> presentation). Even having a <em>single</em> test is much better than none.</p>
+
+<p>With that said, it&#39;s super easy to abuse Behat. We are developers and we think sort of like machines (not really, but you get my point). If you would like to test login to your site you could easily do</p>
+<div class="highlight"><pre><code class="cucumber language-cucumber" data-lang="cucumber"><span class="k">Given </span><span class="nf">I visit &quot;</span><span class="s">/user/login</span><span class="nf">&quot;</span>
+<span class="nf"> </span><span class="c"># fill the username and password input fields, and click submit</span><span class="nf"></span>
+<span class="nf"> </span><span class="k">When </span><span class="nf">I fill &quot;</span><span class="s">username</span><span class="nf">&quot; with &quot;</span><span class="s">foo</span><span class="nf">&quot;</span>
+<span class="nf">  </span><span class="k">And </span><span class="nf">I fill &quot;</span><span class="s">password</span><span class="nf">&quot; with &quot;</span><span class="s">bar</span><span class="nf">&quot;</span>
+<span class="nf">  </span><span class="k">And </span><span class="nf">I press &quot;</span><span class="s">Login</span><span class="nf">&quot;</span>
+<span class="nf"> </span><span class="k">Then </span><span class="nf">I should get a &quot;</span><span class="s">200</span><span class="nf">&quot; HTTP response</span>
+</code></pre></div>
+<p>Your test will return green, but it could be improved:</p>
+
+          <p><a href="http://www.gizra.com/content/behat-the-right-way/">Continue reading…</a></p>
+  </body>
+</html>
+

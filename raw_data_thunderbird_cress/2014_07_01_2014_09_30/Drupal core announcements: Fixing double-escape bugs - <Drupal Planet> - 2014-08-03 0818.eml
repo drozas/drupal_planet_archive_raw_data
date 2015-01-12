@@ -1,0 +1,22 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 03 Aug 2014 07:18:42 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 03 Aug 2014 07:18:42 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Fixing double-escape bugs
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/436473
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Fixing double-escape bugs</title>
+    <base href="https://groups.drupal.org/node/436473">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>Since Twig autoescape is on, there are <a href="https://www.drupal.org/node/2289999">double escape bugs</a>. If you can fix them by refactoring code into Twig templates, that's great. If not then wait for <a href="https://www.drupal.org/node/2289999">an easy way to create HTML on the fly without having to create a theme function / template</a>. It's already RTBC, it's a matter of days to find its way in. Regarding <code>SafeMarkup::set</code> calls, there is an issue to <a href="https://www.drupal.org/node/2297703">refactor and remove</a> the ones we needed to add to get tests pass and so adding more is not acceptable (the reason for writing this announcement are the quick fix issues I need to whack trying to fix double escape by adding more of these).</p>
+  </body>
+</html>
+

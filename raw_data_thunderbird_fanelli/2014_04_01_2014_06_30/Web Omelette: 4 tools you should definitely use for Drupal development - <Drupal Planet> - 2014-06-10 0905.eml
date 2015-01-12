@@ -1,0 +1,66 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 10 Jun 2014 07:05:21 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 10 Jun 2014 07:05:21 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Web Omelette: 4 tools you should definitely use for Drupal development
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.webomelette.com/4-tools-you-should-definitely-use-drupal-development
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Web Omelette: 4 tools you should definitely use for Drupal development</title>
+    <base href="http://www.webomelette.com/4-tools-you-should-definitely-use-drupal-development">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>Developing Drupal sites can be quite a challenge and adventure. And this comes from those who call themselves Drupal developers. Men and women of PHP who work with other frameworks and applications most likely find it even more cumbersome to understand. However, Drupal is fostered by a big community of enthusiastic people who love it, myself included. But in all honesty, the more you work with it, the more you develop this love/hate relationship with all the quirks of Drupal development.</p>
+
+<p>But one thing is certain, and this is applicable to other areas of web development as well: the tools you use for the job can make a big difference in the experience you have. And Drupal makes no exception. I mean, remember when we were writing PHP in Notepad and that one missing semicolon added 2 hours of debugging that day?</p>
+
+<p>In this article I would like to share with you 4 tools that I use for Drupal development. I heavily rely on them to minimise frustration, increase productivity and lower development time. And I can guarantee you that if you are serious about Drupal development and you are not using them, you are missing out. But if you are, kudos, do share some of your experiences that further demonstrate their power.</p>
+
+<p>So here we are, I guess in order of complexity, the 4 tools in my belt when I run <code>vagrant up</code> to spin up a project on my local environment. I will say a few words about each, but I can't go into all of their features. That's for you to explore after I give you a taste of what they can offer.</p>
+
+<h2>Devel and Search Krumo modules</h2>
+
+<p><a href="https://drupal.org/project/devel">Devel</a> is the most used Drupal development module built for aiding with debugging code, generating content and all sorts of other dev tasks. <a href="https://drupal.org/project/search_krumo">Search Krumo</a> is yet another cool module that plugs into it in order to give us a hand with navigating through huge array structures. And if you know Drupal 7, <strong>it is all about big arrays</strong>.</p>
+
+<p>These modules are probably the first solution for debugging variables in Drupal. Using Devel's <code>dsm()</code>, <code>dpm()</code>, and <code>krumo()</code> functions in your code you can print out arrays, objects and whatever you need for a great overview of what you have in scope at that moment of execution. And they are not the only ones...</p>
+
+<p>Another great use for the Devel module is content generation. It has a series of submodules that can generate nodes, taxonomy terms, users and more. Sometimes you need 500 nodes on the site to test something out. Additionally, you can use it to execute PHP code in the Drupal environment, switch between users on the site and other awesome functionality. So it's a must have on any Drupal development environment.</p>
+
+<h2>Drush</h2>
+
+<p>Drush is an awesome command line tool for Drupal that speeds up many tasks. Some people call it the <em>swiss army knife</em> of Drupal and you can't really argue the opposite.</p>
+
+<p><div  id="block-inject-2" class="block-inject block-inject-2"></div><div class="clearfix"></div><p>Drush allows you to perform a host of Drupal tasks from the command line. You can download and enable/disable/uninstall/update modules or Drupal core and all sorts of other helpful jobs. This great <a href="http://drush.ws/">list of core commands</a> can give you an overview of what you can do with Drush. And if you are looking for some help with setting Drush up on your server, you can read <a href="https://www.digitalocean.com/community/articles/how-to-install-drush-on-a-cloud-server-running-ubuntu-12-04">this article</a> I wrote on the subject.</p>
+
+<p>Another great thing about Drush is that aside from all the awesome core commands, you can <a href="http://www.sitepoint.com/drupal-create-drush-command/">declare your own</a>. This way, you can expose some of your custom functionality to the command line. This goes behind development and can help with maintenance or even production jobs that need to run with cron. So it truly is versatile.</p>
+
+<h2>A good IDE like PHPStorm</h2>
+
+<p>I mentioned before the good ol' times (not really) when Notepad was the editor of choice for many developers. Luckily nowadays we don't have to suffer through that as we can use IDEs for coding. I myself use PHPStorm and is of great help.</p>
+
+<p>An IDE can speed up your development time by preventing code mistakes, highlighting syntax for great readability, code hinting for classes and functions in your project and many others. And with Drupal, all of these are important. Since Drupal 7 is mostly procedural you need to be aware of many functions and parameters. The IDE great reduces the time you spend online researching these APIs. And not to mention the integrations you can create with these API documentation resources.</p>
+
+<p>Another great use of IDEs (which for me is the most important) is debugging. Integrating PHPStorm with XDebug on my local server really changed things around. But more on that in the next point.</p>
+
+<h2>Xdebug</h2>
+
+<p>As great as the Devel module is for printing out variables to the screen, it does not come close to Xdebug when we talk about debugging. After setting it up, all you have to do is place a breakpoint in your code and load your site page. The execution stops at the breakpoint (that was hopefully supposed to be executed) and you have access to a wealth of contextual information. You get all the global and scope variables that you can navigate through, a great callstack of what functions/methods have been triggered so far and many others.</p>
+
+<p>Another cool feature is that you can play forward the execution line by line and jump inside of <em>to be called</em> functions to see where the code is heading. This is great for debugging where your code fails, at which point does that exception get thrown, or why that variable is null. So I do recommend checking it out.</p>
+
+<h2>Conclusion</h2>
+
+<p>And there you have it: 4 tools you can start using today to make you Drupal development experience more efficient. Using Drush and the Devel module are really only specifically for Drupal, but the use of a good IDE and XDebug is applicable to all other PHP projects as well. And I can guarantee you they are all worth using.</p>
+</div></div></div><div class="sharethis-buttons"><div class="sharethis-wrapper"><span st_url="http://www.webomelette.com/4-tools-you-should-definitely-use-drupal-development" st_title="4 tools you should definitely use for Drupal development" class="st_facebook"></span>
+<span st_url="http://www.webomelette.com/4-tools-you-should-definitely-use-drupal-development" st_title="4 tools you should definitely use for Drupal development" class="st_twitter" st_via="drupalexp"></span>
+<span st_url="http://www.webomelette.com/4-tools-you-should-definitely-use-drupal-development" st_title="4 tools you should definitely use for Drupal development" class="st_googleplus"></span>
+<script type='text/javascript'>var switchTo5x = true;</script><script type='text/javascript' src='http://w.sharethis.com/button/buttons.js'></script><script type='text/javascript'>stLight.options({"publisher":"dr-8de6c3c4-3462-9715-caaf-ce2c161a50c"});</script></div></div>
+  </body>
+</html>
+

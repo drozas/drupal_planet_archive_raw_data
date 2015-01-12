@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 08 Oct 2014 14:43:09 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 08 Oct 2014 14:43:09 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: mcdruid.co.uk: How to cleanly delete a Drupal file with drush
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.mcdruid.co.uk/content/how-to-cleanly-delete-a-drupal-file-with-drush
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>mcdruid.co.uk: How to cleanly delete a Drupal file with drush</title>
+    <base href="http://www.mcdruid.co.uk/content/how-to-cleanly-delete-a-drupal-file-with-drush">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>This is a simple trick which (unless my googlefu simply failed me) I didn't find described anywhere when I had a quick look:</p>
+<p><div class="geshifilter"><pre class="bash geshifilter-bash" style="font-family:monospace;">$ drush ev <span style="color: #ff0000;">'$file = file_load(21749); var_dump(file_delete($file, TRUE));'</span>
+bool<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #c20cb9; font-weight: bold;">true</span><span style="color: #7a0874; font-weight: bold;">&#41;</span></pre></div></p>
+<p>This means all the appropriate hooks are called in <a href="https://api.drupal.org/api/drupal/includes%21file.inc/function/file_delete/7" rel="nofollow">file_delete</a> so the Drupal API gods should smile on you, and you should get to see the TRUE/FALSE result reflecting success or otherwise. Note that we're passing $force=TRUE "indicating that the file should be deleted even if the file is reported as in use by the file_usage table." So be careful.</p>
+<p>To delete multiple files you could use <a href="https://api.drupal.org/api/drupal/includes%21file.inc/function/file_load_multiple/7" rel="nofollow">file_load_multiple</a> but there's not a corresponding file_delete_multiple function, so you'd have to loop over the array of file objects.</p>
+<p>That's all there is to this one.</p>
+  </body>
+</html>
+

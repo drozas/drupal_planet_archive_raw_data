@@ -1,0 +1,95 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sat, 22 Mar 2014 04:20:13 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sat, 22 Mar 2014 04:20:13 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Pixelite: Upgrading PHP to 5.4 on Ubuntu 12.04 LTS to support Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.pixelite.co.nz/article/upgrading-php-54-ubuntu-1204-lts-support-drupal-8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Pixelite: Upgrading PHP to 5.4 on Ubuntu 12.04 LTS to support Drupal 8</title>
+    <base href="http://www.pixelite.co.nz/article/upgrading-php-54-ubuntu-1204-lts-support-drupal-8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="service-links"><a href="http://twitter.com/share?url=http%3A//www.pixelite.co.nz/article/upgrading-php-54-ubuntu-1204-lts-support-drupal-8&amp;count=horizontal&amp;via=&amp;text=Upgrading%20PHP%20to%205.4%20on%20Ubuntu%2012.04%20LTS%20to%20support%20Drupal%208&amp;counturl=http%3A//www.pixelite.co.nz/article/upgrading-php-54-ubuntu-1204-lts-support-drupal-8" class="twitter-share-button service-links-twitter-widget" title="Tweet This" rel="nofollow"><span class="element-invisible">Tweet Widget</span></a> <a href="http://www.facebook.com/plugins/like.php?href=http%3A//www.pixelite.co.nz/article/upgrading-php-54-ubuntu-1204-lts-support-drupal-8&amp;layout=button_count&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;width=100&amp;height=21&amp;font=&amp;locale=" title="I Like it" class="service-links-facebook-like" rel="nofollow"><span class="element-invisible">Facebook Like</span></a> <a href="http://www.pixelite.co.nz/article/upgrading-php-54-ubuntu-1204-lts-support-drupal-8" title="Plus it" class="service-links-google-plus-one" rel="nofollow"><span class="element-invisible">Google Plus One</span></a> <a href="http://www.pixelite.co.nz/article/upgrading-php-54-ubuntu-1204-lts-support-drupal-8" title="Share on Linkedin" class="service-links-linkedin-share-button" rel="nofollow"><span class="element-invisible">Linkedin Share Button</span></a></div>
+  <div class="field-body">
+    <p>As of the 28 February 2014, Drupal 8 now requires a minimum PHP version of 5.4.2. For background information read <a href="https://drupal.org/node/1498574">the drupal.org issue</a>.</p>
+
+<p>This places everyone running Ubuntu 12.04 LTS in an awkward situation as the PHP version bundled with this release is <a href="https://launchpad.net/ubuntu/precise/+source/php5">PHP 5.3.10</a>.</p>
+
+<p>Luckily there are options to solve this:</p>
+
+<h2>Perform a dist-upgrade to 14.04 LTS</h2>
+
+<p>This may not be the easiest option, but I mention it for completeness, as this newer version of Ubuntu (Trusty Tahr) <a href="https://launchpad.net/ubuntu/trusty/+source/php5">contains PHP 5.5.9</a> out of the box.</p>
+
+<h2>Add a PPA and install newer a newer version of PHP</h2>
+
+<p>For most people this will be the easiest option. For PHP 5.4.x run the command:</p>
+
+<pre><code>sudo add-apt-repository ppa:ondrej/php5-oldstable
+</code></pre>
+
+<p>or for PHP 5.5.x run:</p>
+
+<pre><code>sudo add-apt-repository ppa:ondrej/php5
+</code></pre>
+
+<p>And then update your packages:</p>
+
+<pre><code>sudo apt-get update
+sudo apt-get upgrade
+</code></pre>
+
+<p>The PPA maintainer has more information on the launchpad site https://launchpad.net/~ondrej/+archive/php5</p>
+
+<h3>Common issues</h3>
+
+<p>I was getting the message "The following packages have been kept back" when running the upgrade command earlier</p>
+
+<pre><code>seanh /var/www/D8 git:8.x » sudo apt-get upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages have been kept back:
+  libapache2-mod-php5 linux-generic linux-headers-generic linux-image-generic php-pear php5-cli php5-common php5-curl php5-dev php5-gd php5-mcrypt php5-mysql php5-pgsql php5-xdebug
+</code></pre>
+
+<p>This was solved by manually installing the packages:</p>
+
+<pre><code>sudo apt-get install php-pear php5-cli php5-common php5-curl php5-dev php5-gd php5-mcrypt php5-mysql php5-pgsql php5-xdebug
+</code></pre>
+
+<h2>Comments</h2>
+
+<p>Let me know if this worked for you in the comments, or if you have another way to easily update PHP on your stack.</p>
+  </div>
+  <h3 class="field-label">
+    Tags  </h3>
+
+  <div class="field-tags">
+    <a href="/tag/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupal</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/drupalplanet" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">drupalplanet</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/ubuntu" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">ubuntu</a>  </div>
+  <div class="field-tags">
+    <a href="/tag/php" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">php</a>  </div>
+  <h3 class="field-label">
+    Source  </h3>
+
+  <div class="field-source">
+    <a href="https://launchpad.net/~ondrej/+archive/php5">PPA for PHP 5.5</a>  </div>
+  <h3 class="field-label">
+    Category  </h3>
+
+  <div class="field-category">
+    <a href="/category/tutorial" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Tutorial</a>  </div>
+  </body>
+</html>
+

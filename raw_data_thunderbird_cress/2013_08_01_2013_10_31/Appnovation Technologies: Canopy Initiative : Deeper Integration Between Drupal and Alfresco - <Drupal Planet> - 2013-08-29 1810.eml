@@ -1,0 +1,55 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 29 Aug 2013 17:10:16 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 29 Aug 2013 17:10:16 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Appnovation Technologies: Canopy Initiative : Deeper Integration Between Drupal and Alfresco
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.appnovation.com/canopy_initiative_deeper_integration_between_drupal_and_alfresco
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Appnovation Technologies: Canopy Initiative : Deeper Integration Between Drupal and Alfresco</title>
+    <base href="http://www.appnovation.com/canopy_initiative_deeper_integration_between_drupal_and_alfresco">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>With the Canopy Initiative, we try to continuously improve the Drupal - Alfresco integration.</p>
+<p>Traditionally, Alfresco is used as a back-end document repository, and Drupal as the front-end.</p>
+<p>Drupal is a flexible CMS, and this is a very good tool for creating a nice, dynamic and ergonomic user interface. On the other side, Alfresco is a very powerful document management system, but it’s not trivial to deeply tweak the UI.</p>
+<p>The classic Canopy integration is based on the CMIS standard : Alfresco is used as a CMIS server, while Drupal is set as a CMIS browser. This provides a way to manage documents stored in Alfresco, from Drupal.</p>
+<p>In an attempt to push the integration further, we wanted to create an integration at the UI level : We wanted to integrate a custom Alfresco document view inside a iframe, on the Drupal side. We thought it would greatly improve the user experience, as it would allow users to manage documents the same way they would do from Alfresco Share, without having to connect to another webapp. They would be able to trigger actions from Alfresco Share &amp; Drupal from the same page.</p>
+<p>In order to do that, we first needed to create a custom Alfresco Share page. This is an easy task, and the Alfresco wiki is well documented about that :<br /><a href="http://wiki.alfresco.com/wiki/Share_Custom_Pages">http://wiki.alfresco.com/wiki/Share_Custom_Pages</a><br />
+We needed to create a new “Page definition”, “template instance” and “template”. Since we just wanted to simplify the “document-details” page, we copied those 3 files for this page, renamed them and removed the unnecessary parts, to create our “custom-document-details” page.</p>
+<p>This custom page only had to include those 3 elements from the original document details page :</p>
+<ul><li>Preview</li>
+<li>Actions</li>
+<li>Versions</li>
+</ul><p>The “Preview” and “Versions” parts of the page didn’t need any customization, as we wanted the exact same details as in the original document page, but for the “Actions” part, we wanted to restrict them to a selected subset, to expose only few actions on this custom page. Alfresco 4.x makes it flexible to declare a new custom set of action (action group). Here are the different needed steps :</p>
+<ul><li>Passing the “view” argument to the “Actions” component of the page, in the “template-instance” page. This parameter should match the “action group” name. As the original “document-details” page uses the “document-details” action group name, we chose to create a new “document-customdetails” action group name.</li>
+<li>Create a new DoclistActionGroupResolver (Java Class) by overriding the DefaultDoclistActionGroupResolver, and declare it as “resolver.doclib.customActionGroup” in the spring context. This new CustomDoclistActionGroupResolver is responsible to give the “action-group” name as an output from the node details and the “view” argument received as input. In our case, we want to return “document-customdetails” when input string “view” equals “customdetails”.</li>
+<li>Edit the share-custom-config.xml to :
+<ul><li>Use that new CustomDoclistActionGroupResolver, instead of the DefaultDoclistActionGroupResolver</li>
+<li>Set the different actions available in that custom action group “document-customdetails”</li>
+</ul><p>Here are the code added to the share-custom-config for that part :<br /><code><br />
+  &lt;config evaluator="string-compare" condition="DocLibActions"&gt;<br />
+    &lt;actionGroupResolver&gt;resolver.doclib.customActionGroup&gt;/actionGroupResolver&gt;<br />
+  &lt;actionGroups&gt;<br />
+    &lt;actionGroup id="document-customdetails"&gt;<br />
+    &lt;action index="100" id="document-download" /&gt;<br />
+    &lt;action index="110" id="document-view-content" /&gt;<br />
+    &lt;/actionGroup&gt;<br />
+  &lt;/actionGroups&gt;<br />
+  &lt;/config&gt;<br /></code>
+  </p></li>
+</ul><p>The next challenge was to set a single-sign-on between Drupal and Alfresco. We chose to use the Jasig CAS authentication server. That way, as soon as we are logged into Drupal, we are logged into Alfresco as well, and we don’t need to re-type the credentials again inside the iframe.</p>
+<p>Please find attached a snapshot of the resulting page.</p>
+<p>The advantage of this integration is the flexibility it provides.<br />
+>From there, we can create other new custom pages if we want to access some other actions from Drupal (Manage a workflow, Add category/tag, ...).<br />
+That way, we have the possibility of directly integrating a functionality from Alfresco to Drupal at the UI level without having to re-create the UI in Drupal and the custom web-scripts needed in Alfresco.</p>
+</div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-above"><div class="field-label">Blog Tags:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/content_tags/canopy_initiative" typeof="skos:Concept" property="rdfs:label skos:prefLabel">canopy initiative</a></div><div class="field-item odd"><a href="/content-tags/alfresco" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Alfresco</a></div><div class="field-item even"><a href="/content-tags/drupal-0" typeof="skos:Concept" property="rdfs:label skos:prefLabel">drupal</a></div><div class="field-item odd"><a href="/content_tags/open_source_integration" typeof="skos:Concept" property="rdfs:label skos:prefLabel">open source integration</a></div><div class="field-item even"><a href="/content-tags/open-source" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Open Source</a></div></div></div><div class="field field-name-field-attachments field-type-file field-label-above"><div class="field-label">File Attachments:&nbsp;</div><div class="field-items"><div class="field-item even"><span class="file"><img class="file-icon" alt="" title="image/jpeg" src="/modules/file/icons/image-x-generic.png" /> <a href="http://www.appnovation.com/sites/default/files/attachments/AWS.jpg" type="image/jpeg; length=355841">AWS.jpg</a></span></div></div></div><div class="field field-name-field-section field-type-taxonomy-term-reference field-label-above"><div class="field-label">Section:&nbsp;</div><div class="field-items"><div class="field-item even"><a href="/section/alfresco" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Alfresco</a></div><div class="field-item odd"><a href="/section/canopy" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Canopy</a></div><div class="field-item even"><a href="/section/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Drupal</a></div></div></div>
+  </body>
+</html>
+

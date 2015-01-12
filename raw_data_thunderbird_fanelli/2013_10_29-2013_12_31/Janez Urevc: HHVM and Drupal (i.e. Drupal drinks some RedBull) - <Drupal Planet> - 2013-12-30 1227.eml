@@ -1,0 +1,25 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 30 Dec 2013 11:27:19 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 30 Dec 2013 11:27:19 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Janez Urevc: HHVM and Drupal (i.e. Drupal drinks some RedBull)
+Content-Transfer-Encoding: 8bit
+Content-Base: http://janezurevc.name/hhvm-and-drupal-ie-drupal-drinks-some-redbull
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Janez Urevc: HHVM and Drupal (i.e. Drupal drinks some RedBull)</title>
+    <base href="http://janezurevc.name/hhvm-and-drupal-ie-drupal-drinks-some-redbull">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden view-mode-rss"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I've been following <a href="http://en.wikipedia.org/wiki/HipHop_for_PHP">HHVM (HipHop Virtual machine)</a> for some time now. Project got a bit more of my attention about a year ago, after session at <a href="http://en.wikipedia.org/wiki/FOSDEM">FOSDEM</a> 2013 by <a href="https://github.com/sgolemon">Sara Golemon</a>. PHP has been criticized for quite a lot of it's characteristics, performance definitely being one of those. HHVM seemed to be very promising about fixing it and that's why it got my attention in the first place. Immediately after last year's FOSDEM I tried it with <a href="http://drupal.org">Drupal</a>, but my attempt unfortunately failed miserably. HHVM was simply not yet ready for that. <img alt="" class="media-image" height="480" style="float: left" width="401" typeof="foaf:Image" src="http://janezurevc.name/sites/janezurevc.name/files/styles/large/public/heart.jpg?itok=ZTOdJbcz" /></p>
+<h2>But first a bit of history...</h2>
+<p>HipHop was initially developed by Facebook (and they are still it's main contributor). Facebook was looking for something that would make their PHP code base perform faster while still retaining benefits that PHP brings (primarily ease of use for developers). Initially they created a compiler (HPHPc) that transformed a PHP script into a C++ program, which was then compiled into a binary. This approach showed dramatic increase in performance, but also had some problems. HPHPc did not fully support PHP language and was not a simple drop-in replacement for "standard" (Zend) PHP.</p>
+<p>Facebook decided to deprecate HPHPc, start working on a bit different approach and HHVM was born. HHVM is a <a href="http://en.wikipedia.org/wiki/Just-in-time_compilation">Just-in-time compiler (JIT)</a> for PHP. It behaves very similar to standard interpreter when observed from the outside (which means it can be a drop-in replacement for it), but it works quite different internally. It will run a program as an interpreter at the beginning of execution, collect some statistics for optimization and eventually compile it to byte code on the fly. Compiled program will then run much faster than it's interpreted version. It is quite obvious that we get true performance gains with applications that run for a longer period of time (because of initial interpretation phase and on-the-fly compilation). A standard web (Drupal) application, which is deployed to production servers from time to time, is exactly what we're looking for.</p></div></div></div>
+  </body>
+</html>
+

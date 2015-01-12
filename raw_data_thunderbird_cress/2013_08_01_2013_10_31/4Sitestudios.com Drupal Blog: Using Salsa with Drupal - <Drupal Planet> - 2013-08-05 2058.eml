@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 05 Aug 2013 19:58:14 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 05 Aug 2013 19:58:14 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: 4Sitestudios.com Drupal Blog: Using Salsa with Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.4sitestudios.com/blog/aug-05-2013/using-salsa-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>4Sitestudios.com Drupal Blog: Using Salsa with Drupal</title>
+    <base href="http://www.4sitestudios.com/blog/aug-05-2013/using-salsa-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="http://www.4sitestudios.com/sites/default/files/styles/blog_featured_image/public/salsa-image.jpg?itok=XIhLBz-2" width="600" height="175" alt="Salsa image" title="Salsa image" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>I recently presented <a href="http://capitalcamp.org/content/salsa-spicy-crm-integration-drupal-powered-nonprofits">Salsa: Spicy CRM Integration for Drupal-Powered Nonprofits</a> at CapitalCamp, the District of Columbia's Drupal camp. Here's a summary of the current state of Salsa/Drupal integration, based on that presentation.</p>
+<iframe src="http://www.slideshare.net/slideshow/embed_code/24951514?rel=0" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen webkitallowfullscreen mozallowfullscreen> </iframe><div style="margin-bottom:5px"> <strong> <a href="http://www.slideshare.net/4sitestudios/capitalcamp-2013-salsa" title="Capitalcamp 2013 - Salsa: Spicy CRM Integration for Drupal-Powered Nonprofits" target="_blank">Capitalcamp 2013 - Salsa: Spicy CRM Integration for Drupal-Powered Nonprofits</a> </strong> from <strong><a href="http://www.slideshare.net/4sitestudios" target="_blank">4sitestudios</a></strong> </div>
+<h2>Salsa 101</h2>
+<p>Salsa, from D.C.-based <a href="http://www.salsalabs.com/" target="_blank"></a>Salsa Labs, is an integrated software-as-a-service that helps nonprofits "build, organize and engage a base of support with tools to communicate, fundraise, advocate and build community." 4Site has performed a number of Salsa integrations with Drupal over the years. Two of our recent projects are <a href="http://iamforthechild.org/" target="_blank">I am for the Child</a> for the National Association of Court Appointed Special Advocates (CASA), and <a href="http://preventobesity.net/" target="_blank">PreventObesity.Net</a> for NetCentric Campaigns, the Robert Wood Johnson Foundation and the American Heart Association.</p>
+<p>Salsa is modular, and is built around a number of objects. The central object is the <em>supporter</em>, and most of the objects in other Salsa modules relate to variousT things that your supporters do: donations they make, petitions they sign, events they register to attend, and so on. For the most part, your supporters interact with these objects through HTML forms.</p>
+<h2>Mild Salsa: Links and Embedded Forms</h2>
+<p>It's easy to incorporate basic Salsa functionality into any website. You can always just link to a Salsa-hosted form, which is wrapped in a template that looks like the rest of your site. This is easy, but has a number of drawbacks, the first being that you'll have to update the Salsa template every time the navigation or design of your main site changes. If your site has a lot of dynamic elements (recent news items in the sidebar, for example), a static, remotely hosted form is going to look pretty out of place. You can get around this by <a href="http://salsa3.salsalabs.com/o/8001/p/salsa/website/public2/commons/dev/docs/api/unauthenticated.sjs" target="_blank">embedding forms</a> directly into your site. That's pretty easy for anyone with basic HTML skills, but it's still pretty limited. And it's not terribly Drupal-y!</p>
+<h2>Medium Salsa: Salsa API and Salsa Entity</h2>
+<p>Fortunately, Salsa has a reasonably well-featured, mostly RESTful API. When I started working at 4Site a couple of years ago, I discovered the <a href="http://drupal.org/project/salsa_api" target="_blank">Salsa API</a> module, which lets Drupal easily talk to Salsa, and read from or write to nearly any Salsa object. At the time, the module was for Drupal 6 only, with no recent updates, and the author was no longer active on Drupal.org. I took over as maintainer of the Salsa API module and wrote an initial Drupal 7 version.</p>
+<p>That Drupal 7 port of the Salsa API module allowed other members of the Drupal community to create <a href="http://drupal.org/project/salsa_entity" target="_blank">Salsa Entity</a>, a suite of modules that exposes Salsa's objects as Drupal <em>&nbsp;</em>entities. This allows for deep integration with Drupal without writing a lot of custom code. In fact, the goal of the Salsa Entity project is to allow you to replace the public user interface of Salsa completely.</p>
+<p>Using Salsa Entity, just about any form you create in Salsa is automatically available as a form contained in a Drupal block. Since those forms are rendered through Drupal's Forms API, they're themeable just like any other Drupal form, so you can easily create a highly customized look and feel without writing two sets of templates. Salsa Entity also provides integration with other Drupal modules, including Entity Reference, Rules, and Views.</p>
+<p>One of Salsa Entity's submodules, Salsa Profile, allows your supporters to easily update their Salsa records from their Drupal accounts. It adds a new "Edit Profile" tab to user pages, with a form containing all of the fields in Salsa's supporter object. When the user submits the form, the data is saved directly to Salsa. Of course, you'll probably want to make some changes first. For example, you probably don't want your supporters changing the "source tracking code" that records where you originally acquired them, or the number of times email to them has bounced. Fortunately, since this is a standard Drupal form, we can make changes using the Form API's <a href="https://api.drupal.org/api/drupal/modules!system!system.api.php/function/hook_form_alter/7" target="_blank">form alter</a> functionality. We can keep certain fields from displaying, change the order in which fields appear, add subheadings, change the labels for certain fields, change the widgets users use to edit the field values, and more.</p>
+<h2>Spicy Salsa: Coming Soon!</h2>
+<p>If you want even deeper integration, you can use the Salsa API module with your own custom code. More on that in my next post!</p>
+</div></div></div>
+  </body>
+</html>
+

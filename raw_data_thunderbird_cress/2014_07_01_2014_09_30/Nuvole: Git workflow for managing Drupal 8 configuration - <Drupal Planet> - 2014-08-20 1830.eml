@@ -1,0 +1,86 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 20 Aug 2014 17:30:26 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 20 Aug 2014 17:30:26 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Nuvole: Git workflow for managing Drupal 8 configuration
+Content-Transfer-Encoding: 8bit
+Content-Base: http://nuvole.org/blog/2014/aug/20/git-workflow-managing-drupal-8-configuration
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Nuvole: Git workflow for managing Drupal 8 configuration</title>
+    <base href="http://nuvole.org/blog/2014/aug/20/git-workflow-managing-drupal-8-configuration">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-blog-subtitle field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even">The D8 way to replace &quot;features-update&quot; and &quot;features-revert-all&quot;.</div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><em>This is a preview of Nuvole's training at DrupalCon Amsterdam: <a href="https://amsterdam2014.drupal.org/node/2808">An Effective Development Workflow in Drupal 8</a>.</em></p>
+
+<p>One of the new key features of Drupal 8 is the possibility to <a href="http://nuvole.org/blog/2014/jun/06/configuration-management-drupal-7-drupal-8">deal with configuration in code</a>. Since configuration is now in text files, we want to put it under version control in Git to enjoy the many advantages this brings: comparing configuration states, keeping a history of configuration changes and even moving configuration between sites.</p>
+
+<h2>Setup</h2>
+
+<p>We will assume that you have a development version of Drupal 8, git and drush available on your system.
+You can set up your Drupal git repository in several ways. One of them is outlined in <a href="https://www.drupal.org/node/803746">Building a Drupal site with Git</a> on drupal.org. The document is written for Drupal 7, but can easily be adapted for Drupal 8.<br />
+Another, probably simpler method is to simply download a Drupal 8 (alpha) release and initialise a new repository with it.</p>
+
+<p>In either case you should copy <code>example.gitignore</code> to <code>.gitignore</code> and adapt it to your needs to prevent <code>settings.php</code> and the files directory from being versioned.</p>
+
+<p>The next step is to make sure that a configuration directory is versionable. By default Drupal 8 will place the staging directory under <code>sites/default/files</code> and it is considered a good practice to not version that location, but an alternative location can easily be specified in <code>settings.php</code>:</p>
+
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$config_directories</span><span style="color: #007700">[</span><span style="color: #DD0000">'staging'</span><span style="color: #007700">] = </span><span style="color: #DD0000">'config/staging'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<p>It is also possible and even advisable to specify a directory outside of the web root of course. In that case you would put the parent directory of your web root where drupal is under version control and use <code>../config/staging</code>. We will later see that it is also possible to add more directories and keys to the <code>$config_directories</code> variable.</p>
+
+<p>Because the configuration management of Drupal 8 only works between different instances of the <strong>same</strong> site, the different instances of the site need to be cloned. Cloning a Drupal 8 site is done the same way as cloning a Drupal 7 site. Just dump the database of the site to clone and import it in the other environment.</p>
+
+<h2>Development</h2>
+
+<p>After cloning your site you can go ahead and start configuring your site.<br />
+Once the part of the configuration you were working on is done the whole configuration of the site needs to be exported.</p>
+
+<div class="codeblock"><code>local$ drush config-export staging<br />The current contents of your export directory (config/staging) will be deleted. (y/n): y<br />Configuration successfully exported to config/staging.</code></div>
+
+<p>Next, you need to merge the work of other developers. In some cases it may be enough to simply use <code>git pull</code>, otherwise the configuration has to be merged after it has been committed:</p>
+
+<ul><li><p>Add all configuration to git and commit it.</p></li>
+<li><p>Use git pull (or git fetch and git merge) and resolve any conflicts if necessary.</p></li>
+</ul><p>Git can merge changes in text files quite well, but git does not know about Drupal and its yaml format for configuration. It is, therefore, important to verify that the merged configuration makes sense and is valid. In most cases it will probably not be an issue and just work, but it is always better to be vigilant and be on the safe side. So, after merging, you should always run:</p>
+
+<div class="codeblock"><code>local$ drush config-import staging</code></div>
+
+<p>If the import went smooth you can push the configuration to the remote repository. Otherwise the configuration needs to be fixed first.</p>
+
+<h2>Deployment</h2>
+
+<p>The simplest case is when the configuration on the production site has not been changed. There is an interesting <a href="https://www.drupal.org/project/config_readonly">Configuration Read-only mode</a> module that can enforce this.</p>
+
+<p>If the configuration did not change deploying the new configuration is simply:</p>
+
+<div class="codeblock"><code>remote$ git pull<br />remote$ drush config-import staging</code></div>
+
+<p>If the configuration changes on the production site, it is best to frequently export the live configuration into a dedicated directory.<br />
+Add a new config directory in <code>settings.php</code>:</p>
+
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br />$config_directories</span><span style="color: #007700">[</span><span style="color: #DD0000">'to_dev'</span><span style="color: #007700">] = </span><span style="color: #DD0000">'config/to_dev'</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<div class="codeblock"><code>remote$ drush config-export to_dev -y</code></div>
+
+<p>Add, commit and push it to the production branch so that the developers can deal with it and integrate the changes into the configuration which will be deployed next. Exporting the configuration into a dedicated directory rather than the staging directory avoids the danger that merge conflicts happen on the production site.
+The deployment to the production site should be kept hassle free, so it should always be safe to pull from git and import the configuration without the risk of a conflict.</p>
+
+<h2>Important notes</h2>
+
+<p>It is important to <em>first</em> <strong>export</strong> the configuration changes and <em>then</em> <strong>pull</strong> changes from collaborators because the exporting action wipes the directory and re-populates it with the active configuration. Since everything is in git, you can recover from such a mistake without much difficulty but why make your life complicated.</p>
+
+<p><strong>Import</strong> the configuration <em>before</em> <strong>pushing</strong> it to the remote repository. Broken configuration breaks the site, be a nice co-worker.</p>
+
+<p><em>Git doesn't solve everything!</em> Imagine Alice and Bob start with the same site, it has one content type and among others an "attachment" field. Alice deletes the attachment field, exports the configuration and pushes it to git. In the meantime, Bob creates a new content type and adds the attachment field to it. Bob exports his configuration, merges Alice's configuration changes without a problem (the changes are separate files) and imports the merged configuration. The attentive reader sees where this leads. The commit of Alice deletes the field storage for the attachment field, but Bob added a field instance which depends on the field storage.
+The exported configuration now contains a field instance that can't be imported.<br />
+At the time of writing, drush will signal a successful import but doesn't actually import it while the UI is more helpful and complains that the attachment field instance was not imported due to the missing field storage.</p>
+</div></div></div><div class="field field-name-field-blog-tags field-type-taxonomy-term-reference field-label-inline clearfix"><div class="field-label">Tags:&nbsp;</div><div class="field-items"><div class="field-item even">Drupal Planet, Drupal 8, Code Driven Development</div></div></div><div class="field field-name-field-blog-image field-type-image field-label-above"><div class="field-label">Image:&nbsp;</div><div class="field-items"><div class="field-item even"><img src="http://nuvole.org/sites/default/files/default_images/nuvole-square-logo.png" alt="" /></div></div></div>
+  </body>
+</html>
+

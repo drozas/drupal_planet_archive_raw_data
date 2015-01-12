@@ -1,0 +1,37 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 11 Jun 2014 18:54:49 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 11 Jun 2014 18:54:49 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LightSky: Using Linkit to Link in Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.lightsky.com/blog/using-linkit-link-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LightSky: Using Linkit to Link in Drupal</title>
+    <base href="http://www.lightsky.com/blog/using-linkit-link-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>So in my mad searchings of Drupal modules the other day I came across a really cool module that simplifies content entry and linking to other content on your Drupal site.  The first thing I could think is where has this been my entire life?  The second thing was to add it to our standard Drupal installation.  <a href="http://drupal.org/project/linkit">Linkit</a> allows you to link to content on your Drupal site without knowing the URL or path to the content.  If you are like me, you write your content, then you open another tab and go to all the pages that you need to link so that you can get the URL's.  Now I open up another tab, realize that I installed Linkit, and close that other tab and do it the easy way.  Eventually I will remember that I have Linkit installed and skip the open another tab step, but old habits die hard.  </p>
+<p>So lets look at the module a little bit.</p>
+<h2>
+	Installation</h2>
+<p>Linkit is a pretty simple module to install, it uses the standard <a href="https://drupal.org/documentation/install/modules-themes/modules-7">Drupal module installation procedure.</a>  So if you are familiar with that you are good to go, if you use Drush, then the <em>drush dl</em> and <em>drush en</em> commands are really all you need to get started.  </p>
+<p><img alt="Adding the Linkit Button" src="http://www.lightsky.com/sites/default/files/linkitaddbutton.png" style="width: 383px; height: 47px; float: right;" /></p>
+<p>There is a little bit of configuration that needs to be complete as you will need to add the Linkit button to your WYSIWYG editor.  So for us that just involves going to <a href="http://drupal.org/project/ckeditor">CKEditor's</a> configuration and adding the button to the profiles that you are using.  You might be tempted to create a special profile for this and just attach that profile to your user as to not share this great tool with your colleague, but I wouldn't recommend it.  </p>
+<p><img alt="Adding Support for Linkit" src="http://www.lightsky.com/sites/default/files/linkit_config_checkbox.png" style="width: 300px; height: 166px;" /></p>
+<p>After that you will also need to enable support for Linkit in your editor as you see above.  </p>
+<p>Linkit is pretty powerful though, you can do a lot of customization in the module as well through it's own configuration interface.  Through that interface you can enable it for use in editors or fields as appropriate, choose how Linkit will search your content, and even set it up to search through IMCE files.  There are lots of different use scenarios here so I won't go into a lot of detail about exactly how you should set it up.  Pick the terms and items you will use the most, and don't be afraid to tweak.</p>
+<h2>
+	Using Linkit</h2>
+<p><img alt="" src="http://www.lightsky.com/sites/default/files/screen_shot_2014-06-11_at_3.06.31_pm.png" style="width: 200px; height: 194px; float: right;" />Linkit is super simple to use.  I have added the button next to our normal link button in the editor.  Now if I am linking internally I click the Linkit button that displays the box you see to the right.  When you type in a search term, it will comb your content, rather quickly I might add, and give you a list that is inline with what you are looking for.  Simply click the item you want and your link gets added automatically.</p>
+<p>No more having to search through your content to find the path to what you are looking for.</p>
+<p>Are you already a Linkit user?  What content creation tools to you implement with your Drupal sites?</p>
+</div></div></div>
+  </body>
+</html>
+

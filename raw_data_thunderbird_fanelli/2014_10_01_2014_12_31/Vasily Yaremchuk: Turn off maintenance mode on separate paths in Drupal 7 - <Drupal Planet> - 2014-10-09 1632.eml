@@ -1,0 +1,27 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 09 Oct 2014 14:32:57 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 09 Oct 2014 14:32:57 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Vasily Yaremchuk: Turn off maintenance mode on separate paths in Drupal 7
+Content-Transfer-Encoding: 8bit
+Content-Base: http://yaremchuk.ru/blog/turn-maintenance-mode-separate-paths-drupal-7
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Vasily Yaremchuk: Turn off maintenance mode on separate paths in Drupal 7</title>
+    <base href="http://yaremchuk.ru/blog/turn-maintenance-mode-separate-paths-drupal-7">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <!-- google_ad_section_start --><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p>We have faced with the problem. We use <a href="https://www.drupal.org/project/ajax_register">Ajax Login/Register module</a> but put site in Maintenance mode. </p>
+<p>But we need to have Sign up ability. Ajax Register module show Sign up form in popup, content is requested from "ajax_register/register". But in maintenance mode we can see Maintenance page response... </p>
+<p>But fortunately we have <a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu_site_status_alter/7">hook_menu_site_status_alter</a>. Thus we can turn off Maintenance mode in our module on separate path:</p>
+<p><div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">ajax_register_fix_menu_site_status_alter</span><span style="color: #007700">(&amp;</span><span style="color: #0000BB">$menu_site_status</span><span style="color: #007700">, </span><span style="color: #0000BB">$path</span><span style="color: #007700">) {<br />&nbsp; if (</span><span style="color: #0000BB">$menu_site_status </span><span style="color: #007700">== </span><span style="color: #0000BB">MENU_SITE_OFFLINE </span><span style="color: #007700">&amp;&amp; </span><span style="color: #0000BB">user_is_anonymous</span><span style="color: #007700">() &amp;&amp; </span><span style="color: #0000BB">$path </span><span style="color: #007700">== </span><span style="color: #DD0000">'ajax_register/register'</span><span style="color: #007700">) {<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$menu_site_status </span><span style="color: #007700">= </span><span style="color: #0000BB">MENU_SITE_ONLINE</span><span style="color: #007700">;<br />&nbsp; }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>  </p>
+<p>This is content of ajax_register_fix.module custom module.</p>
+</div></div></div><!-- google_ad_section_end --><div class="field field-name-taxonomy-wp-blog-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Blog tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/blog-tags/drupal-faq">Drupal FAQ</a></li><li class="taxonomy-term-reference-1"><a href="/blog-tags/planet-drupal">Planet Drupal</a></li></ul></div>
+  </body>
+</html>
+

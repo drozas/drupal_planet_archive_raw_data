@@ -1,0 +1,63 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 06 Mar 2014 14:16:05 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 06 Mar 2014 14:16:05 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Forum One: 5 Lessons Learned for Content Migration
+Content-Transfer-Encoding: 8bit
+Content-Base: http://forumone.com/blogs/post/5-lessons-learned-content-migration
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Forum One: 5 Lessons Learned for Content Migration</title>
+    <base href="http://forumone.com/blogs/post/5-lessons-learned-content-migration">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>This past fall I undertook my first content migration effort. This was to migrate an existing site from Expression Engine to Drupal 7. I immediately began looking at the <a href="https://drupal.org/project/migrate">Migrate module</a>&nbsp;to learn it's use and here are some lessons I learned along the way.</p>
+<p>First of all, be aware that migrate is a module for developers. It does have a user interface, but this is merely to run the import process. All the real action happens in the code, so you will need to be familiar with object oriented programming in PHP.</p>
+<h3>Lesson One: Don't Force a 1-1 Relationship</h3>
+<p>Do not try to force a 1-1 relationship with your migration classes and your destination content types. If you are migrating a site, you very likely are taking the equivalent of Drupal content type in the legacy system, creating similar types in Drupal, and probably combining a few of these because you realized in discovery sessions that some of the legacy system's content types are redundant. Although I did not use this method myself, given another migration project, I would create a 1-1 relationship between the migration classes and the <em>legacy system's content types</em>. This will avoid some awkward logic in your migration code as you try to route multiple possible source fields into a single field in Drupal.</p>
+<p>In other words, don't do this:</p>
+<p>Source type \<br />
+Source type ---&gt; Migration ---&gt; Drupal content type<br />
+Source type /</p>
+<p>Do this:</p>
+<p>Source type ---&gt; Migration ---&gt; Drupal content type<br />
+Source type ---&gt; Migration ---&gt; Drupal content type<br />
+Source type ---&gt; Migration ---&gt; Drupal content type</p>
+<h3>Lesson Two: Document</h3>
+<p>Be obsessive about in-code documentation/comments. In code comments are always a good idea, and you can never comment too much, but this is especially true with migrations. I did this from the start and it helped greatly when I had to revisit the migration code. Migrate is handy in that it provides tools to integrate in a project management system by linking to available tickets and places to add descriptions for mappings. Use these, your client's product owner will greatly appreciate it as they are reviewing the state of the migration. Which brings us to Lesson 3.</p>
+<h3>Lesson Three: Break out your migration into tasks</h3>
+<p>Break out the migration task into it's own project/ticketing system and use it! Migration tasks seem to live in a bubble within the larger site build project. Avoid this by separating the migration effort into it's own sub-project with a dedicated ticketing system. This way you won't clutter up the build's ticket queue with migration work and the whole team can observe the progress of the migration.</p>
+<h3>Lesson Four: A Gotchya!</h3>
+<p>A small gotchya on Migrate: If your source and legacy databases are owned by separate users, remember to set the &quot;join&quot; option to false in each of your migration classes with this bit of code:</p>
+<pre>
+    $options = array('map_joinable' =&gt; FALSE);
+
+    $this-&gt;source = new MigrateSourceSQL($query, array(), $count_query, $options);
+</pre>
+<p>This may be the cause of some permissions errors. You may wish to make these databases joinable however, since the performance hit of not joining these is huge, (close to doubling the import in my own casual observation).</p>
+<h3>Lesson Five: Entity Reference Field Handlers</h3>
+<p>Entity reference field handlers do not currently support multiple cardinality (as of December 2013). This means fields with multiple values. You will need to write extra code in your prepare() method to handle this, e.g.&nbsp;</p>
+<pre>
+     $related_nodes = $this-&gt;getRelatedContent($row); //Custom method to seek related nodes based on source id
+
+      foreach ($related_nodes as $related_node) {
+
+        $node-&gt;field_content_relationship[LANGUAGE_NONE][]['target_id'] = $related_node-&gt;nid;
+
+      }
+</pre>
+<p>* assuming this is not a multi-lingual field.&nbsp;</p>
+<p>﻿During this effort, I took it upon myself to develop a small Drupal module that would allow users to explore the Channel data (Expression Engine's version of a content type) of an Expression Engine site. I call it <a href="https://drupal.org/sandbox/johnbburg/2156225">Expression Engine Analyzer</a>&nbsp;and have posted it on Drupal.org as a sandbox project. It's been a great tool to help self understand the source data better and proven to be an excellent visual aid with clients while we discuss the the migration work. The whole team wishes we had such a tool at the beginning of a project, and going forward, I may consider making similar tools at the beginning of other migration efforts.<a id="fck_paste_padding">﻿</a></p><div class="field field-type-text field-field-short-description">
+    <div class="field-items">
+            <div class="field-item odd">
+                    <p>Five practical Drupal lessons learned during a recent content migration effort.</p>        </div>
+        </div>
+</div>
+  </body>
+</html>
+

@@ -1,0 +1,96 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Thu, 18 Sep 2014 21:43:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Thu, 18 Sep 2014 21:43:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Drupal core updates for September 18th, 2014
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/443023
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Drupal core updates for September 18th, 2014</title>
+    <base href="https://groups.drupal.org/node/443023">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>What's new with Drupal 8?</h2>
+<p>The big news this week is we're still on one beta-blocker. Patches for the remaining beta blocker are coming rapidly with @effulgentsia, @plach and @fago working hard to get it over the line. Could we have zero beta blockers by DrupalCon?</p>
+<p>Other keys issues to land this week include <a href="https://www.drupal.org/node/2310255">Remove ArrayAccess from FormState</a> - never again deal with random arrays - rejoice - $form_state is a first-class object!. Thanks to @timplunkett and others who helped get this through. If you have any contrib projects accessing $form_state in an array fashion eg <code>$form_state[&#039;values&#039;][&#039;fooey&#039;];</code> then you need to <a href="https://www.drupal.org/node/2310411">familiarize yourself with the change record</a>.</p>
+<p>In a further sign that Drupal 8 is maturing into a modern HTTP framework, we now have <a href="https://www.drupal.org/node/2303673">support for a stack-php based middleware</a> this will allow us to clean up how page caching, conent negotiotiaton, implementing ban.module's functionalty, options requests and various other elements of the request processing pipeline work. For more information on middlewares see <a href="http://stackphp.com">Stackphp.com</a> and <a href="https://igor.io/2013/02/02/http-kernel-middlewares.html">this article</a> or see the <a href="http://stackphp.com/middlewares/">list of existing middlewares supported by stack-php</a>, and therefore likely to be compatible with Drupal.</p>
+<p>In the same vein <a href="https://www.drupal.org/node/2323759">Modularize kernel exception handling</a> brought some much needed cleanup to to the way we handle exceptions and enables contrib modules to easily add their own exception handling, particularly for custom REST formats.</p>
+<p>Over in <a href="https://drupal.org/node/1938068">Convert UnitTestBase to PHPUnit</a> and <a href="https://drupal.org/node/2324789"> Remove UnitTestBase</a>, @sun, @Berdir and @tim.plunkett have been working towards removing Simpletest-based Unit tests. There are plenty of sessions around the future of testing at Drupalcon Amsterdam so be sure to check these out if testing is your thing.</p>
+<p>The <a href="https://www.drupal.org/node/2289511">Consensus Banana</a> is moving full-steam ahead with loads of issues resolved to move classes out of preprocessing and into templates landing this week. Meanwhile in <a href="https://www.drupal.org/node/2321505">Split Seven's style.css into SMACSS categories</a> @LewisNyman has been making great strides towards bringing sanity to Seven's CSS structure.</p>
+<p>@WimLeers, @alexpott and @chx worked tirelessly in <a href="http://drupal.org/node/2287071">Add cacheability metadata to access checks</a> to harmonize our access-checking systems and add cacheability to the access results in the form of an AccessResultInterface, great work!</p>
+<p>Over in <a href="https://www.drupal.org/node/2313757">Remove text_processing option from text fields, expose existing string field types as plain text in UI</a> @Berdir, @Wim Leers, @dawehner consolidated our text field types, an important change for Site Builders.</p>
+<p>Finally, <a href="http://www.jetbrains.com/phpstorm/whatsnew/">PHPStorm 8</a> has been released with lots of support for Drupal 8 APIs!</p>
+<h2>Where's Drupal 8 at in terms of release?</h2>
+<p><a href="http://drupalreleasedate.com/chart/samples"><img src="https://groups.drupal.org/files/actual_issue_counts_over_time.png" alt="Major, critical, and beta blocker count samples over the past year" /></a></p>
+<p>Since the last <a href="https://groups.drupal.org/node/440868">Drupal Core Update</a> on Sept. 4, we've fixed 19 critical issues and 24 major issues, and added 12 criticals and 19 majors. That puts us overall at <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;amp;status%5B%5D=13&amp;amp;status%5B%5D=8&amp;amp;status%5B%5D=14&amp;amp;status%5B%5D=4&amp;amp;priorities%5B%5D=400&amp;amp;categories%5B%5D=1&amp;amp;categories%5B%5D=2&amp;amp;version%5B%5D=8.x&amp;amp;issue_tags_op=%3D">97 release-blocking critical issues</a> and <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;amp;status%5B%5D=13&amp;amp;status%5B%5D=8&amp;amp;status%5B%5D=14&amp;amp;status%5B%5D=15&amp;amp;status%5B%5D=4&amp;amp;priorities%5B%5D=300&amp;amp;categories%5B%5D=1&amp;amp;categories%5B%5D=2&amp;amp;version%5B%5D=8.x&amp;amp;issue_tags_op=%3D">644 major issues</a>.</p>
+<h2>Where can I help?</h2>
+<h3>Top criticals to hit this week</h3>
+<p>Each week, we check with core maintainers and contributors for the "extra critical" criticals that are blocking other work. These issues are often tough problems with a long history. If you're familiar with the problem-space of one of these issues and have the time to dig in, help drive it forward by reviewing, improving, and testing its patch, and by making sure the issue's summary is up to date and any API changes are documented with a <a href="https://groups.drupal.org/node/402688">draft change record</a>, we could use your help!</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2337927">SqlContentEntityStorage::onFieldStorageDefinition(Create|Update|Delete)() is broken for base fields</a> is the final step of the our last beta blocker. Reviews and manual testing welcomed.</li>
+<li><a href="https://www.drupal.org/node/2327277">[Meta] Untangle Drupal 8 page rendering</a> lays out the final steps to standardize the page building process.  While it's not the result the SCOTCH initiative was hoping for it does line up the pieces needed to allow contrib to experiment with layout mechanisms in a clean and supported way. There are a bevy of child-issues for you to sink your teeth into.</li>
+</ul>
+<p>There are also several <a href="//www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;status[2]=8&amp;status[3]=14&amp;status[4]=4&amp;version[0]=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta%20deadline&amp;text=&amp;assigned=&amp;submitted=&amp;&amp;&amp;&amp;order=field_issue_priority&amp;sort=desc">beta deadline</a> issues that, while not quite critical, will need to be done before the beta if they're to be done at all. The following beta deadline issues are especially important:</p>
+<ul>
+<li><a href="https://www.drupal.org/node/2002138">#2002138: Use adapters for supporting typed data</a> will improve developer experience for the Typed Data API, which in turn improves numerous other APIs.</li>
+<li><a href="https://www.drupal.org/node/2305397">Field type (item) classes implementing AllowedValuesInterface::getPossible(Values|Options)() is incompatible with Views and possibly other use cases</a> will make an important difference for Views as well as contributed modules like Rules.</li>
+<li><a href="https://www.drupal.org/node/2312093">#2312093: Rename FieldInstanceConfig to FieldConfig</a> is a final step to bring consistency and clarity to naming in the Field API.</li>
+</ul>
+<h3>More ways to help</h3>
+<ul>
+<li>Now that we're nearing beta, its time to turn our attention to <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=1&amp;amp;status%5B%5D=13&amp;amp;status%5B%5D=8&amp;amp;status%5B%5D=14&amp;amp;status%5B%5D=4&amp;amp;priorities%5B%5D=400&amp;amp;categories%5B%5D=1&amp;amp;categories%5B%5D=2&amp;amp;version%5B%5D=8.x&amp;amp;issue_tags_op=%3D">release-blocking criticals</a>.</li>
+<li><a href="https://www.drupal.org/project/issues/search/drupal?project_issue_followers=&amp;status[0]=1&amp;status[1]=13&amp;status[2]=8&amp;status[3]=14&amp;status[4]=4&amp;version[0]=8.x&amp;issue_tags_op=%3D&amp;issue_tags=beta%20target&amp;text=&amp;assigned=&amp;submitted=&amp;&amp;&amp;&amp;order=field_issue_priority&amp;sort=desc">Beta target issues</a> are issues that can be added to Beta 1, Beta 2, or later, but would be best done sooner rather than later for solid beta releases.</li>
+<li>With a looming beta, now we can ramp up our efforts on contrib modules - there's a sprint at Amsterdam just for that - so <a href="https://docs.google.com/spreadsheet/ccc?key=0AlRKD0XsivA1dDRIZEFCeXR2ZF9tQzVTU0lRN2lWRnc&amp;usp=drive_web#gid=0">put your name on the list</a> if this is your thing.</li>
+</ul>
+<p>As always, if you're new to contributing to core, check out <a href="https://drupal.org/core-mentoring">Core contribution mentoring hours</a>. Twice per week, you can log into IRC and helpful Drupal core mentors will get you set up with answers to any of your questions, plus provide some useful issues to work on.</p>
+<p>You can also help by <a href="https://www.gittip.com/DrupalCoreGittipTeam/">sponsoring independent Drupal core development</a>.
+</p>
+<h2>Notable Commits</h2>
+<p>The best of <code>git log --since &quot;2014-09-04&quot; --pretty=oneline</code> (200 commits in total):</p>
+<ul>
+<li><a href="http://drupal.org/node/2333113">Issue 2333113</a> by effulgentsia, plach: Add an EntityDefinitionUpdateManager so that entity handlers can respond (e.g., by updating db schema) to code updates in a controlled way (e.g., from update.php).</li>
+<li><a href="http://drupal.org/node/1857256">Issue 1857256</a> by dawehner, xjm, tim.plunkett, jibran, ParisLiakos, hussainweb, pcambra, ekes, InternetDevels, rhabbachi, rdrh555, tstoeckler, oadaeh, Gábor Hojtsy, vijaycs85: Fixed Convert the taxonomy listing and feed at /taxonomy/term/%term to Views.</li>
+<li><a href="http://drupal.org/node/2333501">Issue 2333501</a> by swentel | marcvangend: Implement ThirdPartySettingsInterface in EntityView|FormDisplay.</li>
+<li><a href="http://drupal.org/node/1740492">Issue 1740492</a> by dawehner, damiankloip, dasjo, xjm: Implement a default entity views data handler.</li>
+<li><a href="http://drupal.org/node/2331019">Issue 2331019</a> by slashrsm: Implement ThirdPartySettingsInterface in Vocabulary.</li>
+<li><a href="http://drupal.org/node/2320157">Issue 2320157</a> by moshe weitzman, Wim Leers, penyaskito, tim.plunkett: Generate placeholder content for Field types - essentially devel generate in core.</li>
+<li><a href="http://drupal.org/node/2329485">Issue 2329485</a> by damiankloip, dawehner: Allow permissions.yml files to declare 'permission_callbacks' for dynamic permissions.</li>
+<li><a href="http://drupal.org/node/1898478">Issue 1898478</a> by joelpittet, Cottser, lokapujya, m1r1k, jstoller, er.pushpinderrana, duellj, organicwire, jessebeach, idflood, Jalandhar, Risse, derheap, galooph, mike.roberts, tlattimore, nadavoid, LinL, steveoliver, chakrapani, likin, killerpoke, EVIIILJ, vlad.dancer, podarok, m86 | c4rl: Menu.inc - Convert theme_ functions to Twig.</li>
+<li><a href="http://drupal.org/node/1915056">Issue 1915056</a> by Arla, Berdir, amateescu | catch: Use entity reference for taxonomy parents.</li>
+<li><a href="http://drupal.org/node/2321745">Issue 2321745</a> by larowlan, tim.plunkett: Add #type =&gt; 'path' that accepts path but optionally stores URL object or route name and parameters.</li>
+<li><a href="http://drupal.org/node/474004">Issue 474004</a> by mdrummond, kim.pepper, Wim Leers, jibran, tim.plunkett, joachim | JohnAlbin: Add options to system menu block so primary and secondary menus can be blocks rather than variables - essentially menu block module in core.</li>
+<li><a href="http://drupal.org/node/2068331">Issue 2068331</a> by roderik, slashrsm, pcambra, Sharique, piyuesh23, vijaycs85 | plach: Convert comment SQL queries to the Entity Query API.</li>
+<li><a href="http://drupal.org/node/2226493">Issue 2226493</a> by Berdir, Wim Leers, m1r1k, mr.baileys, andypost, scor, cbr, joelpittet: Apply formatters and widgets to Node base fields.</li>
+<li><a href="http://drupal.org/node/2302563">Issue 2302563</a> by chx, dawehner: Fixed Access check Url objects.</li>
+</ul>
+<p>You can also always check the <a href="https://drupal.org/list-changes">Change records for Drupal core</a> for the full list of Drupal 8 API changes from Drupal 7.</p>
+<h2>Drupal 8 Around the Interwebs</h2>
+<ul>
+<li>Joe Schindler of <a href="http://drupalize.me">Drupalize.me</a> gave us <a href="https://drupalize.me/blog/201409/unravelling-drupal-8-plugin-system">Unravelling the Drupal 8 Plugin System</a> an expansive run-down on Drupal 8's plugin architecture.</li>
+<li>Addison Berry, also of <a href="http://drupalize.me">Drupalize.me</a> tells us about what to expect now that a <a href="https://drupalize.me/blog/201409/drupal-8-beta-so-close">Drupal 8 beta is so close</a></li>
+<li>Dcycle gave us <a href="http://dcycleproject.org/blog/68/approach-code-driven-development-drupal-8">An approach to code driven development in Drupal 8</a></li>
+<li>Hernani Borges de Freitas of Acquia tells us about <a href="https://www.acquia.com/blog/web-services-drupal-8-core">Web services in Drupal 8 Core</a></li>
+<li>Josef Dabernig of the D8 Rules team gives us <a href="http://d8rules.org/news/d8rules-updates-bof-sprints-drupalcon-amsterdam">a rundown on all the comings and goings around Rules in Drupal 8 in Amsterdam</a>
+</li>
+</ul>
+<h2>Drupal 8 in "Real Life"</h2>
+<ul>
+<li><strong>September 19 - October 3</strong>: <a href="https://amsterdam2014.drupal.org/">DrupalCon Amsterdam</a> in Amsterdam, The Netherlands is going to be amazing with lots of opportunities to learn about and get involved with Drupal 8. Be sure to <a href="http://drupalreleasedate.com/chart/samples">sign up for the extended sprints</a>!</li>
+<li><strong>September 18 - Milwaukee</strong>:<br />
+Drupal414 meetup: <a href="https://groups.drupal.org/node/439993">Building a Drupal 8 theme with new fangled awesomeness</a> - <a href="https://drupal.org/u/mdrummond">Marc Drummond</a> will present on building a Drupal 8 theme</li>
+<li><strong>September 18 - Washington, DC</strong>:<a href="https://groups.drupal.org/node/440283">Drupal 8 code sprint with Forum One</a> - join Forum one to work on Drupal 8.</li>
+<li><strong>September 20 - Helsinki</strong>: <a href="https://groups.drupal.org/node/439673">Join Wunderkraut</a> to sprint on Drupal 8</li>
+<li><strong>October 17 - Austria</strong>: <a href="https://groups.drupal.org/node/439163">Drupal 8 starter day</a> a free workshop style introduction to Drupal 8
+</li></ul>
+<h2>Whew! That's a wrap!</h2>
+<p>Do you follow <a href="https://drupal.org/planet">Drupal Planet</a> with devotion, or keep a close eye on the <a href="http://www.drupical.com/">Drupal event calendar</a>, or <code>git pull origin 8.0.x</code> every morning without fail before your coffee? We're looking for more contributors to help compile these posts. You could either take a few hours once every six weeks or so to put together a whole post, or help with one section more regularly. <a href="https://drupal.org/node/2220285">Read more about how you can volunteer to help with these posts</a>!</p>
+<p>Finally special thanks to <a href="http://drupal.org/u/KatteKrab">KatteKrab</a> for assisting with compiling this edition.</p>
+  </body>
+</html>
+

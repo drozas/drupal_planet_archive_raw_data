@@ -1,0 +1,24 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 27 Oct 2013 01:29:53 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 27 Oct 2013 01:29:53 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: PreviousNext: Dynamic Routes in Drupal 8 with a RouteSubscriber
+Content-Transfer-Encoding: 8bit
+Content-Base: http://previousnext.com.au/blog/dynamic-routes-drupal-8-routesubscriber
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>PreviousNext: Dynamic Routes in Drupal 8 with a RouteSubscriber</title>
+    <base href="http://previousnext.com.au/blog/dynamic-routes-drupal-8-routesubscriber">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-summary field-type-text-long field-label-hidden"><div class="field-items"><div class="field-item even"> <p>Previously I have demonstrated how to create a new route controller in <a href="http://previousnext.com.au/blog/using-drupal-8s-new-route-controllers">Using Drupal 8's new route controllers</a> then how to restrict access to it in <a href="http://previousnext.com.au/blog/controlling-access-drupal-8-routes-access-checks">Controlling Access to Drupal 8 Routes with Access Checks</a>. But that's not where the fun ends!</p>
+<p>What about when we need to create a route <em>dynamically</em>. For example, if we need to create routes for content types that we don't know will exist in advance?  In Drupal 7, we created dynamic routes with a foreach loop in hook_menu(). In Drupal 8, we can do all this and more with a RouteSubscriber.</p>
+ </div></div></div><span property="dc:title" content="Dynamic Routes in Drupal 8 with a RouteSubscriber" class="rdf-meta"></span>
+  </body>
+</html>
+

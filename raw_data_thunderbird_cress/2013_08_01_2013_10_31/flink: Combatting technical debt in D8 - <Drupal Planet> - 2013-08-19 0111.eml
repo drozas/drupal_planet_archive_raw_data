@@ -1,0 +1,44 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys: $label2                                                                        
+Date: Mon, 19 Aug 2013 00:11:08 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 19 Aug 2013 00:11:08 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: flink: Combatting technical debt in D8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://flink.com.au/ramblings/combatting-technical-debt-drupal-d8
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>flink: Combatting technical debt in D8</title>
+    <base href="http://flink.com.au/ramblings/combatting-technical-debt-drupal-d8">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-field-image field-type-image field-label-hidden"><div class="field-items"><div class="field-item even" rel="og:image rdfs:seeAlso" resource="http://flink.com.au/sites/default/files/styles/large/public/field/image/leaflet-d8.jpg"><img typeof="foaf:Image" src="http://flink.com.au/sites/default/files/styles/large/public/field/image/leaflet-d8.jpg" width="480" height="394" alt="" /></div></div></div><div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Emotive discussions have been and are being held about D8, Symfony2 and "all that" in various forums and blogs. Examples can be found <a href="http://flink.com.au/ramblings/spare-more-than-thought-for-contrib">here</a> and just this weekend <a href="http://cweagans.net/blog/2013/8/19/how-can-we-fix-drupal-8">here</a>. The latter coincides with the withdrawal of some highly valued contributors from D8 core.<br />
+Which just goes to show that D8 and the end of the old <em>Drupal Way</em> is a real and present topic in the Drupal community.  And so it should be.</p>
+<p>But this piece today is <strong>not</strong> about more of that. This piece is about light at the end of the tunnel, creating that light and making it shine.</p>
+<p>As D8 core is being "polished" it is so exciting to find that already some seriously good D7 modules are receiving some seriously good D8 treatments.  Hell, if we can all chip in and accelerate the pace,  then by the time D8 is officially released, we may consider launching some of our next Drupal projects in D8 in early 2014!</p>
+<p>Want an example? Here's one.<br />
+At flink we love maps. Especially maps driven by <a href="http://http://leafletjs.com">Leaflet JS</a>, the mobile-optimised Javascript library that allows you to produce in Drupal a variety of maps (including Bing, Google, Esri, Stamen, Mapbox), without forcing you to embrace more heavy-weight and/or more complicated solutions, like Google API or OpenLayers. </p>
+<p>So we had a look at what D8 offers today in terms of maps. </p>
+<p>Guess what? An easy mapping solution, including coordinate entry &amp; storage, markers with info balloons, state &amp; country borders, 20+ map canvasses and beautifully animated marker clustering is available for you to use in D8 <strong>today</strong> (see screenshot)!<br />
+Thanks to the work of developers and maintainers in both the core and contrib spaces,  you can test-drive your next mapping project now, and be confident it will be production-ready in a few months.<br />
+Modules required for mapping that are available in D8 now are:</p>
+<ul><li><a href="http://drupal.org/project/views">Views</a>, now part of core</li>
+<li><a href="http://drupal.org/project/geofield">Geofield</a>, for the entry and storage of points, lines and polygons</li>
+<li><a href="http://drupal.org/project/leaflet">Leaflet</a>, the Drupal bridge to <a href="http://http://leafletjs.com">Leaflet JS</a></li>
+<li><a href="http://drupal.org/project/leaflet_more_maps">Leaflet More Maps</a>, includes <strong>Leaflet Demo</strong>, which showcases 2 dozens of maps available to you on your Drupal site, also available live <a href="/tips-tricks/27-reasons-not-to-use-google-maps">here</a></li>
+<li><a href="http://drupal.org/project/leaflet_markercluster">Leaflet MarkerCluster</a>, beautiful <a href="http://leafletjs.com/2012/08/20/guest-post-markerclusterer-0-1-released.html">animated clustering of location markers</a> on your map</li>
+</ul><p>If you haven't used these modules before, why not take them for a spin while test-driving D8 core at the same time?<br /><img style="height: 270px" src="/sites/default/files/tech-debt.jpg" alt="Technical debt in D8" title="Technical debt in D8" /><br />
+As you can see from the image on the right (snaphot  taken18 Aug 2013) the question is not whether we Drupalers have a long road ahead before we can use D8 to its full capacity. It is obvious that road is long. The question is: how fast can we travel? If we all help support the contrib space, it may grow wings and D8 as a viable platform may take off sooner than we all thought.</p>
+<p>At flink, while working on our own ports and other D8 contributions, we will continue to keep an eye on how D8 contrib progresses. Expect more on this later. See you soon!</p>
+</div></div></div><div class="field field-name-field-file-under field-type-taxonomy-term-reference field-label-above">
+      <h3 class="field-label">File under:&nbsp;</h3>
+    <span class="field-items">
+                  <a href="/file-under/planet-drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel">Planet Drupal</a>            </span>
+</div>
+  </body>
+</html>
+

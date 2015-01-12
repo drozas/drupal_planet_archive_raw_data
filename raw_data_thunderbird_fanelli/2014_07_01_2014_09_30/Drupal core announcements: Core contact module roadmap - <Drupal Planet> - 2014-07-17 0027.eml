@@ -1,0 +1,82 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 16 Jul 2014 22:27:46 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 16 Jul 2014 22:27:46 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal core announcements: Core contact module roadmap
+Content-Transfer-Encoding: 8bit
+Content-Base: https://groups.drupal.org/node/433803
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal core announcements: Core contact module roadmap</title>
+    <base href="https://groups.drupal.org/node/433803">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <h2>Background</h2>
+<p>Now that we have a new release cycle, we have the possibility of new features in minor releases, i.e. although we are in feature freeze for 8.0, that doesn't mean we can't add new features until 9.0. Provided they are backwards-compatible, we can add new features in 8.1 and 8.2.<br />
+After recently taking over maintainer-ship of the core contact module, <a href="http://drupal.org/u/tim-e">@tim-e</a> and I, in consultation with <a href="http://drupal.org/u/andypost">@andypost</a> and <a href="http://drupal.org/u/berdir">@berdir</a> have formulated a draft roadmap for the features we'd like to see in contact module in the future.<br />
+We're publishing it here for wider community-input.
+</p>
+<h2>High-level goal</h2>
+<p>To provide the <em>80%</em> use-case of webform. i.e. allowing creation and submission of feedback forms from site-users; and providing editing, listing and administration of submitted form values.<br />
+Webform contains lots of features, we're only after expanding contact module slightly to add storage and administration and in the process meet the basic use-case of webform in core.<br />
+Note that some of these items are features and can be developed in contrib during 8.0 if required with the view to include in point releases eg 8.1, 8.2.</p>
+<ol>
+<li>
+<h2>Open issues</h2>
+<ol>
+<li><del>Move subject/message fields to use widgets <a href="http://www.drupal.org/node/856562">https://www.drupal.org/node/1856562</a></del>
+    </li>
+<li><del>Make contact message behave like normal entity <a href="https://www.drupal.org/node/2289063">https://www.drupal.org/node/2289063</a></del></li>
+<li>Rename contact category to <strong>form</strong> <a href="https://www.drupal.org/node/2285083">https://www.drupal.org/node/2285083</a>
+    </li>
+<li>Provide <strong>redirect</strong> option <a href="https://www.drupal.org/node/306662">https://www.drupal.org/node/306662</a>
+    </li>
+</ol>
+</li>
+<li>
+<h2>Key features/issues on roadmap<br />
+    </h2>
+<ol>
+<li>Add (pluggable) storage of messages <a href="https://www.drupal.org/node/1856560">https://www.drupal.org/node/1856560</a> - we already have a test implementation of this (in a test module) in core, so it is already technically possible.
+    </li>
+<li>Add views integration <a href="https://www.drupal.org/node/1856560">https://www.drupal.org/node/1856560</a>
+    </li>
+<li>Add admin listing of submissions w/ bulk actions to delete <a href="https://www.drupal.org/node/1856560">https://www.drupal.org/node/1856560</a>
+    </li>
+<li>Add ability to edit submissions</li>
+<li>Support for file-fields attached to emails - requires formatter for file-field.
+    </li>
+<li>Ability to edit format of messages bodies including tokens
+    </li>
+<li>Move email logic out of form submit handler to allow submission of messages via REST api that also send email</li>
+<li>Move email logic into own service and add events for other modules to interact
+<ol>
+<li>
+        Make email sending optional at category (form) level</li>
+</ol>
+</li>
+<li>Path integration to allow simple alias management of contact categories
+    </li>
+<li>Per contact-category permissions to allow granular access
+    </li>
+<li>Provide a menu-link per category in a custom menu - auto builds menu of contact category links leveraging the menu link API to solve the category selector regression.
+    </li>
+<li>Provide a configurable and themable block of selected contact forms. Probably needs views to query contact categories. <a href="https://www.drupal.org/node/1997692">https://www.drupal.org/node/1997692</a> and <a href="https://www.drupal.org/node/599770">https://www.drupal.org/node/599770</a>
+    </li>
+</ol>
+</li>
+</ol>
+<h2>Approach</h2>
+<ul>
+<li>Move <a href="https://www.drupal.org/node/1856560">https://www.drupal.org/node/1856560</a> to a meta and add sub-issues for 2.1, 2.2 and 2.3
+    </li>
+<li>Create issues for 2.4 through 2.11</li>
+</ul>
+  </body>
+</html>
+

@@ -1,0 +1,153 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Tue, 21 Jan 2014 04:20:00 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Tue, 21 Jan 2014 04:20:00 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Théodore 'nod_' Biadala: Using ES5 with Drupal 8
+Content-Transfer-Encoding: 8bit
+Content-Base: http://read.theodoreb.net/2014/using-es5-with-drupal8.html
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Théodore 'nod_' Biadala: Using ES5 with Drupal 8</title>
+    <base href="http://read.theodoreb.net/2014/using-es5-with-drupal8.html">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p>In <a href="/2014/fixing-contrib-javascript.html" title="Helping contrib point the gun away from it's foot since 2012">fixing contrib javascript</a> I mentioned that as a contrib
+maintainer or developer you could do a bit more than just run JSHint. This is
+because Drupal 8 will not support IE8, meaning that core and contrib are
+free to go crazy! The incredibly useful <strong>caniuse.com</strong> website holds
+<a href="http://beta.caniuse.com/#compare=ie+9,ie+10,ie+11,ie_mob+10" title="List of supported features on IE: 8, 9, 10 + (mobile), 11">extensive compatibility tables</a> for the fancy new HTML/JS/SVG
+features in the works. But talking about ES5 specifically,
+the <a href="http://kangax.github.io/es5-compat-table/" title="ECMAScript 5 compatibility table">ECMAScript 5 compatibility table</a> is what you’re looking for
+to know what you can rely on.</p>
+
+<p>For core and contrib, here is a peak at what’s coming to a future near you.</p>
+
+<h2 id="safe">Safe</h2>
+
+<p>By safe I mean that those are features that won’t bite you horribly. Some of
+them are already used in Drupal 8 core or are in a patch that’ll be committed
+soon enough.</p>
+
+<h3 id="use-strict"><code>"use strict"</code></h3>
+
+<p>This is actually enforced by JSHint — you know the thing that you should be
+running on your JS — while we’re not relying on the advanced features of the
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode" title="Strict mode">strict mode</a> it is used to make sure there are no leaking variable.
+I’ve seen too many strays variable in contrib and projects. To use,
+put <code>"use strict";</code> at the top of the file-closure.</p>
+
+<pre><code>(function ($, Drupal, drupalSettings) {
+
+  "use strict";
+
+  // Your code.
+
+})(jQuery, Drupal, drupalSettings);
+</code></pre>
+
+<h3 id="functionprototypebind"><code>Function.prototype.bind</code></h3>
+
+<p>It is the native version of the basic usage of <a href="http://api.jquery.com/jquery.proxy/" title="jQuery.proxy()"><code>jQuery.proxy()</code></a>.</p>
+
+<h4 id="before">Before</h4>
+
+<pre><code>var handler = $.proxy(callback, this);
+</code></pre>
+
+<h4 id="after">After</h4>
+
+<pre><code>var handler = callback.bind(this);
+</code></pre>
+
+<h3 id="arrayprototypeforeach"><code>Array.prototype.forEach</code></h3>
+
+<p>Looping is a rather large topic so we’ll stick with the basics. Given the
+following array:</p>
+
+<pre><code>var valueList = [
+  'a', 'e', 'i',
+  'o', 'u', 'y'
+];
+</code></pre>
+
+<h4 id="before-1">Before</h4>
+
+<pre><code>var i = 0;
+var il = valueList.length;
+for (; i &lt; il; i += 1) {
+
+}
+</code></pre>
+
+<h4 id="after-1">After</h4>
+
+<pre><code>function callback (value, index) {}
+valueList.forEach(callback);
+</code></pre>
+
+<h3 id="objectkeys"><code>Object.keys</code></h3>
+
+<p>This one combined with <code>forEach</code> allow you to do painless <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty#Example:_Itarate_over_properties_not_considering_inherited_properties" title="Example: Iterating over the properties of an object">filtered for each</a> if we take the following object:</p>
+
+<pre><code>var snacks = {
+  banana: 0,
+  chips: 1000
+};
+</code></pre>
+
+<h4 id="before-2">Before</h4>
+
+<pre><code>for (var snack in snacks) {
+  if (snacks.hasOwnProperty(snack)) {
+
+  }
+}
+</code></pre>
+
+<h4 id="after-2">After</h4>
+
+<pre><code>function eatSnacks (snack) {}
+Object.keys(snacks).forEach(eatSnacks);
+</code></pre>
+
+<p>And that looks much better than the first example. Giving a name to your
+function gives you extra info on what is it the loop is doing without having
+to comment it too much. Also makes profiling easier since you’ll have data on
+the callback function.</p>
+
+<p>Now you’ll probably ask why not use <a href="http://api.jquery.com/jquery.each/" title="jQuery.each()"><code>jQuery.each</code></a> in both cases?
+or even <a href="http://underscorejs.org/#each" title="Collection Functions (Arrays or Objects)"><code>_.each</code></a>. First it’s native so there is no need for an extra
+library. I’m not talking about speed — if your bottleneck is how you do your
+loops, you don’t need to read all this, otherwise go profile your DOM
+manipulations. jQuery each doesn’t filter with <code>hasOwnProperty</code> which means
+that is some script on your page extends either <code>Object.prototype</code> or
+<code>Array.prototype</code> — on top of breaking jQuery — you’re gonna have a bad time.
+Underscore does filter properly so it’s fine using that if you have the
+library on the page anyway.</p>
+
+<h2 id="i-still-need-ie8-support">I still need IE8 support</h2>
+
+<p>Does <a href="https://drupal.org/node/1569578" title="Internet Explorer 6, 7 and 8 no longer fully supported">Drupal 8 dropping IE: 6, 7, 8</a> means you can’t use it in a
+market like china or big administrations where IE8 is still the default and
+supported browser?</p>
+
+<h3 id="ie8-module">IE8 module</h3>
+
+<p>The <a href="https://drupal.org/project/ie8" title="MY YES, I DO LIKE PAIN!">IE8 module</a> was started to introduce IE8 compatibility back to
+Drupal 8 — in fact it was started to help take the decision to drop IE8.
+While the level of support is still undecided the goal is to allow people who
+develop for IE8 to be able to use Drupal 8. We’ll see what that means when
+that time comes. For now you can use the <a href="https://drupal.org/project/issues/search/drupal?text=&amp;assigned=&amp;submitted=&amp;participant=&amp;issue_tags_op=%3D&amp;issue_tags=ie8" title="ie8 tag search"><strong>ie8</strong> tag</a> in the issue
+queue to help up see what’ll go wrong on IE8.</p>
+
+<p>There is a lot more good stuff we can use such as <code>localStorage</code>,
+<code>document.querySelector</code> but those are DOM-related and have nothing to do
+with ES5 so expect a follow-up post on those.</p>
+  </body>
+</html>
+

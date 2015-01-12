@@ -1,0 +1,28 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 23 Jun 2014 18:47:50 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 23 Jun 2014 18:47:50 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: LightSky: Admins: The Sometimes Forgotten User of Drupal
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.lightsky.com/blog/admins-sometimes-forgotten-user-drupal
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>LightSky: Admins: The Sometimes Forgotten User of Drupal</title>
+    <base href="http://www.lightsky.com/blog/admins-sometimes-forgotten-user-drupal">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Last week a client asked us to build an image gallery for her website. There wasn’t anything super complex about this gallery, but it needed to have the images categorized via taxonomy and it she needed the ability to reorder the images. So off to the interface to create a content type, view, and pages associated with this gallery.</p>
+<p>One thing that I got hung up on was on how to make it so she could reorder the images. This is not an unusual request, and I’ve used almost all of the re-ordering modules there are, yet for some reason, I started off by adding a text field for a “weight” and then figured she could adjust them from there.</p>
+<p>I’m not sure why I thought that was a good solution, after all, as a company we pride ourselves on making Drupal as user friendly as possible. Thankfully I realized the error of my ways, and proceeded to promptly scrap the idea. The solution I ended up with was using <a href="https://www.drupal.org/project/draggableviews" target="_blank">Draggable Views</a> for her to re-arrange the order of the images, a link in the header of the view to add an image directly and a small (&lt;10 line) module to redirect to the draggable view page after she added a gallery image. What she ended up with was a single interface to manage her gallery, and something that both myself and the client was happy with.</p>
+<p>So why do I tell you this story? Because with all of the great flexibility that comes with Drupal, it’s easy to forget about the administrative aspect of a piece of functionality. I think it’s important for everyone to put some thought into how something should work from both the administrative side and the visitors side, and be sure to add some time for that into your budget. The back-end of your site should be as beautiful and easy to use as the front-end and if its not you are doing your clients a huge disservice. I’m glad to see the default Drupal 8 admin interface had a lot of thought regarding usability put into it, but I will save that for a later post.</p>
+<h3>
+	For more tips like these, <a href="http://www.lightsky.com/lightsky-social">follow us</a> on social media or subscribe for free to our <a href="http://www.lightsky.com/rss">RSS feed</a> and <a href="http://eepurl.com/dx_lj">newsletter</a>. You can also <a href="http://www.lightsky.com/simple-contact-form">contact us</a> directly or <a href="http://www.lightsky.com/request-consultation">request a consultation</a>. </h3>
+</div></div></div>
+  </body>
+</html>
+

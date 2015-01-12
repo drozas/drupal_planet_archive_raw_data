@@ -1,0 +1,54 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Mon, 15 Sep 2014 13:46:15 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Mon, 15 Sep 2014 13:46:15 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Jonathan Brown: Drupal & Bitcoin
+Content-Transfer-Encoding: 8bit
+Content-Base: http://jonathanpatrick.me/blog/drupal-bitcoin
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Jonathan Brown: Drupal & Bitcoin</title>
+    <base href="http://jonathanpatrick.me/blog/drupal-bitcoin">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>Almost everything we do on the web will work better with autonomous blockchain technologies such as <a href="http://bitcoin.com/" target="_blank">Bitcoin</a> &amp; <a href="https://www.ethereum.org/" target="_blank">ethereum</a> because they allow systems to be built with unbreakable rules. Unlike Facebook, Twitter, Airbnb, Uber, PayPal or eBay, no executive authority can step in and say the rules don't apply to you.</p>
+<p>Of all the blockchain technologies, Bitcoin is currently the most high profile. It is a massive area of growth in the startup eco-system.</p>
+<p><a href="https://www.drupal.org/drupal-8.0" target="_blank">Drupal 8</a> is going to be a fantastic platform for building startups, but we need to make sure that it is also a fantastic platform for blockchain startups.</p>
+<p>I've started by creating a Drupal 7 &amp; 8 project called <a href="https://www.drupal.org/project/cointools">Coin Tools</a>. It provides various components that would be useful for building a Bitcoin web product. Many of the altcoins are very similar to Bitcoin so the project could easily be extended to accommodate them.</p>
+<p>I've also created a <a href="https://amsterdam2014.drupal.org/bof/blockchain-bitcoin-ethereum" target="_blank">Blockchain BoF</a> at <a href="https://amsterdam2014.drupal.org/" target="_blank">DrupalCon Amsterdam</a> on the Tuesday at 10:45.</p>
+<h1>Coin Tools base module</h1>
+<p>Contains the following field types:</p>
+<ul><li>Address</li>
+<li>Amount</li>
+<li>Transaction</li>
+</ul><h2>Widgets</h2>
+<p><img height="148" src="http://jonathanpatrick.me/bitcoin-images/widgets.png" width="342" /></p>
+<h2>Formatters</h2>
+<p><img height="280" src="http://jonathanpatrick.me/bitcoin-images/formatters.png" width="222" /></p>
+<h1>Coin Tools Daemon</h1>
+<ul><li>facilitates configuration and access to bitcoind service</li>
+<li>triggers a hook when a Bitcoin transaction is detected</li>
+<li>provides a full UI for browsing transactions and sending and receiving bitcoin</li>
+</ul><p><img height="119" src="http://jonathanpatrick.me/bitcoin-images/toolbar.png" width="269" /></p>
+<p><img height="399" src="http://jonathanpatrick.me/bitcoin-images/transaction-browser.png" width="633" /></p>
+<p><img height="399" src="http://jonathanpatrick.me/bitcoin-images/transaction.png" width="633" /></p>
+<p><img height="386" src="http://jonathanpatrick.me/bitcoin-images/send-bitcoin.png" width="633" /></p>
+<p><img height="379" src="http://jonathanpatrick.me/bitcoin-images/receive-bitcoin.png" width="633" /></p>
+<p>I am currently working on a full implementation of <a href="https://github.com/bitcoin/bips/blob/master/bip-0070.mediawiki" target="_blank">BIP 70</a> which provides a much improved payment experience for the customer. Then I will add integration with <a href="https://www.drupal.org/project/payment" target="_blank">Payment</a> / <a href="https://www.drupal.org/project/commerce" target="_blank">Commerce</a>. This means it will be possible to receive payments in Commerce without using a third party payment processor.</p>
+<h1>Coins Tools Fiat</h1>
+<ul><li>obtains bitcoin exchange rates from <a href="https://bitcoinaverage.com/" target="_blank">BitcoinAverage</a> (which I consider to be the gold standard), falling back to <a href="https://bitpay.com/bitcoin-exchange-rates" target="_blank">BitPay BBB</a></li>
+<li>facilitates rendering of fiat amounts</li>
+<li>user can select preferred fiat currency</li>
+<li>current bitcoin value block</li>
+</ul><p><img height="352" src="http://jonathanpatrick.me/bitcoin-images/exchange-rates.png" width="633" /></p>
+<p><img height="47" src="http://jonathanpatrick.me/bitcoin-images/block.png" width="240" /></p>
+<p>If you would like help developing your Bitcoin startup on Drupal, please <a href="http://consulting.bluedroplet.com/contact" target="_blank">get in touch</a>.</p>
+</div></div></div>
+  </body>
+</html>
+

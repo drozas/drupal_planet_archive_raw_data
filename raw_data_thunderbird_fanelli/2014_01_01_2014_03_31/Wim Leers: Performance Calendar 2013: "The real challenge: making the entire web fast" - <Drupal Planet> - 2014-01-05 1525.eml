@@ -1,0 +1,139 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Sun, 05 Jan 2014 14:25:55 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Sun, 05 Jan 2014 14:25:55 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wim Leers: Performance Calendar 2013: "The real challenge: making the entire web fast"
+Content-Transfer-Encoding: 8bit
+Content-Base: http://wimleers.com/article/performance-calendar-2013-making-the-entire-web-fast
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wim Leers: Performance Calendar 2013: "The real challenge: making the entire web fast"</title>
+    <base href="http://wimleers.com/article/performance-calendar-2013-making-the-entire-web-fast">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p><em>This year, <a href="http://perfplanet.com/">Performance Planet</a> did an advent calendar again, just like the last few years. I also contributed an article — what follows is a verbatim copy of my <a href="http://calendar.perfplanet.com/2013/making-the-entire-web-fast/">“The real challenge: making the entire web fast” article for the 2013 Performance Calendar</a>.</em></p>
+
+<p>Probably many — if not most — of us <em>speed freaks</em> work for big companies that are optimizing top 1,000 websites.<br />
+Some companies have the budgets to hire people who work on <span class="caps">WPO</span> full time. Those companies are able to do that thanks to huge revenues — otherwise it would not be financially justifiable. In other words: they&#8217;re probably a top 1,000 website. The percentages of page speed improvements those people bring must translate into sufficient additional revenue to cover their wages.<br />
+Other companies have people who get to spend part of their time on <span class="caps">WPO</span>, and maybe pay for the services of one of the several <span class="caps">WPO</span> companies out there. But even in this case, a sizeable revenue is a requirement to justify&nbsp;it.</p>
+
+<p>So what about the millions of other&nbsp;websites?</p>
+
+<p>Think tiny budgets. Shared hosting. No <code>mod_pagespeed</code> to be seen. The ‘S’ in ‘SME&#8217;s. The small non-profits. How can they make their websites&nbsp;faster?</p>
+
+<p>Well, a few companies are so big that they can even hire people to focus on the big leaps forward in web technology that will make the entire web faster (think better browsers and <span class="caps">HTTP</span> 2.0/<span class="caps">SPDY</span>). Usually that&#8217;s the case because the long-term success of those companies depends on the web, so they have a vested interest in an even more omnipresent web.<br />
+It&#8217;s great. But it&#8217;s not enough: there&#8217;s only so much that better technology can do. A poorly implemented website with lots of large resources per page will still be&nbsp;slow.</p>
+
+<p>So how can we make the majority of the web&nbsp;faster?</p>
+
+<p>I believe we can do that by <em>making the most popular <span class="caps">CMS</span>es faster by&nbsp;default.</em></p>
+
+<h2>The fat head is trampling the long&nbsp;tail</h2>
+
+<p>Increasingly, <a href="http://www.niemanlab.org/2013/12/the-blog-is-dead/">the big few own the attention of us internet users</a>. The long tail receives fewer&nbsp;visitors.</p>
+
+<p>Centralization. Silos. The big few are extremely successful because they have a better <span class="caps">UX</span> (amongst other reasons). Perceived simplicity <span class="amp">&amp;</span> perceived speed are essential elements of that better <span class="caps">UX</span>.</p>
+
+<p>If we want to protect the web&#8217;s diversity, the long tail must receive more attention again. <em>Browsing the wider web</em> feeling fast <span class="amp">&amp;</span> fun rather than slow <span class="amp">&amp;</span> annoying, to avoid a future where people spend (almost) all their time in the few silos they&nbsp;know.</p>
+
+<p>Not just for the ideological idea of a free web with diverse opinions, but also to avoid monopolies from owning the web. Monopolies are bad for all of us for many reasons; two reasons are reduced innovation and higher risk of police state-like measures (such as censorship<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> and&nbsp;eavesdropping).</p>
+
+<p><em>Fast <span class="caps">CMS</span>es suited for various use cases — from simple blogging to complex data modeling — are essential for the success of the long&nbsp;tail.</em></p>
+
+<h2>Making WordPress, Drupal and Joomla fast out of the&nbsp;box</h2>
+
+<p>According to <a href="http://trends.builtwith.com/cms">various</a> <a href="http://w3techs.com/technologies/history_overview/content_management">sites</a> that track the usage statistics of <span class="caps">CMS</span>es, the WordPress—Drupal—Joomla triumvirate powers 2/3rd to 3/4th of the top 1 million and 1/4th of the entire&nbsp;web.</p>
+
+<p>They all have two things in&nbsp;common:</p>
+
+<ol>
+<li>they&#8217;re <em>free and open-source&nbsp;software</em></li>
+<li>they <a href="https://swsblog.stanford.edu/blog/drupal-sitebuilder-citizen-engineer">“enable non-developers to do developer-like things”</a> (let&#8217;s call them “site builders”<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>)</li>
+</ol>
+
+<p><em>If we can make these three open source systems faster, then we make the entire web faster!<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup></em></p>
+
+<p>All three of them run fine on shared hosting. They can all be much faster when running on an optimized stack (think Varnish, memcached and so on). But the point is to make them <em>as fast as possible on shared hosting</em>.</p>
+
+<p>In my own job, I spend a significant part of my time on making <a href="https://drupal.org/drupal-8.0">Drupal 8</a> (the next version of Drupal) being more performant out of the box. A few of those improvements&nbsp;are:</p>
+
+<ul>
+<li>Zero JavaScript is served to anonymous users by&nbsp;default.</li>
+<li>Support for responsive&nbsp;images.</li>
+<li>Partial page caching, which results in much faster serving of <span class="caps">HTML</span> of personalized pages for authenticated&nbsp;users.</li>
+</ul>
+
+<p>Hopefully, Drupal 8 can add more improvements still. And Drupal already <em>had</em> many performance-related features. I&#8217;m sure WordPress and Joomla do,&nbsp;too.</p>
+
+<p><em>But what matters most is whether these performance features are enabled out of the box:</em> many site builders will not be knowledgeable enough to be aware of these features nor their impact. So we should go the extra mile — and maybe add additional code complexity — to ensure we can enable performance features out of the box.<br />
+For example: Drupal has had <span class="caps">CSS</span> <span class="amp">&amp;</span> JavaScript aggregation for a long time … but it&#8217;s not yet enabled out of the box! And that&#8217;s why it&#8217;s not as fast as it could be, for many sites out&nbsp;there.</p>
+
+<p>Therefor:</p>
+
+<ul>
+<li>a significant part of the web would be faster if Drupal shipped with <span class="caps">CSS</span> <span class="amp">&amp;</span> JavaScript aggregation enabled by default at last, but also with other missing performance features such as JavaScript minification, image optimization and static file page&nbsp;caching.</li>
+<li>a huge part of the web would be a lot faster if WordPress shipped with <a href="http://wordpress.org/plugins/wp-super-cache/">static file page caching</a> and <a href="http://wordpress.org/plugins/w3-total-cache/">asset minification and object caching</a> built in <em>and</em> enabled out of the&nbsp;box.</li>
+<li>shipping Joomla with <a href="http://extensions.joomla.org/extensions/administration/admin-performance/7244">an <span class="caps">AJAX</span>y admin <span class="caps">UI</span></a>, <a href="http://extensions.joomla.org/extensions/core-enhancements/performance/site-performance/12088">asset aggregation</a>, <a href="http://extensions.joomla.org/extensions/core-enhancements/performance/site-performance/11545">asset dependency management</a>, <a href="http://extensions.joomla.org/extensions/core-enhancements/performance/cache/9495">automated object cache clearing</a> and <a href="http://extensions.joomla.org/extensions/core-enhancements/performance/cache/13155">page caching</a> — would have a big impact, if enabled out of the&nbsp;box.</li>
+</ul>
+
+<p><em>Overall, <span class="caps">CMS</span> developers should stop blaming the site builder for setting things up suboptimally and instead blame&nbsp;themselves!</em></p>
+
+<p><span class="caps">CMS</span>es should be fast by default. And whenever a site builder is about to configure something that would negatively impact perceived performance, then the user should be made aware — or better yet: remove that choice from the <span class="caps">UI</span> altogether and make it only overridable through code (or using a <span class="caps">CMS</span>&nbsp;extension).</p>
+
+<h2>Content strategy affects performance,&nbsp;too</h2>
+
+<p>All of the above is about performance-related features. But not every performance problem can be solved with better algorithms or smarter&nbsp;caching.</p>
+
+<p><a href="http://alistapart.com/article/thedisciplineofcontentstrategy">Content strategy</a> is crucial for a fast site. A highly optimized responsive website that loads blazingly fast can load excruciatingly slow if the content it needs to show includes several multi-hundred-KiB images. Sadly, in the current state of the web, that is the rule, not the exception. <span class="caps">CMS</span>es should protect its users against that (for example by automatically losslessly optimizing images <em>on output</em> while retaining the originals), or, if unable to protect, educate its&nbsp;users.</p>
+
+<p>If the site builder decides to add all sorts of social media widgets (think Twitter, Facebook, and Google+), and perhaps several tracking analytics scripts… then inevitably a page takes longer to&nbsp;load.</p>
+
+<p>So another part of the puzzle is <em>education</em>. To my knowledge, no <span class="caps">CMS</span> even attempts to educate its&nbsp;users.</p>
+
+<h2>Let&#8217;s…</h2>
+
+<p>It&#8217;s great that many important websites with millions and billions of visitors are being sped up so much. But let&#8217;s not forget about the millions of other websites. As <a href="http://calendar.perfplanet.com/2013/why-is-the-web-so-slow/">Stoyan Stefanov so elegantly <span class="amp">&amp;</span> empirically demonstrated</a>: users are  frustrated by the entire web being slow, not just the web&nbsp;giants.</p>
+
+<p>Do it to further increase the success of open source. Or to reduce the influence of monopolies. Or to make more money. Or to stand up against cultural imperialism. Or just because you selfishly want the web to be faster because you&#8217;re&nbsp;impatient.</p>
+
+<p>Let&#8217;s make the <em>entire</em> web&nbsp;faster.</p>
+
+<div class="footnotes">
+<hr />
+<ol>
+
+<li id="fn:1">
+<p>One must think in a global context, because the web is global. Hence silos are typically global, but they&#8217;re usually also regulated in a single country. For example: Facebook is an American company. In the <span class="caps">U.S.</span>A.’s popular culture (e.g. movies), extreme violence is acceptable, but deity forbid a nipple is seen for a fraction of a second. This particular cultural view is then also applied by American companies: see <a href="http://www.theguardian.com/technology/2012/feb/21/facebook-nudity-violence-censorship-guidelines">&ldquo;Facebook&#8217;s nudity and violence guidelines are laid bare&rdquo;</a>: <q>Nipples are rude but crushed limbs are <span class="caps">OK</span>.</q><br />
+This is considered &ldquo;cultural censorship&rdquo; or &ldquo;cultural imperialism&rdquo;. In other countries, the values may be different. For example, in the case of <em>violence vs. nipples</em>, <a href="http://cultureofoneworld.org/2011/09/23/facebook-censors-swedish-fan-pages-transatlantic-culture-wars-brewing-over-nude-artworks-and-naked-scandinavians/">Sweden has the opposite stance on what&#8217;s acceptable</a>.&#160;<a href="#fnref:1" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn:2">
+<p>Sitebuilders are people who are not necessarily programmers, but can still build a rich, complex website. Zach Chandler from Stanford University has aptly described their importance: <q>The reason why the site builder is so important is that often they are experts in something else, subject matter experts that can use Drupal to model things that exist in their discipline.</q> They can do that thanks&nbsp;to:</p>
+
+<ul>
+<li>data modeling and query builder <span class="caps">UI</span>s</li>
+<li>an ecosystem of extensions for the basic <span class="caps">CMS</span></li>
+</ul>
+
+<p><a href="#fnref:2" rev="footnote">&#8617;</a></p>
+</li>
+
+<li id="fn:3">
+<p>Making perceived performance part of the features they compete on would be interesting, but they each have different focuses so in reality there&#8217;s little competition: they serve different use cases <span class="amp">&amp;</span> markets.&#160;<a href="#fnref:3" rev="footnote">&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+<ul class="tags">
+    <li><a href="/tags/drupal" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Drupal</a></li>
+    <li><a href="/tags/performance" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">performance</a></li>
+    <li><a href="/tags/wpo" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">WPO</a></li>
+</ul>
+  </body>
+</html>
+

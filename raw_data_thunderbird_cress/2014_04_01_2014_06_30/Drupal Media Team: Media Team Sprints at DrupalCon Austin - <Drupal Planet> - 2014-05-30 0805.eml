@@ -1,0 +1,57 @@
+X-Mozilla-Status: 0041
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Fri, 30 May 2014 07:05:43 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Fri, 30 May 2014 07:05:43 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Drupal Media Team: Media Team Sprints at DrupalCon Austin
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.drupalmedia.org/events/2014/drupalcon-austin-sprints
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Drupal Media Team: Media Team Sprints at DrupalCon Austin</title>
+    <base href="http://www.drupalmedia.org/events/2014/drupalcon-austin-sprints">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even"><p><img src="https://austin2014.drupal.org/sites/default/files/images/DrupalCon-Austin-Logo.png" style="float: right; width: 400px; margin: 1em;" /><br />
+The Drupal Media team will be sprinting all week at DrupalCon Austin!</p>
+<h2>Sprint Days</h2>
+<ul><li>Saturday May 31 to Monday June 2: <a href="http://www.largescaledrupal.com/austin2014">Large Scale Drupal event</a> and general community sprints.</li>
+<li>Tuesday June 3 to Thursday June 5th: Coders lounge</li>
+<li>Friday June 6th: The <a href="https://austin2014.drupal.org/contribution-sprints">official contribution sprint day</a>, where all people are encouraged to attend, no matter the skill level.
+</li></ul><h2>Resources</h2>
+<p>All of the sprint tasks are visible in our <a href="https://trello.com/b/jIEIczFi">DrupalCon Austin Trello board</a> which we and all the sprinters will be using to coordinate efforts and progress all week. If you would like access to this board, see Dave Reid (and make sure to sign up for an account on Trello).</p>
+<!--break--><h2>Sprint Areas</h2>
+<h3>Drupal core issues</h3>
+<p><strong>Leads: <a href="https://drupal.org/u/dave-reid">Dave Reid (davereid)</a>, <a href="https://drupal.org/u/slashrsm">Janez Urevc (slashrsm)</a></strong></p>
+<p>This team will be working on any <a href="https://drupal.org/project/issues/search/drupal?status%5B%5D=Open&amp;issue_tags_op=%3D&amp;issue_tags=Media+Initiative">Drupal core issues tagged with "Media Initiative"</a>.</p>
+<p>Some specific issues we'd like to tackle in Austin:</p>
+<ul><li><a href="https://drupal.org/node/1399846">#1399846</a>: Backport the make unused file cleanup configurable to Drupal 7.</li>
+<li><a href="https://drupal.org/node/2128791">#2128791</a>, <a href="https://drupal.org/node/2148353">#2148353</a>, <a href="https://drupal.org/node/2078473">#2078473</a>: Ensure that file entities use a proper access controller and is used for hook_file_download().</li>
+<li><a href="https://drupal.org/node/1308152">#1308152</a>: Add module://, theme:// and profile:// stream wrappers to access system files</li>
+</ul><h3>Drupal 8 contrib module development</h3>
+<p><strong>Leads: <a href="https://drupal.org/u/dave-reid">Dave Reid (davereid)</a>, <a href="https://drupal.org/u/slashrsm">Janez Urevc (slashrsm)</a></strong></p>
+<p>The modules we are working on:</p>
+<ul><li><a href="https://github.com/drupal-media/entity_embed">entity_embed</a></li>
+<li><a href="https://github.com/drupal-media/entity_browser">entity_browser</a></li>
+<li><a href="https://github.com/drupal-media/fallback_formatter">fallback_formatter</a>: Needs porting to Drupal 8.</li>
+</ul><h3>Drupal 7 contrib module beta blockers</h3>
+<p><strong>Leads: <a href="https://drupal.org/u/devin-carlson">Devin Carlson (devincarlson)</a>, <a href="https://drupal.org/u/brantwynn">Brant Wynn (brantwynn)</a></strong></p>
+<p>This team will be working on the following in the hopes to be able to release 7.x-2.0-beta1 versions of the primary Media and File entity modules.</p>
+<ul><li><a href="https://drupal.org/project/issues/search/media?status%5B%5D=Open&amp;issue_tags_op=%3D&amp;issue_tags=7.x-2.0+beta+blocker">Media module issues tagged with "7.x-2.0 beta blocker"</a></li>
+<li><a href="https://drupal.org/project/issues/search/file_entity?status%5B%5D=Open&amp;issue_tags_op=%3D&amp;issue_tags=7.x-2.0+beta+blocker">File entity module issues tagged with "7.x-2.0 beta blocker"</a></li>
+</ul><h3>DrupalMedia.org website</h3>
+<p><strong>Leads: <a href="https://drupal.org/user/586386">Brandon Neil (bneil)</a>, <a href="https://drupal.org/user/428243">Willy Karam (willyk)</a></strong></p>
+<p>We use a <a href="https://trello.com/b/ZT7ohjX9/drupalmedia-org">Trello board</a> to organize the tasks for DrupalMedia.org.</p>
+<h2>Sign up!</h2>
+<p>Make sure to sign up on the <a href="https://docs.google.com/a/davereid.net/spreadsheet/ccc?key=0AlRKD0XsivA1dEYzMVl1cERvYUpXWDNscm8zNlpZeEE&amp;usp=drive_web#gid=0">Sprint attendance availability Google spreadsheet</a> under the 'Drupal Media Initiative' section, if you plan on attending any of the days.</p>
+<h2>Not going to be in Austin?</h2>
+<p>No problem! There are still several ways to participate. We will all be in the #drupal-media IRC channel during the sprints and would be more than happy to help assign issues to work on or point people in the right direction.</p>
+<p>We also will gladly accept <a href="/initiative/submit-user-story">your Drupal Media user story submissions</a> as we start to finalize our plans and development for Drupal 8.</p>
+</div></div></div><div class="field field-name-field-tags field-type-taxonomy-term-reference field-label-above clearfix"><h3 class="field-label">Tags: </h3><ul class="links"><li class="taxonomy-term-reference-0"><a href="/tags/drupalcon">drupalcon</a></li><li class="taxonomy-term-reference-1"><a href="/tags/drupal-planet">drupal planet</a></li><li class="taxonomy-term-reference-2"><a href="/tags/sprints">sprints</a></li></ul></div>
+  </body>
+</html>
+

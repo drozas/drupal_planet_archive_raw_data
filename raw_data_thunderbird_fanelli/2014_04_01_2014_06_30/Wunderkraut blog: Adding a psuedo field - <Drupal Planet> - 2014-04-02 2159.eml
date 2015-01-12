@@ -1,0 +1,36 @@
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                
+Date: Wed, 02 Apr 2014 19:59:41 +0000
+Message-Id: <http://drupal.org/planet/rss.xml#Wed, 02 Apr 2014 19:59:41 +0000@localhost.localdomain>
+From: <Drupal Planet>
+MIME-Version: 1.0
+Subject: Wunderkraut blog: Adding a psuedo field
+Content-Transfer-Encoding: 8bit
+Content-Base: http://www.wunderkraut.com/blog/adding-a-psuedo-field/2014-04-02
+Content-Type: text/html; charset=UTF-8
+
+<html>
+  <head>
+    <title>Wunderkraut blog: Adding a psuedo field</title>
+    <base href="http://www.wunderkraut.com/blog/adding-a-psuedo-field/2014-04-02">
+  </head>
+  <body id="msgFeedSummaryBody" selected="false">
+    <p class="field-ns-blog-post-lead">
+    Sometimes you need to display a field that have no input, like a static text or image on each node, or a Facebook like button, or whatever that does not have an input, but you still want to display it as a field, for that you have the hook hook_field_extra_fields.  </p>
+<div class="field-ns-blog-post-body clearfix">
+            <div class="field-item even"><p>To display a psuedo field you just need two functions (these functions I added to a custom module called  wk_extra_fields)</p>
+
+<div class="codeblock"><code><span style="color: #000000"><span style="color: #0000BB">&lt;?php<br /></span><span style="color: #FF8000">/**<br /> * Implements hook_field_extra_fields().<br /> */<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">wk_extra_fields_field_extra_fields</span><span style="color: #007700">() {<br />&nbsp; </span><span style="color: #0000BB">$extra </span><span style="color: #007700">= array();<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #FF8000">// Just adding the psuedo field to the page node type.<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$extra</span><span style="color: #007700">[</span><span style="color: #DD0000">'node'</span><span style="color: #007700">][</span><span style="color: #DD0000">'page'</span><span style="color: #007700">] = array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'display' </span><span style="color: #007700">=&gt; array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'wk_foo' </span><span style="color: #007700">=&gt; array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'label' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">t</span><span style="color: #007700">(</span><span style="color: #DD0000">'WK: Foo'</span><span style="color: #007700">),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'description' </span><span style="color: #007700">=&gt; </span><span style="color: #0000BB">t</span><span style="color: #007700">(</span><span style="color: #DD0000">'A foo field.'</span><span style="color: #007700">),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'weight' </span><span style="color: #007700">=&gt; -</span><span style="color: #0000BB">5</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ),<br />&nbsp;&nbsp;&nbsp; );<br />&nbsp; return </span><span style="color: #0000BB">$extra</span><span style="color: #007700">;<br />}<br /><br /></span><span style="color: #FF8000">/**<br /> * Implements hook_node_view().<br /> */<br /></span><span style="color: #007700">function </span><span style="color: #0000BB">wk_extra_fields_node_view</span><span style="color: #007700">(</span><span style="color: #0000BB">$node</span><span style="color: #007700">, </span><span style="color: #0000BB">$view_mode</span><span style="color: #007700">, </span><span style="color: #0000BB">$langcode</span><span style="color: #007700">) {<br />&nbsp; </span><span style="color: #FF8000">// The field is showed in when using full view mode and on page node type.<br />&nbsp; </span><span style="color: #007700">if (</span><span style="color: #0000BB">$view_mode </span><span style="color: #007700">== </span><span style="color: #DD0000">'full' </span><span style="color: #007700">&amp;&amp; </span><span style="color: #0000BB">$node</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">type </span><span style="color: #007700">== </span><span style="color: #DD0000">'page'</span><span style="color: #007700">) {<br />&nbsp;&nbsp;&nbsp; </span><span style="color: #0000BB">$node</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">content</span><span style="color: #007700">[</span><span style="color: #DD0000">'wk_foo'</span><span style="color: #007700">] = array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: #DD0000">'#markup' </span><span style="color: #007700">=&gt; </span><span style="color: #DD0000">'&lt;div class="wk-foo"&gt;Foo!&lt;/div&gt;'</span><span style="color: #007700">,<br />&nbsp;&nbsp;&nbsp; );<br />&nbsp; }<br />}<br /></span><span style="color: #0000BB">?&gt;</span></span></code></div>
+
+<p><br />
+So we use the function wk_extra_fields_field_extra_fields() to create the psuedo field for the page node type, after that we can activate it in the display tab, and choose where to show the field.</p>
+
+<p>When we view the node, the function wk_extra_fields_node_view() is called and the content is displayed.</p>
+
+<p><em>Image: "Air Guitar Championship" by AxsDeny. Attribution-NonCommercial-NoDerivs License</em></p>
+</div>
+    </div>
+  </body>
+</html>
+
